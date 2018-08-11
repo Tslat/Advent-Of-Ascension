@@ -1,15 +1,15 @@
-﻿death.attack.slugAcid=%1$s was dissolved into snail slime.
+death.attack.slugAcid=%1$s 被巨蝸牛粘液溶解了。
 
-enchantment.archmage=Archmage
-enchantment.control=Control
-enchantment.crush=Crush
-enchantment.intervention=Intervention
-enchantment.overpower=Overpower
-enchantment.recharge=Recharge
-enchantment.sever=Sever
-enchantment.shell=Shell
-enchantment.slice=Slice
-enchantment.windfury=Windfury
+enchantment.archmage=法術
+enchantment.control=支配
+enchantment.crush=粉碎
+enchantment.intervention=干預
+enchantment.overpower=壓制
+enchantment.recharge=充能
+enchantment.sever=斷絕
+enchantment.shell=砲彈
+enchantment.slice=鋒芒
+enchantment.windfury=風怒
 
 entity.nevermine.Airhead.name=Airhead
 entity.nevermine.Alarmo.name=Alarmo
