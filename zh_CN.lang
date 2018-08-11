@@ -2505,258 +2505,310 @@ items.description.tablet.level=需要 %1$s级灵气等级
 items.description.thrownWeapon=投掷武器
 items.description.unbreakable=无限使用！
 items.description.vulcane.activate=复仇激活时才可以使用
+
 key.cinfo=打开/关闭生物免疫类型图标
 key.exped=切换远征技能效果
 key.lognot=登录公告
 key.skillnameleft=技能名称转换(左)
 key.skillnameright=技能名称转换(右)
 key.skills=打开/关闭技能栏
+
 message.book.worn.1=它们无处不在！<br>看着那些熟悉的面孔，为什么有那么多的眼睛？<br><br>有4种雕符石：<br>现实；<br>穿越；<br>空间；<br>方位；<br><br>用某种漆黑的石头，还有这些雕符石，搭建6个方块高的框架。
 message.book.worn.2=在框架底部的中心，嵌入另一种雕符石——能量。这是重点，这是打开大门的钥匙。 <br>在此过程一共需要13个漆黑的石头，再加上5枚雕符石。<br><br>我所做之事，将覆水难收。
 message.book.worn.3=我已经把前面4种雕符石藏匿于各处的地牢与神殿，防止有人妄图打开这扇门。<br><br>那最后一块，我已将其粉碎，大概不能再使用了。
 message.book.worn.4=所以这重要的第5块雕符石需要你自己合成。将紫晶和翡翠混合，再将漆黑的石头置于中央。<br>就像这样：<br>      紫 翡 紫<br>      紫 石 紫<br>      紫 翡 紫<br><br>愿卡尔颂保佑——
 message.book.worn.5=你，因为你的灵魂从此将今非昔比。
+
 message.dialogue.animaMaster.0=灵气大师：你是大师吗？
 message.dialogue.animaMaster.1=灵气大师：你有多厉害？
 message.dialogue.animaMaster.2=灵气大师：想穿上它吗？努力训练！
 message.dialogue.animaMaster.3=灵气大师：只有真正的大师才能穿上它。
 message.dialogue.animaMaster.4=灵气大师：你是我想要找的人吗？
+
 message.dialogue.assassin.0=暗杀者：当心你的背后。
 message.dialogue.assassin.1=暗杀者：你没注意到有人来了吗？
 message.dialogue.assassin.2=暗杀者：我将回归阴影之中了。
 message.dialogue.assassin.3=暗杀者：嘘！你差点吹开我的面罩。
 message.dialogue.assassin.4=暗杀者：你已经死了。
+
 message.dialogue.auguryMaster.0=占卜大师：你是大师吗？
 message.dialogue.auguryMaster.1=占卜大师：你有多厉害？
 message.dialogue.auguryMaster.2=占卜大师：想穿上它吗？努力训练！
 message.dialogue.auguryMaster.3=占卜大师：只有真正的大师才能穿上它。
 message.dialogue.auguryMaster.4=占卜大师：你是我想要找的人吗？
+
 message.dialogue.butcheryMaster.0=嗜血大师：你是大师吗？
 message.dialogue.butcheryMaster.1=嗜血大师：你有多厉害？
 message.dialogue.butcheryMaster.2=嗜血大师：想穿上它吗？努力训练！
 message.dialogue.butcheryMaster.3=嗜血大师：只有真正的大师才能穿上它。
 message.dialogue.butcheryMaster.4=嗜血大师：你是我想要找的人吗？
-message.dialogue.corruptedTraveller.0=饥饿的旅行家：食物...
-message.dialogue.corruptedTraveller.1=饥饿的旅行家：有吃的?
-message.dialogue.corruptedTraveller.2=饥饿的旅行家：求求你，给点吃的...
-message.dialogue.corruptedTraveller.3=饥饿的旅行家：啊......
-message.dialogue.corruptedTraveller.4=饥饿的旅行家：食物......
+
 message.dialogue.creationMaster.0=召唤大师：你是大师吗？
 message.dialogue.creationMaster.1=召唤大师：你有多厉害？
 message.dialogue.creationMaster.2=召唤大师：想穿上它吗？努力训练！
 message.dialogue.creationMaster.3=召唤大师：只有真正的大师才能穿上它。
 message.dialogue.creationMaster.4=召唤大师：你是我想要找的人吗？
+
 message.dialogue.creepBanker.0=蠕变银行家：需要换硬币吗？
 message.dialogue.creepBanker.1=蠕变银行家：我真的很喜欢金币！
 message.dialogue.creepBanker.2=蠕变银行家：嘿，你有没有听到那种……就是……“嘶嘶”的声音？
 message.dialogue.creepBanker.3=蠕变银行家：你拿到硬币了？
 message.dialogue.creepBanker.4=蠕变银行家：我有很——多不错的硬币给你。
+
 message.dialogue.crystalTrader.0=晶体商人：水晶是真的，真到令人发指。
 message.dialogue.crystalTrader.1=晶体商人：宝石——！！
 message.dialogue.crystalTrader.2=晶体商人：它们简直不能更加闪亮了。
 message.dialogue.crystalTrader.3=晶体商人：看它们，BlingBling的！
 message.dialogue.crystalTrader.4=晶体商人：它们怎么就这么好看！
+
 message.dialogue.dungeonKeeper=地牢守护者：你会在入口时获得一颗传送水晶，它能让你在进入以后结束战斗回到这里。
+
 message.dialogue.expeditionMaster.0=远征大师：你是大师吗？
 message.dialogue.expeditionMaster.1=远征大师：你有多厉害？
 message.dialogue.expeditionMaster.2=远征大师：想穿上它吗？努力训练！
 message.dialogue.expeditionMaster.3=远征大师：只有真正的大师才能穿上它。
 message.dialogue.expeditionMaster.4=远征大师：你是我想要找的人吗？
+
 message.dialogue.explosivesExpert.0=爆破专家：化为碎片吧！
 message.dialogue.explosivesExpert.1=爆破专家：为我的朋友感到遗憾。
 message.dialogue.explosivesExpert.2=爆破专家：真的好奇爬行者们爆炸了以后去哪了。
 message.dialogue.explosivesExpert.3=爆破专家：爬行者们真的给了你它们的碎片。
 message.dialogue.explosivesExpert.4=爆破专家：给你一个全新的！
+
 message.dialogue.extractionMaster.0=精炼大师：你是大师吗？
 message.dialogue.extractionMaster.1=精炼大师：你有多厉害？
 message.dialogue.extractionMaster.2=精炼大师：想穿上它吗？努力训练！
 message.dialogue.extractionMaster.3=精炼大师：只有真正的大师才能穿上它。
 message.dialogue.extractionMaster.4=精炼大师：你是我想要找的人吗？
+
 message.dialogue.foragingMaster.0=采掘大师：你是大师吗？
 message.dialogue.foragingMaster.1=采掘大师：你有多厉害？
 message.dialogue.foragingMaster.2=采掘大师：想穿上它吗？努力训练！
 message.dialogue.foragingMaster.3=采掘大师：只有真正的大师才能穿上它。
 message.dialogue.foragingMaster.4=采掘大师：你是我想要找的人吗？
+
 message.dialogue.gorbArmsDealer.0=戈布：在它们的梦境里居然有一个黑市。
 message.dialogue.gorbArmsDealer.1=戈布：有时我想知道这些武器对我自己有什么作用。
 message.dialogue.gorbArmsDealer.2=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbArmsDealer.3=戈布：我闻到的是蘑菇汤的吗？或者这汤是活的？
 message.dialogue.gorbArmsDealer.4=戈布：别把它拿走，它属于这里!
+
 message.dialogue.gorbCitizen.0=戈布：很奇怪，这个地方是虚构的，但显然有一些生物逃了出来。
 message.dialogue.gorbCitizen.1=戈布：如果你看到了一些会走的蓝色蘑菇，不要想着去吃它。
 message.dialogue.gorbCitizen.2=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbCitizen.3=戈布：很高兴见到你！
 message.dialogue.gorbCitizen.4=戈布：我不是很建议在这里游泳。
+
 message.dialogue.gorbEngineer.0=戈布：我想我应该是有名字的，然而Eeo们并没有给我想一个名字。
 message.dialogue.gorbEngineer.1=戈布：它们真可爱，直到你对它们反击之时。
 message.dialogue.gorbEngineer.2=戈布：我能使用各种金属，用它们做各种事...毕竟这里是梦境。
 message.dialogue.gorbEngineer.3=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbEngineer.4=戈布：你看到它了吗？它在注视着你，我十分确定。
+
 message.dialogue.haulingMaster.0=垂钓大师：你是大师吗？
 message.dialogue.haulingMaster.1=垂钓大师：你有多厉害？
 message.dialogue.haulingMaster.2=垂钓大师：想穿上它吗？努力训练！
 message.dialogue.haulingMaster.3=垂钓大师：只有真正的大师才能穿上它。
 message.dialogue.haulingMaster.4=垂钓大师：你是我想要找的人吗？
+
 message.dialogue.hunterMaster.0=狩猎大师：你是大师吗？
 message.dialogue.hunterMaster.1=狩猎大师：你有多厉害？
 message.dialogue.hunterMaster.2=狩猎大师：想穿上它吗？努力训练！
 message.dialogue.hunterMaster.3=狩猎大师：只有真正的大师才能穿上它。
 message.dialogue.hunterMaster.4=狩猎大师：你是我想要找的人吗？
+
 message.dialogue.infusionMaster.0=附魔大师：你是大师吗？
 message.dialogue.infusionMaster.1=附魔大师：你有多厉害？
 message.dialogue.infusionMaster.2=附魔大师：想穿上它吗？努力训练！
 message.dialogue.infusionMaster.3=附魔大师：只有真正的大师才能穿上它。
 message.dialogue.infusionMaster.4=附魔大师：你是我想要找的人吗？
+
 message.dialogue.innervationMaster.0=支配大师：你是大师吗？
 message.dialogue.innervationMaster.1=支配大师：你有多厉害？
 message.dialogue.innervationMaster.2=支配大师：想穿上它吗？努力训练！
 message.dialogue.innervationMaster.3=支配大师：只有真正的大师才能穿上它。
 message.dialogue.innervationMaster.4=支配大师：你是我想要找的人吗？
+
 message.dialogue.lelyetianBanker.0=赫尔维蒂银行家：你是怎么用这么小的眼睛看见东西的？
 message.dialogue.lelyetianBanker.1=赫尔维蒂银行家：你需要另一个脑袋。
 message.dialogue.lelyetianBanker.2=赫尔维蒂银行家：你的脸色真奇怪！
 message.dialogue.lelyetianBanker.3=赫尔维蒂银行家：今天是个好天气。
 message.dialogue.lelyetianBanker.4=赫尔维蒂银行家：你是从世界另一边过来的？
+
 message.dialogue.lelyetianTrader.0=赫尔维蒂商人：你是怎么用这么小的眼睛看见东西的？
 message.dialogue.lelyetianTrader.1=赫尔维蒂商人：你需要另一个脑袋。
 message.dialogue.lelyetianTrader.2=赫尔维蒂商人：你的脸色真奇怪！
 message.dialogue.lelyetianTrader.3=赫尔维蒂商人：今天是个好天气。
 message.dialogue.lelyetianTrader.4=赫尔维蒂商人：你是从世界另一边过来的？
+
 message.dialogue.loggingMaster.0=砍伐大师：你是大师吗？
 message.dialogue.loggingMaster.1=砍伐大师：你有多厉害？
 message.dialogue.loggingMaster.2=砍伐大师：想穿上它吗？努力训练！
 message.dialogue.loggingMaster.3=砍伐大师：只有真正的大师才能穿上它。
 message.dialogue.loggingMaster.4=砍伐大师：你是我想要找的人吗？
+
 message.dialogue.lottoMan.0=乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoMan.1=乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoMan.2=乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoMan.3=乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoMan.4=乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManAbyss.0=深渊乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManAbyss.1=深渊乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManAbyss.2=深渊乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManAbyss.3=深渊乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManAbyss.4=深渊乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManBarathos.0=爵士乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManBarathos.1=爵士乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManBarathos.2=爵士乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManBarathos.3=爵士乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManBarathos.4=爵士乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManCandyland.0=糖果乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCandyland.1=糖果乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCandyland.2=糖果乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManCandyland.3=糖果乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManCandyland.4=糖果乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManCeleve.0=玩具乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCeleve.1=玩具乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCeleve.2=玩具乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManCeleve.3=玩具乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManCeleve.4=玩具乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManCreeponia.0=蠕变乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCreeponia.1=蠕变乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCreeponia.2=蠕变乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManCreeponia.3=蠕变乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManCreeponia.4=蠕变乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManCrystevia.0=晶体乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCrystevia.1=晶体乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCrystevia.2=晶体乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManCrystevia.3=晶体乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManCrystevia.4=晶体乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManDeeplands.0=深层乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManDeeplands.1=深层乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManDeeplands.2=深层乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManDeeplands.3=深层乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManDeeplands.4=深层乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManDustopia.0=异位乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManDustopia.1=异位乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManDustopia.2=异位乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManDustopia.3=异位乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManDustopia.4=异位乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManGardencia.0=花园乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManGardencia.1=花园乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManGardencia.2=花园乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManGardencia.3=花园乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManGardencia.4=花园乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManGreckon.0=格瑞克乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManGreckon.1=格瑞克乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManGreckon.2=格瑞克乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManGreckon.3=格瑞克乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManGreckon.4=格瑞克乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManHaven.0=天堂乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManHaven.1=天堂乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManHaven.2=天堂乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManHaven.3=天堂乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManHaven.4=天堂乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManIromine.0=黄金乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManIromine.1=黄金乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManIromine.2=黄金乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManIromine.3=黄金乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManIromine.4=黄金乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManLBorean.0=暴风乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLBorean.1=暴风乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLBorean.2=暴风乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManLBorean.3=暴风乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManLBorean.4=暴风乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManLelyetia.0=赫尔维蒂乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLelyetia.1=赫尔维蒂乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLelyetia.2=赫尔维蒂乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManLelyetia.3=赫尔维蒂乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManLelyetia.4=赫尔维蒂乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManLunalus.0=月球乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLunalus.1=月球乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLunalus.2=月球乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManLunalus.3=月球乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManLunalus.4=月球乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManMysterium.0=秘境乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManMysterium.1=秘境乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManMysterium.2=秘境乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManMysterium.3=秘境乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManMysterium.4=秘境乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManNether.0=下界乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManNether.1=下界乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManNether.2=下界乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManNether.3=下界乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManNether.4=下界乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManPrecasia.0=传说乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManPrecasia.1=传说乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManPrecasia.2=传说乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManPrecasia.3=传说乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManPrecasia.4=传说乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManRunandor.0=融化乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManRunandor.1=融化乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManRunandor.2=融化乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManRunandor.3=融化乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManRunandor.4=融化乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManShyrelands.0=塞尔瑞乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManShyrelands.1=塞尔瑞乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManShyrelands.2=塞尔瑞乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManShyrelands.3=塞尔瑞乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManShyrelands.4=塞尔瑞乐透兑换人：每个人都是赢家！
+
 message.dialogue.lottoManVoxPonds.0=未知乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManVoxPonds.1=未知乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManVoxPonds.2=未知乐透兑换人：好东西可不多，来碰碰运气吧！
 message.dialogue.lottoManVoxPonds.3=未知乐透兑换人：§b你永远不会得到这些东西的！
 message.dialogue.lottoManVoxPonds.4=未知乐透兑换人：每个人都是赢家！
+
 message.dialogue.metalloid.0=金属收藏家：你好，人类。
 message.dialogue.metalloid.1=金属收藏家：你看起来是肉做的。为什么不试试金属？
 message.dialogue.metalloid.2=金属收藏家：我真的超爱金属。
 message.dialogue.metalloid.3=金属收藏家：金属，如此美妙~
 message.dialogue.metalloid.4=金属收藏家：拿一些装在你身上。
+
 message.dialogue.naturalist.0=自然主义者：向塞里安致敬！
 message.dialogue.naturalist.1=自然主义者：塞里安是这世界的一部分。
 message.dialogue.naturalist.2=自然主义者：需要种子吗？
 message.dialogue.naturalist.3=自然主义者：我超爱园艺的！
 message.dialogue.naturalist.4=自然主义者：它们都是全新的生命！
+
+message.dialogue.corruptedTraveller.0=饥饿的旅行家：食物...
+message.dialogue.corruptedTraveller.1=饥饿的旅行家：有吃的?
+message.dialogue.corruptedTraveller.2=饥饿的旅行家：求求你，给点吃的...
+message.dialogue.corruptedTraveller.3=饥饿的旅行家：啊......
+message.dialogue.corruptedTraveller.4=饥饿的旅行家：食物......
+
 message.dialogue.portalMaster.0=售票员：要去哪个世界？
 message.dialogue.portalMaster.1=售票员：融化比格瑞克更快乐。
 message.dialogue.portalMaster.2=售票员：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.portalMaster.3=售票员：天哪！又一个跑出来了！
 message.dialogue.portalMaster.4=售票员：票！谁有票？
+
 message.dialogue.primordialBanker.0=原始银行家：问候凡人。
 message.dialogue.primordialBanker.1=原始银行家：异位也会有凡人？
 message.dialogue.primordialBanker.2=原始银行家：你不害怕吗？
 message.dialogue.primordialBanker.3=原始银行家：§b我从未惧怕黑暗。
 message.dialogue.primordialBanker.4=原始银行家：你在这里并不安全。
+
 message.dialogue.primordialGuide.0=导游：小心，原始生物的永恒治愈广为人知。
 message.dialogue.primordialGuide.1=导游：充过能的宝珠在月球创造祭坛上使用。
 message.dialogue.primordialGuide.2=导游：小心潜行者首领！它极度危险。
@@ -2765,111 +2817,133 @@ message.dialogue.primordialGuide.4=导游：默克生活在遍布在异位的高
 message.dialogue.primordialGuide.5=导游：怪物在这片土地很猖獗。
 message.dialogue.primordialGuide.6=导游：这里到处都是危险的怪物，祝你好运。
 message.dialogue.primordialGuide.7=导游：当心你看到的一切。
+
 message.dialogue.primordialMerchant.0=原始商人：问候凡人。
 message.dialogue.primordialMerchant.1=原始商人：异位也会有凡人？
 message.dialogue.primordialMerchant.2=原始商人：你不害怕吗？
 message.dialogue.primordialMerchant.3=原始商人：§b我从未惧怕黑暗。
 message.dialogue.primordialMerchant.4=原始商人：你在这里并不安全。
+
 message.dialogue.primordialSpellbinder.0=原始法师：问候凡人。
 message.dialogue.primordialSpellbinder.1=原始法师：异位也会有凡人？
 message.dialogue.primordialSpellbinder.2=原始法师：你不害怕吗？
 message.dialogue.primordialSpellbinder.3=原始法师：§b我从未惧怕黑暗。
 message.dialogue.primordialSpellbinder.4=原始法师：你在这里并不安全。
+
 message.dialogue.primordialWizard.0=原始精灵：问候凡人。
 message.dialogue.primordialWizard.1=原始精灵：异位也会有凡人？
 message.dialogue.primordialWizard.2=原始精灵：你不害怕吗？
 message.dialogue.primordialWizard.3=原始精灵：§b我从未惧怕黑暗。
 message.dialogue.primordialWizard.4=原始精灵：你在这里并不安全。
+
 message.dialogue.professor.0=教授：我想获得我自己的雷铁。但我不会亲自下矿。
 message.dialogue.professor.1=教授：你见过我的宠物剑圣了么？
 message.dialogue.professor.2=教授：我在天堂看见过一些有趣的生物，是我为它们升了级！
 message.dialogue.professor.3=教授：这里的小偷无处不在。你见过其中一个吗？
 message.dialogue.professor.4=教授：多么棒的全新标本！
+
 message.dialogue.realmShifter.0=宝石收藏家：在另一世界再见。
 message.dialogue.realmShifter.1=宝石收藏家：这是什么世界？
 message.dialogue.realmShifter.2=宝石收藏家：啊~这甜美的空气。
 message.dialogue.realmShifter.3=宝石收藏家：这个世界是如此……普通。
 message.dialogue.realmShifter.4=宝石收藏家：我去过所有的地方。劝你别所有的地方都去。
+
 message.dialogue.runationMaster.0=魔力大师：你是大师吗？
 message.dialogue.runationMaster.1=魔力大师：你有多厉害？
 message.dialogue.runationMaster.2=魔力大师：想穿上它吗？努力训练！
 message.dialogue.runationMaster.3=魔力大师：只有真正的大师才能穿上它。
 message.dialogue.runationMaster.4=魔力大师：你是我想要找的人吗？
+
 message.dialogue.shyreArcher.0=塞尔瑞射手：来把弓吧！
 message.dialogue.shyreArcher.1=塞尔瑞射手：这弓可真美
 message.dialogue.shyreArcher.2=塞尔瑞射手：你的脸色真奇怪。
 message.dialogue.shyreArcher.3=塞尔瑞射手：暖和的一天。
 message.dialogue.shyreArcher.4=塞尔瑞射手：你拿的那个不算弓，这才算弓。
+
 message.dialogue.shyreBanker.0=塞尔瑞银行家：你用那么小的眼睛是怎么看清东西的？
 message.dialogue.shyreBanker.1=塞尔瑞银行家：你眼睛可真多。
 message.dialogue.shyreBanker.2=塞尔瑞银行家：你的脸色真奇怪。
 message.dialogue.shyreBanker.3=塞尔瑞银行家：今天天气不错。
 message.dialogue.shyreBanker.4=塞尔瑞银行家：你有没有捡到过一枚月币，那是我掉的。
+
 message.dialogue.soulAgent.0=灵魂代理人：你见过我的另一半吗？
 message.dialogue.soulAgent.1=灵魂代理人：我的另一半今天感觉不是很好。
 message.dialogue.soulAgent.2=灵魂代理人：我看起来还好吗？
 message.dialogue.soulAgent.3=灵魂代理人：我觉得我失去了一些体重。
 message.dialogue.soulAgent.4=灵魂代理人：就在刚刚，我感受不到完整的自己了。
+
 message.dialogue.storeKeeper.0=商店老板：我看到有人进来过。
 message.dialogue.storeKeeper.1=商店老板：我的商店确实失去了屋顶。
 message.dialogue.storeKeeper.2=商店老板：有人想接管我的店？不存在的。
 message.dialogue.storeKeeper.3=商店老板：先不说这地表发生了什么，鬼知道这地下有什么？
 message.dialogue.storeKeeper.4=商店老板：我昨天只有5个眼睛。
+
 message.dialogue.tokenCollector.0=令牌交易者：你的力量在这里得到了增强！
 message.dialogue.tokenCollector.1=令牌交易者：想要新装备吗？
 message.dialogue.tokenCollector.2=令牌交易者：只有最优秀的战士才能驾驭这个法杖。
 message.dialogue.tokenCollector.3=令牌交易者：拿到令牌了？
 message.dialogue.tokenCollector.4=令牌交易者：令牌交易者有好东西，只要你有足够的令牌。
+
 message.dialogue.toyMerchant.0=玩具商人：§b不要再低处挖掘，在虚空可找不回你的尸体。
 message.dialogue.toyMerchant.1=玩具商人：想要玩具吗~
 message.dialogue.toyMerchant.2=玩具商人：有些玩具可有点危险哦~
 message.dialogue.toyMerchant.3=玩具商人：保证有趣，够你玩一天~
 message.dialogue.toyMerchant.4=玩具商人：别盯着我的脸看。
+
 message.dialogue.trollTrader.0=哥布林商人：§b可别在海底挖矿。
 message.dialogue.trollTrader.1=哥布林商人：抱歉，我的老哥。
 message.dialogue.trollTrader.2=哥布林商人：不好意思了，老铁。
 message.dialogue.trollTrader.3=哥布林商人：我忒喜欢安佛比亚的肺的味儿了。
 message.dialogue.trollTrader.4=哥布林商人：哎呀妈呀！你吓着我了。
+
 message.dialogue.vulcanismMaster.0=浊流大师：你是大师吗？
 message.dialogue.vulcanismMaster.1=浊流大师：你有多厉害？
 message.dialogue.vulcanismMaster.2=浊流大师：想穿上它吗？努力训练！
 message.dialogue.vulcanismMaster.3=浊流大师：只有真正的大师才能穿上它。
 message.dialogue.vulcanismMaster.4=浊流大师：你是我想要找的人吗？
+
 message.dialogue.zalBanker.0=扎尔银行家：§b不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalBanker.1=扎尔银行家：我丢了个银币，大概是找不到了。
 message.dialogue.zalBanker.2=扎尔银行家：我真的很害怕那个飘浮的监狱。
 message.dialogue.zalBanker.3=扎尔银行家：你看上去怪怪的。
 message.dialogue.zalBanker.4=扎尔银行家：你在上面看到了什么？
+
 message.dialogue.zalChild.0=扎尔儿童：你好，怪人！
 message.dialogue.zalChild.1=扎尔儿童：妈妈说不要和奇怪的人说话。
 message.dialogue.zalChild.2=扎尔儿童：来抓我啊~
 message.dialogue.zalChild.3=扎尔儿童：你有一个大脑袋。
 message.dialogue.zalChild.4=扎尔儿童：你可真丑！
+
 message.dialogue.zalCitizen.0=扎尔市民：§b不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalCitizen.1=扎尔市民：偷偷告诉你，我刚刚捡到了一个银币。
 message.dialogue.zalCitizen.2=扎尔市民：我真的很害怕那个飘浮的监狱。
 message.dialogue.zalCitizen.3=扎尔市民：你看上去怪怪的。
 message.dialogue.zalCitizen.4=扎尔市民：你在上面看到了什么？
+
 message.dialogue.zalFoodMarket.0=扎尔美食家：§b不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalFoodMarket.1=扎尔美食家：饿了吧？来块曲奇吧！
 message.dialogue.zalFoodMarket.2=扎尔美食家：监狱里可吃不到这些东西。
 message.dialogue.zalFoodMarket.3=扎尔美食家：你看上去怪怪的。
 message.dialogue.zalFoodMarket.4=扎尔美食家：你在上面看到了什么？
+
 message.dialogue.zalHerbalist.0=扎尔农民：§b不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalHerbalist.1=扎尔农民：种瓜得豆，种豆得瓜。
 message.dialogue.zalHerbalist.2=扎尔农民：其实我并不知道怎么种植它们。
 message.dialogue.zalHerbalist.3=扎尔农民：你看上去怪怪的。
 message.dialogue.zalHerbalist.4=扎尔农民：上面有什么好东西吗？
+
 message.dialogue.zalLunarade.0=扎尔爆破手：你好啊怪人！
 message.dialogue.zalLunarade.1=扎尔爆破手：想找点乐子吗？
 message.dialogue.zalLunarade.2=扎尔爆破手：逍遥法外！
 message.dialogue.zalLunarade.3=扎尔爆破手：你这个大脑壳。
 message.dialogue.zalLunarade.4=扎尔爆破手：你真丑。那么丑。
+
 message.dialogue.zalSpellbinder.0=扎尔收藏家：你好啊怪人！
 message.dialogue.zalSpellbinder.1=扎尔收藏家：我能让它光彩耀人！
 message.dialogue.zalSpellbinder.2=扎尔收藏家：也许你知道该怎么使用它。
 message.dialogue.zalSpellbinder.3=扎尔收藏家：我记得在异位有一位我的同行。
 message.dialogue.zalSpellbinder.4=扎尔收藏家：你看起来依然很难看。
+
 message.event.bigDayEnd=落日的余晖映照大地，傀儡之日将荏苒日月。
 message.event.bigDayStart=巨人傀儡已然苏醒，今日或将不同凡响。
 message.event.bloodHuntEnd=黎明已至，这场狩猎将告一段落。
@@ -2894,6 +2968,7 @@ message.event.shyreWind=随风而去吧！！
 message.event.soulScurryEnd=日出东方，灵魂渐而销声匿迹。
 message.event.soulScurryStart=月色苍白，灵魂匆匆，它们不再安分。
 message.event.sunrise=曙光初现。
+
 message.feedback.ancientCavernRequirement.erebon.levels=你需要70级的占卜和狩猎等级来使用它。
 message.feedback.ancientCavernRequirement.erebon.tribute=你需要充满埃瑞本的祝福条来使用它。
 message.feedback.ancientCavernRequirement.luxon.levels=你需要70级的占卜和魔力等级来使用它。
@@ -2902,15 +2977,65 @@ message.feedback.ancientCavernRequirement.pluton.levels=你需要70级的占卜�
 message.feedback.ancientCavernRequirement.pluton.tribute=你需要充满普洛顿的祝福条来使用它。
 message.feedback.ancientCavernRequirement.selyan.levels=你需要70级的占卜和附魔等级来使用它。
 message.feedback.ancientCavernRequirement.selyan.tribute=你需要充满塞里安的祝福条来使用它。
+
 message.feedback.blockPlace.ancientCavern=一股神奇的力量阻止你在这里放置方块。
 message.feedback.blockPlace.immortallis=埃瑞本：你胆敢破坏我的领地？
+
 message.feedback.boss.flyCheat=卡尔颂：躲在空中等同于懦夫行径。为此我要你付出代价。
+
+message.feedback.hunterRequirement=你需要至少%1$s级的狩猎等级才可以攻击这个怪物。
+
+message.feedback.immortallisProgression.evilSpiritsEnd=你已经收割了25个恶灵，你可以进入下一关了。
+message.feedback.immortallisProgression.evilSpiritsStart=为埃瑞本收割25个恶灵！
+message.feedback.immortallisProgression.flashStart=闪耀者，最迅捷的不朽者就在你面前！
+message.feedback.immortallisProgression.goldEnd=%1$s，你可以进入下一关了。
+message.feedback.immortallisProgression.goldStart.0=从掺金傀儡那儿收集掺金。
+message.feedback.immortallisProgression.goldStart.1=把它放到掺金蓄能器里！
+message.feedback.immortallisProgression.klobberStart=虐杀者，最强壮的不朽者就在你面前！
+message.feedback.immortallisProgression.mirageStart=幻象者，最智慧的不朽者就在你面前！
+message.feedback.immortallisProgression.proshieldStart=抵抗者，最坚毅的不朽者就在你面前！
+message.feedback.immortallisProgression.pureGoldEnd=%1$s，你可以进入下一关了。
+message.feedback.immortallisProgression.pureGoldStart.0=在纯金傀儡那儿收集纯金。
+message.feedback.immortallisProgression.pureGoldStart.1=把它放到纯金蓄能器里！
+message.feedback.immortallisProgression.returnCrystal.fail=你没有空间携带传送水晶了！
+message.feedback.immortallisProgression.rewards=奖励已经置入你的物品栏。
+message.feedback.immortallisProgression.skeletalSpiritsEnd=你已经收割了25个骷髅怪物，你可以进入下一关了。
+message.feedback.immortallisProgression.skeletalSpiritsStart=为埃瑞本收割25个骷髅怪物！
+
+message.feedback.item.labriconRealmstone.create=卡尔颂：%1$s，你为我展示了真正的平衡。是时候见见我了。
+message.feedback.item.occultPickaxe.activate=这附近有矿物！
+message.feedback.item.reefStaff.fail=有一种力量阻止你使用这个法杖。
+message.feedback.item.returnCrystal.fail=这个水晶仿佛在不朽之地之外没什么用。
+message.feedback.item.rosidons.fail=这个世界没有表面！
+message.feedback.item.rosidons.noHeightFail=貌似伊甸果无法传送你
+message.feedback.item.skillCrystal.fail=你至少需要15级的技能等级才能使用。
+message.feedback.item.vulcane.fail=你需要%1$s级的浊流技能等级才能使用这个浊流之杖。
+
+message.feedback.spawnBoss.fail=你不能在和平难度召唤Boss！
+
+message.feedback.tribute.erebon=埃瑞本很感激你的帮助。
+message.feedback.tribute.krasaun=卡尔颂对你的平等赞赏有加。
+message.feedback.tribute.luxon=卢克森在闪耀，由此你获得了祝福。
+message.feedback.tribute.none.0=愿幸运之神祝福你，因为其他的神忽视了你。
+message.feedback.tribute.none.1=你没做什么贡献。众神没怎么注意到你。
+message.feedback.tribute.none.2=众神会像你背弃他们一样，抛弃你。
+message.feedback.tribute.none.3=你的贡品太少，众神并不想祝福你。
+message.feedback.tribute.none.4=漫漫黑夜，没有神愿意保佑你。
+message.feedback.tribute.none.5=众神想让你尝尝孤独的黑夜的愤怒。
+message.feedback.tribute.none.6=在这动荡的夜晚，没人想要帮你。
+message.feedback.tribute.none.7=祝你好运凡人，你让众神不高兴了。
+message.feedback.tribute.none.8=没有众神的青睐，你只有靠自己了。
+message.feedback.tribute.none.9=此时此刻，众神对你视而不见。
+message.feedback.tribute.pluton=普洛顿对你的贡献印象深刻。
+message.feedback.tribute.selyan=塞里安赐予你祝福以奖赏你。
+
 message.feedback.expedition.breath=肺力惊人！
 message.feedback.expedition.food=感觉没有那么饿了。
 message.feedback.expedition.speed=风伴你而行。
+
 message.feedback.extraction.animaStones=你在岩浆里发现了一些破碎的灵魂石。
 message.feedback.extraction.arrows=你在岩浆里发现了一些元素箭。
-message.feedback.extraction.blazePowder=您在岩浆里发现了一些烈焰粉。
+message.feedback.extraction.blazePowder=你在岩浆里发现了一些烈焰粉。
 message.feedback.extraction.blazeRods=你在岩浆里发现了一些烈焰棒。
 message.feedback.extraction.bones=你在岩浆里发现了一些骨头。
 message.feedback.extraction.bullets=你在岩浆里发现了一些金属弹。
@@ -2932,32 +3057,7 @@ message.feedback.extraction.repairDust=你在岩浆里发现了魔法修复沙�
 message.feedback.extraction.rosite=你在岩浆里发现了一些硫铜锑锭。
 message.feedback.extraction.runes=你在岩浆里发现了很多符文。
 message.feedback.extraction.shinyBox=你在岩浆里发现了一些闪亮的盒子。
-message.feedback.hunterRequirement=你需要至少%1$s级的狩猎等级才可以攻击这个怪物。
-message.feedback.immortallisProgression.evilSpiritsEnd=你已经收割了25个恶灵，你可以进入下一关了。
-message.feedback.immortallisProgression.evilSpiritsStart=为埃瑞本收割25个恶灵！
-message.feedback.immortallisProgression.flashStart=闪耀者，最迅捷的不朽者就在你面前！
-message.feedback.immortallisProgression.goldEnd=%1$s，你可以进入下一关了。
-message.feedback.immortallisProgression.goldStart.0=从掺金傀儡那儿收集掺金。
-message.feedback.immortallisProgression.goldStart.1=把它放到掺金蓄能器里！
-message.feedback.immortallisProgression.klobberStart=虐杀者，最强壮的不朽者就在你面前！
-message.feedback.immortallisProgression.mirageStart=幻象者，最智慧的不朽者就在你面前！
-message.feedback.immortallisProgression.proshieldStart=抵抗者，最坚毅的不朽者就在你面前！
-message.feedback.immortallisProgression.pureGoldEnd=%1$s，你可以进入下一关了。
-message.feedback.immortallisProgression.pureGoldStart.0=在纯金傀儡那儿收集纯金。
-message.feedback.immortallisProgression.pureGoldStart.1=把它放到纯金蓄能器里！
-message.feedback.immortallisProgression.returnCrystal.fail=你没有空间携带传送水晶了！
-message.feedback.immortallisProgression.rewards=奖励已经置入你的物品栏。
-message.feedback.immortallisProgression.skeletalSpiritsEnd=你已经收割了25个骷髅怪物，你可以进入下一关了。
-message.feedback.immortallisProgression.skeletalSpiritsStart=为埃瑞本收割25个骷髅怪物！
-message.feedback.item.labriconRealmstone.create=卡尔颂：%1$s，你为我展示了真正的平衡。是时候见见我了。
-message.feedback.item.occultPickaxe.activate=这附近有矿物！
-message.feedback.item.reefStaff.fail=有一种力量阻止你使用这个法杖。
-message.feedback.item.returnCrystal.fail=这个水晶仿佛在不朽之地之外没什么用。
-message.feedback.item.rosidons.fail=这个世界没有表面！
-message.feedback.item.rosidons.noHeightFail=貌似伊甸果无法传送你
-message.feedback.item.skillCrystal.fail=你至少需要15级的技能等级才能使用。
-message.feedback.item.vulcane.fail=你需要%1$s级的浊流技能等级才能使用这个浊流之杖。
-message.feedback.spawnBoss.fail=你不能在和平难度召唤Boss！
+
 message.feedback.teleporterFrame.abyss=血之深渊
 message.feedback.teleporterFrame.ancientCavern=终之远古
 message.feedback.teleporterFrame.barathos=巨之爵士
@@ -2979,21 +3079,7 @@ message.feedback.teleporterFrame.mysterium=谜之秘境
 message.feedback.teleporterFrame.precasia=华之传说
 message.feedback.teleporterFrame.shyrelands=圣之塞尔瑞
 message.feedback.teleporterFrame.voxPonds=恶之未知
-message.feedback.tribute.erebon=埃瑞本很感激你的帮助。
-message.feedback.tribute.krasaun=卡尔颂对你的平等赞赏有加。
-message.feedback.tribute.luxon=卢克森在闪耀，由此你获得了祝福。
-message.feedback.tribute.none.0=愿幸运之神祝福你，因为其他的神忽视了你。
-message.feedback.tribute.none.1=你没做什么贡献。众神没怎么注意到你。
-message.feedback.tribute.none.2=众神会像你背弃他们一样，抛弃你。
-message.feedback.tribute.none.3=你的贡品太少，众神并不想祝福你。
-message.feedback.tribute.none.4=漫漫黑夜，没有神愿意保佑你。
-message.feedback.tribute.none.5=众神想让你尝尝孤独的黑夜的愤怒。
-message.feedback.tribute.none.6=在这动荡的夜晚，没人想要帮你。
-message.feedback.tribute.none.7=祝你好运凡人，你让众神不高兴了。
-message.feedback.tribute.none.8=没有众神的青睐，你只有靠自己了。
-message.feedback.tribute.none.9=此时此刻，众神对你视而不见。
-message.feedback.tribute.pluton=普洛顿对你的贡献印象深刻。
-message.feedback.tribute.selyan=塞里安赐予你祝福以奖赏你。
+
 message.mob.bane.kill=%1$s击败了幽魂！
 message.mob.bane.spawn=此时，%1$s感到一阵寒意。
 message.mob.baroness.kill=%1$s击败了女爵！
@@ -3060,6 +3146,7 @@ message.mob.voxStoreKeeper.spawn=商店老板：现在出来还安全吗？
 message.mob.voxxulon.kill=%1$s击败了未知！
 message.mob.voxxulon.spawn=霎时间，%1$s闻到了一阵恶臭。
 message.mob.xxeus.kill=%1$s击败了远古战神！
+
 skills.anima.name=灵气
 skills.augury.name=占卜
 skills.butchery.name=嗜血
@@ -3076,6 +3163,8 @@ skills.logging.name=砍伐
 skills.robbery.name=掠夺
 skills.runation.name=魔力
 skills.vulcanism.name=浊流
+
+
 tile.abyssalGlass.name=深渊玻璃
 tile.AbyssGrass.name=深渊草方块
 tile.abyssPortal.name=深渊传送门
