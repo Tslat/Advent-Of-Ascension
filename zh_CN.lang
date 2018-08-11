@@ -2589,20 +2589,20 @@ message.dialogue.foragingMaster.4=采掘大师：你是我想要找的人吗？
 
 message.dialogue.gorbArmsDealer.0=戈布：在它们的梦境里居然有一个黑市。
 message.dialogue.gorbArmsDealer.1=戈布：有时我想知道这些武器对我自己有什么作用。
-message.dialogue.gorbArmsDealer.2=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
+message.dialogue.gorbArmsDealer.2=戈布：我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbArmsDealer.3=戈布：我闻到的是蘑菇汤的吗？或者这汤是活的？
 message.dialogue.gorbArmsDealer.4=戈布：别把它拿走，它属于这里!
 
 message.dialogue.gorbCitizen.0=戈布：很奇怪，这个地方是虚构的，但显然有一些生物逃了出来。
 message.dialogue.gorbCitizen.1=戈布：如果你看到了一些会走的蓝色蘑菇，不要想着去吃它。
-message.dialogue.gorbCitizen.2=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
+message.dialogue.gorbCitizen.2=戈布：我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbCitizen.3=戈布：很高兴见到你！
 message.dialogue.gorbCitizen.4=戈布：我不是很建议在这里游泳。
 
 message.dialogue.gorbEngineer.0=戈布：我想我应该是有名字的，然而Eeo们并没有给我想一个名字。
 message.dialogue.gorbEngineer.1=戈布：它们真可爱，直到你对它们反击之时。
 message.dialogue.gorbEngineer.2=戈布：我能使用各种金属，用它们做各种事...毕竟这里是梦境。
-message.dialogue.gorbEngineer.3=戈布：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
+message.dialogue.gorbEngineer.3=戈布：我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.gorbEngineer.4=戈布：你看到它了吗？它在注视着你，我十分确定。
 
 message.dialogue.haulingMaster.0=垂钓大师：你是大师吗？
@@ -2650,133 +2650,133 @@ message.dialogue.loggingMaster.4=砍伐大师：你是我想要找的人吗？
 message.dialogue.lottoMan.0=乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoMan.1=乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoMan.2=乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoMan.3=乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoMan.3=乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoMan.4=乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManAbyss.0=深渊乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManAbyss.1=深渊乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManAbyss.2=深渊乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManAbyss.3=深渊乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManAbyss.3=深渊乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManAbyss.4=深渊乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManBarathos.0=爵士乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManBarathos.1=爵士乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManBarathos.2=爵士乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManBarathos.3=爵士乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManBarathos.3=爵士乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManBarathos.4=爵士乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManCandyland.0=糖果乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCandyland.1=糖果乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCandyland.2=糖果乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManCandyland.3=糖果乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManCandyland.3=糖果乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManCandyland.4=糖果乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManCeleve.0=玩具乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCeleve.1=玩具乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCeleve.2=玩具乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManCeleve.3=玩具乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManCeleve.3=玩具乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManCeleve.4=玩具乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManCreeponia.0=蠕变乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCreeponia.1=蠕变乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCreeponia.2=蠕变乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManCreeponia.3=蠕变乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManCreeponia.3=蠕变乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManCreeponia.4=蠕变乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManCrystevia.0=晶体乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManCrystevia.1=晶体乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManCrystevia.2=晶体乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManCrystevia.3=晶体乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManCrystevia.3=晶体乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManCrystevia.4=晶体乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManDeeplands.0=深层乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManDeeplands.1=深层乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManDeeplands.2=深层乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManDeeplands.3=深层乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManDeeplands.3=深层乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManDeeplands.4=深层乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManDustopia.0=异位乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManDustopia.1=异位乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManDustopia.2=异位乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManDustopia.3=异位乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManDustopia.3=异位乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManDustopia.4=异位乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManGardencia.0=花园乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManGardencia.1=花园乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManGardencia.2=花园乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManGardencia.3=花园乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManGardencia.3=花园乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManGardencia.4=花园乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManGreckon.0=格瑞克乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManGreckon.1=格瑞克乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManGreckon.2=格瑞克乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManGreckon.3=格瑞克乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManGreckon.3=格瑞克乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManGreckon.4=格瑞克乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManHaven.0=天堂乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManHaven.1=天堂乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManHaven.2=天堂乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManHaven.3=天堂乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManHaven.3=天堂乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManHaven.4=天堂乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManIromine.0=黄金乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManIromine.1=黄金乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManIromine.2=黄金乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManIromine.3=黄金乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManIromine.3=黄金乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManIromine.4=黄金乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManLBorean.0=暴风乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLBorean.1=暴风乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLBorean.2=暴风乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManLBorean.3=暴风乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManLBorean.3=暴风乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManLBorean.4=暴风乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManLelyetia.0=赫尔维蒂乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLelyetia.1=赫尔维蒂乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLelyetia.2=赫尔维蒂乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManLelyetia.3=赫尔维蒂乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManLelyetia.3=赫尔维蒂乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManLelyetia.4=赫尔维蒂乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManLunalus.0=月球乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManLunalus.1=月球乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManLunalus.2=月球乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManLunalus.3=月球乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManLunalus.3=月球乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManLunalus.4=月球乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManMysterium.0=秘境乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManMysterium.1=秘境乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManMysterium.2=秘境乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManMysterium.3=秘境乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManMysterium.3=秘境乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManMysterium.4=秘境乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManNether.0=下界乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManNether.1=下界乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManNether.2=下界乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManNether.3=下界乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManNether.3=下界乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManNether.4=下界乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManPrecasia.0=传说乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManPrecasia.1=传说乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManPrecasia.2=传说乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManPrecasia.3=传说乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManPrecasia.3=传说乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManPrecasia.4=传说乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManRunandor.0=融化乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManRunandor.1=融化乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManRunandor.2=融化乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManRunandor.3=融化乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManRunandor.3=融化乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManRunandor.4=融化乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManShyrelands.0=塞尔瑞乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManShyrelands.1=塞尔瑞乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManShyrelands.2=塞尔瑞乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManShyrelands.3=塞尔瑞乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManShyrelands.3=塞尔瑞乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManShyrelands.4=塞尔瑞乐透兑换人：每个人都是赢家！
 
 message.dialogue.lottoManVoxPonds.0=未知乐透兑换人：稀有武器在这里出售！
 message.dialogue.lottoManVoxPonds.1=未知乐透兑换人：你看起来很想赌一把！
 message.dialogue.lottoManVoxPonds.2=未知乐透兑换人：好东西可不多，来碰碰运气吧！
-message.dialogue.lottoManVoxPonds.3=未知乐透兑换人：§b你永远不会得到这些东西的！
+message.dialogue.lottoManVoxPonds.3=未知乐透兑换人：你永远不会得到这些东西的！
 message.dialogue.lottoManVoxPonds.4=未知乐透兑换人：每个人都是赢家！
 
 message.dialogue.metalloid.0=金属收藏家：你好，人类。
@@ -2799,14 +2799,14 @@ message.dialogue.corruptedTraveller.4=饥饿的旅行家：食物......
 
 message.dialogue.portalMaster.0=售票员：要去哪个世界？
 message.dialogue.portalMaster.1=售票员：融化比格瑞克更快乐。
-message.dialogue.portalMaster.2=售票员：§b我可不在乎地下是怎样的了，地上就已经够奇怪的了！
+message.dialogue.portalMaster.2=售票员：我可不在乎地下是怎样的了，地上就已经够奇怪的了！
 message.dialogue.portalMaster.3=售票员：天哪！又一个跑出来了！
 message.dialogue.portalMaster.4=售票员：票！谁有票？
 
 message.dialogue.primordialBanker.0=原始银行家：问候凡人。
 message.dialogue.primordialBanker.1=原始银行家：异位也会有凡人？
 message.dialogue.primordialBanker.2=原始银行家：你不害怕吗？
-message.dialogue.primordialBanker.3=原始银行家：§b我从未惧怕黑暗。
+message.dialogue.primordialBanker.3=原始银行家：我从未惧怕黑暗。
 message.dialogue.primordialBanker.4=原始银行家：你在这里并不安全。
 
 message.dialogue.primordialGuide.0=导游：小心，原始生物的永恒治愈广为人知。
@@ -2821,19 +2821,19 @@ message.dialogue.primordialGuide.7=导游：当心你看到的一切。
 message.dialogue.primordialMerchant.0=原始商人：问候凡人。
 message.dialogue.primordialMerchant.1=原始商人：异位也会有凡人？
 message.dialogue.primordialMerchant.2=原始商人：你不害怕吗？
-message.dialogue.primordialMerchant.3=原始商人：§b我从未惧怕黑暗。
+message.dialogue.primordialMerchant.3=原始商人：我从未惧怕黑暗。
 message.dialogue.primordialMerchant.4=原始商人：你在这里并不安全。
 
 message.dialogue.primordialSpellbinder.0=原始法师：问候凡人。
 message.dialogue.primordialSpellbinder.1=原始法师：异位也会有凡人？
 message.dialogue.primordialSpellbinder.2=原始法师：你不害怕吗？
-message.dialogue.primordialSpellbinder.3=原始法师：§b我从未惧怕黑暗。
+message.dialogue.primordialSpellbinder.3=原始法师：我从未惧怕黑暗。
 message.dialogue.primordialSpellbinder.4=原始法师：你在这里并不安全。
 
 message.dialogue.primordialWizard.0=原始精灵：问候凡人。
 message.dialogue.primordialWizard.1=原始精灵：异位也会有凡人？
 message.dialogue.primordialWizard.2=原始精灵：你不害怕吗？
-message.dialogue.primordialWizard.3=原始精灵：§b我从未惧怕黑暗。
+message.dialogue.primordialWizard.3=原始精灵：我从未惧怕黑暗。
 message.dialogue.primordialWizard.4=原始精灵：你在这里并不安全。
 
 message.dialogue.professor.0=教授：我想获得我自己的雷铁。但我不会亲自下矿。
@@ -2884,13 +2884,13 @@ message.dialogue.tokenCollector.2=令牌交易者：只有最优秀的战士才�
 message.dialogue.tokenCollector.3=令牌交易者：拿到令牌了？
 message.dialogue.tokenCollector.4=令牌交易者：令牌交易者有好东西，只要你有足够的令牌。
 
-message.dialogue.toyMerchant.0=玩具商人：§b不要再低处挖掘，在虚空可找不回你的尸体。
+message.dialogue.toyMerchant.0=玩具商人：不要再低处挖掘，在虚空可找不回你的尸体。
 message.dialogue.toyMerchant.1=玩具商人：想要玩具吗~
 message.dialogue.toyMerchant.2=玩具商人：有些玩具可有点危险哦~
 message.dialogue.toyMerchant.3=玩具商人：保证有趣，够你玩一天~
 message.dialogue.toyMerchant.4=玩具商人：别盯着我的脸看。
 
-message.dialogue.trollTrader.0=哥布林商人：§b可别在海底挖矿。
+message.dialogue.trollTrader.0=哥布林商人：可别在海底挖矿。
 message.dialogue.trollTrader.1=哥布林商人：抱歉，我的老哥。
 message.dialogue.trollTrader.2=哥布林商人：不好意思了，老铁。
 message.dialogue.trollTrader.3=哥布林商人：我忒喜欢安佛比亚的肺的味儿了。
@@ -2902,7 +2902,7 @@ message.dialogue.vulcanismMaster.2=浊流大师：想穿上它吗？努力训练
 message.dialogue.vulcanismMaster.3=浊流大师：只有真正的大师才能穿上它。
 message.dialogue.vulcanismMaster.4=浊流大师：你是我想要找的人吗？
 
-message.dialogue.zalBanker.0=扎尔银行家：§b不要在月球岛上挖掘！你会后悔的。
+message.dialogue.zalBanker.0=扎尔银行家：不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalBanker.1=扎尔银行家：我丢了个银币，大概是找不到了。
 message.dialogue.zalBanker.2=扎尔银行家：我真的很害怕那个飘浮的监狱。
 message.dialogue.zalBanker.3=扎尔银行家：你看上去怪怪的。
@@ -2914,19 +2914,19 @@ message.dialogue.zalChild.2=扎尔儿童：来抓我啊~
 message.dialogue.zalChild.3=扎尔儿童：你有一个大脑袋。
 message.dialogue.zalChild.4=扎尔儿童：你可真丑！
 
-message.dialogue.zalCitizen.0=扎尔市民：§b不要在月球岛上挖掘！你会后悔的。
+message.dialogue.zalCitizen.0=扎尔市民：不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalCitizen.1=扎尔市民：偷偷告诉你，我刚刚捡到了一个银币。
 message.dialogue.zalCitizen.2=扎尔市民：我真的很害怕那个飘浮的监狱。
 message.dialogue.zalCitizen.3=扎尔市民：你看上去怪怪的。
 message.dialogue.zalCitizen.4=扎尔市民：你在上面看到了什么？
 
-message.dialogue.zalFoodMarket.0=扎尔美食家：§b不要在月球岛上挖掘！你会后悔的。
+message.dialogue.zalFoodMarket.0=扎尔美食家：不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalFoodMarket.1=扎尔美食家：饿了吧？来块曲奇吧！
 message.dialogue.zalFoodMarket.2=扎尔美食家：监狱里可吃不到这些东西。
 message.dialogue.zalFoodMarket.3=扎尔美食家：你看上去怪怪的。
 message.dialogue.zalFoodMarket.4=扎尔美食家：你在上面看到了什么？
 
-message.dialogue.zalHerbalist.0=扎尔农民：§b不要在月球岛上挖掘！你会后悔的。
+message.dialogue.zalHerbalist.0=扎尔农民：不要在月球岛上挖掘！你会后悔的。
 message.dialogue.zalHerbalist.1=扎尔农民：种瓜得豆，种豆得瓜。
 message.dialogue.zalHerbalist.2=扎尔农民：其实我并不知道怎么种植它们。
 message.dialogue.zalHerbalist.3=扎尔农民：你看上去怪怪的。
