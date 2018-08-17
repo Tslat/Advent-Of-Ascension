@@ -1,4 +1,4 @@
-death.attack.slugAcid=%1$s被巨蜗牛粘液溶解了。
+death.attack.slugAcid=%1$s被巨蜗牛粘液溶解了
 
 enchantment.archmage=法术
 enchantment.control=支配
@@ -734,7 +734,7 @@ gui.notice.tip.11=巨剑可以伤害更远的敌人。
 gui.notice.tip.1=硬币可以与某些世界的银行家交易。
 gui.notice.tip.2=填满你的祝福条可以让你在夜晚获得一些增益效果。
 gui.notice.tip.3=庇护所是生存的关键。
-gui.notice.tip.4=不要一开始就试着打怪，不然你会输的。
+gui.notice.tip.4=不打无胜算之仗。
 gui.notice.tip.5=在篝火和生命之灯附近可以恢复生命值。
 gui.notice.tip.6=战斗怒火可以使你造成额外伤害。
 gui.notice.tip.7=你可以调整远征技能带来的增益效果。
