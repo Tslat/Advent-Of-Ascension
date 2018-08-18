@@ -1183,6 +1183,7 @@ key.categories.advent=Advent управление
 key.cstats=Переключить иконки над головами мобов
 key.exped=Переключить бонус от экспедиции
 key.notice=Закрыть доску информации
+key.resources=Toggle Resources Display
 key.skills=Показать/скрыть навыки
 key.skillsLeft=Название предыдущего навыка
 key.skillsRight=Название следующего навыка
