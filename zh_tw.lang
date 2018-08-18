@@ -1184,6 +1184,7 @@ key.categories.advent=Advent Keys
 key.cstats=Toggle Mob Overheads
 key.exped=Expedition Boost Toggle
 key.notice=Close Login Notice
+key.resources=Toggle Resources Display
 key.skills=Toggle Skills Display
 key.skillsLeft=Previous Skill Name
 key.skillsRight=Next Skill Name
