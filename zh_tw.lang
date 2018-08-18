@@ -800,7 +800,8 @@ item.CreationArmour.desc.1=Increased Creation Regeneration
 item.CreationArmour.desc.2=Minions Are Granted a Random Buff When Spawned
 item.CreationBoots.name=Creation Boots
 item.CreationChestplate.name=Creation Chestplate
-item.CreationHelmet.name=Creation Helmetitem.CrystallisBoots.name=Crystallis Boots
+item.CreationHelmet.name=Creation Helmet
+item.CrystallisBoots.name=Crystallis Boots
 item.CreationLegs.name=Creation Leggings
 item.CrystallisArmour.desc.1=66%% Chance to Deal Double Melee Damage
 item.CrystallisArmour.desc.2=20%% Chance to Deal 45%% of the Base Damage to Yourself
