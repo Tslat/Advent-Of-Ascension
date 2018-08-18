@@ -1183,7 +1183,8 @@ key.categories.advent=Advent按键
 key.cstats=Toggle Mob Overheads
 key.exped=Expedition Boost Toggle
 key.notice=关闭公告
-key.skills=Toggle Skills Display
+key.resources=切换资源显示
+key.skills=切换技能显示
 key.skillsLeft=上个技能名称
 key.skillsRight=下个技能名称
 
