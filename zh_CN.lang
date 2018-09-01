@@ -1,7 +1,7 @@
 death.attack.slugAcid=%1$s被巨蜗牛粘液溶解了
 
 enchantment.archmage=法术
-enchantment.control=支配
+enchantment.control=抑制
 enchantment.crush=粉碎
 enchantment.intervention=干预
 enchantment.overpower=压制
@@ -1202,7 +1202,7 @@ item.EssenceAncient.name=远古精华
 item.EssenceCharged.name=电磁精华
 item.EssenceDark.name=黑暗精华
 item.EssenceDivine.name=神圣精华
-item.EssenceEmpowered.name=控制精华
+item.EssenceEmpowered.name=注能精华
 item.EssenceEthereal.name=飘渺精华
 item.EssenceLuminate.name=灿烂精华
 item.EssenceMolten.name=熔融精华
@@ -2884,7 +2884,7 @@ message.dialogue.tokenCollector.2=令牌交易者：只有最优秀的战士才�
 message.dialogue.tokenCollector.3=令牌交易者：拿到令牌了？
 message.dialogue.tokenCollector.4=令牌交易者：令牌交易者有好东西，只要你有足够的令牌。
 
-message.dialogue.toyMerchant.0=玩具商人：不要再低处挖掘，在虚空可找不回你的尸体。
+message.dialogue.toyMerchant.0=玩具商人：不要在低处挖掘，在虚空可找不回你的尸体。
 message.dialogue.toyMerchant.1=玩具商人：想要玩具吗~
 message.dialogue.toyMerchant.2=玩具商人：有些玩具可有点危险哦~
 message.dialogue.toyMerchant.3=玩具商人：保证有趣，够你玩一天~
@@ -4024,7 +4024,7 @@ tile.runicConstructBricks.name=符文砖
 tile.runicGlass.name=符文玻璃
 tile.runicGlassU.name=符文玻璃
 tile.runicLeaves.name=符文玻璃
-tile.sandPrecasia.name=传说沙石
+tile.sandPrecasia.name=传说沙子
 tile.sbrick_0.name=淡灰色楼梯
 tile.sbrick_1.name=橙色楼梯
 tile.sbrick_10.name=紫色楼梯
