@@ -2,7 +2,9 @@
 Translate Advent of Ascension
 
 This is the language files for Advent of Ascension for Minecraft 1.7.10 at their most updated.
+
 You can view the 1.12 lang files here: https://github.com/Tslat/AoA-Translation/tree/master
+
 This space is for the community to suggest changes and new languages so that more translations can be added.
 
 To suggest a translation change, click on the translation file you want to change, click the little pencil icon in the top right to edit the file.
