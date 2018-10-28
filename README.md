@@ -5,10 +5,10 @@ There is no source code to be found here as the mod is not open-source.
 
 # What can I do here?
 You can do 3 things here:
-1. Submit a bug report. To do so, head to the issues page, and click "New Issue"
+1. Submit a bug report. To do so, head to the issues page, and click "New Issue":
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
-2. Submit a suggestion. To do so, head to the issues page, and click "New Issue", then select the suggestion type you want.
+2. Submit a suggestion. To do so, head to the issues page, and click "New Issue", then select the suggestion type you want:
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
 3. Contribute to the translation of the mod. To do so, you need to follow these steps:
