@@ -6,9 +6,11 @@ There is no source code to be found here as the mod is not open-source.
 # What can I do here?
 You can do 3 things here:
 1. Submit a bug report. To do so, head to the issues page, and click "New Issue"
+
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
 2. Submit a suggestion. To do so, head to the issues page, and click "New Issue", then select the suggestion type you want.
+
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
 3. Contribute to the translation of the mod. To do so, you need to follow these steps:
@@ -21,7 +23,9 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
   
 NOTE: You are currently viewing the language files for the Minecraft-1.7.10 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
 
-You can read a tutorial on the editing process here: https://help.github.com/articles/editing-files-in-another-user-s-repository/
+You can read a tutorial on the editing process here:
+
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 --
 
