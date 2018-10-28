@@ -1,16 +1,22 @@
-# AoA-Translation
-Translate Advent of Ascension
+# Advent of Ascension
+This is the official Github for Advent of Ascension.
 
-This is the language files for Advent of Ascension for Minecraft 1.7.10 at their most updated.
+There is no source code to be found here as the mod is not open-source.
 
-You can view the 1.12 lang files here: https://github.com/Tslat/AoA-Translation/tree/1.12
+# What can I do here?
+You can do 3 things here:
+1. Submit a bug report. To do so, head to the issues page, and click "New Issue"
+https://github.com/Tslat/Advent-Of-Ascension/issues
 
-This space is for the community to suggest changes and new languages so that more translations can be added.
+2. Submit a suggestion. To do so, head to the issues page, and click "New Issue", then select the suggestion type you want.
+https://github.com/Tslat/Advent-Of-Ascension/issues
 
-To suggest a translation change, click on the translation file you want to change, click the little pencil icon in the top right to edit the file.
-Edit the bits you want to change, then click propose file change to submit your changes.
-
-You can read a tutorial on this process here: https://help.github.com/articles/editing-files-in-another-user-s-repository/
+3. Contribute to the translation of the mod. To do so, you need to follow these steps:
+  i) Click on the language file you want to translate.
+  ii) Click on the little pencil icon in the top right to edit the file
+  iii) Edit the file to your liking, then click "Propose File Change".
+NOTE: You are currently viewing the language files for the Minecraft-1.7.10 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
+You can read a tutorial on the editing process here: https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 --
 
