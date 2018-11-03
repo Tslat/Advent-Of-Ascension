@@ -36,14 +36,13 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 # 这里能干什么？
 你可以做以下三件事之一：
-
-1.提交漏洞报告。前往issue页面，并单击"New Issue"：
+1. 提交漏洞报告。前往issue页面，并单击"New Issue"：
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
-2.提交建议。前往issue页面，单击"New Issue"并选择你提交的建议类型：
+2. 提交建议。前往issue页面，单击"New Issue"并选择你提交的建议类型：
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
-3.翻译该Mod的内容。具体操作流程如下：
+3. 翻译该Mod的内容。具体操作流程如下：
  
   i)单击要更改的语言文件。
   
