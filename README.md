@@ -26,13 +26,32 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 --
 
-这个项目用于翻译Advent of Ascension
+# Advent of Ascension
 
-这是Advent of Ascension最新版本的语言文件。此空间用于社区建议译名更改以及新的语言，以便添加更多译名。
+这是Advent of Ascension 的官方Github页面。
 
-欲提供译名更改，先单击要更改的语言文件，再单击右上角的小铅笔图标开始编辑文件。请编辑您要更改的位置，最后单击"purpose file change"提交更改。
+由于此模组不开源，因而这里不会有任何源代码。
 
-您可以阅读该过程的说明：https://help.github.com/articles/editing-files-in-another-user-s-repository/
+# 这里能干什么？
+你可以做以下三件事之一：
+1.提交漏洞报告。前往issue页面，并单击"New Issue":
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2.提交建议。前往issue页面，单击"New Issue"并选择你提交的建议类型：
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3.翻译该模组的内容。具体操作流程如下：
+ 
+  i)单击要更改的语言文件。
+  
+  ii)单击右上角的小铅笔图标开始编辑文件。
+  
+  iii)编辑您要更改的位置，最后单击"purpose file change"提交更改。
+
+注：目前显示的语言文件为Minecraft版本1.7.10的语言文件。如需翻译其他版本的语言文件，请单击“Branch"按钮，并选择你要编辑的版本。
+
+您可以阅读该过程的说明：
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 --
 
