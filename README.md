@@ -36,6 +36,7 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 # 这里能干什么？
 你可以做以下三件事之一：
+
 1.提交漏洞报告。前往issue页面，并单击"New Issue"：
 https://github.com/Tslat/Advent-Of-Ascension/issues
 
