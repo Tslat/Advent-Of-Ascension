@@ -14,15 +14,44 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
 3. Contribute to the translation of the mod. To do so, you need to follow these steps:
 
-  i) Click on the language file you want to translate.
+  i) Click on the language file you want to translate;
   
-  ii) Click on the little pencil icon in the top right to edit the file
+  ii) Click on the little pencil icon in the top right to edit the file;
   
   iii) Edit the file to your liking, then click "Propose File Change".
   
 NOTE: You are currently viewing the language files for the Minecraft-1.7.10 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
 
 You can read a tutorial on the editing process here:
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+--
+
+Русский:
+# Advent of Ascension
+Это официальная страница Advent of Ascension на Github.
+
+Здесь отсутствует исходный код, так как мод не является опен-сурс (т.е. сам исходный код закрыт).
+
+# Что я смогу здесь сделать?
+Вы можете здесь сделать 3 вещи:
+1. Отправьте отчёт о баге. Чтобы сделать это, перейдите на страницу Issues, и нажмите New Issue:
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2. Отправьте предложение.  Чтобы сделать это, перейдите на страницу Issues, и нажмите New Issue, затем выберите тип предложения, который вы хотите.
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3. Поспособствуйте переводу мода. Чтобы сделать это, вам нужно выполнить эти шаги:
+
+  i) Нажмите на языковой файл (расширения .lang), который вы хотите перевести;
+  
+  ii) Нажмите на маленький значок крандаша в правом верхнем углу для редактирования файла;
+  
+  iii) Отредактируйте файл по своему вкусу, после чего нажмите "Propose File Change".
+
+ПРИМЕЧАНИЕ: Вы в данный момент просматриваете языковые файлы мода для версии Майнкрафта 1.7.10. Чтобы перевести другие версии, нажмите кнопку "Branch" и выберите версию, которую вы хотите отредактировать.
+
+Вы можете прочитать туториал по редактированию здесь:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 --
