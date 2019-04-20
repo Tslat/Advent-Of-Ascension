@@ -1,0 +1,15 @@
+Infusion (Skill)
+
+When you need just a bit more power out of your gear, you may find yourself wanting to imbue some magical abilities into your sword or helmet.
+Infusion allows you to do just that. Craft yourself an infusion table, and collect some infusion enhancers and put together an infusion structure and you'll be able to infuse Advent of Ascension items with additional enchantments.
+
+To level up Infusion, you have a few options:
+
+Pixons:
+  While you roam around the worlds, you'll stumble across some bright flickering creatures that seem to aimlessly wander the land. These creatures are pixons. If you take a stone bowl to them, you'll be able to harvest them and collect their concentrated essence, giving you some infusion stones and xp. Different pixons roam different worlds, and give different infusion stones and xp amounts.
+  When you're a high enough level, you'll be able to make yourself a diamond bowl, which allows you to harvest pixons even more efficiently.
+
+Infusion Stones:
+  As you find and collect infusion stones, you can take them back to your infusion table and insert them. Each time you do, you'll gain a little more Infusion xp, and a small chance to get an empowered version of the stone back. These empowered versions can then be used to infuse enchantments into different items.
+
+Level up your Infusion skill to unlock additional enchantment options on your infusion table, and access to more valuable pixons.
