@@ -1,0 +1,10 @@
+Runation (Skill)
+
+Runation is all about imbuing magical power into runium. The result of this is then used as ammo for staves, in the form of runes.
+To get started, you'll need to go find yourself some runium ore. Dig that up, and smelt it down to get some runium chunks. These chunks can then be crafted into blank runes.
+
+Take your blank runes to a rune shrine that can be found floating around the various worlds, and use them on the rune shrines there to imbue magical power into them and gain xp.
+In the overworld you can imbue the blank runes with air power at an air rune shrine. These shrines come equipped with a rune shrine block to use, but other rune shrines in other worlds do not. You may want to steal away the rune shrine from the wind rune shrines, or craft another one to carry around for when you need it.
+
+As you level up, you will gain knowledge on how to imbue more powerful magic types and craft different runes. Some of these more powerful runes will require charged runium, which can be found in the Deeplands as charged runium ore.
+Higher levels of Runation start to give you duplicate runes for free when crafting as well!

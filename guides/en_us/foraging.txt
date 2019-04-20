@@ -1,0 +1,6 @@
+Foraging (Skill)
+
+Dig, dig, dig. Who doesn't love a good dig?
+Foraging is a skill that allows you to find additional treasures while mining ordinary stone. As you mine, you may occasionally find some juicy loot alongside your stone block. Every time you find some, you'll gain a bit of xp.
+
+The higher your Foraging level, the more frequent the loot, and the better it is too!

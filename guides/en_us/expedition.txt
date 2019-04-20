@@ -1,0 +1,18 @@
+Expedition (Skill)
+
+Here's a skill anyone can enjoy. Expedition is a skill based around exploration and movement.
+Whenever you're running around, exploring the lands, you'll occasionally gain some expedition xp. You don't even have to do anything special!
+
+As your expedition level goes up, you'll gain more and more leg power and find that you take less damage from falling down.
+
+Expedition also has a secondary effect. Every now and then while running around, you will be briefly revitalised by your expedition prowess. The exact effect depends on which buff you have chosen in the player menu. Click on the Expedition icon to toggle between effects.
+The power and frequency of this effect increases depending on your Expedition level.
+
+Speed:
+  Choose the gust of wind icon to select the speed buff. While running around, you may gain a brief speed boost, allowing you to travel even faster!
+
+Satiation:
+  Choose the food icon to select the satiation buff. While running around, you may suddenly find yourself a little less hungry than before. Stretch your valuable food resources out!
+
+Deep Breath:
+  Choose the bubble icon to select the deep breath buff. While swimming, you may suddenly find some additional oxygen to hang onto, allowing you to swim even longer without surfacing.
