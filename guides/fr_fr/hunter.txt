@@ -1,8 +1,8 @@
-Hunter (Skill)
+Chasse (Skill)
 
-While Hauling is about taking a break and relaxing with a nice fishing rod, Hunter is the exact opposite - it's about stabbing stuff in the face. Or anywhere else.
-You may notice while wandering around that some creatures have an icon of two crossed swords floating above their head.
-These icons indicate that the creature is a Hunter creature. Hunter creatures give Hunter xp when killed, but they can only be attacked if you have the required Hunter level to do so.
-Hunter creatures tend to give decent rewards, and the higher level ones especially tend to give unique loot.
+Alors que la pêche c'est faire une pause et se relaxer avec une belle canne à pêche, la chasse est l'exact opposé - c'est poignarder des trucs dans la face. Ou partout ailleurs.
+Tu remarqueras peut-être tandis que tu te balades que certaines créatures ont une icône de deux épées croisées flottant au-dessus de leur tête.
+Ces icônes indiquent que ces créatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'xp de chasse lorsqu'ils sont tués, mais ils ne peuvent être attaqués que si tu as le bon niveau de chasse.
+Les mobs chasseurs donnent souvent de belles récompenses, et ceux de haut niveau donnent particulièrement souvent du butin unique.
 
-Remember: Green swords = ATTACK! Red swords = Do something other than attack. Make a sandwich? I don't know.
+N'oublie pas: Épées vertes = FAIS UN ASSAUT! Épées rouges = Fais autre chose qu'un assaut. Un sandwich, par exemple? Je sais pas.

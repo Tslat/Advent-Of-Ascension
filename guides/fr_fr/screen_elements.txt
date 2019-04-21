@@ -1,24 +1,24 @@
-Screen Elements (Gui)
+Éléments à l'écran (Gui)
 
-Advent of Ascension installs a few display elements on your screen while you play. These elements are crucial to progressing through the mod, as they show you vital information that you will need to know as you play.
-You can toggle this display off with the assigned toggle button (default to 'o'). If you are unsure what your assigned button is, check your controls settings.
+Advent of Ascension installe plusieurs éléments à l'écran pendant que tu joues. Ces éléments sont cruciaux pour progresser dans le mod, car ils montrent des informations vitales que tu auras besoin de savoir en jouant.
+Tu peux désactiver cet affichage avec le bouton assigné ('o' par défaut). Si tu n'est pas sûr de ton bouton assigné, regarde dans tes paramètres de contrôles.
 
-The Fist Icon:
-  The orange/red fist icon is called Battle Rage. Battle rage regenerates passively over time, and once you gain a sufficient amount of it, your attacks will have a chance to hit extra hard, dealing much more damage. You can increase how much damage this hit deals by levelling up your Butchery skill.
+L'icône du poing:
+  L'icône de poing orange/rouge est appelée rage de combat. La rage de combat se régénère passivement au fur et à mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros dégâts, faisant bien plus mal. Tu peut augmenter les dégâts de ce coup en montant ton skill boucherie.
 
-The Lighting Bolt:
-  The lighting bolt icon is called Energy. This represents a renewable, consumable resource that is used by blasters to fire. It will regenerate passively on its own, however it can drain quickly while firing a blaster.
+L'éclair:
+  L'icône d'éclair est appelée énergie. Cela représente une resource renouvelable et consommable qui est utilisée comme munition par les blasters. Elle se régénère passivement lorsqu'inactive, mais est rapidement drainée par les blasters.
 
-The Horned Creature Icon:
-  This icon is called Creation. It's a representation of creation points that passively regenerate while you play. Creation slabs from the Creation skill require a certain amount of creation points to use, so if you are summoning minions you will need to pay attention to how many you have.
-  You can raise your maximum creation points by levelling up your Augury skill.
+L'îcone de créature à cornes:
+  Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent pasivement pendant que tu joues. Les tablettes de création du skill création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
+  Tu peut augmenter ton maximum de points de création en montant ton skill augure.
 
-The Blue Alien Icon:
-  This icon is called Soul Power. It represents the amount of soul power points you have. Soul power points regenerate slowly over time while you play. Currently they are unused, so you don't need to worry too much about them for now.
+L'icône alien bleu:
+  Cette icône est appelée pouvoir des âmes. Il représente la quantité de pouvoir de âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Ils sont actuellement inutilisés, donc pas besoin de s'en préoccuper pour l'instant.
 
-The Four Lines:
-  Wedged inbetween Battle Rage and Energy is the Tribute icon. This icon is split into four individual lines, with each one representing a specific deity. There are four primary deities in Advent of Ascension: Erebon, Luxon, Pluton, and Selyan. Each one likes and dislikes different things, and so it can be hard to please them all.
-  When you do certain tasks throughout the day however, you will find these bars begin to fill up. If you manage to fill a bar up, then when the sun falls behind the horizon, you will be granted a favour by the deity you appeased. These favours can be very useful, so get to it!
+Les quatres lignes:
+  Logée entre la rage de combat et l'énergie est l'icône de tribut. Cette icône est divisée en quatre lignes individuelles, chacune représentant une divinité spécifique. Il y a quatre principales divinités dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et déteste différentes choses, et il peut donc être difficile de toutes les combler.
+  Lorsque tu accomplis certaines tâches pendant la journée en revanche, tu verras ces barres se remplir. Si tu réussis à remplir une barre en entier, alors quand le soleil se couchera, tu seras offert une faveur par la divinité que tu as apaisée. Ces faveurs peuvent êre très utiles, alors au travail!
 
-The Skull Icon:
-  This icon doesn't show all the time, it only appears for a short time when taking damage occasionally. When this icon appears, the mob that attacked you has its soul linked to yours. You can then use a Vulcane to remotely damage the creature in retaliation. Grab a Vulcane early on, as this can do a lot of damage very easily!
+L'icône de crâne:
+  Cette icône n'apparaît pas toujours, elle n'apparaît que pendant un court instant parfois après avoir pris des dégâts. Quand cette icône apparaît, le mob qui t'as attaqué a son âme liée à la tienne. Tu peux alors utiliser un vulcane pour infliger des dégâts instantanés en revanche. Essaie d'obtenir vite un vulcane, car çela peut facilement faire beaucoup de dégâts!

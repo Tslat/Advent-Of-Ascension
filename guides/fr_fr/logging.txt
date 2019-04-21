@@ -1,6 +1,6 @@
-Logging (Skill)
+Bûchage (Skill)
 
-Logging is a lot like Foraging. It allows you to find additional useful loot while cutting down trees. Whenever you break down some wood, you have a small chance to find some additional shiny trinkets. Whenever you do so, you'll also gain a bit of Logging xp.
-Keep levelling up your Logging skill, and you'll find that you get better trinkets, and more often too!
+Le bûchage est très similaire au forage. Il permet de trouver d'utiles cadeaux bonus en coupant des arbres. À chaque fois que tu coupes du bois, tu as une petite chance de trouver des bonus suppplémentaires. À chaque fois que ça arrive, tu gagnes aussi un peu d'xp de bûchage.
+Continue à monter ton bûchage, et tu trouveras de meilleurs objets, et plus souvent!
 
-Remember to replant your trees though, otherwise you may end up turning your forest into a desert, and then there's no more loot for you!
+N'oublie pas de replanter tes arbres par contre, ou tu risques de finir par transformer ta forêt en désert, et ensuite plus de bonus pour toi!

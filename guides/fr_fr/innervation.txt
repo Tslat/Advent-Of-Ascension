@@ -1,7 +1,7 @@
 Innervation (Skill)
 
-Innervation is the skill of vitality. Every time you kill a creature, it may drop a small shard of its vitality in the form of a heart stone. This heart stone can then be picked up by you to gain a little bit of innervation xp.
+L'innervation est le skill de la vitalité. À chaque fois que tu tues une créature, elle droppera peut-être un petit fragment de sa vitalité sous la forme d'une pierre de cœur. Tu peut ensuite ramasser cette pierre de cœur pour obtenir un peu d'xp d'innervation.
 
-As you level up your Innervation skill, you'll occasionally be able to utilise this additional absorbed vitality to withstand or dodge incoming attacks, or even use them to your advantage!
+Alors que tu montes ton innervation, tu seras capable parfois d'utiliser cette vitaité pour supporter ou esquiver les attaques ennemies, ou même les utiliser à ton avantage!
 
-That's not too hard, right?
+C'est pas si dur, si?
