@@ -1,10 +1,10 @@
 Runation (Skill)
 
-Runation is all about imbuing magical power into runium. The result of this is then used as ammo for staves, in the form of runes.
-To get started, you'll need to go find yourself some runium ore. Dig that up, and smelt it down to get some runium chunks. These chunks can then be crafted into blank runes.
+La runation, c'est imbuer un pouvoir magique dans du runium. Le résultat de ceçi est une munition pour bâtons, sous la forme de runes.
+Pour commencer, tu devras trouver du minerai de runium. Ramasse-ça, et fonds-le pour avoir des fragments de runium. Ces fragments peuvent ensuite être craftés en runes vides.
 
-Take your blank runes to a rune shrine that can be found floating around the various worlds, and use them on the rune shrines there to imbue magical power into them and gain xp.
-In the overworld you can imbue the blank runes with air power at an air rune shrine. These shrines come equipped with a rune shrine block to use, but other rune shrines in other worlds do not. You may want to steal away the rune shrine from the wind rune shrines, or craft another one to carry around for when you need it.
+Prends tes runes vides et amène les à un sanctuaire de runes qui flotte dans le ciel de différents mondes, et utilise-les içi pour imbuer de la magie dedans et gagner de l'xp de runation.
+Dans l'overworld tu peut imbuer tes runes blanches avec le pouvoir de l'air à un sanctuaire de l'air. Ces sanctuaires sont équippés avec un bloc de sanctuaire à utiliser, mais les autres dans d'autres mondes ne le sont pas. Tu voudras peut-être voler le bloc de sanctuaire des sanctuaires du vent, ou en crafter un autre à transporter en cas de besoin.
 
-As you level up, you will gain knowledge on how to imbue more powerful magic types and craft different runes. Some of these more powerful runes will require charged runium, which can be found in the Deeplands as charged runium ore.
-Higher levels of Runation start to give you duplicate runes for free when crafting as well!
+Alors que tu montes en niveaux, tu apprendras à imbuer des types de magie plus puissants et à fabriquer des runes différentes. Certaines des runes plus puissantes demandent du runium chargé, qui peut être trouvé dans les Deeplands sous la forme de minerai de runium chargé.
+Les plus hauts niveaux de runation te permettent de gagner deux runes pour le prix d'une aussi!
