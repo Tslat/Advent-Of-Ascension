@@ -1,7 +1,7 @@
 Infusion (Skill)
 
 Quand tu as besoin d'un peu plus de pouvoir pour ton équipement, tu voudras peut-être imbuer des pouvoirs magiques dans ton épée ou ton casque.
-C'est exactement ce que l'infusion te permet de faire. Fabrique-toi une tbale d'infusion, collecte des amplificateurs d'infusion et construit une structure d'infusion et tu seras capable d'infuser les objets d'Advent of Ascension avec de nouveaux enchantements.
+C'est exactement ce que l'infusion te permet de faire. Fabrique-toi une table d'infusion, collecte des amplificateurs d'infusion et construit une structure d'infusion et tu seras capable d'infuser les objets d'Advent of Ascension avec de nouveaux enchantements.
 
 Pour monter en infusion, tu as quelques options:
 
