@@ -3,8 +3,8 @@ Runation (Skill)
 La runation, c'est imbuer un pouvoir magique dans du runium. Le résultat de ceçi est une munition pour bâtons, sous la forme de runes.
 Pour commencer, tu devras trouver du minerai de runium. Ramasse-ça, et fonds-le pour avoir des fragments de runium. Ces fragments peuvent ensuite être craftés en runes vides.
 
-Prends tes runes vides et amène les à un sanctuaire de runes qui flotte dans le ciel de différents mondes, et utilise-les içi pour imbuer de la magie dedans et gagner de l'xp de runation.
-Dans l'overworld tu peut imbuer tes runes blanches avec le pouvoir de l'air à un sanctuaire de l'air. Ces sanctuaires sont équippés avec un bloc de sanctuaire à utiliser, mais les autres dans d'autres mondes ne le sont pas. Tu voudras peut-être voler le bloc de sanctuaire des sanctuaires du vent, ou en crafter un autre à transporter en cas de besoin.
+Prends tes runes vides et amène-les à un sanctuaire de runes qui flotte dans le ciel de différents mondes, et utilise-les içi pour imbuer de la magie dedans et gagner de l'xp de runation.
+Dans l'overworld tu peut imbuer tes runes vides avec le pouvoir de l'air à un sanctuaire de l'air. Ces sanctuaires sont équippés avec un bloc de sanctuaire à utiliser, mais les autres dans d'autres mondes ne le sont pas. Tu voudras peut-être voler le bloc de sanctuaire des sanctuaires du vent, ou en crafter un autre à transporter en cas de besoin.
 
 Alors que tu montes en niveaux, tu apprendras à imbuer des types de magie plus puissants et à fabriquer des runes différentes. Certaines des runes plus puissantes demandent du runium chargé, qui peut être trouvé dans les Deeplands sous la forme de minerai de runium chargé.
 Les plus hauts niveaux de runation te permettent de gagner deux runes pour le prix d'une aussi!
