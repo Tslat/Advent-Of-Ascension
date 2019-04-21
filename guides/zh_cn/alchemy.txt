@@ -1,3 +1,3 @@
-Alchemy (Skill)
+炼金（技能）
 
-Alchemy is not yet implemented into AoA.
+AoA尚未加入炼金技能。
