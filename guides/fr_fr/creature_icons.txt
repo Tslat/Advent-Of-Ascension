@@ -1,35 +1,35 @@
-Creature Overhead Icons
+Icônes des créatures
 
-You may notice that some mobs have some small icons floating above their head. Each of these icons have special meanings, and it's important that you know what each one does.
+Tu remarqueras peut-être que certains mobs ont des petites icônes flottant au-dessus de leur tête. Chacune des ces icône a une signification particulière, et il est important de savoir les interpréter.
 
-So what are they?
+Alors que veulent-elles dire?
 
-The Dual Swords:
-  The swords indicate that the creature is a Hunter creature. This means that the creature cannot normally be attacked without having a high enough Hunter level. You can tell if you have a high enough level if the swords are green. Mobs that are too hard for you will have red swords.
+Les deux épées:
+  Les deux épées croisées indiquent que la créature est un mob chasseur. Cela veut dire que la créature ne peut être normalement attaquée par les joueurs avec un niveau de chasse trop bas. Tu peut savoir que tu as le bon niveau si les épées sont vertes. Les mobs trop difficiles pour toi auront des épées rouges.
 
-The Lightning Bolt:
-  A yellow lightning bolt symbol indicates that the creature is immune to blaster weapons.
+L'éclair:
+  Un symbole d'éclair jaune indique que la créature est immunisée aux blasters.
 
-The Explosion:
-  An explosion symbol indicates that the creature is immune to explosions and explosive damage.
+L'explosion:
+  Un symbole d'explosion indique que la créature est immunisée aux explosions et aux dégâts explosifs.
 
-The Fire:
-  A fire symbol indicates that the creature is immune to fire, and fire-based damage.
+Le feu:
+  Un symbole de flamme indique que la créature est immunisée au feu, et aux dégâts basés sur le feu.
 
-The Pistol:
-  A pistol symbol indicates that the creature is immune to gun weapons. This includes normal guns, snipers, cannons, and shotguns, but does not include blasters or bows.
+Le pistolet:
+  Un symbole de pistolet indique que la créature est immunisée aux pistolets. Cela inclut les fusils, snipers, canons, et carabines, mais n'inclut pas les blasters ni les arcs.
 
-The Rainbow Spiral:
-  A colourful spiral symbol indicates that the creature is immune to magical attacks and damage. This is primarily for attacks from staves, however it can affect other damage too.
+La spirale arc-en-ciel:
+  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Cela compte principalement le dégâts de bâtons, mais cela peut aussi affecter d'autre choses.
 
-The Single Sword:
-  A single purple sword symbol indicates that the creature is immune to melee damage.
+L'épée seule:
+  Un symbole d'une seule épée violette indique que la créature est immunisée aux dégâts de mélée.
 
-The Bow:
-  A bow symbol indicates that the creature is immune to ranged damage. This includes bows, but not guns, blasters, or staves.
+L'arc:
+  Un symbole d'arc indique que la créature est immunisée aux dégâts à distance. Cela inclut les arcs, mais pas les pistolets, blasters, ou bâtons.
 
-The Question Mark:
-  A red question mark symbol indicates that the creature has special combat mechanics. This will vary between mobs, so pay attention!
+Le point d'interrogation:
+  Un symbole point d'interragation rouge indique que la créature possède des mécaniques de combat spéciales. Cela varie entre les mobs, alors fait attention!
 
-The Potion:
-  A potion symbol indicates that the creature is immune to potions and status effects.
+La potion:
+  Un symbole de potion indique que la créature est immunisée aux potions et effets de statut.
