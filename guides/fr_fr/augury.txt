@@ -1,6 +1,6 @@
-Augury (Skill)
+Augure (Skill)
 
-Augury is a skill based around divine essences. Levelling it up is very simple; all you need to do is use some essences on an Ascension Shrine block. Different essences give different amounts of xp, and the more xp the essence gives, the higher the Augury level requirement to use it.
-Essences can be obtained as rewards from other skills, especially Foraging and Logging.
+L'augure est un skill basé sur les essences divines. Le monter en niveau est très simple; tu ce que tu doit faire est utiliser quelques essences sur un bloc sanctuaire d'ascension. Les différentes essences donnent différent nombres de points d'xp, et plus une essence donne d'xp, plus il faut avoir un haut niveau d'augure pour s'en servir.
+Les essences sont obtenues comme récompenses d'autres skills, particulièrement le forage et le bûchage.
 
-As you level up your Augury, your maximum creation points and soul points will increase, allowing you to summon more minions and use more soul power before running out.
+Tandis que tu améliores ton niveau d'augure, tes points de création et points d'âme maximum augmentent, permettant d'invoquer plus de sbires et d'utiliser plus de pouvoir des âmes avant d'arriver à court.
