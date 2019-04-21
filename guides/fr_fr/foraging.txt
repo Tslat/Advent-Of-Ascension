@@ -1,6 +1,6 @@
-Foraging (Skill)
+Forage (Skill)
 
-Dig, dig, dig. Who doesn't love a good dig?
-Foraging is a skill that allows you to find additional treasures while mining ordinary stone. As you mine, you may occasionally find some juicy loot alongside your stone block. Every time you find some, you'll gain a bit of xp.
+Creuser, creuser, creuser. Qui n'aime pas creuser?
+Le forage est un skill qui permet de trouver des trésors supplémentaires en minant de la pierre ordinaire. En minant, tu pourrais occasionellement trouver un beau butin en plus du bloc de pierre. À chaque fois que ça arrive, tu gagneras un peu d'xp.
 
-The higher your Foraging level, the more frequent the loot, and the better it is too!
+Plus le niveau de forage est haut, plus le loot est fréquent, et le mieux il est aussi!
