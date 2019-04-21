@@ -1,6 +1,5 @@
-Butchery (Skill)
+Boucherie (Skill)
 
-Bloodlust. Delicious, destructive bloodlust. Butchery is all about dealing damage, and dealing as much of it as possible. Occasionally, when you are meleeing a target, a little red orb will drop off and start floating away. This is bloodlust. Craft yourself a blood accumulator, and use it on a bloodlust to gain xp.
+Soif de sang. Délicieuse, destructive soif de sang. La boucherie est basée autour de faire des dégâts, et en faire le plus possible. Occasionellement, lorsque tu attaque une cible en melee, un petit orbe rouge tombra et commmençera a s'en aller. Il s'agît de bloodlust. Fabrique-toi un accumulateur à sang, et utilise-le sur un bloodlust pour gagner de l'xp.
 
-As you level up your Butchery skill, you'll recharge your Battle Rage quicker, and deal even more damage when it activates.
-An essential trait for any budding warrior!
+En améliorant ton niveau de boucherie, tu rechargeras ta rage de combta plus vite, et feras encore plus de dégâts lorsqu'elle s'active. Essentiel pour les guerriers en prime!
