@@ -5,7 +5,7 @@ Pendant que tu cours dans tout les sens, explorant les terres, tu gagnes parfois
 
 Quand tes niveaux d'expédition montent, tu auras de plus en plus de force dans tes jambes et te rendras compte que tu prendras moins de dégâts de chute.
 
-L'expédition a aussi un effet secondaire. De temps en temps en se déplaçant, tu seras brièvement revitalisé par tes prouesse d'expédition. L'efet exact dépend de quel bonus tu as choisis dans le menu joueur. Clique sur l'icône expédition pour changer d'effet.
+L'expédition a aussi un effet secondaire. De temps en temps en se déplaçant, tu seras brièvement revitalisé par tes prouesses d'expédition. L'effet exact dépend de quel bonus tu as choisi dans le menu joueur. Clique sur l'icône expédition pour changer d'effet.
 La force et la fréquence de ces effets augmentent avec les niveaux d'expédition.
 
 Vitesse:
