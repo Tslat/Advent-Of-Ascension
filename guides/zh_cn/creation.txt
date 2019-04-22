@@ -1,8 +1,8 @@
-Creation (Skill)
+创造（技能）
 
-Raise your hand if you like having minions destroy everything in your path without even having to lift a finger!
-Creation is a skill that allows you to create and summon various helpful minions. These minions offer varying benefits and abilities, and will often fight alongside you. Do not underestimate these little creatures, they deal out some serious damage!
+想要完全通过宠物帮你杀出一条血路的人举手！
+创造将允许你创造并生成各种有用的宠物。这些生物不仅可以为你提供各种帮助，还会与你并肩作战。不要低估这些小生物的能力，它们可不是吃素的！
 
-In order for you to level up your creation skill, you will need to craft some minion slabs and sacrifice them on a creation forge. Sacrificing the minion slab grants you some xp.
+提升创造技能需要你先合成一些宠物召唤板。接着你就可以在创造祭坛上通过消耗召唤板获取一定的经验。
 
-As you level up, you'll be able to utilise and sacrifice higher levelled minion slabs, either to gain more powerful friends, or gain more xp.
+随着你创造等级的提升，你就可以使用和消耗更高等级的宠物召唤板。这样既可以得到更多朋友，又可以收获更多经验，何乐而不为呢？
