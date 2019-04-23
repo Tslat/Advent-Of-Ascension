@@ -1,9 +1,9 @@
-Expedition (Skill)
+远征（技能）
 
-Here's a skill anyone can enjoy. Expedition is a skill based around exploration and movement.
-Whenever you're running around, exploring the lands, you'll occasionally gain some expedition xp. You don't even have to do anything special!
+这是一个老少皆宜的技能。远征是一个围绕着探索和运动的技能。
+当你在世界中自由的疾跑时，j就会偶尔获得一些远征经验。就这么简单！
 
-As your expedition level goes up, you'll gain more and more leg power and find that you take less damage from falling down.
+随着你远征等级的提升，你的腿部力量会逐渐增强并且会受到越来越少的摔落伤害。
 
 Expedition also has a secondary effect. Every now and then while running around, you will be briefly revitalised by your expedition prowess. The exact effect depends on which buff you have chosen in the player menu. Click on the Expedition icon to toggle between effects.
 The power and frequency of this effect increases depending on your Expedition level.
