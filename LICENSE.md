@@ -6,7 +6,6 @@ For the purpose of playing/using the mod, you are free to Use, and Share the mod
 
 For all other purposes, all activities must follow the clauses outlined on this page, in their entirety, and to the fullest extent.
 
-~~ ~~ ~~ ~~
 
 # General
 Clauses outlined in this section apply in all situations regarding Advent of Ascension.
@@ -24,7 +23,6 @@ You may however restrict content from the mod behind soft currency as wanted. So
 ### Legality
 Let's just put this one up front: This license will not hold up in court. None of us want to deal with court procedings even if it did. However, breach of this license will be met with as much hostile force as reasonably and practicably possible. I develop and provide this mod in good faith and free of charge for all, please have some respect for all the other people who enjoy this mod and want to see it worked on in the future. Also, if you breach this license, you will have to live with the knowledge that you have disappointed an adorable living creature. You don't want that do you?
 
-~~ ~~ ~~ ~~
 
 # Distribution
 Uploading, Sharing, or Re-hosting Advent of Ascension or any of its assets.
@@ -38,7 +36,6 @@ As a singular exception to the above clause, you may re-host this mod, as a comp
 ### Alternate Hosting
 If, for some reason, none of the existing methods of downloading/distribution satisfy your requirements for using the mod, you may request that alternate arrangements be made with Tslat. No guarantee will be made that your request will be granted, but it will be given as much consideration as reasonably possible.
 
-~~ ~~ ~~ ~~
 
 # Usage
 Playing, Featuring, Showing, or otherwise using Advent of Ascension or any of its assets.
@@ -55,7 +52,6 @@ You may create, use, and distribute any extensions or addons to Advent of Ascens
 ### Attribution
 In all circumstances where the mod or its assets are featured, linked, reviewed, or otherwise showcased; the mod developer Tslat must be credited clearly and plainly. A linkback to the official wiki is greatly appreciated, but not strictly required.
 
-~~ ~~ ~~ ~~
 
 # Re-use
 Using the mod or its assets beyond the scope of playing or showcasing.
@@ -69,10 +65,9 @@ Modification of the mod may be done for private purposes, however the modified f
 ### Withheld Rights
 Tslat reserves the right to implement any concepts created by any add-on or extension into the core mod. All assets and code of the extension is strictly property of the add-on author however, and relative care will be taken to consider the author's thoughts and wishes when assuming the concept for use.
 
-~~ ~~ ~~ ~~
 
 # Breaches
 Responses to breaches of any parts of this license.
 
-## Refusal of Service
+### Refusal of Service
 Breaches of this license may result in the permanent loss of ability to use the mod or portions of the mod. No consideration is given to persons who breach any part of these terms of any reason.
