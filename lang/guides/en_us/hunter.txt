@@ -1,0 +1,8 @@
+Hunter (Skill)
+
+While Hauling is about taking a break and relaxing with a nice fishing rod, Hunter is the exact opposite - it's about stabbing stuff in the face. Or anywhere else.
+You may notice while wandering around that some creatures have an icon of two crossed swords floating above their head.
+These icons indicate that the creature is a Hunter creature. Hunter creatures give Hunter xp when killed, but they can only be attacked if you have the required Hunter level to do so.
+Hunter creatures tend to give decent rewards, and the higher level ones especially tend to give unique loot.
+
+Remember: Green swords = ATTACK! Red swords = Do something other than attack. Make a sandwich? I don't know.

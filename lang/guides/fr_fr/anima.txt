@@ -1,0 +1,8 @@
+Anima (Skill)
+
+L'anima est un skill basé autour de la nature.
+
+Tu peux monter ta compétence d'anima en collectant des herbes et des fleurs, brisant des feuilles, et récupérant des récoltes matures. Quand tu fais ceçi, il y a une petite chance qu'une pierre d'anima bleue apparaisse. Ramasse cette pierre pour gagner un peu d'xp d'anima.
+De plus, tu peux améliorer ton anima en activant des pierres d'anima fragmentées. Les pierres d'anima fragmentées peuvent être obtenues de certains PNJs, ou en récompense d'autres activités. Utilisée sur un bloc d'herbe, elle encourage les plantes et les fleurs à proximité à pousser, et offre un peu d'xp d'anima.
+
+Augmenter le niveau d'anima n'a actuellement aucun bénéfice, mais cela arrivera bientôt!

@@ -1,0 +1,35 @@
+Creature Overhead Icons
+
+You may notice that some mobs have some small icons floating above their head. Each of these icons have special meanings, and it's important that you know what each one does.
+
+So what are they?
+
+The Dual Swords:
+  The swords indicate that the creature is a Hunter creature. This means that the creature cannot normally be attacked without having a high enough Hunter level. You can tell if you have a high enough level if the swords are green. Mobs that are too hard for you will have red swords.
+
+The Lightning Bolt:
+  A yellow lightning bolt symbol indicates that the creature is immune to blaster weapons.
+
+The Explosion:
+  An explosion symbol indicates that the creature is immune to explosions and explosive damage.
+
+The Fire:
+  A fire symbol indicates that the creature is immune to fire, and fire-based damage.
+
+The Pistol:
+  A pistol symbol indicates that the creature is immune to gun weapons. This includes normal guns, snipers, cannons, and shotguns, but does not include blasters or bows.
+
+The Rainbow Spiral:
+  A colourful spiral symbol indicates that the creature is immune to magical attacks and damage. This is primarily for attacks from staves, however it can affect other damage too.
+
+The Single Sword:
+  A single purple sword symbol indicates that the creature is immune to melee damage.
+
+The Bow:
+  A bow symbol indicates that the creature is immune to ranged damage. This includes bows, but not guns, blasters, or staves.
+
+The Question Mark:
+  A red question mark symbol indicates that the creature has special combat mechanics. This will vary between mobs, so pay attention!
+
+The Potion:
+  A potion symbol indicates that the creature is immune to potions and status effects.

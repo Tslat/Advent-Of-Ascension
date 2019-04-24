@@ -1,0 +1,35 @@
+Icônes des créatures
+
+Tu remarqueras peut-être que certains mobs ont des petites icônes flottant au-dessus de leur tête. Chacune des ces icônes a une signification particulière, et il est important de savoir les interpréter.
+
+Alors que veulent-elles dire?
+
+Les deux épées:
+  Les deux épées croisées indiquent que la créature est un mob chasseur. Cela veut dire que la créature ne peut pas être normalement attaquée par les joueurs avec un niveau de chasse trop bas. Tu peut savoir que tu as le bon niveau si les épées sont vertes. Les mobs trop difficiles pour toi auront des épées rouges.
+
+L'éclair:
+  Un symbole d'éclair jaune indique que la créature est immunisée aux blasters.
+
+L'explosion:
+  Un symbole d'explosion indique que la créature est immunisée aux explosions et aux dégâts explosifs.
+
+Le feu:
+  Un symbole de flamme indique que la créature est immunisée au feu, et aux dégâts basés sur le feu.
+
+Le pistolet:
+  Un symbole de pistolet indique que la créature est immunisée aux pistolets. Cela inclut les fusils, snipers, canons, et carabines, mais n'inclut pas les blasters ni les arcs.
+
+La spirale arc-en-ciel:
+  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Cela compte principalement les dégâts de bâtons, mais cela peut aussi affecter d'autres choses.
+
+L'épée seule:
+  Un symbole d'une seule épée violette indique que la créature est immunisée aux dégâts de mélée.
+
+L'arc:
+  Un symbole d'arc indique que la créature est immunisée aux dégâts à distance. Cela inclut les arcs, mais pas les pistolets, blasters, ou bâtons.
+
+Le point d'interrogation:
+  Un symbole point d'interrogation rouge indique que la créature possède des mécaniques de combat spéciales. Cela varie entre les mobs, alors fait attention!
+
+La potion:
+  Un symbole de potion indique que la créature est immunisée aux potions et effets de statut.

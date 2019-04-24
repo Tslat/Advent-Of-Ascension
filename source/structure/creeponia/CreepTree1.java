@@ -1,0 +1,143 @@
+package net.tslat.aoa3.structure.creeponia;
+
+import net.minecraft.block.BlockVine;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.structure.AoAStructure;
+
+import java.util.Random;
+
+public class CreepTree1 extends AoAStructure { //StructureSie: 5x10x5
+	private static final IBlockState creepLeaves = BlockRegister.leavesCreep.getDefaultState();
+	private static final IBlockState creepLog = BlockRegister.logCreep.getDefaultState();
+	private static final IBlockState creepVineNorth = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.NORTH, true);
+	private static final IBlockState creepVineSouth = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.SOUTH, true);
+	private static final IBlockState creepVineWest = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.WEST, true);
+	private static final IBlockState creepVineEast = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.EAST, true);
+
+	public CreepTree1() {
+		super("CreepTree1");
+	}
+
+	@Override
+	protected void build(World world, Random rand, BlockPos basePos) {
+		addBlock(world, basePos, 2, 0, 2, creepLog);
+		addBlock(world, basePos, 2, 1, 2, creepLog);
+		addBlock(world, basePos, 2, 2, 2, creepLog);
+		addBlock(world, basePos, 1, 3, 1, creepLeaves);
+		addBlock(world, basePos, 1, 3, 2, creepLeaves);
+		addBlock(world, basePos, 1, 3, 3, creepLeaves);
+		addBlock(world, basePos, 2, 3, 1, creepLeaves);
+		addBlock(world, basePos, 2, 3, 2, creepLog);
+		addBlock(world, basePos, 2, 3, 3, creepLeaves);
+		addBlock(world, basePos, 3, 3, 1, creepLeaves);
+		addBlock(world, basePos, 3, 3, 2, creepLeaves);
+		addBlock(world, basePos, 3, 3, 3, creepLeaves);
+		addBlock(world, basePos, 1, 4, 1, creepLeaves);
+		addBlock(world, basePos, 1, 4, 2, creepLeaves);
+		addBlock(world, basePos, 1, 4, 3, creepLeaves);
+		addBlock(world, basePos, 2, 4, 1, creepLeaves);
+		addBlock(world, basePos, 2, 4, 2, creepLog);
+		addBlock(world, basePos, 2, 4, 3, creepLeaves);
+		addBlock(world, basePos, 3, 4, 1, creepLeaves);
+		addBlock(world, basePos, 3, 4, 2, creepLeaves);
+		addBlock(world, basePos, 3, 4, 3, creepLeaves);
+		addBlock(world, basePos, 2, 5, 2, creepLog);
+		addBlock(world, basePos, 2, 6, 2, creepLog);
+		addBlock(world, basePos, 2, 7, 2, creepLog);
+		addBlock(world, basePos, 1, 8, 1, creepLeaves);
+		addBlock(world, basePos, 1, 8, 2, creepLeaves);
+		addBlock(world, basePos, 1, 8, 3, creepLeaves);
+		addBlock(world, basePos, 2, 8, 1, creepLeaves);
+		addBlock(world, basePos, 2, 8, 2, creepLog);
+		addBlock(world, basePos, 2, 8, 3, creepLeaves);
+		addBlock(world, basePos, 3, 8, 1, creepLeaves);
+		addBlock(world, basePos, 3, 8, 2, creepLeaves);
+		addBlock(world, basePos, 3, 8, 3, creepLeaves);
+		addBlock(world, basePos, 1, 9, 1, creepLeaves);
+		addBlock(world, basePos, 1, 9, 2, creepLeaves);
+		addBlock(world, basePos, 1, 9, 3, creepLeaves);
+		addBlock(world, basePos, 2, 9, 1, creepLeaves);
+		addBlock(world, basePos, 2, 9, 2, creepLeaves);
+		addBlock(world, basePos, 2, 9, 3, creepLeaves);
+		addBlock(world, basePos, 3, 9, 1, creepLeaves);
+		addBlock(world, basePos, 3, 9, 2, creepLeaves);
+		addBlock(world, basePos, 3, 9, 3, creepLeaves);
+
+		addBlock(world, basePos, 0, 2, 3, creepVineEast);
+		addBlock(world, basePos, 1, 2, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 2, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 2, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 2, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 2, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 2, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 2, 3, creepVineWest);
+		addBlock(world, basePos, 0, 3, 1, creepVineEast);
+		addBlock(world, basePos, 0, 3, 2, creepVineEast);
+		addBlock(world, basePos, 0, 3, 3, creepVineEast);
+		addBlock(world, basePos, 1, 3, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 3, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 3, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 3, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 3, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 3, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 3, 1, creepVineWest);
+		addBlock(world, basePos, 4, 3, 2, creepVineWest);
+		addBlock(world, basePos, 4, 3, 3, creepVineWest);
+		addBlock(world, basePos, 0, 4, 1, creepVineEast);
+		addBlock(world, basePos, 0, 4, 2, creepVineEast);
+		addBlock(world, basePos, 0, 4, 3, creepVineEast);
+		addBlock(world, basePos, 1, 4, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 4, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 4, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 4, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 4, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 4, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 4, 1, creepVineWest);
+		addBlock(world, basePos, 4, 4, 2, creepVineWest);
+		addBlock(world, basePos, 4, 4, 3, creepVineWest);
+		addBlock(world, basePos, 0, 6, 3, creepVineEast);
+		addBlock(world, basePos, 1, 6, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 6, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 6, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 6, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 6, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 6, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 6, 3, creepVineWest);
+		addBlock(world, basePos, 0, 7, 2, creepVineEast);
+		addBlock(world, basePos, 0, 7, 3, creepVineEast);
+		addBlock(world, basePos, 1, 7, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 7, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 7, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 7, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 7, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 7, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 7, 3, creepVineWest);
+		addBlock(world, basePos, 0, 8, 1, creepVineEast);
+		addBlock(world, basePos, 0, 8, 2, creepVineEast);
+		addBlock(world, basePos, 0, 8, 3, creepVineEast);
+		addBlock(world, basePos, 1, 8, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 8, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 8, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 8, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 8, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 8, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 8, 1, creepVineWest);
+		addBlock(world, basePos, 4, 8, 2, creepVineWest);
+		addBlock(world, basePos, 4, 8, 3, creepVineWest);
+		addBlock(world, basePos, 0, 9, 1, creepVineEast);
+		addBlock(world, basePos, 0, 9, 2, creepVineEast);
+		addBlock(world, basePos, 0, 9, 3, creepVineEast);
+		addBlock(world, basePos, 1, 9, 0, creepVineSouth);
+		addBlock(world, basePos, 1, 9, 4, creepVineNorth);
+		addBlock(world, basePos, 2, 9, 0, creepVineSouth);
+		addBlock(world, basePos, 2, 9, 4, creepVineNorth);
+		addBlock(world, basePos, 3, 9, 0, creepVineSouth);
+		addBlock(world, basePos, 3, 9, 4, creepVineNorth);
+		addBlock(world, basePos, 4, 9, 1, creepVineWest);
+		addBlock(world, basePos, 4, 9, 2, creepVineWest);
+		addBlock(world, basePos, 4, 9, 3, creepVineWest);
+	}
+}

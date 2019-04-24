@@ -1,0 +1,176 @@
+package net.tslat.aoa3.client.model.entities.mobs.runandor;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.math.MathHelper;
+
+public class ModelRunicGuardian extends ModelBase {
+	ModelRenderer head;
+	ModelRenderer body;
+	ModelRenderer rightarm;
+	ModelRenderer leftarm;
+	ModelRenderer rightleg;
+	ModelRenderer leftleg;
+	ModelRenderer body2;
+	ModelRenderer body3;
+	ModelRenderer body4;
+	ModelRenderer body5;
+	ModelRenderer body6;
+	ModelRenderer body7;
+	ModelRenderer leftleg2;
+	ModelRenderer rightleg3;
+	ModelRenderer rightleg2;
+	ModelRenderer leftleg3;
+	ModelRenderer leftarm2;
+	ModelRenderer rightarm2;
+	ModelRenderer body8;
+	ModelRenderer body9;
+
+	public ModelRunicGuardian() {
+		textureWidth = 64;
+		textureHeight = 64;
+		(head = new ModelRenderer(this, 0, 0)).addBox(-4.0f, -8.0f, -1.0f, 8, 8, 1);
+		head.setRotationPoint(0.0f, 0.0f, -2.0f);
+		head.setTextureSize(64, 64);
+		head.mirror = true;
+		setRotation(head, 0.0f, 0.0f, 0.0f);
+		(body = new ModelRenderer(this, 16, 10)).addBox(-3.0f, 0.0f, -2.0f, 8, 1, 1);
+		body.setRotationPoint(4.0f, 12.0f, 1.0f);
+		body.setTextureSize(64, 64);
+		body.mirror = true;
+		setRotation(body, 0.0f, 0.0f, 1.22173f);
+		(rightarm = new ModelRenderer(this, 40, 16)).addBox(-4.0f, -2.0f, -2.0f, 6, 8, 1);
+		rightarm.setRotationPoint(-7.0f, -3.0f, 0.0f);
+		rightarm.setTextureSize(64, 64);
+		rightarm.mirror = true;
+		setRotation(rightarm, 0.0f, 0.0f, 0.7853982f);
+		(leftarm = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 6, 8, 1);
+		leftarm.setRotationPoint(7.0f, -3.0f, 0.0f);
+		leftarm.setTextureSize(64, 64);
+		leftarm.mirror = true;
+		setRotation(leftarm, 0.0f, 0.0f, -0.7853982f);
+		(rightleg = new ModelRenderer(this, 0, 25)).addBox(-3.0f, 7.0f, -2.0f, 6, 4, 1);
+		rightleg.setRotationPoint(-6.0f, 13.0f, 0.0f);
+		rightleg.setTextureSize(64, 64);
+		rightleg.mirror = true;
+		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
+		(leftleg = new ModelRenderer(this, 0, 25)).addBox(-3.0f, 7.0f, -2.0f, 6, 4, 1);
+		leftleg.setRotationPoint(6.0f, 13.0f, 0.0f);
+		leftleg.setTextureSize(64, 64);
+		leftleg.mirror = true;
+		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(body2 = new ModelRenderer(this, 16, 16)).addBox(-4.0f, 0.0f, -2.0f, 8, 10, 1);
+		body2.setRotationPoint(0.0f, 2.0f, 0.0f);
+		body2.setTextureSize(64, 64);
+		body2.mirror = true;
+		setRotation(body2, 0.0f, 0.0f, 0.0f);
+		(body3 = new ModelRenderer(this, 16, 10)).addBox(-3.0f, 0.0f, -2.0f, 8, 1, 1);
+		body3.setRotationPoint(-3.0f, 12.0f, 1.0f);
+		body3.setTextureSize(64, 64);
+		body3.mirror = true;
+		setRotation(body3, 0.0f, 0.0f, 1.919862f);
+		(body4 = new ModelRenderer(this, 16, 13)).addBox(-4.0f, 0.0f, -2.0f, 1, 1, 1);
+		body4.setRotationPoint(0.5f, 2.0f, 0.0f);
+		body4.setTextureSize(64, 64);
+		body4.mirror = true;
+		setRotation(body4, 0.0f, 0.0f, 1.570796f);
+		(body5 = new ModelRenderer(this, 16, 10)).addBox(-5.0f, 0.0f, -2.0f, 8, 1, 1);
+		body5.setRotationPoint(6.0f, 0.0f, 1.0f);
+		body5.setTextureSize(64, 64);
+		body5.mirror = true;
+		setRotation(body5, 0.0f, 0.0f, -0.6108652f);
+		(body6 = new ModelRenderer(this, 16, 10)).addBox(-3.0f, 0.0f, -2.0f, 8, 1, 1);
+		body6.setRotationPoint(-6.0f, 0.0f, 1.0f);
+		body6.setTextureSize(64, 64);
+		body6.mirror = true;
+		setRotation(body6, 0.0f, 0.0f, 0.6108652f);
+		(body7 = new ModelRenderer(this, 16, 10)).addBox(-4.0f, 0.0f, -2.0f, 8, 1, 1);
+		body7.setRotationPoint(0.5f, 2.0f, 1.0f);
+		body7.setTextureSize(64, 64);
+		body7.mirror = true;
+		setRotation(body7, 0.0f, 0.0f, 1.570796f);
+		(leftleg2 = new ModelRenderer(this, 0, 32)).addBox(-0.5f, 5.0f, -1.0f, 1, 4, 1);
+		leftleg2.setRotationPoint(6.0f, 13.0f, 0.0f);
+		leftleg2.setTextureSize(64, 64);
+		leftleg2.mirror = true;
+		setRotation(leftleg2, 0.0f, 0.0f, 0.0f);
+		(rightleg3 = new ModelRenderer(this, 0, 16)).addBox(-0.5f, 5.0f, -1.0f, 1, 4, 1);
+		rightleg3.setRotationPoint(-6.0f, 13.0f, 0.0f);
+		rightleg3.setTextureSize(64, 64);
+		rightleg3.mirror = true;
+		setRotation(rightleg3, 0.0f, 0.0f, 0.0f);
+		(rightleg2 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -2.0f, 6, 6, 1);
+		rightleg2.setRotationPoint(-6.0f, 13.0f, 0.0f);
+		rightleg2.setTextureSize(64, 64);
+		rightleg2.mirror = true;
+		setRotation(rightleg2, 0.0f, 0.0f, 0.0f);
+		(leftleg3 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -2.0f, 6, 6, 1);
+		leftleg3.setRotationPoint(6.0f, 13.0f, 0.0f);
+		leftleg3.setTextureSize(64, 64);
+		leftleg3.mirror = true;
+		setRotation(leftleg3, 0.0f, 0.0f, 0.0f);
+		(leftarm2 = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 6, 8, 1);
+		leftarm2.setRotationPoint(9.0f, 5.0f, 0.0f);
+		leftarm2.setTextureSize(64, 64);
+		leftarm2.mirror = true;
+		setRotation(leftarm2, 0.0f, 0.0f, 0.0f);
+		(rightarm2 = new ModelRenderer(this, 40, 16)).addBox(-4.0f, -2.0f, -2.0f, 6, 8, 1);
+		rightarm2.setRotationPoint(-9.0f, 5.0f, 0.0f);
+		rightarm2.setTextureSize(64, 64);
+		rightarm2.mirror = true;
+		setRotation(rightarm2, 0.0f, 0.0f, 0.0f);
+		(body8 = new ModelRenderer(this, 16, 10)).addBox(-4.0f, 0.0f, -2.0f, 8, 1, 1);
+		body8.setRotationPoint(-6.0f, 6.0f, 1.0f);
+		body8.setTextureSize(64, 64);
+		body8.mirror = true;
+		setRotation(body8, 0.0f, 0.0f, 0.3490659f);
+		(body9 = new ModelRenderer(this, 16, 10)).addBox(-4.0f, 0.0f, -2.0f, 8, 1, 1);
+		body9.setRotationPoint(6.0f, 6.0f, 1.0f);
+		body9.setTextureSize(64, 64);
+		body9.mirror = true;
+		setRotation(body9, 0.0f, 0.0f, -0.3490659f);
+	}
+
+	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
+		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
+		head.render(par7);
+		body.render(par7);
+		rightarm.render(par7);
+		leftarm.render(par7);
+		rightleg.render(par7);
+		leftleg.render(par7);
+		body2.render(par7);
+		body3.render(par7);
+		body4.render(par7);
+		body5.render(par7);
+		body6.render(par7);
+		body7.render(par7);
+		leftleg2.render(par7);
+		rightleg3.render(par7);
+		rightleg2.render(par7);
+		leftleg3.render(par7);
+		leftarm2.render(par7);
+		rightarm2.render(par7);
+		body8.render(par7);
+		body9.render(par7);
+	}
+
+	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
+	}
+
+	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
+		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightleg.rotateAngleY = 0.0f;
+		rightleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightleg2.rotateAngleY = 0.0f;
+		rightleg3.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightleg3.rotateAngleY = 0.0f;
+		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		leftleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		leftleg3.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+	}
+}

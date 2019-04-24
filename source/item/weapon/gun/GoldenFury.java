@@ -1,0 +1,51 @@
+package net.tslat.aoa3.item.weapon.gun;
+
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
+import net.tslat.aoa3.entity.projectiles.gun.EntityYellowBullet;
+import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.StringUtil;
+
+import java.util.List;
+
+public class GoldenFury extends BaseGun implements AdventWeapon {
+	public GoldenFury(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, sound, durability, firingDelayTicks, recoil);
+		setUnlocalizedName("GoldenFury");
+		setRegistryName("aoa3:golden_fury");
+	}
+
+	@Override
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
+		Item ammo = ItemUtil.findAndConsumeBullet(player, gun, true, player.getHeldItem(hand));
+
+		if (ammo != null) {
+			if (itemRand.nextInt(3) == 0) {
+				player.world.createExplosion(null, player.posX, player.posY + player.height + 0.1f, player.posZ, 2.0f, false);
+				player.setFire(5);
+			}
+			else {
+				return new EntityYellowBullet(player, gun, hand, 120, 0);
+			}
+		}
+
+		return null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+		tooltip.add(StringUtil.getColourLocaleString("item.GoldenFury.desc.1", TextFormatting.DARK_GREEN));
+		super.addInformation(stack, world, tooltip, flag);
+	}
+}

@@ -1,0 +1,24 @@
+Éléments à l'écran (Gui)
+
+Advent of Ascension installe plusieurs éléments à l'écran pendant que tu joues. Ces éléments sont cruciaux pour progresser dans le mod, car ils montrent des informations vitales que tu auras besoin de savoir en jouant.
+Tu peux désactiver cet affichage avec le bouton assigné ('o' par défaut). Si tu n'est pas sûr de ton bouton assigné, regarde dans tes paramètres de contrôles.
+
+L'icône du poing:
+  L'icône de poing orange/rouge est appelée rage de combat. La rage de combat se régénère passivement au fur et à mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros dégâts, faisant bien plus mal. Tu peut augmenter les dégâts de ce coup en montant ton skill boucherie.
+
+L'éclair:
+  L'icône d'éclair est appelée énergie. Cela représente une resource renouvelable et consommable qui est utilisée comme munition par les blasters. Elle se régénère passivement lorsqu'inactive, mais est rapidement drainée par les blasters.
+
+L'îcone de créature à cornes:
+  Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent pasivement pendant que tu joues. Les tablettes de création du skill création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
+  Tu peut augmenter ton maximum de points de création en montant ton skill augure.
+
+L'icône alien bleu:
+  Cette icône est appelée pouvoir des âmes. Il représente la quantité de pouvoir de âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Ils sont actuellement inutilisés, donc pas besoin de s'en préoccuper pour l'instant.
+
+Les quatres lignes:
+  Logée entre la rage de combat et l'énergie est l'icône de tribut. Cette icône est divisée en quatre lignes individuelles, chacune représentant une divinité spécifique. Il y a quatre principales divinités dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et déteste différentes choses, et il peut donc être difficile de toutes les combler.
+  Lorsque tu accomplis certaines tâches pendant la journée en revanche, tu verras ces barres se remplir. Si tu réussis à remplir une barre en entier, alors quand le soleil se couchera, tu seras offert une faveur par la divinité que tu as apaisée. Ces faveurs peuvent êre très utiles, alors au travail!
+
+L'icône de crâne:
+  Cette icône n'apparaît pas toujours, elle n'apparaît que pendant un court instant parfois après avoir pris des dégâts. Quand cette icône apparaît, le mob qui t'as attaqué a son âme liée à la tienne. Tu peux alors utiliser un vulcane pour infliger des dégâts instantanés en revanche. Essaie d'obtenir vite un vulcane, car çela peut facilement faire beaucoup de dégâts!
