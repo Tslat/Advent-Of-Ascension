@@ -2,7 +2,8 @@ English:
 # Advent of Ascension
 This is the official Github for Advent of Ascension.
 
-There is no source code to be found here as the mod is not open-source.
+This branch is for the latest 1.7.10 version of the mod (version Tslat-1.1.3).
+
 
 # What can I do here?
 You can do 3 things here:
@@ -14,7 +15,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
 3. Contribute to the translation of the mod. To do so, you need to follow these steps:
 
-  i) Click on the language file you want to translate;
+  i) Go to the 'lang' folder and click on the language file you want to translate;
   
   ii) Click on the little pencil icon in the top right to edit the file;
   
