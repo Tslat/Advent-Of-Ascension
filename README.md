@@ -4,8 +4,11 @@ This is the official Github for Advent of Ascension.
 
 This branch is for the latest 1.7.10 version of the mod (version Tslat-1.1.3).
 
+## DISCLAIMER
+The source provided in this github is for viewing purposes only. Under license, you are permitted to modify the code for PRIVATE USE ONLY.
+Redistribution of the code is a BREACH of the license terms.
 
-# What can I do here?
+## What can I do here?
 You can do 3 things here:
 1. Submit a bug report. To do so, head to the issues page, and click "New Issue":
 https://github.com/Tslat/Advent-Of-Ascension/issues
@@ -34,7 +37,7 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 Здесь отсутствует исходный код, так как мод не является опен-сурс (т.е. сам исходный код закрыт).
 
-# Что я смогу здесь сделать?
+## Что я смогу здесь сделать?
 Вы можете здесь сделать 3 вещи:
 1. Отправьте отчёт о баге. Чтобы сделать это, перейдите на страницу Issues, и нажмите New Issue:
 https://github.com/Tslat/Advent-Of-Ascension/issues
@@ -64,7 +67,7 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 由于此Mod不开源，因而这里不会有任何源代码。
 
-# 这里能干什么？
+## 这里能干什么？
 你可以做以下三件事之一：
 1. 提交漏洞报告。前往issue页面，并单击"New Issue"：
 https://github.com/Tslat/Advent-Of-Ascension/issues
