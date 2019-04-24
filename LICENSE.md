@@ -11,7 +11,7 @@ For all other purposes, all activities must follow the clauses outlined on this 
 # General
 Clauses outlined in this section apply in all situations regarding Advent of Ascension.
 
-## Waivers
+### Waivers
 Any/all clauses on this page may be waived if, and only if you have explicit, written, documented permission from Tslat to do so. Failure to present this evidence at request is regarded as a violation of this license.
 
 ## Applicability
