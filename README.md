@@ -2,13 +2,13 @@
 This is the official Github for Advent of Ascension.
 
 This branch is for the latest 1.12.2 version of the mod.
-Code provided here is commit-free. All source viewable here is representative of the latest public release only.
-As such, all commits to this code will be immediately deleted. Submit a bug report or suggestion for fixes and changes
 
 ## DISCLAIMER
 The source provided in this github is for viewing purposes only. Under license, you are permitted to modify the code for PRIVATE USE ONLY.
 Redistribution of the code is a BREACH of the license terms.
 
+Code provided here is commit-free. All source viewable here is representative of the latest public release only.
+As such, all non-translation commits to this code will be immediately deleted. Submit a bug report or suggestion for fixes and changes
 
 ## What can I do here?
 You can do 3 things here:
