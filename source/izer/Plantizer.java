@@ -1,0 +1,81 @@
+package net.nevermine.izer;
+
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.nevermine.block.functional.*;
+import net.nevermine.creativetab.FarmingTab;
+import net.nevermine.item.crop.EternalSeeds;
+
+public class Plantizer {
+	public static CreativeTabs FarmingTab;
+	public static Block EyeBulbBlock;
+	public static Block HollyTopBlock;
+	public static Block HavenShroomBlock;
+	public static Block FloraclesBlock;
+	public static Block GoldicapsBlock;
+	public static Block LunacrikeBlock;
+	public static Block LunaglobeBlock;
+	public static Block RosidonsBlock;
+	public static Block TrilliadsBlock;
+	public static Block LunalonsBlock;
+	public static Block ChiliBlock;
+	public static Block TeaBlock;
+	public static Block BubbleBerriesBlock;
+	public static Block HeartFruitBlock;
+	public static Block MagicMarangBlock;
+	public static Block ThornyPlantBlock;
+	public static final Item EyeBulbSeeds;
+	public static final Item HavenShroomSeeds;
+	public static final Item HollyTopSeeds;
+	public static final Item LunacrikeSeeds;
+	public static final Item LunalonSeeds;
+	public static final Item LunaglobeSeeds;
+	public static final Item RosidonSeeds;
+	public static final Item GoldicapSeeds;
+	public static final Item FloracleSeeds;
+	public static final Item TrilliadSeeds;
+	public static final Item TeaSeeds;
+	public static final Item ChiliSeeds;
+	public static final Item HeartFruitSeeds;
+	public static final Item BubbleBerrySeeds;
+	public static final Item ThornyPlantSeeds;
+	public static final Item MagicMarangSeeds;
+
+	static {
+		Plantizer.FarmingTab = new FarmingTab(CreativeTabs.getNextID(), "FarmingTab");
+		Plantizer.HollyTopBlock = new BlockHollyTops().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("hollyTops");
+		Plantizer.HavenShroomBlock = new BlockHavenShrooms().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("havenShroom");
+		Plantizer.FloraclesBlock = new BlockFloracles().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("floracles");
+		Plantizer.GoldicapsBlock = new BlockGoldicaps().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("goldicaps");
+		Plantizer.LunacrikeBlock = new BlockLunacrike().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("lunacrike");
+		Plantizer.LunaglobeBlock = new BlockLunaGlobe().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("lunaGlobe");
+		Plantizer.RosidonsBlock = new BlockRosidons().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("rosidons");
+		Plantizer.TrilliadsBlock = new BlockTrilliads().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("trilliads");
+		Plantizer.LunalonsBlock = new BlockLunalons().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("lunalons");
+		Plantizer.ChiliBlock = new BlockChiliPlant().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("chilis");
+		Plantizer.TeaBlock = new BlockTeatree().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("tea");
+		Plantizer.BubbleBerriesBlock = new BlockBubbleBerries().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("bubbleberries");
+		Plantizer.HeartFruitBlock = new BlockHeartFruit().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("heartfruit");
+		Plantizer.MagicMarangBlock = new BlockMagicMarang().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("magicmarang");
+		Plantizer.ThornyPlantBlock = new BlockThornyPlant().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("thornyplant");
+		Plantizer.EyeBulbBlock = new BlockEyeBulbs().setHardness(0.0f).setCreativeTab(Plantizer.FarmingTab).setStepSound(Block.soundTypeGrass).setBlockName("eyeBulb");
+		EyeBulbSeeds = new EternalSeeds(Plantizer.EyeBulbBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("EyeBulbSeeds").setTextureName("nevermine:eyeBulbSeeds");
+		HavenShroomSeeds = new EternalSeeds(Plantizer.HavenShroomBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("HavenShroomSeeds").setTextureName("nevermine:havenShroomSeeds");
+		HollyTopSeeds = new EternalSeeds(Plantizer.HollyTopBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("HollyTopSeeds").setTextureName("nevermine:hollyTopSeeds");
+		LunacrikeSeeds = new EternalSeeds(Plantizer.LunacrikeBlock, Blocks.farmland).setUnlocalizedName("LunacrikeSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:lunacrikeSeeds");
+		LunalonSeeds = new EternalSeeds(Plantizer.LunalonsBlock, Blocks.farmland).setUnlocalizedName("LunalonSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:lunalonSeeds");
+		LunaglobeSeeds = new EternalSeeds(Plantizer.LunaglobeBlock, Blocks.farmland).setUnlocalizedName("LunaglobeSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:lunaglobeSeeds");
+		RosidonSeeds = new EternalSeeds(Plantizer.RosidonsBlock, Blocks.farmland).setUnlocalizedName("RosidonSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:rosidonSeeds");
+		GoldicapSeeds = new EternalSeeds(Plantizer.GoldicapsBlock, Blocks.farmland).setUnlocalizedName("GoldicapSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:goldicapSeeds");
+		FloracleSeeds = new EternalSeeds(Plantizer.FloraclesBlock, Blocks.farmland).setUnlocalizedName("FloracleSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:floracleSeeds");
+		TrilliadSeeds = new EternalSeeds(Plantizer.TrilliadsBlock, Blocks.farmland).setUnlocalizedName("TrilliadSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:trilliadSeeds");
+		TeaSeeds = new EternalSeeds(Plantizer.TeaBlock, Blocks.farmland).setUnlocalizedName("TeaSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:teaSeeds");
+		ChiliSeeds = new EternalSeeds(Plantizer.ChiliBlock, Blocks.farmland).setUnlocalizedName("ChiliSeeds").setCreativeTab(Plantizer.FarmingTab).setTextureName("nevermine:chiliSeeds");
+		HeartFruitSeeds = new EternalSeeds(Plantizer.HeartFruitBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("HeartFruitSeeds").setTextureName("nevermine:heartFruitSeeds");
+		BubbleBerrySeeds = new EternalSeeds(Plantizer.BubbleBerriesBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("BubbleBerrySeeds").setTextureName("nevermine:bubbleBerrySeeds");
+		ThornyPlantSeeds = new EternalSeeds(Plantizer.ThornyPlantBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("ThornyPlantSeeds").setTextureName("nevermine:thornPlantSeeds");
+		MagicMarangSeeds = new EternalSeeds(Plantizer.MagicMarangBlock, Blocks.farmland).setCreativeTab(Plantizer.FarmingTab).setUnlocalizedName("MagicMarangSeeds").setTextureName("nevermine:magicMarangSeeds");
+	}
+}

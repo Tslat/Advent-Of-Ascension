@@ -1,0 +1,105 @@
+package net.nevermine.structures.dustopia;
+
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
+import net.nevermine.izer.Blockizer;
+
+import java.util.Random;
+
+public class Cage3 extends WorldGenerator {
+	public boolean generate(final World world, final Random rand, final int i, final int j, final int k) {
+		if (world.getBlock(i + 5, j - 1, k + 1) != Blockizer.GrassDustopia && world.getBlock(i + 5, j - 1, k + 1) != Blockizer.DirtDustopia) {
+			return false;
+		}
+		world.setBlock(i + 0, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 0, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 0, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 0, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 6, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 7, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 0, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 0, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 0, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 1, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 1, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 1, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 1, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 1, j + 9, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 1, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 2, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 6, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 7, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 2, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 2, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 3, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 4, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 0, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 1, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 2, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 3, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 4, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 5, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 6, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 7, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 8, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 9, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 5, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 6, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 7, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 8, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 6, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 7, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 8, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 8, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 9, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 9, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 9, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 9, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 9, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 9, j + 9, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 9, j + 10, k + 1, Blockizer.StoneDustopia);
+		world.setBlock(i + 10, j + 5, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 10, j + 5, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 10, j + 5, k + 2, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 10, j + 6, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 6, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 6, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 7, k + 0, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 7, k + 1, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 7, k + 2, Blockizer.DawnwoodBars);
+		world.setBlock(i + 10, j + 8, k + 0, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 10, j + 8, k + 1, Blockizer.DawnwoodPlanks);
+		world.setBlock(i + 10, j + 8, k + 2, Blockizer.DawnwoodPlanks);
+		return true;
+	}
+}

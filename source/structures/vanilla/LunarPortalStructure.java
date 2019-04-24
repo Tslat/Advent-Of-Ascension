@@ -1,0 +1,81 @@
+package net.nevermine.structures.vanilla;
+
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
+import net.nevermine.izer.Blockizer;
+
+import java.util.Random;
+
+public class LunarPortalStructure extends WorldGenerator {
+	public boolean generate(final World world, final Random rand, final int i, final int j, final int k) {
+		world.setBlock(i + 0, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 1, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 1, j + 4, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 1, j + 5, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 2, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 2, j + 4, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 2, j + 5, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 5, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 5, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 6, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 6, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 6, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 2, j + 7, k + 2, Blockizer.GrassLunasole);
+		world.setBlock(i + 2, j + 7, k + 3, Blockizer.GrassLunasole);
+		world.setBlock(i + 2, j + 7, k + 4, Blockizer.GrassLunasole);
+		world.setBlock(i + 3, j + 0, k + 0, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 1, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 5, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 0, k + 6, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 1, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 2, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 3, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 4, k + 1, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 4, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 4, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 4, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 4, k + 5, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 5, k + 1, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 5, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 5, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 5, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 5, k + 5, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 6, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 6, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 6, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 3, j + 7, k + 2, Blockizer.GrassLunasole);
+		world.setBlock(i + 3, j + 7, k + 3, Blockizer.GrassLunasole);
+		world.setBlock(i + 3, j + 7, k + 4, Blockizer.GrassLunasole);
+		world.setBlock(i + 3, j + 8, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 8, k + 3, Blockizer.lunalusPortal);
+		world.setBlock(i + 3, j + 8, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 9, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 9, k + 3, Blockizer.lunalusPortal);
+		world.setBlock(i + 3, j + 9, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 10, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 10, k + 3, Blockizer.lunalusPortal);
+		world.setBlock(i + 3, j + 10, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 11, k + 2, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 11, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 3, j + 11, k + 4, Blockizer.LunarBricks);
+		world.setBlock(i + 4, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 4, j + 4, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 4, j + 5, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 5, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 5, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 6, k + 2, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 6, k + 3, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 6, k + 4, Blockizer.DirtLunasole);
+		world.setBlock(i + 4, j + 7, k + 2, Blockizer.GrassLunasole);
+		world.setBlock(i + 4, j + 7, k + 3, Blockizer.GrassLunasole);
+		world.setBlock(i + 4, j + 7, k + 4, Blockizer.GrassLunasole);
+		world.setBlock(i + 5, j + 0, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 5, j + 4, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 5, j + 5, k + 3, Blockizer.LunarBricks);
+		world.setBlock(i + 6, j + 0, k + 3, Blockizer.LunarBricks);
+		return true;
+	}
+}

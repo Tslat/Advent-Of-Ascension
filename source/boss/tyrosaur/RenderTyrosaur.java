@@ -1,0 +1,51 @@
+/*
+ * Decompiled with CFR 0_128.
+ *
+ * Could not load the following classes:
+ *  cpw.mods.fml.relauncher.Side
+ *  cpw.mods.fml.relauncher.SideOnly
+ *  net.minecraft.client.model.ModelBase
+ *  net.minecraft.client.renderer.entity.RenderLiving
+ *  net.minecraft.entity.Entity
+ *  net.minecraft.entity.EntityLiving
+ *  net.minecraft.util.ResourceLocation
+ */
+package net.nevermine.boss.tyrosaur;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
+import net.nevermine.resource.boss.EternalBossStatus;
+
+@SideOnly(value = Side.CLIENT)
+public class RenderTyrosaur extends RenderLiving {
+	private static final ResourceLocation EntityTexture = new ResourceLocation("nevermine:textures/mobs/tyrosaur.png");
+	protected modelTyrosaur model;
+
+	public RenderTyrosaur(ModelBase par1ModelBase, float par2) {
+		super(par1ModelBase, par2);
+		model = (modelTyrosaur)mainModel;
+	}
+
+	public void renderTyrosaur(EntityTyrosaur var1, double var2, double var4, double var6, float var8, float var9) {
+		EternalBossStatus.setBossStatus(var1, true, 43);
+		super.doRender(var1, var2, var4, var6, var8, var9);
+	}
+
+	public void doRender(EntityLiving var1, double var2, double var4, double var6, float var8, float var9) {
+		renderTyrosaur((EntityTyrosaur)var1, var2, var4, var6, var8, var9);
+	}
+
+	public void doRender(Entity var1, double var2, double var4, double var6, float var8, float var9) {
+		renderTyrosaur((EntityTyrosaur)var1, var2, var4, var6, var8, var9);
+	}
+
+	protected ResourceLocation getEntityTexture(Entity entity) {
+		return EntityTexture;
+	}
+}
+
