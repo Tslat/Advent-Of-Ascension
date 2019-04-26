@@ -1,0 +1,15 @@
+注魔（技能）
+
+如果你要更强大的装备，将神奇的能力注入你的剑或护甲绝对是一个不错的选择。
+注魔的意义就在于此。合成一个注魔台，收集几个增强器并摆放成一个特定的结构，你就可以为虚无世界的物品附上任何魔咒。
+
+提高注魔等级有以下几种方式：
+
+光：
+   当你在各维度漫游时，你会偶然发现一些明亮的闪烁生物在漫无目的地徘徊。这些生物就叫光。对着它们使用石碗，就能够收集它们浓缩的精华，并给予你一些注魔石和经验。不同种类的光在不同的世界中漫游，并给予不同的注魔石和注魔经验
+   如果你有足够高的注魔等级，你还可以合成一个钻石碗，用于更有效地收集光。
+
+Infusion Stones:
+  As you find and collect infusion stones, you can take them back to your infusion table and insert them. Each time you do, you'll gain a little more Infusion xp, and a small chance to get an empowered version of the stone back. These empowered versions can then be used to infuse enchantments into different items.
+
+Level up your Infusion skill to unlock additional enchantment options on your infusion table, and access to more valuable pixons.
