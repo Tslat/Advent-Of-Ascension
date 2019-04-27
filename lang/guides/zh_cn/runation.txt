@@ -1,0 +1,10 @@
+魔力（技能）
+
+魔力是一个围绕将魔法注入符文的技能。获得的符文就可以作为法杖的弹药使用。
+你首先需要找到一些符文矿。将挖到的符文矿放入熔炉中烧炼就可以得到符文块，并可以用于进一步合成未充能符文。
+
+在各维度找到一些漂浮在空中的符文祭坛，并对着符文祭坛使用符文就可以往符文中注入祭坛的魔法，你也会因此获得一些魔力经验。
+In the overworld you can imbue the blank runes with air power at an air rune shrine. These shrines come equipped with a rune shrine block to use, but other rune shrines in other worlds do not. You may want to steal away the rune shrine from the wind rune shrines, or craft another one to carry around for when you need it.
+
+As you level up, you will gain knowledge on how to imbue more powerful magic types and craft different runes. Some of these more powerful runes will require charged runium, which can be found in the Deeplands as charged runium ore.
+Higher levels of Runation start to give you duplicate runes for free when crafting as well!
