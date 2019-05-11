@@ -1443,6 +1443,7 @@ gui.aoamain.bestiary.attribute=Creature Attribute:
 gui.aoamain.bestiary.downloading=Download AoA mob statistics...
 gui.aoamain.bestiary.empty=There's nothing here, maybe you should kill something
 gui.aoamain.bestiary.health=Health:
+gui.aoamain.bestiary.hunterReq=Hunter Requirement:
 gui.aoamain.bestiary.knockback=Knockback Resist:
 gui.aoamain.bestiary.projectileStrength=Projectile Damage:
 gui.aoamain.bestiary.size=Size:
