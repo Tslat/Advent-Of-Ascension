@@ -54,8 +54,8 @@ public class EntityLottoman extends AoATrader {
 
 	@Override
 	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 5), new ItemStack(ItemRegister.gemBag)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 12), new ItemStack(ItemRegister.gemBag, 13)));
+		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ItemRegister.gemBag)));
+		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 30), new ItemStack(ItemRegister.gemBag, 13)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(ItemRegister.magicRepairDust)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 25), new ItemStack(ItemRegister.coinGold, 25), new ItemStack(ItemRegister.magicRepairDust, 15)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.orbulon, 15), new ItemStack(ItemRegister.magicRepairDust, 2)));

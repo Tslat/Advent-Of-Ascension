@@ -54,11 +54,9 @@ public class BiomeDeeplands extends Biome {
 	public class BiomeDeeplandsDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.chargedRuniumVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.chargedRuniumVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreChargedRunium.getDefaultState(), Math.max(ConfigurationUtil.chargedRuniumMinOres, rand.nextInt(ConfigurationUtil.chargedRuniumMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+				for (int i = 0; i < ConfigurationUtil.OreConfig.chargedRunium.veinsPerChunk; i++) {
+					new WorldGenMinable(BlockRegister.oreChargedRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chargedRunium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chargedRunium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 				}
-			}
 
 			for (int i = 0; i < 4; i++) {
 				new WorldGenMinable(BlockRegister.deepCase.getDefaultState(), 5, BlockMatcher.forBlock(BlockRegister.stoneDeeplands))

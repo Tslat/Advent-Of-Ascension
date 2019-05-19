@@ -49,7 +49,7 @@ public class PacketLeaderboardStats implements IMessage {
 			readEntries = (ArrayList<Leaderboard.TrimmedLeaderboardEntry>)objectIn.readObject();
 		}
 		catch (Exception e) {
-			if (ConfigurationUtil.doVerboseDebugging)
+			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				AdventOfAscension.getLogger().log(Level.WARN, "Unable to deserialize packet for leaderboard stats, skipping");
 		}
 		finally {
@@ -79,7 +79,7 @@ public class PacketLeaderboardStats implements IMessage {
 			entriesByteArray = byteStreamOut.toByteArray();
 		}
 		catch (Exception e) {
-			if (ConfigurationUtil.doVerboseDebugging)
+			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				AdventOfAscension.getLogger().log(Level.WARN, "Failed to serialize packet for leaderboard stats, skipping");
 
 			return;
@@ -113,7 +113,7 @@ public class PacketLeaderboardStats implements IMessage {
 
 	public PacketLeaderboardStats(Enums.Skills skill, ArrayList<NBTTagCompound> entries) {
 		this.skillId = skill.id	;
-		this.arraySize = entries.size();
+		this.arraySize = entries.leaderboardCapacity();
 		this.entries = entries;
 	}
 

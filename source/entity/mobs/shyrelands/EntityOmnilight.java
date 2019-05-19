@@ -32,7 +32,7 @@ public class EntityOmnilight extends AoAFlyingRangedMob {
     }
 
     @Override
-    protected double getBaseProjectileDamage() {
+    public double getBaseProjectileDamage() {
         return 8;
     }
 

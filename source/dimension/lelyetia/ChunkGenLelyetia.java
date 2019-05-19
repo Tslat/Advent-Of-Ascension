@@ -246,7 +246,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceLelyetianTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLelyetianTower) == 0) {
+		if (ConfigurationUtil.StructureConfig.lelyetia.lelyetianTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lelyetia.lelyetianTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 60;
@@ -254,7 +254,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock && world.getBlockState(pos.setPos(x + 7, y, z + 7)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("LelyetianTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceZhinxEnclave > 0 && rand.nextInt(ConfigurationUtil.spawnChanceZhinxEnclave) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lelyetia.zhinxEnclaveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lelyetia.zhinxEnclaveSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 15;
@@ -262,7 +262,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, 55, z + 6)).getBlock() != Blocks.AIR)
 				StructuresHandler.generateStructure("ZhinxEnclave", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceParaviteHive > 0 && rand.nextInt(ConfigurationUtil.spawnChanceParaviteHive) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lelyetia.paraviteHiveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lelyetia.paraviteHiveSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 36;
@@ -270,14 +270,14 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, 55, z + 6)).getBlock() != Blocks.AIR)
 				StructuresHandler.generateStructure("ParaviteHive", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceBoneyDungeon > 0 && rand.nextInt(ConfigurationUtil.spawnChanceBoneyDungeon) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lelyetia.boneyDungeonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lelyetia.boneyDungeonSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 31;
 
 			StructuresHandler.generateStructure("BoneyDungeon", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGrawPillar > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGrawPillar) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lelyetia.grawPillarSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lelyetia.grawPillarSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 60;

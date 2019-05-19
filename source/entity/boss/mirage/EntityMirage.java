@@ -46,7 +46,7 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 8;
 	}
 
@@ -91,7 +91,7 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis)
+		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
 			dropItem(ItemRegister.progressCoin3, 1);
 	}
 
@@ -107,7 +107,7 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 		if (!world.isRemote && rand.nextInt(80) == 0) {
 			world.playSound(null, posX, posY, posZ, SoundsRegister.mobMirageTeleport, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			
-			if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis) {
+			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 				switch (rand.nextInt(4)) {
 					case 0:
 						setLocationAndAngles(167, 24, 8, rand.nextFloat() * 360, 0);

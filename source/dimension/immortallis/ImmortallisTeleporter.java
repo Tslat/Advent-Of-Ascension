@@ -29,7 +29,7 @@ public class ImmortallisTeleporter extends AoATeleporter {
 
 	@Override
 	public void placeEntity(World world, Entity entity, float yaw) {
-		if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis) {
+		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 			if (entity.hasCapability(AdventPlayerProvider.ADVENT_PLAYER, null)) {
 				PortalCoordinatesContainer loc = new PortalCoordinatesContainer(world.provider.getDimension(), entity.posX, entity.posY, entity.posZ);
 

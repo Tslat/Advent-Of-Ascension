@@ -20,7 +20,8 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.utils.ItemUtil;
 
 public class CrystalCreator extends Block {
-	private Item crystalType;
+	private Item gemstone;
+	private Item crystal;
 
 	public CrystalCreator(String name, String registryName) {
 		super(Material.ROCK);
@@ -36,63 +37,25 @@ public class CrystalCreator extends Block {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
 			ItemStack stack = player.getHeldItem(hand);
-			Item crystal = Items.AIR;
 
-			switch (crystalType.getUnlocalizedName()) {
-				case "item.BlueCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesBlue)
-						return false;
+			if (stack.getItem() == gemstone) {
+				if (!player.capabilities.isCreativeMode)
+					stack.shrink(1);
 
-					crystal = ItemRegister.crystalBlue;
-					break;
-				case "item.GreenCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesGreen)
-						return false;
-
-					crystal = ItemRegister.crystalGreen;
-					break;
-				case "item.RedCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesRed)
-						return false;
-
-					crystal = ItemRegister.crystalRed;
-					break;
-				case "item.PurpleCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesPurple)
-						return false;
-
-					crystal = ItemRegister.crystalPurple;
-					break;
-				case "item.WhiteCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesWhite)
-						return false;
-
-					crystal = ItemRegister.crystalWhite;
-					break;
-				case "item.YellowCrystal":
-					if (stack.getItem() != ItemRegister.gemstonesYellow)
-						return false;
-
-					crystal = ItemRegister.crystalYellow;
-					break;
+				if (AdventOfAscension.rand.nextInt(8) == 0) {
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal));
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.crystalCreatorUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				}
 			}
-
-			if (!player.capabilities.isCreativeMode)
-				stack.shrink(1);
-
-			if (AdventOfAscension.rand.nextInt(8) == 0) {
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal));
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.crystalCreatorUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
-			}
-
-			return true;
 		}
 
 		return true;
 	}
 
-	public void setActivationCrystal(Item crystal) {
-		if (crystalType == null)
-			crystalType = crystal;
+	public void setConversionItems(Item gemstone, Item crystal) {
+		if (gemstone == null) {
+			this.gemstone = gemstone;
+			this.crystal = crystal;
+		}
 	}
 }

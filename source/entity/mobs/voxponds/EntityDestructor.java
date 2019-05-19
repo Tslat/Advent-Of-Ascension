@@ -44,7 +44,7 @@ public class EntityDestructor extends AoARangedMob implements SpecialPropertyEnt
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 8;
 	}
 

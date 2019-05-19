@@ -23,7 +23,8 @@ public class ElusiveRenderer extends RenderLiving<EntityElusive> {
 	@Override
 	public void doRender(EntityElusive entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		BossBarRenderer.boss = entity;
+		if (x + y + z != 0)
+			BossBarRenderer.boss = entity;
 
 		if (partialTicks < 0.3)
 			entity.checkMusicStatus();

@@ -53,19 +53,17 @@ public class BiomeShyrelands extends Biome {
 	public class BiomeShyrelandsDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.shyreOreMinOres > 0) {
-				for (int i = 0; i < Math.max(ConfigurationUtil.shyreOreMinOres, rand.nextInt(ConfigurationUtil.shyreOreMaxOres)); i++) {
-					posX = basePos.getX() + rand.nextInt(16);
-					posZ = basePos.getZ() + rand.nextInt(16);
-					posY = rand.nextInt(25) + 2;
+			for (int i = 0; i < Math.max(ConfigurationUtil.OreConfig.shyre.minBlocksPerChunk, rand.nextInt(ConfigurationUtil.OreConfig.shyre.maxBlocksPerChunk)); i++) {
+				posX = basePos.getX() + rand.nextInt(16);
+				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = rand.nextInt(25) + 2;
 
-					if (world.getBlockState(pos.setPos(posX, posY, posZ)) == biome.fillerBlock) {
-						if (rand.nextInt(8) == 0) {
-							world.setBlockState(pos, BlockRegister.oreShyregem.getDefaultState());
-						}
-						else {
-							world.setBlockState(pos, BlockRegister.oreShyrestone.getDefaultState());
-						}
+				if (world.getBlockState(pos.setPos(posX, posY, posZ)) == biome.fillerBlock) {
+					if (rand.nextInt(8) == 0) {
+						world.setBlockState(pos, BlockRegister.oreShyregem.getDefaultState());
+					}
+					else {
+						world.setBlockState(pos, BlockRegister.oreShyrestone.getDefaultState());
 					}
 				}
 			}

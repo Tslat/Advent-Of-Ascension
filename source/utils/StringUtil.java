@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.text.DecimalFormat;
 
 public class StringUtil {
 	public static ITextComponent getLocale(String key) {
@@ -61,16 +62,32 @@ public class StringUtil {
 		return firstLetter + string.substring(1).toLowerCase();
 	}
 
-	public static String numberToSuffixFormat(float value) {
-		if (value < 1000) {
-			return Math.round(value) + "";
+	public static String floorAndAppendSuffix(float value, boolean strictDigitCount) {
+		String suffix = "";
+
+		if (value >= 10000) {
+			if (value < 1000000) {
+				suffix = "k";
+				value = value / 1000f;
+			}
+			else if (value < 1000000000) {
+				suffix = "m";
+				value = value / 1000000f;
+			}
+			else {
+				suffix = "b";
+				value = value / 1000000000f;
+			}
 		}
-		else if (value < 1000000) {
-			return Math.round(value / 1000f) + "k";
-		}
-		else {
-			return Math.round(value / 1000000f) + "m";
-		}
+
+		if (strictDigitCount && value >= 10)
+			value = (int)value;
+
+		return new DecimalFormat(strictDigitCount ? "#.#" : "#.##").format(value) + suffix;
+	}
+
+	public static String roundToNthDecimalPlace(float value, int decimals) {
+		return String.valueOf(Math.round(value * (float)Math.pow(10, decimals)) / (float)Math.pow(10, decimals));
 	}
 
 	public static String capitaliseAllWords(@Nonnull String str) {

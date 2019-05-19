@@ -94,13 +94,14 @@ public class EntityPropertiesRenderer {
 		GlStateManager.rotate(-mc.getRenderManager().playerViewX, 1, 0, 0);
 		GlStateManager.translate(xOffset, yOffset, 0);
 		GlStateManager.scale(0.45f, 0.45f, 0.45f);
-		GL11.glDisable(2896);
+		GL11.glDisable(GL11.GL_LIGHTING);
 		buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 		buffer.pos(-0.5d, -0.25d, 0).tex(0, 1).normal(0.0f, 1.0f, 0.0f).endVertex();
 		buffer.pos(0.5d, -0.25d, 0).tex(1, 1).normal(0.0f, 1.0f, 0.0f).endVertex();
 		buffer.pos(0.5d, 0.75d, 0).tex(1, 0).normal(0.0f, 1.0f, 0.0f).endVertex();
 		buffer.pos(-0.5d, 0.75d, 0).tex(0, 0).normal(0.0f, 1.0f, 0.0f).endVertex();
 		tess.draw();
+		GL11.glEnable(GL11.GL_LIGHTING);
 		GlStateManager.popMatrix();
 	}
 }

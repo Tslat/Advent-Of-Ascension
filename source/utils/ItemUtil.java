@@ -20,6 +20,7 @@ import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ItemUtil {
@@ -46,17 +47,17 @@ public class ItemUtil {
 		}
 	}
 
-	public static double getStackAttributeSpeedValue(ItemStack stack, IAttribute attribute, EntityPlayer player, EntityEquipmentSlot equipmentSlot, UUID attributeUUID) {
+	public static double getStackAttributeValue(ItemStack stack, IAttribute baseAttribute, EntityPlayer player, EntityEquipmentSlot equipmentSlot, UUID attributeUUID) {
 		for (Map.Entry<String, AttributeModifier> entry : stack.getItem().getAttributeModifiers(equipmentSlot, stack).entries()) {
 			AttributeModifier mod = entry.getValue();
 
 			if (mod.getID().equals(attributeUUID)) {
 				double value = mod.getAmount();
 
-				value += player.getEntityAttribute(attribute).getBaseValue();
+				if (mod.getID().equals(UUID.fromString(Enums.AttributeUUIDS.VANILLA_ATTACK_SPEED)))
+					value += player.getEntityAttribute(baseAttribute).getBaseValue();
 
 				return mod.getOperation() != 1 && mod.getOperation() != 2 ? value : value * 100;
-
 			}
 		}
 
@@ -148,7 +149,7 @@ public class ItemUtil {
 		return ammo;
 	}
 
-	public static boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runeMap, EntityPlayer player, boolean allowBuffs, ItemStack heldItem) {
+	public static boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runeMap, EntityPlayer player, boolean allowBuffs, @Nonnull ItemStack heldItem) {
 		if (player.capabilities.isCreativeMode)
 			return true;
 

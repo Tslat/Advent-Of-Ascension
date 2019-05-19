@@ -12,12 +12,12 @@ import net.tslat.aoa3.utils.ConfigurationUtil;
 
 public class RunandorPortalBlock extends PortalBlock {
 	public RunandorPortalBlock() {
-		super("RunandorPortal", "runandor_portal", ConfigurationUtil.dimRunandor, Enums.RGBIntegers.ELECTRIC_BLUE);
+		super("RunandorPortal", "runandor_portal", ConfigurationUtil.MainConfig.dimensionIds.runandor, Enums.RGBIntegers.ELECTRIC_BLUE);
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (!(entity instanceof EntityPlayerMP) || (world.provider.getDimension() == ConfigurationUtil.dimRunandor || ((EntityPlayerMP)entity).capabilities.isCreativeMode || ((EntityPlayerMP)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
+		if (!(entity instanceof EntityPlayerMP) || (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.runandor || ((EntityPlayerMP)entity).capabilities.isCreativeMode || ((EntityPlayerMP)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
 			super.onEntityCollidedWithBlock(world, pos, state, entity);
 	}
 }

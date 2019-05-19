@@ -82,7 +82,7 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!world.isRemote && EntityUtil.isMeleeDamage(source)) {
-			if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis) {
+			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 				switch (rand.nextInt(3)) {
 					case 0:
 						setPositionAndUpdate(235, 22, 10);
@@ -108,7 +108,7 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (!world.isRemote) {
-			if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis) {
+			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 				switch (rand.nextInt(3)) {
 					case 0:
 						setPositionAndUpdate(235, 22, 10);
@@ -133,7 +133,7 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 	protected void dropSpecialItems(int lootingMod, DamageSource source) {
 		dropItem(Item.getItemFromBlock(BlockRegister.statueFlash), 1);
 
-		if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis)
+		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
 			dropItem(ItemRegister.tokensDungeon, 7 + rand.nextInt(5 + lootingMod));
 
 		if (rand.nextInt(3) == 0) {
@@ -156,7 +156,7 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 
 	@Override
 	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis)
+		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
 			dropItem(ItemRegister.progressCoin4, 1);
 	}
 

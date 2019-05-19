@@ -367,7 +367,7 @@ public class ChunkGenLBorean implements IChunkGenerator {
 			this.lakeGen.generate(world, rand, lakePos);
 		}
 
-		if (ConfigurationUtil.spawnChanceAquaticCastle > 0 && rand.nextInt(ConfigurationUtil.spawnChanceAquaticCastle) == 0) {
+		if (ConfigurationUtil.StructureConfig.lborean.aquaticCastleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lborean.aquaticCastleSpawnChance) == 0) {
 			x = baseX + rand.nextInt(6);
 			z = baseZ + rand.nextInt(5);
 			y = world.getHeight(x + 12, z + 12);
@@ -375,7 +375,7 @@ public class ChunkGenLBorean implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 12, y - 1, z + 12)) == biome.topBlock || world.getBlockState(pos).getBlock() == Blocks.WATER)
 				StructuresHandler.generateStructure("AquaticCastle", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceDrownedLottoStand > 0 && rand.nextInt(ConfigurationUtil.spawnChanceAquaticCastle) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lborean.drownedLottoStandSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lborean.aquaticCastleSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 7);
@@ -383,7 +383,7 @@ public class ChunkGenLBorean implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("DrownedLottoStand", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceDracyonFountain > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDracyonFountain) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lborean.dracyonFountainSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lborean.dracyonFountainSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -391,7 +391,7 @@ public class ChunkGenLBorean implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)) == biome.topBlock)
 				StructuresHandler.generateStructure("DracyonFountain", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceHydroPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceHydroPlatform) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lborean.hydroPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lborean.hydroPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3);
@@ -400,7 +400,7 @@ public class ChunkGenLBorean implements IChunkGenerator {
 				StructuresHandler.generateStructure("HydroPlatform", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceWaterRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceWaterRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.lborean.waterRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lborean.waterRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

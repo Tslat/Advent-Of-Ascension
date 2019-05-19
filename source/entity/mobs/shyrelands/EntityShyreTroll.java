@@ -33,7 +33,7 @@ public class EntityShyreTroll extends AoARangedMob {
     }
 
     @Override
-    protected double getBaseProjectileDamage() {
+    public double getBaseProjectileDamage() {
         return 5.5;
     }
 

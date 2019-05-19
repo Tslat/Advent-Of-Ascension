@@ -23,10 +23,7 @@ import net.tslat.aoa3.entity.mobs.shyrelands.EntityArcworm;
 import net.tslat.aoa3.entity.mobs.shyrelands.EntityShyreTroll;
 import net.tslat.aoa3.entity.mobs.voxponds.EntityAlarmo;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PacketUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.*;
 import net.tslat.aoa3.utils.skills.AuguryUtil;
 
 import java.io.IOException;
@@ -58,7 +55,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 	private static float xpExpedition = 0;
 	private static int percentCompleteExpedition = 0;
 	private static int optExpedition = 0;
-	public static int levelExtraction = 1;
+	private static int levelExtraction = 1;
 	private static float xpExtraction = 0;
 	private static int percentCompleteExtraction = 0;
 	private static int levelForaging = 1;
@@ -120,7 +117,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		int y = AdventMainGui.scaledTabRootY + 20;
 		float percentComplete = tributeSelyan / 200f;
 
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.tribute"), x + 50, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.tribute"), x + 50, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		mc.getTextureManager().bindTexture(resourcesTextures);
 		drawScaledCustomSizeModalRect(x, y, 0, 0, 100, 30, 100, 30, 400, 490);
 		drawScaledCustomSizeModalRect(x, y, 0, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 490);
@@ -162,18 +159,18 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 390, 50, 50, 62, 62, 400, 490);
 		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 440, percentComplete * 50, 50, percentComplete * 62, 62, 400, 490);
 
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.selyan"), x + 50, y + 11, 1.25f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.luxon"), x + 50, y + 41, 1.25f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.erebon"), x + 50, y + 71, 1.25f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.pluton"), x + 50, y + 101, 1.25f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.rage"), x + 161, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.energy"), x + 161, y + 67, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.creation"), x + 161, y + 149, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.soul"), x + 161, y + 231, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, (int)resourceRage + "/" + 200, x + 161, y + 40, 1.125f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, (int)resourceEnergy + "/" + 200, x + 161, y + 122, 1.125f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.numberToSuffixFormat(resourceCreation) + "/" + StringUtil.numberToSuffixFormat(maxCreation), x + 161, y + 204, 1.125f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
-		AdventMainGui.drawCenteredScaledString(mc.fontRenderer, StringUtil.numberToSuffixFormat(resourceSoul) + "/" + StringUtil.numberToSuffixFormat(maxSoul), x + 161, y + 286, 1.125f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.selyan"), x + 50, y + 11, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.luxon"), x + 50, y + 41, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.erebon"), x + 50, y + 71, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.pluton"), x + 50, y + 101, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.rage"), x + 161, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.energy"), x + 161, y + 67, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.creation"), x + 161, y + 149, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.soul"), x + 161, y + 231, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceRage + "/" + 200, x + 161, y + 40, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceEnergy + "/" + 200, x + 161, y + 122, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.floorAndAppendSuffix(resourceCreation, true) + "/" + StringUtil.floorAndAppendSuffix(maxCreation, true), x + 161, y + 204, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.floorAndAppendSuffix(resourceSoul, true) + "/" + StringUtil.floorAndAppendSuffix(maxSoul, true), x + 161, y + 286, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 	}
 
 	private void renderSkills() {
@@ -300,6 +297,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 			x = AdventMainGui.scaledTabRootX + 170 + (100 * (1 + skill.id % 5));
 			int lvl = 1;
 			float xp = 0;
+			boolean hitXpCap = false;
 			String skillName = "";
 
 			switch (skill) {
@@ -380,10 +378,21 @@ public class AdventGuiTabPlayer extends GuiScreen {
 					break;
 			}
 
-			AdventMainGui.drawCenteredScaledString(mc.fontRenderer, skillName, x + 31, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.DROP_SHADOW);
+			if (!ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100) {
+				lvl = 100;
+				hitXpCap = true;
+			}
+
+			if (lvl >= 1000)
+				hitXpCap = true;
+
+			RenderUtil.drawCenteredScaledString(mc.fontRenderer, skillName, x + 31, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 			GlStateManager.scale(1.25, 1.25, 1.25);
-			mc.fontRenderer.drawString(StringUtil.getLocaleStringWithArguments("gui.aoamain.player.lvl", String.valueOf(ConfigurationUtil.vanityLevels ? lvl : Math.min(lvl, 100))), x * 0.8f, (y + 65) * 0.8f, Enums.RGBIntegers.WHITE, true);
-			mc.fontRenderer.drawString(StringUtil.getLocaleStringWithArguments("gui.aoamain.player.xp", StringUtil.numberToSuffixFormat(xp), (!ConfigurationUtil.vanityLevels && lvl >= 100) ? "0" : StringUtil.numberToSuffixFormat(PlayerUtil.getXpRequiredForNextLevel(lvl))), x * 0.8f, (y + 77) * 0.8f, Enums.RGBIntegers.WHITE, true);
+			mc.fontRenderer.drawString(StringUtil.getLocaleStringWithArguments("gui.aoamain.player.lvl", String.valueOf(lvl)), x * 0.8f, (y + 65) * 0.8f, Enums.RGBIntegers.WHITE, true);
+
+			if (!hitXpCap)
+				mc.fontRenderer.drawString(StringUtil.getLocaleStringWithArguments("gui.aoamain.player.xp", StringUtil.floorAndAppendSuffix(xp, true), StringUtil.floorAndAppendSuffix(PlayerUtil.getXpRequiredForNextLevel(lvl), true)), x * 0.8f, (y + 77) * 0.8f, Enums.RGBIntegers.WHITE, true);
+
 			GlStateManager.scale(0.8, 0.8, 0.8);
 		}
 	}
@@ -395,7 +404,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		GlStateManager.scale(1.6, 1.6, 1.6);
 
 		String name = mc.player.getDisplayNameString();
-		AdventMainGui.drawOutlinedText(mc.fontRenderer, name, (int)((posX - 10 - mc.fontRenderer.getStringWidth(name) / 2) * 0.625f), (int)((posY - 170) * 0.625f), Enums.RGBIntegers.WHITE, 1.6f);
+		RenderUtil.drawOutlinedText(mc.fontRenderer, name, (int)((posX - 10 - mc.fontRenderer.getStringWidth(name) / 2) * 0.625f), (int)((posY - 170) * 0.625f), Enums.RGBIntegers.WHITE, 1.6f);
 		GlStateManager.scale(0.625, 0.625, 0.625);
 
 		GlStateManager.enableColorMaterial();

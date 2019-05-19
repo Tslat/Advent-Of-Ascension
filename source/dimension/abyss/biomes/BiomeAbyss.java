@@ -54,11 +54,9 @@ public class BiomeAbyss extends Biome {
 	public class BiomeAbyssDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.bloodstoneVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.bloodstoneVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreBloodstone.getDefaultState(), Math.max(ConfigurationUtil.bloodstoneMinOres, rand.nextInt(ConfigurationUtil.bloodstoneMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneAbyss))
-							.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(5) + 45, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.bloodstone.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreBloodstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.bloodstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.bloodstone.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneAbyss))
+						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(5) + 45, rand.nextInt(16)));
 			}
 		}
 

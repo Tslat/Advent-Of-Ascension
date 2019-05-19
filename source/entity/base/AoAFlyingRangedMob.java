@@ -97,7 +97,7 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
 
     protected abstract double getBaseMaxHealth();
 
-    protected abstract double getBaseProjectileDamage();
+    public abstract double getBaseProjectileDamage();
 
     protected abstract double getBaseMovementSpeed();
 

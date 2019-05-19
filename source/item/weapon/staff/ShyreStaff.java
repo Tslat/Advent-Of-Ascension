@@ -63,7 +63,7 @@ public class ShyreStaff extends BaseStaff {
 
 		shooter.setPositionAndUpdate(block.getX(), block.getY(), block.getZ());
 
-		if (shooter instanceof EntityPlayerMP && shooter.world.provider.getDimension() == ConfigurationUtil.dimLunalus)
+		if (shooter instanceof EntityPlayerMP && shooter.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lunalus)
 			ModUtil.completeAdvancement((EntityPlayerMP)shooter, "lunalus/200_iq", "lunalus_shyre_staff_travel");
 	}
 

@@ -16,7 +16,7 @@ public class LeaderboardDataHandler {
 	private static final HashMap<Enums.Skills, Leaderboard> leaderboards = new HashMap<Enums.Skills, Leaderboard>(Enums.Skills.values().length + 1);
 
 	protected static void init() {
-		if (!ConfigurationUtil.leaderboardEnabled)
+		if (!ConfigurationUtil.MainConfig.leaderboardEnabled)
 			return;
 
 		File worldDir = new File(FMLCommonHandler.instance().getSavesDirectory(), FMLCommonHandler.instance().getMinecraftServerInstance().getFolderName());
@@ -90,11 +90,11 @@ public class LeaderboardDataHandler {
 			return;
 		}
 		finally {
-			if (inputStream != null)
-				IOUtils.closeQuietly(inputStream);
-
 			if (objectStream != null)
 				IOUtils.closeQuietly(objectStream);
+
+			if (inputStream != null)
+				IOUtils.closeQuietly(inputStream);
 		}
 
 		leaderboards.put(skill, leaderboard);
@@ -123,9 +123,12 @@ public class LeaderboardDataHandler {
 			}
 		}
 
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+
 		try {
-			FileOutputStream fos = new FileOutputStream(skillFile);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			fos = new FileOutputStream(skillFile);
+			oos = new ObjectOutputStream(fos);
 
 			oos.writeObject(leaderboard);
 			oos.close();
@@ -141,6 +144,13 @@ public class LeaderboardDataHandler {
 			e.printStackTrace();
 
 			return;
+		}
+		finally {
+			if (oos != null)
+				IOUtils.closeQuietly(oos);
+
+			if (fos != null)
+				IOUtils.closeQuietly(fos);
 		}
 	}
 }

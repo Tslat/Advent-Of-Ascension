@@ -27,7 +27,7 @@ public class WorldProviderHaven extends WorldProvider implements AoAWorldProvide
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = true;
+		this.hasSkyLight = false;
 		this.biomeProvider = DimensionRegister.worldTypeHaven.getBiomeProvider(world);
 	}
 

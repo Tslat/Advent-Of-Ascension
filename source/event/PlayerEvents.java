@@ -44,6 +44,8 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.*;
 import net.tslat.aoa3.utils.skills.*;
 
+import java.util.Random;
+
 public class PlayerEvents {
 	@SubscribeEvent
 	public void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
@@ -55,16 +57,16 @@ public class PlayerEvents {
 			if (!ev.player.world.isRemote && !ev.player.capabilities.isCreativeMode && ev.player.onGround && !ev.player.isRiding())
 				ExpeditionUtil.handleRunningTick(ev, cap);
 
-			if (ev.player.dimension == ConfigurationUtil.dimShyrelands) {
+			if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.shyrelands) {
 				ShyrelandsEvents.doPlayerTick(cap);
 			}
-			else if (ev.player.dimension == ConfigurationUtil.dimLelyetia) {
+			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.lelyetia) {
 				LelyetiaEvents.doPlayerTick(cap);
 			}
-			else if (ev.player.dimension == ConfigurationUtil.dimVoxPonds) {
+			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.voxPonds) {
 				VoxPondsEvents.doPlayerTick(cap);
 			}
-			else if (ev.player.dimension == ConfigurationUtil.dimCandyland) {
+			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.candyland) {
 				CandylandEvents.doPlayerTick(cap);
 			}
 		}
@@ -341,6 +343,8 @@ public class PlayerEvents {
 
 	@SubscribeEvent
 	public void onBlockPlace(final BlockEvent.PlaceEvent ev) {
+		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.getPlayer());
+
 		if (!ev.getPlayer().capabilities.isCreativeMode && WorldUtil.isBlockProtectedWorld(ev.getWorld().provider.getDimension())) {
 			ev.setCanceled(true);
 		}

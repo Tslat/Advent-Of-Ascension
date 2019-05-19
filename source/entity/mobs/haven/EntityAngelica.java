@@ -76,7 +76,7 @@ public class EntityAngelica extends AoAFlyingMeleeMob {
 
 	@Override
 	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() != ConfigurationUtil.dimAncientCavern) {
+		if (world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
 			if (rand.nextBoolean())
 				dropItem(ItemRegister.tokensHaven, 1);
 
@@ -97,7 +97,7 @@ public class EntityAngelica extends AoAFlyingMeleeMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.dimAncientCavern) {
+		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
 			Entity source = cause.getTrueSource();
 			EntityPlayer killer = null;
 

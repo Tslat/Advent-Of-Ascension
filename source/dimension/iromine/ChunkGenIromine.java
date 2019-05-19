@@ -357,7 +357,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceIroMaze > 0 && rand.nextInt(ConfigurationUtil.spawnChanceIroMaze) == 0) {
+		if (ConfigurationUtil.StructureConfig.iromine.iroMazeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.iroMazeSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = world.getHeight(x + 20, z + 14);
@@ -365,7 +365,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 20, y - 1, z + 14)) == biome.topBlock)
 				StructuresHandler.generateStructure("IroMaze", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceChargingPads > 0 && rand.nextInt(ConfigurationUtil.spawnChanceChargingPads) == 0) {
+		else if (ConfigurationUtil.StructureConfig.iromine.chargingPadsSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.chargingPadsSpawnChance) == 0) {
 			x = baseX + rand.nextInt(13);
 			z = baseZ + rand.nextInt(13);
 			y = world.getHeight(x + 8, z + 8);
@@ -373,7 +373,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y - 1, z + 8)) == biome.topBlock)
 				StructuresHandler.generateStructure("ChargingPads", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceProfessorsLab > 0 && rand.nextInt(ConfigurationUtil.spawnChanceProfessorsLab) == 0) {
+		else if (ConfigurationUtil.StructureConfig.iromine.professorsLabSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.professorsLabSpawnChance) == 0) {
 			x = baseX + rand.nextInt(13);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 8, z + 5);
@@ -381,7 +381,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("ProfessorsLab", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceIroPillar > 0 && rand.nextInt(ConfigurationUtil.spawnChanceIroPillar) == 0) {
+		else if (ConfigurationUtil.StructureConfig.iromine.iroPillarSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.iroPillarSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3);
@@ -389,7 +389,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 3, y - 1, z + 3)) == biome.topBlock)
 				StructuresHandler.generateStructure("IroPillar", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceIroPassage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceIroPassage) == 0) {
+		else if (ConfigurationUtil.StructureConfig.iromine.iroPassageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.iroPassageSpawnChance) == 0) {
 			switch (rand.nextInt(4)) {
 				case 0:
 					x = baseX + rand.nextInt(16);
@@ -426,7 +426,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 			}
 		}
 
-		if (ConfigurationUtil.spawnChanceEnergyRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceEnergyRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.iromine.energyRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.iromine.energyRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

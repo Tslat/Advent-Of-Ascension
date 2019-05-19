@@ -4,6 +4,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -91,6 +93,9 @@ public class EntityYeti extends AoAMeleeMob {
 	protected void dropSpecialItems(int lootingMod, DamageSource source) {
 		if (rand.nextInt(25 - lootingMod) == 0)
 			dropItem(WeaponRegister.blasterBlastChiller, 1);
+
+		if (rand.nextInt(10) == 0 && source.getTrueSource() instanceof EntityPlayer && ((EntityPlayer)source.getTrueSource()).getHeldItemMainhand().getItem() == Items.SHEARS)
+			dropItem(ItemRegister.yetiFingernails, 1);
 	}
 
 	@Override

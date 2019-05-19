@@ -71,7 +71,7 @@ public class EntitySkeletalCowman extends AoARangedMob implements SpecialPropert
     }
 
     @Override
-    protected double getBaseProjectileDamage() {
+    public double getBaseProjectileDamage() {
         return 12;
     }
 

@@ -360,14 +360,14 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceKaiyuTemple > 0 && rand.nextInt(ConfigurationUtil.spawnChanceKaiyuTemple) == 0) {
+		if (ConfigurationUtil.StructureConfig.precasia.kaiyuTempleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.kaiyuTempleSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = world.getHeight(x + 22, z + 22);
 
 			StructuresHandler.generateStructure("KaiyuTemple", world, rand, pos.setPos(x, y - 30, z));
 		}
-		else if (ConfigurationUtil.spawnChanceSkeletalArmyArena > 0 && rand.nextInt(ConfigurationUtil.spawnChanceSkeletalArmyArena) == 0) {
+		else if (ConfigurationUtil.StructureConfig.precasia.skeletalArmyArenaSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.skeletalArmyArenaSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ + rand.nextInt(7);
 			y = world.getHeight(x + 22, z + 13);
@@ -378,7 +378,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			if ((block1 == biome.topBlock.getBlock() || block1 == BlockRegister.stonePrecasiaHigh) && (block2 == biome.topBlock.getBlock() || block2 == BlockRegister.stonePrecasiaHigh))
 				StructuresHandler.generateStructure("SkeletalArmyArena", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceTyrosaurStompingGround > 0 && rand.nextInt(ConfigurationUtil.spawnChanceTyrosaurStompingGround) == 0) {
+		else if (ConfigurationUtil.StructureConfig.precasia.tyrosaurStompingGroundSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.tyrosaurStompingGroundSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = world.getHeight(x + 7, z + 7);
@@ -386,7 +386,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("TyrosaurStompingGround", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceJungleLottoHut > 0 && rand.nextInt(ConfigurationUtil.spawnChanceJungleLottoHut) == 0) {
+		else if (ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -394,7 +394,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)) == biome.topBlock)
 				StructuresHandler.generateStructure("JungleLottoHut", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceOpteryxNest > 0 && rand.nextInt(ConfigurationUtil.spawnChanceOpteryxNest) == 0) {
+		else if (ConfigurationUtil.StructureConfig.precasia.opteryxNestSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.opteryxNestSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -403,7 +403,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 				StructuresHandler.generateStructure("OpteryxNest", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChancePrecasianDen > 0 && rand.nextInt(ConfigurationUtil.spawnChancePrecasianDen) == 0) {
+		if (ConfigurationUtil.StructureConfig.precasia.precasianDenSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.precasianDenSpawnChance) == 0) {
 			x = baseX + rand.nextInt(2);
 			z = baseZ;
 			y = rand.nextInt(5) + 2;
@@ -425,7 +425,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			StructuresHandler.generateStructure(structure, world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceLifeRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLifeRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.precasia.lifeRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.lifeRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x, z) + 20;

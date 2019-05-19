@@ -1,6 +1,8 @@
 package net.tslat.aoa3.entity.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.EnumPushReaction;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -56,6 +58,9 @@ public class EntityBloodlust extends EntityCreature {
     public boolean canBePushed() {
         return false;
     }
+
+    @Override
+    protected void collideWithEntity(Entity entityIn) {}
 
     @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {

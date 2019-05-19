@@ -42,7 +42,7 @@ public class EntityMagicke extends AoARangedMob implements HunterEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 2;
 	}
 

@@ -52,7 +52,7 @@ public class EntityRedGuardian extends AoARangedMob implements BossEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 20;
 	}
 

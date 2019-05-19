@@ -114,7 +114,6 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 			biomeArray[i] = (byte)Biome.getIdForBiome(biome);
 		}
 
-		chunk.generateSkylightMap();
 		return chunk;
 	}
 
@@ -155,8 +154,6 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 
 		for (int l = 0; l < bufferX; ++l) {
 			for (int i1 = 0; i1 < bufferZ; ++i1) {
-				double d3 = 0.0D;
-
 				for (int k = 0; k < bufferY; ++k) {
 					double d4 = adouble[k];
 					double d5 = this.ar[i] / 512.0D;
@@ -197,11 +194,6 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 	}
 
 	private void setBlocksInChunk() {
-		int i = 4;
-		int j = this.world.getSeaLevel() / 2 + 1;
-		int k = 5;
-		int l = 17;
-		int i1 = 5;
 		this.noiseArray = this.generateNoiseField(this.noiseArray, curChunkX * 4, 0, curChunkZ * 4, 5, 17, 5);
 
 		for (int j1 = 0; j1 < 4; ++j1) {
@@ -217,14 +209,12 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 					double d8 = (this.noiseArray[((j1 + 1) * 5 + k1 + 1) * 17 + l1 + 1] - d4) * 0.125D;
 
 					for (int i2 = 0; i2 < 8; ++i2) {
-						double d9 = 0.25D;
 						double d10 = d1;
 						double d11 = d2;
 						double d12 = (d3 - d1) * 0.25D;
 						double d13 = (d4 - d2) * 0.25D;
 
 						for (int j2 = 0; j2 < 4; ++j2) {
-							double d14 = 0.25D;
 							double d15 = d10;
 							double d16 = (d11 - d10) * 0.25D;
 
@@ -261,7 +251,6 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 			return;
 
 		int i = this.world.getSeaLevel() + 1;
-		double d0 = 0.03125D;
 		this.depthBuffer = this.stoneNoiseGen.generateNoiseOctaves(this.depthBuffer, curChunkX * 16, curChunkZ * 16, 0, 16, 16, 1, 0.0625D, 0.0625D, 0.0625D);
 
 		for (int j = 0; j < 16; ++j) {
@@ -334,7 +323,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceCrystalBuilding > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCrystalBuilding) == 0) {
+		if (ConfigurationUtil.StructureConfig.crystevia.crystalBuildingSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.crystevia.crystalBuildingSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 20 + rand.nextInt(80);
@@ -359,7 +348,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 			}
 		}
 
-		if (ConfigurationUtil.spawnChanceCrystalTransferHut > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCrystalTransferHut) == 0) {
+		if (ConfigurationUtil.StructureConfig.crystevia.crystalTransferHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.crystevia.crystalTransferHutSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 20 + rand.nextInt(80);

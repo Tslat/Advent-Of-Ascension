@@ -29,7 +29,8 @@ public class YellowGuardianRenderer extends RenderLiving<EntityYellowGuardian> {
 	@Override
 	public void doRender(EntityYellowGuardian entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		BossBarRenderer.boss = entity;
+		if (x + y + z != 0)
+			BossBarRenderer.boss = entity;
 	}
 
 	@Nullable

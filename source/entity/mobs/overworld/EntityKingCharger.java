@@ -96,15 +96,9 @@ public class EntityKingCharger extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity target) {
-		if (super.attackEntityAsMob(target)) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 45, 4, true, true));
-
-			return true;
-		}
-
-		return false;
+	protected void doMeleeEffect(Entity target) {
+		if (target instanceof EntityLivingBase)
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 45, 4, true, true));
 	}
 
 	@Override

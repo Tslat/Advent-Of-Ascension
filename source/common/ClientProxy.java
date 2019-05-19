@@ -15,12 +15,9 @@ import net.tslat.aoa3.client.render.entities.projectiles.ProjectileRenders;
 import net.tslat.aoa3.common.packet.leaderboard.PacketLeaderboardStats;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WebUtil;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends ServerProxy {
-	public static boolean isRomanLanguage = true;
-
 	@Override
 	public void preInit() {
 		KeyBinder.init();
@@ -30,7 +27,6 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void postInit() {
 		ProjectileRenders.postInit();
-		WebUtil.doHTTPTasks(true);
 		AdventGuiTabGuides.prepAvailableBundles();
 	}
 

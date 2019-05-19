@@ -31,7 +31,7 @@ public class ExoplateArmour extends AdventArmour {
 
 	@Override
 	public void handleDamageReductions(LivingHurtEvent event, AdventPlayerCapability cap) {
-		if (!EntityUtil.isMagicDamage(event.getSource(), event.getEntity(), event.getAmount())) {
+		if (EntityUtil.isPhysicalDamage(event.getSource(), event.getEntity(), event.getAmount())) {
 			if (cap.getPlayer().getFoodStats().getFoodLevel() > 0) {
 				cap.getPlayer().getFoodStats().setFoodLevel(cap.getPlayer().getFoodStats().getFoodLevel() - (int)(event.getAmount() * 0.4));
 				event.setAmount(event.getAmount() * 0.4f);

@@ -42,7 +42,7 @@ public class EntityBaumba extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 7.5;
 	}
 

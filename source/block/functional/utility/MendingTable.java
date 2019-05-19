@@ -31,37 +31,36 @@ public class MendingTable extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (world.isRemote)
-			return false;
+		if (!world.isRemote) {
+			ItemStack stack = player.getHeldItem(hand);
 
-		ItemStack stack = player.getHeldItem(hand);
-
-		if (stack.getItem() == ItemRegister.ingotRustedIron) {
-			if (!player.capabilities.isCreativeMode)
-				stack.shrink(1);
-
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(Items.IRON_INGOT));
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.mendingSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
-		}
-		else if (stack.getItem() == ItemRegister.oldBoot) {
-			if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.magicMendingSolution))) {
-				stack.shrink(1);
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.gunShoeFlinger));
-
+			if (stack.getItem() == ItemRegister.ingotRustedIron) {
 				if (!player.capabilities.isCreativeMode)
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.metalTub));
+					stack.shrink(1);
 
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(Items.IRON_INGOT));
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.mendingSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
-		}
-		else if (stack.getItemDamage() != 0 && stack.isItemStackDamageable()) {
-			if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.magicMendingSolution))) {
-				stack.setItemDamage(0);
+			else if (stack.getItem() == ItemRegister.oldBoot) {
+				if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.magicMendingSolution))) {
+					stack.shrink(1);
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.gunShoeFlinger));
 
-				if (!player.capabilities.isCreativeMode)
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.metalTub));
+					if (!player.capabilities.isCreativeMode)
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.metalTub));
 
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.mendingSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.mendingSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				}
+			}
+			else if (stack.getItemDamage() != 0 && stack.isItemStackDamageable()) {
+				if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.magicMendingSolution))) {
+					stack.setItemDamage(0);
+
+					if (!player.capabilities.isCreativeMode)
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.metalTub));
+
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.mendingSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				}
 			}
 		}
 

@@ -83,7 +83,7 @@ public class EntityUrv extends AoAMeleeMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.dimImmortallis) {
+		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 			Entity attacker = cause.getTrueSource();
 
 			if (attacker instanceof EntityPlayer || attacker instanceof EntityTameable) {

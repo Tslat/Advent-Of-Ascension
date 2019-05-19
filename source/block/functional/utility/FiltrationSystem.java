@@ -69,7 +69,6 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.magicMendingSolution));
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.filtrationSystemUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
 					world.setBlockState(pos, BlockRegister.filtrationSystem.getDefaultState());
-					return true;
 				}
 			}
 			else {
@@ -81,7 +80,6 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.filtrationSystemActivate, SoundCategory.BLOCKS, 1.0f, 1.0f);
 					world.setBlockState(pos, boilingState.getDefaultState());
-					return true;
 				}
 			}
 

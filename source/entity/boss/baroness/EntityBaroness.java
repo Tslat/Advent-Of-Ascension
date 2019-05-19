@@ -81,7 +81,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 8;
 	}
 

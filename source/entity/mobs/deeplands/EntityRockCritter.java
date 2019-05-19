@@ -102,7 +102,7 @@ public class EntityRockCritter extends AoAMeleeMob {
 
     @Override
     protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (world.provider.getDimension() != ConfigurationUtil.dimAncientCavern) {
+        if (world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
             if (rand.nextInt(40 - lootingMod) == 0)
                 dropItem(ItemRegister.realmstoneAncientCavern, 1);
         }
@@ -147,7 +147,7 @@ public class EntityRockCritter extends AoAMeleeMob {
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.dimAncientCavern) {
+        if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
             Entity source = cause.getTrueSource();
             EntityPlayer killer = null;
 

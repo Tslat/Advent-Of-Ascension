@@ -25,6 +25,7 @@ public class DirtBlock extends BlockDirt {
 		setSoundType(SoundType.GROUND);
 		setDefaultState(blockState.getBaseState());
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setHarvestLevel("shovel", 0);
 	}
 
 	@SideOnly(Side.CLIENT)

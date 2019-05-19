@@ -1,9 +1,9 @@
 package net.tslat.aoa3.client.gui.mainwindow;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.IProgressMeter;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.RenderUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.WebUtil;
 
@@ -20,14 +21,14 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
-public class AdventMainGui extends GuiScreen {
+public class AdventMainGui extends GuiScreen implements IProgressMeter {
 	@Nullable
 	protected static ResourceLocation overlayTexture = null;
 	protected static ResourceLocation backgroundTexture;
 	protected static ResourceLocation menuButtonTexture;
 
 	private static ADVENT_WINDOW_TAB selectedTab = ADVENT_WINDOW_TAB.PLAYER;
-	protected static MainWindowThemes currentTheme;
+	protected static Enums.MainWindowThemes currentTheme;
 	@Nullable
 	private static GuiScreen tabScreen;
 
@@ -58,14 +59,16 @@ public class AdventMainGui extends GuiScreen {
 		this.buttonList.add(new AdventMainGuiTabButton(3, 11, 339, StringUtil.getLocaleString("gui.aoamain.tab.guides"), ADVENT_WINDOW_TAB.GUIDES));
 		this.buttonList.add(new AdventMainGuiTabButton(4, 11, 409, StringUtil.getLocaleString("gui.aoamain.tab.help"), ADVENT_WINDOW_TAB.HELP));
 
-		this.buttonList.get(1).enabled = false;
 		this.buttonList.get(2).enabled = false;
-		//this.buttonList.get(3).enabled = false;
 
 		correctGuiPositions();
 
-		if (tabScreen == null)
+		if (tabScreen == null) {
 			initTabScreen();
+		}
+		else {
+			tabScreen.initGui();
+		}
 
 		setThemeTextures();
 	}
@@ -119,6 +122,12 @@ public class AdventMainGui extends GuiScreen {
 		GlStateManager.popMatrix();
 	}
 
+	@Override
+	public void onStatsUpdated() {
+		if (tabScreen instanceof IProgressMeter)
+			((IProgressMeter)tabScreen).onStatsUpdated();
+	}
+
 	protected enum ADVENT_WINDOW_TAB {
 		PLAYER,
 		BESTIARY,
@@ -164,7 +173,7 @@ public class AdventMainGui extends GuiScreen {
 					stringColour = Enums.RGBIntegers.YELLOW_2;
 				}
 
-				drawCenteredScaledString(mc.fontRenderer, displayString, scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(mc.fontRenderer, displayString, scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
 				GlStateManager.scale(scaleInverse, scaleInverse, scaleInverse);
 			}
 		}
@@ -180,12 +189,7 @@ public class AdventMainGui extends GuiScreen {
 	}
 
 	private static void setThemeTextures() {
-		try {
-			currentTheme = MainWindowThemes.valueOf(ConfigurationUtil.mainWindowTheme);
-		}
-		catch (IllegalArgumentException e) {
-			currentTheme = MainWindowThemes.Default;
-		}
+		currentTheme = ConfigurationUtil.MainConfig.mainWindowTheme;
 
 		switch (currentTheme) {
 			case Jungle:
@@ -204,8 +208,8 @@ public class AdventMainGui extends GuiScreen {
 				overlayTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/hell/overlay.png");
 				break;
 			default:
-				ConfigurationUtil.mainWindowTheme = "Default";
-				currentTheme = MainWindowThemes.Default;
+				ConfigurationUtil.MainConfig.mainWindowTheme = Enums.MainWindowThemes.Default;
+				currentTheme = Enums.MainWindowThemes.Default;
 			case Default:
 				backgroundTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/default/background.png");
 				menuButtonTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/default/tab_buttons.png");
@@ -214,90 +218,12 @@ public class AdventMainGui extends GuiScreen {
 		}
 	}
 
-	protected static void drawOutlinedText(FontRenderer fontRenderer, String msg, int x, int y, int colour, float currentScale) {
-		if (!Minecraft.getMinecraft().isUnicode())
-			currentScale = 1;
-
-		fontRenderer.drawString(msg, x, y + (1 / currentScale), 0, false);
-		fontRenderer.drawString(msg, x, y - (1 / currentScale), 0, false);
-		fontRenderer.drawString(msg, x + (1 / currentScale), y, 0, false);
-		fontRenderer.drawString(msg, x - (1 / currentScale), y, 0, false);
-		fontRenderer.drawString(msg, x, y, colour, false);
-		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	protected static void drawScaledString(FontRenderer fontRenderer, String msg, int x, int y, float scale, int colour, StringRenderType renderType) {
-		float realX = x / scale;
-		float realY = y / scale;
-
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(scale, scale, scale);
-
-		if (renderType == StringRenderType.OUTLINED) {
-			if (!Minecraft.getMinecraft().isUnicode())
-				scale = 1;
-
-			fontRenderer.drawString(msg, realX, realY + (1 / scale), 0, false);
-			fontRenderer.drawString(msg, realX, realY - (1 / scale), 0, false);
-			fontRenderer.drawString(msg, realX + (1 / scale), realY, 0, false);
-			fontRenderer.drawString(msg, realX - (1 / scale), realY, 0, false);
-		}
-
-		fontRenderer.drawString(msg, realX, realY, colour, renderType == StringRenderType.DROP_SHADOW);
-		GlStateManager.popMatrix();
-	}
-
-	protected static void drawCenteredScaledString(FontRenderer fontRenderer, String msg, int x, int y, float scale, int colour, StringRenderType renderType) {
-		float realX = (x - fontRenderer.getStringWidth(msg) * scale / 2f) / scale;
-		float realY = y / scale;
-
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(scale, scale, scale);
-
-		if (renderType == StringRenderType.OUTLINED) {
-			if (!Minecraft.getMinecraft().isUnicode())
-				scale = 1;
-
-			fontRenderer.drawString(msg, realX, realY + (1 / scale), 0, false);
-			fontRenderer.drawString(msg, realX, realY - (1 / scale), 0, false);
-			fontRenderer.drawString(msg, realX + (1 / scale), realY, 0, false);
-			fontRenderer.drawString(msg, realX - (1 / scale), realY, 0, false);
-		}
-
-		fontRenderer.drawString(msg, realX, realY, colour, renderType == StringRenderType.DROP_SHADOW);
-		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-		GlStateManager.popMatrix();
-	}
-
-	protected static void drawSplitLineStringWithShadow(FontRenderer fontRenderer, String msg, int x, int y, int wrapWidth, float scale, int colour) {
-		GlStateManager.pushMatrix();
-		GlStateManager.scale(scale, scale, scale);
-
-		fontRenderer.drawSplitString(msg, (int)((x + 1) / scale), (int)((y + 1) / scale), (int)((wrapWidth + 1) / scale), Enums.RGBIntegers.BLACK);
-		fontRenderer.drawSplitString(msg, (int)(x / scale), (int)(y / scale), (int)(wrapWidth / scale), colour);
-		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-		GlStateManager.popMatrix();
-	}
-
 	@Override
 	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
 
 		if (tabScreen != null)
 			tabScreen.handleMouseInput();
-	}
-
-	protected enum StringRenderType {
-		NORMAL,
-		DROP_SHADOW,
-		OUTLINED
-	}
-
-	protected enum MainWindowThemes {
-		Default,
-		Jungle,
-		Ancient_Ruins,
-		Hell
 	}
 
 	private void initTabScreen() {
@@ -311,6 +237,9 @@ public class AdventMainGui extends GuiScreen {
 				tabScreen.setWorldAndResolution(mc, (int)((width + 182) * scale), (int)((height + 118) * scale));
 				break;
 			case BESTIARY:
+				tabScreen = new AdventGuiTabBestiary();
+				tabScreen.setWorldAndResolution(mc, (int)((width + 182) * scale), (int)((height + 118) * scale));
+				break;
 			case GUIDES:
 				tabScreen = new AdventGuiTabGuides();
 				tabScreen.setWorldAndResolution(mc, (int)((width + 182) * scale), (int)((height + 118) * scale));
@@ -324,7 +253,7 @@ public class AdventMainGui extends GuiScreen {
 
 	@Override
 	public boolean doesGuiPauseGame() {
-		return ConfigurationUtil.mainWindowPausesGame;
+		return ConfigurationUtil.MainConfig.mainWindowPausesGame;
 	}
 
 	private void correctGuiPositions() {
@@ -362,8 +291,8 @@ public class AdventMainGui extends GuiScreen {
 			tabScreen.onGuiClosed();
 	}
 
-	protected static void changeTheme(MainWindowThemes theme) {
-		ConfigurationUtil.changeMainWindowTheme(theme.toString());
+	protected static void changeTheme(Enums.MainWindowThemes theme) {
+		ConfigurationUtil.changeMainWindowTheme(theme);
 		setThemeTextures();
 	}
 }

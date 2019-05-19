@@ -54,10 +54,8 @@ public class BiomeHaven extends Biome {
 	public class BiomeHavenDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.crystalliteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.crystalliteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreCrystallite.getDefaultState(), Math.max(ConfigurationUtil.crystalliteMinOres, rand.nextInt(ConfigurationUtil.crystalliteMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneHaven)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40) + 30, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.crystallite.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreCrystallite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.crystallite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.crystallite.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneHaven)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40) + 30, rand.nextInt(16)));
 			}
 		}
 

@@ -1,4 +1,4 @@
-package net.tslat.aoa3.library;
+package net.tslat.aoa3.library.scheduling;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;

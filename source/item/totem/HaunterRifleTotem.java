@@ -8,9 +8,9 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.misc.EntityLottoIdol;
 
-public class HauntersRifleTotem extends TotemItem {
-	public HauntersRifleTotem() {
-		super("HauntersRifleTotem", "haunters_rifle_totem");
+public class HaunterRifleTotem extends TotemItem {
+	public HaunterRifleTotem() {
+		super("HaunterRifleTotem", "haunter_rifle_totem");
 	}
 
 	@Override

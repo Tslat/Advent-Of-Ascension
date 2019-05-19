@@ -31,7 +31,7 @@ public class EntityModulo extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 4;
 	}
 

@@ -60,7 +60,7 @@ public class EntityClunkhead extends AoARangedMob implements SpecialPropertyEnti
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 1 + rand.nextInt(35);
 	}
 

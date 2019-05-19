@@ -62,7 +62,7 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 6;
 	}
 

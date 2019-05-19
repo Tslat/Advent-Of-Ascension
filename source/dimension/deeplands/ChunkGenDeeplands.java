@@ -344,7 +344,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceArocknidCave > 0 && rand.nextInt(ConfigurationUtil.spawnChanceArocknidCave) == 0) {
+		if (ConfigurationUtil.StructureConfig.deeplands.arocknidCaveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.deeplands.arocknidCaveSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = 20;
@@ -352,7 +352,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y, z + 7)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("ArocknidCave", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceChargingStation > 0 && rand.nextInt(ConfigurationUtil.spawnChanceChargingStation) == 0) {
+		else if (ConfigurationUtil.StructureConfig.deeplands.chargingStationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.deeplands.chargingStationSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = 20;
@@ -360,7 +360,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y, z + 7)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("ChargingStation", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceKrorPillars > 0 && rand.nextInt(ConfigurationUtil.spawnChanceKrorPillars) == 0) {
+		else if (ConfigurationUtil.StructureConfig.deeplands.krorPillarsSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.deeplands.krorPillarsSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(16);
 			y = 20;
@@ -368,7 +368,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y, z)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("KrorPillars", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceDeepLottoShelter > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDeepLottoShelter) == 0) {
+		else if (ConfigurationUtil.StructureConfig.deeplands.deepLottoShelterSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.deeplands.deepLottoShelterSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 20;

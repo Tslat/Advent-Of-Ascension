@@ -1,9 +1,13 @@
 package net.tslat.aoa3.item.weapon.thrown;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -50,5 +54,10 @@ public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
 
 		tooltip.add(StringUtil.getColourLocaleString("items.description.thrownWeapon", TextFormatting.AQUA));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.throwable.speed", Double.toString((2000 / firingDelay) / (double)100)));
+	}
+
+	@Override
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
+		return HashMultimap.<String, AttributeModifier>create();
 	}
 }

@@ -28,7 +28,7 @@ public class Rosidons extends BasicFood {
 		if (!world.isRemote) {
 			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
 
-			if (player.dimension == ConfigurationUtil.dimAncientCavern || player.dimension == ConfigurationUtil.dimImmortallis) {
+			if (player.dimension == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern || player.dimension == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 				cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.item.rosidons.dimFail"));
 				return;
 			}

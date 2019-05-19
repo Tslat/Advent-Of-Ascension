@@ -94,7 +94,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
 
     protected abstract double getBaseMaxHealth();
 
-    protected abstract double getBaseProjectileDamage();
+    public abstract double getBaseProjectileDamage();
 
     protected abstract double getBaseMovementSpeed();
 

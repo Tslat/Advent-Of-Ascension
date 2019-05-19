@@ -42,13 +42,13 @@ public class CrystalExtensionShrine extends Block {
 				int lvl = cap.getLevel(Enums.Skills.AUGURY);
 
 				if (lvl < 36) {
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceEmpowered));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceEmpowered, 8));
 				}
 				else if (lvl < 66) {
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceDark));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceDark, 8));
 				}
 				else {
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceDivine));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.essenceDivine, 8));
 				}
 
 				if (!player.capabilities.isCreativeMode)

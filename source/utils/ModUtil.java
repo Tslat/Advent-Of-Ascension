@@ -3,7 +3,6 @@ package net.tslat.aoa3.utils;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -13,12 +12,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.item.weapon.staff.FungalStaff;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -28,7 +26,6 @@ public class ModUtil {
 	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private static final HashSet<Runnable> scheduledTasks = new HashSet<Runnable>();
 
-	private static final IAttribute MOD_MAX_HEALTH = (new RangedAttribute(null, "generic.MaxHealth", 20.0D, Float.MIN_VALUE, Integer.MAX_VALUE)).setDescription("Max Health").setShouldWatch(true);
 	public static final AxisAlignedBB COLLIDABLE_BLOCK_AABB = new AxisAlignedBB(0.05, 0.05, 0.05, 0.95, 0.95, 0.95);
 
 	public static void scrapeRegistries() {
@@ -46,35 +43,7 @@ public class ModUtil {
 	}
 
 	public static void patchMaxHP() {
-		try {
-			Field healthField = null;
-
-			try {
-				healthField = SharedMonsterAttributes.class.getDeclaredField("MAX_HEALTH");
-			}
-			catch (NoSuchFieldException e) {
-				try {
-					healthField = SharedMonsterAttributes.class.getDeclaredField("field_111267_a");
-				}
-				catch (NoSuchFieldException ex) {
-					System.out.println("Unable to find max health field to patch, dropping");
-				}
-			}
-
-			if (healthField != null) {
-				healthField.setAccessible(true);
-
-				Field modifiers = Field.class.getDeclaredField("modifiers");
-				modifiers.setAccessible(true);
-				modifiers.setInt(healthField, healthField.getModifiers() & ~Modifier.FINAL);
-
-				healthField.set(null, MOD_MAX_HEALTH);
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Unable to patch out vanilla MaxHP, dropping");
-			e.printStackTrace();
-		}
+		ObfuscationReflectionHelper.setPrivateValue((Class)RangedAttribute.class, SharedMonsterAttributes.MAX_HEALTH, Double.MAX_VALUE, 1);
 	}
 
 	public static void scheduleRequiredTask(Runnable run, int time, TimeUnit unit) {

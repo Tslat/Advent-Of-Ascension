@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.model.entities.misc;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
@@ -55,9 +56,9 @@ public class ModelBipedClear extends ModelBase {
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		GL11.glPushMatrix();
-		GL11.glEnable(3042);
-		GL11.glBlendFunc(770, 771);
+		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(770, 771);
 		head.render(f5);
 		body.render(f5);
 		rightArm.render(f5);
@@ -65,6 +66,7 @@ public class ModelBipedClear extends ModelBase {
 		leftLeg.render(f5);
 		hat.render(f5);
 		rightLeg.render(f5);
+		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 	}
 

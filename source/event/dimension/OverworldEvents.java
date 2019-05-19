@@ -57,7 +57,7 @@ public class OverworldEvents {
 					int pluton = cap.getTribute(Enums.Deities.PLUTON);
 					int erebon = cap.getTribute(Enums.Deities.EREBON);
 
-					if (ConfigurationUtil.showDailyMessages)
+					if (ConfigurationUtil.MainConfig.showDailyMessages)
 						pl.sendMessage(StringUtil.getColourLocale("message.event.nightfall", TextFormatting.DARK_AQUA));
 
 					if (pluton == 200) {
@@ -91,7 +91,7 @@ public class OverworldEvents {
 						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.tributeSuccess, SoundCategory.AMBIENT, 1.0f, 1.0f);
 					}
 					else {
-						if (ConfigurationUtil.showDailyMessages)
+						if (ConfigurationUtil.MainConfig.showDailyMessages)
 							pl.sendMessage(StringUtil.getColourLocale("message.event.tribute.none." + AdventOfAscension.rand.nextInt(10), TextFormatting.DARK_GRAY));
 
 						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.tributeFail, SoundCategory.AMBIENT, 1.0f, 1.0f);
@@ -122,7 +122,7 @@ public class OverworldEvents {
 				break;
 			case 23031:
 				for (EntityPlayer pl : ev.world.playerEntities) {
-					if (ConfigurationUtil.showDailyMessages)
+					if (ConfigurationUtil.MainConfig.showDailyMessages)
 						pl.sendMessage(StringUtil.getColourLocale("message.event.sunrise", TextFormatting.YELLOW));
 
 					PlayerUtil.getAdventPlayer(pl).resetAllTribute();

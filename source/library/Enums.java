@@ -337,6 +337,7 @@ public class Enums {
 		public static final String MOVEMENT_SPEED = "a1371c64-c09e-4ed6-adfd-5afbaea79369";
 		public static final String ATTACK_SPEED_MAINHAND = "99fdc256-279e-4c8e-b1c6-9209571f134e";
 		public static final String ATTACK_SPEED_OFFHAND = "63f030a6-7269-444d-b26c-ae3514b36e1b";
+		public static final String VANILLA_ATTACK_SPEED = "FA233E1C-4180-4865-B01B-BCCE9785ACA3";
 		public static final String MOB_BLOODTHIRST_BUFF = "2803f9b4-57ed-471f-8a0e-7a41fa100608";
 	}
 
@@ -561,6 +562,41 @@ public class Enums {
 
 		public TextFormatting getColour() {
 			return colour;
+		}
+	}
+
+	public enum MainWindowThemes {
+		Default,
+		Jungle,
+		Ancient_Ruins,
+		Hell
+	}
+
+	public enum PlayerCrownTypes {
+		Donator,
+		Super_Donator,
+		Crazy_Donator,
+		Wiki_Editor,
+		Tslat,
+		Ursun;
+
+		public enum ChooseableCrownTypes {
+			Donator,
+			Super_Donator,
+			Wiki_Editor;
+
+			public PlayerCrownTypes toBaseType() {
+				switch (this) {
+					case Donator:
+						return PlayerCrownTypes.Donator;
+					case Super_Donator:
+						return PlayerCrownTypes.Super_Donator;
+					case Wiki_Editor:
+						return PlayerCrownTypes.Wiki_Editor;
+					default:
+						return null;
+				}
+			}
 		}
 	}
 }

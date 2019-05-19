@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityMechaSkellox;
 
 public class MechaSkelloxSlab extends BaseSlab {
 	public MechaSkelloxSlab() {
-		super("MechaSkelloxSlab", "mecha_skellox_slab", 92, 200, 92, 4000);
+		super("MechaSkelloxSlab", "mecha_skellox_slab", 92, 200, 92, 8000);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class ElecanyteArmour extends AdventArmour {
 	public void handleDamageReductions(LivingHurtEvent event, AdventPlayerCapability cap) {
 		DamageSource source = event.getSource();
 
-		if (!EntityUtil.isMagicDamage(event.getSource(), event.getEntity(), event.getAmount())) {
+		if (EntityUtil.isPhysicalDamage(event.getSource(), event.getEntity(), event.getAmount())) {
 			if (cap.consumeResource(Enums.Resources.ENERGY, 200, false))
 				event.setAmount(event.getAmount() * 0.4f);
 		}

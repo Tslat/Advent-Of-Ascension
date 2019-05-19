@@ -215,11 +215,11 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
-
-		if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
+		
+		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
 			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(UUID.fromString(Enums.AttributeUUIDS.ATTACK_SPEED_MAINHAND), "AoAGunMainHand", -getHolsterSpeed(), 2));
-
-		if (equipmentSlot == EntityEquipmentSlot.OFFHAND) {
+		}
+		else if (equipmentSlot == EntityEquipmentSlot.OFFHAND) {
 			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(UUID.fromString(Enums.AttributeUUIDS.ATTACK_SPEED_OFFHAND), "AoAGunOffHand", -getHolsterSpeed(), 2));
 			multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), EnchantmentBrace.modifier());
 		}

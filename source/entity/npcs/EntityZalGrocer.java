@@ -53,7 +53,7 @@ public class EntityZalGrocer extends AoATrader {
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 40), new ItemStack(Items.COOKIE, 64)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(Items.BEEF, 5)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 50), new ItemStack(Items.BEEF, 30)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(Items.BEEF, 64)));
+		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(Items.BEEF, 64)));
 
 		return newList;
 	}

@@ -18,7 +18,10 @@ public class IllusionAltar extends BossAltarBlock {
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		EntityElusive elusive = new EntityElusive(player.world);
 
-		elusive.setLocationAndAngles(blockPos.getX() + (Math.signum(player.posX - blockPos.getZ()) * 6), blockPos.getY() + 1, blockPos.getZ() + (Math.signum(player.posZ - blockPos.getZ()) * 6), 0 ,0);
+		int posX = (int)(blockPos.getX() + player.getLookVec().x * -6);
+		int posZ = (int)(blockPos.getZ() + player.getLookVec().z * -6);
+
+		elusive.setLocationAndAngles(posX, player.world.getHeight(posX, posZ), posZ, 0, 0);
 		player.world.spawnEntity(elusive);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.elusive.spawn", player.getDisplayNameString()), blockPos);
 	}

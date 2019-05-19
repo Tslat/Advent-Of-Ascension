@@ -28,8 +28,9 @@ public class PacketUtil {
 		network.registerMessage(PacketSkillData.Handler.class, PacketSkillData.class, 6, Side.CLIENT);
 		network.registerMessage(PacketTributeData.Handler.class, PacketTributeData.class, 7, Side.CLIENT);
 		network.registerMessage(PacketGreatbladeHit.Handler.class, PacketGreatbladeHit.class, 8, Side.SERVER);
-		network.registerMessage(PacketParticleSpawn.Handler.class, PacketParticleSpawn.class, 9, Side.CLIENT);
-		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 10, Side.CLIENT);
-		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 11, Side.CLIENT);
+		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 9, Side.CLIENT);
+		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 10, Side.CLIENT);
+		network.registerMessage(PacketChangedCrown.Handler.class, PacketChangedCrown.class, 11, Side.SERVER);
+		network.registerMessage(PacketPlayerCrownInfo.Handler.class, PacketPlayerCrownInfo.class, 12, Side.CLIENT);
 	}
 }

@@ -24,7 +24,7 @@ public class AoALeaderboard extends Thread {
 
 	@Override
 	public void run() {
-		if (!ConfigurationUtil.leaderboardEnabled) {
+		if (!ConfigurationUtil.MainConfig.leaderboardEnabled) {
 			running = false;
 
 			return;

@@ -34,7 +34,7 @@ public class EntityArcWizard extends AoARangedMob implements HunterEntity {
     }
 
     @Override
-    protected double getBaseProjectileDamage() {
+    public double getBaseProjectileDamage() {
         return 4;
     }
 

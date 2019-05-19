@@ -28,7 +28,7 @@ public class AncientCavernShrine extends UnbreakableBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && !player.isSneaking() && world.provider.getDimension() == ConfigurationUtil.dimAncientCavern && player.hasCapability(AdventPlayerProvider.ADVENT_PLAYER, null)) {
+		if (!world.isRemote && !player.isSneaking() && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern && player.hasCapability(AdventPlayerProvider.ADVENT_PLAYER, null)) {
 			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
 			BlockPos teleportPos = new BlockPos(0, 17, 0);
 

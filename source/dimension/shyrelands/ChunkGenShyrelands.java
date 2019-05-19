@@ -417,7 +417,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceShyreDecoration > 0 && rand.nextInt(ConfigurationUtil.spawnChanceShyreDecoration) == 0) {
+		if (ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance) == 0) {
 			AoAStructure structure = StructuresHandler.EMPTY_STRUCTURE;
 
 			switch (rand.nextInt(7)) {
@@ -447,7 +447,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 			StructuresHandler.generateStructure(structure, world, rand, pos.setPos(baseX, 31, baseZ));
 		}
 
-		if (ConfigurationUtil.spawnChanceCraexxeusTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCraexxeusTower) == 0) {
+		if (ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance) == 0) {
 			x = baseX + 3;
 			z = baseZ + 3;
 			y = 31;
@@ -455,7 +455,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 			StructuresHandler.generateStructure("CraexxeusTower", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceShyreDungeon > 0 && rand.nextInt(ConfigurationUtil.spawnChanceShyreDungeon) == 0) {
+		if (ConfigurationUtil.StructureConfig.shyrelands.shyreDungeonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.shyreDungeonSpawnChance) == 0) {
 			switch (rand.nextInt(3)) {
 				case 0:
 					x = baseX + rand.nextInt(10);

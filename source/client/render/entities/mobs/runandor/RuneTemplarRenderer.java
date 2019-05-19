@@ -27,6 +27,7 @@ public class RuneTemplarRenderer extends RenderLiving<EntityRuneTemplar> {
 	public void doRender(EntityRuneTemplar entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		if (!entity.isDisabled()) {
+			if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
 		}
 		else {

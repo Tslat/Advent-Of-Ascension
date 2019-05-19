@@ -43,7 +43,7 @@ public class PacketIndividualLeaderboardStats implements IMessage {
 			readEntries = (SortedMap<Enums.Skills, Integer>)objectIn.readObject();
 		}
 		catch (Exception e) {
-			if (ConfigurationUtil.doVerboseDebugging)
+			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				AdventOfAscension.getLogger().log(Level.WARN, "Unable to deserialize packet for leaderboard stats, skipping");
 		}
 		finally {
@@ -72,7 +72,7 @@ public class PacketIndividualLeaderboardStats implements IMessage {
 			entriesByteArray = byteStreamOut.toByteArray();
 		}
 		catch (Exception e) {
-			if (ConfigurationUtil.doVerboseDebugging)
+			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				AdventOfAscension.getLogger().log(Level.WARN, "Failed to serialize packet for leaderboard stats, skipping");
 
 			return;

@@ -116,7 +116,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceClunkheadArena > 0 && rand.nextInt(ConfigurationUtil.spawnChanceClunkheadArena) == 0) {
+		if (ConfigurationUtil.StructureConfig.runandor.clunkheadArenaSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.runandor.clunkheadArenaSpawnChance) == 0) {
 			x = baseX + rand.nextInt(6);
 			z = baseZ + rand.nextInt(10);
 			y = world.getHeight(x + 12, z + 10);
@@ -124,7 +124,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 12, y - 1, z + 10)) == biome.topBlock)
 				StructuresHandler.generateStructure("ClunkheadArena", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceRunicTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRunicTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.runandor.runicTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.runandor.runicTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -132,7 +132,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("RunicTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceSpectralCage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceSpectralCage) == 0) {
+		else if (ConfigurationUtil.StructureConfig.runandor.spectralCageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.runandor.spectralCageSpawnChance) == 0) {
 			x = baseX + rand.nextInt(13);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 8, z + 7);
@@ -140,7 +140,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("SpectralCage", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceRuneRandomisationStation > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRuneRandomisationStation) == 0) {
+		else if (ConfigurationUtil.StructureConfig.runandor.runeRandomisationStationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.runandor.runeRandomisationStationSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 7, z + 7);
@@ -148,7 +148,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("RuneRandomisationStation", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceRuneTemplarBunker > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRuneTemplarBunker) == 0) {
+		else if (ConfigurationUtil.StructureConfig.runandor.runeTemplarBunkerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.runandor.runeTemplarBunkerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 3;

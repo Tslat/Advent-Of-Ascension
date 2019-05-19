@@ -44,6 +44,7 @@ import net.tslat.aoa3.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.item.weapon.thrown.BaseThrownWeapon;
 import net.tslat.aoa3.item.weapon.vulcane.BaseVulcane;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.StringUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -310,7 +311,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + sword.getAttackDamage() + "\n");
 						System.out.print("    Durability: " + sword.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeSpeedValue(new ItemStack(sword), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")) + "\n");
+						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeValue(new ItemStack(sword), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")) + "\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -322,7 +323,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + greatblade.getDamage() + "\n");
 						System.out.print("    Durability: " + greatblade.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeSpeedValue(new ItemStack(greatblade), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")) + "\n");
+						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(greatblade), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")), 2) + "\n");
 						System.out.print("    Reach: " + ((int)greatblade.getReach()) + " blocks\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
@@ -335,7 +336,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + maul.getDamage() + "\n");
 						System.out.print("    Durability: " + maul.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeSpeedValue(new ItemStack(maul), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")) + "\n");
+						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(maul), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")), 2) + "\n");
 						System.out.print("    Knockback: " + (maul.getBaseKnockback()) + "\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
@@ -351,7 +352,8 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + shotgun.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / shotgun.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + shotgun.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + shotgun.getDrawTime() + "\n");
+
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(shotgun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -365,7 +367,21 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + sniper.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / sniper.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + sniper.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + sniper.getDrawTime() + "\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(sniper), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("---~~~---~~~---~~~\n");
+					}
+
+					System.out.print("Guns: ---~~~---~~~---~~~\n");
+
+					for (BaseGun gun : guns) {
+						System.out.print(new ItemStack(gun).getDisplayName() + "\n");
+						System.out.print("ID: " + gun.getRegistryName().toString() + "\n");
+						System.out.print("Stats: \n");
+						System.out.print("    Damage per shot: " + gun.getDamage() + "\n");
+						System.out.print("    Durability: " + gun.getMaxDamage() + "\n");
+						System.out.print("    Firing Speed: " + (2000 / gun.getFiringDelay()) / (double)100 + "/sec\n");
+						System.out.print("    Recoil: " + gun.getRecoil() + "\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(gun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -379,7 +395,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + cannon.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / cannon.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + cannon.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + cannon.getDrawTime() + "\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(cannon), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -393,6 +409,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + blaster.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / blaster.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Energy Cost: " + blaster.getEnergyCost() + "\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (float)(ItemUtil.getStackAttributeValue(new ItemStack(blaster), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3"))), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -406,7 +423,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + archergun.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / archergun.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + archergun.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + archergun.getDrawTime() + "\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(archergun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -606,6 +623,6 @@ public class CommandTslat extends CommandBase {
 
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return sender instanceof EntityPlayer && ((EntityPlayer)sender).getGameProfile().getId().equals(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4"));
+		return sender instanceof EntityPlayer && AdventOfAscension.instance.isTslat(((EntityPlayer)sender).getGameProfile().getId());
 	}
 }

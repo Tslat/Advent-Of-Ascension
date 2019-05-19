@@ -51,7 +51,7 @@ public class EntityAnemia extends AoAFlyingRangedMob implements HunterEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 20;
 	}
 

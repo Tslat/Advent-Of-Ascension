@@ -39,7 +39,7 @@ public class EntityCherryBarrager extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 5;
 	}
 

@@ -12,12 +12,12 @@ import net.tslat.aoa3.utils.ConfigurationUtil;
 
 public class GreckonPortalBlock extends PortalBlock {
 	public GreckonPortalBlock() {
-		super("GreckonPortal", "greckon_portal", ConfigurationUtil.dimGreckon, Enums.RGBIntegers.DARK_VIOLET);
+		super("GreckonPortal", "greckon_portal", ConfigurationUtil.MainConfig.dimensionIds.greckon, Enums.RGBIntegers.DARK_VIOLET);
 	}
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (!(entity instanceof EntityPlayerMP) || (world.provider.getDimension() == ConfigurationUtil.dimGreckon || ((EntityPlayerMP)entity).capabilities.isCreativeMode || ((EntityPlayerMP)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
+		if (!(entity instanceof EntityPlayerMP) || (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.greckon || ((EntityPlayerMP)entity).capabilities.isCreativeMode || ((EntityPlayerMP)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
 			super.onEntityCollidedWithBlock(world, pos, state, entity);
 	}
 }

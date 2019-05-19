@@ -262,7 +262,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceGyroPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGyroPlatform) == 0) {
+		if (ConfigurationUtil.StructureConfig.celeve.gyroPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.celeve.gyroPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(11);
 			z = baseZ + rand.nextInt(16);
 			y = 40 + rand.nextInt(20);
@@ -270,7 +270,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x, y, z)).getBlock() == Blocks.AIR && world.getBlockState(pos.setPos(x + 17, y + 7, z + 17)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("GyroPlatform", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCelevianLottoBalloon > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCelevianLottoBalloon) == 0) {
+		else if (ConfigurationUtil.StructureConfig.celeve.celevianLottoBalloonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.celeve.celevianLottoBalloonSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 10 + rand.nextInt(20);
@@ -278,7 +278,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 2, y, z + 2)).getBlock() == Blocks.AIR && world.getBlockState(pos.setPos(x + 8, y + 17, z + 8)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("CelevianLottoBalloon", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceToyTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceToyTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.celeve.toyTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.celeve.toyTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -287,7 +287,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 				StructuresHandler.generateStructure("ToyTower", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceCompassRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCompassRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.celeve.compassRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.celeve.compassRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 15;

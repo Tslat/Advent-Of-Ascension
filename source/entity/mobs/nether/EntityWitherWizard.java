@@ -48,7 +48,7 @@ public class EntityWitherWizard extends AoARangedMob implements SpecialPropertyE
     }
 
     @Override
-    protected double getBaseProjectileDamage() {
+    public double getBaseProjectileDamage() {
         return 6;
     }
 

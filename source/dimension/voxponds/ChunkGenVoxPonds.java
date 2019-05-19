@@ -138,7 +138,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			}
 		}
 
-		if (ConfigurationUtil.spawnChanceEnigmaStation > 0 && rand.nextInt(ConfigurationUtil.spawnChanceEnigmaStation) == 0) {
+		if (ConfigurationUtil.StructureConfig.voxPonds.enigmaStationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.enigmaStationSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 18;
@@ -146,7 +146,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 6)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("EnigmaStation", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceControlTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceControlTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.controlTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.controlTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 39;
@@ -154,7 +154,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 6)) == biome.topBlock && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("ControlTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCellTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCellTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.cellTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.cellTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 39;
@@ -162,7 +162,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("CellTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceObservationTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceObservationTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.observationTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.observationTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(14);
 			z = baseZ + rand.nextInt(10);
 			y = 39;
@@ -170,7 +170,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y - 1, z + 11)) == biome.topBlock && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("ObservationTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceVoxBuilding > 0 && rand.nextInt(ConfigurationUtil.spawnChanceVoxBuilding) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.voxBuildingSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.voxBuildingSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = 39;
@@ -196,7 +196,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 				StructuresHandler.generateStructure(structure, world, rand, pos.setPos(x, y, z));
 			}
 		}
-		else if (ConfigurationUtil.spawnChanceNightwingIsland > 0 && rand.nextInt(ConfigurationUtil.spawnChanceNightwingIsland) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.nightwingIslandSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.nightwingIslandSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 18;
@@ -204,7 +204,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 2, y, z + 2)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("NightwingIsland", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceVoxLottoOutpost > 0 && rand.nextInt(ConfigurationUtil.spawnChanceVoxLottoOutpost) == 0) {
+		else if (ConfigurationUtil.StructureConfig.voxPonds.voxLottoOutpostSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.voxLottoOutpostSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 39;
@@ -213,7 +213,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 				StructuresHandler.generateStructure("VoxLottoOutpost", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChancePoisonRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChancePoisonRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.voxPonds.poisonRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.poisonRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 47;

@@ -436,7 +436,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceIllusionTree > 0 && rand.nextInt(ConfigurationUtil.spawnChanceIllusionTree) == 0) {
+		if (ConfigurationUtil.StructureConfig.abyss.illusionTreeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.illusionTreeSpawnChance) == 0) {
 			x = baseX + rand.nextInt(11);
 			z = baseZ + rand.nextInt(10);
 			y = world.getHeight(x + 9, z + 9);
@@ -444,7 +444,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 9, y - 1, z + 9)) == biome.topBlock)
 				StructuresHandler.generateStructure("IllusionTree", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceJaweHut > 0 && rand.nextInt(ConfigurationUtil.spawnChanceJaweHut) == 0) {
+		else if (ConfigurationUtil.StructureConfig.abyss.jaweHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.jaweHutSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -452,7 +452,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("JaweHut", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceFleshTemple > 0 && rand.nextInt(ConfigurationUtil.spawnChanceFleshTemple) == 0) {
+		else if (ConfigurationUtil.StructureConfig.abyss.fleshTempleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.fleshTempleSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x, z + 6);
@@ -460,7 +460,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x, y - 1, z + 6)) == biome.topBlock)
 				StructuresHandler.generateStructure("FleshTemple", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceAbyssalLottoHut > 0 && rand.nextInt(ConfigurationUtil.spawnChanceAbyssalLottoHut) == 0) {
+		else if (ConfigurationUtil.StructureConfig.abyss.abyssalLottoHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.abyssalLottoHutSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 2, z + 2) + 20;
@@ -468,7 +468,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 2, y + 3, z + 2)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("AbyssalLottoHut", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceShadowlordPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceShadowlordPlatform) == 0) {
+		else if (ConfigurationUtil.StructureConfig.abyss.shadowlordPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.shadowlordPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 5);
@@ -477,7 +477,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 				StructuresHandler.generateStructure("ShadowlordPlatform", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceWitherRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceWitherRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.abyss.witherRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.witherRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 12;

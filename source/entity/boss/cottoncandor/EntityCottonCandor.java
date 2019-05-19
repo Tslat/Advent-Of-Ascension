@@ -92,7 +92,7 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 35;
 	}
 

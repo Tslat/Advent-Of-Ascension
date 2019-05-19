@@ -130,7 +130,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceHauntedCastle > 0 && rand.nextInt(ConfigurationUtil.spawnChanceHauntedCastle) == 0) {
+		if (ConfigurationUtil.StructureConfig.mysterium.hauntedCastleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.hauntedCastleSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = world.getHeight(x + 19, z + 14);
@@ -138,7 +138,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 19, y -1, z + 14)) == biome.topBlock)
 				StructuresHandler.generateStructure("HauntedCastle", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceFungshroom > 0 && rand.nextInt(ConfigurationUtil.spawnChanceFungshroom) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.fungshroomSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.fungshroomSpawnChance) == 0) {
 			x = baseX + rand.nextInt(13);
 			z = baseZ + rand.nextInt(13);
 			y = world.getHeight(x + 8, z + 8);
@@ -146,7 +146,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y - 1, z + 8)) == biome.topBlock)
 				StructuresHandler.generateStructure("Fungshroom", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGorbVillage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGorbVillage) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.gorbVillageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.gorbVillageSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ + rand.nextInt(10);
 			y = world.getHeight(x + 22, z + 10);
@@ -154,7 +154,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 22, y - 1, z + 10)) == biome.topBlock)
 				StructuresHandler.generateStructure("GorbVillage", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceMysticLottoShroom > 0 && rand.nextInt(ConfigurationUtil.spawnChanceMysticLottoShroom) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.mysticLottoShroomSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.mysticLottoShroomSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -162,7 +162,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)) == biome.topBlock)
 				StructuresHandler.generateStructure("MysticLottoShroom", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceMushroomSpiderCave > 0 && rand.nextInt(ConfigurationUtil.spawnChanceMushroomSpiderCave) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.mushroomSpiderCaveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.mushroomSpiderCaveSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = world.getHeight(x + 7, z + 7);
@@ -170,7 +170,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("MushroomSpiderCave", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceMysticPortalPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceMysticPortalPlatform) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.mysticPortalPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.mysticPortalPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 4);
@@ -178,7 +178,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 4)) == biome.topBlock)
 			StructuresHandler.generateStructure("MysticPortalPlatform", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceRunicArena > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRunicArena) == 0) {
+		else if (ConfigurationUtil.StructureConfig.mysterium.runicArenaSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.runicArenaSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 7, z + 7);
@@ -187,7 +187,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 				StructuresHandler.generateStructure("RunicArena", world, rand, pos.setPos(x, y , z));
 		}
 
-		if (ConfigurationUtil.spawnChanceDistortionRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDistortionRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.mysterium.distortionRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.mysterium.distortionRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 15;

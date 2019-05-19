@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Leaderboard implements Serializable {
-	private final ArrayList<LeaderboardEntry> leaderboardArray = new ArrayList<LeaderboardEntry>(ConfigurationUtil.leaderboardSize);
-	private final HashMap<UUID, Integer> indexMap = new HashMap<UUID, Integer>(ConfigurationUtil.leaderboardSize);
+	private final ArrayList<LeaderboardEntry> leaderboardArray = new ArrayList<LeaderboardEntry>(ConfigurationUtil.MainConfig.leaderboardCapacity);
+	private final HashMap<UUID, Integer> indexMap = new HashMap<UUID, Integer>(ConfigurationUtil.MainConfig.leaderboardCapacity);
 
 	private int lowestIndex = 0;
 	@Nullable
@@ -61,8 +61,8 @@ public class Leaderboard implements Serializable {
 					LeaderboardEntry entry = leaderboardArray.get(i);
 
 					if (entry != null && entry.getLvl() >= level) {
-						if (i + 1 < ConfigurationUtil.leaderboardSize) {
-							if (lowestIndex == ConfigurationUtil.leaderboardSize - 1) {
+						if (i + 1 < ConfigurationUtil.MainConfig.leaderboardCapacity) {
+							if (lowestIndex == ConfigurationUtil.MainConfig.leaderboardCapacity - 1) {
 								indexMap.remove(leaderboardArray.get(lowestIndex).getUuid());
 								leaderboardArray.remove(lowestIndex);
 							}
@@ -122,7 +122,7 @@ public class Leaderboard implements Serializable {
 		int firstRank = (pl == null ? 4 : Math.max(4, indexMap.containsKey(pl.getUniqueID()) ? indexMap.get(pl.getUniqueID()) : lowestIndex - 5) - 4);
 		ArrayList<NBTTagCompound> resultArray = new ArrayList<NBTTagCompound>();
 
-		for (int i = firstRank; i <= firstRank + 10 && i < leaderboardArray.size(); i++) {
+		for (int i = firstRank; i <= firstRank + 10 && i < leaderboardArray.leaderboardCapacity(); i++) {
 			LeaderboardEntry entry = leaderboardArray.get(i);
 
 			if (entry == null)

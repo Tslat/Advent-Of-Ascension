@@ -38,7 +38,7 @@ public class EntityLelyetianCaster extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 4;
 	}
 

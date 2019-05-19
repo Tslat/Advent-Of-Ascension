@@ -22,63 +22,63 @@ public class OverworldGen {
 	}
 
 	private static void doOreGen(World world, Random rand, int chunkX, int chunkZ) {
-		if (ConfigurationUtil.amethystVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.amethystVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.amethyst.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.amethyst.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(40);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreAmethyst.getDefaultState(), Math.max(ConfigurationUtil.amethystMinOres, rand.nextInt(ConfigurationUtil.amethystMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreAmethyst.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.amethyst.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.amethyst.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
-		if (ConfigurationUtil.rositeVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.rositeVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.rosite.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.rosite.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(25);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreRosite.getDefaultState(), Math.max(ConfigurationUtil.rositeMinOres, rand.nextInt(ConfigurationUtil.rositeMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreRosite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.rosite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.rosite.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
-		if (ConfigurationUtil.limoniteVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.limoniteVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.limonite.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.limonite.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(50);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreLimonite.getDefaultState(), Math.max(ConfigurationUtil.limoniteMinOres, rand.nextInt(ConfigurationUtil.limoniteMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreLimonite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.limonite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.limonite.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
-		if (ConfigurationUtil.runiumVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.runiumVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.runium.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.runium.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(20);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreRunium.getDefaultState(), Math.max(ConfigurationUtil.runiumMinOres, rand.nextInt(ConfigurationUtil.runiumMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.runium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.runium.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
-		if (ConfigurationUtil.jadeVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.jadeVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.jade.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.jade.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(20);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreJade.getDefaultState(), Math.max(ConfigurationUtil.jadeMinOres, rand.nextInt(ConfigurationUtil.jadeMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreJade.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jade.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jade.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
-		if (ConfigurationUtil.sapphireVeinCount > 0) {
-			for (int i = 0; i < rand.nextInt(ConfigurationUtil.sapphireVeinCount); i++) {
+		if (ConfigurationUtil.OreConfig.sapphire.maxVeinsPerChunk > 0) {
+			for (int i = 0; i < rand.nextInt(ConfigurationUtil.OreConfig.sapphire.maxVeinsPerChunk); i++) {
 				int posX = chunkX + rand.nextInt(16);
 				int posY = rand.nextInt(10);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreSapphire.getDefaultState(), Math.max(ConfigurationUtil.sapphireMinOres, rand.nextInt(ConfigurationUtil.sapphireMaxOres))).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.oreSapphire.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.sapphire.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.sapphire.maxOresPerVein))).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 	}
@@ -87,7 +87,7 @@ public class OverworldGen {
 		Biome biome = world.getBiome(new BlockPos(chunkX, 0, chunkZ));
 
 		if (biome == Biomes.OCEAN || biome == Biomes.DEEP_OCEAN) {
-			if (ConfigurationUtil.spawnChanceAmphibiyteCove > 0 && rand.nextInt(ConfigurationUtil.spawnChanceAmphibiyteCove) == 0) {
+			if (ConfigurationUtil.StructureConfig.overworld.amphibiyteCoveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.amphibiyteCoveSpawnChance) == 0) {
 				int posX = chunkX + rand.nextInt(13);
 				int posZ = chunkZ + rand.nextInt(12);
 				int posY = world.getHeight(posX + 8, posZ + 8);
@@ -99,7 +99,7 @@ public class OverworldGen {
 			}
 		}
 
-		if (ConfigurationUtil.spawnChanceRuinedTeleporterFrame > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRuinedTeleporterFrame) == 0) {
+		if (ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance) == 0) {
 			int posX = chunkX + rand.nextInt(16);
 			int posZ = chunkZ + rand.nextInt(15);
 			int posY = rand.nextInt(10) + 10;
@@ -108,7 +108,7 @@ public class OverworldGen {
 				StructuresHandler.generateStructure("RuinedTeleporterFrame", world, rand, new BlockPos(posX, posY, posZ));
 		}
 
-		if (ConfigurationUtil.spawnChanceWindRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceWindRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.overworld.windRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.windRuneShrineSpawnChance) == 0) {
 			int posX = chunkX + rand.nextInt(16);
 			int posZ = chunkZ + rand.nextInt(16);
 			int posY = world.getHeight(posX, posZ);

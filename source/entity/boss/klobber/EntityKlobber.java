@@ -78,7 +78,7 @@ public class EntityKlobber extends AoAMeleeMob implements BossEntity {
 
 	@Override
 	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() == ConfigurationUtil.dimImmortallis)
+		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
 			dropItem(ItemRegister.progressCoin1, 1);
 	}
 

@@ -8,6 +8,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.WorldUtil;
@@ -77,6 +78,13 @@ public class EntitySeaCharger extends AoAMeleeMob {
 
 	@Override
 	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
+		if (source.isFireDamage() || isBurning()) {
+			dropItem(ItemRegister.chargerShank, 1 + rand.nextInt(1 + lootingMod));
+		}
+		else {
+			dropItem(ItemRegister.chargerShankRaw, 1 + rand.nextInt(1 + lootingMod));
+		}
+
 		if (rand.nextInt(6) == 0)
 			dropItem(Items.FEATHER, 3 + rand.nextInt(1 + lootingMod));
 	}

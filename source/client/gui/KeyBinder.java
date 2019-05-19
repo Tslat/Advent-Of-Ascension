@@ -5,8 +5,10 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.mainwindow.AdventMainGui;
-
+@SideOnly(Side.CLIENT)
 public class KeyBinder {
 	public static KeyBinding keyCreatureStats;
 	public static KeyBinding keyResourceGui;
@@ -15,8 +17,6 @@ public class KeyBinder {
 	public static boolean statusCreatureStats = true;
 	public static boolean statusResourceGui = false;
 	public static boolean statusResourceGuiMessage = true;
-
-	public static int currentSkillName = 0;
 
 	public static void init() {
 		ClientRegistry.registerKeyBinding(keyCreatureStats = new KeyBinding("key.cstats", 49, "key.categories.advent"));
@@ -34,7 +34,13 @@ public class KeyBinder {
 			statusResourceGuiMessage = false;
 		}
 
-		if (keyAdventGui.isPressed() && Minecraft.getMinecraft().player != null)
-			Minecraft.getMinecraft().displayGuiScreen(new AdventMainGui(Minecraft.getMinecraft().player));
+		if (keyAdventGui.isPressed() && Minecraft.getMinecraft().player != null) {
+			if (Minecraft.getMinecraft().currentScreen instanceof AdventMainGui) {
+				Minecraft.getMinecraft().player.displayGui(null);
+			}
+			else if (Minecraft.getMinecraft().currentScreen == null) {
+				Minecraft.getMinecraft().displayGuiScreen(new AdventMainGui(Minecraft.getMinecraft().player));
+			}
+		}
 	}
 }

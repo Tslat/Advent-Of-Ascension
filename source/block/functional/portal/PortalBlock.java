@@ -157,7 +157,8 @@ public class PortalBlock extends UnbreakableBlock {
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayerMP && !entity.isRiding() && !entity.isBeingRidden()) {
 			if (entity.timeUntilPortal > 0) {
-				entity.timeUntilPortal = 10;
+				entity.timeUntilPortal = 30;
+
 				return;
 			}
 

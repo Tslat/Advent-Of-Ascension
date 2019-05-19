@@ -70,7 +70,7 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 5;
 	}
 

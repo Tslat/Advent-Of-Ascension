@@ -460,7 +460,7 @@ public final class AoAPlayerAPI {
 			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
 			int lvl = AdventGuiTabPlayer.getSkillLevel(skill);
 
-			return ConfigurationUtil.vanityLevels && includeVanityLevels ? lvl : Math.min(lvl, 100);
+			return ConfigurationUtil.MainConfig.showVanityLevels && includeVanityLevels ? lvl : Math.min(lvl, 100);
 		}
 		catch (IllegalArgumentException ex) {
 			AdventOfAscension.getLogger().log(Level.WARN, "Invalid skill name request getClientSkillLevel API call: " + skillName);

@@ -56,10 +56,8 @@ public class BiomeMysterium extends Biome {
 	public class BiomeMysteriumDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.mystiteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.mystiteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreMystite.getDefaultState(), Math.max(ConfigurationUtil.mystiteMinOres, rand.nextInt(ConfigurationUtil.mystiteMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneMysterium)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 2, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.mystite.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreMystite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.mystite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.mystite.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneMysterium)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 2, rand.nextInt(16)));
 			}
 		}
 

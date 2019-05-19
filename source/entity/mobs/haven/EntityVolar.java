@@ -35,7 +35,7 @@ public class EntityVolar extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 10;
 	}
 

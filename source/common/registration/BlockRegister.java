@@ -65,18 +65,6 @@ import static net.tslat.aoa3.library.Enums.Deities.*;
 
 @Mod.EventBusSubscriber
 public class BlockRegister {
-	private final static String oreDictCobble = "cobblestone";
-	private final static String oreDictFenceGateWood = "fenceGateWood";
-	private final static String oreDictFenceWood = "fenceWood";
-	private final static String oreDictGlass = "blockGlass";
-	private final static String oreDictLeaves = "treeLeaves";
-	private final static String oreDictPlanks = "plankWood";
-	private final static String oreDictSand = "sand";
-	private final static String oreDictSlabWood = "slabWood";
-	private final static String oreDictStairsWood = "stairWood";
-	private final static String oreDictStone = "stone";
-	private final static String oreDictWood = "logWood";
-
 	public static final BasicBlock stoneAbyss = new StoneBlock("AbyssalStone", "abyss_stone");
 	public static final BasicBlock stoneBarathos = new StoneBlock("BarathosHellstone", "barathos_hellstone");
 	public static final BasicBlock stoneBaron = new StoneBlock("BaronStone", "baron_stone");
@@ -140,7 +128,7 @@ public class BlockRegister {
 	public static final OreBlock oreBaronyte = new OreBlock("BaronyteOre", "baronyte_ore", 3);
 	public static final OreBlock oreBlazium = new OreBlock("BlaziumOre", "blazium_ore", 3);
 	public static final OreBlock oreBloodstone = new OreBlock("BloodstoneOre", "bloodstone_ore", 3);
-	public static final OreBlock oreBlueCrystal = new OreBlock("BlueCrystalOre", "blue_crystal_ore", 3);
+	public static final OreBlock oreBlueGemstone = new OreBlock("BlueGemstoneOre", "blue_crystal_ore", 3);
 	public static final OreBlock oreChargedRunium = new OreBlock("ChargedRuniumOre", "charged_runium_ore", 3);
 	public static final OreBlock oreChestboneFragments = new OreBlock("ChestboneFragmentsOre", "chestbone_fragments_ore", 3);
 	public static final OreBlock oreCrystallite = new OreBlock("CrystalliteOre", "crystallite_ore", 3);
@@ -150,7 +138,7 @@ public class BlockRegister {
 	public static final OreBlock oreGemenyte = new OreBlock("GemenyteOre", "gemenyte_ore", 3);
 	public static final OreBlock oreGhastly = new OreBlock("GhastlyOre", "ghastly_ore", 3);
 	public static final OreBlock oreGhoulish = new OreBlock("GhoulishOre", "ghoulish_ore", 3);
-	public static final OreBlock oreGreenCrystal = new OreBlock("GreenCrystalOre", "green_crystal_ore", 3);
+	public static final OreBlock oreGreenGemstone = new OreBlock("GreenGemstoneOre", "green_crystal_ore", 3);
 	public static final OreBlock oreJade = new OreBlock("JadeOre", "jade_ore", 3);
 	public static final OreBlock oreJewelyte = new OreBlock("JewelyteOre", "jewelyte_ore", 3);
 	public static final OreBlock oreLegboneFragments = new OreBlock("LegboneFragmentsOre", "legbone_fragments_ore", 3);
@@ -158,8 +146,8 @@ public class BlockRegister {
 	public static final OreBlock oreLyon = new OreBlock("LyonOre", "lyon_ore", 3);
 	public static final OreBlock oreMystite = new OreBlock("MystiteOre", "mystite_ore", 3);
 	public static final OreBlock oreOrnamyte = new OreBlock("OrnamyteOre", "ornamyte_ore", 3);
-	public static final OreBlock orePurpleCrystal = new OreBlock("PurpleCrystalOre", "purple_crystal_ore", 3);
-	public static final OreBlock oreRedCrystal = new OreBlock("RedCrystalOre", "red_crystal_ore", 3);
+	public static final OreBlock orePurpleGemstone = new OreBlock("PurpleGemstoneOre", "purple_crystal_ore", 3);
+	public static final OreBlock oreRedGemstone = new OreBlock("RedGemstoneOre", "red_crystal_ore", 3);
 	public static final OreBlock oreRosite = new OreBlock("RositeOre", "rosite_ore", 3);
 	public static final OreBlock oreRunium = new OreBlock("RuniumOre", "runium_ore", 2);
 	public static final OreBlock oreSapphire = new OreBlock("SapphireOre", "sapphire_ore", 3);
@@ -167,8 +155,8 @@ public class BlockRegister {
 	public static final OreBlock oreShyrestone = new OreBlock("ShyrestoneOre", "shyrestone_ore", 3);
 	public static final OreBlock oreSkullboneFragments = new OreBlock("SkullboneFragmentsOre", "skullbone_fragments_ore", 3);
 	public static final OreBlock oreVarsium = new OreBlock("VarsiumOre", "varsium_ore", 3);
-	public static final OreBlock oreWhiteCrystal = new OreBlock("WhiteCrystalOre", "white_crystal_ore", 3);
-	public static final OreBlock oreYellowCrystal = new OreBlock("YellowCrystalOre", "yellow_crystal_ore", 3);
+	public static final OreBlock oreWhiteGemstone = new OreBlock("WhiteGemstoneOre", "white_crystal_ore", 3);
+	public static final OreBlock oreYellowGemstone = new OreBlock("YellowGemstoneOre", "yellow_crystal_ore", 3);
 
 	public static final BasicBlock bricksBaron = new BasicDecorationBlock("BaronBricks", "baron_bricks", Material.ROCK, 10f, 15f);
 	public static final BasicBlock bricksBlack = new BasicDecorationBlock("BlackBricks", "black_bricks", Material.ROCK, 2.0f, 10.0f);
@@ -702,12 +690,12 @@ public class BlockRegister {
 	public static final BasicBlock cottonCandyAqua = new BasicBlock("AquaCottonCandy", "aqua_cotton_candy", Material.WEB);
 	public static final BasicBlock cottonCandyPink = new BasicBlock("PinkCottonCandy", "pink_cotton_candy", Material.WEB);
 	public static final BasicBlock crate = new BasicDecorationBlock("Crate", "crate", Material.WOOD);
-	public static final BasicBlock crystalBlue = new TranslucentBlock("BlueCrystal", "blue_crystal_block", Material.GLASS, 1.0f, 0f, 3);
-	public static final BasicBlock crystalGreen = new TranslucentBlock("GreenCrystal", "green_crystal_block", Material.GLASS, 1.0f, 0f, 3);
-	public static final BasicBlock crystalPurple = new TranslucentBlock("PurpleCrystal", "purple_crystal_block", Material.GLASS, 1.0f, 0f, 3);
-	public static final BasicBlock crystalRed = new TranslucentBlock("RedCrystal", "red_crystal_block", Material.GLASS, 1.0f, 0f, 3);
-	public static final BasicBlock crystalWhite = new TranslucentBlock("WhiteCrystal", "white_crystal_block", Material.GLASS, 1.0f, 0f, 3);
-	public static final BasicBlock crystalYellow = new TranslucentBlock("YellowCrystal", "yellow_crystal_block", Material.GLASS, 1.0f, 0f, 3);
+	public static final BasicBlock crystalBlue = new TranslucentBlock("BlueCrystal", "blue_crystal_block", Material.GLASS, 1.0f, 0f, 0);
+	public static final BasicBlock crystalGreen = new TranslucentBlock("GreenCrystal", "green_crystal_block", Material.GLASS, 1.0f, 0f, 0);
+	public static final BasicBlock crystalPurple = new TranslucentBlock("PurpleCrystal", "purple_crystal_block", Material.GLASS, 1.0f, 0f, 0);
+	public static final BasicBlock crystalRed = new TranslucentBlock("RedCrystal", "red_crystal_block", Material.GLASS, 1.0f, 0f, 0);
+	public static final BasicBlock crystalWhite = new TranslucentBlock("WhiteCrystal", "white_crystal_block", Material.GLASS, 1.0f, 0f, 0);
+	public static final BasicBlock crystalYellow = new TranslucentBlock("YellowCrystal", "yellow_crystal_block", Material.GLASS, 1.0f, 0f, 0);
 	public static final BasicBlock darkFaceBrick = new BasicBlock("DarkFaceBrick", "dark_face_brick", Material.ROCK);
 	public static final BasicBlock deeplandsTrapExplosion = new DeeplandsTrapExplosion();
 	public static final BasicBlock deeplandsTrapLava = new DeeplandsTrapLava();
@@ -916,28 +904,28 @@ public class BlockRegister {
 	public static final BossAltarBlock visualentAltar = new VisualentAltar();
 	public static final BossAltarBlock voxxulonAltar = new VoxxulonAltar();
 
-	public static final PortalBlock portalAbyss = new PortalBlock("AbyssPortal", "abyss_portal", ConfigurationUtil.dimAbyss, Enums.RGBIntegers.RED_2);
-	public static final PortalBlock portalAncientCavern = new PortalBlock("AncientCavernPortal", "ancient_cavern_portal", ConfigurationUtil.dimAncientCavern, Enums.RGBIntegers.PIGMENT_GREEN);
-	public static final PortalBlock portalBarathos = new PortalBlock("BarathosPortal", "barathos_portal", ConfigurationUtil.dimBarathos, Enums.RGBIntegers.LIGHT_CORAL);
-	public static final PortalBlock portalBorean = new PortalBlock("BoreanPortal", "borean_portal", ConfigurationUtil.dimLborean, Enums.RGBIntegers.IRIS_BLUE);
-	public static final PortalBlock portalCandyland = new PortalBlock("CandylandPortal", "candyland_portal", ConfigurationUtil.dimCandyland, Enums.RGBIntegers.MISTY_ROSE);
-	public static final PortalBlock portalCeleve = new PortalBlock("CelevePortal", "celeve_portal", ConfigurationUtil.dimCeleve, Enums.RGBIntegers.YELLOW_2);
-	public static final PortalBlock portalCreeponia = new PortalBlock("CreeponiaPortal", "creeponia_portal", ConfigurationUtil.dimCreeponia, Enums.RGBIntegers.DE_YORK);
-	public static final PortalBlock portalCrystevia = new PortalBlock("CrysteviaPortal", "crystevia_portal", ConfigurationUtil.dimCrystevia, Enums.RGBIntegers.HELIOTROPE);
-	public static final PortalBlock portalDeeplands = new PortalBlock("DeeplandsPortal", "deeplands_portal", ConfigurationUtil.dimDeeplands, Enums.RGBIntegers.SILVER);
-	public static final PortalBlock portalDustopia = new PortalBlock("DustopiaPortal", "dustopia_portal", ConfigurationUtil.dimDustopia, Enums.RGBIntegers.BLACK);
-	public static final PortalBlock portalGardencia = new PortalBlock("GardenciaPortal", "gardencia_portal", ConfigurationUtil.dimGardencia, Enums.RGBIntegers.DEEP_PINK);
+	public static final PortalBlock portalAbyss = new PortalBlock("AbyssPortal", "abyss_portal", ConfigurationUtil.MainConfig.dimensionIds.abyss, Enums.RGBIntegers.RED_2);
+	public static final PortalBlock portalAncientCavern = new PortalBlock("AncientCavernPortal", "ancient_cavern_portal", ConfigurationUtil.MainConfig.dimensionIds.ancientCavern, Enums.RGBIntegers.PIGMENT_GREEN);
+	public static final PortalBlock portalBarathos = new PortalBlock("BarathosPortal", "barathos_portal", ConfigurationUtil.MainConfig.dimensionIds.barathos, Enums.RGBIntegers.LIGHT_CORAL);
+	public static final PortalBlock portalBorean = new PortalBlock("BoreanPortal", "borean_portal", ConfigurationUtil.MainConfig.dimensionIds.lborean, Enums.RGBIntegers.IRIS_BLUE);
+	public static final PortalBlock portalCandyland = new PortalBlock("CandylandPortal", "candyland_portal", ConfigurationUtil.MainConfig.dimensionIds.candyland, Enums.RGBIntegers.MISTY_ROSE);
+	public static final PortalBlock portalCeleve = new PortalBlock("CelevePortal", "celeve_portal", ConfigurationUtil.MainConfig.dimensionIds.celeve, Enums.RGBIntegers.YELLOW_2);
+	public static final PortalBlock portalCreeponia = new PortalBlock("CreeponiaPortal", "creeponia_portal", ConfigurationUtil.MainConfig.dimensionIds.creeponia, Enums.RGBIntegers.DE_YORK);
+	public static final PortalBlock portalCrystevia = new PortalBlock("CrysteviaPortal", "crystevia_portal", ConfigurationUtil.MainConfig.dimensionIds.crystevia, Enums.RGBIntegers.HELIOTROPE);
+	public static final PortalBlock portalDeeplands = new PortalBlock("DeeplandsPortal", "deeplands_portal", ConfigurationUtil.MainConfig.dimensionIds.deeplands, Enums.RGBIntegers.SILVER);
+	public static final PortalBlock portalDustopia = new PortalBlock("DustopiaPortal", "dustopia_portal", ConfigurationUtil.MainConfig.dimensionIds.dustopia, Enums.RGBIntegers.BLACK);
+	public static final PortalBlock portalGardencia = new PortalBlock("GardenciaPortal", "gardencia_portal", ConfigurationUtil.MainConfig.dimensionIds.gardencia, Enums.RGBIntegers.DEEP_PINK);
 	public static final PortalBlock portalGreckon = new GreckonPortalBlock();
-	public static final PortalBlock portalHaven = new PortalBlock("HavenPortal", "haven_portal", ConfigurationUtil.dimHaven, Enums.RGBIntegers.BRIGHT_TURQUOISE);
-	public static final PortalBlock portalImmortallis = new PortalBlock("ImmortallisPortal", "immortallis_portal", ConfigurationUtil.dimImmortallis, Enums.RGBIntegers.GOLDEN_POPPY);
-	public static final PortalBlock portalIromine = new PortalBlock("IrominePortal", "iromine_portal", ConfigurationUtil.dimIromine, Enums.RGBIntegers.TANGERINE_YELLOW);
-	public static final PortalBlock portalLelyetia = new PortalBlock("LelyetiaPortal", "lelyetia_portal", ConfigurationUtil.dimLelyetia, Enums.RGBIntegers.MANGO_TANGO);
-	public static final PortalBlock portalLunalus = new PortalBlock("LunalusPortal", "lunalus_portal", ConfigurationUtil.dimLunalus, Enums.RGBIntegers.LAVENDER_BLUSH);
-	public static final PortalBlock portalMysterium = new PortalBlock("MysteriumPortal", "mysterium_portal", ConfigurationUtil.dimMysterium, Enums.RGBIntegers.TYRIAN_PURPLE);
-	public static final PortalBlock portalPrecasia = new PortalBlock("PrecasiaPortal", "precasia_portal", ConfigurationUtil.dimPrecasia, Enums.RGBIntegers.ELECTRIC_LIME);
+	public static final PortalBlock portalHaven = new PortalBlock("HavenPortal", "haven_portal", ConfigurationUtil.MainConfig.dimensionIds.haven, Enums.RGBIntegers.BRIGHT_TURQUOISE);
+	public static final PortalBlock portalImmortallis = new PortalBlock("ImmortallisPortal", "immortallis_portal", ConfigurationUtil.MainConfig.dimensionIds.immortallis, Enums.RGBIntegers.GOLDEN_POPPY);
+	public static final PortalBlock portalIromine = new PortalBlock("IrominePortal", "iromine_portal", ConfigurationUtil.MainConfig.dimensionIds.iromine, Enums.RGBIntegers.TANGERINE_YELLOW);
+	public static final PortalBlock portalLelyetia = new PortalBlock("LelyetiaPortal", "lelyetia_portal", ConfigurationUtil.MainConfig.dimensionIds.lelyetia, Enums.RGBIntegers.MANGO_TANGO);
+	public static final PortalBlock portalLunalus = new PortalBlock("LunalusPortal", "lunalus_portal", ConfigurationUtil.MainConfig.dimensionIds.lunalus, Enums.RGBIntegers.LAVENDER_BLUSH);
+	public static final PortalBlock portalMysterium = new PortalBlock("MysteriumPortal", "mysterium_portal", ConfigurationUtil.MainConfig.dimensionIds.mysterium, Enums.RGBIntegers.TYRIAN_PURPLE);
+	public static final PortalBlock portalPrecasia = new PortalBlock("PrecasiaPortal", "precasia_portal", ConfigurationUtil.MainConfig.dimensionIds.precasia, Enums.RGBIntegers.ELECTRIC_LIME);
 	public static final PortalBlock portalRunandor = new RunandorPortalBlock();
-	public static final PortalBlock portalShyrelands = new PortalBlock("ShyrelandsPortal", "shyrelands_portal", ConfigurationUtil.dimShyrelands, Enums.RGBIntegers.YELLOW);
-	public static final PortalBlock portalVoxPonds = new PortalBlock("VoxPondsPortal", "vox_ponds_portal", ConfigurationUtil.dimVoxPonds, Enums.RGBIntegers.OLIVE);
+	public static final PortalBlock portalShyrelands = new PortalBlock("ShyrelandsPortal", "shyrelands_portal", ConfigurationUtil.MainConfig.dimensionIds.shyrelands, Enums.RGBIntegers.YELLOW);
+	public static final PortalBlock portalVoxPonds = new PortalBlock("VoxPondsPortal", "vox_ponds_portal", ConfigurationUtil.MainConfig.dimensionIds.voxPonds, Enums.RGBIntegers.OLIVE);
 
 	public static final AncientAltar ancientAltar = new AncientAltar();
 	public static final AncientCavernShrine shrineErebon = new AncientCavernShrine("ErebonShrine", "erebon_shrine", EREBON);
@@ -1482,7 +1470,7 @@ public class BlockRegister {
 				oreBaronyte,
 				oreBlazium,
 				oreBloodstone,
-				oreBlueCrystal,
+				oreBlueGemstone,
 				oreChargedRunium,
 				oreChestboneFragments,
 				oreCrystallite,
@@ -1492,7 +1480,7 @@ public class BlockRegister {
 				oreGemenyte,
 				oreGhastly,
 				oreGhoulish,
-				oreGreenCrystal,
+				oreGreenGemstone,
 				oreJade,
 				oreJewelyte,
 				oreLegboneFragments,
@@ -1500,8 +1488,8 @@ public class BlockRegister {
 				oreLyon,
 				oreMystite,
 				oreOrnamyte,
-				orePurpleCrystal,
-				oreRedCrystal,
+				orePurpleGemstone,
+				oreRedGemstone,
 				oreRosite,
 				oreRunium,
 				oreSapphire,
@@ -1509,8 +1497,8 @@ public class BlockRegister {
 				oreShyrestone,
 				oreSkullboneFragments,
 				oreVarsium,
-				oreWhiteCrystal,
-				oreYellowCrystal,
+				oreWhiteGemstone,
+				oreYellowGemstone,
 				bricksBaron,
 				bricksBlack,
 				bricksBloodstone,
@@ -2799,7 +2787,7 @@ public class BlockRegister {
 				new ItemBlock(oreBaronyte).setRegistryName(oreBaronyte.getRegistryName()),
 				new ItemBlock(oreBlazium).setRegistryName(oreBlazium.getRegistryName()),
 				new ItemBlock(oreBloodstone).setRegistryName(oreBloodstone.getRegistryName()),
-				new ItemBlock(oreBlueCrystal).setRegistryName(oreBlueCrystal.getRegistryName()),
+				new ItemBlock(oreBlueGemstone).setRegistryName(oreBlueGemstone.getRegistryName()),
 				new ItemBlock(oreChargedRunium).setRegistryName(oreChargedRunium.getRegistryName()),
 				new ItemBlock(oreChestboneFragments).setRegistryName(oreChestboneFragments.getRegistryName()),
 				new ItemBlock(oreCrystallite).setRegistryName(oreCrystallite.getRegistryName()),
@@ -2809,7 +2797,7 @@ public class BlockRegister {
 				new ItemBlock(oreGemenyte).setRegistryName(oreGemenyte.getRegistryName()),
 				new ItemBlock(oreGhastly).setRegistryName(oreGhastly.getRegistryName()),
 				new ItemBlock(oreGhoulish).setRegistryName(oreGhoulish.getRegistryName()),
-				new ItemBlock(oreGreenCrystal).setRegistryName(oreGreenCrystal.getRegistryName()),
+				new ItemBlock(oreGreenGemstone).setRegistryName(oreGreenGemstone.getRegistryName()),
 				new ItemBlock(oreJade).setRegistryName(oreJade.getRegistryName()),
 				new ItemBlock(oreJewelyte).setRegistryName(oreJewelyte.getRegistryName()),
 				new ItemBlock(oreLegboneFragments).setRegistryName(oreLegboneFragments.getRegistryName()),
@@ -2817,8 +2805,8 @@ public class BlockRegister {
 				new ItemBlock(oreLyon).setRegistryName(oreLyon.getRegistryName()),
 				new ItemBlock(oreMystite).setRegistryName(oreMystite.getRegistryName()),
 				new ItemBlock(oreOrnamyte).setRegistryName(oreOrnamyte.getRegistryName()),
-				new ItemBlock(orePurpleCrystal).setRegistryName(orePurpleCrystal.getRegistryName()),
-				new ItemBlock(oreRedCrystal).setRegistryName(oreRedCrystal.getRegistryName()),
+				new ItemBlock(orePurpleGemstone).setRegistryName(orePurpleGemstone.getRegistryName()),
+				new ItemBlock(oreRedGemstone).setRegistryName(oreRedGemstone.getRegistryName()),
 				new ItemBlock(oreRosite).setRegistryName(oreRosite.getRegistryName()),
 				new ItemBlock(oreRunium).setRegistryName(oreRunium.getRegistryName()),
 				new ItemBlock(oreSapphire).setRegistryName(oreSapphire.getRegistryName()),
@@ -2826,8 +2814,8 @@ public class BlockRegister {
 				new ItemBlock(oreShyrestone).setRegistryName(oreShyrestone.getRegistryName()),
 				new ItemBlock(oreSkullboneFragments).setRegistryName(oreSkullboneFragments.getRegistryName()),
 				new ItemBlock(oreVarsium).setRegistryName(oreVarsium.getRegistryName()),
-				new ItemBlock(oreWhiteCrystal).setRegistryName(oreWhiteCrystal.getRegistryName()),
-				new ItemBlock(oreYellowCrystal).setRegistryName(oreYellowCrystal.getRegistryName()),
+				new ItemBlock(oreWhiteGemstone).setRegistryName(oreWhiteGemstone.getRegistryName()),
+				new ItemBlock(oreYellowGemstone).setRegistryName(oreYellowGemstone.getRegistryName()),
 				new ItemBlock(bricksBaron).setRegistryName(bricksBaron.getRegistryName()),
 				new ItemBlock(bricksBlack).setRegistryName(bricksBlack.getRegistryName()),
 				new ItemBlock(bricksBloodstone).setRegistryName(bricksBloodstone.getRegistryName()),
@@ -4037,6 +4025,30 @@ public class BlockRegister {
 	}
 
 	@SubscribeEvent
+	public static void remapMissing(final RegistryEvent.MissingMappings<Block> ev) {
+		for (RegistryEvent.MissingMappings.Mapping<Block> map : ev.getAllMappings()) {
+			if (map.key.equals(new ResourceLocation("aoa3:blue_crystal_ore"))) {
+				map.remap(oreBlueGemstone);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:green_crystal_ore"))) {
+				map.remap(oreGreenGemstone);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:red_crystal_ore"))) {
+				map.remap(oreRedGemstone);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:purple_crystal_ore"))) {
+				map.remap(orePurpleGemstone);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:white_crystal_ore"))) {
+				map.remap(oreWhiteGemstone);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:yellow_crystal_ore"))) {
+				map.remap(oreWhiteGemstone);
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public static void registerItemBlockRenders(final ModelRegistryEvent ev) {
 		registerRender(Item.getItemFromBlock(stoneAbyss), "blocks/generation/stone/");
 		registerRender(Item.getItemFromBlock(stoneBarathos), "blocks/generation/stone/");
@@ -4098,7 +4110,7 @@ public class BlockRegister {
 		registerRender(Item.getItemFromBlock(oreBaronyte), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreBlazium), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreBloodstone), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(oreBlueCrystal), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(oreBlueGemstone), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreChargedRunium), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreChestboneFragments), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreCrystallite), "blocks/generation/ores/");
@@ -4108,7 +4120,7 @@ public class BlockRegister {
 		registerRender(Item.getItemFromBlock(oreGemenyte), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreGhastly), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreGhoulish), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(oreGreenCrystal), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(oreGreenGemstone), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreJade), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreJewelyte), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreLegboneFragments), "blocks/generation/ores/");
@@ -4116,8 +4128,8 @@ public class BlockRegister {
 		registerRender(Item.getItemFromBlock(oreLyon), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreMystite), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreOrnamyte), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(orePurpleCrystal), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(oreRedCrystal), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(orePurpleGemstone), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(oreRedGemstone), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreRosite), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreRunium), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreSapphire), "blocks/generation/ores/");
@@ -4125,8 +4137,8 @@ public class BlockRegister {
 		registerRender(Item.getItemFromBlock(oreShyrestone), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreSkullboneFragments), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(oreVarsium), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(oreWhiteCrystal), "blocks/generation/ores/");
-		registerRender(Item.getItemFromBlock(oreYellowCrystal), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(oreWhiteGemstone), "blocks/generation/ores/");
+		registerRender(Item.getItemFromBlock(oreYellowGemstone), "blocks/generation/ores/");
 		registerRender(Item.getItemFromBlock(bricksBaron), "blocks/decoration/bricks/");
 		registerRender(Item.getItemFromBlock(bricksBlack), "blocks/decoration/bricks/");
 		registerRender(Item.getItemFromBlock(bricksBloodstone), "blocks/decoration/bricks/");
@@ -5387,28 +5399,74 @@ public class BlockRegister {
 	}
 
 	public static void doInitTasks() {
-		crystalCreatorBlue.setActivationCrystal(ItemRegister.crystalBlue);
-		crystalCreatorGreen.setActivationCrystal(ItemRegister.crystalGreen);
-		crystalCreatorPurple.setActivationCrystal(ItemRegister.crystalPurple);
-		crystalCreatorRed.setActivationCrystal(ItemRegister.crystalRed);
-		crystalCreatorWhite.setActivationCrystal(ItemRegister.crystalWhite);
-		crystalCreatorYellow.setActivationCrystal(ItemRegister.crystalYellow);
+		String oreDictCobble = "cobblestone";
+		String oreDictFenceGateWood = "fenceGateWood";
+		String oreDictFenceWood = "fenceWood";
+		String oreDictGlass = "blockGlass";
+		String oreDictLeaves = "treeLeaves";
+		String oreDictPlanks = "plankWood";
+		String oreDictSand = "sand";
+		String oreDictSlabWood = "slabWood";
+		String oreDictStairsWood = "stairWood";
+		String oreDictStone = "stone";
+		String oreDictWood = "logWood";
+		
+		crystalCreatorBlue.setConversionItems(ItemRegister.gemstonesBlue, ItemRegister.crystalBlue);
+		crystalCreatorGreen.setConversionItems(ItemRegister.gemstonesGreen, ItemRegister.crystalGreen);
+		crystalCreatorPurple.setConversionItems(ItemRegister.gemstonesPurple, ItemRegister.crystalPurple);
+		crystalCreatorRed.setConversionItems(ItemRegister.gemstonesRed, ItemRegister.crystalRed);
+		crystalCreatorWhite.setConversionItems(ItemRegister.gemstonesWhite, ItemRegister.crystalWhite);
+		crystalCreatorYellow.setConversionItems(ItemRegister.gemstonesYellow, ItemRegister.crystalYellow);
 		oreAmethyst.setDrop(ItemRegister.amethyst);
 		oreBloodstone.setDrop(ItemRegister.gemBloodstone);
-		oreBlueCrystal.setDrop(ItemRegister.crystalBlue);
+		oreBlueGemstone.setDrop(ItemRegister.gemstonesBlue);
 		oreChestboneFragments.setDrop(ItemRegister.boneFragmentChestbone);
 		oreCrystallite.setDrop(ItemRegister.gemCrystallite);
 		oreFootboneFragments.setDrop(ItemRegister.boneFragmentFootbone);
-		oreGreenCrystal.setDrop(ItemRegister.crystalGreen);
+		oreGreenGemstone.setDrop(ItemRegister.gemstonesGreen);
 		oreJade.setDrop(ItemRegister.jade);
 		oreLegboneFragments.setDrop(ItemRegister.boneFragmentLegbone);
-		orePurpleCrystal.setDrop(ItemRegister.crystalPurple);
-		oreRedCrystal.setDrop(ItemRegister.crystalRed);
+		orePurpleGemstone.setDrop(ItemRegister.gemstonesPurple);
+		oreRedGemstone.setDrop(ItemRegister.gemstonesRed);
 		oreSapphire.setDrop(ItemRegister.sapphire);
 		oreShyregem.setDrop(ItemRegister.shyregem);
 		oreSkullboneFragments.setDrop(ItemRegister.boneFragmentSkullbone);
-		oreWhiteCrystal.setDrop(ItemRegister.crystalWhite);
-		oreYellowCrystal.setDrop(ItemRegister.crystalYellow);
+		oreWhiteGemstone.setDrop(ItemRegister.gemstonesWhite);
+		oreYellowGemstone.setDrop(ItemRegister.gemstonesYellow);
+
+		OreDictionary.registerOre("oreAmethyst", oreAmethyst);
+		OreDictionary.registerOre("oreBaronyte", oreBaronyte);
+		OreDictionary.registerOre("oreBlazium", oreBlazium);
+		OreDictionary.registerOre("oreBloodstone", oreBloodstone);
+		OreDictionary.registerOre("oreBlueGemstone", oreBlueGemstone);
+		OreDictionary.registerOre("oreChargedRunium", oreChargedRunium);
+		OreDictionary.registerOre("oreChestboneFragments", oreChestboneFragments);
+		OreDictionary.registerOre("oreCrystallite", oreCrystallite);
+		OreDictionary.registerOre("oreElecanium", oreElecanium);
+		OreDictionary.registerOre("oreEmberstone", oreEmberstone);
+		OreDictionary.registerOre("oreFootboneFragments", oreFootboneFragments);
+		OreDictionary.registerOre("oreGemenyte", oreGemenyte);
+		OreDictionary.registerOre("oreGhastly", oreGhastly);
+		OreDictionary.registerOre("oreGhoulish", oreGhoulish);
+		OreDictionary.registerOre("oreGreenGemstone", oreGreenGemstone);
+		OreDictionary.registerOre("oreJade", oreJade);
+		OreDictionary.registerOre("oreJewelyte", oreJewelyte);
+		OreDictionary.registerOre("oreLegboneFragments", oreLegboneFragments);
+		OreDictionary.registerOre("oreLimonite", oreLimonite);
+		OreDictionary.registerOre("oreLyon", oreLyon);
+		OreDictionary.registerOre("oreMystite", oreMystite);
+		OreDictionary.registerOre("oreOrnamyte", oreOrnamyte);
+		OreDictionary.registerOre("orePurpleGemstone", orePurpleGemstone);
+		OreDictionary.registerOre("oreRedGemstone", oreRedGemstone);
+		OreDictionary.registerOre("oreRosite", oreRosite);
+		OreDictionary.registerOre("oreRunium", oreRunium);
+		OreDictionary.registerOre("oreSapphire", oreSapphire);
+		OreDictionary.registerOre("oreShyregem", oreShyregem);
+		OreDictionary.registerOre("oreShyrestone", oreShyrestone);
+		OreDictionary.registerOre("oreSkullboneFragments", oreSkullboneFragments);
+		OreDictionary.registerOre("oreVarsium", oreVarsium);
+		OreDictionary.registerOre("oreWhiteGemstone", oreWhiteGemstone);
+		OreDictionary.registerOre("oreYellowGemstone", oreYellowGemstone);
 
 		OreDictionary.registerOre(oreDictStone, ancientRock);
 

@@ -28,8 +28,6 @@ public class ChargingTable extends BasicNonCubeBlock {
 					player.getHeldItem(hand).shrink(1);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.boulderDash));
-
-				return true;
 			}
 		}
 

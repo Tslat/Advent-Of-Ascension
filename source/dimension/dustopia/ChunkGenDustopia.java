@@ -353,7 +353,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChancePrimordialShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChancePrimordialShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.dustopia.primordialShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.primordialShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x, z);
@@ -361,7 +361,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 2, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("PrimordialShrine", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCrusiliskCave > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCrusiliskCave) == 0) {
+		else if (ConfigurationUtil.StructureConfig.dustopia.crusiliskCaveSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.crusiliskCaveSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(10);
 			y = world.getHeight(x + 5, z + 13);
@@ -369,7 +369,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 13)) == biome.topBlock)
 				StructuresHandler.generateStructure("CrusiliskCave", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceMerkyreTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceMerkyreTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.dustopia.merkyreTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.merkyreTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = world.getHeight(x + 7, z + 9);
@@ -377,7 +377,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 9)) == biome.topBlock)
 				StructuresHandler.generateStructure("MerkyreTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceArkzyneOutpost > 0 && rand.nextInt(ConfigurationUtil.spawnChanceArkzyneOutpost) == 0) {
+		else if (ConfigurationUtil.StructureConfig.dustopia.arkzyneOutpostSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.arkzyneOutpostSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(15);
 			y = world.getHeight(x + 7, z + 7);
@@ -385,7 +385,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock)
 				StructuresHandler.generateStructure("ArkzyneOutpost", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLottoCage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLottoCage) == 0) {
+		else if (ConfigurationUtil.StructureConfig.dustopia.lottoCageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.lottoCageSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 2, z + 2);
@@ -393,7 +393,7 @@ public class ChunkGenDustopia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 2, y - 1, z + 2)) == biome.topBlock)
 				StructuresHandler.generateStructure("LottoCage", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceDustopianVillage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDustopianVillage) == 0) {
+		else if (ConfigurationUtil.StructureConfig.dustopia.dustopianVillageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.dustopia.dustopianVillageSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ + rand.nextInt(7);
 			y = world.getHeight(x + 16, z + 11);

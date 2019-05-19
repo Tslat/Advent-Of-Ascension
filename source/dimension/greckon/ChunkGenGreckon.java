@@ -363,7 +363,7 @@ public class ChunkGenGreckon implements IChunkGenerator {
 			this.lakeGen.generate(world, rand, pos.setPos(x + 8, y, z + 8));
 		}
 
-		if (ConfigurationUtil.spawnChanceHauntedMaze > 0 && rand.nextInt(ConfigurationUtil.spawnChanceHauntedMaze) == 0) {
+		if (ConfigurationUtil.StructureConfig.greckon.hauntedMazeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.greckon.hauntedMazeSpawnChance) == 0) {
 			x = baseX + rand.nextInt(5);
 			z = baseZ + rand.nextInt(14);
 			y = world.getHeight(x + 12, z + 8);
@@ -371,7 +371,7 @@ public class ChunkGenGreckon implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 12, y - 1, z + 8)) == biome.topBlock)
 				StructuresHandler.generateStructure("HauntedMaze", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceHauntedLottoRock > 0 && rand.nextInt(ConfigurationUtil.spawnChanceHauntedLottoRock) == 0) {
+		else if (ConfigurationUtil.StructureConfig.greckon.hauntedLottoRockSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.greckon.hauntedLottoRockSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4) + 25;
@@ -379,7 +379,7 @@ public class ChunkGenGreckon implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("HauntedLottoRock", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceFacelessTree > 0 && rand.nextInt(ConfigurationUtil.spawnChanceFacelessTree) == 0) {
+		else if (ConfigurationUtil.StructureConfig.greckon.facelessTreeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.greckon.facelessTreeSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -388,7 +388,7 @@ public class ChunkGenGreckon implements IChunkGenerator {
 				StructuresHandler.generateStructure("FacelessTree", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceStormRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceStormRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.greckon.stormRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.greckon.stormRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

@@ -15,7 +15,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.MouseEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -25,24 +29,27 @@ import net.tslat.aoa3.client.gui.KeyBinder;
 import net.tslat.aoa3.client.gui.render.HelmetScreenRenderer;
 import net.tslat.aoa3.client.gui.render.ScreenOverlayRenderer;
 import net.tslat.aoa3.client.gui.render.SniperGuiRenderer;
-import net.tslat.aoa3.common.ClientProxy;
+import net.tslat.aoa3.client.model.entities.player.LayerPlayerCrown;
+import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
+import net.tslat.aoa3.common.packet.PacketChangedCrown;
 import net.tslat.aoa3.common.packet.PacketGreatbladeHit;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
+@SideOnly(Side.CLIENT)
 public class ClientEventHandler {
 	public static int tick;
 	public static int recoilTicks;
 	public static int recoilTicksRemaining;
 	public static float recoilAngle;
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void clientTick(final TickEvent.ClientTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
@@ -93,18 +100,19 @@ public class ClientEventHandler {
 				HelmetScreenRenderer.screen = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
 			}
-
-			switch (Minecraft.getMinecraft().gameSettings.language) {
-				case "zh_cn":
-					ClientProxy.isRomanLanguage = false;
-					break;
-				default:
-					ClientProxy.isRomanLanguage = true;
-			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent ev) {
+		if (ev.getModID().equals("aoa3")) {
+			ConfigManager.sync("aoa3", Config.Type.INSTANCE);
+
+			if ("aoa3/main_config".equals(ev.getConfigID()))
+				PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
+		}
+	}
+
 	@SubscribeEvent(receiveCanceled = true)
 	public void onGreatbladeMouse(MouseEvent ev) {
 		if (ev.getButton() != 0 || !ev.isButtonstate())
@@ -126,7 +134,12 @@ public class ClientEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onPlayerRenderPre(RenderPlayerEvent.Pre ev) {
+		if (ConfigurationUtil.MainConfig.showPlayerCrowns && PlayerCrownHandler.testForNewRenderer(ev.getEntityPlayer().getGameProfile().getId()))
+			ev.getRenderer().addLayer(new LayerPlayerCrown(ev.getRenderer()));
+	}
+
 	@SubscribeEvent
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
 		if (KeyBinder.keyAdventGui.getKeyCode() == 0) {
@@ -135,9 +148,10 @@ public class ClientEventHandler {
 		else {
 			ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(KeyBinder.keyAdventGui.getKeyCode())));
 		}
+
+		PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onPlayerDeath(LivingDeathEvent ev) {
 		if (ev.getEntity() instanceof EntityPlayer)

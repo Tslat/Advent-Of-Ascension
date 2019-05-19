@@ -20,6 +20,7 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
@@ -32,6 +33,8 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 
 	public EntityPincher(World world) {
 		super(world, entityWidth, 0.75f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -156,6 +159,11 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 				target.addVelocity(motionX * -5, motionY * -2, motionZ * -5);
 			}
 		}
+	}
+
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source) {
+		return EntityUtil.isRangedDamage(source, this, 1f);
 	}
 
 	@Override

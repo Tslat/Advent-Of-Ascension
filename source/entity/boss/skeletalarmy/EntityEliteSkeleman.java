@@ -48,7 +48,7 @@ public class EntityEliteSkeleman extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 7;
 	}
 

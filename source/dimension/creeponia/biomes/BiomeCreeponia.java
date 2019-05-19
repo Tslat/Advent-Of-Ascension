@@ -53,22 +53,16 @@ public class BiomeCreeponia extends Biome {
 	public class BiomeCreeponiaDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.ornamyteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.ornamyteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreOrnamyte.getDefaultState(), Math.max(ConfigurationUtil.ornamyteMinOres, rand.nextInt(ConfigurationUtil.ornamyteMaxOres)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(12) + 3, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.ornamyte.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreOrnamyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ornamyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ornamyte.maxOresPerVein)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(12) + 3, rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.gemenyteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.gemenyteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreGemenyte.getDefaultState(), Math.max(ConfigurationUtil.gemenyteMinOres, rand.nextInt(ConfigurationUtil.gemenyteMaxOres)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.gemenyte.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreGemenyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.gemenyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.gemenyte.maxOresPerVein)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.jewelyteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.jewelyteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreJewelyte.getDefaultState(), Math.max(ConfigurationUtil.jewelyteMinOres, rand.nextInt(ConfigurationUtil.jewelyteMaxOres)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.jewelyte.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreJewelyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jewelyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jewelyte.maxOresPerVein)), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
 			}
 		}
 

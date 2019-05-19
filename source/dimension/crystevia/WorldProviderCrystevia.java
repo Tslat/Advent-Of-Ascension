@@ -28,7 +28,6 @@ public class WorldProviderCrystevia extends WorldProvider implements AoAWorldPro
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		//this.nether = true;
 		this.biomeProvider = DimensionRegister.worldTypeCrystevia.getBiomeProvider(world);
 	}
 

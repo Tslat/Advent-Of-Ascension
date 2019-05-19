@@ -84,7 +84,7 @@ public class EntitySpearmintSlug extends AoAMeleeMob {
 	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
 		dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(3 + lootingMod));
 		dropItem(Item.getItemFromBlock(BlockRegister.candyWhite), 1 + rand.nextInt(2 + lootingMod));
-		dropItem(Item.getItemFromBlock(BlockRegister.candyRed), 1 + rand.nextInt(2 + lootingMod));
+		dropItem(Item.getItemFromBlock(BlockRegister.candyGreen), 1 + rand.nextInt(2 + lootingMod));
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 public final class AoASkillAPI {
 	/**
 	 * Adds a weighted loot entry to the Extraction loot pool with an optional level requirement.
-	 * Stack size will default to a size of 1.
+	 * Stack leaderboardCapacity will default to a leaderboardCapacity of 1.
 	 *
 	 * @param level the Extraction level required to obtain this drop<br>
 	 *              Min value: 1
@@ -28,7 +28,7 @@ public final class AoASkillAPI {
 	}
 
 	/**
-	 * Adds a weighted loot entry to the Extraction loot pool with an optional level requirement and a given minimum and maximum stack size.
+	 * Adds a weighted loot entry to the Extraction loot pool with an optional level requirement and a given minimum and maximum stack leaderboardCapacity.
 	 *
 	 * @param level the Extraction level required to obtain this drop<br>
 	 *              Min value: 1
@@ -37,9 +37,9 @@ public final class AoASkillAPI {
 	 *               Min value: 1
 	 * @param loot the itemstack that drops as part of this loot bundles.<br>
 	 *             CAN BE NULL
-	 * @param minStackSize minimum stack size for the loot stack.<br>
+	 * @param minStackSize minimum stack leaderboardCapacity for the loot stack.<br>
 	 *           Min value: 1
-	 * @param maxStackSize maximum stack size for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
+	 * @param maxStackSize maximum stack leaderboardCapacity for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
 	 *           Min value must be higher than minStackSize<br>
 	 *           Max value: 64
 	 */
@@ -56,7 +56,7 @@ public final class AoASkillAPI {
 
 	/**
 	 * Adds a weighted loot entry to the Foraging loot pool with an optional level requirement.
-	 * Stack size will default to a size of 1.
+	 * Stack leaderboardCapacity will default to a leaderboardCapacity of 1.
 	 *
 	 * @param level the Foraging level required to obtain this drop<br>
 	 *              Min value: 1
@@ -74,7 +74,7 @@ public final class AoASkillAPI {
 	}
 
 	/**
-	 * Adds a weighted loot entry to the Foraging loot pool with an optional level requirement and a given minimum and maximum stack size.
+	 * Adds a weighted loot entry to the Foraging loot pool with an optional level requirement and a given minimum and maximum stack leaderboardCapacity.
 	 *
 	 * @param level the Foraging level required to obtain this drop<br>
 	 *              Min value: 1
@@ -86,9 +86,9 @@ public final class AoASkillAPI {
 	 * @param xp the amount of Foraging xp to give as part of this loot bundle.<br>
 	 *           Min value: 0<br>
 	 *           Max value: 20000
-	 * @param minStackSize minimum stack size for the loot stack.<br>
+	 * @param minStackSize minimum stack leaderboardCapacity for the loot stack.<br>
 	 *           Min value: 1
-	 * @param maxStackSize maximum stack size for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
+	 * @param maxStackSize maximum stack leaderboardCapacity for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
 	 *           Min value must be higher than minStackSize<br>
 	 *           Max value: 64
 	 */
@@ -106,7 +106,7 @@ public final class AoASkillAPI {
 
 	/**
 	 * Adds a weighted loot entry to the Hauling loot pool with an optional level requirement.
-	 * Stack size will default to a size of 1.
+	 * Stack leaderboardCapacity will default to a leaderboardCapacity of 1.
 	 *
 	 * @param level the Hauling level required to obtain this drop<br>
 	 *              Min value: 1
@@ -124,7 +124,7 @@ public final class AoASkillAPI {
 	}
 
 	/**
-	 * Adds a weighted loot entry to the Hauling loot pool with an optional level requirement and a given minimum and maximum stack size.
+	 * Adds a weighted loot entry to the Hauling loot pool with an optional level requirement and a given minimum and maximum stack leaderboardCapacity.
 	 *
 	 * @param level the Hauling level required to obtain this drop<br>
 	 *              Min value: 1
@@ -136,9 +136,9 @@ public final class AoASkillAPI {
 	 * @param xp the amount of Hauling xp to give as part of this loot bundle.<br>
 	 *           Min value: 0<br>
 	 *           Max value: 20000
-	 * @param minStackSize minimum stack size for the loot stack.<br>
+	 * @param minStackSize minimum stack leaderboardCapacity for the loot stack.<br>
 	 *           Min value: 1
-	 * @param maxStackSize maximum stack size for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
+	 * @param maxStackSize maximum stack leaderboardCapacity for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
 	 *           Min value must be higher than minStackSize<br>
 	 *           Max value: 64
 	 */
@@ -156,7 +156,7 @@ public final class AoASkillAPI {
 
 	/**
 	 * Adds a weighted loot entry to the Logging loot pool with an optional level requirement.
-	 * Stack size will default to a size of 1.
+	 * Stack leaderboardCapacity will default to a leaderboardCapacity of 1.
 	 *
 	 * @param level the Logging level required to obtain this drop<br>
 	 *              Min value: 1
@@ -174,7 +174,7 @@ public final class AoASkillAPI {
 	}
 
 	/**
-	 * Adds a weighted loot entry to the Logging loot pool with an optional level requirement and a given minimum and maximum stack size.
+	 * Adds a weighted loot entry to the Logging loot pool with an optional level requirement and a given minimum and maximum stack leaderboardCapacity.
 	 *
 	 * @param level the Logging level required to obtain this drop<br>
 	 *              Min value: 1
@@ -186,9 +186,9 @@ public final class AoASkillAPI {
 	 * @param xp the amount of Logging xp to give as part of this loot bundle.<br>
 	 *           Min value: 0<br>
 	 *           Max value: 20000
-	 * @param minStackSize minimum stack size for the loot stack.<br>
+	 * @param minStackSize minimum stack leaderboardCapacity for the loot stack.<br>
 	 *           Min value: 1
-	 * @param maxStackSize maximum stack size for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
+	 * @param maxStackSize maximum stack leaderboardCapacity for the loot stack. Size of the stack will be randomly chosen between minStackSize and this, inclusive.<br>
 	 *           Min value must be higher than minStackSize<br>
 	 *           Max value: 64
 	 */

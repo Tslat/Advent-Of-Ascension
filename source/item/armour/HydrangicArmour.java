@@ -42,7 +42,7 @@ public class HydrangicArmour extends AdventArmour {
 				runeMap.put(ItemRegister.runeLife, 10);
 				runeMap.put(ItemRegister.runeDistortion, 10);
 
-				if (!ItemUtil.findAndConsumeRunes(runeMap, pl, false, null))
+				if (!ItemUtil.findAndConsumeRunes(runeMap, pl, false, ItemStack.EMPTY))
 					return;
 			}
 

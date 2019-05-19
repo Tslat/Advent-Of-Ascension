@@ -372,7 +372,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceBaronessArena > 0 && rand.nextInt(ConfigurationUtil.spawnChanceBaronessArena) == 0) {
+		if (ConfigurationUtil.StructureConfig.barathos.baronessArenaSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.barathos.baronessArenaSpawnChance) == 0) {
 			y = world.getHeight(baseX + 15, baseZ + 15);
 
 			IBlockState testBlock = world.getBlockState(pos.setPos(baseX + 15, y - 1, baseZ + 15));
@@ -380,7 +380,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 			if (testBlock == biome.topBlock || testBlock == biome.fillerBlock)
 				StructuresHandler.generateStructure("BaronessArena", world, rand, pos.setPos(baseX, y, baseZ));
 		}
-		else if (ConfigurationUtil.spawnChanceHiveNest > 0 && rand.nextInt(ConfigurationUtil.spawnChanceHiveNest) == 0) {
+		else if (ConfigurationUtil.StructureConfig.barathos.hiveNestSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.barathos.hiveNestSpawnChance) == 0) {
 			x = baseX + rand.nextInt(10);
 			z = baseZ + rand.nextInt(10);
 			y = world.getHeight(x + 9, z + 11);
@@ -388,7 +388,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x, y - 1, z)) == biome.topBlock)
 				StructuresHandler.generateStructure("HiveNest", world, rand, pos);
 		}
-		else if (ConfigurationUtil.spawnChanceBaronCastle > 0 && rand.nextInt(ConfigurationUtil.spawnChanceBaronCastle) == 0) {
+		else if (ConfigurationUtil.StructureConfig.barathos.baronCastleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.barathos.baronCastleSpawnChance) == 0) {
 			x = baseX + rand.nextInt(15);
 			z = baseZ + rand.nextInt(14);
 			y = world.getHeight(x + 7, z + 15);
@@ -396,7 +396,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x, y - 1, z)) == biome.topBlock)
 				StructuresHandler.generateStructure("BaronCastle", world, rand, pos);
 		}
-		else if (ConfigurationUtil.spawnChanceBaronessHouse > 0 && rand.nextInt(ConfigurationUtil.spawnChanceBaronessHouse) == 0) {
+		else if (ConfigurationUtil.StructureConfig.barathos.baronessHouseSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.barathos.baronessHouseSpawnChance) == 0) {
 			x = baseX + rand.nextInt(10);
 			z = baseZ + rand.nextInt(11);
 			y = world.getHeight(x + 10, z + 9);
@@ -405,7 +405,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 				StructuresHandler.generateStructure("BaronessHouse", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChancePowerRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChancePowerRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.barathos.powerRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.barathos.powerRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

@@ -374,7 +374,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceCreeperHQ > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCreeperHQ) == 0) {
+		if (ConfigurationUtil.StructureConfig.creeponia.creeperHQSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.creeponia.creeperHQSpawnChance) == 0) {
 			x = baseX + rand.nextInt(6);
 			z = baseZ + rand.nextInt(6);
 			y = world.getHeight(x + 9, z + 10);
@@ -382,7 +382,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 9, y - 1, z + 10)) == biome.topBlock)
 				StructuresHandler.generateStructure("CreeperHQ", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCreeponianLottoStand > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCreeponianLottoStand) == 0) {
+		else if (ConfigurationUtil.StructureConfig.creeponia.creeponianLottoStandSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.creeponia.creeponianLottoStandSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3);
@@ -390,7 +390,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 3, y - 1, z + 3)) == biome.topBlock)
 				StructuresHandler.generateStructure("CreeponianLottoStand", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceExplosivesTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceExplosivesTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.creeponia.explosivesTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.creeponia.explosivesTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3);
@@ -398,7 +398,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 3, y - 1, z + 3)) == biome.topBlock)
 				StructuresHandler.generateStructure("ExplosivesTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCreeponiaBank > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCreeponiaBank) == 0) {
+		else if (ConfigurationUtil.StructureConfig.creeponia.creeponiaBankSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.creeponia.creeponiaBankSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 6);

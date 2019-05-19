@@ -39,7 +39,7 @@ public class EntityClown extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 4;
 	}
 

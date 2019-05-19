@@ -22,6 +22,11 @@ public class EntityWitheringLottoman extends EntityLottoman {
 	}
 
 	@Override
+	protected boolean isOverworldNPC() {
+		return false;
+	}
+
+	@Override
 	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 10), new ItemStack(ItemRegister.totemFlamingFury)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 10), new ItemStack(ItemRegister.totemWartGun)));

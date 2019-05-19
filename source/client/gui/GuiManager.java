@@ -5,6 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerMerchant;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.mainwindow.AdventMainGui;
 import net.tslat.aoa3.client.gui.merchants.TraderGui;
 import net.tslat.aoa3.client.gui.misc.WornBookGui;
@@ -99,7 +101,7 @@ public class GuiManager implements IGuiHandler {
 
 		return null;
 	}
-
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Object getClientGuiElement(int guiId, EntityPlayer player, World world, int x, int y, int z) {
 		Enums.ModGuis gui = Enums.ModGuis.getById(guiId);
@@ -193,6 +195,7 @@ public class GuiManager implements IGuiHandler {
 		return null;
 	}
 
+	@SideOnly(Side.CLIENT)
 	private Object getTraderGui(EntityPlayer pl, Class<? extends AoATrader> traderClass, int entityId, String guiName) {
 		AoATrader trader = getNearbyEntityGuiTarget(pl, traderClass, entityId);
 

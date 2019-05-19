@@ -64,7 +64,7 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 4;
 	}
 

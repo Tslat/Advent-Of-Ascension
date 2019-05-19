@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.ScrollablePane;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.RenderUtil;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
@@ -32,17 +33,16 @@ public class AdventGuiTabGuides extends GuiScreen {
 	private int adjustedMouseX;
 	private int adjustedMouseY;
 
-	AdventGuiTabGuides() {
-		if (languageChanged())
-			prepAvailableBundles();
-	}
-
 	@Override
 	public void initGui() {
-		super.initGui();
-
 		if (scrollMenu == null)
 			scrollMenu = new BundlesMenu(mc, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.scale);
+
+		if (languageChanged()) {
+			currentLanguage = FMLCommonHandler.instance().getCurrentLanguage();
+
+			prepAvailableBundles();
+		}
 	}
 
 	@Override
@@ -73,6 +73,13 @@ public class AdventGuiTabGuides extends GuiScreen {
 		Creature_Icons,
 		What_To_Do_First,
 		Screen_Elements,
+		Blood_Hunt,
+		Big_Day,
+		Creep_Day,
+		Death_Day,
+		Full_Moon,
+		Lunar_Invasion,
+		Soul_Scurry,
 		Alchemy,
 		Anima,
 		Augury,
@@ -91,7 +98,7 @@ public class AdventGuiTabGuides extends GuiScreen {
 	}
 
 	protected static boolean languageChanged() {
-		return FMLCommonHandler.instance().getCurrentLanguage().equalsIgnoreCase(currentLanguage);
+		return !FMLCommonHandler.instance().getCurrentLanguage().equalsIgnoreCase(currentLanguage);
 	}
 
 	public static void prepAvailableBundles() {
@@ -171,15 +178,15 @@ public class AdventGuiTabGuides extends GuiScreen {
 			}
 
 			if (timeAdjustedTop != top) {
-				for (int i = Math.max(0, (int)((scrollDistance - 29) / 30f)); i * 30 <= bottom - top && i < infoBundles.size(); i++) {
+				for (int i = Math.max(0, (int)(scrollDistance / 30f)); i * 30 <= bottom - top && i < infoBundles.size(); i++) {
 					InfoBundle bundle = infoBundles.get(i);
 					int rowTop = top + i * 30;
 					int rowBottom = rowTop + 30;
 
 					drawRect(left, rowTop, right, rowBottom, i % 2 == 0 ? 0xFF010101 : 0xFF202020);
-					AdventMainGui.drawCenteredScaledString(mc.fontRenderer, bundle.title, left + (int)(viewWidth / 2f), rowTop + 8, 2f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-					AdventMainGui.drawScaledString(mc.fontRenderer, "V", left + 5, rowTop + 18, 1.5f, Enums.RGBIntegers.SILVER, AdventMainGui.StringRenderType.OUTLINED);
-					AdventMainGui.drawScaledString(mc.fontRenderer, "V", right - 20, rowTop + 18, 1.5f, Enums.RGBIntegers.SILVER, AdventMainGui.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(mc.fontRenderer, bundle.title, left + (int)(viewWidth / 2f), rowTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(mc.fontRenderer, "V", left + 5, rowTop + 18, 1.5f, Enums.RGBIntegers.SILVER, RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawScaledString(mc.fontRenderer, "V", right - 20, rowTop + 18, 1.5f, Enums.RGBIntegers.SILVER, RenderUtil.StringRenderType.OUTLINED);
 				}
 			}
 
@@ -188,15 +195,15 @@ public class AdventGuiTabGuides extends GuiScreen {
 
 				if (openBundleLines == null) {
 					openBundleLines = mc.fontRenderer.listFormattedStringToWidth(bundle.info, (int)((viewWidth - 30) / 1.5f));
-					openBundleHeight = Math.max(viewHeight - 30, 25 + (int)(openBundleLines.size() * (9 * 1.5f)));
+					openBundleHeight = Math.max(viewHeight - 30, 25 + (int)(openBundleLines.size() * (mc.fontRenderer.FONT_HEIGHT * 1.5f)));
 				}
 
 				int timeAdjustedBottom = (int)(timeAdjustedTop + 30 + openBundleHeight * selectedPercentSwitched);
 
 				drawRect(left, timeAdjustedTop, right, timeAdjustedTop + 30, openBundleIndex % 2 == 0 ? 0xFF010101 : 0xFF202020);
-				AdventMainGui.drawCenteredScaledString(mc.fontRenderer, bundle.title, left + (int)(viewWidth / 2f), timeAdjustedTop + 8, 2f, Enums.RGBIntegers.WHITE, AdventMainGui.StringRenderType.NORMAL);
-				AdventMainGui.drawScaledString(mc.fontRenderer, "^", left + 5,  timeAdjustedTop + 18, 1.5f, Enums.RGBIntegers.SILVER, AdventMainGui.StringRenderType.OUTLINED);
-				AdventMainGui.drawScaledString(mc.fontRenderer, "^", right - 20, timeAdjustedTop + 18, 1.5f, Enums.RGBIntegers.SILVER, AdventMainGui.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(mc.fontRenderer, bundle.title, left + (int)(viewWidth / 2f), timeAdjustedTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+				RenderUtil.drawScaledString(mc.fontRenderer, "^", left + 5,  timeAdjustedTop + 18, 1.5f, Enums.RGBIntegers.SILVER, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawScaledString(mc.fontRenderer, "^", right - 20, timeAdjustedTop + 18, 1.5f, Enums.RGBIntegers.SILVER, RenderUtil.StringRenderType.OUTLINED);
 				drawRect(left, timeAdjustedTop + 30, right, timeAdjustedBottom, 0xFF505050);
 
 				if (selectedPercentSwitched == 1) {
@@ -230,8 +237,8 @@ public class AdventGuiTabGuides extends GuiScreen {
 
 				int newTop = top - Math.max(0, (int)distanceScrolled);
 				int relativeMouseY = mouseY - newTop + 2;
-				System.out.println();
-				if (relativeMouseY < 0 || mouseY > top + viewHeight)
+
+				if (mouseY - top < 0 || mouseY > top + viewHeight)
 					return;
 
 				if (openBundleIndex < 0) {

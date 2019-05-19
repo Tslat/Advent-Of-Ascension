@@ -21,7 +21,7 @@ public class HauntedIdol extends SimpleItem {
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			if (world.provider.getDimension() == ConfigurationUtil.dimGreckon) {
+			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.greckon) {
 				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
 					player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null).sendPlayerMessage(StringUtil.getLocale("message.feedback.spawnBoss.difficultyFail"));
 					return EnumActionResult.FAIL;

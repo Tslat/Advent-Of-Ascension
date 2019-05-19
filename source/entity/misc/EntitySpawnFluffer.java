@@ -1,8 +1,10 @@
 package net.tslat.aoa3.entity.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +16,7 @@ public class EntitySpawnFluffer extends EntityLiving {
     public EntitySpawnFluffer(World worldIn) {
         super(worldIn);
         setSilent(true);
+        setSize(0.1f, 0.1f);
     }
 
     @Override
@@ -51,6 +54,20 @@ public class EntitySpawnFluffer extends EntityLiving {
     protected SoundEvent getDeathSound() {
         return null;
     }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return false;
+    }
+
+    @Override
+    protected void collideWithEntity(Entity entityIn) {}
+
+    @Override
+    protected void collideWithNearbyEntities() {}
+
+    @Override
+    public void onCollideWithPlayer(EntityPlayer entityIn) {}
 
     @Override
     protected void playStepSound(BlockPos pos, Block blockIn) {}

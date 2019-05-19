@@ -1,9 +1,11 @@
-package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
+package net.tslat.aoa3.entity.mobs.overworld.fullmoon;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
@@ -92,7 +94,11 @@ public class EntityIrkling extends AoAMeleeMob {
 
 	@Override
 	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.orbulon, 1);
+		if (rand.nextBoolean())
+			dropItem(ItemRegister.moonstone, 1);
+
+		if (rand.nextInt(7) == 0)
+			dropItem(Item.getItemFromBlock(BlockRegister.bannerSoul), 1);
 	}
 
 	@Override
@@ -108,6 +114,6 @@ public class EntityIrkling extends AoAMeleeMob {
 	@Nonnull
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
-		return Enums.CreatureEvents.LUNAR_INVASION;
+		return Enums.CreatureEvents.FULL_MOON;
 	}
 }

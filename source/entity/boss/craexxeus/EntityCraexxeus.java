@@ -54,7 +54,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 10;
 	}
 

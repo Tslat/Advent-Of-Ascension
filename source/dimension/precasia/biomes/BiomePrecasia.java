@@ -44,28 +44,20 @@ public class BiomePrecasia extends Biome {
 	public class BiomePrecasiaDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.skullboneFragmentsVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.skullboneFragmentsVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreSkullboneFragments.getDefaultState(), Math.max(ConfigurationUtil.skullboneFragmentsMinOres, rand.nextInt(ConfigurationUtil.skullboneFragmentsMaxOres)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.skullboneFragments.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreSkullboneFragments.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.skullboneFragments.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.skullboneFragments.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.footboneFragmentsVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.footboneFragmentsVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreFootboneFragments.getDefaultState(), Math.max(ConfigurationUtil.footboneFragmentsMinOres, rand.nextInt(ConfigurationUtil.footboneFragmentsMaxOres)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.footboneFragments.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreFootboneFragments.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.footboneFragments.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.footboneFragments.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.legboneFragmentsVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.legboneFragmentsVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreLegboneFragments.getDefaultState(), Math.max(ConfigurationUtil.legboneFragmentsMinOres, rand.nextInt(ConfigurationUtil.legboneFragmentsMaxOres)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.legboneFragments.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreLegboneFragments.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.legboneFragments.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.legboneFragments.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.chestboneFragmentsVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.chestboneFragmentsVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreChestboneFragments.getDefaultState(), Math.max(ConfigurationUtil.chestboneFragmentsMinOres, rand.nextInt(ConfigurationUtil.chestboneFragmentsMaxOres)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.chestboneFragments.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreChestboneFragments.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chestboneFragments.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chestboneFragments.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stonePrecasiaLow)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40), rand.nextInt(16)));
 			}
 		}
 

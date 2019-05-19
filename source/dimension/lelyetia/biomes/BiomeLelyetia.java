@@ -36,6 +36,7 @@ public class BiomeLelyetia extends Biome {
 		this.spawnableMonsterList.clear();
 		this.spawnableWaterCreatureList.clear();
 		this.decorator = new BiomeLelyetiaDecorator();
+
 	}
 
 	public void biomeInit() {

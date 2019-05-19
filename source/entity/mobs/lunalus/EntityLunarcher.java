@@ -50,7 +50,7 @@ public class EntityLunarcher extends AoAFlyingRangedMob implements SpecialProper
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 4;
 	}
 

@@ -21,7 +21,7 @@ public class StructuresHandler {
 		if (name != null && name.length() > 0) {
 			structures.put(name, structure);
 
-			if (ConfigurationUtil.doVerboseDebugging)
+			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				AdventOfAscension.getLogger().log(Level.INFO, "Registered structure: " + name);
 		}
 	}

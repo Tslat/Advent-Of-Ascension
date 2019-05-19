@@ -125,11 +125,6 @@ public class EntityVisualent extends AoAFlyingMeleeMob implements BossEntity {
 			if (source != null) {
 				if (source instanceof EntityPlayer) {
 					killer = (EntityPlayer)source;
-
-					if (killer instanceof EntityPlayerMP && (cause.getImmediateSource() instanceof EntitySniperSlug || cause.getImmediateSource() instanceof EntityDischargeSlug)) {
-						if (killer.getHeldItemMainhand().getItem() instanceof BaseSniper)
-							ModUtil.completeAdvancement((EntityPlayerMP)killer, "lunalus/bullseye", "sniper_skill");
-					}
 				}
 				else if (source instanceof EntityTameable && ((EntityTameable)source).getOwner() instanceof EntityPlayer) {
 					killer = (EntityPlayer)((EntityTameable)source).getOwner();

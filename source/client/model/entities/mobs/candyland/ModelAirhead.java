@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.model.entities.mobs.candyland;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
@@ -50,15 +51,16 @@ public class ModelAirhead extends ModelBase {
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
-		GL11.glPushMatrix();
-		GL11.glEnable(3042);
-		GL11.glBlendFunc(770, 771);
+		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(770, 771);
 		R2.render(par7);
 		Shape2.render(par7);
 		Shape3.render(par7);
 		R1.render(par7);
 		R3.render(par7);
 		R4.render(par7);
+		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 	}
 

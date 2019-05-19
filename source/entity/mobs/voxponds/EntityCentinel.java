@@ -42,7 +42,7 @@ public class EntityCentinel extends AoARangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 3;
 	}
 

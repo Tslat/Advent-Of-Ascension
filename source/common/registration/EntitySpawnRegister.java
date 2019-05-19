@@ -62,7 +62,7 @@ import static net.tslat.aoa3.common.registration.DimensionRegister.*;
 public class EntitySpawnRegister {
 
     public static void registerEntitySpawns() {
-        if (!ConfigurationUtil.disableOverworldMobs) {
+        if (!ConfigurationUtil.MainConfig.disableOverworldMobs) {
             final BiomeDictionary.Type[] emptyTypeList = new BiomeDictionary.Type[0];
 
             Biome[] overworldBiomes = getOverworldBiomes();
@@ -171,7 +171,7 @@ public class EntitySpawnRegister {
             EntityRegistry.addSpawn(EntityCyclops.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
             EntityRegistry.addSpawn(EntityCharger.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
             EntityRegistry.addSpawn(EntityTreeSpirit.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntitySasquatch.class, 70, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
+            EntityRegistry.addSpawn(EntitySasquatch.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
             EntityRegistry.addSpawn(EntityHeadlessHunter.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
             EntityRegistry.addSpawn(EntityGlisteningPixon.class, 1, 0, 1, EnumCreatureType.AMBIENT, genericBiomes);
             EntityRegistry.addSpawn(EntityBoneCreature.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);

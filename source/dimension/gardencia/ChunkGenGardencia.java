@@ -364,7 +364,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 			this.lakeGen.generate(world, rand, pos.setPos(x + 8, y, z + 8));
 		}
 
-		if (ConfigurationUtil.spawnChanceFloroCastle > 0 && rand.nextInt(ConfigurationUtil.spawnChanceFloroCastle) == 0) {
+		if (ConfigurationUtil.StructureConfig.gardencia.floroCastleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.floroCastleSpawnChance) == 0) {
 			x = baseX + rand.nextInt(5);
 			z = baseZ + rand.nextInt(5);
 			y = 63;
@@ -372,7 +372,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x, y, z)).getBlock() == Blocks.WATER)
 				StructuresHandler.generateStructure("FloroCastle", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGardenCastle > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGardenCastle) == 0) {
+		else if (ConfigurationUtil.StructureConfig.gardencia.gardenCastleSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.gardenCastleSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ + rand.nextInt(9);
 			y = world.getHeight(x + 17, z + 5);
@@ -380,7 +380,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 17, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("GardenCastle", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLottoSkyFlower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLottoSkyFlower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.gardencia.lottoSkyFlowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.lottoSkyFlowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -388,7 +388,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)) == biome.topBlock)
 				StructuresHandler.generateStructure("LottoSkyFlower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceWizardFlower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceWizardFlower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.gardencia.wizardFlowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.wizardFlowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -396,7 +396,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("WizardFlower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceDayseeFlower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDayseeFlower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.gardencia.dayseeFlowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.dayseeFlowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 7, z + 7);
@@ -405,7 +405,7 @@ public class ChunkGenGardencia implements IChunkGenerator {
 				StructuresHandler.generateStructure("DayseeFlower", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceKineticRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceKineticRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.gardencia.kineticRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.gardencia.kineticRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

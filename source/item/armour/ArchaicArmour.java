@@ -1,7 +1,8 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -10,8 +11,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class ArchaicArmour extends AdventArmour {
 	public void setTickEffect(AdventPlayerCapability cap) {
 		EntityPlayer pl = cap.getPlayer();
 
-		if (EntityUtil.checkBelowHealthPercentThreshold(cap.getPlayer(), 20)) {
-			for (final EntityMob e : pl.world.getEntitiesWithinAABB(EntityMob.class, pl.getEntityBoundingBox().grow(6.0f))) {
+		if (cap.isCooledDown(Enums.Counters.ARCHAIC) && EntityUtil.checkBelowHealthPercentThreshold(cap.getPlayer(), 20)) {
+			for (final EntityLivingBase e : pl.world.getEntitiesWithinAABB(EntityLivingBase.class, pl.getEntityBoundingBox().grow(6.0f), entity -> entity instanceof IMob)) {
 				e.addVelocity(pl.motionX * 7.5, pl.motionY * 0.5, pl.motionZ * 7.5);
 			}
 

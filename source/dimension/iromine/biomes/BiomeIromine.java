@@ -55,10 +55,8 @@ public class BiomeIromine extends Biome {
 	public class BiomeIromineDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.lyonVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.lyonVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreLyon.getDefaultState(), Math.max(ConfigurationUtil.lyonMinOres, rand.nextInt(ConfigurationUtil.lyonMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneIromine)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 45, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.lyon.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreLyon.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.lyon.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.lyon.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneIromine)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 45, rand.nextInt(16)));
 			}
 		}
 

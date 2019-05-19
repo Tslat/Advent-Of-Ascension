@@ -241,7 +241,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceDawnlightDungeon > 0 && rand.nextInt(ConfigurationUtil.spawnChanceDawnlightDungeon) == 0) {
+		if (ConfigurationUtil.StructureConfig.haven.dawnlightDungeonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.dawnlightDungeonSpawnChance) == 0) {
 			x = baseX + rand.nextInt(10);
 			z = baseZ + rand.nextInt(16);
 			y = rand.nextInt(25) + 10;
@@ -249,7 +249,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 10, y + 7, z + 5)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("DawnlightDungeon", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceFloatingLottoFountain > 0 && rand.nextInt(ConfigurationUtil.spawnChanceFloatingLottoFountain) == 0) {
+		else if (ConfigurationUtil.StructureConfig.haven.floatingLottoFountainSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.floatingLottoFountainSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = rand.nextInt(40) + 10;
@@ -257,7 +257,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 3, y + 8, z + 3)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("FloatingLottoFountain", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGuardianTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGuardianTower) == 0) {
+		else if (ConfigurationUtil.StructureConfig.haven.guardianTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.guardianTowerSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = world.getHeight(x, z);
@@ -265,7 +265,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 14, y - 1, x + 14)) == biome.topBlock)
 				StructuresHandler.generateStructure("GuardianTower", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.spawnChanceRockriderBoulder > 0 && rand.nextInt(ConfigurationUtil.spawnChanceRockriderBoulder) == 0) {
+		else if (ConfigurationUtil.StructureConfig.haven.rockriderBoulderSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.rockriderBoulderSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = rand.nextInt(45) + 30;
@@ -274,7 +274,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 				StructuresHandler.generateStructure("RockriderBoulder", world, rand, pos.setPos(x, y - 1, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceStrikeRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceStrikeRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.haven.strikeRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.strikeRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 3, z + 3) + 20;

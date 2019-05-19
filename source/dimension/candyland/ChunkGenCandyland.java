@@ -359,7 +359,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.spawnChanceCottonCandyTower > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCottonCandyTower) == 0) {
+		if (ConfigurationUtil.StructureConfig.candyland.cottonCandyTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.candyland.cottonCandyTowerSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 4, z + 4);
@@ -367,7 +367,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y - 1, z + 4)) == biome.topBlock)
 				StructuresHandler.generateStructure("CottonCandyTower", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGingerbreadHouse > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGingerbreadHouse) == 0) {
+		else if (ConfigurationUtil.StructureConfig.candyland.gingerbreadHouseSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.candyland.gingerbreadHouseSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -375,7 +375,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("GingerbreadHouse", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceGingerbirdAviary > 0 && rand.nextInt(ConfigurationUtil.spawnChanceGingerbirdAviary) == 0) {
+		else if (ConfigurationUtil.StructureConfig.candyland.gingerbirdAviarySpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.candyland.gingerbirdAviarySpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 5, z + 5);
@@ -383,7 +383,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
 				StructuresHandler.generateStructure("GingerbirdAviary", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceCandyLottoPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceCandyLottoPlatform) == 0) {
+		else if (ConfigurationUtil.StructureConfig.candyland.candyLottoPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.candyland.candyLottoPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 6);
@@ -391,7 +391,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 6)) == biome.topBlock)
 				StructuresHandler.generateStructure("CandyLottoPlatform", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceInfestedCandyCane > 0 && rand.nextInt(ConfigurationUtil.spawnChanceInfestedCandyCane) == 0) {
+		else if (ConfigurationUtil.StructureConfig.candyland.infestedCandyCaneSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.candyland.infestedCandyCaneSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = world.getHeight(x + 6, z + 6);

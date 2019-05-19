@@ -21,5 +21,6 @@ public class JeiHooks implements IModPlugin {
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.heartStone));
 		blacklist.addIngredientToBlacklist(new ItemStack(WeaponRegister.gunShoeFlinger));
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.oldBoot));
+		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.yetiFingernails));
 	}
 }

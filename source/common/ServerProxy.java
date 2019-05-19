@@ -12,12 +12,11 @@ import net.tslat.aoa3.utils.WebUtil;
 public class ServerProxy {
 	public void preInit() {}
 
-	public void postInit() {
-		WebUtil.doHTTPTasks(false);
-	}
+	public void postInit() {}
 
 	public void serverStart(MinecraftServer server) {
 		OverworldEvents.doWorldStartCheck(server.getWorld(0));
+		WebUtil.extractPlayerCrownsFromWeb();
 	}
 
 	public void serverStarted() {

@@ -23,9 +23,9 @@ public class EntityHauntedLottoman extends EntityLottoman {
 
 	@Override
 	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 10), new ItemStack(ItemRegister.totemHauntersRifle)));
+		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 10), new ItemStack(ItemRegister.totemHaunterRifle)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 10), new ItemStack(ItemRegister.totemViper1)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 40), new ItemStack(ItemRegister.tokensGreckon, 35), new ItemStack(ItemRegister.totemHauntersRifle, 10)));
+		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 40), new ItemStack(ItemRegister.tokensGreckon, 35), new ItemStack(ItemRegister.totemHaunterRifle, 10)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 40), new ItemStack(ItemRegister.tokensGreckon, 35), new ItemStack(ItemRegister.totemViper1, 10)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(ItemRegister.magicRepairDust)));
 		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 50), new ItemStack(ItemRegister.magicRepairDust, 15)));

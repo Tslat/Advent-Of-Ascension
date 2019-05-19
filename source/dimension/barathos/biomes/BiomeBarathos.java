@@ -55,30 +55,22 @@ public class BiomeBarathos extends Biome {
 	public class BiomeBarathosDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			if (ConfigurationUtil.varsiumVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.varsiumVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreVarsium.getDefaultState(), Math.max(ConfigurationUtil.varsiumMinOres, rand.nextInt(ConfigurationUtil.varsiumMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
-							.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(38) + 25, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.varsium.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreVarsium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.varsium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.varsium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
+						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(38) + 25, rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.elecaniumVeinCount > 0) {
-				for (int i = 0; i < 2; i++) {
-					new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.elecaniumMinOres, rand.nextInt(ConfigurationUtil.elecaniumMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
-							.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 25, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.elecanium.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
+						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 25, rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.baronyteVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.baronyteVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreBaronyte.getDefaultState(), Math.max(ConfigurationUtil.baronyteMinOres, rand.nextInt(ConfigurationUtil.baronyteMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneBaron)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(10) + 25, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.baronyte.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreBaronyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.baronyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.baronyte.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(10) + 25, rand.nextInt(16)));
 			}
 
-			if (ConfigurationUtil.blaziumVeinCount > 0) {
-				for (int i = 0; i < ConfigurationUtil.blaziumVeinCount; i++) {
-					new WorldGenMinable(BlockRegister.oreBlazium.getDefaultState(), Math.max(ConfigurationUtil.blaziumMinOres, rand.nextInt(ConfigurationUtil.blaziumMaxOres)), BlockMatcher.forBlock(BlockRegister.stoneBarathos)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20), rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.blazium.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreBlazium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blazium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blazium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBarathos)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20), rand.nextInt(16)));
 			}
 		}
 

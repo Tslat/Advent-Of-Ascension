@@ -35,7 +35,7 @@ public class EntityAirhead extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 40;
 	}
 

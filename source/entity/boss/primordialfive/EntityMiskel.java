@@ -57,7 +57,7 @@ public class EntityMiskel extends AoARangedMob implements BossEntity {
 	}
 
 	@Override
-	protected double getBaseProjectileDamage() {
+	public double getBaseProjectileDamage() {
 		return 14;
 	}
 

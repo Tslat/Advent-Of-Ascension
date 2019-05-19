@@ -120,7 +120,6 @@ public class EntityUtil {
 			}
 		}
 
-
 		target.hurtResistantTime = 0;
 		double velocityX = target.motionX;
 		double velocityY = target.motionY;
@@ -348,7 +347,7 @@ public class EntityUtil {
 	}
 
 	public static boolean isMagicDamage(DamageSource source, Entity target, float dmg) {
-		return (source.isMagicDamage() && !source.getDamageType().equals("blaster")) && !source.getDamageType().equals("thorns") && !(target instanceof EntityLivingBase && isPoisonDamage(source, target, dmg));
+		return source.isMagicDamage() && !source.getDamageType().equals("blaster") && !source.getDamageType().equals("thorns") && !(target instanceof EntityLivingBase && isPoisonDamage(source, target, dmg));
 	}
 
 	public static boolean isRangedDamage(DamageSource source, Entity target, float dmg) {
@@ -411,7 +410,6 @@ public class EntityUtil {
 			case 2:
 				return EnumFacing.WEST;
 			case 3:
-				return EnumFacing.NORTH;
 			default:
 				return EnumFacing.NORTH;
 		}

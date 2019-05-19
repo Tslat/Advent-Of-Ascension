@@ -18,7 +18,9 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
 import net.tslat.aoa3.common.packet.PacketRevenge;
 import net.tslat.aoa3.common.packet.PacketSkillData;
 import net.tslat.aoa3.common.packet.PacketTributeData;
@@ -26,7 +28,6 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.WebUtil;
 
 import java.util.UUID;
 
@@ -72,7 +73,7 @@ public class GlobalEvents {
 			UUID uuid = e.player.getGameProfile().getId();
 			String msg = null;
 
-			if (uuid.equals(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4"))) {
+			if (AdventOfAscension.instance.isTslat(uuid)) {
 				msg = TextFormatting.DARK_RED + "It begins...Is this the end?";
 
 				((WorldServer)e.player.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, e.player.posX, e.player.posY + 0.2, e.player.posZ, 16, 0.5, 0.5, 0.5, 0.1);
@@ -80,7 +81,7 @@ public class GlobalEvents {
 			else if (uuid.equals(UUID.fromString("010318ef-28fc-4c7c-8940-2f0d62eabfa6"))) {
 				msg = TextFormatting.LIGHT_PURPLE + "Xolova creeps in to watch you suffer. Feel free to die now.";
 			}
-			else if (WebUtil.crazyDonators.contains(uuid)) {
+			else if (PlayerCrownHandler.isCrazyDonator(uuid)) {
 				msg = TextFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
 			}
 
@@ -95,6 +96,7 @@ public class GlobalEvents {
 
 			PacketUtil.network.sendTo(new PacketTributeData(cap.getTribute(Enums.Deities.EREBON), cap.getTribute(Enums.Deities.LUXON), cap.getTribute(Enums.Deities.PLUTON), cap.getTribute(Enums.Deities.SELYAN)), (EntityPlayerMP)e.player);
 			PacketUtil.network.sendTo(new PacketRevenge(cap.isRevengeActive()), (EntityPlayerMP)e.player);
+			PlayerCrownHandler.syncWithNewClient((EntityPlayerMP)e.player);
 
 			Advancement rootAdv = ModUtil.getAdvancement("overworld/root");
 			PlayerAdvancements plAdvancements = ((EntityPlayerMP)e.player).getAdvancements();

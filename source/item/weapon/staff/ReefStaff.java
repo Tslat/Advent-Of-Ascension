@@ -15,7 +15,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.ReefStaffTask;
+import net.tslat.aoa3.library.scheduling.ReefStaffTask;
 import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.WorldUtil;

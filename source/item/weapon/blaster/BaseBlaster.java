@@ -24,15 +24,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
@@ -75,7 +75,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 
 	@Override
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return oldStack.getItem() != newStack.getItem();
+		return slotChanged || oldStack.getItem() != newStack.getItem();
 	}
 
 	@Override
@@ -98,6 +98,16 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		if (player.getCooledAttackStrength(0.0f) < 1)
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
+		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)player);
+		int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.recharge, stack);
+		int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, stack);
+		float energyConsumption = (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
+
+		if (cap.getArmourSetType() == Enums.ArmourSets.GHOULISH)
+			energyConsumption *= 0.7f;
+		if (cap.getResourceValue(Enums.Resources.ENERGY) < energyConsumption)
+			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
 		player.setActiveHand(hand);
 
 		return ActionResult.newResult(EnumActionResult.PASS, stack);
@@ -105,38 +115,47 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
-		if (count + firingDelay <= 72000 && count % firingDelay == 0) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
+		if (!player.world.isRemote) {
+			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)player);
 			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.recharge, stack);
 			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, stack);
+			float energyConsumption = ((EntityPlayer)player).capabilities.isCreativeMode ? 0 : (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
 
-			if (!player.world.isRemote) {
-				if (consumeEnergy(cap, stack, (1 + (0.3f * greed)) * energyCost * (1 - 0.07f * recharge))) {
-					if (sound != null)
-						player.world.playSound(null, player.posX, player.posY, player.posZ, sound, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			if (cap.getArmourSetType() == Enums.ArmourSets.GHOULISH)
+				energyConsumption *= 0.7f;
 
-					fire(stack, player);
-					((EntityPlayer)player).addStat(StatList.getObjectUseStats(this));
+			if (cap.getResourceValue(Enums.Resources.ENERGY) >= energyConsumption) {
+				if (count + firingDelay <= 72000 && count % firingDelay == 0) {
+					if (consumeEnergy(cap, stack, energyConsumption)) {
+						if (sound != null)
+							player.world.playSound(null, player.posX, player.posY, player.posZ, sound, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-					if ((72000 - count) / firingDelay >= getMaxDamage(stack))
-						stack.damageItem((72000 - count) / firingDelay, player);
+						fire(stack, player);
+						((EntityPlayer)player).addStat(StatList.getObjectUseStats(this));
+
+						if ((72000 - count) / firingDelay >= getMaxDamage(stack) - stack.getItemDamage())
+							stack.damageItem((72000 - count) / firingDelay, player);
+					}
+					else {
+						player.stopActiveHand();
+					}
 				}
-				else {
-					player.stopActiveHand();
-				}
+			}
+			else {
+				player.stopActiveHand();
 			}
 		}
 	}
 
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase player, int useTicksRemaining) {
-		stack.damageItem((72000 - useTicksRemaining) / firingDelay, player);
+		stack.damageItem((72000 - useTicksRemaining - 1) / firingDelay, player);
 	}
 
 	public abstract void fire(ItemStack blaster, EntityLivingBase shooter);
 
 	public boolean consumeEnergy(AdventPlayerCapability cap, ItemStack stack, float cost) {
-		return cap.consumeResource(Enums.Resources.ENERGY, (float)(cap.getArmourSetType() == Enums.ArmourSets.GHOULISH ? cost * 0.7 : cost), false);
+		return cap.consumeResource(Enums.Resources.ENERGY, cost, false);
 	}
 
 	@Override

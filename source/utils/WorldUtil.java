@@ -1,6 +1,7 @@
 package net.tslat.aoa3.utils;
 
 import net.minecraft.block.*;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -15,13 +16,13 @@ public class WorldUtil {
 		try {
 			int height;
 
-			if (world.provider.getDimension() == ConfigurationUtil.dimDeeplands) {
+			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.deeplands) {
 				height = 121;
 			}
 			else if (world.provider.getDimension() == -1) {
 				height = 128;
 			}
-			else if (world.provider.getDimension() == ConfigurationUtil.dimCrystevia) {
+			else if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.crystevia) {
 				height = 127;
 			}
 			else {
@@ -58,12 +59,20 @@ public class WorldUtil {
 	}
 
 	public static boolean isBlockProtectedWorld(int id) {
-		return id == ConfigurationUtil.dimImmortallis || id == ConfigurationUtil.dimAncientCavern;
+		return id == ConfigurationUtil.MainConfig.dimensionIds.immortallis || id == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern;
 	}
 
-	public static boolean isNaturalOverworldBlock(IBlockState block) {
-		Block bl = block.getBlock();
+	public static boolean isNaturalOverworldBlock(IBlockState blockState) {
+		Block bl = blockState.getBlock();
 
-		return bl instanceof BlockGrass || bl instanceof BlockDirt || bl instanceof BlockSand || bl instanceof BlockGravel || bl instanceof BlockStone || bl instanceof BlockSnowBlock || bl instanceof BlockSnow || bl instanceof BlockIce || bl instanceof BlockOre || bl instanceof BlockRedstoneOre;
+		if (bl instanceof BlockStone) {
+			BlockStone.EnumType stoneVariant = blockState.getValue(BlockStone.VARIANT);
+
+			return stoneVariant != BlockStone.EnumType.ANDESITE_SMOOTH && stoneVariant != BlockStone.EnumType.DIORITE_SMOOTH && stoneVariant != BlockStone.EnumType.GRANITE_SMOOTH;
+
+		}
+		else {
+			return bl instanceof BlockGrass || bl instanceof BlockDirt || bl instanceof BlockSand || bl instanceof BlockGravel || bl instanceof BlockSnowBlock || bl instanceof BlockSnow || bl instanceof BlockIce || bl instanceof BlockOre || bl instanceof BlockRedstoneOre;
+		}
 	}
 }

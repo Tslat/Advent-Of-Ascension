@@ -394,6 +394,7 @@ public class ItemRegister {
 	public static final Rosidons rosidons = new Rosidons();
 	public static final Tea tea = new Tea();
 	public static final TrilliadLeaves trilliadLeaves = new TrilliadLeaves();
+	public static final YetiFingernails yetiFingernails = new YetiFingernails();
 
 	public static final InfusionBowl diamondBowl = new InfusionBowl("DiamondBowl", "diamond_bowl", 50);
 	public static final InfusionBowl stoneBowl = new InfusionBowl("StoneBowl", "stone_bowl", 100);
@@ -445,7 +446,7 @@ public class ItemRegister {
 	public static final TotemItem totemFroster = new FrosterTotem();
 	public static final TotemItem totemGigaCannon = new GigaCannonTotem();
 	public static final TotemItem totemGoofyGreatblade = new GoofyGreatbladeTotem();
-	public static final TotemItem totemHauntersRifle = new HauntersRifleTotem();
+	public static final TotemItem totemHaunterRifle = new HaunterRifleTotem();
 	public static final TotemItem totemLunaBlaster = new LunaBlasterTotem();
 	public static final TotemItem totemMechaBlaster = new MechaBlasterTotem();
 	public static final TotemItem totemMintMagnum = new MintMagnumTotem();
@@ -842,8 +843,7 @@ public class ItemRegister {
 				totemFlowercorne,
 				totemFroster,
 				totemGigaCannon,
-				totemGoofyGreatblade,
-				totemHauntersRifle,
+				totemGoofyGreatblade, totemHaunterRifle,
 				totemLunaBlaster,
 				totemMechaBlaster,
 				totemMintMagnum,
@@ -870,6 +870,7 @@ public class ItemRegister {
 				treasureBox,
 				treatBag,
 				trilliadLeaves,
+				yetiFingernails,
 				trollIdol,
 				trollSkull,
 				turquoiseStripefish,
@@ -935,6 +936,9 @@ public class ItemRegister {
 			}
 			else if (map.key.equals(new ResourceLocation("aoa3:sapphire_ingot"))) {
 				map.remap(sapphire);
+			}
+			else if (map.key.equals(new ResourceLocation("aoa3:haunters_rifle_totem"))) {
+				map.remap(totemHaunterRifle);
 			}
 		}
 	}
@@ -1303,7 +1307,7 @@ public class ItemRegister {
 		registerRender(totemFroster, "totems/");
 		registerRender(totemGigaCannon, "totems/");
 		registerRender(totemGoofyGreatblade, "totems/");
-		registerRender(totemHauntersRifle, "totems/");
+		registerRender(totemHaunterRifle, "totems/");
 		registerRender(totemLunaBlaster, "totems/");
 		registerRender(totemMechaBlaster, "totems/");
 		registerRender(totemMintMagnum, "totems/");
@@ -1330,6 +1334,7 @@ public class ItemRegister {
 		registerRender(treasureBox, "misc/misc/");
 		registerRender(treatBag, "misc/boss/");
 		registerRender(trilliadLeaves, "food/plants/");
+		registerRender(yetiFingernails, "food/misc/");
 		registerRender(trollIdol, "misc/boss/");
 		registerRender(trollSkull, "misc/misc/");
 		registerRender(turquoiseStripefish, "food/fish/");

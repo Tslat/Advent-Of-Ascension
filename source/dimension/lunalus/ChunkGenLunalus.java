@@ -100,7 +100,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 		}
 
 
-		if (ConfigurationUtil.spawnChanceLunarVillage > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarVillage) == 0) {
+		if (ConfigurationUtil.StructureConfig.lunalus.lunarVillageSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarVillageSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ;
 			y = rand.nextInt(4) + 4;
@@ -114,7 +114,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			StructuresHandler.generateStructure("LunarBank", world, rand, pos.setPos(x, y + 5, z + 12));
 			StructuresHandler.generateStructure("LunarFountain", world, rand, pos.setPos(x + 30, y, z + 14));
 		}
-		else if (ConfigurationUtil.spawnChanceSpaceArena > 0 && rand.nextInt(ConfigurationUtil.spawnChanceSpaceArena) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.spaceArenaSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.spaceArenaSpawnChance) == 0) {
 			x = baseX + rand.nextInt(9);
 			z = baseZ + rand.nextInt(8);
 			y = rand.nextInt(3) + 15;
@@ -122,7 +122,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 10, y + 4, z + 11)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("SpaceArena", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLunarCreationPlatform > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarCreationPlatform) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.lunarCreationPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarCreationPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = rand.nextInt(3) + 15;
@@ -130,7 +130,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 4, y + 2, z + 4)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("LunarCreationPlatform", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceZargPlanetoid > 0 && rand.nextInt(ConfigurationUtil.spawnChanceZargPlanetoid) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.zargPlanetoidSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.zargPlanetoidSpawnChance) == 0) {
 			x = baseX + rand.nextInt(7);
 			z = baseZ + rand.nextInt(5);
 			y = rand.nextInt(3) + 15;
@@ -138,7 +138,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 11, y + 12, z + 12)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("ZargPlanetoid", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLunarMaze > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarMaze) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.lunarMazeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarMazeSpawnChance) == 0) {
 			x = baseX + rand.nextInt(12);
 			z = baseZ + rand.nextInt(12);
 			y = rand.nextInt(3) + 15;
@@ -146,7 +146,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 9, y + 7, z + 9)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("LunarMaze", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLunarPrison > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarPrison) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.lunarPrisonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarPrisonSpawnChance) == 0) {
 			x = baseX;
 			z = baseZ + rand.nextInt(9);
 			y = rand.nextInt(3) + 15;
@@ -154,7 +154,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 18, y + 5, z + 10)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("LunarPrison", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceLunarGarden > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarGarden) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.lunarGardenSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarGardenSpawnChance) == 0) {
 			x = baseX + rand.nextInt(13);
 			z = baseZ + rand.nextInt(13);
 			y = rand.nextInt(3) + 15;
@@ -162,7 +162,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 8, y + 7, z + 8)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("LunarGarden", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.spawnChanceObserversEye > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarGarden) == 0) {
+		else if (ConfigurationUtil.StructureConfig.lunalus.observersEyeSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarGardenSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = 90 + rand.nextInt(10);
@@ -170,7 +170,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 			StructuresHandler.generateStructure("ObserversEye", world, rand, pos.setPos(x, y, z));
 		}
 
-		if (ConfigurationUtil.spawnChanceLunarRuneShrine > 0 && rand.nextInt(ConfigurationUtil.spawnChanceLunarRuneShrine) == 0) {
+		if (ConfigurationUtil.StructureConfig.lunalus.lunarRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.lunalus.lunarRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
 			y = rand.nextBoolean() ? rand.nextInt(20) + 70 : rand.nextInt(15) + 6;

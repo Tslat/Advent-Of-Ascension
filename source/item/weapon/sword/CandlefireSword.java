@@ -27,7 +27,7 @@ public class CandlefireSword extends BaseSword implements AdventWeapon {
 			return false;
 
 		if (target.isBurning() && player.getCooledAttackStrength(0.0f) > 0.75f)
-			EntityUtil.dealMeleeDamage(player, target, 11, false);
+			EntityUtil.dealMeleeDamage(player, target, 9, false);
 
 		return false;
 	}

@@ -141,15 +141,15 @@ public class AdventPlayerCapability implements CapabilityBasePlayer {
 		for (Enums.Skills sk : Enums.Skills.values()) {
 			NBTTagCompound skillTag = baseTag.getCompoundTag(sk.toString());
 
-			skillsLvl.put(sk, skillTag.getInteger("Level"));
-			skillsXp.put(sk, skillTag.getFloat("Exp"));
+			skillsLvl.put(sk, MathHelper.clamp(skillTag.getInteger("Level"), 1, 1000));
+			skillsXp.put(sk, Math.max(0, skillTag.getFloat("Exp")));
 
 			if (sk == Skills.EXPEDITION)
 				expeditionBoost = skillTag.getInteger("Opt");
 		}
 
 		for (Enums.Deities deity : Enums.Deities.values()) {
-			tribute.put(deity, baseTag.getInteger(deity.toString()));
+			tribute.put(deity, MathHelper.clamp(baseTag.getInteger(deity.toString()), 0, 200));
 		}
 
 		if (baseTag.hasKey("PortalMap")) {
@@ -514,7 +514,7 @@ public class AdventPlayerCapability implements CapabilityBasePlayer {
 		int lvl = skillsLvl.get(skill);
 		float remaining = Math.min(544132359, xp);
 		int levels = 0;
-		boolean noXpDrop = !ConfigurationUtil.vanityLevels && lvl >= 100;
+		boolean noXpDrop = !ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100;
 
 		if (lvl >= 1000)
 			return;
@@ -552,7 +552,7 @@ public class AdventPlayerCapability implements CapabilityBasePlayer {
 			PacketUtil.network.sendTo(new PacketSkillData(skill.id, skillsLvl.get(skill), skillsXp.get(skill), expeditionBoost), (EntityPlayerMP)player);
 
 			if (!noXpDrop)
-				PacketUtil.network.sendTo(new PacketXpGain(skill.id, xp), (EntityPlayerMP)player);
+				PacketUtil.network.sendTo(new PacketXpGain(skill.id, xp, levels > 0), (EntityPlayerMP)player);
 		}
 	}
 

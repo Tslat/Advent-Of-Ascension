@@ -1,4 +1,4 @@
-package net.tslat.aoa3.entity.mobs.overworld.fullmoon;
+package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -76,11 +76,6 @@ public class EntityTerrestrial extends AoAMeleeMob {
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
-	}
-
-	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 2, true, true));
@@ -94,6 +89,6 @@ public class EntityTerrestrial extends AoAMeleeMob {
 	@Nonnull
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
-		return Enums.CreatureEvents.FULL_MOON;
+		return Enums.CreatureEvents.LUNAR_INVASION;
 	}
 }

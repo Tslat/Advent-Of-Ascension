@@ -40,8 +40,6 @@ public class DivineStation extends Block {
 				player.getHeldItem(hand).addEnchantment(EnchantmentsRegister.intervention, 1);
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.infusionSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
 				player.inventoryContainer.detectAndSendChanges();
-
-				return true;
 			}
 		}
 
