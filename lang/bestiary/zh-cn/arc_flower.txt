@@ -1,0 +1,6 @@
+Arc Flowers are actually Arcworms using the ground to hide from predators. Cleverly, the arcworm has evolved a growth on its head that looks very similar to nearby flora. It then buries itself underground and relies on vibrations to find prey.
+When it senses it is being target, it immediately stops movement and waits until it feels it is safe to move again.
+
+When not staying still, it will sneak up on prey and attempt to eat them feet-first. Unfortunately it doesn't seem capable of determining whether a target is small enough to actually be eaten before attempting to do so.
+
+If hit in retaliation, the Arcworm will immediately come to the surface and begin attacking
