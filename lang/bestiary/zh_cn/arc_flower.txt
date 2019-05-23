@@ -1,6 +1,6 @@
-Arc Flowers are actually Arcworms using the ground to hide from predators. Cleverly, the arcworm has evolved a growth on its head that looks very similar to nearby flora. It then buries itself underground and relies on vibrations to find prey.
-When it senses it is being target, it immediately stops movement and waits until it feels it is safe to move again.
+电弧花实际上是一种利用地面躲避捕食者的电弧蠕虫。聪明的是，电弧蠕虫的头部已经进化出一种类似于附近植物群的生长方式。然后它把自己埋在地下，依靠振动来寻找猎物。
+当它感觉到自己是目标时，它会立即停止运动，直到感觉安全后再移动。
 
-When not staying still, it will sneak up on prey and attempt to eat them feet-first. Unfortunately it doesn't seem capable of determining whether a target is small enough to actually be eaten before attempting to do so.
+当它不在原地不动时，它会悄悄靠近猎物，试图先用脚吃掉它们。不幸的是，在试图这样做之前它似乎无法确定一个目标是否足够小到足以被它吃下去。
 
-If hit in retaliation, the Arcworm will immediately come to the surface and begin attacking
+如果被反击，电弧蠕虫会立即钻出地面并开始攻击。
