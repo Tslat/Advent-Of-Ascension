@@ -44,7 +44,7 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 	public void setTickEffect(AdventPlayerCapability cap) {
 		EntityPlayer pl = cap.getPlayer();
 
-		pl.addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 2, true, false));
+		pl.addPotionEffect(new PotionEffect(MobEffects.SPEED, 5, 2, true, false));
 
 		if (pl.motionY == 0.0 && pl.isSneaking()) {
 			if (pl.motionX < 1.25 && pl.motionX > -1.25)
@@ -55,7 +55,7 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 		}
 
 		if (pl.motionY > 0.0 && pl.motionY < 0.4)
-			pl.motionY *= 1.100000023841858;
+			pl.motionY *= 1.150000023841858;
 
 		if (pl.motionY < 0.0)
 			pl.motionY *= 0.8999999761581421;

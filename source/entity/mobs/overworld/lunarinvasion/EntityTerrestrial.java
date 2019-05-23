@@ -76,6 +76,11 @@ public class EntityTerrestrial extends AoAMeleeMob {
 	}
 
 	@Override
+	protected int getSpawnChanceFactor() {
+		return 5;
+	}
+
+	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 2, true, true));

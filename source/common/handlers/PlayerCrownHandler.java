@@ -80,8 +80,6 @@ public class PlayerCrownHandler {
 	public static void addOrSetCrown(UUID uuid, Enums.PlayerCrownTypes crown) {
 		if (playerCrowns.containsKey(uuid))
 			playerCrowns.get(uuid).setPreferredCrown(crown);
-
-		renderCheckedPlayers.remove(uuid);
 	}
 
 	@Nullable

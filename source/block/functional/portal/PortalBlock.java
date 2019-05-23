@@ -25,12 +25,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.block.UnbreakableBlock;
 import net.tslat.aoa3.block.functional.misc.CarvedRunicPortalBlock;
 import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.client.fx.FXPortalFloater;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.PortalCoordinatesContainer;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -162,7 +162,7 @@ public class PortalBlock extends UnbreakableBlock {
 				return;
 			}
 
-			AdventPlayerCapability cap = (AdventPlayerCapability)entity.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
+			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayerMP)entity);
 			WorldProvider provider = entity.getServer().getWorld(dimId).provider;
 			ITeleporter teleporter = provider instanceof AoAWorldProvider ? ((AoAWorldProvider)provider).getTeleporter((WorldServer)world) : ((WorldServer)world).getDefaultTeleporter();
 			PortalCoordinatesContainer portalLoc = cap.getPortalReturnLocation(world.provider.getDimension());
@@ -185,7 +185,7 @@ public class PortalBlock extends UnbreakableBlock {
 			}
 
 			if (entity != null)
-				entity.timeUntilPortal  = 10;
+				entity.timeUntilPortal = 200;
 		}
 	}
 

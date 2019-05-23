@@ -18,14 +18,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class XpParticlesRenderer {
-	private static final ConcurrentHashMap<Enums.Skills, ArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<Enums.Skills, ArrayList<XPParticle>>(15);
+	private static final ConcurrentHashMap<Enums.Skills, CopyOnWriteArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<Enums.Skills, CopyOnWriteArrayList<XPParticle>>(15);
 	private static final ResourceLocation skillsTextures = new ResourceLocation("aoa3", "textures/gui/maingui/skills.png");
 
 	public static void addXpParticle(Enums.Skills skill, float xp, boolean isLevelUp) {
 		if (!particlesMap.containsKey(skill))
-			particlesMap.put(skill, new ArrayList<XPParticle>());
+			particlesMap.put(skill, new CopyOnWriteArrayList<XPParticle>());
 
 		if (isLevelUp) {
 			particlesMap.get(skill).add(0, new XPParticle(xp, true));
@@ -48,7 +49,7 @@ public class XpParticlesRenderer {
 			if (mc.currentScreen == null && !mc.gameSettings.hideGUI) {
 				GlStateManager.disableDepth();
 
-				Iterator<Map.Entry<Enums.Skills, ArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
+				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
 				int skillCount = particlesMap.size();
 				int scrollHeight = (int)(res.getScaledHeight() / 3f);
 				int skillNum = 0;
@@ -58,9 +59,9 @@ public class XpParticlesRenderer {
 				final double skillIconsY = 2;
 
 				while (mapIterator.hasNext()) {
-					Map.Entry<Enums.Skills, ArrayList<XPParticle>> particleEntry = mapIterator.next();
+					Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>> particleEntry = mapIterator.next();
 					Enums.Skills skill = particleEntry.getKey();
-					ArrayList<XPParticle> particleArray = particleEntry.getValue();
+					CopyOnWriteArrayList<XPParticle> particleArray = particleEntry.getValue();
 
 					if (particleArray.isEmpty()) {
 						mapIterator.remove();
@@ -69,15 +70,17 @@ public class XpParticlesRenderer {
 					}
 
 					boolean isLevelUp = particleArray.get(0).levelUp;
-					Iterator<XPParticle> particleIterator = particleArray.iterator();
+					ArrayList<XPParticle> removalList = null;
 
-					while (particleIterator.hasNext()) {
-						XPParticle particle = particleIterator.next();
-
+					for (XPParticle particle : particleArray) {
 						RenderUtil.drawCenteredScaledString(mc.fontRenderer, particle.xpString, (int)(res.getScaledWidth_double() / 2d), scrollHeight - particle.age, 0.5f, Enums.RGBIntegers.WHITE | (int)(255 * (1 - particle.age / (float)scrollHeight)) << 24, RenderUtil.StringRenderType.NORMAL);
 
-						if (++particle.age >= scrollHeight - 2)
-							particleIterator.remove();
+						if (++particle.age >= scrollHeight - 2) {
+							if (removalList == null)
+								removalList = new ArrayList<XPParticle>();
+
+							removalList.add(particle);
+						}
 					}
 
 					int skillUvX = 0;
@@ -149,6 +152,10 @@ public class XpParticlesRenderer {
 
 						RenderUtil.drawCenteredScaledString(mc.fontRenderer, lvl, (int)(newX + (renderSize + 2) / 2f), (int)((newY + renderSize / 2f) - mc.fontRenderer.FONT_HEIGHT / 3f * stringScale), stringScale, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
 					}
+
+					if (removalList != null)
+						particleArray.removeAll(removalList);
+
 					if (particleArray.isEmpty())
 						mapIterator.remove();
 
@@ -158,10 +165,10 @@ public class XpParticlesRenderer {
 				GlStateManager.enableDepth();
 			}
 			else {
-				Iterator<Map.Entry<Enums.Skills, ArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
+				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
 
 				while (mapIterator.hasNext()) {
-					ArrayList<XPParticle> particleArray = mapIterator.next().getValue();
+					CopyOnWriteArrayList<XPParticle> particleArray = mapIterator.next().getValue();
 
 					particleArray.removeIf(particle -> particle.age++ >= 200);
 

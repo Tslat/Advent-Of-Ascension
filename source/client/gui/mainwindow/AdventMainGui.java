@@ -11,11 +11,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.gui.KeyBinder;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.RenderUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.WebUtil;
+import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -224,6 +226,14 @@ public class AdventMainGui extends GuiScreen implements IProgressMeter {
 
 		if (tabScreen != null)
 			tabScreen.handleMouseInput();
+	}
+
+	@Override
+	public void handleKeyboardInput() throws IOException {
+		if (Keyboard.getEventKey() == KeyBinder.keyAdventGui.getKeyCode() && Keyboard.getEventKeyState())
+			Minecraft.getMinecraft().displayGuiScreen(null);
+
+		super.handleKeyboardInput();
 	}
 
 	private void initTabScreen() {

@@ -36,7 +36,7 @@ public class KeyBinder {
 
 		if (keyAdventGui.isPressed() && Minecraft.getMinecraft().player != null) {
 			if (Minecraft.getMinecraft().currentScreen instanceof AdventMainGui) {
-				Minecraft.getMinecraft().player.displayGui(null);
+				Minecraft.getMinecraft().displayGuiScreen(null);
 			}
 			else if (Minecraft.getMinecraft().currentScreen == null) {
 				Minecraft.getMinecraft().displayGuiScreen(new AdventMainGui(Minecraft.getMinecraft().player));
