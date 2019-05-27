@@ -1,5 +1,3 @@
-#Подсказки 
-
 advancement.aoa.abyss.activated_my_trap_card.desc=Убить Элюзива, находясь под эффектом невидимости и без брони 
 advancement.aoa.abyss.activated_my_trap_card.title=Активировал мою карту-ловушку!
 advancement.aoa.abyss.eluding_the_elusive.desc=Скрафтить золотую статую Элюзива
@@ -565,8 +563,6 @@ death.attack.temple_trap=%1$s was killed by temple traps
 death.attack.toxic_block=Toxic blocks put %1$s to sleep 
 death.attack.vox_ponds=%1$s fell victim to the toxic atmosphere of the Vox Ponds 
 
-#Зачарования 
-
 enchantment.archmage=Архимаг 
 enchantment.brace=Связь 
 enchantment.control=Контроль 
@@ -577,10 +573,6 @@ enchantment.intervention=Вмешательство
 enchantment.recharge=Перезарядка 
 enchantment.sever=Разрез 
 enchantment.shell=Гильза 
-
-
-
-#Мобы 
 
 entity.aao3.spiritual_shot.name=Spiritual Shot 
 entity.aoa3.abyssal_lottoman.name=Лотерейщик Бездны 
@@ -1293,9 +1285,6 @@ entity.aoa3.zarg.name=Зарг
 entity.aoa3.zhinx.name=Жинкс 
 entity.aoa3.zorp.name=Зорп 
 
-
-#Гуи 
-
 gui.aoamain.creation=Создание 
 gui.aoamain.energy=Энергия 
 gui.aoamain.erebon=Эребон 
@@ -1339,8 +1328,6 @@ gui.aoamain.tip.9=Некоторые моб спавнятся во время �
 gui.aoamain.tribute=Благословение 
 gui.aoamain.update=Доступно обновление! Новая версия: %1$s 
 gui.resources.showTip=Нажмите '%1$s', чтобы показать ресурсы. 
-
-#Предметы 
 
 item.Abominator.name=Абоминатор 
 item.AbominatorTotem.name=Тотем Абоминатора 
@@ -2950,8 +2937,6 @@ itemGroup.AdventToolsTab=[Nevermine] Инструменты
 itemGroup.AdventTotemsTab=[Nevermine] Тотемы 
 itemGroup.AdventVulcanesTab=[Nevermine] вулканы 
 
-#Описание предметов 
-
 items.description.ammo.arrows=Боеприпасы: Остролистовые стрелы 
 items.description.ammo.bullets=Боеприпасы: Пульки 
 items.description.ammo.cannonballs=Боеприпасы: Пушечные ядра 
@@ -3012,15 +2997,10 @@ items.description.throwable.speed=Скорость бросания: %1$s/сек
 items.description.thrownWeapon=Метательное оружие 
 items.description.vulcane.use=Используйте, когда активно возмездие 
 
-
-#Настройки 
-
 key.adventGui=Открыть меню Advent of Ascension 
 key.categories.advent=Advent of Ascension управление 
 key.cstats=Переключить иконки над головами мобов 
-key.resources=Показать/скрыть ресурсы 
-
-#Книга 
+key.resources=Показать/скрыть ресурсы  
 
 message.book.worn.1=Они везде!<br>Ли-Лица, почему так много глаз?<br><br>Четыре резные руны:<br>Реальности.<br>Путешествия.<br>Космоса.<br>Направления.<br><br>Постройте рамку из почерневшего камень, шесть блоков в высоту. 
 message.book.worn.2=Включая резные руны.<br>В центре рамки вставьте руну силы. Это важно, это ключевые руны.<br>13 почерневшего камня, 5 резных рун.<br><br>То, что я открыл, не может быть закрыто. 
@@ -3028,8 +3008,6 @@ message.book.worn.3=Я спрятал первые четыре руны в да
 message.book.worn.4=Пятая ключевая руна крафтится вручную из комбинации пустых рун и ока эндера, с почерневшим камнем по центру. Примерно так:<br> U E U<br> U S U<br> U U U<br><br> 
 message.book.worn.5=Да благословит тебя Krasaun, чтобы твоя душа никогда не была прежней. 
 message.book.worn.5=Да благословит тебя Красон, ибо душа твоя уже никогда не будет прежней. 
-
-#Диалоги 
 
 message.dialogue.abyssal_lottoman.0=Abyssal Lottoman: Редкие пушки по скидке! 
 message.dialogue.abyssal_lottoman.1=Abyssal Lottoman: Ты выглядишь как рисковый человек! 
@@ -3381,8 +3359,6 @@ message.dialogue.zal_vendor.2=Zal Youngling: Поймай меня, если с�
 message.dialogue.zal_vendor.3=Zal Youngling: У тебя большая голова. 
 message.dialogue.zal_vendor.4=Zal Youngling: Ты такой уродливый! 
 
-#События 
-
 message.event.candyland.sticky=Эта жидкость очень липкая! 
 message.event.end.bigDay=День медленно исчезает при заходе солнца. 
 message.event.end.bloodHunt=Охотники за кровью удовлетворенно отступают. 
@@ -3419,8 +3395,6 @@ message.event.tribute.none.8=Пусть тебе повезет без помо�
 message.event.tribute.none.9=Боги слепы по отношению к тебе в это трудное время. 
 message.event.tribute.pluton=Плутон улыбается вашей находчивости. 
 message.event.tribute.selyan=Сейлян одобрительно кивает на твои добрые дела. 
-
-#оповещения 
 
 message.feedback.ancientCavernRequirement.erebon.levels=Erebon requires Augury and Hunter levels of 70 or higher to challenge his champion. 
 message.feedback.ancientCavernRequirement.erebon.tribute=You must have a full tribute bar to Erebon to challenge his champion. 
@@ -3509,8 +3483,6 @@ message.feedback.teleporterFrame.voxPonds=You begin to feel sick as weird feelin
 message.login.welcome.alt=Welcome to Advent of Ascension! Check your settings to assign a key to open the main window 
 message.login.welcome=Welcome to Advent of Ascension! Press %1$s to view your stats 
 
-#сообщения мобов 
-
 message.mob.bane.incorrectDimension=Bane can only be summoned within the Greckon. 
 message.mob.bane.kill=%1$s defeated Bane! 
 message.mob.bane.spawn=%1$s feels a chill. 
@@ -3584,8 +3556,6 @@ message.mob.voxxulon.kill=%1$s defeated Voxxulon!
 message.mob.voxxulon.spawn=%1$s smells a terrible stench! 
 message.mob.xxeus.kill=%1$s defeated Xxeus! 
 
-#Скилы 
-
 skills.alchemy.name=Алхимия 
 skills.anima.name=Анима 
 skills.augury.name=Прорицание 
@@ -3601,9 +3571,6 @@ skills.infusion.name=Инфузия
 skills.innervation.name=Выносливость 
 skills.logging.name=Лесорубство 
 skills.runation.name=Руноделие 
-
-
-#Блоки 
 
 tile.AbyssalGlass.name=Стекло Бездны 
 tile.AbyssalStone.name=Abyssal Stone 
@@ -4971,6 +4938,4 @@ tile.YellowWaterweeds.name=Waterweeds
 tile.ZargSpawner.name=Zarg Spawner 
 tile.ZhinxGlass.name=Zhinx Glass 
 tile.ZhinxSpawner.name=Zhinx Spawner 
-tile.ZorpSpawner.name=Zorp Spawne
-#########################################################################
-Перевел:barbaratimson с частичным копированием названий из прошлой версии
+tile.ZorpSpawner.name=Zorp Spawner
