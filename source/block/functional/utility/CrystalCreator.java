@@ -53,7 +53,7 @@ public class CrystalCreator extends Block {
 	}
 
 	public void setConversionItems(Item gemstone, Item crystal) {
-		if (gemstone == null) {
+		if (this.gemstone == null) {
 			this.gemstone = gemstone;
 			this.crystal = crystal;
 		}

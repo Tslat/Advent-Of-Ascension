@@ -36,6 +36,7 @@ import net.tslat.aoa3.common.packet.PacketGreatbladeHit;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -107,9 +108,7 @@ public class ClientEventHandler {
 	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent ev) {
 		if (ev.getModID().equals("aoa3")) {
 			ConfigManager.sync("aoa3", Config.Type.INSTANCE);
-
-			if ("aoa3/main_config".equals(ev.getConfigID()))
-				PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
+			PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
 		}
 	}
 
