@@ -1,4 +1,4 @@
-A lost autonomous robotic creature from ancient times, Sand Golems are most often found in desert areas, wandering around aimlessly.
-Long ago, civilised tribes living in the desert discovered how to create animated robotic guards for their sand villages. Powered by the heat of the sun, they require no input and have one aim: guard.
+沙漠傀儡是一种失落的远古时代自动机怪，经常在沙漠地区漫无目的地游荡。
+很久以前，居住在沙漠中的文明部落发现了如何为他们的沙土村庄创造活动机器人守卫。它们由太阳的热量提供动力，不需要任何输入，只有一个目标：守护。
 
-Approaching one is not recommended, as their guarding motives are unchanged after hundreds of years and they will see you as an immediate threat.
+这里不是推荐接近它们，因为他们守护的本能在几百年后没有改变。它们直接会把你视为一种威胁。
