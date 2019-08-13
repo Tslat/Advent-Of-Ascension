@@ -1,18 +1,18 @@
-Expédition (Skill)
+Expedition (Skill)
 
-Voilà un skill dont tout le monde peut profiter. L'expédition est un skill basé autour de l'exploration et du mouvement.
-Pendant que tu cours dans tout les sens, explorant les terres, tu gagnes parfois de l'xp d'expédition. Tu n'as même pas besoin de faire quelque chose en particulier!
+Voila un skill dont tout le monde peut profiter. L'expedition est un skill base autour de l'exploration et du mouvement.
+Pendant que tu cours dans tout les sens, explorant les terres, tu gagnes parfois de l'exp d'expedition. Tu n'as meme pas besoin de faire quelque chose en particulier!
 
-Quand tes niveaux d'expédition montent, tu auras de plus en plus de force dans tes jambes et te rendras compte que tu prendras moins de dégâts de chute.
+Quand tes niveaux d'expedition montent, tu auras de plus en plus de force dans tes jambes et te rendras compte que tu prendras moins de degats de chute.
 
-L'expédition a aussi un effet secondaire. De temps en temps en se déplaçant, tu seras brièvement revitalisé par tes prouesses d'expédition. L'effet exact dépend de quel bonus tu as choisi dans le menu joueur. Clique sur l'icône expédition pour changer d'effet.
-La force et la fréquence de ces effets augmentent avec les niveaux d'expédition.
+L'expedition a aussi un effet secondaire. De temps en temps en se deplacant, tu seras brievement revitalise par tes prouesses d'expedition. L'effet exact depend de quel bonus tu as choisi dans le menu joueur. Clique sur l'icone expedition pour changer d'effet.
+La force et la frequence de ces effets augmentent avec les niveaux d'expedition.
 
 Vitesse:
-  Choisis l'icône rafale de vent pour sélectionner le bonus de vitesse. En courant, tu gagnes parfois un court bonus de vitesse, permettant de voyager encore plus vite!
+  Choisis l'icone rafale de vent pour selectionner le bonus de vitesse. En courant, tu gagnes parfois un court bonus de vitesse, permettant de voyager encore plus vite!
 
-Satiété:
-  Choisis l'icône nourriture pour sélectionner le bonus de satiété. En courant, tu te retrouveras parfois un peu moins affamé qu'avant. Pratique pour l'économie de nourriture!
+Satiete:
+  Choisis l'icone nourriture pour selectionner le bonus de satiete. En courant, tu te retrouveras parfois un peu moins affame qu'avant. Pratique pour l'economie de nourriture!
 
 Respiration profonde:
-  Choisis l'icône bulle pour sélectionner le bonus respiration. En nageant, tu trouveras parfois soudainement de l'oxygène supplémentaire auquel s'accrocher, permettant de nager plus longtemps sans aller à la surface.
+  Choisis l'icone bulle pour selectionner le bonus respiration. En nageant, tu trouveras parfois soudainement de l'oxygene supplementaire auquel s'accrocher, permettant de nager plus longtemps sans aller a la surface.
