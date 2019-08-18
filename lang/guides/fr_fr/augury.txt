@@ -1,6 +1,6 @@
 Augure (Skill)
 
-L'augure est un skill basé sur les essences divines. Le monter en niveau est très simple; tout ce que tu doit faire est utiliser quelques essences sur un bloc sanctuaire d'ascension. Les différentes essences donnent différent nombres de points d'xp, et plus une essence donne d'xp, plus il faut avoir un haut niveau d'augure pour s'en servir.
-Les essences sont obtenues comme récompenses d'autres skills, particulièrement le forage et le bûchage.
+L'augure est un skill base sur les essences divines. Le monter en niveau est tres simple; tout ce que tu doit faire est utiliser quelques essences sur un bloc sanctuaire d'ascension. Les differentes essences donnent different nombres de points d'exp, et plus une essence donne d'exp, plus il faut avoir un haut niveau d'augure pour s'en servir.
+Les essences sont obtenues comme recompenses d'autres skills, tout particulierement le forage et le buchage.
 
-Tandis que tu améliores ton niveau d'augure, tes points de création et points d'âme maximum augmentent, permettant d'invoquer plus de sbires et d'utiliser plus de pouvoir des âmes avant d'arriver à court.
+Tandis que tu ameliores ton niveau d'augure, tes points de creation et pouvoir d'ame maximum augmentent, permettant d'invoquer plus de sbires et d'utiliser plus de pouvoir des ames avant d'arriver a court.

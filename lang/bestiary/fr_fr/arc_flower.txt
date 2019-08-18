@@ -1,0 +1,6 @@
+Les arcfleurs sont en réalité des arcvers utilisant le sol à proximité pour se cacher des prédateurs. Intelligemment, l'arcver a évolué pour posséder une excroissance sur sa tête qui ressemble beaucoup aux fleurs environnantes. Il s'enterre ensuite dans le sol et détecte ses proies grâce aux vibrations.
+Si il se sent ciblé, il arrêtera de bouger immédiatement et attendra de se sentir en sécurité à nouveau pour recommencer à bouger.
+
+Lorsqu'il n'est pas immobile, il essaie de s'approcher silencieusement des proies pour essayer de les manger les pieds en premier. Malheureusement il semble incapable de déterminer si sa cible est assez petite pour être mangée ou non avant d'essayer.
+
+Si il est frappé, l'arcver sortira à la surface et commençera immédiatement à attaquer pour se venger.

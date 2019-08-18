@@ -1,15 +1,15 @@
 Infusion (Skill)
 
-Quand tu as besoin d'un peu plus de pouvoir pour ton équipement, tu voudras peut-être imbuer des pouvoirs magiques dans ton épée ou ton casque.
+Quand tu as besoin d'un peu plus de pouvoir pour ton equipement, tu voudras peut-etre imbuer des pouvoirs magiques dans ton epee ou ton casque.
 C'est exactement ce que l'infusion te permet de faire. Fabrique-toi une table d'infusion, collecte des amplificateurs d'infusion et construit une structure d'infusion et tu seras capable d'infuser les objets d'Advent of Ascension avec de nouveaux enchantements.
 
 Pour monter en infusion, tu as quelques options:
 
 Pixons:
-  Aors que tu erres à travers les mondes, tu recontreras de brillantes et clignotantes créatures qui semblent voyager sans but. Ces créatures sont des pixons. Si tu amènes un bol de pierre, tu seras capable de les récupérer et d'obtenir leur essence concentrée, donnant des pierres d'infusion et de l'xp. Il existe différents pixons dans différents mondes, et ils donnent des diiférentes pierres et taux d'xp.
-  Avec un assez haut niveau, tu seras capable de te faire un bol en diamant, qui te permet de récupérer les pixons de manière plus efficace.
+  Aors que tu erres a travers les mondes, tu recontreras de brillantes et clignotantes créatures qui semblent voyager sans but. Ces creatures sont des pixons. Si tu amenes un bol de pierre, tu seras capable de les recuperer et d'obtenir leur essence concentree, donnant des pierres d'infusion et de l'exp. Il existe differents pixons dans differents mondes, et ils donnent des diiferentes pierres et taux d'exp.
+  Avec un assez haut niveau, tu seras capable de te faire un bol en diamant, qui te permet de recuperer les pixons de maniere plus efficace.
 
 Pierres d'infusion:
-  Alors que tu trouves et collecte pierres d'infusion, tu peut les ramener à ta table d'infusion et les insérer. À chaque fois, tu gagneras un peu plus d'xp d'infusion, et une petite chance d'obtenir une version énergisée de la pierre. Ces versions énergisées peuvent ensuite être utilisées pour infuser des enchantements dans différents objets.
+  Alors que tu trouves et collecte pierres d'infusion, tu peut les ramener e ta table d'infusion et les inserer. A chaque fois, tu gagneras un peu plus d'exp d'infusion, et une petite chance d'obtenir une version energisee de la pierre. Ces versions energisees peuvent ensuite etre utilisees pour infuser des enchantements dans differents objets.
 
-Monte ton infusion pour obtenir plus d'options d'infusion sur ta table, et accéder à des pixons plus puissants.
+Monte ton infusion pour obtenir plus d'options d'infusion sur ta table, et acceder a des pixons plus puissants.
