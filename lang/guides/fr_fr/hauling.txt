@@ -1,7 +1,7 @@
-Pêche (Skill)
+Peche (Skill)
 
-Quand tu as fini de tuer des monstres et de creuser sous terre, repose-toi et relaxe-toi avec de la pêche. Le skill pêche te donne accès à de très utiles récompenses de pêche non disponibles autrepart.
-Lorsque tu remontes un poisson, tu trouveras peut-être un poisson plus nutritif qu'à l'ordinaire. Si tu est chanceux, tu trouveras peut-être même une sorte de trésor! Lorsque tu réussis à ramener quelque chose de spécial des profondeurs, tu gagnes un peu d'xp de pêche.
+Quand tu as fini de tuer des monstres et de creuser sous terre, repose-toi et relaxe-toi avec de la peche. Le skill peche te donne acces a de tres utiles recompenses de peche non disponibles autrepart.
+Lorsque tu remontes un poisson, tu trouveras peut-etre un poisson plus nutritif qu'a l'ordinaire. Si tu est chanceux, tu trouveras peut-etre meme une sorte de tresor! Lorsque tu reussis a ramener quelque chose de special des profondeurs, tu gagnes un peu d'exp de peche.
 
-Le plus tu montes ton niveau de pêche, le meilleur sera le butin remonté!
-Certains des poissons cachés là-dessous sont peut-être les plats les plus nutritifs du coin...
+Le plus tu montes ton niveau de peche, le meilleur sera le butin remonte!
+Certains des poissons caches la-dessous sont peut-etre les plats les plus nutritifs du coin...

@@ -1,6 +1,6 @@
-Goblins are generally considered a pest by most landowners and explorers, and are generally mostly well known for their destructive, provocative tendencies.
-While technically a humanoid, Goblins are entirely unrelated to the human species, and evolved separately. Regardless of this, they have evolved some sort of primitive intellect, and are able to communicate with each other.
-They are also able to interact with a basic form of magic, which they primarily use to shoot high-energy projectiles at whomever or whatever they see fit.
+哥布林是被大多数地主和探险者公认的一种有害生物，并且因为其充满破坏性和挑衅性的动机而臭名昭著。
+虽然严格来讲，哥布林是类人物种，但它们与人类完全无关，是各自进化而来的。尽管如此，它们已经进化出了某种原始的智力，并且能够互相交流。
+它们还能与一种基本的魔法互动，这种魔法主要用来向它们看中的任何人或物发射高能的弹射物。
 
-They aren't considered aggressive, however their constant pestering and tendency to fire projectiles at nearby creatures has caused them to be treated as if they are aggressive.
-Deal with them with caution, as goblins like to work together, and can easily overwhelm if in groups.
+它们本不被认为是攻击性生物，但是它们不断的纠缠，以及向附近的生物发射弹射物的倾向，使得可以视为它们具有攻击性。
+对付它们时一定要小心，因为哥布林们喜欢团队作战，所以有可能很容易地被成群结队的哥布林击溃。
