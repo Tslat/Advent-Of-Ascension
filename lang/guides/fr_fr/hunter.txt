@@ -1,8 +1,8 @@
 Chasse (Skill)
 
-Alors que la peche c'est faire une pause et se relaxer avec une belle canne à peche, la chasse est l'exact oppose - c'est poignarder des trucs dans la face. Ou partout ailleurs.
-Tu remarqueras peut-etre tandis que tu te balades que certaines creatures ont une icone de deux epees croisees flottant au-dessus de leur tete.
-Ces icones indiquent que ces creatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'exp de chasse lorsqu'ils sont tués, mais ils ne peuvent etre attaques que si tu as le bon niveau de chasse.
-Les mobs chasseurs donnent souvent de belles récompenses, et ceux de haut niveau donnent particulierement souvent du butin unique.
+Alors que la pêche c'est faire une pause et se relaxer avec une belle canne à pêche, la chasse est l'exact opposé - c'est poignarder des trucs dans la face. Ou partout ailleurs.
+Tu remarqueras peut-être tandis que tu te balades que certaines créatures ont une icône de deux épées croisées flottant au-dessus de leur tête.
+Ces icônes indiquent que ces créatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'exp de chasse lorsqu'ils sont tués, mais ils ne peuvent être attaqués que si tu as le bon niveau de chasse.
+Les mobs chasseurs donnent souvent de belles récompenses, et ceux de haut niveau donnent particulièrement souvent du butin unique.
 
-N'oublie pas: Epees vertes = FAIS UN ASSAUT! Epees rouges = Fais autre chose qu'un assaut. Un sandwich, par exemple? Je sais pas.
+N'oublie pas: Épées vertes = FAIS UN ASSAUT! Épées rouges = Fais autre chose qu'un assaut. Un sandwich, par exemple? Je sais pas.
