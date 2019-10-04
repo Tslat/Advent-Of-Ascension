@@ -1,10 +1,10 @@
-Chasse au sang (evenement)
+Chasse au sang (évènement)
 
-"La chasse au sang a commence!"
-Aventuriers, prenez garde, la chasse au sang est sur nos epaules.
-La chasse au sang est un evenement nocturne qui peut se produire certaines nuits dans l'Overworld. Lorsqu'elle commence, vous recevrez le message ci-dessus - votre signal pour vous mettre a couvert!
+"La chasse au sang a commencée!"
+Aventuriers, prenez garde, la chasse au sang est sur nos épaules.
+La chasse au sang est un évènement nocturne qui peut se produire certaines nuits dans l'Overworld. Lorsqu'elle commence, vous recevrez le message ci-dessus - votre signal pour vous mettre à couvert!
 
-Durant la chasse au sang, des creatures hostiles originant de l'Abysse s'echappent de leur dimension pour hanter la notre, cherchant a repandre le sang d'aventuriers proches.
-Ne vous inquietez pas, il ne boiront pas votre sang; juste l'etaler sur l'herbe sur laquelle tu marche en celebrant ta fin.
+Durant la chasse au sang, des créatures hostiles originant de l'Abysse s'échappent de leur dimension pour hanter la nôtre, cherchant à répandre le sang d'aventuriers proches.
+Ne vous inquiétez pas, ils ne boiront pas votre sang; juste l'étaler sur l'herbe sur laquelle tu marches en célébrant ta fin.
 
-Ces creatures abyssales preferent rester dans l'obscurite, donc lorsque le soleil se leve elles arretent d'entrer dans notre monde, mettant fin a la chasse au sang jusqu'a ce qu'ils trouvent une nouvelle entree.
+Ces créatures abyssales préfèrent rester dans l'obscurité, donc lorsque le soleil se lève elles arrêtent d'entrer dans notre monde, mettant fin à la chasse au sang jusqu'à ce qu'ils trouvent une nouvelle entrée.

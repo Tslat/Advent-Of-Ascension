@@ -1,24 +1,24 @@
-Elements a l'ecran (GUI)
+Élements a l'ecran (GUI)
 
-Advent of Ascension installe plusieurs elements a l'ecran pendant que tu joues. Ces elements sont cruciaux pour progresser dans le mod, car ils montrent des informations vitales que tu auras besoin de savoir en jouant.
-Tu peux desactiver cet affichage avec le bouton assigne ('o' par défaut). Si tu n'est pas sur de ton bouton assigne, regarde dans tes parametres de controles.
+Advent of Ascension installe plusieurs éléments à l'écran pendant que tu joues. Ces éléments sont cruciaux pour progresser dans le mod, car ils montrent des informations vitales que tu auras besoin de savoir en jouant.
+Tu peux désactiver cet affichage avec le bouton assigné ('o' par défaut). Si tu n'est pas sûr de ton bouton assigné, regarde dans tes paramètres de contrôles.
 
-L'icone du poing:
-  L'icone de poing orange/rouge est appelee rage de combat. La rage de combat se regenere passivement au fur et a mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros degats, faisant bien plus mal. Tu peut augmenter les degats de ce coup en montant ton skill boucherie.
+L'icône du poing:
+  L'icône de poing orange/rouge est appelée rage de combat. La rage de combat se régénère passivement au fur et à mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros dégâts, faisant bien plus mal. Tu peut augmenter les dégâts de ce coup en montant ton skill boucherie.
 
-L'eclair:
-  L'icone d'eclair est appelee energie. Cela represente une ressource renouvelable et consommable qui est utilisee comme munition par les blasters. Elle se regenere passivement lorsqu'inactive, mais est rapidement drainee par les blasters.
+L'éclair:
+  L'icône d'éclair est appelée énergie. Çela représente une ressource renouvelable et consommable qui est utilisée comme munition par les blasters. Elle se régénère passivement lorsqu'inactive, mais est rapidement drainée par les blasters.
 
-L'icone de creature a cornes:
-  Cette icone est appelee creation. C'est une representation des points de creation qui se regenerent passivement pendant que tu joues. Les dalles de creation du skill creation coutent des points de creation a utiliser, donc si tu invoques des sbires tu devras garder un œil a combien tu en as.
-  Tu peut augmenter ton maximum de points de creation en montant ton skill augure.
+L'icône de créature à cornes:
+  Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent passivement pendant que tu joues. Les dalles de création du skill création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
+  Tu peut augmenter ton maximum de points de création en montant ton skill augure.
 
-L'icone alien bleu:
-  Cette icone est appelee pouvoir des ames. Elle represente la quantite de pouvoir des ames en ta possession. Ces points se regenerent lentement pendant que tu joues. Ils sont actuellement inutilises, donc pas besoin de s'en preoccuper pour l'instant.
+L'icône alien bleu:
+  Cette icône est appelée pouvoir des âmes. Elle représente la quantité de pouvoir des âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Ils sont actuellement inutilisés, donc pas besoin de s'en préoccuper pour l'instant.
 
 Les quatres lignes:
-  Logee entre la rage de combat et l'energie est l'icone de tribut. Cette icone est divisee en quatre lignes individuelles, chacune representant une divinite specifique. Il y a quatre principales divinites dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et deteste differentes choses, et il peut donc etre difficile de toutes les combler.
-  Lorsque tu accomplis certaines taches pendant la journee en revanche, tu verras ces barres se remplir. Si tu reussis a remplir une barre en entier, alors quand le soleil se couchera, tu seras offert une faveur par la divinite que tu as apaisee. Ces faveurs peuvent etre tres utiles, alors au travail!
+  Logée entre la rage de combat et l'énergie est l'icône de tribut. Cette icône est divisée en quatre lignes individuelles, chacune représentant une divinité spécifique. Il y a quatre principales divinités dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et déteste différentes choses, et il peut donc être difficile de toutes les combler.
+  Lorsque tu accomplis certaines tâches pendant la journée en revanche, tu verras ces barres se remplir. Si tu réussis à remplir une barre en entier, alors quand le soleil se couchera, tu seras offert une faveur par la divinité que tu as apaisée. Ces faveurs peuvent être très utiles, alors au travail!
 
-L'icone de crane:
-  Cette icone n'apparait pas toujours, elle n'apparait que pendant un court instant parfois apres avoir pris des degats. Quand cette icone apparait, le mob qui t'as attaque a son âme liee a la tienne. Tu peux alors utiliser un vulcane pour infliger des degats instantanes en revanche. Essaie d'obtenir vite un vulcane, car cela peut facilement faire beaucoup de degats!
+L'icône de crâne:
+  Cette icône n'apparaît pas toujours, elle n'apparaît que pendant un court instant parfois après avoir pris des dégâts. Quand cette icône apparaît, le mob qui t'a attaqué à son âme liée à la tienne. Tu peux alors utiliser un vulcane pour infliger des dégâts instantanés en revanche. Essaie d'obtenir vite un vulcane, car çela peut façilement faire beaucoup de dégâts!

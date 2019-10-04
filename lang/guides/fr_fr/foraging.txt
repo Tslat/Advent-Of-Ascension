@@ -1,6 +1,6 @@
 Forage (Skill)
 
 Creuser, creuser, creuser. Qui n'aime pas creuser?
-Le forage est un skill qui permet de trouver des tresors supplementaires en minant de la pierre ordinaire. En minant, tu pourrais occasionellement trouver un beau butin en plus du bloc de pierre. A chaque fois que ca arrive, tu gagneras un peu d'exp.
+Le forage est un skill qui permet de trouver des trésors supplémentaires en minant de la pierre ordinaire. En minant, tu pourrais occasionellement trouver un beau butin en plus du bloc de pierre. À chaque fois que ça arrive, tu gagneras un peu d'exp.
 
-Plus le niveau de forage est haut, plus le butin est frequent, et le mieux il est aussi!
+Plus le niveau de forage est haut, plus le butin est fréquent, et le mieux il est aussi!
