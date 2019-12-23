@@ -5,4 +5,4 @@ Tu remarqueras peut-être tandis que tu te balades que certaines créatures ont 
 Ces icônes indiquent que ces créatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'exp de chasse lorsqu'ils sont tués, mais ils ne peuvent être attaqués que si tu as le bon niveau de chasse.
 Les mobs chasseurs donnent souvent de belles récompenses, et ceux de haut niveau donnent particulièrement souvent du butin unique.
 
-N'oublie pas: Épées vertes = FAIS UN ASSAUT! Épées rouges = Fais autre chose qu'un assaut. Un sandwich, par exemple? Je sais pas.
+N'oublie pas: Épées vertes = CHARGEEEZ! Épées rouges = Fais autre chose que charger. Un sandwich, par exemple? Je sais pas.
