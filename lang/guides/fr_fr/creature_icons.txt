@@ -5,7 +5,7 @@ Tu remarqueras peut-être que certains mobs ont des petites icônes flottant au-
 Alors que veulent-elles dire?
 
 Les deux épées:
-  Les deux épées croisées indiquent que la créature est un mob chasseur. Çela veut dire que la créature ne peut pas être normalement attaquée par les joueurs avec un niveau de chasse trop bas. Tu peux savoir que tu as le bon niveau si les épées sont vertes. Les mobs trop difficiles pour toi auront des épées rouges.
+  Les deux épées croisées indiquent que la créature est un mob chasseur. Cela veut dire que la créature ne peut pas être normalement attaquée par les joueurs avec un niveau de chasse trop bas. Tu peux savoir que tu as le bon niveau si les épées sont vertes. Les mobs trop difficiles pour toi auront des épées rouges.
 
 L'éclair:
   Un symbole d'éclair jaune indique que la créature est immunisée aux blasters.
@@ -20,7 +20,7 @@ Le pistolet:
   Un symbole de pistolet indique que la créature est immunisée aux pistolets. Çela inclut les fusils, snipers, canons, et carabines, mais n'inclut pas les blasters ni les arcs.
 
 La spirale arc-en-ciel:
-  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Çela compte principalement les dégâts de baguettes, mais çela peut aussi affecter d'autres choses.
+  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Cela compte principalement les dégâts de bâtons, mais çela peut aussi affecter d'autres choses.
 
 L'épée seule:
   Un symbole d'une seule épée violette indique que la créature est immunisée aux dégâts de mélée.
