@@ -1,6 +1,3 @@
 Augury (Skill)
 
-Augury is a skill based around divine essences. Levelling it up is very simple; all you need to do is use some essences on an Ascension Shrine block. Different essences give different amounts of xp, and the more xp the essence gives, the higher the Augury level requirement to use it.
-Essences can be obtained as rewards from other skills, especially Foraging and Logging.
-
-As you level up your Augury, your maximum creation points and soul points will increase, allowing you to summon more minions and use more soul power before running out.
+Augury has been temporarily deactivated.
