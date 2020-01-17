@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
@@ -17,8 +18,8 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -35,7 +36,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeCandyland;
+	private final Biome biome = BiomeRegister.biomeCandyland;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -246,7 +247,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.dirtCandyland.getDefaultState());
 								}
 								else if (i2 * 8 + j2 == world.getSeaLevel()) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, Blocks.WATER.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.candiedWater.getDefaultState());
 								}
 								else if (i2 * 8 + j2 < this.world.getSeaLevel()) {
 									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.dirtCandyland.getDefaultState());
@@ -402,6 +403,7 @@ public class ChunkGenCandyland implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

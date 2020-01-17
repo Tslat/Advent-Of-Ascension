@@ -1,20 +1,16 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Items;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityBoneback extends AoAMeleeMob implements HunterEntity {
+public class EntityBoneback extends AoAMeleeMob {
 	public static final float entityWidth = 0.5625f;
 
 	public EntityBoneback(World world) {
@@ -28,22 +24,27 @@ public class EntityBoneback extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 40;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 12;
+		return 4;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25d;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 3d;
 	}
 
 	@Nullable
@@ -62,6 +63,12 @@ public class EntityBoneback extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobBonebackHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBoneback;
+	}
+
 	@Override
 	protected SoundEvent getStepSound() {
 		return SoundsRegister.veryHeavyStep;
@@ -70,31 +77,6 @@ public class EntityBoneback extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Items.BONE, 4 + rand.nextInt(lootingMod + 1));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 12;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 24f;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Override

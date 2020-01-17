@@ -24,7 +24,7 @@ public class SpawnerBlock extends BlockMobSpawner {
 
 	public SpawnerBlock(String name, String registryName, String mobName, boolean unbreakable) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
 

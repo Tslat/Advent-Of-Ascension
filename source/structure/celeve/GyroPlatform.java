@@ -457,7 +457,7 @@ public class GyroPlatform extends AoAStructure { //StructureSize: 19x9x19
 		addBlock(world, basePos, 1, 2, 17, celevusStem);
 		addBlock(world, basePos, 4, 2, 0, whitewashBricks);
 		addBlock(world, basePos, 4, 2, 18, whitewashBricks);
-		addBlock(world, basePos, 9, 2, 9, toyBox);
+		//addBlock(world, basePos, 9, 2, 9, toyBox);
 		addBlock(world, basePos, 14, 2, 0, whitewashBricks);
 		addBlock(world, basePos, 14, 2, 18, whitewashBricks);
 		addBlock(world, basePos, 17, 2, 1, celevusStem);

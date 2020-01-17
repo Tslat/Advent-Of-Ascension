@@ -1,13 +1,12 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -66,15 +65,10 @@ public class EntityFacelessRunner extends AoAMeleeMob {
 		return SoundsRegister.mobFacelessRunnerHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneDeeplands, 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFacelessRunner;
 	}
 
 	@Override

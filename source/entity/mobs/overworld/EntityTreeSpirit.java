@@ -1,18 +1,17 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -37,12 +36,12 @@ public class EntityTreeSpirit extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 25;
+		return 35;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 6;
 	}
 
 	@Override
@@ -66,22 +65,15 @@ public class EntityTreeSpirit extends AoAMeleeMob {
 		return SoundsRegister.mobTreeSpiritHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityTreeSpirit;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(ItemRegister.seedsHollyTop, 1 + rand.nextInt(1 + lootingMod));
-
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(8 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

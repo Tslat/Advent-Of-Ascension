@@ -2,13 +2,16 @@ package net.tslat.aoa3.entity.mobs.barathos;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -24,23 +27,34 @@ public class EntityEmperorBeast extends AoAMeleeMob {
 	}
 
 	@Override
+	protected void initEntityAI() {
+		tasks.addTask(1, new EntityAISwimming(this));
+		tasks.addTask(2, new EntityAIAttackMelee(this, 1.0d, false));
+		tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0d));
+		tasks.addTask(4, new EntityAIWanderAvoidWater(this, 1.0d));
+		tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f));
+		tasks.addTask(5, new EntityAILookIdle(this));
+		targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+	}
+
+	@Override
 	public float getEyeHeight() {
 		return 5.3125f;
 	}
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1;
+		return 1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 250;
+		return 150;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 9;
+		return 11;
 	}
 
 	@Override
@@ -69,9 +83,10 @@ public class EntityEmperorBeast extends AoAMeleeMob {
 		return SoundsRegister.mobEmperorBeastStep;
 	}
 
+	@Nullable
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityEmperorBeast;
 	}
 
 	@Override

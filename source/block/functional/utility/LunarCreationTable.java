@@ -10,18 +10,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
+
+import java.util.HashSet;
 
 public class LunarCreationTable extends Block {
 	public LunarCreationTable() {
 		super(Material.ROCK);
-		setUnlocalizedName("LunarCreationTable");
+		setTranslationKey("LunarCreationTable");
 		setRegistryName("aoa3:lunar_creation_table");
 		setHardness(-1f);
 		setResistance(999999999f);
@@ -32,84 +33,77 @@ public class LunarCreationTable extends Block {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			Item weaponItem = null;
+			BlockPos lunarPos = null;
+			BlockPos moonlightPos = null;
+			BlockPos darklightPos = null;
+			BlockPos sunfirePos = null;
+			BlockPos duskPos = null;
 
-			if (world.getBlockState(pos.add(-2, 0, -2)).getBlock() == BlockRegister.lunarOrbDusk) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					world.setBlockToAir(pos.add(-2, 0, -2));
-					world.setBlockToAir(pos.add(2, 0, 2));
-					weaponItem = WeaponRegister.gunIonRevolver;
-				}
-				else if (world.getBlockState(pos.add(-2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					world.setBlockToAir(pos.add(-2, 0, -2));
-					world.setBlockToAir(pos.add(-2, 0, 2));
-					weaponItem = WeaponRegister.blasterIonBlaster;
-				}
-			}
-			else if (world.getBlockState(pos.add(-2, 0, -2)).getBlock() == BlockRegister.lunarOrbDarklight) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					world.setBlockToAir(pos.add(-2, 0, -2));
-					world.setBlockToAir(pos.add(2, 0, 2));
-					weaponItem = WeaponRegister.staffLunar;
-				}
-			}
-			else if (world.getBlockState(pos.add(-2, 0, -2)).getBlock() == BlockRegister.lunarOrbMoonlight) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					if (world.getBlockState(pos.add(2, 0, -2)).getBlock() == BlockRegister.lunarOrbMoonlight) {
-						world.setBlockToAir(pos.add(-2, 0, -2));
-						world.setBlockToAir(pos.add(2, 0, 2));
-						world.setBlockToAir(pos.add(2, 0, -2));
-						weaponItem = WeaponRegister.staffMoonlight;
+			for (int x = -2; x <= 2; x += 2) {
+				for (int z = -2; z <= 2; z += 2) {
+					BlockPos checkPos = pos.add(x, 0, z);
+					IBlockState block = world.getBlockState(checkPos);
+
+					if (block.getBlock() == BlockRegister.lunarOrbLunar) {
+						lunarPos = checkPos;
 					}
-					else {
-						world.setBlockToAir(pos.add(-2, 0, -2));
-						world.setBlockToAir(pos.add(2, 0, 2));
-						weaponItem = WeaponRegister.blasterAtomizer;
+					else if (block.getBlock() == BlockRegister.lunarOrbMoonlight) {
+						moonlightPos = checkPos;
+					}
+					else if (block.getBlock() == BlockRegister.lunarOrbDarklight) {
+						darklightPos = checkPos;
+					}
+					else if (block.getBlock() == BlockRegister.lunarOrbDusk) {
+						duskPos = checkPos;
+					}
+					else if (block.getBlock() == BlockRegister.lunarOrbSunfire) {
+						sunfirePos = checkPos;
 					}
 				}
 			}
-			else if (world.getBlockState(pos.add(-2, 0, -2)).getBlock() == BlockRegister.lunarOrbLunar) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					if (world.getBlockState(pos.add(-2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar && world.getBlockState(pos.add(2, 0, -2)).getBlock() == BlockRegister.lunarOrbLunar) {
-						world.setBlockToAir(pos.add(-2, 0, -2));
-						world.setBlockToAir(pos.add(2, 0, 2));
-						world.setBlockToAir(pos.add(-2, 0, 2));
-						world.setBlockToAir(pos.add(2, 0, -2));
-						weaponItem = WeaponRegister.staffMeteor;
+
+			if (lunarPos != null && moonlightPos != null) {
+				if (darklightPos != null && sunfirePos != null && duskPos != null) {
+					HashSet<Item> armours = new HashSet<Item>(4);
+
+					armours.add(ArmourRegister.lunarBoots);
+					armours.add(ArmourRegister.lunarLegs);
+					armours.add(ArmourRegister.lunarBody);
+					armours.add(ArmourRegister.lunarHelmet);
+
+					for (ItemStack stack : player.inventory.mainInventory) {
+						armours.removeIf(item -> item == stack.getItem());
 					}
-					else {
-						world.setBlockToAir(pos.add(-2, 0, -2));
-						world.setBlockToAir(pos.add(2, 0, 2));
-						weaponItem = WeaponRegister.staffCelestial;
+
+					for (ItemStack stack : player.inventory.armorInventory) {
+						armours.removeIf(item -> item == stack.getItem());
 					}
+
+					for (ItemStack stack : player.inventory.armorInventory) {
+						armours.removeIf(item -> item == stack.getItem());
+					}
+
+					if (armours.isEmpty()) {
+						armours.add(ArmourRegister.lunarBoots);
+						armours.add(ArmourRegister.lunarLegs);
+						armours.add(ArmourRegister.lunarBody);
+						armours.add(ArmourRegister.lunarHelmet);
+					}
+
+					Item armourPiece = (Item)armours.toArray()[player.getRNG().nextInt(armours.size())];
+
+					world.spawnEntity(new EntityItem(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(armourPiece)));
+					world.setBlockToAir(lunarPos);
+					world.setBlockToAir(moonlightPos);
+					world.setBlockToAir(duskPos);
+					world.setBlockToAir(sunfirePos);
+					world.setBlockToAir(darklightPos);
 				}
-			}
-			else if (world.getBlockState(pos.add(2, 0, -2)).getBlock() == BlockRegister.lunarOrbMoonlight) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					world.setBlockToAir(pos.add(2, 0, -2));
-					world.setBlockToAir(pos.add(2, 0, 2));
-					weaponItem = WeaponRegister.cannonEnergyCannon;
+				else {
+					world.spawnEntity(new EntityItem(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(ItemRegister.observingEye)));
+					world.setBlockToAir(lunarPos);
+					world.setBlockToAir(moonlightPos);
 				}
-			}
-			else if (world.getBlockState(pos.add(-2, 0, -2)).getBlock() == BlockRegister.lunarOrbSunfire) {
-				if (world.getBlockState(pos.add(2, 0, 2)).getBlock() == BlockRegister.lunarOrbLunar) {
-					world.setBlockToAir(pos.add(-2, 0, -2));
-					world.setBlockToAir(pos.add(2, 0, 2));
-					weaponItem = WeaponRegister.staffSun;
-				}
-			}
-
-			if (weaponItem != null) {
-				EntityItem weaponEntity = new EntityItem(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), new ItemStack(weaponItem));
-
-				weaponEntity.motionX = 0;
-				weaponEntity.motionY = 0.3;
-				weaponEntity.motionZ = 0;
-
-				world.spawnEntity(weaponEntity);
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.lunarCreationTableSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
-
-				return true;
 			}
 		}
 

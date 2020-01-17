@@ -5,6 +5,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
@@ -62,6 +63,12 @@ public class EntityGoldus extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundsRegister.mobAutomatonHit;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
 	}
 
 	@Override

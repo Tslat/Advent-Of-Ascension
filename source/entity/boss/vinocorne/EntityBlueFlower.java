@@ -52,7 +52,7 @@ public class EntityBlueFlower extends AoAMeleeMob implements SpecialPropertyEnti
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isGunDamage(source) || EntityUtil.isRangedDamage(source, this, 1);
 	}
 

@@ -30,7 +30,7 @@ public class Skeletanium extends BasicBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityLivingBase && (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).capabilities.isCreativeMode))
 			entity.attackEntityFrom(new DamageSource("skeletanium"), 3.0f);
 	}

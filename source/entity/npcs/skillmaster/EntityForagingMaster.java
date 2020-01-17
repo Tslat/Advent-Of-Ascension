@@ -1,15 +1,15 @@
 package net.tslat.aoa3.entity.npcs.skillmaster;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoATraderRecipe;
-import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class EntityForagingMaster extends EntitySkillMaster {
 	public EntityForagingMaster(World world) {
@@ -18,17 +18,15 @@ public class EntityForagingMaster extends EntitySkillMaster {
 
 	@Nullable
 	@Override
-	protected ITextComponent getInteractMessage() {
-		return StringUtil.getLocale("message.dialogue.foraging_master." + rand.nextInt(5));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityForagingMaster;
 	}
 
 	@Override
-	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.ForagingBody)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.ForagingLegs)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.ForagingBoots)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.ForagingHelmet)));
-
-		return newList;
+	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.foragingBody)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.foragingLegs)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.foragingBoots)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.foragingHelmet)));
 	}
 }

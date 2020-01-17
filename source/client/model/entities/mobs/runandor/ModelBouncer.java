@@ -6,15 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelBouncer extends ModelBase {
-	ModelRenderer body;
-	ModelRenderer legp1;
-	ModelRenderer legp2;
-	ModelRenderer legp3;
-	ModelRenderer legp4;
-	ModelRenderer head;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
+	private ModelRenderer body;
+	private ModelRenderer legp1;
+	private ModelRenderer legp2;
+	private ModelRenderer legp3;
+	private ModelRenderer legp4;
+	private ModelRenderer head;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
 
 	public ModelBouncer() {
 		textureWidth = 64;

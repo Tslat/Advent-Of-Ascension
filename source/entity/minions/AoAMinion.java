@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
 import javax.annotation.Nullable;
 
@@ -59,6 +60,30 @@ public abstract class AoAMinion extends EntityTameable {
     @Override
     public boolean canAttackClass(Class<? extends EntityLivingBase> clazz) {
         return !AoAMinion.class.isAssignableFrom(clazz);
+    }
+
+    @Override
+    public void setAttackTarget(@Nullable EntityLivingBase target) {
+        if (target != null) {
+            EntityLivingBase owner = getOwner();
+
+            if (owner instanceof EntityPlayer && !HunterUtil.doesPlayerMeetHunterReq(target, (EntityPlayer)owner))
+                return;
+        }
+
+        super.setAttackTarget(target);
+    }
+
+    @Override
+    public void setRevengeTarget(@Nullable EntityLivingBase target) {
+        if (target != null) {
+            EntityLivingBase owner = getOwner();
+
+            if (owner instanceof EntityPlayer && !HunterUtil.doesPlayerMeetHunterReq(target, (EntityPlayer)owner))
+                return;
+        }
+
+        super.setRevengeTarget(target);
     }
 
     @Override
@@ -122,6 +147,11 @@ public abstract class AoAMinion extends EntityTameable {
         else {
             return false;
         }
+    }
+
+    @Override
+    public boolean isEntityInvulnerable(DamageSource source) {
+        return super.isEntityInvulnerable(source) || (getOwnerId() != null && source.getTrueSource() != null && source.getTrueSource().getUniqueID().equals(getOwnerId()));
     }
 
     @Nullable

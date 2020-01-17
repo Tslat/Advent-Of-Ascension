@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityAnimal;
@@ -22,20 +23,18 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.ScrollablePane;
+import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.entity.base.*;
 import net.tslat.aoa3.entity.properties.BossEntity;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.RenderUtil;
 import net.tslat.aoa3.utils.StringUtil;
-import org.apache.commons.io.IOUtils;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
 import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -111,11 +110,11 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 		mobList = new ArrayList<EntityList.EntityEggInfo>();
 
 		for (EntityList.EntityEggInfo entityEggInfo : EntityList.ENTITY_EGGS.values()) {
-			if (entityEggInfo.spawnedID.getResourceDomain().equals("aoa3") && stats.readStat(entityEggInfo.killEntityStat) > 0)
+			if (stats.readStat(entityEggInfo.killEntityStat) > 0)
 				mobList.add(entityEggInfo);
 		}
 
-		mobList.sort(Comparator.comparing(eggInfo -> eggInfo.spawnedID.getResourcePath()));
+		mobList.sort(Comparator.comparing(eggInfo -> eggInfo.spawnedID.getPath()));
 
 		receivedStats = true;
 	}
@@ -127,7 +126,9 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 		try {
 			entity = (EntityLivingBase)ForgeRegistries.ENTITIES.getValue(eggInfo.spawnedID).getEntityClass().getConstructor(World.class).newInstance(mc.player.world);
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+			AdventOfAscension.logOptionalMessage("Unable to retrieve entity from egg info: " + eggInfo.spawnedID.toString());
+		}
 
 		return entity;
 	}
@@ -135,6 +136,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 	private void gatherEntityStats(EntityList.EntityEggInfo eggInfo) {
 		openEntryInstance = getEntityFromEgg(eggInfo);
 		openEntryStatsLines = new ArrayList<String>();
+		openEntryInfoLines = new ArrayList<String>(0);
 
 		if (openEntryInstance != null) {
 			String type;
@@ -170,7 +172,15 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 				type = StringUtil.getLocaleString("gui.aoamain.bestiary.type.trader");
 			}
 			else {
-				type = StringUtil.getLocaleString("gui.aoamain.bestiary.type.other");
+				if (eggInfo.spawnedID.getNamespace().equals("aoa3")) {
+					type = StringUtil.getLocaleString("gui.aoamain.bestiary.type.other");
+				}
+				else if (openEntryInstance instanceof IRangedAttackMob) {
+					type = StringUtil.getLocaleString("gui.aoamain.bestiary.type.ranged");
+				}
+				else {
+					type = StringUtil.getLocaleString("gui.aoamain.bestiary.type.melee");
+				}
 			}
 
 			switch (openEntryInstance.getCreatureAttribute()) {
@@ -191,11 +201,20 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 
 			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.type") + TextFormatting.RESET + " " + type);
 
-			if (openEntryInstance instanceof HunterEntity)
-				openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.hunterReq") + TextFormatting.RESET + " " + ((HunterEntity)openEntryInstance).getHunterReq());
+			if (openEntryInstance instanceof SpecialPropertyEntity) {
+				int hunterLvl = HunterUtil.getHunterLevel(openEntryInstance);
+
+				if (hunterLvl > 0)
+					openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.hunterReq") + TextFormatting.RESET + " " + hunterLvl);
+
+				openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.immunity.immunities"));
+
+				for (Enums.MobProperties property : ((SpecialPropertyEntity)openEntryInstance).getMobProperties()) {
+					openEntryStatsLines.add("    " + StringUtil.getLocaleString("gui.aoamain.bestiary.immunity." + property.toString().toLowerCase()));
+				}
+			}
 
 			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.attribute") + TextFormatting.RESET + " " + attribute);
-
 			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.size") + TextFormatting.RESET + " " + ((int)(openEntryInstance.width * 1000)) / 1000f + "x" + ((int)(openEntryInstance.height * 1000)) / 1000f);
 			openEntryStatsLines.add("");
 			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.health") + TextFormatting.RESET + " " + openEntryInstance.getMaxHealth());
@@ -220,41 +239,13 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 				}
 			}
 
-			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.speed") + TextFormatting.RESET + " " + openEntryInstance.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.speed") + TextFormatting.RESET + " " + (int)(openEntryInstance.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 1000) / 1000f);
 
-			ClassLoader classLoader = AdventOfAscension.instance.getClass().getClassLoader();
-			InputStream streamIn;
-			BufferedReader reader = null;
-			InputStreamReader streamReader = null;
+			if (eggInfo.spawnedID.getNamespace().equals("aoa3")) {
+				String info = ModUtil.getTextFromResourceFile(new ResourceLocation("aoa3", "lang/other/" + currentLanguage + "/bestiary/" + eggInfo.spawnedID.getPath().toLowerCase()), "txt", new ResourceLocation("aoa3", "lang/other/en_us/bestiary/" + eggInfo.spawnedID.getPath().toLowerCase()));
 
-			try {
-				streamIn = classLoader.getResourceAsStream("assets/aoa3/lang/bestiary/" + currentLanguage + "/" + eggInfo.spawnedID.getResourcePath().toLowerCase() + ".txt");
-
-				if (streamIn == null)
-					streamIn = classLoader.getResourceAsStream("assets/aoa3/lang/bestiary/en_us/" + eggInfo.spawnedID.getResourcePath().toLowerCase() + ".txt");
-
-				if (streamIn == null) {
-					openEntryInfoLines = new ArrayList<String>();
-
-					return;
-				}
-
-				final StringBuilder content = new StringBuilder();
-				streamReader = new InputStreamReader(streamIn);
-				reader = new BufferedReader(streamReader);
-
-				reader.lines().forEach(line -> {content.append(line); content.append("\n");});
-				openEntryInfoLines = mc.fontRenderer.listFormattedStringToWidth(content.toString(), (int)(734 / 1.5f));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally {
-				if (streamReader != null)
-					IOUtils.closeQuietly(streamReader);
-
-				if (reader != null)
-					IOUtils.closeQuietly(reader);
+				if (info != null)
+					openEntryInfoLines = mc.fontRenderer.listFormattedStringToWidth(info, (int)(734 / 1.5f));
 			}
 		}
 		else {
@@ -291,6 +282,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 						int rowTop = top + 20 + i * 100;
 						int rowBottom = rowTop + 180;
 						EntityLivingBase entity = getEntityFromEgg(entityEggInfo);
+						String entityName = entity != null ? entity.getName() : StringUtil.getLocaleString("entity." + entityEggInfo.spawnedID.getNamespace() + "." + entityEggInfo.spawnedID.getPath() + ".name").replace(".minecraft", "");
 
 						drawRect(left + 40, rowTop + 30, left + 360, rowBottom, 0xFF202020);
 
@@ -298,7 +290,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 							drawEntity(entity, left + 200, rowTop + 170, 50f);
 
 						drawRect(left + 40, rowTop, left + 360, rowTop + 30, 0xFF010101);
-						RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("entity.aoa3." + entityEggInfo.spawnedID.getResourcePath() + ".name"), left + 200, rowTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawCenteredScaledString(mc.fontRenderer, entityName, left + 200, rowTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 						mc.getTextureManager().bindTexture(iconsTextures);
 						RenderUtil.drawScaledCustomSizeModalRect(left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 32);
 						RenderUtil.drawScaledCustomSizeModalRect(left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 32);
@@ -308,6 +300,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 						if (i + 1 < mobList.size()) {
 							entityEggInfo = mobList.get(i + 1);
 							entity = getEntityFromEgg(entityEggInfo);
+							entityName = entity != null ? entity.getName() : StringUtil.getLocaleString("entity." + entityEggInfo.spawnedID.getNamespace() + "." + entityEggInfo.spawnedID.getPath() + ".name").replace(".minecraft", "");
 
 							drawRect(right - 360, rowTop + 30, right - 40, rowBottom, 0xFF202020);
 
@@ -315,7 +308,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 								drawEntity(entity, right - 200, rowTop + 170, 50f);
 
 							drawRect(right - 360, rowTop, right - 40, rowTop + 30, 0xFF010101);
-							RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("entity.aoa3." + entityEggInfo.spawnedID.getResourcePath() + ".name"), right - 200, rowTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawCenteredScaledString(mc.fontRenderer, entityName, right - 200, rowTop + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 							mc.getTextureManager().bindTexture(iconsTextures);
 							RenderUtil.drawScaledCustomSizeModalRect(right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 32);
 							RenderUtil.drawScaledCustomSizeModalRect(right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 32);
@@ -330,7 +323,9 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 
 					drawRect(left, top + 30, right, bottom, 0xFF202020);
 					drawRect(left, top, right, top + 30, 0xFF010101);
-					RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("entity.aoa3." + entityEggInfo.spawnedID.getResourcePath() + ".name"), left + (int)(viewWidth / 2f), top + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+					String entityName = openEntryInstance != null ? openEntryInstance.getName() : StringUtil.getLocaleString("entity." + entityEggInfo.spawnedID.getNamespace() + "." + entityEggInfo.spawnedID.getPath() + ".name").replace(".minecraft", "");
+
+					RenderUtil.drawCenteredScaledString(mc.fontRenderer, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 
 					if (openEntryInstance != null)
 						drawEntity(openEntryInstance, left + 200, top + 240, 75f);
@@ -338,6 +333,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 					mc.getTextureManager().bindTexture(iconsTextures);
 					RenderUtil.drawScaledCustomSizeModalRect(left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 32);
 					RenderUtil.drawScaledCustomSizeModalRect(left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 32);
+					RenderUtil.drawScaledString(mc.fontRenderer, "X", right - 20, top + 5, 1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 					RenderUtil.drawScaledString(mc.fontRenderer, StringUtil.floorAndAppendSuffix(stats.readStat(entityEggInfo.killEntityStat), true), left + 445, top + 48, 1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 					RenderUtil.drawScaledString(mc.fontRenderer, StringUtil.floorAndAppendSuffix(stats.readStat(entityEggInfo.entityKilledByStat), true), left + 445, top + 68, 1.5f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
 
@@ -407,7 +403,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 
 				int relativeMouseX = mouseX - left + 2;
 
-				if (relativeMouseX < 40 || relativeMouseX > right - left - 40)
+				if (openEntryIndex < 0 && (relativeMouseX < 40 || relativeMouseX > right - left - 40))
 					return;
 
 				int newTop = top - Math.max(0, (int)distanceScrolled);

@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
 
@@ -23,7 +24,7 @@ public class EntityVisulon extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0;
+		return 0.3;
 	}
 
 	@Override
@@ -33,7 +34,7 @@ public class EntityVisulon extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 15;
 	}
 
 	@Override
@@ -59,14 +60,14 @@ public class EntityVisulon extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobVisularHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVisulon;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.observingEye, 1);
-		dropItem(ItemRegister.realmstoneLunalus, 1);
+	protected int getSpawnChanceFactor() {
+		return 5;
 	}
 }

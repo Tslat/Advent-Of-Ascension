@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,16 +20,23 @@ import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Vulkram extends BaseThrownWeapon {
 	public static final float dmg = 3f;
 
 	public Vulkram() {
-		super(dmg, SoundEvents.ENTITY_ARROW_SHOOT, 7);
-		setUnlocalizedName("Vulkram");
+		super(dmg, 7);
+		setTranslationKey("Vulkram");
 		setRegistryName("aoa3:vulkram");
 		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundEvents.ENTITY_ARROW_SHOOT;
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -37,12 +37,12 @@ public class EntityRunicGuardian extends AoARangedMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 70;
+		return 109;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 6;
+		return 13.5;
 	}
 
 	@Override
@@ -55,15 +55,10 @@ public class EntityRunicGuardian extends AoARangedMob {
 		return null;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(20 - lootingMod) == 0)
-			dropItem(ItemRegister.runicEnergy, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRunicGuardian;
 	}
 
 	@Override
@@ -80,9 +75,9 @@ public class EntityRunicGuardian extends AoARangedMob {
 		if (getShootSound() != null)
 			world.playSound(null, posX, posY, posZ, getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 
-		projectile1.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
-		projectile2.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
-		projectile3.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+		projectile1.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
+		projectile2.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
+		projectile3.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 		world.spawnEntity(projectile1);
 		world.spawnEntity(projectile2);
 		world.spawnEntity(projectile3);

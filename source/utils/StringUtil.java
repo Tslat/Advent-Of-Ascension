@@ -3,7 +3,6 @@ package net.tslat.aoa3.utils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -14,20 +13,20 @@ import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 
 public class StringUtil {
-	public static ITextComponent getLocale(String key) {
+	public static TextComponentTranslation getLocale(String key) {
 		return new TextComponentTranslation(key);
 	}
 
-	public static ITextComponent getColourLocale(String key, TextFormatting colour) {
-		return new TextComponentTranslation(key).setStyle(new Style().setColor(colour));
+	public static TextComponentTranslation getColourLocale(String key, TextFormatting colour) {
+		return (TextComponentTranslation)(new TextComponentTranslation(key).setStyle(new Style().setColor(colour)));
 	}
 
-	public static ITextComponent getLocaleWithArguments(String key, String... args) {
+	public static TextComponentTranslation getLocaleWithArguments(String key, String... args) {
 		return new TextComponentTranslation(key, (Object[])args);
 	}
 
-	public static ITextComponent getColourLocaleWithArguments(String key, TextFormatting colour, String... args) {
-		return new TextComponentTranslation(key, (Object[])args).setStyle(new Style().setColor(colour));
+	public static TextComponentTranslation getColourLocaleWithArguments(String key, TextFormatting colour, String... args) {
+		return (TextComponentTranslation)(new TextComponentTranslation(key, (Object[])args).setStyle(new Style().setColor(colour)));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -50,13 +49,13 @@ public class StringUtil {
 		return colour + I18n.format(key, (Object[])args);
 	}
 
-	public static void sendMessageWithinRadius(ITextComponent msg, Entity center, int radius) {
+	public static void sendMessageWithinRadius(TextComponentTranslation msg, Entity center, int radius) {
 		for (EntityPlayer pl : center.world.getEntitiesWithinAABB(EntityPlayer.class, center.getEntityBoundingBox().grow(50))) {
 			pl.sendMessage(msg);
 		}
 	}
 
-	public static String toProperCasing(String string) {
+	public static String capitaliseFirstLetter(String string) {
 		char firstLetter = Character.toTitleCase(string.charAt(0));
 
 		return firstLetter + string.substring(1).toLowerCase();
@@ -87,10 +86,15 @@ public class StringUtil {
 	}
 
 	public static String roundToNthDecimalPlace(float value, int decimals) {
-		return String.valueOf(Math.round(value * (float)Math.pow(10, decimals)) / (float)Math.pow(10, decimals));
+		float val = Math.round(value * (float)Math.pow(10, decimals)) / (float)Math.pow(10, decimals);
+
+		if (((int)val) == val)
+			return String.valueOf((int)val);
+
+		return String.valueOf(val);
 	}
 
-	public static String capitaliseAllWords(@Nonnull String str) {
+	public static String toTitleCase(@Nonnull String str) {
 		int sz = str.length();
 		StringBuilder buffer = new StringBuilder(sz);
 		boolean space = true;
@@ -98,7 +102,7 @@ public class StringUtil {
 		for (int i = 0; i < sz; i++) {
 			char ch = str.charAt(i);
 
-			if (Character.isWhitespace(ch)) {
+			if (Character.isWhitespace(ch) || ch == '_') {
 				buffer.append(ch);
 				space = true;
 			}
@@ -112,5 +116,35 @@ public class StringUtil {
 		}
 
 		return buffer.toString();
+	}
+
+	public static boolean isInteger(CharSequence chars) {
+		if (chars == null || chars.length() == 0)
+			return false;
+
+		for (int i = 0; i < chars.length(); i++) {
+			if (!Character.isDigit(chars.charAt(i)))
+				return false;
+		}
+
+		return true;
+	}
+
+	public static int toInteger(String string) {
+		try {
+			return Integer.parseInt(string);
+		}
+		catch (NumberFormatException e) {
+			return 0;
+		}
+	}
+
+	public static float toFloat(String string) {
+		try {
+			return Float.parseFloat(string);
+		}
+		catch (NumberFormatException e) {
+			return 0;
+		}
 	}
 }

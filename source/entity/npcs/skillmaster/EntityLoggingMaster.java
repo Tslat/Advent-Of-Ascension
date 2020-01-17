@@ -1,15 +1,15 @@
 package net.tslat.aoa3.entity.npcs.skillmaster;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoATraderRecipe;
-import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class EntityLoggingMaster extends EntitySkillMaster {
 	public EntityLoggingMaster(World world) {
@@ -18,17 +18,15 @@ public class EntityLoggingMaster extends EntitySkillMaster {
 
 	@Nullable
 	@Override
-	protected ITextComponent getInteractMessage() {
-		return StringUtil.getLocale("message.dialogue.logging_master." + rand.nextInt(5));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityLoggingMaster;
 	}
 
 	@Override
-	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.LoggingBody)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.LoggingLegs)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.LoggingBoots)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.LoggingHelmet)));
-
-		return newList;
+	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.loggingBody)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.loggingLegs)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.loggingBoots)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), new ItemStack(ArmourRegister.loggingHelmet)));
 	}
 }

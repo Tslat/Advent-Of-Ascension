@@ -3,33 +3,25 @@ package net.tslat.aoa3.entity.mobs.nether;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityWitherBall;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityWitherWizard extends AoARangedMob implements SpecialPropertyEntity {
+public class EntityWitherWizard extends AoARangedMob {
     public static final float entityWidth = 0.6f;
 
     public EntityWitherWizard(World world) {
         super(world, entityWidth, 2.5f);
-
-        this.isImmuneToFire = true;
-        this.mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
     }
 
     @Override
@@ -44,12 +36,12 @@ public class EntityWitherWizard extends AoARangedMob implements SpecialPropertyE
 
     @Override
     protected double getBaseMaxHealth() {
-        return 40;
+        return 60;
     }
 
     @Override
     public double getBaseProjectileDamage() {
-        return 6;
+        return 6.5d;
     }
 
     @Override
@@ -75,30 +67,16 @@ public class EntityWitherWizard extends AoARangedMob implements SpecialPropertyE
         return SoundsRegister.mobWitherWizardHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(15 - lootingMod) == 0)
-            dropItem(WeaponRegister.staffEmber, 1);
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerNether), 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-        dropItem(ItemRegister.runeWither, 2 + rand.nextInt(3 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityWitherWizard;
     }
 
     @Override
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
         if (target instanceof EntityLivingBase)
             ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 20, 60, true, true));
-    }
-
-    @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
-        return source.isFireDamage();
     }
 
     @Nullable
@@ -112,9 +90,8 @@ public class EntityWitherWizard extends AoARangedMob implements SpecialPropertyE
         return new EntityWitherBall(this, Enums.MobProjectileType.ENERGY);
     }
 
-    @Nonnull
     @Override
-    public TreeSet<Enums.MobProperties> getMobProperties() {
-        return mobProperties;
+    protected float getSpawnChanceFactor() {
+        return 0.5f;
     }
 }

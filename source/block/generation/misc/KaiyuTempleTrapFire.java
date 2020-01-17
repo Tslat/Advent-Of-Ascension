@@ -13,11 +13,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.UnbreakableBlock;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.ModUtil;
 
 import javax.annotation.Nullable;
 
 public class KaiyuTempleTrapFire extends UnbreakableBlock {
+	private final AxisAlignedBB COLLIDABLE_BLOCK_AABB = new AxisAlignedBB(0.05, 0.05, 0.05, 0.95, 0.95, 0.95);
+
 	public KaiyuTempleTrapFire() {
 		super("KaiyuTempleTrapSquares", "kaiyu_temple_trap_squares", Material.ROCK);
 	}
@@ -25,13 +26,12 @@ public class KaiyuTempleTrapFire extends UnbreakableBlock {
 	@Nullable
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return ModUtil.COLLIDABLE_BLOCK_AABB;
+		return COLLIDABLE_BLOCK_AABB;
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
-			entity.world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundsRegister.templeTrapLaugh, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 70, 3, true, false));
 			entity.setFire(5);
 		}

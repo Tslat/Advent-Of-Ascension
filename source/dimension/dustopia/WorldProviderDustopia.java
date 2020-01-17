@@ -69,7 +69,7 @@ public class WorldProviderDustopia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable

@@ -1,21 +1,17 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +31,7 @@ public class EntityYeti extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.2d;
 	}
 
 	@Override
@@ -69,6 +65,12 @@ public class EntityYeti extends AoAMeleeMob {
 		return SoundsRegister.mobYetiHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityYeti;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -87,26 +89,6 @@ public class EntityYeti extends AoAMeleeMob {
 			target.addVelocity(motionX * 5.5 * resist, 0.5 * resist, motionZ * 5.5 * resist);
 			target.velocityChanged = true;
 		}
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(25 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterBlastChiller, 1);
-
-		if (rand.nextInt(10) == 0 && source.getTrueSource() instanceof EntityPlayer && ((EntityPlayer)source.getTrueSource()).getHeldItemMainhand().getItem() == Items.SHEARS)
-			dropItem(ItemRegister.yetiFingernails, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(6) == 0)
-			dropItem(ItemRegister.iceCrystal, 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

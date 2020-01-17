@@ -11,25 +11,33 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGrenade;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Baronator extends BaseGun implements AdventWeapon {
-	public Baronator(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("Baronator");
+	public Baronator(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("Baronator");
 		setRegistryName("aoa3:baronator");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunRevolver;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
 		BaseBullet bullet = super.findAndConsumeAmmo(player, gun, hand);
 
-		if (bullet != null && !player.world.isRemote && itemRand.nextInt(3) == 0)
+		if (bullet != null && !player.world.isRemote && itemRand.nextInt(5) == 0)
 			player.world.spawnEntity(new EntityGrenade(player, gun, hand, 120, 0));
 
 		return bullet;

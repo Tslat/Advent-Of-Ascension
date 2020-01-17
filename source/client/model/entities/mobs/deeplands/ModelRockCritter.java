@@ -6,18 +6,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRockCritter extends ModelBase {
-	ModelRenderer Leg6;
-	ModelRenderer Leg4;
-	ModelRenderer Leg2;
-	ModelRenderer Leg5;
-	ModelRenderer Leg3;
-	ModelRenderer Leg1;
-	ModelRenderer Leg8;
-	ModelRenderer Leg7;
-	ModelRenderer RearEnd;
-	ModelRenderer RearEnd2;
-	ModelRenderer RearEnd3;
-	ModelRenderer RearEnd4;
+	private ModelRenderer Leg6;
+	private ModelRenderer Leg4;
+	private ModelRenderer Leg2;
+	private ModelRenderer Leg5;
+	private ModelRenderer Leg3;
+	private ModelRenderer Leg1;
+	private ModelRenderer Leg8;
+	private ModelRenderer Leg7;
+	private ModelRenderer RearEnd;
+	private ModelRenderer RearEnd2;
+	private ModelRenderer RearEnd3;
+	private ModelRenderer RearEnd4;
 
 	public ModelRockCritter() {
 		textureWidth = 128;

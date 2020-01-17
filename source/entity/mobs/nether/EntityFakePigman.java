@@ -90,4 +90,9 @@ public class EntityFakePigman extends AoAMeleeMob {
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
     }
+
+    @Override
+    protected float getSpawnChanceFactor() {
+        return 0.5f;
+    }
 }

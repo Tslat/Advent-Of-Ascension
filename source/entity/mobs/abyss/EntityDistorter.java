@@ -1,26 +1,43 @@
 package net.tslat.aoa3.entity.mobs.abyss;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityDistorter extends AoAMeleeMob {
+public class EntityDistorter extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
+
+	private int effectTick = 60;
 
 	public EntityDistorter(World world) {
 		super(world, entityWidth, 2.125f);
+
+		mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
+		mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
+	}
+
+	@Override
+	protected void initEntityAI() {
+		tasks.addTask(1, new EntityAISwimming(this));
+		tasks.addTask(2, new EntityAIWatchClosest(this, EntityPlayer.class, 15.0f));
+		tasks.addTask(2, new EntityAILookIdle(this));
 	}
 
 	@Override
@@ -30,22 +47,22 @@ public class EntityDistorter extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.1;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 95;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0;
 	}
 
 	@Nullable
@@ -64,33 +81,38 @@ public class EntityDistorter extends AoAMeleeMob {
 		return SoundsRegister.mobDistorterHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensAbyss, 1 + rand.nextInt(1 + lootingMod));
-
-		if (rand.nextInt(40 - lootingMod) == 0)
-			dropItem(WeaponRegister.cannonSuperCannon, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityDistorter;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(10 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isBlasterDamage(source) || EntityUtil.isMagicDamage(source, this, damage);
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(11), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			if (!pl.isSneaking())
-				pl.addVelocity(Math.signum(posX - pl.posX) * 0.029, 0, Math.signum(posZ - pl.posZ) * 0.029);
+		effectTick--;
+
+		if (ticksExisted % 5 == 0) {
+			Potion currentEffect = effectTick <= 30 ? MobEffects.SLOWNESS : MobEffects.SPEED;
+
+			for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(2), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canEntityBeSeen(pl))) {
+				pl.addPotionEffect(new PotionEffect(currentEffect, 5, 5, true, false));
+			}
 		}
+
+		if (effectTick <= 0)
+			effectTick = 60;
 	}
 
+	@Nonnull
 	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 2, true, false));
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

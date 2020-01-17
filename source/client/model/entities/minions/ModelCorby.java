@@ -6,17 +6,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelCorby extends ModelBase {
-	ModelRenderer head2;
-	ModelRenderer body1;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer head1;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer body2;
-	ModelRenderer body3;
+	private ModelRenderer head2;
+	private ModelRenderer body1;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer head1;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
 
 	public ModelCorby() {
 		textureWidth = 128;

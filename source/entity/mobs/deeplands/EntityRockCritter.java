@@ -11,21 +11,21 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.mobs.mysterium.EntityMushroomSpider;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
 public class EntityRockCritter extends AoAMeleeMob {
     public static final float entityWidth = 0.875f;
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityMushroomSpider.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityRockCritter.class, DataSerializers.BYTE);
 
     public EntityRockCritter(World world) {
         super(world, entityWidth, 1.21875f);
@@ -49,17 +49,17 @@ public class EntityRockCritter extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.1d;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 45;
+        return 75;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 7d;
     }
 
     @Override
@@ -90,6 +90,12 @@ public class EntityRockCritter extends AoAMeleeMob {
         return SoundEvents.ENTITY_SPIDER_STEP;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityRockCritter;
+    }
+
     @Override
     public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
@@ -98,19 +104,6 @@ public class EntityRockCritter extends AoAMeleeMob {
     @Override
     public boolean getCanSpawnHere() {
         return posY < 120 && super.getCanSpawnHere();
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
-            if (rand.nextInt(40 - lootingMod) == 0)
-                dropItem(ItemRegister.realmstoneAncientCavern, 1);
-        }
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
     }
 
     @Override

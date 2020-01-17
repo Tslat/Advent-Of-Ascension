@@ -8,19 +8,19 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelConstructOfFlight extends ModelBase {
-	ModelRenderer WingL1;
-	ModelRenderer r1;
-	ModelRenderer WingL2;
-	ModelRenderer WingL3;
-	ModelRenderer WingR1;
-	ModelRenderer WingR2;
-	ModelRenderer WingR3;
-	ModelRenderer Shape1;
-	ModelRenderer r2;
-	ModelRenderer r3;
-	ModelRenderer r4;
-	ModelRenderer r5;
-	ModelRenderer r6;
+	private ModelRenderer WingL1;
+	private ModelRenderer r1;
+	private ModelRenderer WingL2;
+	private ModelRenderer WingL3;
+	private ModelRenderer WingR1;
+	private ModelRenderer WingR2;
+	private ModelRenderer WingR3;
+	private ModelRenderer shape1;
+	private ModelRenderer r2;
+	private ModelRenderer r3;
+	private ModelRenderer r4;
+	private ModelRenderer r5;
+	private ModelRenderer r6;
 
 	public ModelConstructOfFlight() {
 		textureWidth = 64;
@@ -60,11 +60,11 @@ public class ModelConstructOfFlight extends ModelBase {
 		WingR3.setTextureSize(64, 64);
 		WingR3.mirror = true;
 		setRotation(WingR3, 0.0f, 0.0f, 0.0f);
-		(Shape1 = new ModelRenderer(this, 0, 0)).addBox(-5.0f, 0.0f, 0.0f, 10, 10, 10);
-		Shape1.setRotationPoint(0.0f, 11.0f, -6.0f);
-		Shape1.setTextureSize(64, 64);
-		Shape1.mirror = true;
-		setRotation(Shape1, 0.0f, 0.0f, 0.0f);
+		(shape1 = new ModelRenderer(this, 0, 0)).addBox(-5.0f, 0.0f, 0.0f, 10, 10, 10);
+		shape1.setRotationPoint(0.0f, 11.0f, -6.0f);
+		shape1.setTextureSize(64, 64);
+		shape1.mirror = true;
+		setRotation(shape1, 0.0f, 0.0f, 0.0f);
 		(r2 = new ModelRenderer(this, 43, 6)).addBox(2.0f, -6.0f, 6.0f, 3, 2, 2);
 		r2.setRotationPoint(0.0f, 11.0f, -1.0f);
 		r2.setTextureSize(64, 64);
@@ -104,7 +104,7 @@ public class ModelConstructOfFlight extends ModelBase {
 		WingR1.render(par7);
 		WingR2.render(par7);
 		WingR3.render(par7);
-		Shape1.render(par7);
+		shape1.render(par7);
 		r2.render(par7);
 		r3.render(par7);
 		r4.render(par7);

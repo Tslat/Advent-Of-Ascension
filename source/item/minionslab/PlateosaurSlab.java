@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityPlateosaur;
 
 public class PlateosaurSlab extends BaseSlab {
 	public PlateosaurSlab() {
-		super("PlateosaurSlab", "plateosaur_slab", 25, 140, 33, 250);
+		super("PlateosaurSlab", "plateosaur_slab", 33, 140, 33, 250);
 	}
 
 	@Override

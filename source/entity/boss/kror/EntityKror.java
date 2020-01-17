@@ -1,25 +1,18 @@
 package net.tslat.aoa3.entity.boss.kror;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.utils.EntityUtil;
@@ -31,9 +24,6 @@ import javax.annotation.Nullable;
 public class EntityKror extends AoAMeleeMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/kror.png");
 	public static final float entityWidth = 2.2f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityKror(World world) {
 		super(world, entityWidth, 4f);
@@ -87,26 +77,15 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
 	@Override
-	public boolean isNonBoss() {
-		return false;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityKror;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueKror), 1);
-
-		switch (rand.nextInt(3)) {
-			case 0:
-				dropItem(WeaponRegister.gunRockerRifle, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.cannonBoulderBomber, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.greatbladeSubterranean, 1);
-				break;
-		}
+	public boolean isNonBoss() {
+		return false;
 	}
 
 	@Override
@@ -121,6 +100,14 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 2, true, true));
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -169,30 +156,17 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicKror;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicKror, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

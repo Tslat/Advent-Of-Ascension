@@ -1,10 +1,10 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -24,17 +24,17 @@ public class EntityAriel extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.15;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 115;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 12;
 	}
 
 	@Override
@@ -60,12 +60,12 @@ public class EntityAriel extends AoAMeleeMob {
 		return SoundsRegister.mobArielHit;
 	}
 
+	@Nullable
 	@Override
-	public void fall(float distance, float damageMultiplier) {}
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityAriel;
+	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerRunic), 1);
-	}
+	public void fall(float distance, float damageMultiplier) {}
 }

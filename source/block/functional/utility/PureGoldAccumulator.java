@@ -9,16 +9,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class PureGoldAccumulator extends Block {
 	public PureGoldAccumulator() {
 		super(Material.ROCK);
-		setUnlocalizedName("PureGoldAccumulator");
+		setTranslationKey("PureGoldAccumulator");
 		setRegistryName("aoa3:pure_gold_accumulator");
 		setHardness(-1f);
 		setResistance(999999999f);
@@ -29,15 +29,15 @@ public class PureGoldAccumulator extends Block {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.pureGold) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand	).shrink(1);
 
-			cap.addTribute(Enums.Deities.PLUTON, 20);
+			plData.stats().addTribute(Enums.Deities.PLUTON, 20);
 
-			if (cap.getTribute(Enums.Deities.PLUTON) == 200)
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.immortallisProgression.pureGoldEnd", player.getDisplayNameString()));
+			if (plData.stats().getTribute(Enums.Deities.PLUTON) == 200)
+				plData.sendThrottledChatMessage("message.feedback.immortallisProgression.pureGoldEnd",  player.getDisplayNameString());
 		}
 
 		return true;

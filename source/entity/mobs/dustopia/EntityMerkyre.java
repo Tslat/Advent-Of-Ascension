@@ -1,23 +1,21 @@
 package net.tslat.aoa3.entity.mobs.dustopia;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityMerkyre extends AoAMeleeMob implements HunterEntity {
+public class EntityMerkyre extends AoAMeleeMob {
     public static final float entityWidth = 0.5625f;
 
     public EntityMerkyre(World world) {
@@ -31,22 +29,22 @@ public class EntityMerkyre extends AoAMeleeMob implements HunterEntity {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 75;
+        return 119;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 13;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.26d;
     }
 
     @Nullable
@@ -67,36 +65,30 @@ public class EntityMerkyre extends AoAMeleeMob implements HunterEntity {
         return SoundsRegister.mobMerkyreHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(5) == 0)
-            dropItem(ItemRegister.primordialSkull, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityMerkyre;
     }
 
     @Override
-    protected void doMeleeEffect(Entity target) {
-        if (target instanceof EntityLivingBase)
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 150, 30, true, true));
-    }
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (super.attackEntityFrom(source, amount) && !EntityUtil.isEnvironmentalDamage(source)) {
+            EntityAreaEffectCloud effectCloud = new EntityAreaEffectCloud(world, posX, posY, posZ);
 
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-    }
+            effectCloud.setDuration(30);
+            effectCloud.setRadius(1.5f);
+            effectCloud.setOwner(this);
+            effectCloud.setWaitTime(0);
+            effectCloud.setColor(Enums.RGBIntegers.BLACK);
+            effectCloud.addEffect(new PotionEffect(MobEffects.BLINDNESS, 60, 0, false, true));
+            effectCloud.setRadiusPerTick(-(effectCloud.getRadius() - 0.5f) / (float)effectCloud.getDuration());
 
-    @Override
-    public int getHunterReq() {
-        return 79;
-    }
+            world.spawnEntity(effectCloud);
 
-    @Override
-    public float getHunterXp() {
-        return 1500;
-    }
+            return true;
+        }
 
-    @Nonnull
-    @Override
-    public TreeSet<Enums.MobProperties> getMobProperties() {
-        return mobProperties;
+        return false;
     }
 }

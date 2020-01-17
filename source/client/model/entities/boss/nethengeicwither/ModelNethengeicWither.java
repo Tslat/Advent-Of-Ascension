@@ -6,25 +6,25 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelNethengeicWither extends ModelBase {
-	ModelRenderer body1;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer head1;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer body8;
-	ModelRenderer body9;
-	ModelRenderer head10;
-	ModelRenderer head;
-	ModelRenderer head2;
-	ModelRenderer body11;
-	ModelRenderer body12;
-	ModelRenderer body13;
-	ModelRenderer body14;
-	ModelRenderer head7;
-	ModelRenderer body15;
+	private ModelRenderer body1;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer head1;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
+	private ModelRenderer head10;
+	private ModelRenderer head;
+	private ModelRenderer head2;
+	private ModelRenderer body11;
+	private ModelRenderer body12;
+	private ModelRenderer body13;
+	private ModelRenderer body14;
+	private ModelRenderer head7;
+	private ModelRenderer body15;
 
 	public ModelNethengeicWither() {
 		textureWidth = 128;

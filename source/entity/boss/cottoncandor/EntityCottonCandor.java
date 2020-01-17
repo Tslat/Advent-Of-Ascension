@@ -1,15 +1,12 @@
 package net.tslat.aoa3.entity.boss.cottoncandor;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -21,11 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
@@ -37,6 +30,7 @@ import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,9 +41,6 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	public static final float entityWidth = 1.5f;
 	private static final DataParameter<Byte> STAGE = EntityDataManager.<Byte>createKey(EntityCottonCandor.class, DataSerializers.BYTE);
 	private int stageCountdown = 100;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityCottonCandor(World world) {
 		super(world, entityWidth, 2.375f);
@@ -119,13 +110,19 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 		return SoundsRegister.mobCottonCandorHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCottonCandor;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		if (source.getImmediateSource() instanceof IProjectile) {
 			IProjectile projectile = (IProjectile)source.getImmediateSource();
 
@@ -158,35 +155,6 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 		return true;
 	}
 
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueCottonCandor), 1);
-
-		if (rand.nextInt(6) == 0)
-			dropItem(WeaponRegister.greatbladeCottonCrusher, 1);
-
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(ArmourRegister.CandyHelmet, 1);
-				break;
-			case 1:
-				dropItem(ArmourRegister.CandyBody, 1);
-				break;
-			case 2:
-				dropItem(ArmourRegister.CandyLegs, 1);
-				break;
-			case 3:
-				dropItem(ArmourRegister.CandyBoots, 1);
-				break;
-		}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.cottonCandyAqua), 32 + rand.nextInt(16 + 4 * lootingMod));
-		dropItem(Item.getItemFromBlock(BlockRegister.cottonCandyPink), 32 + rand.nextInt(16 + 4 * lootingMod));
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
@@ -205,6 +173,14 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	}
 
 	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
+	}
+
+	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
@@ -220,12 +196,12 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 5, false);
+		WorldUtil.createExplosion(this, world, projectile, 5f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 5, false);
+		WorldUtil.createExplosion(this, world, projectile, 5f);
 	}
 
 	@Override
@@ -266,30 +242,17 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicCottonCandor;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicCottonCandor, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

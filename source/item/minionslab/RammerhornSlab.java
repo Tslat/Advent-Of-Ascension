@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityRammerhorn;
 
 public class RammerhornSlab extends BaseSlab {
 	public RammerhornSlab() {
-		super("RammerhornSlab", "rammerhorn_slab", 59, 140, 27, 200);
+		super("RammerhornSlab", "rammerhorn_slab", 27, 140, 27, 200);
 	}
 
 	@Override

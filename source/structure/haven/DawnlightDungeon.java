@@ -1,10 +1,13 @@
 package net.tslat.aoa3.structure.haven;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -15,6 +18,8 @@ public class DawnlightDungeon extends AoAStructure { //StructureSize: 20x15x10
 	private static final IBlockState crystalliteBricks = BlockRegister.bricksCrystallite.getDefaultState();
 	private static final IBlockState havenGlass = BlockRegister.glassHaven.getDefaultState();
 	private static final IBlockState dawnlightSpawner = BlockRegister.spawnerDawnlight.getDefaultState();
+	private static final IBlockState chestWest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST);
+	private static final IBlockState chestEast = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public DawnlightDungeon() {
 		super("DawnlightDungeon");
@@ -216,6 +221,7 @@ public class DawnlightDungeon extends AoAStructure { //StructureSize: 20x15x10
 		addBlock(world, basePos, 2, 1, 9, crystalliteBricks);
 		addBlock(world, basePos, 3, 1, 0, crystalliteBricks);
 		addBlock(world, basePos, 3, 1, 4, dawnlightSpawner);
+		addBlock(world, basePos, 3, 1, 5, chestEast);
 		addBlock(world, basePos, 3, 1, 9, crystalliteBricks);
 		addBlock(world, basePos, 4, 1, 0, crystalliteBricks);
 		addBlock(world, basePos, 4, 1, 9, crystalliteBricks);
@@ -254,6 +260,7 @@ public class DawnlightDungeon extends AoAStructure { //StructureSize: 20x15x10
 		addBlock(world, basePos, 15, 1, 0, crystalliteBricks);
 		addBlock(world, basePos, 15, 1, 9, crystalliteBricks);
 		addBlock(world, basePos, 16, 1, 0, crystalliteBricks);
+		addBlock(world, basePos, 16, 1, 4, chestWest);
 		addBlock(world, basePos, 16, 1, 5, dawnlightSpawner);
 		addBlock(world, basePos, 16, 1, 9, crystalliteBricks);
 		addBlock(world, basePos, 17, 1, 0, crystalliteBricks);
@@ -828,5 +835,10 @@ public class DawnlightDungeon extends AoAStructure { //StructureSize: 20x15x10
 		addBlock(world, basePos, 9, 14, 5, whitewashBricks);
 		addBlock(world, basePos, 10, 14, 4, whitewashBricks);
 		addBlock(world, basePos, 10, 14, 5, whitewashBricks);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureDawnlightDungeon, basePos.add(3, 1, 5), basePos.add(16, 1, 4));
 	}
 }

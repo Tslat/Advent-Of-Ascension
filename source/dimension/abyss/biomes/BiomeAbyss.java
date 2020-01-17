@@ -32,8 +32,8 @@ public class BiomeAbyss extends Biome {
 	public BiomeAbyss() {
 		super(properties);
 		setRegistryName("aoa3", "abyss");
-		this.topBlock = BlockRegister.grassAbyss.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneAbyss.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("abyss_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("abyss_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -77,10 +77,18 @@ public class BiomeAbyss extends Biome {
 				posY = world.getHeight(posX, posZ);
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
-					if (rand.nextBoolean()) {
-						StructuresHandler.generateStructure("BloodPine", world, rand, pos.setPos(posX, posY, posZ));
-					} else {
-						StructuresHandler.generateStructure("EyeShrub", world, rand, pos.setPos(posX, posY, posZ));
+					switch (rand.nextInt(5)) {
+						case 0:
+						case 1:
+							StructuresHandler.generateStructure("BloodPine", world, rand, pos.setPos(posX, posY, posZ));
+							break;
+						case 2:
+						case 3:
+							StructuresHandler.generateStructure("EyeShrub", world, rand, pos.setPos(posX, posY, posZ));
+							break;
+						case 4:
+							StructuresHandler.generateStructure("BloodSpikes", world, rand, pos.setPos(posX, posY, posZ));
+							break;
 					}
 				}
 			}

@@ -4,11 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.PredicateUtil;
 
@@ -29,12 +29,12 @@ public class EntityAxiolight extends AoAMeleeMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 80;
+        return 167;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 7;
+        return 15.5;
     }
 
     @Override
@@ -65,12 +65,10 @@ public class EntityAxiolight extends AoAMeleeMob {
         return SoundsRegister.mobAxiolightHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensShyrelands, 1 + rand.nextInt(4 + lootingMod));
-
-        if (rand.nextInt(80 - lootingMod) == 0)
-            dropItem(WeaponRegister.staffLightshine, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityAxiolight;
     }
 
     @Override
@@ -78,11 +76,6 @@ public class EntityAxiolight extends AoAMeleeMob {
         super.onLivingUpdate();
 
         List<EntityPlayer> playerList = world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(12), PredicateUtil.IS_VULNERABLE_PLAYER);
-
-        for (EntityPlayer pl : playerList) {
-            if (!pl.isSneaking())
-                pl.addVelocity(Math.signum(pl.posX - posX) * 0.029, 0, Math.signum(pl.posZ - posZ) * 0.029);
-        }
 
         if (playerList.isEmpty())
             addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, -1, 1, true, true));

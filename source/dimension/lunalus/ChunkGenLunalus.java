@@ -8,7 +8,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -23,7 +23,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeLunalus;
+	private final Biome biome = BiomeRegister.biomeLunalus;
 
 	private int x;
 	private int y;

@@ -1,9 +1,11 @@
 package net.tslat.aoa3.entity.npcs.ambient;
 
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAAmbientNPC;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -31,7 +33,18 @@ public class EntityGorbCitizen extends AoAAmbientNPC {
 
 	@Nullable
 	@Override
-	protected ITextComponent getInteractMessage() {
-		return StringUtil.getLocale("message.dialogue.gorb_citizen." + rand.nextInt(5));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGorbCitizen;
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.mysterium;
+	}
+
+	@Nullable
+	@Override
+	protected String getInteractMessage(ItemStack heldItem) {
+		return "message.dialogue.gorb_citizen." + rand.nextInt(5);
 	}
 }

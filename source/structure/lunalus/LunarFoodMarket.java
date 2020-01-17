@@ -1,11 +1,14 @@
 package net.tslat.aoa3.structure.lunalus;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityZalGrocer;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.entity.npcs.trader.EntityZalGrocer;
 import net.tslat.aoa3.entity.npcs.ambient.EntityZalCitizen;
 import net.tslat.aoa3.structure.AoAStructure;
 
@@ -19,6 +22,7 @@ public class LunarFoodMarket extends AoAStructure { //StructureSize: 13x8x9
 	private static final IBlockState lunarCarpet = BlockRegister.carpetLunar.getDefaultState();
 	private static final IBlockState lunarLamp = BlockRegister.lampLunar.getDefaultState().withProperty(FIXED_LAMP, true);
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public LunarFoodMarket() {
 		super("LunarFoodMarket");
@@ -156,8 +160,8 @@ public class LunarFoodMarket extends AoAStructure { //StructureSize: 13x8x9
 		addBlock(world, basePos, 1, 1, 1, lunarCarpet);
 		addBlock(world, basePos, 1, 1, 2, lunarCarpet);
 		addBlock(world, basePos, 1, 1, 3, lunarCarpet);
-		addBlock(world, basePos, 1, 1, 4, lunarCarpet);
-		addBlock(world, basePos, 1, 1, 5, lunarCarpet);
+		addBlock(world, basePos, 1, 1, 4, chest);
+		addBlock(world, basePos, 1, 1, 5, chest);
 		addBlock(world, basePos, 1, 1, 6, lunarCarpet);
 		addBlock(world, basePos, 1, 1, 7, lunarCarpet);
 		addBlock(world, basePos, 1, 1, 8, lunarBricks);
@@ -492,7 +496,7 @@ public class LunarFoodMarket extends AoAStructure { //StructureSize: 13x8x9
 		EntityZalCitizen zalCitizen2 = new EntityZalCitizen(world);
 		EntityZalCitizen zalCitizen3 = new EntityZalCitizen(world);
 
-		grocer.setLocationAndAngles(basePos.getX() + 2, basePos.getY() + 2, basePos.getZ() + 4, rand.nextFloat() * 360, 0);
+		grocer.setLocationAndAngles(basePos.getX() + 4, basePos.getY() + 2, basePos.getZ() + 4, rand.nextFloat() * 360, 0);
 		zalCitizen.setLocationAndAngles(basePos.getX() + 5, basePos.getY() + 2, basePos.getZ() + 2, rand.nextFloat() * 360, 0);
 		zalCitizen2.setLocationAndAngles(basePos.getX() + 8, basePos.getY() + 2, basePos.getZ() + 2, rand.nextFloat() * 360, 0);
 		zalCitizen3.setLocationAndAngles(basePos.getX() + 12, basePos.getY() + 2, basePos.getZ() + 3, rand.nextFloat() * 360, 0);
@@ -500,5 +504,10 @@ public class LunarFoodMarket extends AoAStructure { //StructureSize: 13x8x9
 		world.spawnEntity(zalCitizen);
 		world.spawnEntity(zalCitizen2);
 		world.spawnEntity(zalCitizen3);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureLunarFoodMarket, basePos.add(1, 1, 4), basePos.add(1, 1, 5));
 	}
 }

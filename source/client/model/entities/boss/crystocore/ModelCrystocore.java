@@ -7,52 +7,52 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelCrystocore extends ModelBase {
-	ModelRenderer Shape1;
-	ModelRenderer Center;
-	ModelRenderer Shape2;
-	ModelRenderer Shape3;
-	ModelRenderer Shape4;
-	ModelRenderer Shape5;
-	ModelRenderer Shape6;
+	private ModelRenderer shape1;
+	private ModelRenderer Center;
+	private ModelRenderer shape2;
+	private ModelRenderer shape3;
+	private ModelRenderer shape4;
+	private ModelRenderer shape5;
+	private ModelRenderer shape6;
 
 	public ModelCrystocore() {
 		textureWidth = 128;
 		textureHeight = 128;
-		(Shape1 = new ModelRenderer(this, 42, 88)).addBox(-20.0f, 14.0f, -5.0f, 10, 14, 10);
-		Shape1.setRotationPoint(0.0f, -4.0f, 0.0f);
-		Shape1.setTextureSize(128, 128);
-		Shape1.mirror = true;
-		setRotation(Shape1, 0.0f, 0.0f, 0.0f);
+		(shape1 = new ModelRenderer(this, 42, 88)).addBox(-20.0f, 14.0f, -5.0f, 10, 14, 10);
+		shape1.setRotationPoint(0.0f, -4.0f, 0.0f);
+		shape1.setTextureSize(128, 128);
+		shape1.mirror = true;
+		setRotation(shape1, 0.0f, 0.0f, 0.0f);
 		(Center = new ModelRenderer(this, 0, 0)).addBox(-10.0f, -10.0f, -10.0f, 20, 20, 20);
 		Center.setRotationPoint(0.0f, -5.0f, 0.0f);
 		Center.setTextureSize(128, 128);
 		Center.mirror = true;
 		setRotation(Center, 0.0f, 0.0f, 0.0f);
-		(Shape2 = new ModelRenderer(this, 0, 42)).addBox(-10.0f, 15.0f, -4.0f, 20, 8, 8);
-		Shape2.setRotationPoint(0.0f, -4.0f, 0.0f);
-		Shape2.setTextureSize(128, 128);
-		Shape2.mirror = true;
-		setRotation(Shape2, 0.0f, 0.0f, 0.0f);
-		(Shape3 = new ModelRenderer(this, 0, 88)).addBox(10.0f, 14.0f, -5.0f, 10, 10, 10);
-		Shape3.setRotationPoint(0.0f, -4.0f, 0.0f);
-		Shape3.setTextureSize(128, 128);
-		Shape3.mirror = true;
-		setRotation(Shape3, 0.0f, 0.0f, 0.0f);
-		(Shape4 = new ModelRenderer(this, 42, 61)).addBox(10.0f, -29.0f, -5.0f, 10, 14, 10);
-		Shape4.setRotationPoint(0.0f, -5.0f, 0.0f);
-		Shape4.setTextureSize(128, 128);
-		Shape4.mirror = true;
-		setRotation(Shape4, 0.0f, 0.0f, 0.0f);
-		(Shape5 = new ModelRenderer(this, 0, 42)).addBox(-10.0f, -24.0f, -4.0f, 20, 8, 8);
-		Shape5.setRotationPoint(0.0f, -5.0f, 0.0f);
-		Shape5.setTextureSize(128, 128);
-		Shape5.mirror = true;
-		setRotation(Shape5, 0.0f, 0.0f, 0.0f);
-		(Shape6 = new ModelRenderer(this, 0, 61)).addBox(-20.0f, -25.0f, -5.0f, 10, 10, 10);
-		Shape6.setRotationPoint(0.0f, -5.0f, 0.0f);
-		Shape6.setTextureSize(128, 128);
-		Shape6.mirror = true;
-		setRotation(Shape6, 0.0f, 0.0f, 0.0f);
+		(shape2 = new ModelRenderer(this, 0, 42)).addBox(-10.0f, 15.0f, -4.0f, 20, 8, 8);
+		shape2.setRotationPoint(0.0f, -4.0f, 0.0f);
+		shape2.setTextureSize(128, 128);
+		shape2.mirror = true;
+		setRotation(shape2, 0.0f, 0.0f, 0.0f);
+		(shape3 = new ModelRenderer(this, 0, 88)).addBox(10.0f, 14.0f, -5.0f, 10, 10, 10);
+		shape3.setRotationPoint(0.0f, -4.0f, 0.0f);
+		shape3.setTextureSize(128, 128);
+		shape3.mirror = true;
+		setRotation(shape3, 0.0f, 0.0f, 0.0f);
+		(shape4 = new ModelRenderer(this, 42, 61)).addBox(10.0f, -29.0f, -5.0f, 10, 14, 10);
+		shape4.setRotationPoint(0.0f, -5.0f, 0.0f);
+		shape4.setTextureSize(128, 128);
+		shape4.mirror = true;
+		setRotation(shape4, 0.0f, 0.0f, 0.0f);
+		(shape5 = new ModelRenderer(this, 0, 42)).addBox(-10.0f, -24.0f, -4.0f, 20, 8, 8);
+		shape5.setRotationPoint(0.0f, -5.0f, 0.0f);
+		shape5.setTextureSize(128, 128);
+		shape5.mirror = true;
+		setRotation(shape5, 0.0f, 0.0f, 0.0f);
+		(shape6 = new ModelRenderer(this, 0, 61)).addBox(-20.0f, -25.0f, -5.0f, 10, 10, 10);
+		shape6.setRotationPoint(0.0f, -5.0f, 0.0f);
+		shape6.setTextureSize(128, 128);
+		shape6.mirror = true;
+		setRotation(shape6, 0.0f, 0.0f, 0.0f);
 	}
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
@@ -60,13 +60,13 @@ public class ModelCrystocore extends ModelBase {
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(770, 771);
-		Shape1.render(par7);
+		shape1.render(par7);
 		Center.render(par7);
-		Shape2.render(par7);
-		Shape3.render(par7);
-		Shape4.render(par7);
-		Shape5.render(par7);
-		Shape6.render(par7);
+		shape2.render(par7);
+		shape3.render(par7);
+		shape4.render(par7);
+		shape5.render(par7);
+		shape6.render(par7);
 		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 	}
@@ -79,17 +79,17 @@ public class ModelCrystocore extends ModelBase {
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
 		Center.rotateAngleY = par4 / (float)(180f / Math.PI);
-		Shape1.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape2.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape3.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape4.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape5.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape6.rotateAngleZ = par3 * 0.067f * 1.25f;
-		Shape1.rotateAngleY = par3 * 0.067f * 1.25f;
-		Shape2.rotateAngleY = par3 * 0.067f * 1.25f;
-		Shape3.rotateAngleY = par3 * 0.067f * 1.25f;
-		Shape4.rotateAngleY = par3 * 0.067f * 1.25f;
-		Shape5.rotateAngleY = par3 * 0.067f * 1.25f;
-		Shape6.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape1.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape2.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape3.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape4.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape5.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape6.rotateAngleZ = par3 * 0.067f * 1.25f;
+		shape1.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape2.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape3.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape4.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape5.rotateAngleY = par3 * 0.067f * 1.25f;
+		shape6.rotateAngleY = par3 * 0.067f * 1.25f;
 	}
 }

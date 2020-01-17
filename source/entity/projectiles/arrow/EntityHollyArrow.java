@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
-import net.tslat.aoa3.item.weapon.archergun.BaseArchergun;
+import net.tslat.aoa3.entity.projectiles.gun.EntityHollyArrowShot;
 import net.tslat.aoa3.item.weapon.bow.BaseBow;
 
 import javax.annotation.Nullable;
@@ -37,12 +37,13 @@ import java.util.List;
 
 public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 	private static final Predicate<Entity> ARROW_TARGETS = Predicates.and(EntitySelectors.NOT_SPECTATING, EntitySelectors.IS_ALIVE, Entity::canBeCollidedWith);
-	private static final DataParameter<Byte> CRITICAL = EntityDataManager.<Byte>createKey(EntityArrow.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> CRITICAL = EntityDataManager.<Byte>createKey(EntityHollyArrow.class, DataSerializers.BYTE);
 	private int xTile = -1;
 	private int yTile = -1;
 	private int zTile = -1;
 	private Block inTile;
 	private int inData;
+	private boolean hasHitGround;
 	public boolean inGround;
 	public int timeInGround;
 	public EntityArrow.PickupStatus pickupStatus = PickupStatus.DISALLOWED;
@@ -53,7 +54,6 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 	private double baseDamage = 10;
 	private int knockbackStrength;
 	private BaseBow bow;
-	private BaseArchergun archergun;
 
 	public EntityHollyArrow(World world) {
 		super(world);
@@ -64,15 +64,24 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 		setPosition(x, y, z);
 	}
 
-	public EntityHollyArrow(World world, BaseArchergun gun, EntityLivingBase shooter, double damage) {
-		this(world, (BaseBow)null, shooter, damage);
+	public EntityHollyArrow(World world, EntityHollyArrowShot archergunShot) {
+		super(world);
+		this.shooter = archergunShot.getThrower();
+		this.shootingEntity = this.shooter;
+		this.bow = null;
+		this.baseDamage = 0;
+		this.knockbackStrength = 0;
+		setSize(0.5f, 0.5f);
+		setPositionAndRotation(archergunShot.posX, archergunShot.posY, archergunShot.posZ, archergunShot.rotationYaw, archergunShot.rotationPitch);
 
-		archergun = gun;
+		if (shooter instanceof EntityPlayer)
+			pickupStatus = PickupStatus.ALLOWED;
 	}
 
 	public EntityHollyArrow(World world, BaseBow bow, EntityLivingBase shooter, double damage) {
 		super(world);
 		this.shooter = shooter;
+		this.shootingEntity = shooter;
 		this.bow = bow;
 		this.baseDamage = damage;
 		setSize(0.5f, 0.5f);
@@ -151,7 +160,7 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 		super.onEntityUpdate();
 
-		if (bow != null)
+		if (bow != null && !hasHitGround)
 			bow.doArrowTick(this, shooter);
 
 		if (prevRotationPitch == 0.0F && prevRotationYaw == 0.0F) {
@@ -169,8 +178,10 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 		if (iblockstate.getMaterial() != Material.AIR) {
 			AxisAlignedBB axisalignedbb = iblockstate.getCollisionBoundingBox(world, blockpos);
 
-			if (axisalignedbb != Block.NULL_AABB && axisalignedbb.offset(blockpos).contains(new Vec3d(posX, posY, posZ)))
+			if (axisalignedbb != Block.NULL_AABB && axisalignedbb.offset(blockpos).contains(new Vec3d(posX, posY, posZ))) {
 				inGround = true;
+				hasHitGround = true;
+			}
 		}
 
 		if (arrowShake > 0)
@@ -283,24 +294,27 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 				return;
 
 			float vectoredVelocity = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ);
-			int damage = MathHelper.ceil((baseDamage / 1.5) / (3 / (double)vectoredVelocity));
+			float damage = (float)(baseDamage / 1.5f) / (3f / vectoredVelocity);
 
 			if (getIsCritical())
-				damage += rand.nextInt(damage / 2 + 2);
+				damage += damage / 4f + rand.nextFloat() * (damage / 1.5f);
 
-			DamageSource damagesource;
+			DamageSource damageSource;
 
 			if (shooter == null) {
-				damagesource = DamageSource.causeArrowDamage(this, this);
+				damageSource = DamageSource.causeArrowDamage(this, this);
 			}
 			else {
-				damagesource = DamageSource.causeArrowDamage(this, shooter);
+				damageSource = DamageSource.causeArrowDamage(this, shooter);
 			}
 
-			if (isBurning() && !(target instanceof EntityEnderman))
-				target.setFire(5);
+			if (bow != null)
+				damage = bow.getArrowDamage(this, target, damage);
 
-			if (target.attackEntityFrom(damagesource, (float)damage)) {
+			if (target.attackEntityFrom(damageSource, damage)) {
+				if (isBurning() && !(target instanceof EntityEnderman))
+					target.setFire(5);
+
 				if (target instanceof EntityLivingBase)	{
 					EntityLivingBase entitylivingbase = (EntityLivingBase)target;
 
@@ -311,7 +325,7 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 						float motionVector = MathHelper.sqrt(motionX * motionX + motionZ * motionZ);
 
 						if (motionVector > 0.0F)
-							entitylivingbase.addVelocity(motionX * (double)knockbackStrength * 0.6000000238418579D / (double)motionVector, 0.1D, motionZ * (double)knockbackStrength * 0.6000000238418579D / (double)motionVector);
+							entitylivingbase.addVelocity(motionX * (double)knockbackStrength / 2d * 0.6000000238418579D / (double)motionVector, 0.1D, motionZ * (double)knockbackStrength / 2d * 0.6000000238418579D / (double)motionVector);
 					}
 
 					if (shooter instanceof EntityLivingBase) {
@@ -327,8 +341,8 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 				playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 
-				if (bow != null)
-					bow.doImpactEffect(this, target, shooter);
+				if (bow != null && !hasHitGround)
+					bow.doImpactEffect(this, target, shooter, damage);
 
 				if (!(target instanceof EntityEnderman))
 					setDead();
@@ -366,13 +380,14 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 			posZ -= motionZ / (double)f2 * 0.05000000074505806D;
 			playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 			inGround = true;
+			hasHitGround = true;
 			arrowShake = 7;
 			setIsCritical(false);
 
 			if (iblockstate.getMaterial() != Material.AIR)
-				inTile.onEntityCollidedWithBlock(world, blockpos, iblockstate, this);
+				inTile.onEntityCollision(world, blockpos, iblockstate, this);
 
-			if (!world.isRemote && bow != null)
+			if (!world.isRemote && bow != null && !hasHitGround)
 				bow.doBlockImpact(this, iblockstate, shooter);
 		}
 	}
@@ -470,7 +485,7 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 	public void setEnchantmentEffectsFromEntity(EntityLivingBase shooter, float mod) {
 		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, shooter);
 		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, shooter);
-		setDamage((double)(mod * 2.0F) + rand.nextGaussian() * 0.25D + (double)((float)world.getDifficulty().getDifficultyId() * 0.11F));
+		setDamage((double)(mod * 2.0F) + rand.nextGaussian() * 0.25D + (double)((float)world.getDifficulty().getId() * 0.11F));
 
 		if (i > 0)
 			setDamage(getDamage() + (double)i * 0.5D + 0.5D);
@@ -487,11 +502,23 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 		this.knockbackStrength = knockback;
 	}
 
+	public int getKnockbackStrength() {
+		return this.knockbackStrength;
+	}
+
 	@Override
 	protected ItemStack getArrowStack() {
 		return new ItemStack(ItemRegister.hollyArrow);
 	}
 
+	public Entity getShooter() {
+		return shooter;
+	}
+
 	@Override
 	public void doImpactEffect() {}
+
+	public BaseBow getShootingBow() {
+		return bow;
+	}
 }

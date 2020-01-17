@@ -77,9 +77,8 @@ public class PlayerCrownHandler {
 		}
 	}
 
-	public static void addOrSetCrown(UUID uuid, Enums.PlayerCrownTypes crown) {
-		if (playerCrowns.containsKey(uuid))
-			playerCrowns.get(uuid).setPreferredCrown(crown);
+	public static void setCrownChoice(UUID uuid, Enums.PlayerCrownTypes crown) {
+		playerCrowns.put(uuid, playerCrowns.getOrDefault(uuid, new PlayerCrownContainer(crown)).setPreferredCrown(crown));
 	}
 
 	@Nullable
@@ -166,7 +165,7 @@ public class PlayerCrownHandler {
 		}
 
 		PlayerCrownContainer setPreferredCrown(Enums.PlayerCrownTypes crown) {
-			if (unlockedCrowns.contains(preferredCrown))
+			if (unlockedCrowns == null || unlockedCrowns.contains(preferredCrown))
 				this.preferredCrown = crown;
 
 			return this;

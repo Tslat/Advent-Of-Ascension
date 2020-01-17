@@ -1,21 +1,33 @@
 package net.tslat.aoa3.entity.mobs.iromine;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityMechamaton extends AoAMeleeMob {
+import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
+
+public class EntityMechamaton extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 1.125f;
 
     public EntityMechamaton(World world) {
         super(world, entityWidth, 2.125f);
+
+        mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -25,12 +37,12 @@ public class EntityMechamaton extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 1;
+        return 0.8;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 160;
+        return 120;
     }
 
     @Override
@@ -40,7 +52,12 @@ public class EntityMechamaton extends AoAMeleeMob {
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.329;
+        return 0.295;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 3.5d;
     }
 
     @Nullable
@@ -66,19 +83,34 @@ public class EntityMechamaton extends AoAMeleeMob {
         return SoundsRegister.mobGolemStep;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(50 - lootingMod) == 0)
-            dropItem(WeaponRegister.staffPower, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityMechamaton;
     }
 
     @Override
     protected void doMeleeEffect(Entity target) {
-        super.doMeleeEffect(target);
+        if (target instanceof EntityLivingBase) {
+            double resist = 1;
+            IAttributeInstance attrib = ((EntityLivingBase)target).getEntityAttribute(KNOCKBACK_RESISTANCE);
+
+            if (attrib != null)
+                resist -= attrib.getAttributeValue();
+
+            target.addVelocity(motionX * 5 * resist, motionY * 1.3 * resist, motionZ * 5 * resist);
+            target.velocityChanged = true;
+        }
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

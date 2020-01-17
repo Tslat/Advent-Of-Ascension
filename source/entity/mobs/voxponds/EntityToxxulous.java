@@ -1,24 +1,27 @@
 package net.tslat.aoa3.entity.mobs.voxponds;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityToxxulous extends AoAMeleeMob {
+public class EntityToxxulous extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.75f;
 
     public EntityToxxulous(World world) {
         super(world, entityWidth, 1.125f);
+
+        mobProperties.add(Enums.MobProperties.STATUS_IMMUNE);
     }
 
     @Override
@@ -28,22 +31,22 @@ public class EntityToxxulous extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.1;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 60;
+        return 95;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 12.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875f;
+        return 0.295;
     }
 
     @Nullable
@@ -64,26 +67,23 @@ public class EntityToxxulous extends AoAMeleeMob {
         return SoundsRegister.mobToxxulousHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(100 - lootingMod) == 0)
-            dropItem(WeaponRegister.blasterPoisonPlunger, 1);
-
-        if (rand.nextInt(10) == 0)
-            dropItem(ItemRegister.sludgeParasite, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityToxxulous;
     }
 
     @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    public boolean canBeHitWithPotion() {
+        return false;
     }
 
     @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    public void addPotionEffect(PotionEffect effect) {}
 
-        for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(7), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-            pl.addPotionEffect(new PotionEffect(MobEffects.POISON, 30, 2, true, false));
-        }
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

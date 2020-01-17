@@ -4,20 +4,28 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntitySwarmShot;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Swarmotron extends BaseBlaster {
-	public Swarmotron(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float energyCost) {
-		super(dmg, sound, durability, fireDelayTicks, energyCost);
-		setUnlocalizedName("Swarmotron");
+	public Swarmotron(double dmg, int durability, int fireDelayTicks, float energyCost) {
+		super(dmg, durability, fireDelayTicks, energyCost);
+		setTranslationKey("Swarmotron");
 		setRegistryName("aoa3:swarmotron");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunSwarmotron;
 	}
 
 	@Override
@@ -32,7 +40,7 @@ public class Swarmotron extends BaseBlaster {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.Swarmotron.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Swarmotron.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

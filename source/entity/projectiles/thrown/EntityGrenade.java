@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityGrenade extends BaseBullet implements HardProjectile {
 	private float explosionStrength = 1.5f;
@@ -38,11 +39,11 @@ public class EntityGrenade extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(thrower, posX, posY, posZ, explosionStrength, false);
+		WorldUtil.createExplosion(thrower, world, this, explosionStrength);
 	}
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		world.createExplosion(thrower, posX, posY, posZ, explosionStrength, false);
+		WorldUtil.createExplosion(thrower, world, this, explosionStrength);
 	}
 }

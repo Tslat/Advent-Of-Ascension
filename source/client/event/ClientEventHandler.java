@@ -10,12 +10,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -25,18 +27,17 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.gui.KeyBinder;
 import net.tslat.aoa3.client.gui.render.HelmetScreenRenderer;
 import net.tslat.aoa3.client.gui.render.ScreenOverlayRenderer;
 import net.tslat.aoa3.client.gui.render.SniperGuiRenderer;
 import net.tslat.aoa3.client.model.entities.player.LayerPlayerCrown;
+import net.tslat.aoa3.client.sound.MusicSound;
 import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
 import net.tslat.aoa3.common.packet.PacketChangedCrown;
 import net.tslat.aoa3.common.packet.PacketGreatbladeHit;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
-import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -114,21 +115,20 @@ public class ClientEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	public void onGreatbladeMouse(MouseEvent ev) {
-		if (ev.getButton() != 0 || !ev.isButtonstate())
-			return;
+		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode()) {
+			Minecraft mc = Minecraft.getMinecraft();
+			EntityPlayer player = mc.player;
 
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.player;
+			if (player != null) {
+				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+				ItemStack offHandStack = player.getActiveItemStack();
 
-		if (player != null) {
-			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-			ItemStack offHandStack = player.getActiveItemStack();
+				if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
+					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
 
-			if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
-				RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
-
-				if (ray != null)
-					PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
+					if (ray != null)
+						PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
+				}
 			}
 		}
 	}
@@ -141,11 +141,13 @@ public class ClientEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
-		if (KeyBinder.keyAdventGui.getKeyCode() == 0) {
-			ev.player.sendMessage(StringUtil.getColourLocale("message.login.welcome.alt", TextFormatting.GRAY));
-		}
-		else {
-			ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(KeyBinder.keyAdventGui.getKeyCode())));
+		if (ConfigurationUtil.MainConfig.showWelcomeMessage) {
+			if (KeyBinder.keyAdventGui.getKeyCode() == 0) {
+				ev.player.sendMessage(StringUtil.getColourLocale("message.login.welcome.alt", TextFormatting.GRAY));
+			}
+			else {
+				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(KeyBinder.keyAdventGui.getKeyCode())));
+			}
 		}
 
 		PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
@@ -174,7 +176,7 @@ public class ClientEventHandler {
 				Entity collided = collisionList.get(i);
 
 				AxisAlignedBB axis = collided.getEntityBoundingBox().grow(collided.getCollisionBorderSize());
-				Vec3d extendedEyesVec = eyesVec.addVector(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance);
+				Vec3d extendedEyesVec = eyesVec.add(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance);
 				RayTraceResult collisionRay = axis.calculateIntercept(eyesVec, extendedEyesVec);
 
 				if (axis.contains(eyesVec)) {
@@ -205,5 +207,11 @@ public class ClientEventHandler {
 		else {
 			player.rotationPitch += recoilAngle / (35.0f  * (SniperGuiRenderer.isSniping ? 2 : 1));
 		}
+	}
+
+	@SubscribeEvent
+	public void onMusicPlay(PlaySoundEvent ev) {
+		if (ev.getSound() != null && ev.getSound().getCategory() == SoundCategory.MUSIC && !(ev.getSound() instanceof MusicSound) && MusicSound.currentlyBlockingMusic())
+			ev.setResultSound(null);
 	}
 }

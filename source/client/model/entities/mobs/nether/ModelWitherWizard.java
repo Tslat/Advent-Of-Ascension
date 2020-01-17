@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelWitherWizard extends ModelBase {
-	ModelRenderer head1;
-	ModelRenderer body;
-	ModelRenderer rightarm1;
-	ModelRenderer leftarm;
-	ModelRenderer body2;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer rightarm2;
-	ModelRenderer rightarm3;
-	ModelRenderer rightarm4;
-	ModelRenderer rightarm5;
-	ModelRenderer rightarm6;
+	private ModelRenderer head1;
+	private ModelRenderer body;
+	private ModelRenderer rightArm1;
+	private ModelRenderer leftArm;
+	private ModelRenderer body2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer rightArm2;
+	private ModelRenderer rightArm3;
+	private ModelRenderer rightArm4;
+	private ModelRenderer rightArm5;
+	private ModelRenderer rightArm6;
 
 	public ModelWitherWizard() {
 		textureWidth = 128;
@@ -33,16 +33,16 @@ public class ModelWitherWizard extends ModelBase {
 		body.setTextureSize(128, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightarm1 = new ModelRenderer(this, 97, 7)).addBox(0.0f, -15.0f, -8.0f, 2, 2, 2);
-		rightarm1.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm1.setTextureSize(128, 32);
-		rightarm1.mirror = true;
-		setRotation(rightarm1, 0.6108652f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 24, 16)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
-		leftarm.setRotationPoint(5.0f, 2.0f, 0.0f);
-		leftarm.setTextureSize(128, 32);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.0f, 0.0f, 0.0f);
+		(rightArm1 = new ModelRenderer(this, 97, 7)).addBox(0.0f, -15.0f, -8.0f, 2, 2, 2);
+		rightArm1.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm1.setTextureSize(128, 32);
+		rightArm1.mirror = true;
+		setRotation(rightArm1, 0.6108652f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 24, 16)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
+		leftArm.setRotationPoint(5.0f, 2.0f, 0.0f);
+		leftArm.setTextureSize(128, 32);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 0, 16)).addBox(-4.0f, 0.0f, -2.0f, 8, 12, 4);
 		body2.setRotationPoint(0.0f, 0.0f, 0.0f);
 		body2.setTextureSize(128, 32);
@@ -63,48 +63,48 @@ public class ModelWitherWizard extends ModelBase {
 		head4.setTextureSize(128, 32);
 		head4.mirror = true;
 		setRotation(head4, 0.0f, 0.0f, 0.0f);
-		(rightarm2 = new ModelRenderer(this, 24, 16)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
-		rightarm2.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm2.setTextureSize(128, 32);
-		rightarm2.mirror = true;
-		setRotation(rightarm2, 0.0f, 0.0f, 0.0f);
-		(rightarm3 = new ModelRenderer(this, 82, 0)).addBox(-2.0f, 1.0f, -8.0f, 2, 18, 2);
-		rightarm3.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm3.setTextureSize(128, 32);
-		rightarm3.mirror = true;
-		setRotation(rightarm3, 0.6108652f, 0.0f, 0.0f);
-		(rightarm4 = new ModelRenderer(this, 82, 0)).addBox(-2.0f, -11.0f, -8.0f, 2, 12, 2);
-		rightarm4.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm4.setTextureSize(128, 32);
-		rightarm4.mirror = true;
-		setRotation(rightarm4, 0.6108652f, 0.0f, 0.0f);
-		(rightarm5 = new ModelRenderer(this, 97, 0)).addBox(-4.0f, -13.0f, -8.0f, 6, 2, 2);
-		rightarm5.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm5.setTextureSize(128, 32);
-		rightarm5.mirror = true;
-		setRotation(rightarm5, 0.6108652f, 0.0f, 0.0f);
-		(rightarm6 = new ModelRenderer(this, 97, 7)).addBox(-4.0f, -15.0f, -8.0f, 2, 2, 2);
-		rightarm6.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm6.setTextureSize(128, 32);
-		rightarm6.mirror = true;
-		setRotation(rightarm6, 0.6108652f, 0.0f, 0.0f);
+		(rightArm2 = new ModelRenderer(this, 24, 16)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
+		rightArm2.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm2.setTextureSize(128, 32);
+		rightArm2.mirror = true;
+		setRotation(rightArm2, 0.0f, 0.0f, 0.0f);
+		(rightArm3 = new ModelRenderer(this, 82, 0)).addBox(-2.0f, 1.0f, -8.0f, 2, 18, 2);
+		rightArm3.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm3.setTextureSize(128, 32);
+		rightArm3.mirror = true;
+		setRotation(rightArm3, 0.6108652f, 0.0f, 0.0f);
+		(rightArm4 = new ModelRenderer(this, 82, 0)).addBox(-2.0f, -11.0f, -8.0f, 2, 12, 2);
+		rightArm4.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm4.setTextureSize(128, 32);
+		rightArm4.mirror = true;
+		setRotation(rightArm4, 0.6108652f, 0.0f, 0.0f);
+		(rightArm5 = new ModelRenderer(this, 97, 0)).addBox(-4.0f, -13.0f, -8.0f, 6, 2, 2);
+		rightArm5.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm5.setTextureSize(128, 32);
+		rightArm5.mirror = true;
+		setRotation(rightArm5, 0.6108652f, 0.0f, 0.0f);
+		(rightArm6 = new ModelRenderer(this, 97, 7)).addBox(-4.0f, -15.0f, -8.0f, 2, 2, 2);
+		rightArm6.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm6.setTextureSize(128, 32);
+		rightArm6.mirror = true;
+		setRotation(rightArm6, 0.6108652f, 0.0f, 0.0f);
 	}
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head1.render(par7);
 		body.render(par7);
-		rightarm1.render(par7);
-		leftarm.render(par7);
+		rightArm1.render(par7);
+		leftArm.render(par7);
 		body2.render(par7);
 		head2.render(par7);
 		head3.render(par7);
 		head4.render(par7);
-		rightarm2.render(par7);
-		rightarm3.render(par7);
-		rightarm4.render(par7);
-		rightarm5.render(par7);
-		rightarm6.render(par7);
+		rightArm2.render(par7);
+		rightArm3.render(par7);
+		rightArm4.render(par7);
+		rightArm5.render(par7);
+		rightArm6.render(par7);
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
@@ -122,7 +122,7 @@ public class ModelWitherWizard extends ModelBase {
 		head3.rotateAngleX = par5 / 54.11268f;
 		head4.rotateAngleY = par4 / 57.295776f;
 		head4.rotateAngleX = par5 / 54.11268f;
-		leftarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm.rotateAngleZ = 0.0f;
+		leftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm.rotateAngleZ = 0.0f;
 	}
 }

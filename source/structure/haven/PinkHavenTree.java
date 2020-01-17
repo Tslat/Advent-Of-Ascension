@@ -89,7 +89,7 @@ public class PinkHavenTree extends AoAStructure { //StructureSize: 7x10x7
 		addBlock(world, basePos, 5, 7, 3, pinkLeaves);
 		addBlock(world, basePos, 2, 8, 3, pinkLeaves);
 		addBlock(world, basePos, 3, 8, 2, pinkLeaves);
-		addBlock(world, basePos, 3, 8, 3, pinkLeaves);
+		addBlock(world, basePos, 4, 8, 3, pinkLeaves);
 		addBlock(world, basePos, 3, 8, 4, pinkLeaves);
 		addBlock(world, basePos, 3, 9, 3, pinkLeaves);
 	}

@@ -1,13 +1,11 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityShyreBeam;
@@ -29,12 +27,12 @@ public class EntityShyreTroll extends AoARangedMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 20;
+        return 165;
     }
 
     @Override
     public double getBaseProjectileDamage() {
-        return 5.5;
+        return 17;
     }
 
     @Override
@@ -71,30 +69,14 @@ public class EntityShyreTroll extends AoARangedMob {
         return SoundsRegister.shotShyreTrollFire;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerShiny), 1);
-
-        if (rand.nextInt(50 - lootingMod) == 0)
-            dropItem(WeaponRegister.staffShyre, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.runeWind, 4 + rand.nextInt(3 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityShyreTroll;
     }
 
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
         return new EntityShyreBeam(this, Enums.MobProjectileType.ENERGY);
-    }
-
-    @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-
-        if (getHealth() > 0)
-            heal(0.2f);
     }
 }

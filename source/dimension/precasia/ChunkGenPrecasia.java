@@ -19,8 +19,8 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -38,7 +38,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomePrecasia;
+	private final Biome biome = BiomeRegister.biomePrecasia;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -378,14 +378,6 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			if ((block1 == biome.topBlock.getBlock() || block1 == BlockRegister.stonePrecasiaHigh) && (block2 == biome.topBlock.getBlock() || block2 == BlockRegister.stonePrecasiaHigh))
 				StructuresHandler.generateStructure("SkeletalArmyArena", world, rand, pos.setPos(x, y, z));
 		}
-		else if (ConfigurationUtil.StructureConfig.precasia.tyrosaurStompingGroundSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.tyrosaurStompingGroundSpawnChance) == 0) {
-			x = baseX + rand.nextInt(15);
-			z = baseZ + rand.nextInt(15);
-			y = world.getHeight(x + 7, z + 7);
-
-			if (world.getBlockState(pos.setPos(x + 7, y - 1, z + 7)) == biome.topBlock)
-				StructuresHandler.generateStructure("TyrosaurStompingGround", world, rand, pos.setPos(x, y, z));
-		}
 		else if (ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
@@ -406,7 +398,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 		if (ConfigurationUtil.StructureConfig.precasia.precasianDenSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.precasianDenSpawnChance) == 0) {
 			x = baseX + rand.nextInt(2);
 			z = baseZ;
-			y = rand.nextInt(5) + 2;
+			y = rand.nextInt(15) + 5;
 
 			AoAStructure structure = StructuresHandler.EMPTY_STRUCTURE;
 

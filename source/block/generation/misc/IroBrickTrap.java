@@ -9,6 +9,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.BasicBlock;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class IroBrickTrap extends BasicBlock {
 	public IroBrickTrap() {
@@ -21,7 +22,9 @@ public class IroBrickTrap extends BasicBlock {
 
 	@Override
 	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		player.addPotionEffect(new PotionEffect(MobEffects.POISON, 20, 2));
+		if (PlayerUtil.shouldPlayerBeAffected(player))
+			player.addPotionEffect(new PotionEffect(MobEffects.POISON, 20, 2));
+
 		world.setBlockToAir(pos);
 	}
 }

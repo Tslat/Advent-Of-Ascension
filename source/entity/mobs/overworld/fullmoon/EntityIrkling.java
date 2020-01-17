@@ -1,16 +1,13 @@
 package net.tslat.aoa3.entity.mobs.overworld.fullmoon;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,6 +18,9 @@ public class EntityIrkling extends AoAMeleeMob {
 
 	public EntityIrkling(World world) {
 		super(world, entityWidth, 1.6875f);
+
+		rand.setSeed(entityUniqueID.getMostSignificantBits());
+		jumpTimer = rand.nextInt(80) + 40;
 	}
 
 	@Override
@@ -30,22 +30,22 @@ public class EntityIrkling extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1f;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 135;
+		return 40;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 8;
+		return 5.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.31;
 	}
 
 	@Nullable
@@ -64,9 +64,20 @@ public class EntityIrkling extends AoAMeleeMob {
 		return SoundsRegister.mobIrklingHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityIrkling;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
+	}
+
+	@Override
+	protected float getJumpUpwardsMotion() {
+		return jumpTimer == 0 ? 0.8f : super.getJumpUpwardsMotion();
 	}
 
 	@Override
@@ -82,28 +93,14 @@ public class EntityIrkling extends AoAMeleeMob {
 			--jumpTimer;
 
 		if (jumpTimer == 0) {
+			jump();
 			jumpTimer = 80;
-			motionY = 0.800000011920929;
 
 			if (getAttackTarget() != null) {
 				motionX = (getAttackTarget().posZ - posZ) * 0.0949999988079071;
 				motionZ = (getAttackTarget().posZ - posZ) * 0.0949999988079071;
 			}
 		}
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.moonstone, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSoul), 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

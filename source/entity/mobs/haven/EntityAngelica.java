@@ -8,22 +8,29 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityAngelica extends AoAFlyingMeleeMob {
+public class EntityAngelica extends AoAFlyingMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntityAngelica(World world) {
 		super(world, entityWidth, 2f);
+
+		mobProperties.add(Enums.MobProperties.STATUS_IMMUNE);
 	}
 
 	@Override
@@ -33,12 +40,12 @@ public class EntityAngelica extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0;
+		return 0.1;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 20;
+		return 84;
 	}
 
 	@Override
@@ -69,29 +76,24 @@ public class EntityAngelica extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobAngelicaHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return world.provider.getDimensionType() == DimensionRegister.dimensionAncientCavern ? null : LootSystemRegister.entityAngelica;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
-			if (rand.nextBoolean())
-				dropItem(ItemRegister.tokensHaven, 1);
-
-			if (rand.nextInt(60 - lootingMod) == 0)
-				dropItem(ItemRegister.gravitator, 1);
-
-			if (rand.nextInt(40 - lootingMod) == 0)
-				dropItem(ItemRegister.realmstoneAncientCavern, 1);
-		}
+	public boolean canBeHitWithPotion() {
+		return false;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
+	public void addPotionEffect(PotionEffect effect) {}
 
 	@Override
 	public void onDeath(DamageSource cause) {
@@ -118,8 +120,15 @@ public class EntityAngelica extends AoAFlyingMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
-			addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 60, 0, true, true));
+			addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 60, 1, true, false));
+			addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 60, 0, true, false));
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 60, 0, true, true));
 		}
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

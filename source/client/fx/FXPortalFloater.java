@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client.fx;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -9,6 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.client.render.FXRenders;
+
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class FXPortalFloater extends Particle {
@@ -136,12 +138,14 @@ public class FXPortalFloater extends Particle {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static class Factory implements IParticleFactory {
+	public static class Factory implements FXRenders.FXFactory {
+		@Nullable
 		@Override
-		public Particle createParticle(int id, World world, double x, double y, double z, double vX, double vY, double vZ, int... args) {
-			Particle particle = new FXPortalFloater(world, x, y, z, vX, vY, vZ, args[0], args[1]);
+		public Particle createParticle(double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int textureOffsetIndex, float scale, int... args) {
+			Particle particle = new FXPortalFloater(Minecraft.getMinecraft().world, posX, posY, posZ, velocityX, velocityY, velocityZ, textureOffsetIndex, scale);
 
 			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+
 			return particle;
 		}
 	}

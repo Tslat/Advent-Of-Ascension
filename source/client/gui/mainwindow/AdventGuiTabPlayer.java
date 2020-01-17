@@ -15,7 +15,7 @@ import net.tslat.aoa3.common.packet.PacketExpeditionToggle;
 import net.tslat.aoa3.entity.boss.skeletalarmy.EntityEliteSkelePig;
 import net.tslat.aoa3.entity.mobs.abyss.EntityOcculent;
 import net.tslat.aoa3.entity.mobs.candyland.EntityGingerbreadMan;
-import net.tslat.aoa3.entity.mobs.candyland.EntitySpearmintSlug;
+import net.tslat.aoa3.entity.animals.EntitySpearmintSnail;
 import net.tslat.aoa3.entity.mobs.celeve.*;
 import net.tslat.aoa3.entity.mobs.misc.EntitySeaSkeleton;
 import net.tslat.aoa3.entity.mobs.overworld.*;
@@ -24,6 +24,7 @@ import net.tslat.aoa3.entity.mobs.shyrelands.EntityShyreTroll;
 import net.tslat.aoa3.entity.mobs.voxponds.EntityAlarmo;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.*;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 import net.tslat.aoa3.utils.skills.AuguryUtil;
 
 import java.io.IOException;
@@ -119,54 +120,54 @@ public class AdventGuiTabPlayer extends GuiScreen {
 
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.tribute"), x + 50, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		mc.getTextureManager().bindTexture(resourcesTextures);
-		drawScaledCustomSizeModalRect(x, y, 0, 0, 100, 30, 100, 30, 400, 490);
-		drawScaledCustomSizeModalRect(x, y, 0, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 490);
+		drawScaledCustomSizeModalRect(x, y, 0, 0, 100, 30, 100, 30, 400, 590);
+		drawScaledCustomSizeModalRect(x, y, 0, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributeLuxon / 200f;
 
-		drawScaledCustomSizeModalRect(x, y + 30, 100, 0, 100, 30, 100, 30, 400, 490);
-		drawScaledCustomSizeModalRect(x, y + 30, 100, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 490);
+		drawScaledCustomSizeModalRect(x, y + 30, 100, 0, 100, 30, 100, 30, 400, 590);
+		drawScaledCustomSizeModalRect(x, y + 30, 100, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributeErebon / 200f;
 
-		drawScaledCustomSizeModalRect(x, y + 60, 200, 0, 100, 30, 100, 30, 400, 490);
-		drawScaledCustomSizeModalRect(x, y + 60, 200, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 490);
+		drawScaledCustomSizeModalRect(x, y + 60, 200, 0, 100, 30, 100, 30, 400, 590);
+		drawScaledCustomSizeModalRect(x, y + 60, 200, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributePluton / 200f;
 
-		drawScaledCustomSizeModalRect(x, y + 90, 300, 0, 100, 30, 100, 30, 400, 490);
-		drawScaledCustomSizeModalRect(x, y + 90, 300, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 490);
+		drawScaledCustomSizeModalRect(x, y + 90, 300, 0, 100, 30, 100, 30, 400, 590);
+		drawScaledCustomSizeModalRect(x, y + 90, 300, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = resourceRage / 200f;
 
-		drawScaledCustomSizeModalRect(x + 130, y, 0, 190, 50, 50, 62, 62, 400, 490);
-		drawScaledCustomSizeModalRect(x + 130, y, resourceRage >= 150 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 62, 62, 400, 490);
+		drawScaledCustomSizeModalRect(x + 130, y, 0, 190, 50, 50, 62, 62, 400, 590);
+		drawScaledCustomSizeModalRect(x + 130, y, resourceRage >= 150 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		percentComplete = resourceEnergy / 200f;
 
-		drawScaledCustomSizeModalRect(x + 130, y + 82, 0, 90, 50, 50, 62, 62, 400, 490);
-		drawScaledCustomSizeModalRect(x + 130, y + 82, 0, 140, percentComplete * 50, 50, percentComplete * 62, 62, 400, 490);
+		drawScaledCustomSizeModalRect(x + 130, y + 82, 0, 90, 50, 50, 62, 62, 400, 590);
+		drawScaledCustomSizeModalRect(x + 130, y + 82, 0, 140, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		float maxCreation = AuguryUtil.getMaxCreation(levelAugury);
 		percentComplete = resourceCreation / maxCreation;
 
-		drawScaledCustomSizeModalRect(x + 130, y + 164, 0, 290, 50, 50, 62, 62, 400, 490);
-		drawScaledCustomSizeModalRect(x + 130, y + 164, 0, 340, percentComplete * 50, 50, percentComplete * 62, 62, 400, 490);
+		drawScaledCustomSizeModalRect(x + 130, y + 164, 0, 290, 50, 50, 62, 62, 400, 590);
+		drawScaledCustomSizeModalRect(x + 130, y + 164, 0, 340, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		float maxSoul = AuguryUtil.getMaxSoul(levelAugury);
 		percentComplete = resourceSoul / maxSoul;
 
-		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 390, 50, 50, 62, 62, 400, 490);
-		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 440, percentComplete * 50, 50, percentComplete * 62, 62, 400, 490);
+		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 390, 50, 50, 62, 62, 400, 590);
+		drawScaledCustomSizeModalRect(x + 130, y + 246, 0, 440, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.selyan"), x + 50, y + 11, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.luxon"), x + 50, y + 41, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.erebon"), x + 50, y + 71, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.pluton"), x + 50, y + 101, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.rage"), x + 161, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.energy"), x + 161, y + 67, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.creation"), x + 161, y + 149, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.soul"), x + 161, y + 231, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("deities.selyan.name"), x + 50, y + 11, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("deities.luxon.name"), x + 50, y + 41, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("deities.erebon.name"), x + 50, y + 71, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("deities.pluton.name"), x + 50, y + 101, 1.25f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("resources.rage.name"), x + 161, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("resources.energy.name"), x + 161, y + 67, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("resources.creation.name"), x + 161, y + 149, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("resources.soul.name"), x + 161, y + 231, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceRage + "/" + 200, x + 161, y + 40, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceEnergy + "/" + 200, x + 161, y + 122, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.floorAndAppendSuffix(resourceCreation, true) + "/" + StringUtil.floorAndAppendSuffix(maxCreation, true), x + 161, y + 204, 1.125f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
@@ -807,7 +808,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 						entityToRender = new EntityEliteSkelePig(mc.world);
 						break;
 					case 23:
-						entityToRender = new EntitySpearmintSlug(mc.world);
+						entityToRender = new EntitySpearmintSnail(mc.world);
 						break;
 					case 24:
 						entityToRender = new EntityShadow(mc.world);

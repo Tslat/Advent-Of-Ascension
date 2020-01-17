@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,8 +32,8 @@ import net.tslat.aoa3.utils.StringUtil;
 import java.util.List;
 
 public abstract class BaseSniper extends BaseGun implements AdventWeapon {
-	public BaseSniper(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, sound, durability, fireDelayTicks, recoil);
+	public BaseSniper(double dmg, int durability, int fireDelayTicks, float recoil) {
+		super(dmg, durability, fireDelayTicks, recoil);
 		setCreativeTab(CreativeTabsRegister.snipersTab);
 	}
 
@@ -50,6 +49,9 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 
 		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
 
+		if (cap == null)
+			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+
 		if (cap.getNextFireTime() < GlobalEvents.tick) {
 			BaseBullet ammo = findAndConsumeAmmo(player, this, hand);
 
@@ -57,18 +59,19 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 				if (!world.isRemote)
 					fireSniper(player, hand);
 
-				player.world.playSound(null, player.posX, player.posY, player.posZ, sound, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				if (getFiringSound() != null)
+					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 				stack.damageItem(1, player);
-				cap.setNextFireTime(firingDelay);
+				cap.setNextFireTime(getFiringDelay());
 				return ActionResult.newResult(EnumActionResult.PASS, stack);
 			}
 
 			if (player instanceof EntityPlayerMP)
 				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + firingDelay * 2) {
-			cap.setNextFireTime(-GlobalEvents.tick);
+		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
+			cap.setNextFireTime(0);
 		}
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
@@ -82,9 +85,9 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 
 			if (shooter instanceof EntityPlayerMP) {
 				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.control, shooter.getHeldItem(hand));
-				float recoiling = recoil * (1 - control * 0.15f);
+				float recoiling = getRecoilForShot(shooter.getHeldItem(hand), shooter) * (1 - control * 0.15f);
 
-				PacketUtil.network.sendTo(new PacketRecoil(recoiling, firingDelay), (EntityPlayerMP)shooter);
+				PacketUtil.network.sendTo(new PacketRecoil(recoiling, getFiringDelay()), (EntityPlayerMP)shooter);
 			}
 		}
 		else {
@@ -92,7 +95,7 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 			bullet.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0f, 20.0f, 50.0f);
 
 			if (shooter instanceof EntityPlayerMP)
-				PacketUtil.network.sendTo(new PacketRecoil(recoil * 2f, firingDelay), (EntityPlayerMP)shooter);
+				PacketUtil.network.sendTo(new PacketRecoil(getRecoil() * 2f, getFiringDelay()), (EntityPlayerMP)shooter);
 		}
 
 		shooter.world.spawnEntity(bullet);
@@ -120,9 +123,9 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.gun", TextFormatting.DARK_RED, Double.toString(dmg)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.sniper.use", TextFormatting.AQUA));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.metalSlugs", TextFormatting.LIGHT_PURPLE));
+		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.gun", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.sniper.use", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / getFiringDelay()) / (double)100)));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.metalSlugs", Enums.ItemDescriptionType.ITEM_AMMO_COST));
 	}
 }

@@ -1,12 +1,12 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -24,22 +24,22 @@ public class EntityHorndron extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0.3d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 70;
+		return 40;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 14;
+		return 5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25;
 	}
 
 	@Nullable
@@ -58,14 +58,15 @@ public class EntityHorndron extends AoAMeleeMob {
 		return SoundsRegister.mobHorndronHit;
 	}
 
+	@Nullable
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHorndron;
 	}
 
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected boolean isDaylightMob() {
+		return true;
 	}
 
 	@Override

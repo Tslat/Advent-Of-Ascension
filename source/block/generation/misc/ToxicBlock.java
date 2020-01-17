@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 public class ToxicBlock extends Block {
 	public ToxicBlock() {
 		super(Material.SPONGE);
-		setUnlocalizedName("ToxicBlock");
+		setTranslationKey("ToxicBlock");
 		setRegistryName("aoa3:toxic_block");
 		setHardness(1.5f);
 		setResistance(1.0f);
@@ -35,7 +35,7 @@ public class ToxicBlock extends Block {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World wordld, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World wordld, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
 			entity.attackEntityFrom(new DamageSource("toxic_block").setDamageBypassesArmor(), 4.0f);
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 5, true, true));

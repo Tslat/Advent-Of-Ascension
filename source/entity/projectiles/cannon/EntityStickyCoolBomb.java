@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityStickyCoolBomb extends BaseBullet implements HardProjectile {
 	private BaseGun weapon;
@@ -102,7 +103,7 @@ public class EntityStickyCoolBomb extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+		WorldUtil.createExplosion(thrower, world, this, 2.0f);
 
 		if (!world.isRemote)
 			setDead();

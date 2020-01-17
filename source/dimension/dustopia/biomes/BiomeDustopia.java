@@ -29,8 +29,8 @@ public class BiomeDustopia extends Biome {
 	public BiomeDustopia() {
 		super(properties);
 		setRegistryName("aoa3", "dustopia");
-		this.topBlock = BlockRegister.grassDustopia.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtDustopia.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("dustopia_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("dustopia_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

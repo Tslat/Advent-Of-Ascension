@@ -5,7 +5,7 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 
 public class WorldTypeHaven extends WorldType {
 	public WorldTypeHaven() {
@@ -14,7 +14,7 @@ public class WorldTypeHaven extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(DimensionRegister.biomeHaven);
+		return new BiomeProviderSingle(BiomeRegister.biomeHaven);
 	}
 
 	@Override

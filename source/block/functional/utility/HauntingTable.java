@@ -19,7 +19,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class HauntingTable extends Block {
 	public HauntingTable() {
 		super(Material.ROCK);
-		setUnlocalizedName("HauntingTable");
+		setTranslationKey("HauntingTable");
 		setRegistryName("aoa3:haunting_table");
 		setHardness(-1f);
 		setResistance(999999999f);

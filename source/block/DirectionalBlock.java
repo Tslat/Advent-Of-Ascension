@@ -52,6 +52,6 @@ public class DirectionalBlock extends BasicNonCubeBlock {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.getFront(meta));
+		return this.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.byIndex(meta));
 	}
 }

@@ -51,7 +51,7 @@ public class EntityGreenFlower extends AoAMeleeMob implements SpecialPropertyEnt
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isMeleeDamage(source);
 	}
 

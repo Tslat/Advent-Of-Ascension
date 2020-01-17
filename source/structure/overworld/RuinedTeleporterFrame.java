@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityCorruptedTraveller;
+import net.tslat.aoa3.entity.npcs.trader.EntityCorruptedTraveller;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -24,6 +24,14 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 
 	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
+		boolean alteration1 = rand.nextBoolean();
+		boolean alteration2 = rand.nextBoolean();
+		boolean alteration3 = rand.nextBoolean();
+		boolean alteration4 = rand.nextBoolean();
+		boolean alteration5 = rand.nextBoolean();
+		boolean alteration6 = rand.nextBoolean();
+
+
 		addBlock(world, basePos, 0, 0, 0, ancientRock);
 		addBlock(world, basePos, 0, 0, 1, ancientRock);
 		addBlock(world, basePos, 0, 0, 2, ancientRock);
@@ -35,7 +43,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 0, 0, 8, ancientRock);
 		addBlock(world, basePos, 0, 0, 9, ancientRock);
 
-		if (rand.nextBoolean())
+		if (alteration1)
 			addBlock(world, basePos, 0, 0, 10, ancientRock);
 
 		addBlock(world, basePos, 0, 0, 11, ancientRock);
@@ -50,7 +58,10 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 1, 0, 5, ancientRock);
 		addBlock(world, basePos, 1, 0, 6, ancientRock);
 		addBlock(world, basePos, 1, 0, 7, ancientRock);
-		addBlock(world, basePos, 1, 0, 8, ancientRock);
+
+		if (alteration4)
+			addBlock(world, basePos, 1, 0, 8, ancientRock);
+
 		addBlock(world, basePos, 1, 0, 9, ancientRock);
 		addBlock(world, basePos, 1, 0, 10, ancientRock);
 		addBlock(world, basePos, 1, 0, 11, ancientRock);
@@ -74,12 +85,16 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 2, 0, 14, ancientRock);
 		addBlock(world, basePos, 3, 0, 0, ancientRock);
 		addBlock(world, basePos, 3, 0, 1, ancientRock);
-		addBlock(world, basePos, 3, 0, 2, ancientRock);
-		addBlock(world, basePos, 3, 0, 3, ancientRock);
-		addBlock(world, basePos, 3, 0, 4, ancientRock);
-		addBlock(world, basePos, 3, 0, 5, ancientRock);
-		addBlock(world, basePos, 3, 0, 6, ancientRock);
-		addBlock(world, basePos, 3, 0, 7, ancientRock);
+
+		if (alteration6) {
+			addBlock(world, basePos, 3, 0, 2, ancientRock);
+			addBlock(world, basePos, 3, 0, 3, ancientRock);
+			addBlock(world, basePos, 3, 0, 4, ancientRock);
+			addBlock(world, basePos, 3, 0, 5, ancientRock);
+			addBlock(world, basePos, 3, 0, 6, ancientRock);
+			addBlock(world, basePos, 3, 0, 7, ancientRock);
+		}
+
 		addBlock(world, basePos, 3, 0, 8, ancientRock);
 		addBlock(world, basePos, 3, 0, 9, ancientRock);
 		addBlock(world, basePos, 3, 0, 10, ancientRock);
@@ -104,9 +119,13 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 4, 0, 14, ancientRock);
 		addBlock(world, basePos, 5, 0, 0, ancientRock);
 		addBlock(world, basePos, 5, 0, 1, ancientRock);
-		addBlock(world, basePos, 5, 0, 2, ancientRock);
-		addBlock(world, basePos, 5, 0, 3, ancientRock);
-		addBlock(world, basePos, 5, 0, 4, ancientRock);
+
+		if (alteration3) {
+			addBlock(world, basePos, 5, 0, 2, ancientRock);
+			addBlock(world, basePos, 5, 0, 3, ancientRock);
+			addBlock(world, basePos, 5, 0, 4, ancientRock);
+		}
+
 		addBlock(world, basePos, 5, 0, 5, ancientRock);
 		addBlock(world, basePos, 5, 0, 6, ancientRock);
 		addBlock(world, basePos, 5, 0, 7, ancientRock);
@@ -137,7 +156,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 7, 0, 2, ancientRock);
 		addBlock(world, basePos, 7, 0, 3, ancientRock);
 
-		if (rand.nextBoolean())
+		if (alteration2)
 			addBlock(world, basePos, 7, 0, 4, ancientRock);
 
 		addBlock(world, basePos, 7, 0, 5, ancientRock);
@@ -153,7 +172,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 8, 0, 0, ancientRock);
 		addBlock(world, basePos, 8, 0, 1, ancientRock);
 
-		if (rand.nextBoolean())
+		if (alteration4)
 			addBlock(world, basePos, 8, 0, 2, ancientRock);
 
 		addBlock(world, basePos, 8, 0, 3, ancientRock);
@@ -161,11 +180,14 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 8, 0, 5, ancientRock);
 		addBlock(world, basePos, 8, 0, 6, ancientRock);
 		addBlock(world, basePos, 8, 0, 7, ancientRock);
-		addBlock(world, basePos, 8, 0, 8, ancientRock);
-		addBlock(world, basePos, 8, 0, 9, ancientRock);
-		addBlock(world, basePos, 8, 0, 10, ancientRock);
-		addBlock(world, basePos, 8, 0, 11, ancientRock);
-		addBlock(world, basePos, 8, 0, 12, ancientRock);
+
+		if (alteration6) {
+			addBlock(world, basePos, 8, 0, 8, ancientRock);
+			addBlock(world, basePos, 8, 0, 9, ancientRock);
+			addBlock(world, basePos, 8, 0, 10, ancientRock);
+			addBlock(world, basePos, 8, 0, 11, ancientRock);
+			addBlock(world, basePos, 8, 0, 12, ancientRock);
+		}
 		addBlock(world, basePos, 8, 0, 13, ancientRock);
 		addBlock(world, basePos, 8, 0, 14, ancientRock);
 		addBlock(world, basePos, 9, 0, 0, ancientRock);
@@ -186,7 +208,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 10, 0, 0, ancientRock);
 		addBlock(world, basePos, 10, 0, 1, ancientRock);
 
-		if (rand.nextBoolean()) {
+		if (alteration4) {
 			addBlock(world, basePos, 10, 0, 2, ancientRock);
 			addBlock(world, basePos, 10, 0, 3, ancientRock);
 			addBlock(world, basePos, 10, 0, 4, ancientRock);
@@ -204,10 +226,14 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 0, 1, 0, ancientRock);
 		addBlock(world, basePos, 0, 1, 1, ancientRock);
 		addBlock(world, basePos, 0, 1, 2, ancientRock);
-		addBlock(world, basePos, 0, 1, 3, ancientRock);
-		addBlock(world, basePos, 0, 1, 4, ancientRock);
-		addBlock(world, basePos, 0, 1, 5, ancientRock);
-		addBlock(world, basePos, 0, 1, 6, ancientRock);
+
+		if (alteration1) {
+			addBlock(world, basePos, 0, 1, 3, ancientRock);
+			addBlock(world, basePos, 0, 1, 4, ancientRock);
+			addBlock(world, basePos, 0, 1, 5, ancientRock);
+			addBlock(world, basePos, 0, 1, 6, ancientRock);
+		}
+
 		addBlock(world, basePos, 0, 1, 7, ancientRock);
 		addBlock(world, basePos, 0, 1, 8, ancientRock);
 		addBlock(world, basePos, 0, 1, 9, ancientRock);
@@ -233,7 +259,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 2, 1, 6, ancientRock);
 		addBlock(world, basePos, 2, 1, 7, ancientRock);
 
-		if (rand.nextBoolean())
+		if (alteration6)
 			addBlock(world, basePos, 2, 1, 8, ancientRock);
 
 		addBlock(world, basePos, 2, 1, 9, air);
@@ -249,10 +275,13 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 3, 1, 4, ancientRock);
 		addBlock(world, basePos, 3, 1, 5, ancientRock);
 		addBlock(world, basePos, 3, 1, 6, ancientRock);
-		addBlock(world, basePos, 3, 1, 7, ancientRock);
-		addBlock(world, basePos, 3, 1, 8, ancientRock);
-		addBlock(world, basePos, 3, 1, 9, ancientRock);
-		addBlock(world, basePos, 3, 1, 10, ancientRock);
+
+		if (alteration5) {
+			addBlock(world, basePos, 3, 1, 7, ancientRock);
+			addBlock(world, basePos, 3, 1, 8, ancientRock);
+			addBlock(world, basePos, 3, 1, 9, ancientRock);
+			addBlock(world, basePos, 3, 1, 10, ancientRock);
+		}
 		addBlock(world, basePos, 3, 1, 11, ancientRock);
 		addBlock(world, basePos, 3, 1, 12, air);
 		addBlock(world, basePos, 3, 1, 13, air);
@@ -282,7 +311,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 5, 1, 7, ancientRock);
 		addBlock(world, basePos, 5, 1, 8, ancientRock);
 
-		if (rand.nextBoolean())
+		if (alteration6)
 			addBlock(world, basePos, 5, 1, 9, ancientRock);
 
 		addBlock(world, basePos, 5, 1, 10, ancientRock);
@@ -311,10 +340,13 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 7, 1, 4, ancientRock);
 		addBlock(world, basePos, 7, 1, 5, ancientRock);
 		addBlock(world, basePos, 7, 1, 6, ancientRock);
-		addBlock(world, basePos, 7, 1, 7, ancientRock);
-		addBlock(world, basePos, 7, 1, 8, ancientRock);
-		addBlock(world, basePos, 7, 1, 9, ancientRock);
-		addBlock(world, basePos, 7, 1, 10, ancientRock);
+
+		if (alteration1) {
+			addBlock(world, basePos, 7, 1, 7, ancientRock);
+			addBlock(world, basePos, 7, 1, 8, ancientRock);
+			addBlock(world, basePos, 7, 1, 9, ancientRock);
+			addBlock(world, basePos, 7, 1, 10, ancientRock);
+		}
 		addBlock(world, basePos, 7, 1, 11, ancientRock);
 		addBlock(world, basePos, 7, 1, 12, air);
 		addBlock(world, basePos, 7, 1, 13, air);
@@ -357,7 +389,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 10, 1, 10, ancientRock);
 		addBlock(world, basePos, 10, 1, 11, ancientRock);
 
-		if (rand.nextBoolean()) {
+		if (alteration5) {
 			addBlock(world, basePos, 10, 1, 12, ancientRock);
 			addBlock(world, basePos, 10, 1, 13, ancientRock);
 			addBlock(world, basePos, 10, 1, 14, ancientRock);
@@ -440,7 +472,10 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 5, 2, 5, ancientRock);
 		addBlock(world, basePos, 5, 2, 6, ancientRock);
 		addBlock(world, basePos, 5, 2, 7, ancientRock);
-		addBlock(world, basePos, 5, 2, 8, ancientRock);
+
+		if (alteration3)
+			addBlock(world, basePos, 5, 2, 8, ancientRock);
+
 		addBlock(world, basePos, 5, 2, 9, ancientRock);
 		addBlock(world, basePos, 5, 2, 10, ancientRock);
 		addBlock(world, basePos, 5, 2, 11, air);
@@ -505,7 +540,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 10, 2, 0, air);
 		addBlock(world, basePos, 10, 2, 1, air);
 
-		if (rand.nextBoolean())
+		if (alteration2)
 			addBlock(world, basePos, 10, 2, 2, ancientRock);
 
 		addBlock(world, basePos, 10, 2, 3, air);
@@ -726,7 +761,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 		addBlock(world, basePos, 5, 5, 7, air);
 		addBlock(world, basePos, 5, 5, 8, air);
 
-		if (rand.nextBoolean())
+		if (alteration1)
 			addBlock(world, basePos, 5, 5, 9, ancientRock);
 
 		addBlock(world, basePos, 5, 5, 10, air);
@@ -818,7 +853,7 @@ public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x
 	protected void spawnEntities(World world, Random rand, BlockPos basePos) {
 		EntityCorruptedTraveller corruptedTraveller = new EntityCorruptedTraveller(world);
 
-		corruptedTraveller.setLocationAndAngles(basePos.getX() + 5, basePos.getY() + 3, basePos.getZ() + 7, rand.nextFloat() * 360, 0);
+		corruptedTraveller.setLocationAndAngles(basePos.getX() + 5, basePos.getY() + 4, basePos.getZ() + 7, rand.nextFloat() * 360, 0);
 		world.spawnEntity(corruptedTraveller);
 	}
 }

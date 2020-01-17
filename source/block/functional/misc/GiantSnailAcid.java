@@ -15,9 +15,9 @@ public class GiantSnailAcid extends AcidBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
-			entity.attackEntityFrom(new DamageSource("giant_snail_acid"), 15.0f);
+			entity.attackEntityFrom(new DamageSource("acid"), 15.0f);
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3));
 		}
 	}

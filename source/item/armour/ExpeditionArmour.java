@@ -5,23 +5,24 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUREXPEDITION;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_EXPEDITION;
 
 public class ExpeditionArmour extends AdventArmour implements SkillItem {
-	public ExpeditionArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOUREXPEDITION, name, registryName, renderIndex, slot);
+	public ExpeditionArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_EXPEDITION, name, registryName, slot);
 	}
 
 	@Override
@@ -40,21 +41,34 @@ public class ExpeditionArmour extends AdventArmour implements SkillItem {
 	}
 
 	@Override
-	public void setTickEffect(AdventPlayerCapability cap) {
-		cap.getPlayer().addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 8));
+	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.addXpModifier(Enums.Skills.EXPEDITION, 0.3f);
+	}
+
+	@Override
+	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.removeXpModifier(Enums.Skills.EXPEDITION, 0.3f);
+	}
+
+	@Override
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+		if (slots == null) {
+			plData.player().addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 1, true, false));
+
+			if (plData.player().isSprinting() && plData.player().getFoodStats().getSaturationLevel() == 0)
+				plData.player().getFoodStats().setFoodSaturationLevel(0.1f);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.ExpeditionArmour.desc.1", TextFormatting.DARK_GREEN));
-
-		if (AdventGuiTabPlayer.getSkillLevel(getSkill()) >= 100) {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.GREEN, Integer.toString(100), StringUtil.getLocaleString("skills.expedition.name")));
-		}
-		else {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.RED, Integer.toString(100), StringUtil.getLocaleString("skills.expedition.name")));
-		}
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ExpeditionArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ExpeditionArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.skillXpBonus", Enums.ItemDescriptionType.POSITIVE, Integer.toString(30), StringUtil.getLocaleString("skills.expedition.name")));
+		tooltip.add(ItemUtil.getFormattedLevelRestrictedDescriptionText(Enums.Skills.EXPEDITION, 100));
 	}
 }

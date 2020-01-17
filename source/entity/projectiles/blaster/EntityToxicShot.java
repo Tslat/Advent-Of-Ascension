@@ -10,6 +10,10 @@ public class EntityToxicShot extends BaseEnergyShot {
 		super(world);
 	}
 
+	public EntityToxicShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge, float xMod, float yMod, float zMod) {
+		super(shooter, weapon, maxAge, xMod, yMod, zMod);
+	}
+
 	public EntityToxicShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge) {
 		super(shooter, weapon, maxAge);
 	}

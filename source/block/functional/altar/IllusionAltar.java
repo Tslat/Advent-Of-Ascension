@@ -7,6 +7,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.boss.elusive.EntityElusive;
+import net.tslat.aoa3.entity.boss.elusive.EntityElusiveClone;
 import net.tslat.aoa3.utils.StringUtil;
 
 public class IllusionAltar extends BossAltarBlock {
@@ -17,12 +18,18 @@ public class IllusionAltar extends BossAltarBlock {
 	@Override
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		EntityElusive elusive = new EntityElusive(player.world);
+		EntityElusiveClone clone = new EntityElusiveClone(elusive);
+		double posX = (int)(blockPos.getX() + player.getLookVec().x * -10);
+		double posZ = (int)(blockPos.getZ() + player.getLookVec().z * -10);
 
-		int posX = (int)(blockPos.getX() + player.getLookVec().x * -6);
-		int posZ = (int)(blockPos.getZ() + player.getLookVec().z * -6);
+		clone.setLocationAndAngles(posX, player.world.getHeight((int)posX, (int)posZ), posZ, player.rotationYawHead, 0);
 
-		elusive.setLocationAndAngles(posX, player.world.getHeight(posX, posZ), posZ, 0, 0);
+		posX += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
+		posZ += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
+
+		elusive.setLocationAndAngles(posX, player.world.getHeight((int)posX, (int)posZ), posZ, 0, 0);
 		player.world.spawnEntity(elusive);
+		player.world.spawnEntity(clone);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.elusive.spawn", player.getDisplayNameString()), blockPos);
 	}
 

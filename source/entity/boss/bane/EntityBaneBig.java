@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.boss.bane;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityBaneBig extends AoAMeleeMob {
 	public static final float entityWidth = 1.2f;
@@ -46,9 +47,9 @@ public class EntityBaneBig extends AoAMeleeMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		world.createExplosion(this, posX, posY, posZ, 6, false);
-
-		if (!world.isRemote)
+		if (!world.isRemote) {
+			WorldUtil.createExplosion(this, world, 6f);
 			setDead();
+		}
 	}
 }

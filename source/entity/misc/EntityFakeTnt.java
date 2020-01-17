@@ -5,6 +5,7 @@ import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityFakeTnt extends EntityTNTPrimed {
 	public EntityFakeTnt(World world, BlockPos position) {
@@ -53,6 +54,6 @@ public class EntityFakeTnt extends EntityTNTPrimed {
 	}
 
 	private void explode() {
-		world.createExplosion(this, posX, posY, posZ, 4.0f, false);
+		WorldUtil.createExplosion(getTntPlacedBy(), world, this, 4.0f);
 	}
 }

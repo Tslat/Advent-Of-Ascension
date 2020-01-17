@@ -6,22 +6,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelGadgetoid extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer rightleg2;
-	ModelRenderer leftleg2;
-	ModelRenderer TurningHead;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
-	ModelRenderer head7;
-	ModelRenderer head8;
-	ModelRenderer head9;
-	ModelRenderer head10;
-	ModelRenderer head11;
-	ModelRenderer head12;
+	private ModelRenderer head;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer rightLeg2;
+	private ModelRenderer leftLeg2;
+	private ModelRenderer Turninghead;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
+	private ModelRenderer head7;
+	private ModelRenderer head8;
+	private ModelRenderer head9;
+	private ModelRenderer head10;
+	private ModelRenderer head11;
+	private ModelRenderer head12;
 
 	public ModelGadgetoid() {
 		textureWidth = 128;
@@ -31,31 +31,31 @@ public class ModelGadgetoid extends ModelBase {
 		head.setTextureSize(128, 32);
 		head.mirror = true;
 		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
-		rightleg.setRotationPoint(-6.0f, 12.0f, 6.0f);
-		rightleg.setTextureSize(128, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
-		leftleg.setRotationPoint(6.0f, 12.0f, 6.0f);
-		leftleg.setTextureSize(128, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
-		(rightleg2 = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
-		rightleg2.setRotationPoint(-6.0f, 12.0f, -6.0f);
-		rightleg2.setTextureSize(128, 32);
-		rightleg2.mirror = true;
-		setRotation(rightleg2, 0.0f, 0.0f, 0.0f);
-		(leftleg2 = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
-		leftleg2.setRotationPoint(6.0f, 12.0f, -6.0f);
-		leftleg2.setTextureSize(128, 32);
-		leftleg2.mirror = true;
-		setRotation(leftleg2, 0.0f, 0.0f, 0.0f);
-		(TurningHead = new ModelRenderer(this, 36, 16)).addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8);
-		TurningHead.setRotationPoint(0.0f, 3.0f, 0.0f);
-		TurningHead.setTextureSize(128, 32);
-		TurningHead.mirror = true;
-		setRotation(TurningHead, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
+		rightLeg.setRotationPoint(-6.0f, 12.0f, 6.0f);
+		rightLeg.setTextureSize(128, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
+		leftLeg.setRotationPoint(6.0f, 12.0f, 6.0f);
+		leftLeg.setTextureSize(128, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
+		(rightLeg2 = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
+		rightLeg2.setRotationPoint(-6.0f, 12.0f, -6.0f);
+		rightLeg2.setTextureSize(128, 32);
+		rightLeg2.mirror = true;
+		setRotation(rightLeg2, 0.0f, 0.0f, 0.0f);
+		(leftLeg2 = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
+		leftLeg2.setRotationPoint(6.0f, 12.0f, -6.0f);
+		leftLeg2.setTextureSize(128, 32);
+		leftLeg2.mirror = true;
+		setRotation(leftLeg2, 0.0f, 0.0f, 0.0f);
+		(Turninghead = new ModelRenderer(this, 36, 16)).addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8);
+		Turninghead.setRotationPoint(0.0f, 3.0f, 0.0f);
+		Turninghead.setTextureSize(128, 32);
+		Turninghead.mirror = true;
+		setRotation(Turninghead, 0.0f, 0.0f, 0.0f);
 		(head3 = new ModelRenderer(this, 36, 1)).addBox(6.0f, 0.5f, 12.0f, 4, 2, 1);
 		head3.setRotationPoint(-4.0f, 9.0f, -4.0f);
 		head3.setTextureSize(128, 32);
@@ -111,11 +111,11 @@ public class ModelGadgetoid extends ModelBase {
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
-		rightleg2.render(par7);
-		leftleg2.render(par7);
-		TurningHead.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
+		rightLeg2.render(par7);
+		leftLeg2.render(par7);
+		Turninghead.render(par7);
 		head3.render(par7);
 		head4.render(par7);
 		head5.render(par7);
@@ -135,13 +135,13 @@ public class ModelGadgetoid extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		TurningHead.rotateAngleY = par4 / 57.295776f;
-		TurningHead.rotateAngleX = par5 / 54.11268f;
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		leftleg.rotateAngleY = 0.0f;
-		leftleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
-		rightleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		Turninghead.rotateAngleY = par4 / 57.295776f;
+		Turninghead.rotateAngleX = par5 / 54.11268f;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		leftLeg.rotateAngleY = 0.0f;
+		leftLeg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

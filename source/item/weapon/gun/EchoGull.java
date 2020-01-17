@@ -1,41 +1,70 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.scheduling.async.EchoGullTask;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.ModUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EchoGull extends BaseGun implements AdventWeapon {
-	public EchoGull(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("EchoGull");
+	public EchoGull(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("EchoGull");
 		setRegistryName("aoa3:echo_gull");
 	}
 
+	@Nullable
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		BaseBullet bullet = super.findAndConsumeAmmo(player, gun, hand);
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunFastRifle;
+	}
 
-		if (bullet != null)
-			bullet.setPierceCount(1);
+	@Override
+	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		ArrayList<Tuple<EntityLivingBase, Integer>> entityList = new ArrayList<Tuple<EntityLivingBase, Integer>>();
 
-		return bullet;
+		for (EntityLivingBase entity : bullet.world.getEntitiesWithinAABB(EntityLivingBase.class, bullet.getEntityBoundingBox().grow(30), PredicateUtil.IS_HOSTILE_MOB)) {
+			int distance = (int)entity.getDistance(bullet);
+
+			if (entityList.isEmpty()) {
+				entityList.add(new Tuple<EntityLivingBase, Integer>(entity, distance));
+			}
+			else {
+				for (int i = 0; i < entityList.size(); i++) {
+					int dist = entityList.get(i).getSecond();
+
+					if (dist == distance || dist > distance) {
+						entityList.add(i, new Tuple<EntityLivingBase, Integer>(entity, distance));
+
+						break;
+					}
+				}
+			}
+		}
+
+		ModUtil.scheduleSyncronisedTask(new EchoGullTask(bullet.world, entityList), 1);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.EchoGull.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.EchoGull.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -6,15 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelCreepuple extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer head2;
-	ModelRenderer body2;
-	ModelRenderer body3;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer head2;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
 
 	public ModelCreepuple() {
 		textureWidth = 64;

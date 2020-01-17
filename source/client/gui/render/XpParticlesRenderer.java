@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,16 +25,41 @@ public class XpParticlesRenderer {
 	private static final ConcurrentHashMap<Enums.Skills, CopyOnWriteArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<Enums.Skills, CopyOnWriteArrayList<XPParticle>>(15);
 	private static final ResourceLocation skillsTextures = new ResourceLocation("aoa3", "textures/gui/maingui/skills.png");
 
+	private static long lastPacketReceivedTime = 0;
+	private static XPParticle lastParticleReceived = null;
+	private static Enums.Skills lastParticleSkill = null;
+
 	public static void addXpParticle(Enums.Skills skill, float xp, boolean isLevelUp) {
 		if (!particlesMap.containsKey(skill))
 			particlesMap.put(skill, new CopyOnWriteArrayList<XPParticle>());
 
+		if (lastParticleSkill == skill && System.currentTimeMillis() <= lastPacketReceivedTime + 10) {
+			if (lastParticleReceived != null) {
+				lastParticleReceived.modifyXp(xp, isLevelUp);
+
+				if (lastParticleReceived.levelUp) {
+					CopyOnWriteArrayList<XPParticle> array = particlesMap.get(skill);
+
+					array.remove(array.size() - 1);
+					array.add(0, lastParticleReceived);
+				}
+
+				return;
+			}
+		}
+
+		XPParticle particle;
+
 		if (isLevelUp) {
-			particlesMap.get(skill).add(0, new XPParticle(xp, true));
+			particlesMap.get(skill).add(0, particle = new XPParticle(xp, true));
 		}
 		else {
-			particlesMap.get(skill).add(new XPParticle(xp, false));
+			particlesMap.get(skill).add(particle = new XPParticle(xp, false));
 		}
+
+		lastParticleReceived = particle;
+		lastPacketReceivedTime = System.currentTimeMillis();
+		lastParticleSkill = skill;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -49,13 +75,14 @@ public class XpParticlesRenderer {
 			if (mc.currentScreen == null && !mc.gameSettings.hideGUI) {
 				GlStateManager.disableDepth();
 
+				long currentTime = System.currentTimeMillis();
 				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
 				int skillCount = particlesMap.size();
 				int scrollHeight = (int)(res.getScaledHeight() / 3f);
 				int skillNum = 0;
 				float rowBasedScale = (int)(1 + ((skillCount - 1) / 5f));
 				float renderSize = 25 / (1 + (rowBasedScale - 1) * 0.5f);
-				final double skillIconsX = (res.getScaledWidth_double() - ((renderSize * (1 + (((skillCount <= 5 ? skillCount : 5) - 1) * 0.5f))))) / 2d;
+				final double skillIconsX = (res.getScaledWidth_double() - (renderSize * (1 + ((Math.min(skillCount, 5) - 1) * 0.5f)))) / 2d;
 				final double skillIconsY = 2;
 
 				while (mapIterator.hasNext()) {
@@ -73,9 +100,12 @@ public class XpParticlesRenderer {
 					ArrayList<XPParticle> removalList = null;
 
 					for (XPParticle particle : particleArray) {
-						RenderUtil.drawCenteredScaledString(mc.fontRenderer, particle.xpString, (int)(res.getScaledWidth_double() / 2d), scrollHeight - particle.age, 0.5f, Enums.RGBIntegers.WHITE | (int)(255 * (1 - particle.age / (float)scrollHeight)) << 24, RenderUtil.StringRenderType.NORMAL);
+						float particleLifespan = 1 - ((currentTime - particle.creationTime) / 1500f);
 
-						if (++particle.age >= scrollHeight - 2) {
+						if (particleLifespan >= 0.1)
+							RenderUtil.drawCenteredScaledString(mc.fontRenderer, particle.xpString, (int)(res.getScaledWidth_double() / 2d), (int)(scrollHeight * particleLifespan), 0.5f, Enums.RGBIntegers.WHITE | (int)MathHelper.clamp(255 * particleLifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
+
+						if (particle.creationTime <= currentTime - 1800) {
 							if (removalList == null)
 								removalList = new ArrayList<XPParticle>();
 
@@ -88,7 +118,6 @@ public class XpParticlesRenderer {
 
 					switch (skill) {
 						case ALCHEMY:
-							skillUvX = 0;
 							break;
 						case ANIMA:
 							skillUvX = 50;
@@ -115,7 +144,6 @@ public class XpParticlesRenderer {
 							skillUvX = 400;
 							break;
 						case HAULING:
-							skillUvX = 0;
 							skillUvY += 100;
 							break;
 						case HUNTER:
@@ -145,6 +173,7 @@ public class XpParticlesRenderer {
 
 					mc.getTextureManager().bindTexture(skillsTextures);
 					RenderUtil.drawScaledCustomSizeModalRect(newX, newY, skillUvX, skillUvY, 50, 50, renderSize, renderSize, 450, 240);
+					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
 					if (isLevelUp) {
 						String lvl = String.valueOf(AdventGuiTabPlayer.getSkillLevel(skill));
@@ -164,32 +193,41 @@ public class XpParticlesRenderer {
 
 				GlStateManager.enableDepth();
 			}
-			else {
+			else if (!particlesMap.isEmpty()) {
 				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
+				long cutoffTime = System.currentTimeMillis() - 1800;
 
 				while (mapIterator.hasNext()) {
 					CopyOnWriteArrayList<XPParticle> particleArray = mapIterator.next().getValue();
 
-					particleArray.removeIf(particle -> particle.age++ >= 200);
+					particleArray.removeIf(particle -> particle.creationTime <= cutoffTime);
 
 					if (particleArray.isEmpty())
 						mapIterator.remove();
 				}
 			}
 		}
-		else  {
+		else if (!particlesMap.isEmpty())  {
 			particlesMap.clear();
 		}
 	}
 
 	static class XPParticle {
 		boolean levelUp;
+		float xp;
 		String xpString;
 
-		protected int age = 0;
+		protected long creationTime = System.currentTimeMillis();
 
 		XPParticle(float xp, boolean isLevelUp) {
 			this.levelUp = isLevelUp;
+			this.xp = xp;
+			this.xpString = "+" + StringUtil.floorAndAppendSuffix(xp, false);
+		}
+
+		protected void modifyXp(float additionalXp, boolean isLevelUp) {
+			this.levelUp = levelUp || isLevelUp;
+			this.xp = xp + additionalXp;
 			this.xpString = "+" + StringUtil.floorAndAppendSuffix(xp, false);
 		}
 	}

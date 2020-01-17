@@ -1,10 +1,16 @@
 package net.tslat.aoa3.structure.gardencia;
 
+import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.block.functional.lamps.LampBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -19,6 +25,11 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 	private static final IBlockState carpet = BlockRegister.carpetGardencian.getDefaultState();
 	private static final IBlockState podPlantSpawner = BlockRegister.spawnerPodPlant.getDefaultState();
 	private static final IBlockState petalCraftingStation = BlockRegister.petalCraftingStation.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
+	private static final IBlockState chestSouth = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
+	private static final IBlockState goldicaps = BlockRegister.cropGoldicaps.getDefaultState().withProperty(BlockCrops.AGE, 7);
+	private static final IBlockState ivoryJadeLamp = BlockRegister.lampIvoryJade.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
+	private static final IBlockState farmland = Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7);
 
 	public GardenCastle() {
 		super("GardenCastle");
@@ -299,9 +310,9 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 9, 4, 14, rosidianBricks);
 		addBlock(world, basePos, 9, 4, 15, rosidianBricks);
 		addBlock(world, basePos, 9, 4, 16, rosidianBricks);
-		addBlock(world, basePos, 9, 4, 17, rosidianBricks);
-		addBlock(world, basePos, 9, 4, 18, rosidianBricks);
-		addBlock(world, basePos, 9, 4, 19, rosidianBricks);
+		addBlock(world, basePos, 9, 4, 17, farmland);
+		addBlock(world, basePos, 9, 4, 18, farmland);
+		addBlock(world, basePos, 9, 4, 19, farmland);
 		addBlock(world, basePos, 9, 4, 20, gardencianBricks);
 		addBlock(world, basePos, 10, 4, 0, gardencianBricks);
 		addBlock(world, basePos, 10, 4, 1, gardencianBricks);
@@ -583,9 +594,9 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 24, 4, 14, rosidianBricks);
 		addBlock(world, basePos, 24, 4, 15, rosidianBricks);
 		addBlock(world, basePos, 24, 4, 16, rosidianBricks);
-		addBlock(world, basePos, 24, 4, 17, rosidianBricks);
-		addBlock(world, basePos, 24, 4, 18, rosidianBricks);
-		addBlock(world, basePos, 24, 4, 19, rosidianBricks);
+		addBlock(world, basePos, 24, 4, 17, farmland);
+		addBlock(world, basePos, 24, 4, 18, farmland);
+		addBlock(world, basePos, 24, 4, 19, farmland);
 		addBlock(world, basePos, 24, 4, 20, gardencianBricks);
 		addBlock(world, basePos, 25, 4, 7, gardencianBricks);
 		addBlock(world, basePos, 25, 4, 8, rosidianBricks);
@@ -711,7 +722,7 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 6, 5, 16, gardencianBricks);
 		addBlock(world, basePos, 6, 5, 17, water);
 		addBlock(world, basePos, 6, 5, 18, water);
-		addBlock(world, basePos, 6, 5, 19, water);
+		addBlock(world, basePos, 6, 5, 19, chest);
 		addBlock(world, basePos, 6, 5, 20, gardencianBricks);
 		addBlock(world, basePos, 7, 5, 7, gardencianBricks);
 		addBlock(world, basePos, 7, 5, 8, carpet);
@@ -751,10 +762,10 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 9, 5, 14, carpet);
 		addBlock(world, basePos, 9, 5, 15, carpet);
 		addBlock(world, basePos, 9, 5, 16, carpet);
-		addBlock(world, basePos, 9, 5, 17, carpet);
-		addBlock(world, basePos, 9, 5, 18, carpet);
-		addBlock(world, basePos, 9, 5, 19, carpet);
-		addBlock(world, basePos, 9, 5, 20, rosidianBricks);
+		addBlock(world, basePos, 9, 5, 17, goldicaps);
+		addBlock(world, basePos, 9, 5, 18, goldicaps);
+		addBlock(world, basePos, 9, 5, 19, goldicaps);
+		addBlock(world, basePos, 9, 5, 20, ivoryJadeLamp);
 		addBlock(world, basePos, 10, 5, 0, gardencianBricks);
 		addBlock(world, basePos, 10, 5, 1, gardencianBricks);
 		addBlock(world, basePos, 10, 5, 2, gardencianGlass);
@@ -948,10 +959,10 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 24, 5, 14, carpet);
 		addBlock(world, basePos, 24, 5, 15, carpet);
 		addBlock(world, basePos, 24, 5, 16, carpet);
-		addBlock(world, basePos, 24, 5, 17, carpet);
-		addBlock(world, basePos, 24, 5, 18, carpet);
-		addBlock(world, basePos, 24, 5, 19, carpet);
-		addBlock(world, basePos, 24, 5, 20, rosidianBricks);
+		addBlock(world, basePos, 24, 5, 17, goldicaps);
+		addBlock(world, basePos, 24, 5, 18, goldicaps);
+		addBlock(world, basePos, 24, 5, 19, goldicaps);
+		addBlock(world, basePos, 24, 5, 20, ivoryJadeLamp);
 		addBlock(world, basePos, 25, 5, 7, gardencianBricks);
 		addBlock(world, basePos, 25, 5, 8, carpet);
 		addBlock(world, basePos, 25, 5, 9, carpet);
@@ -1006,7 +1017,7 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 28, 5, 16, gardencianBricks);
 		addBlock(world, basePos, 28, 5, 17, water);
 		addBlock(world, basePos, 28, 5, 18, water);
-		addBlock(world, basePos, 28, 5, 19, water);
+		addBlock(world, basePos, 28, 5, 19, chest);
 		addBlock(world, basePos, 28, 5, 20, gardencianBricks);
 		addBlock(world, basePos, 29, 5, 7, gardencianBricks);
 		addBlock(world, basePos, 29, 5, 8, carpet);
@@ -2082,7 +2093,7 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 17, 12, 11, gardencianBricks);
 		addBlock(world, basePos, 17, 12, 12, carpet);
 		addBlock(world, basePos, 17, 12, 13, petalCraftingStation);
-		addBlock(world, basePos, 17, 12, 14, carpet);
+		addBlock(world, basePos, 17, 12, 14, chestSouth);
 		addBlock(world, basePos, 17, 12, 15, carpet);
 		addBlock(world, basePos, 17, 12, 16, gardencianBricks);
 		addBlock(world, basePos, 18, 12, 11, rosidianBricks);
@@ -2766,5 +2777,10 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 		addBlock(world, basePos, 29, 22, 17, gardencianBricks);
 		addBlock(world, basePos, 29, 22, 18, gardencianBricks);
 		addBlock(world, basePos, 29, 22, 19, gardencianBricks);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureGardenCastle, basePos.add(6, 5, 19), basePos.add(28, 5, 19), basePos.add(17, 12, 14));
 	}
 }

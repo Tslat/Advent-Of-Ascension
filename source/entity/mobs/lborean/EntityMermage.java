@@ -4,22 +4,20 @@ import com.google.common.base.Predicate;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCyanShot;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityMermage extends AoARangedMob implements HunterEntity {
+public class EntityMermage extends AoARangedMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityMermage(World world) {
@@ -51,12 +49,12 @@ public class EntityMermage extends AoARangedMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 130;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 5;
+		return 14;
 	}
 
 	@Override
@@ -67,7 +65,7 @@ public class EntityMermage extends AoARangedMob implements HunterEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPoseidoLiving;
+		return SoundsRegister.mobMermageLiving;
 	}
 
 	@Nullable
@@ -82,26 +80,18 @@ public class EntityMermage extends AoARangedMob implements HunterEntity {
 		return SoundsRegister.mobMermageHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(40 - lootingMod) == 0)
-			dropItem(ItemRegister.waterloggedCoralCannon, 1);
-
-		if(rand.nextBoolean())
-			dropItem(ItemRegister.tokensBorean, 1 + rand.nextInt(2 + lootingMod));
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityMermage;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isInWater() && getHealth() > 0)
-			heal(0.6f);
+		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
+			heal(0.2f);
 	}
 
 	@Nullable
@@ -113,21 +103,5 @@ public class EntityMermage extends AoARangedMob implements HunterEntity {
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new EntityCyanShot(this, Enums.MobProjectileType.ENERGY);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 63;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 700;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

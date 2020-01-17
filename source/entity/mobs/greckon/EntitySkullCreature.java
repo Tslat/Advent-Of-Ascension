@@ -1,19 +1,27 @@
 package net.tslat.aoa3.entity.mobs.greckon;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntitySkullCreature extends AoAMeleeMob {
+public class EntitySkullCreature extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.6875f;
 
     public EntitySkullCreature(World world) {
         super(world, entityWidth, 2.3125f);
+
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
+        mobProperties.add(Enums.MobProperties.STATUS_IMMUNE);
     }
 
     @Override
@@ -23,17 +31,17 @@ public class EntitySkullCreature extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.4;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 40;
+        return 118;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 12;
     }
 
     @Override
@@ -59,23 +67,15 @@ public class EntitySkullCreature extends AoAMeleeMob {
         return SoundsRegister.mobSkullCreatureHit;
     }
 
+    @Nullable
     @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entitySkullCreature;
     }
 
+    @Nonnull
     @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-
-        if (getHealth() < 15) {
-            if ((getHealth() > 10 || getHealth() < 5) && getHealth() > 0)
-                heal(0.2f);
-        }
-    }
-
-    @Override
-    public boolean getIsInvulnerable() {
-        return getHealth() < 15 && (getHealth() > 10 || getHealth() < 5) && getHealth() > 0;
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

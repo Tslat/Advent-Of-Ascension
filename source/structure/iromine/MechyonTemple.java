@@ -1,9 +1,11 @@
 package net.tslat.aoa3.structure.iromine;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -13,7 +15,7 @@ public class MechyonTemple extends AoAStructure { //StructureSize: 11x11x12
 	private static final IBlockState dottedBrick = BlockRegister.bricksIroDotted.getDefaultState();
 	private static final IBlockState confusionTrap = BlockRegister.iroBrickTrap.getDefaultState();
 	private static final IBlockState mechyonSpawner = BlockRegister.spawnerMechyon.getDefaultState();
-	private static final IBlockState iroCrate = BlockRegister.iroCrate.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 
 	public MechyonTemple() {
 		super("MechyonTemple");
@@ -174,7 +176,7 @@ public class MechyonTemple extends AoAStructure { //StructureSize: 11x11x12
 		addBlock(world, basePos, 4, 1, 0, stripedBrick);
 		addBlock(world, basePos, 4, 1, 11, stripedBrick);
 		addBlock(world, basePos, 5, 1, 0, stripedBrick);
-		addBlock(world, basePos, 5, 1, 6, iroCrate);
+		addBlock(world, basePos, 5, 1, 6, chest);
 		addBlock(world, basePos, 5, 1, 11, stripedBrick);
 		addBlock(world, basePos, 6, 1, 0, stripedBrick);
 		addBlock(world, basePos, 6, 1, 11, stripedBrick);
@@ -560,5 +562,10 @@ public class MechyonTemple extends AoAStructure { //StructureSize: 11x11x12
 		addBlock(world, basePos, 8, 10, 7, dottedBrick);
 		addBlock(world, basePos, 8, 10, 8, dottedBrick);
 		addBlock(world, basePos, 8, 10, 9, dottedBrick);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureIroPassageChests, basePos.add(5, 1, 6));
 	}
 }

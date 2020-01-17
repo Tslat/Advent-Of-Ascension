@@ -5,9 +5,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -27,17 +28,17 @@ public class EntityParasect extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.5f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 80;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 7.5;
 	}
 
 	@Override
@@ -61,25 +62,20 @@ public class EntityParasect extends AoAMeleeMob {
 		return SoundsRegister.mobParasectHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityParasect;
+	}
+
 	@Override
 	public boolean getCanSpawnHere() {
 		return posY < 50 && super.getCanSpawnHere();
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(60 - lootingMod) == 0)
-			dropItem(ItemRegister.hiveChunk, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 45, 4, true, false));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 45, 4, false, true));
 	}
 }

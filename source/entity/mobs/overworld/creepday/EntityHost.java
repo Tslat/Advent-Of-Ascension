@@ -1,21 +1,19 @@
 package net.tslat.aoa3.entity.mobs.overworld.creepday;
 
 import com.google.common.base.Predicate;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,12 +39,12 @@ public class EntityHost extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0f;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 230;
+		return 120;
 	}
 
 	@Override
@@ -75,6 +73,12 @@ public class EntityHost extends AoAMeleeMob {
 		return SoundsRegister.mobHostLiving;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHost;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -97,17 +101,6 @@ public class EntityHost extends AoAMeleeMob {
 			world.spawnEntity(creeper);
 			world.playSound(null, posX, posY, posZ, SoundsRegister.mobHostDrop, SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.realmstoneCreeponia, 1);
-		dropItem(Items.GUNPOWDER, 16 + lootingMod * 5);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

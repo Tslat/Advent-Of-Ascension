@@ -2,7 +2,7 @@ package net.tslat.aoa3.dimension.immortallis;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -10,8 +10,10 @@ import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
-import net.tslat.aoa3.library.PortalCoordinatesContainer;
+import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.HashMap;
 
@@ -28,30 +30,19 @@ public class ImmortallisTeleporter extends AoATeleporter {
 	}
 
 	@Override
-	public void placeEntity(World world, Entity entity, float yaw) {
+	public BlockPos findExistingPortal(World world, Entity entity) {
 		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 			if (entity.hasCapability(AdventPlayerProvider.ADVENT_PLAYER, null)) {
-				PortalCoordinatesContainer loc = new PortalCoordinatesContainer(world.provider.getDimension(), entity.posX, entity.posY, entity.posZ);
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)entity);
+				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(world.provider.getDimension(), entity.posX, entity.posY, entity.posZ);
 
-				entity.getCapability(AdventPlayerProvider.ADVENT_PLAYER,null).setPortalReturnLocation(fromWorld.provider.getDimension(), loc);
+				plData.setPortalReturnLocation(entity.world.provider.getDimension(), portalLoc);
 			}
 
-			entity.motionX = 0;
-			entity.motionY = 0;
-			entity.motionZ = 0;
-			entity.rotationPitch = 0;
-			entity.rotationYaw = -90;
-
-			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP)entity).connection.setPlayerLocation(-5, 20, 3, entity.rotationYaw, entity.rotationPitch);
-			}
-			else {
-				entity.setLocationAndAngles(-5, 20, 3, entity.rotationYaw, entity.rotationPitch);
-			}
+			return new BlockPos(-5, 20, 3);
 		}
-		else {
-			super.placeEntity(world, entity, yaw);
-		}
+
+		return super.findExistingPortal(world, entity);
 	}
 
 	@Override

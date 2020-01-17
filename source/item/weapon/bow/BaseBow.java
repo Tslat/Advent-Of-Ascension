@@ -64,10 +64,6 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 		});
 	}
 
-	public float getDrawSpeedMod() {
-		return drawSpeedMultiplier;
-	}
-
 	public double getDamage() {
 		return dmg;
 	}
@@ -79,7 +75,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 		EntityPlayer pl = (EntityPlayer)shooter;
 		boolean infiniteAmmo = pl.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
 		ItemStack ammoStack = findAmmo(pl);
-		int charge = (int)((getMaxItemUseDuration(stack) - timeLeft) * drawSpeedMultiplier);
+		int charge = (int)((getMaxItemUseDuration(stack) - timeLeft) * getDrawSpeedMultiplier());
 		charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, world, pl, charge, !ammoStack.isEmpty() || infiniteAmmo);
 
 		if (charge < 0)
@@ -95,7 +91,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 				if (!world.isRemote) {
 					EntityHollyArrow arrow = makeArrow(pl, stack, ammoStack, velocity, !infiniteAmmo);
 
-					doArrowMods(arrow, shooter);
+					doArrowMods(arrow, shooter, timeLeft);
 					world.spawnEntity(arrow);
 				}
 
@@ -116,7 +112,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 			arrowEntity.setIsCritical(true);
 
 		if (powerEnchant > 0)
-			arrowEntity.setDamage(arrowEntity.getDamage() + (double)powerEnchant * 0.5D + 0.5D);
+			arrowEntity.setDamage(arrowEntity.getDamage() + (double)powerEnchant * 1.5D + 1D);
 
 		if (punchEnchant > 0)
 			arrowEntity.setKnockbackStrength(punchEnchant);
@@ -179,27 +175,31 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.ingotRosite), false) || super.getIsRepairable(stack, repairMaterial);
+		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
 	}
 
-	public void doArrowMods(EntityHollyArrow arrow, EntityLivingBase shooter) {}
+	public void doArrowMods(EntityHollyArrow arrow, EntityLivingBase shooter, int useTicksRemaining) {}
 
-	public void doImpactEffect(EntityHollyArrow arrow, Entity target, Entity shooter) {}
+	public void doImpactEffect(EntityHollyArrow arrow, Entity target, Entity shooter, float damage) {}
 
 	public void doBlockImpact(EntityHollyArrow arrow, IBlockState blockState, Entity shooter) {}
 
 	public void doArrowTick(EntityHollyArrow arrow, Entity shooter) {}
 
+	public float getArrowDamage(EntityHollyArrow arrow, Entity target, float currentDamage) {
+		return currentDamage;
+	}
+
 	@Override
 	public int getItemEnchantability() {
-		return 0;
+		return 8;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.arrows", TextFormatting.DARK_RED, Double.toString(dmg)));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.bow.drawSpeed", Double.toString(((int)(72000 / drawSpeedMultiplier) / 720) / (double)100)));
+		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.bow.drawSpeed", Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100)));
 		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.arrows", TextFormatting.LIGHT_PURPLE));
 	}
 }

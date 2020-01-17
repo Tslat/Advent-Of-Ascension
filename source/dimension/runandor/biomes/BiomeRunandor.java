@@ -1,14 +1,17 @@
 package net.tslat.aoa3.dimension.runandor.biomes;
 
+import net.minecraft.block.state.pattern.BlockMatcher;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import java.awt.*;
 import java.util.Random;
@@ -28,8 +31,8 @@ public class BiomeRunandor extends Biome {
 	public BiomeRunandor() {
 		super(properties);
 		setRegistryName("aoa3", "runandor");
-		this.topBlock = BlockRegister.grassRunic.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneRunic.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("runic_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("runic_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -48,6 +51,14 @@ public class BiomeRunandor extends Biome {
 	}
 
 	public class BiomeRunandorDecorator extends AoABiomeDecorator {
+		@Override
+		protected void doOreGen(World world, Biome biome, Random rand, BlockPos basePos, BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
+			for (int i = 0; i < ConfigurationUtil.OreConfig.elecanium.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneRunic))
+						.generate(world, rand, basePos.add(rand.nextInt(14) + 1, rand.nextInt(35) + 1, rand.nextInt(14) + 1));
+			}
+		}
+
 		@Override
 		protected void doPlantGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < 85; i++) {

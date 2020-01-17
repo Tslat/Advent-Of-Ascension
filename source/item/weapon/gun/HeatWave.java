@@ -12,24 +12,32 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityHotShot;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class HeatWave extends BaseGun implements AdventWeapon {
 	private final int firingDelay;
 	private final double dmg;
 
-	public HeatWave(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
+	public HeatWave(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
-		setUnlocalizedName("HeatWave");
+		setTranslationKey("HeatWave");
 		setRegistryName("aoa3:heat_wave");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunHeatWave;
 	}
 
 	@Override

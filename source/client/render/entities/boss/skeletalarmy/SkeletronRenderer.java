@@ -23,6 +23,7 @@ public class SkeletronRenderer extends RenderLiving<EntitySkeletron> {
 	@Override
 	public void doRender(EntitySkeletron entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
 	}

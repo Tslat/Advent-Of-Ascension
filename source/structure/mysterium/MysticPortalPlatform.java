@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityPortalMaster;
+import net.tslat.aoa3.entity.npcs.trader.EntityPortalMaster;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -18,7 +18,6 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 	private static final IBlockState runicStone = BlockRegister.stoneRunic.getDefaultState();
 	private static final IBlockState runandorPortal = BlockRegister.portalRunandor.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
-	private static final IBlockState greckonPortal = BlockRegister.portalGreckon.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
 	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getDefaultState().withProperty(FIXED_LAMP, true);
 
 	public MysticPortalPlatform() {
@@ -364,9 +363,8 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 		addBlock(world, basePos, 10, 27, 7, runicStone);
 		addBlock(world, basePos, 10, 27, 8, runicStone);
 		addBlock(world, basePos, 11, 27, 2, runicStone);
-		addBlock(world, basePos, 11, 27, 3, greckonPortal);
-		addBlock(world, basePos, 11, 27, 4, greckonPortal);
-		addBlock(world, basePos, 11, 27, 5, greckonPortal);
+		addBlock(world, basePos, 11, 27, 3, runicStone);
+		addBlock(world, basePos, 11, 27, 4, runicStone);
 		addBlock(world, basePos, 11, 27, 6, runicStone);
 		addBlock(world, basePos, 1, 28, 2, runicStone);
 		addBlock(world, basePos, 1, 28, 3, runandorPortal);
@@ -374,9 +372,6 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 		addBlock(world, basePos, 1, 28, 5, runandorPortal);
 		addBlock(world, basePos, 1, 28, 6, runicStone);
 		addBlock(world, basePos, 11, 28, 2, runicStone);
-		addBlock(world, basePos, 11, 28, 3, greckonPortal);
-		addBlock(world, basePos, 11, 28, 4, greckonPortal);
-		addBlock(world, basePos, 11, 28, 5, greckonPortal);
 		addBlock(world, basePos, 11, 28, 6, runicStone);
 		addBlock(world, basePos, 1, 29, 2, runicStone);
 		addBlock(world, basePos, 1, 29, 3, runandorPortal);
@@ -384,20 +379,14 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 		addBlock(world, basePos, 1, 29, 5, runandorPortal);
 		addBlock(world, basePos, 1, 29, 6, runicStone);
 		addBlock(world, basePos, 11, 29, 2, runicStone);
-		addBlock(world, basePos, 11, 29, 3, greckonPortal);
-		addBlock(world, basePos, 11, 29, 4, greckonPortal);
-		addBlock(world, basePos, 11, 29, 5, greckonPortal);
+		addBlock(world, basePos, 11, 29, 4, runicStone);
 		addBlock(world, basePos, 11, 29, 6, runicStone);
 		addBlock(world, basePos, 1, 30, 2, runicStone);
 		addBlock(world, basePos, 1, 30, 3, runicStone);
 		addBlock(world, basePos, 1, 30, 4, runicStone);
 		addBlock(world, basePos, 1, 30, 5, runicStone);
 		addBlock(world, basePos, 1, 30, 6, runicStone);
-		addBlock(world, basePos, 11, 30, 2, runicStone);
-		addBlock(world, basePos, 11, 30, 3, runicStone);
-		addBlock(world, basePos, 11, 30, 4, runicStone);
 		addBlock(world, basePos, 11, 30, 5, runicStone);
-		addBlock(world, basePos, 11, 30, 6, runicStone);
 	}
 
 	@Override

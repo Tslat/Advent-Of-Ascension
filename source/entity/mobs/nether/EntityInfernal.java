@@ -3,13 +3,11 @@ package net.tslat.aoa3.entity.mobs.nether;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -30,7 +28,6 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
 
         this.isImmuneToFire = true;
         this.mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
-        this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
     }
 
     @Override
@@ -45,17 +42,17 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
 
     @Override
     protected double getBaseMaxHealth() {
-        return 190;
+        return 95d;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 35;
+        return 8.5d;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.25d;
     }
 
     @Nullable
@@ -81,40 +78,15 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
         return SoundsRegister.veryHeavyStep;
     }
 
+    @Nullable
     @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityInfernal;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensNether, 1 + rand.nextInt(2 + lootingMod));
-
-        if (rand.nextInt(4) == 0)
-            dropItem(ArmourRegister.InfernalBody, 1);
-
-        if (rand.nextInt(4) == 0)
-            dropItem(ArmourRegister.InfernalLegs, 1);
-
-        if (rand.nextInt(4) == 0)
-            dropItem(ArmourRegister.InfernalHelmet, 1);
-
-        if (rand.nextInt(4) == 0)
-            dropItem(ArmourRegister.InfernalBoots, 1);
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitNether, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.ingotEmberstone, 2 + rand.nextInt(3 + lootingMod));
-        dropItem(ItemRegister.coinSilver, 10 + rand.nextInt(5 + lootingMod));
-    }
-
-    @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
-        return source.isFireDamage() || EntityUtil.isGunDamage(source);
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return source.isFireDamage();
     }
 
     @Override
@@ -126,10 +98,25 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
             if (attrib != null)
                 resist -= attrib.getAttributeValue();
 
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 50, 0, true, false));
+            target.setFire(5);
             target.addVelocity(motionX * 10.5 * resist, motionY * 0.5 * resist, motionZ * 10.5 * resist);
             target.velocityChanged = true;
         }
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        boolean success = super.attackEntityFrom(source, amount);
+
+        if (success && EntityUtil.isMeleeDamage(source))
+            source.getTrueSource().setFire(5);
+
+        return success;
+    }
+
+    @Override
+    protected float getSpawnChanceFactor() {
+        return 0.5f;
     }
 
     @Nonnull

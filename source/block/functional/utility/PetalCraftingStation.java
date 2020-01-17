@@ -11,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
@@ -19,7 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class PetalCraftingStation extends Block {
 	public PetalCraftingStation() {
 		super(Material.ROCK);
-		setUnlocalizedName("PetalCraftingStation");
+		setTranslationKey("PetalCraftingStation");
 		setRegistryName("aoa3:petal_crafting_station");
 		setHardness(5.0f);
 		setResistance(10.0f);
@@ -29,16 +30,30 @@ public class PetalCraftingStation extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			if (ItemUtil.consumeMultipleItemsSafely(player, new ItemStack(ItemRegister.smallPetalBlue), new ItemStack(ItemRegister.smallPetalGreen), new ItemStack(ItemRegister.smallPetalOrange),
-					new ItemStack(ItemRegister.smallPetalRed), new ItemStack(ItemRegister.smallPetalPurple))) {
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.petals));
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.petalCraftingStationSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+		if (player.getHeldItem(hand).getItem() == ItemRegister.petals) {
+			if (!player.capabilities.isCreativeMode)
+				player.getHeldItem(hand).shrink(1);
 
-				return true;
+			switch (player.getRNG().nextInt(4)) {
+				case 0:
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicBoots));
+					break;
+				case 1:
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicLegs));
+					break;
+				case 2:
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicBody));
+					break;
+				case 3:
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicHelmet));
+					break;
 			}
+
+			world.playSound(null, pos, SoundsRegister.petalCraftingStationSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 }

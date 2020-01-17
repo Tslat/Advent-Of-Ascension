@@ -1,21 +1,29 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
-import net.minecraft.item.Item;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityStimulo extends AoAMeleeMob {
+public class EntityStimulo extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.6f;
 
     public EntityStimulo(World world) {
         super(world, entityWidth, 1.875f);
+
+        mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
     }
 
     @Override
@@ -25,22 +33,22 @@ public class EntityStimulo extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 85;
+        return 164;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 15.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.27;
     }
 
     @Nullable
@@ -61,24 +69,44 @@ public class EntityStimulo extends AoAMeleeMob {
         return SoundsRegister.mobStimuloHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityStimulo;
+    }
+
     @Override
     public boolean getCanSpawnHere() {
         return posY < 35 && super.getCanSpawnHere();
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensShyrelands, 1 + rand.nextInt(3 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerShyre), 1);
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isBlasterDamage(source);
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (ticksExisted % 100 == 0)
-            heal(getHealth());
+        if (!world.isRemote) {
+            float healthPercent = EntityUtil.getCurrentHealthPercent(this);
+
+            if (healthPercent < 0.25) {
+                addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 0, true, false));
+            }
+            else if (healthPercent < 0.50) {
+                addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 1, true, false));
+            }
+            else if (healthPercent < 0.75) {
+                addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 2, true, false));
+            }
+        }
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

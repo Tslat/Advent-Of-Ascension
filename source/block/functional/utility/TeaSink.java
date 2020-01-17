@@ -1,6 +1,5 @@
 package net.tslat.aoa3.block.functional.utility;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,7 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.block.BasicNonCubeBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
@@ -44,10 +42,8 @@ public class TeaSink extends BasicNonCubeBlock {
 		fullState = this;
 	}
 
-	public TeaSink registerFullSink(IForgeRegistry<Block> registry) {
-		registry.register(fullState);
-
-		return this;
+	public TeaSink getFullSink() {
+		return fullState;
 	}
 
 	@Override
@@ -133,6 +129,6 @@ public class TeaSink extends BasicNonCubeBlock {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 }

@@ -1,17 +1,14 @@
 package net.tslat.aoa3.client.gui.mainwindow;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.IProgressMeter;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.KeyBinder;
+import net.tslat.aoa3.client.event.KeyBinder;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.RenderUtil;
@@ -144,7 +141,7 @@ public class AdventMainGui extends GuiScreen implements IProgressMeter {
 
 		private final ADVENT_WINDOW_TAB tabID;
 
-		public AdventMainGuiTabButton(int buttonId, int x, int y, String buttonText, ADVENT_WINDOW_TAB tab) {
+		private AdventMainGuiTabButton(int buttonId, int x, int y, String buttonText, ADVENT_WINDOW_TAB tab) {
 			super(buttonId, x, y, buttonWidth, buttonHeight, buttonText);
 
 			this.tabID = tab;
@@ -208,6 +205,11 @@ public class AdventMainGui extends GuiScreen implements IProgressMeter {
 				backgroundTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/hell/background.png");
 				menuButtonTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/hell/tab_buttons.png");
 				overlayTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/hell/overlay.png");
+				break;
+			case Crystals:
+				backgroundTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/crystals/background.png");
+				menuButtonTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/crystals/tab_buttons.png");
+				overlayTexture = new ResourceLocation("aoa3", "textures/gui/maingui/themes/crystals/overlay.png");
 				break;
 			default:
 				ConfigurationUtil.MainConfig.mainWindowTheme = Enums.MainWindowThemes.Default;

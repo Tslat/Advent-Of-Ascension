@@ -63,7 +63,7 @@ public class WorldProviderIromine extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable
@@ -79,7 +79,7 @@ public class WorldProviderIromine extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public float getCloudHeight() {
-		return 128f;
+		return -1000f;
 	}
 
 	@Nullable
@@ -96,11 +96,11 @@ public class WorldProviderIromine extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public boolean isSurfaceWorld() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
-		return 0.4F;
+		return 1f;
 	}
 }

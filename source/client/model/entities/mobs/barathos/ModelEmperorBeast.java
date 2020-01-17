@@ -6,16 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelEmperorBeast extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer leftleg2;
-	ModelRenderer rightleg2;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer head2;
-	ModelRenderer head3;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer leftLeg2;
+	private ModelRenderer rightLeg2;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
 
 	public ModelEmperorBeast() {
 		textureWidth = 128;
@@ -30,26 +30,26 @@ public class ModelEmperorBeast extends ModelBase {
 		body.setTextureSize(128, 64);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 83, 2)).addBox(-5.0f, 13.0f, -11.0f, 10, 4, 12);
-		rightleg.setRotationPoint(-7.0f, 7.0f, 6.0f);
-		rightleg.setTextureSize(128, 64);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 83, 2)).addBox(-5.0f, 13.0f, -11.0f, 10, 4, 12);
-		leftleg.setRotationPoint(7.0f, 7.0f, 6.0f);
-		leftleg.setTextureSize(128, 64);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
-		(leftleg2 = new ModelRenderer(this, 100, 22)).addBox(-3.0f, 0.0f, -4.0f, 6, 15, 8);
-		leftleg2.setRotationPoint(7.0f, 7.0f, 6.0f);
-		leftleg2.setTextureSize(128, 64);
-		leftleg2.mirror = true;
-		setRotation(leftleg2, -0.3490659f, 0.0f, 0.0f);
-		(rightleg2 = new ModelRenderer(this, 100, 22)).addBox(-3.0f, 0.0f, -4.0f, 6, 15, 8);
-		rightleg2.setRotationPoint(-7.0f, 7.0f, 6.0f);
-		rightleg2.setTextureSize(128, 64);
-		rightleg2.mirror = true;
-		setRotation(rightleg2, -0.3490659f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 83, 2)).addBox(-5.0f, 13.0f, -11.0f, 10, 4, 12);
+		rightLeg.setRotationPoint(-7.0f, 7.0f, 6.0f);
+		rightLeg.setTextureSize(128, 64);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 83, 2)).addBox(-5.0f, 13.0f, -11.0f, 10, 4, 12);
+		leftLeg.setRotationPoint(7.0f, 7.0f, 6.0f);
+		leftLeg.setTextureSize(128, 64);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg2 = new ModelRenderer(this, 100, 22)).addBox(-3.0f, 0.0f, -4.0f, 6, 15, 8);
+		leftLeg2.setRotationPoint(7.0f, 7.0f, 6.0f);
+		leftLeg2.setTextureSize(128, 64);
+		leftLeg2.mirror = true;
+		setRotation(leftLeg2, -0.3490659f, 0.0f, 0.0f);
+		(rightLeg2 = new ModelRenderer(this, 100, 22)).addBox(-3.0f, 0.0f, -4.0f, 6, 15, 8);
+		rightLeg2.setRotationPoint(-7.0f, 7.0f, 6.0f);
+		rightLeg2.setTextureSize(128, 64);
+		rightLeg2.mirror = true;
+		setRotation(rightLeg2, -0.3490659f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 24, 29)).addBox(-4.0f, 0.0f, -2.0f, 8, 23, 12);
 		body2.setRotationPoint(0.0f, -11.0f, -3.0f);
 		body2.setTextureSize(128, 64);
@@ -76,10 +76,10 @@ public class ModelEmperorBeast extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
-		leftleg2.render(par7);
-		rightleg2.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
+		leftLeg2.render(par7);
+		rightLeg2.render(par7);
 		body2.render(par7);
 		body3.render(par7);
 		head2.render(par7);
@@ -93,11 +93,11 @@ public class ModelEmperorBeast extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		rightleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2 - 0.349f;
-		rightleg2.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
-		leftleg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2 - 0.349f;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		rightLeg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2 - 0.349f;
+		rightLeg2.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		leftLeg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2 - 0.349f;
 	}
 }

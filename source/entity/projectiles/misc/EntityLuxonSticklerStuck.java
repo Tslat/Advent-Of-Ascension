@@ -1,13 +1,14 @@
 package net.tslat.aoa3.entity.projectiles.misc;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityLuxonSticklerStuck extends EntityThrowable {
 	private EntityLivingBase target;
@@ -49,22 +50,29 @@ public class EntityLuxonSticklerStuck extends EntityThrowable {
 
 		if (target != null && !target.isDead) {
 			setLocationAndAngles(target.posX, target.posY + target.getEyeHeight(), target.posZ, 0, 360);
-
-			if (shooter instanceof EntityPlayer)
-				PlayerUtil.addResourceToPlayer((EntityPlayer)shooter, Enums.Resources.SOUL, 0.01f);
 		}
 		else {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(thrower, world, this, 2.0f);
 
 			if (!world.isRemote)
 				setDead();
+
+			return;
 		}
 
 		if (age >= 100) {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(thrower, world, posX, posY + 1, posZ, 2.0f);
 
 			if (!world.isRemote)
 				setDead();
+
+			return;
+		}
+
+		if (world.getTotalWorldTime() % 40 == 0) {
+			for (EntityLivingBase entity : world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(7), PredicateUtil.IS_HOSTILE_MOB)) {
+				entity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 45, 0, false, true));
+			}
 		}
 	}
 }

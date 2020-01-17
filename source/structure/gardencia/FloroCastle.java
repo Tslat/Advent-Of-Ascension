@@ -1,16 +1,22 @@
 package net.tslat.aoa3.structure.gardencia;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
 
 public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 	private static final IBlockState unbreakableStem = BlockRegister.unbreakablePlantStem.getDefaultState();
-	private static final IBlockState blackPetals = BlockRegister.petalsBlack.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
+	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);
+	private static final IBlockState chestEast = chest.withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public FloroCastle() {
 		super("FloroCastle");
@@ -538,6 +544,7 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 3, 1, 8, unbreakableStem);
 		addBlock(world, basePos, 3, 1, 10, unbreakableStem);
 		addBlock(world, basePos, 3, 1, 11, unbreakableStem);
+		addBlock(world, basePos, 3, 1, 12, chestEast);
 		addBlock(world, basePos, 3, 1, 13, unbreakableStem);
 		addBlock(world, basePos, 3, 1, 15, unbreakableStem);
 		addBlock(world, basePos, 3, 1, 19, unbreakableStem);
@@ -709,6 +716,7 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 17, 1, 12, unbreakableStem);
 		addBlock(world, basePos, 17, 1, 14, unbreakableStem);
 		addBlock(world, basePos, 17, 1, 16, unbreakableStem);
+		addBlock(world, basePos, 17, 1, 18, chest);
 		addBlock(world, basePos, 17, 1, 19, unbreakableStem);
 		addBlock(world, basePos, 17, 1, 22, unbreakableStem);
 		addBlock(world, basePos, 17, 1, 23, unbreakableStem);
@@ -2617,6 +2625,7 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 5, 8, 7, unbreakableStem);
 		addBlock(world, basePos, 5, 8, 10, unbreakableStem);
 		addBlock(world, basePos, 5, 8, 12, unbreakableStem);
+		addBlock(world, basePos, 5, 8, 15, chest);
 		addBlock(world, basePos, 5, 8, 16, unbreakableStem);
 		addBlock(world, basePos, 5, 8, 18, unbreakableStem);
 		addBlock(world, basePos, 5, 8, 21, unbreakableStem);
@@ -2674,9 +2683,11 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 10, 8, 0, unbreakableStem);
 		addBlock(world, basePos, 10, 8, 3, unbreakableStem);
 		addBlock(world, basePos, 10, 8, 8, unbreakableStem);
+		addBlock(world, basePos, 10, 8, 9, chestWest);
 		addBlock(world, basePos, 10, 8, 10, unbreakableStem);
 		addBlock(world, basePos, 10, 8, 14, unbreakableStem);
 		addBlock(world, basePos, 10, 8, 18, unbreakableStem);
+		addBlock(world, basePos, 10, 8, 19, chestWest);
 		addBlock(world, basePos, 10, 8, 20, unbreakableStem);
 		addBlock(world, basePos, 10, 8, 24, unbreakableStem);
 		addBlock(world, basePos, 11, 8, 0, unbreakableStem);
@@ -2744,6 +2755,7 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 16, 8, 3, unbreakableStem);
 		addBlock(world, basePos, 16, 8, 4, unbreakableStem);
 		addBlock(world, basePos, 16, 8, 6, unbreakableStem);
+		addBlock(world, basePos, 16, 8, 10, chest);
 		addBlock(world, basePos, 16, 8, 11, unbreakableStem);
 		addBlock(world, basePos, 16, 8, 15, unbreakableStem);
 		addBlock(world, basePos, 16, 8, 16, unbreakableStem);
@@ -2998,5 +3010,10 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 		addBlock(world, basePos, 14, 9, 15, unbreakableStem);
 
 		FloroCastlePt2.addBlocks(this, world, rand, basePos);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureFloroCastle, basePos.add(3, 1, 12), basePos.add(17, 1, 18), basePos.add(5, 8, 15), basePos.add(10, 8, 9), basePos.add(10, 8, 19), basePos.add(16, 8, 10), basePos.add(20, 14, 16), basePos.add(4, 18, 17), basePos.add(22, 18, 13));
 	}
 }

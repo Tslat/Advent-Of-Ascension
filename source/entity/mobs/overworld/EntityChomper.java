@@ -4,24 +4,23 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
+
+import static net.tslat.aoa3.library.misc.AoAAttributes.BLOODTHIRSTY_BUFF;
 
 public class EntityChomper extends AoAMeleeMob {
-	private static final AttributeModifier BLOODTHIRSTY_BUFF = new AttributeModifier(UUID.fromString(Enums.AttributeUUIDS.MOB_BLOODTHIRST_BUFF), "AoABloodthirstyBuff", 1.05, 1);
 	public static final float entityWidth = 0.8f;
 
 	public EntityChomper(World world) {
@@ -35,7 +34,7 @@ public class EntityChomper extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.2d;
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class EntityChomper extends AoAMeleeMob {
 			EntityUtil.removeAttributeModifier(this, SharedMonsterAttributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
 		}
 		else {
-			EntityUtil.applyAttributeModifier(this, SharedMonsterAttributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
+			EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
 		}
 
 		super.setAttackTarget(target);
@@ -86,6 +85,12 @@ public class EntityChomper extends AoAMeleeMob {
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityChomper;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -105,7 +110,7 @@ public class EntityChomper extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block);
+		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

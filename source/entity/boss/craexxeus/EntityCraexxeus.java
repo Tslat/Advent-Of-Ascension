@@ -1,20 +1,14 @@
 package net.tslat.aoa3.entity.boss.craexxeus;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -30,9 +24,6 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/craexxeus.png");
 	public static final float entityWidth = 3.5f;
 	private int chargeCooldown = 300;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityCraexxeus(World world) {
 		super(world, entityWidth, 4.4375f);
@@ -87,6 +78,12 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 		return SoundsRegister.shotCraexxeusFire;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCraexxeus;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
@@ -102,9 +99,18 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueCraexxeus), 1);
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicCraexxeus;
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -133,7 +139,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 					double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 					world.playSound(null, posX, posY, posZ, SoundsRegister.shotCraexxeusNukeFire, SoundCategory.HOSTILE, 1.0f, 1.0f);
-					projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+					projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 					world.spawnEntity(projectile);
 				}
 			}
@@ -168,24 +174,5 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicCraexxeus, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

@@ -4,11 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
@@ -28,17 +28,17 @@ public class EntityDoubler extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.1d;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 100;
+        return 70;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 21;
+        return 8d;
     }
 
     @Override
@@ -64,27 +64,15 @@ public class EntityDoubler extends AoAMeleeMob {
         return SoundsRegister.mobDoublerHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityDoubler;
+    }
+
     @Override
     public boolean getCanSpawnHere() {
         return posY < 120 && super.getCanSpawnHere();
-    }
-
-    @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.realmstoneDeeplands, 1);
-
-        if (rand.nextBoolean())
-            dropItem(WeaponRegister.archergunSkeletal, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinSilver, 5 + rand.nextInt(9 + lootingMod));
     }
 
     @Override

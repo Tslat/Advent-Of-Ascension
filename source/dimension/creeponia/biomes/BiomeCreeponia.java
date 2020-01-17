@@ -31,8 +31,8 @@ public class BiomeCreeponia extends Biome {
 	public BiomeCreeponia() {
 		super(properties);
 		setRegistryName("aoa3", "creeponia");
-		this.topBlock = BlockRegister.grassCreeponia.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtCreeponia.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("creeponia_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("creeponia_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

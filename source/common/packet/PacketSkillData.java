@@ -17,10 +17,14 @@ public class PacketSkillData implements IMessage {
 
 	public PacketSkillData() {}
 
-	public PacketSkillData(final int skill, final int lvl, final float xp, final int opt) {
+	public PacketSkillData(final int skill, final int lvl, final float xp, Integer opt) {
 		skillId = skill;
 		level = lvl;
 		this.xp = xp;
+
+		if (opt == null)
+			opt = 0;
+
 		data = opt;
 	}
 
@@ -47,7 +51,7 @@ public class PacketSkillData implements IMessage {
 				AdventGuiTabPlayer.setSkillData(skill, msg.xp, msg.level, msg.data);
 			}
 			else {
-				AdventOfAscension.getLogger().log(Level.WARN, "Error trying to set skill data in client skills holder, skipping");
+				AdventOfAscension.logMessage(Level.WARN, "Error trying to set skill data in client skills holder, skipping");
 			}
 
 			return null;

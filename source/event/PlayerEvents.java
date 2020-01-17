@@ -1,417 +1,358 @@
 package net.tslat.aoa3.event;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.block.*;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.block.generation.stone.StoneBlock;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
+import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
+import net.tslat.aoa3.common.packet.PacketResourceData;
+import net.tslat.aoa3.common.packet.PacketSkillData;
+import net.tslat.aoa3.common.packet.PacketTributeData;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.WeaponRegister;
+import net.tslat.aoa3.dimension.AoAWorldProvider;
+import net.tslat.aoa3.entity.misc.EntityAnimaStone;
 import net.tslat.aoa3.entity.misc.EntityBloodlust;
+import net.tslat.aoa3.event.custom.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dimension.*;
-import net.tslat.aoa3.item.armour.HaulingArmour;
+import net.tslat.aoa3.item.misc.BlankRealmstone;
+import net.tslat.aoa3.item.misc.ReservedItem;
+import net.tslat.aoa3.item.misc.summon.BossSpawningItem;
 import net.tslat.aoa3.item.tool.SpecialHarvestTool;
+import net.tslat.aoa3.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.*;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 import net.tslat.aoa3.utils.skills.*;
+import org.apache.logging.log4j.Level;
 
-import java.util.Random;
+import java.util.UUID;
 
 public class PlayerEvents {
 	@SubscribeEvent
 	public void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
-		if (ev.phase == TickEvent.Phase.END) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.player);
+		if (ev.phase == TickEvent.Phase.END && !ev.player.world.isRemote) {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.player);
 
-			cap.tickPlayer();
+			plData.tickPlayer();
 
 			if (!ev.player.world.isRemote && !ev.player.capabilities.isCreativeMode && ev.player.onGround && !ev.player.isRiding())
-				ExpeditionUtil.handleRunningTick(ev, cap);
+				ExpeditionUtil.handleRunningTick(ev, plData);
 
 			if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.shyrelands) {
-				ShyrelandsEvents.doPlayerTick(cap);
+				ShyrelandsEvents.doPlayerTick(plData);
 			}
 			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.lelyetia) {
-				LelyetiaEvents.doPlayerTick(cap);
+				LelyetiaEvents.doPlayerTick(plData);
 			}
 			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.voxPonds) {
-				VoxPondsEvents.doPlayerTick(cap);
+				VoxPondsEvents.doPlayerTick(plData);
 			}
 			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.candyland) {
-				CandylandEvents.doPlayerTick(cap);
+				CandylandEvents.doPlayerTick(plData);
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onPlayerHit(final LivingAttackEvent ev) {
-		if (ev.getEntity() instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
+		if (!ev.getEntity().world.isRemote && ev.getEntity() instanceof EntityPlayer) {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
 
-			if (!ev.getEntity().world.isRemote && EntityUtil.isPhysicalDamage(ev.getSource(), ev.getEntity(), ev.getAmount()))
-				InnervationUtil.tryDodge(ev);
+			plData.handleIncomingAttack(ev);
+		}
+	}
 
-			if (cap.getArmourSet() != null)
-				cap.getArmourSet().handleAttackImmunities(ev, cap);
+	@SubscribeEvent
+	public void onPlayerLevelUp(final PlayerLevelChangeEvent ev) {
+		if (ev.getSkill() == Enums.Skills.INNERVATION) {
+			double healthBuff = InnervationUtil.getHealthBuff(ev.getNewLevel());
+
+			if (healthBuff != InnervationUtil.getHealthBuff(ev.getOldLevel())) {
+				EntityUtil.removeAttributeModifier(ev.getEntityPlayer(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.INNERVATION_HEALTH_BUFF);
+
+				if (healthBuff > 0)
+					EntityUtil.applyAttributeModifierSafely(ev.getEntityPlayer(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(healthBuff));
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onPlayerDamaged(final LivingDamageEvent ev) {
-		if (ev.getEntityLiving() instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntityLiving());
+		if (!ev.getEntityLiving().world.isRemote && ev.getEntityLiving() instanceof EntityPlayer) {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntityLiving());
 
 			if (ev.getEntityLiving().getHealth() > 0.0f) {
-				if (cap.getArmourSet() != null) {
-					cap.getArmourSet().handleDamageTriggers(ev, cap);
-				}
+				plData.handleDamageTriggers(ev);
 
-				if (ev.getSource().getTrueSource() instanceof EntityLivingBase && AdventOfAscension.rand.nextInt(10) == 0)
-					cap.enableRevenge((EntityLivingBase)ev.getSource().getTrueSource());
+				if (ev.getSource().getTrueSource() instanceof EntityLivingBase && AdventOfAscension.rand.nextInt(15) == 0)
+					plData.enableRevenge((EntityLivingBase)ev.getSource().getTrueSource());
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onPlayerHurt(final LivingHurtEvent ev) {
-		if (ev.getEntityLiving() instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntityLiving());
+		if (!ev.getEntityLiving().world.isRemote) {
+			if (ev.getEntityLiving() instanceof EntityPlayer) {
+				EntityPlayer pl = (EntityPlayer)ev.getEntityLiving();
 
-			if (cap.getArmourSet() != null)
-				cap.getArmourSet().handleDamageReductions(ev, cap);
-		}
-		else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
+				PlayerUtil.getAdventPlayer(pl).handleIncomingDamage(ev);
 
-			if (cap.getArmourSet() != null)
-				cap.getArmourSet().handleAttackBuffs(ev, cap);
+				if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getImmediateSource() instanceof EntityCreeper && !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, ev.getSource().getImmediateSource().getEntityBoundingBox().grow(3)).isEmpty() && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
+					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCreeponia));
+			}
+			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
 
-			if (EntityUtil.isMeleeDamage(ev.getSource()) && !ev.getSource().isDamageAbsolute()) {
-				ButcheryUtil.tryCritical(ev, cap);
+				plData.handleOutgoingDamage(ev);
 
-				if (AdventOfAscension.rand.nextInt(30) == 0)
-					ev.getEntity().world.spawnEntity(new EntityBloodlust(ev.getEntity().world, ev.getEntity().getPosition()));
+				if (EntityUtil.isMeleeDamage(ev.getSource()) && !ev.getSource().isDamageAbsolute()) {
+					ButcheryUtil.tryCritical(ev, plData);
+
+					if (AdventOfAscension.rand.nextInt(30) == 0)
+						ev.getEntity().world.spawnEntity(new EntityBloodlust(ev.getEntity().world, ev.getEntity().getPosition()));
+				}
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onPlayerFall(final LivingFallEvent ev) {
-		if (ev.getEntity() instanceof EntityPlayer) {
-			final EntityPlayer pl = (EntityPlayer)ev.getEntity();
+		if (!ev.getEntity().world.isRemote && ev.getEntity() instanceof EntityPlayer) {
+			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.consumeItem((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.realmstoneBlank)))
+				ItemUtil.givePlayerItemOrDrop((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.realmstoneLelyetia));
 
-			if (!pl.world.isRemote) {
-				AdventPlayerCapability cap = (AdventPlayerCapability)pl.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
 
-				switch (cap.getArmourSetType()) {
-					case ALACRITY:
-					case AMETHIND:
-					case HUNTER:
-					case LUNAR:
-					case ROCKBONE:
-						ev.setCanceled(true);
-						break;
-					default:
-						ExpeditionUtil.handleFallEvent(ev, cap);
-						break;
+			plData.handlePlayerFalling(ev);
+			ExpeditionUtil.handleFallEvent(ev, plData);
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onEntityDeath(final LivingDeathEvent ev) {
+		if (!ev.getEntity().world.isRemote) {
+			if (ev.getEntity() instanceof EntityPlayer) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
+
+				plData.stats().resetAllTribute();
+				plData.handlePlayerDeath(ev);
+				ReservedItem.handlePlayerDeath(plData.player());
+
+				// Patching broken forge/vanilla code
+				if (!ev.getEntity().isDead && ev.getSource().getTrueSource() instanceof EntityLivingBase)
+					ev.getSource().getTrueSource().onKillEntity((EntityLivingBase)ev.getEntity());
+			}
+			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
+				if (ev.getEntity().world.provider.getDimension() == 0) {
+					if (ev.getEntity().world.isDaytime()) {
+						PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
+
+						plData.stats().addTribute(Enums.Deities.EREBON, 8);
+						plData.stats().addTribute(Enums.Deities.LUXON, -8);
+					}
+				}
+				else if (ev.getEntity().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.crystevia && ev.getEntity().getClass().toString().contains("Construct")) {
+					ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((EntityPlayer)ev.getSource().getTrueSource(), ItemRegister.realmstoneBlank);
+
+					if (blankRealmstoneStack != null)
+						BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource());
 				}
 			}
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onPlayerDeath(final LivingDeathEvent ev) {
-		if (ev.getEntity() instanceof EntityPlayer) {
-			EntityPlayer pl = (EntityPlayer)ev.getEntity();
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
-
-			cap.resetAllTribute();
-
-			if (!pl.world.isRemote) {
-				if (!pl.world.getGameRules().getBoolean("keepInventory")) {
-					for (int i = 0; i < pl.inventory.getSizeInventory(); i++) {
-						ItemStack stack = pl.inventory.getStackInSlot(i);
-
-						if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-							cap.interventionStacks.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
-							pl.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
-						}
-					}
-
-					for (int i = 0; i < 4; i++) {
-						ItemStack stack = pl.inventory.armorInventory.get(i);
-
-						if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-							cap.interventionStacks.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
-							pl.inventory.armorInventory.set(i, ItemStack.EMPTY);
-						}
-					}
-				}
-
-				if (pl instanceof EntityPlayerMP) {
-					if (ev.getSource().damageType.equals("vox_ponds"))
-						ModUtil.completeAdvancement((EntityPlayerMP)pl, "voxponds/oops", "atmosphere_death");
-				}
-			}
-
-
-			if (!ev.getEntity().isDead && ev.getSource().getTrueSource() instanceof EntityLivingBase)
-				ev.getSource().getTrueSource().onKillEntity((EntityPlayer)ev.getEntity());
-		}
-		else if (ev.getEntity().world.provider.getDimension() == 0 && ev.getEntity().world.isDaytime() && ev.getSource().getTrueSource() instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
-
-			cap.addTribute(Enums.Deities.EREBON, 8);
-			cap.addTribute(Enums.Deities.LUXON, -8);
-		}
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onPlayerChangeEquipment(final LivingEquipmentChangeEvent ev) {
+		if (!ev.getEntityLiving().world.isRemote && ev.getEntityLiving() instanceof EntityPlayer)
+			PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntityLiving()).equipment().markDirty();
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onPlayerRespawn(final net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent ev) {
-		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.player);
-
-		if (!cap.interventionStacks.isEmpty()) {
-			for (ItemStack stack : cap.interventionStacks) {
-				ItemUtil.givePlayerItemOrDrop(ev.player, stack);
-			}
-
-			cap.interventionStacks.clear();
-		}
+		if (!ev.player.world.isRemote)
+			PlayerUtil.getAdventPlayer(ev.player).handlePlayerRespawn(ev);
 	}
 
 	@SubscribeEvent
 	public void onPlayerClone(final PlayerEvent.Clone ev) {
-		AdventPlayerCapability oldCap = (AdventPlayerCapability)ev.getOriginal().getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-		NBTTagCompound oldTag = oldCap.saveNBTData();
-		AdventPlayerCapability newCap = (AdventPlayerCapability)ev.getEntityPlayer().getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-		newCap.loadNBTData(oldTag);
-
-		newCap.interventionStacks = oldCap.interventionStacks;
+		if (!ev.getEntityPlayer().world.isRemote)
+			PlayerUtil.clonePlayerData(ev.getOriginal(), ev.getEntityPlayer());
 	}
 
 	@SubscribeEvent
 	public void onWorldChange(final net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent ev) {
-		if (ev.fromDim != 0) {
-			PlayerUtil.getAdventPlayer(ev.player).resetAllTribute();
-		}
-		else {
-			World world = DimensionManager.getWorld(ev.fromDim);
+		if (!ev.player.world.isRemote)
+			PlayerUtil.getAdventPlayer(ev.player).stats().resetAllTribute();
 
-			if (!world.isDaytime()) {
-				AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.player);
-				long timeRemaining = 24000L - world.getWorldTime();
-
-				if (cap.getTribute(Enums.Deities.LUXON) == 200)
-					ev.player.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, (int)timeRemaining, 0, true, false));
-
-				if (cap.getTribute(Enums.Deities.EREBON) == 200)
-					ev.player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, (int)timeRemaining, 0, true, false));
-
-				if (cap.getTribute(Enums.Deities.PLUTON) == 200)
-					ev.player.addPotionEffect(new PotionEffect(MobEffects.LUCK, (int)timeRemaining, 1, true, false));
-
-				if (cap.getTribute(Enums.Deities.SELYAN) == 200)
-					ev.player.addPotionEffect(new PotionEffect(MobEffects.SPEED, (int)timeRemaining, 0, true, false));
-			}
-		}
+		if (ev.fromDim == ConfigurationUtil.MainConfig.dimensionIds.lelyetia && ev.player.hasNoGravity())
+			ev.player.setNoGravity(false);
 	}
 
 	@SubscribeEvent
 	public void onBlockHarvest(final BlockEvent.HarvestDropsEvent ev) {
-		if (ev.getWorld().isRemote || ev.getHarvester() == null || ev.getHarvester() instanceof FakePlayer)
+		if (ev.getHarvester() == null || ev.getHarvester() instanceof FakePlayer)
 			return;
 
-		Item tool = ev.getHarvester().getHeldItem(EnumHand.MAIN_HAND).getItem();
+		EntityPlayer pl = ev.getHarvester();
+		Item tool = pl.getHeldItem(EnumHand.MAIN_HAND).getItem();
 
 		if (tool instanceof SpecialHarvestTool)
 			((SpecialHarvestTool)tool).doHarvestEffect(ev);
 
+		if (ev.getWorld().isRemote)
+			return;
+
 		Block bl = ev.getState().getBlock();
 
 		if (bl instanceof BlockCrops || bl instanceof BlockFlower || bl instanceof BlockVine || bl instanceof BlockLeaves) {
-			if (bl instanceof BlockCrops)
-				PlayerUtil.getAdventPlayer(ev.getHarvester()).addTribute(Enums.Deities.SELYAN, 2);
+			if (!(bl instanceof BlockCrops) || ((BlockCrops)bl).isMaxAge(ev.getState())) {
+				if (bl instanceof BlockCrops) {
+					PlayerUtil.getAdventPlayer(pl).stats().addTribute(Enums.Deities.SELYAN, 2);
 
-			if (bl instanceof BlockLeaves ? AdventOfAscension.rand.nextInt(35) == 0 : bl instanceof BlockCrops ? (((BlockCrops)bl).isMaxAge(ev.getState()) && AdventOfAscension.rand.nextInt(8) == 0) : AdventOfAscension.rand.nextInt(8) == 0) {
-				EntityItem animaDrop = new EntityItem(ev.getWorld(), ev.getPos().getX(), ev.getPos().getY(), ev.getPos().getZ(), new ItemStack(ItemRegister.animaStone));
+					if (AdventOfAscension.rand.nextInt(500) == 0)
+						pl.entityDropItem(new ItemStack(WeaponRegister.gunGardener), 0);
+				}
 
-				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.heartStoneSpawn, SoundCategory.MASTER, 1.0f, 1.0f);
-				ev.getWorld().spawnEntity(animaDrop);
+				if (bl instanceof BlockLeaves ? AdventOfAscension.rand.nextInt(35) == 0 : bl instanceof BlockCrops ? AdventOfAscension.rand.nextInt(6) == 0 : AdventOfAscension.rand.nextInt(8) == 0) {
+					EntityAnimaStone animaStone = new EntityAnimaStone(ev.getWorld(), ev.getPos());
+
+					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.heartStoneSpawn, SoundCategory.MASTER, 1.0f, 1.0f);
+					ev.getWorld().spawnEntity(animaStone);
+				}
 			}
 		}
 		else if (bl == Blocks.STONE || bl == Blocks.NETHERRACK || bl instanceof StoneBlock || bl == Blocks.END_STONE) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.getHarvester());
-			int lvl = cap.getLevel(Enums.Skills.FORAGING);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+			int lvl = plData.stats().getLevel(Enums.Skills.FORAGING);
 
 			if (bl != Blocks.NETHERRACK || AdventOfAscension.rand.nextBoolean()) {
 				if (ForagingUtil.shouldGetLoot(lvl)) {
-					ForagingUtil.ForagingDrop loot = ForagingUtil.getLoot(lvl);
-					EntityItem entityItem = new EntityItem(ev.getWorld());
-					ItemStack lootDrop = loot.getLootStack();
+					ev.getDrops().addAll(ForagingUtil.getLoot(pl));
 
-					if (cap.getArmourSetType() == Enums.ArmourSets.FORAGING)
-						lootDrop.setCount(lootDrop.getCount() * 2);
+					if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.FORAGING)
+						ev.getDrops().addAll(ForagingUtil.getLoot(pl));
 
-					entityItem.setItem(lootDrop);
-					entityItem.setPosition(ev.getPos().getX() + 0.5, ev.getPos().getY(), ev.getPos().getZ() + 0.5);
-					ev.getWorld().spawnEntity(entityItem);
-					cap.addXp(Enums.Skills.FORAGING, loot.xp, false);
 					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
 
 					if (ev.getWorld().provider.getDimension() == 0)
-						cap.addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
+						plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
 				}
 			}
 		}
 		else if (bl instanceof BlockLog) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.getHarvester());
-			int lvl = cap.getLevel(Enums.Skills.LOGGING);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+			int lvl = plData.stats().getLevel(Enums.Skills.LOGGING);
 
 			if (LoggingUtil.shouldGetLoot(lvl)) {
 				if (AdventOfAscension.rand.nextBoolean()) {
-					LoggingUtil.LoggingDrop loot = LoggingUtil.getLoot(lvl);
-					EntityItem entityItem = new EntityItem(ev.getWorld());
-					ItemStack lootDrop = loot.getLootStack();
+					ev.getDrops().addAll(LoggingUtil.getLoot(pl));
 
-					if (cap.getArmourSetType() == Enums.ArmourSets.LOGGING)
-						lootDrop.setCount(lootDrop.getCount() * 2);
-
-					entityItem.setItem(lootDrop);
-					entityItem.setPosition(ev.getPos().getX() + 0.5, ev.getPos().getY(), ev.getPos().getZ() + 0.5);
-					ev.getWorld().spawnEntity(entityItem);
-					cap.addXp(Enums.Skills.LOGGING, loot.xp, false);
+					if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.LOGGING)
+						ev.getDrops().addAll(LoggingUtil.getLoot(pl));
 				}
 				else {
+					ItemStack duplicateStack = ItemStack.EMPTY;
 
 					for (ItemStack stack : ev.getDrops()) {
 						if (stack.getItem() == Item.getItemFromBlock(bl)) {
-							stack = stack.copy();
+							duplicateStack = stack.copy();
 
-							stack.setCount(lvl > 50 ? 2 : 1);
+							duplicateStack.setCount(lvl > 50 ? 2 : 1);
+							plData.stats().addXp(Enums.Skills.LOGGING, (float)Math.pow(lvl, 1.65D) * 3, false);
 
-							EntityItem item = new EntityItem(ev.getWorld(), ev.getPos().getX(), ev.getPos().getY(), ev.getPos().getZ(), stack);
-
-							ev.getWorld().spawnEntity(item);
-							cap.addXp(Enums.Skills.LOGGING, (float)Math.pow(lvl, 1.65D) * 3, false);
 							break;
 						}
 					}
 
-					if (ev.getWorld().provider.getDimension() == 0)
-						cap.addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
-
-					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
+					if (!duplicateStack.isEmpty())
+						ev.getDrops().add(duplicateStack);
 				}
+
+				if (ev.getWorld().provider.getDimension() == 0)
+					plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
+
+				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
 			}
+		}
+		else if (bl instanceof BlockOre && ev.getPos().getY() <= 5 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank))) {
+			ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneDeeplands));
 		}
 	}
 
 	@SubscribeEvent
 	public void onBlockBreak(final BlockEvent.BreakEvent ev) {
-		if (!ev.getPlayer().capabilities.isCreativeMode && WorldUtil.isBlockProtectedWorld(ev.getWorld().provider.getDimension()))
+		if (!ev.getPlayer().capabilities.isCreativeMode && !ev.getWorld().isBlockModifiable(ev.getPlayer(), ev.getPos()))
 			ev.setCanceled(true);
 	}
 
 	@SubscribeEvent
 	public void onBlockPlace(final BlockEvent.PlaceEvent ev) {
-		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.getPlayer());
-
-		if (!ev.getPlayer().capabilities.isCreativeMode && WorldUtil.isBlockProtectedWorld(ev.getWorld().provider.getDimension())) {
+		if (!ev.getPlayer().capabilities.isCreativeMode && ev.getWorld().provider instanceof AoAWorldProvider && !((AoAWorldProvider)ev.getWorld().provider).canPlaceBlock(ev.getPlayer(), ev.getPos(), ev.getPlacedBlock())) {
 			ev.setCanceled(true);
+
+			return;
+		}
+
+		if (!ev.getWorld().isRemote && PlayerUtil.isWearingFullSet(ev.getPlayer(), Enums.ArmourSets.HYDRANGIC)) {
+			if (ev.getPlacedBlock().getBlock() instanceof IGrowable && ItemDye.applyBonemeal(new ItemStack(Items.DYE, 1, 15), ev.getWorld(), ev.getPos())) {
+				ev.getWorld().playEvent(2005, ev.getPos(), 0);
+				ev.getPlayer().inventory.damageArmor(4);
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onBlockInteract(final PlayerInteractEvent.RightClickBlock ev) {
-		if (!ev.getEntityPlayer().capabilities.isCreativeMode && WorldUtil.isBlockProtectedWorld(ev.getWorld().provider.getDimension())) {
-			Item item = ev.getItemStack().getItem();
-
-			if (item instanceof ItemBlock || item instanceof ItemBucket || item instanceof ItemArmorStand || item instanceof ItemHangingEntity) {
-				ev.setCancellationResult(EnumActionResult.SUCCESS);
-				ev.setUseItem(Event.Result.DENY);
-				ev.setResult(Event.Result.DENY);
-				ev.setCanceled(true);
-			}
+		if (!ev.getEntityPlayer().capabilities.isCreativeMode && ev.getWorld().provider instanceof AoAWorldProvider && !((AoAWorldProvider)ev.getWorld().provider).canInteractWith(ev.getEntityPlayer(), ev.getPos(), null, ev.getItemStack())) {
+			ev.setCancellationResult(EnumActionResult.SUCCESS);
+			ev.setUseItem(Event.Result.DENY);
+			ev.setResult(Event.Result.DENY);
+			ev.setCanceled(true);
 		}
 	}
 
 	@SubscribeEvent
 	public void onEmptyBucketUse(final FillBucketEvent ev) {
-		if (!ev.getEntityPlayer().capabilities.isCreativeMode && WorldUtil.isBlockProtectedWorld(ev.getWorld().provider.getDimension())) {
+		if (!ev.getEntityPlayer().capabilities.isCreativeMode && ev.getWorld().provider instanceof AoAWorldProvider && !((AoAWorldProvider)ev.getWorld().provider).canInteractWith(ev.getEntityPlayer(), ev.getTarget() == null ? null  : ev.getTarget().getBlockPos(), null, ev.getEmptyBucket())) {
 			ev.setCanceled(true);
 			ev.setResult(Event.Result.DENY);
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerPickup(final net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent ev) {
-		if (!ev.player.world.isRemote) {
-			if (ev.getStack().getItem() == ItemRegister.animaStone) {
-				AnimaUtil.doAnimaStonePickup(ev);
-			}
-			else if (ev.getStack().getItem() == ItemRegister.heartStone) {
-				InnervationUtil.doHeartStonePickup(ev);
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerFish(final ItemFishedEvent ev) {
-		if (!ev.getDrops().isEmpty() && ev.getDrops().get(0).getItem() instanceof ItemFishFood) {
-			if (AdventOfAscension.rand.nextInt(3) == 0 && !(ev.getEntityPlayer() instanceof FakePlayer)) {
-				AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(ev.getEntityPlayer());
-				int lvl = cap.getLevel(Enums.Skills.HAULING);
-				HaulingUtil.HaulingDrop loot = HaulingUtil.getLoot(lvl);
-
-				if (cap.getArmourSetType() == Enums.ArmourSets.HAULING)
-					loot = HaulingArmour.doLootBonusCheck(cap, loot);
-
-				EntityFishHook lure = ev.getHookEntity();
-				BlockPos lurePos = lure.getPosition();
-				BlockPos playerPos = ev.getEntityPlayer().getPosition();
-				EntityItem lootEntity = new EntityItem(ev.getHookEntity().world, lurePos.getX(), lurePos.getY(), lurePos.getZ(), loot.getLootStack());
-				int distX = playerPos.getX() - lurePos.getX();
-				int distY = playerPos.getY() - lurePos.getY();
-				int distZ = playerPos.getZ() - lurePos.getZ();
-				double hyp = MathHelper.sqrt(distX * distX + distY * distY + distZ * distZ);
-				lootEntity.motionX = distX * 0.1D;
-				lootEntity.motionY = distY * 0.1D + (double)MathHelper.sqrt(hyp) * 0.12D;
-				lootEntity.motionZ = distZ * 0.1D;
-
-				lure.world.spawnEntity(lootEntity);
-				lure.world.spawnEntity(new EntityXPOrb(lure.world, playerPos.getX(), playerPos.getY() + 0.5D, playerPos.getZ(), AdventOfAscension.rand.nextInt(10) + 2));
-				cap.addXp(Enums.Skills.HAULING, loot.xp, false);
-				ev.setCanceled(true);
-			}
 		}
 	}
 
@@ -420,12 +361,120 @@ public class PlayerEvents {
 		EntityPlayer pl = ev.getEntityPlayer();
 
 		if (!pl.world.isRemote && pl.world.provider.getDimension() == 0) {
-			if (pl.world instanceof WorldServer) {
-				AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+			PlayerUtil.getAdventPlayer(pl).stats().resetAllTribute();
 
-				cap.resetAllTribute();
+			if (pl.world instanceof WorldServer)
 				OverworldEvents.doWorldStartCheck(pl.world);
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerLogin(final net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent ev) {
+		if (ev.player instanceof EntityPlayerMP && !ev.player.world.isRemote) {
+			UUID uuid = ev.player.getGameProfile().getId();
+			String msg = null;
+
+			if (AdventOfAscension.instance().isTslat(uuid)) {
+				msg = TextFormatting.DARK_RED + "It begins...Is this the end?";
+
+				((WorldServer)ev.player.world).spawnParticle(EnumParticleTypes.SMOKE_LARGE, ev.player.posX, ev.player.posY + 0.2, ev.player.posZ, 16, 0.5, 0.5, 0.5, 0.1);
+			}
+			else if (uuid.equals(UUID.fromString("010318ef-28fc-4c7c-8940-2f0d62eabfa6"))) {
+				msg = TextFormatting.LIGHT_PURPLE + "Xolova creeps in to watch you suffer. Feel free to die now.";
+			}
+			else if (PlayerCrownHandler.isCrazyDonator(uuid)) {
+				msg = TextFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
+			}
+
+			if (msg != null)
+				FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().sendMessage(new TextComponentString(msg));
+
+			OverworldEvents.alertNewPlayer(ev.player.world, ev.player);
+
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.player);
+			PlayerDataManager.PlayerStats stats = plData.stats();
+
+			for (Enums.Skills sk : Enums.Skills.values()) {
+				PacketUtil.network.sendTo(new PacketSkillData(sk.id, stats.getLevelForDisplay(sk), stats.getExp(sk), stats.getSkillData(Enums.Skills.EXPEDITION)), (EntityPlayerMP)ev.player);
+			}
+
+			EntityUtil.applyAttributeModifierSafely(ev.player, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(InnervationUtil.getHealthBuff(stats.getLevel(Enums.Skills.INNERVATION))));
+			PacketUtil.network.sendTo(new PacketTributeData(stats.getTribute(Enums.Deities.EREBON), stats.getTribute(Enums.Deities.LUXON), stats.getTribute(Enums.Deities.PLUTON), stats.getTribute(Enums.Deities.SELYAN)), (EntityPlayerMP)ev.player);
+			PacketUtil.network.sendTo(new PacketResourceData(stats.getResourceValue(Enums.Resources.CREATION), stats.getResourceValue(Enums.Resources.ENERGY), stats.getResourceValue(Enums.Resources.RAGE), stats.getResourceValue(Enums.Resources.SOUL), plData.isRevengeActive()), (EntityPlayerMP)ev.player);
+			PlayerCrownHandler.syncWithNewClient((EntityPlayerMP)ev.player);
+
+			Advancement rootAdv = ModUtil.getAdvancement("overworld/root");
+
+			if (rootAdv != null) {
+				PlayerAdvancements plAdvancements = ((EntityPlayerMP)ev.player).getAdvancements();
+
+				if (!plAdvancements.getProgress(rootAdv).isDone()) {
+					plAdvancements.grantCriterion(ModUtil.getAdvancement("overworld/by_the_books"), "legitimate");
+					plAdvancements.grantCriterion(rootAdv, "playerjoin");
+				}
+			}
+			else {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things. This may cause issues");
+
+				if (ConfigurationUtil.MainConfig.doVerboseDebugging) {
+					AdventOfAscension.logOptionalMessage("Printing out current advancements list...");
+					FMLCommonHandler.instance().getMinecraftServerInstance().getAdvancementManager().getAdvancements().forEach(advancement -> AdventOfAscension.logOptionalMessage(advancement.getId().toString()));
+				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onItemToss(final ItemTossEvent ev) {
+		World world = ev.getPlayer().getEntityWorld();
+
+		if (!world.isRemote) {
+			EntityItem entityItem = ev.getEntityItem();
+			Item item = entityItem.getItem().getItem();
+
+			if (item == ItemRegister.realmstoneBlank) {
+				if (entityItem.isInLava())
+					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(ItemRegister.realmstoneNether));
+			}
+			else if (item instanceof BossSpawningItem) {
+				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+					PlayerUtil.getAdventPlayer(ev.getPlayer()).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
+					return;
+				}
+
+				ev.setCanceled(true);
+				world.spawnEntity(EntityUtil.newBossEntityItemFromExisting(entityItem, ev.getPlayer()));
+
+				BossSpawningItem bossItem = (BossSpawningItem)item;
+
+				if (bossItem.getThrowingSound() != null)
+					world.playSound(null, entityItem.posX, entityItem.posY, entityItem.posZ, bossItem.getThrowingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerPickupXp(final PlayerPickupXpEvent ev) {
+		EntityPlayer pl = ev.getEntityPlayer();
+
+		if (!pl.world.isRemote && ev.getOrb().xpValue > 0) {
+			int i = ItemUtil.findItemInInventory(pl, ItemRegister.expFlask);
+
+			if (i < 0)
+				return;
+
+			ItemStack stack = pl.inventory.getStackInSlot(i);
+
+			ExpFlask.addExp((EntityPlayerMP)ev.getEntityPlayer(), i, stack, ev.getOrb().xpValue);
+			ev.setCanceled(true);
+			ev.getOrb().xpValue = 0;
+			ev.getOrb().setDead();
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerFishing(final ItemFishedEvent ev) {
+		if (ev.getEntityPlayer().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lborean && ev.getEntityPlayer().getRNG().nextInt(10) == 0)
+			ev.getDrops().add(new ItemStack(ItemRegister.callOfTheDrake));
 	}
 }

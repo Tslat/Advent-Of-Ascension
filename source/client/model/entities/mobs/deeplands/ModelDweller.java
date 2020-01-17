@@ -6,13 +6,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelDweller extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer head2;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer head2;
 
 	public ModelDweller() {
 		textureWidth = 64;
@@ -27,16 +27,16 @@ public class ModelDweller extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
-		rightleg.setRotationPoint(-3.0f, 18.0f, 0.0f);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
-		leftleg.setRotationPoint(3.0f, 18.0f, 0.0f);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
+		rightLeg.setRotationPoint(-3.0f, 18.0f, 0.0f);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
+		leftLeg.setRotationPoint(3.0f, 18.0f, 0.0f);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 48, 5)).addBox(-4.0f, 0.0f, -2.0f, 4, 23, 4);
 		body2.setRotationPoint(2.0f, -8.0f, 0.0f);
 		body2.setTextureSize(64, 32);
@@ -58,8 +58,8 @@ public class ModelDweller extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		body2.render(par7);
 		body3.render(par7);
 		head2.render(par7);
@@ -72,8 +72,8 @@ public class ModelDweller extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

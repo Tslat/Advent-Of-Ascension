@@ -16,10 +16,10 @@ import java.util.List;
 public class TrollBasherAxe extends BaseSword implements AdventWeapon {
 	final ToolMaterial material;
 
-	public TrollBasherAxe(final ToolMaterial material, Float dmg, Double speed) {
-		super(material, dmg, speed);
+	public TrollBasherAxe(final ToolMaterial material, final double speed) {
+		super(material, speed);
 		this.material = material;
-		setUnlocalizedName("TrollBasherAxe");
+		setTranslationKey("TrollBasherAxe");
 		setRegistryName("aoa3:troll_basher_axe");
 		setHarvestLevel("axe", 3);
 	}
@@ -27,6 +27,7 @@ public class TrollBasherAxe extends BaseSword implements AdventWeapon {
 	@Override
 	public float getDestroySpeed(ItemStack stack, IBlockState state) {
 		Material material = state.getMaterial();
+
 		return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : 4.0f;
 	}
 

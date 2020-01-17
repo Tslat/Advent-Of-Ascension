@@ -33,8 +33,8 @@ public class BiomeIromine extends Biome {
 	public BiomeIromine() {
 		super(properties);
 		setRegistryName("aoa3", "iromine");
-		this.topBlock = BlockRegister.grassIromine.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneIromine.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("iromine_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("iromine_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -49,7 +49,7 @@ public class BiomeIromine extends Biome {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getSkyColorByTemp(float currentTemperature) {
-		return Color.YELLOW.getRGB();
+		return 0;
 	}
 
 	public class BiomeIromineDecorator extends AoABiomeDecorator {
@@ -121,16 +121,18 @@ public class BiomeIromine extends Biome {
 
 		@Override
 		protected void doMiscGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			posX = basePos.getX() + rand.nextInt(16);
-			posZ = basePos.getZ() + rand.nextInt(16);
-			posY = world.getHeight(posX + 3, posZ + 3) + 15 + rand.nextInt(5);
+			if (rand.nextInt(50) == 0) {
+				posX = basePos.getX() + rand.nextInt(16);
+				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = world.getHeight(posX + 3, posZ + 3) + 15 + rand.nextInt(5);
 
-			if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR) {
-				if (rand.nextBoolean()) {
-					StructuresHandler.generateStructure("IroDoubler", world, rand, pos.setPos(posX, posY, posZ));
-				}
-				else {
-					StructuresHandler.generateStructure("IroFloater", world, rand, pos.setPos(posX, posY, posZ));
+				if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR) {
+					if (rand.nextBoolean()) {
+						StructuresHandler.generateStructure("IroDoubler", world, rand, pos.setPos(posX, posY, posZ));
+					}
+					else {
+						StructuresHandler.generateStructure("IroFloater", world, rand, pos.setPos(posX, posY, posZ));
+					}
 				}
 			}
 		}

@@ -7,8 +7,10 @@ import net.minecraft.item.ItemFishFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.food.HealingFishFood;
 import net.tslat.aoa3.utils.EntityUtil;
@@ -92,5 +94,11 @@ public class EntityGnawer extends AoAMinion {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return getHurtSound(DamageSource.FALL);
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGnawer;
 	}
 }

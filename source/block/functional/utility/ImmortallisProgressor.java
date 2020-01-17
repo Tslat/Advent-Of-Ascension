@@ -12,7 +12,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.boss.flash.EntityFlash;
 import net.tslat.aoa3.entity.boss.klobber.EntityKlobber;
@@ -20,15 +19,16 @@ import net.tslat.aoa3.entity.boss.mirage.EntityMirage;
 import net.tslat.aoa3.entity.boss.proshield.EntityProshield;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class ImmortallisProgressor extends Block {
 	private final int place;
 
 	public ImmortallisProgressor(String name, String registryName, int place) {
 		super(Material.ROCK);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(-1f);
 		setResistance(999999999f);
@@ -40,16 +40,16 @@ public class ImmortallisProgressor extends Block {
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			AdventPlayerCapability cap;
+			PlayerDataManager plData;
 
 			switch (place) {
 				case 1:
 					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin0))) {
 						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.returnCrystal))) {
-							cap = PlayerUtil.getAdventPlayer(player);
+							plData = PlayerUtil.getAdventPlayer(player);
 
-							cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.item.returnCrystal.noSpace"));
-							cap.resetAllTribute();
+							plData.sendThrottledChatMessage("message.feedback.item.returnCrystal.noSpace");
+							plData.stats().resetAllTribute();
 							player.entityDropItem(new ItemStack(ItemRegister.progressCoin0), 0.5f);
 						}
 						else {
@@ -62,7 +62,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 2:
-					if (PlayerUtil.getAdventPlayer(player).getTribute(Enums.Deities.PLUTON) >= 100) {
+					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) >= 100) {
 						if (world.getEntitiesWithinAABB(EntityKlobber.class, new AxisAlignedBB(52, 16, -13, 82, 26, 17)).size() == 0) {
 							EntityKlobber klobber = new EntityKlobber(world);
 
@@ -85,7 +85,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 4:
-					if (PlayerUtil.getAdventPlayer(player).getTribute(Enums.Deities.EREBON) >= 100) {
+					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) >= 100) {
 						if (world.getEntitiesWithinAABB(EntityProshield.class, new AxisAlignedBB(107, 16, -13, 137, 26, 17)).size() == 0) {
 							EntityProshield proshield = new EntityProshield(world);
 
@@ -109,7 +109,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 6:
-					if (PlayerUtil.getAdventPlayer(player).getTribute(Enums.Deities.PLUTON) == 200) {
+					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) == 200) {
 						if (world.getEntitiesWithinAABB(EntityMirage.class, new AxisAlignedBB(153, 19, -8, 183, 29, 22)).size() == 0) {
 							EntityMirage mirage = new EntityMirage(world);
 
@@ -132,7 +132,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 8:
-					if (PlayerUtil.getAdventPlayer(player).getTribute(Enums.Deities.EREBON) == 200) {
+					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) == 200) {
 						if (world.getEntitiesWithinAABB(EntityFlash.class, new AxisAlignedBB(218, 16, -12, 248, 26, 18)).size() == 0) {
 							EntityFlash flash = new EntityFlash(world);
 
@@ -150,7 +150,7 @@ public class ImmortallisProgressor extends Block {
 					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin4))) {
 						player.setPositionAndUpdate(0, 20, 0);
 						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.returnCrystal));
-						PlayerUtil.getAdventPlayer(player).resetAllTribute();
+						PlayerUtil.getAdventPlayer(player).stats().resetAllTribute();
 
 						return true;
 					}

@@ -1,8 +1,10 @@
 package net.tslat.aoa3.entity.mobs.mysterium;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -28,17 +30,17 @@ public class EntitySpiritGuardian extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1;
+		return 0.15;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 60;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 11.5;
 	}
 
 	@Override
@@ -62,6 +64,12 @@ public class EntitySpiritGuardian extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundsRegister.mobSpiritLiving;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySpiritGuardian;
 	}
 
 	@Override

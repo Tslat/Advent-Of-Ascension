@@ -1,22 +1,21 @@
 package net.tslat.aoa3.entity.mobs.creeponia;
 
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
 
-public class EntityKingCreeper extends EntityCreeper {
+public class EntityKingCreeper extends EntityCreeponiaCreeper {
     public static final float entityWidth = 0.6f;
 
     public EntityKingCreeper(World world) {
-        super(world);
+        super(world, entityWidth, 1.9375f);
 
-        setSize(entityWidth, 1.9375f);
+        fuseTime = 80;
     }
 
     @Override
@@ -25,11 +24,23 @@ public class EntityKingCreeper extends EntityCreeper {
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+    protected double getBaseKnockbackResistance() {
+        return 0.1d;
+    }
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.95);
+    @Override
+    protected double getBaseMaxHealth() {
+        return 85d;
+    }
+
+    @Override
+    protected double getBaseMovementSpeed() {
+        return 0.23d;
+    }
+
+    @Override
+	public float getExplosionStrength() {
+        return 6f;
     }
 
     @Nullable
@@ -48,17 +59,9 @@ public class EntityKingCreeper extends EntityCreeper {
         return SoundsRegister.mobCreepoidHit;
     }
 
+    @Nullable
     @Override
-    protected boolean isValidLightLevel() {
-        return true;
-    }
-
-    @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        dropItem(ItemRegister.coinGold, 1 + rand.nextInt(2 + lootingModifier));
-
-        if (wasRecentlyHit) {
-            dropItem(ItemRegister.realmstoneCreeponia, 1);
-        }
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityKingCreeper;
     }
 }

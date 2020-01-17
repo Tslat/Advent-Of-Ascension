@@ -5,6 +5,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityDischargeShot extends BaseBullet implements HardProjectile {
 	public EntityDischargeShot(World world) {
@@ -25,6 +26,6 @@ public class EntityDischargeShot extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(getThrower(), posX, posY, posZ, 2.5f, false);
+		WorldUtil.createExplosion(getThrower(), world, this, 1.8f);
 	}
 }

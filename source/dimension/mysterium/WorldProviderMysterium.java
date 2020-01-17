@@ -69,7 +69,7 @@ public class WorldProviderMysterium extends WorldProvider implements AoAWorldPro
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable

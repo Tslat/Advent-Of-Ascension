@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -27,7 +28,7 @@ public class WorldProviderCeleve extends WorldProvider implements AoAWorldProvid
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = true;
+		this.hasSkyLight = !ConfigurationUtil.MainConfig.fasterFloatingDimensions;
 		this.biomeProvider = DimensionRegister.worldTypeCeleve.getBiomeProvider(world);
 	}
 
@@ -64,7 +65,7 @@ public class WorldProviderCeleve extends WorldProvider implements AoAWorldProvid
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable

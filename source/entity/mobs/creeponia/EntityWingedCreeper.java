@@ -1,26 +1,21 @@
 package net.tslat.aoa3.entity.mobs.creeponia;
 
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
 
-public class EntityWingedCreeper extends EntityCreeper {
+public class EntityWingedCreeper extends EntityCreeponiaCreeper {
     public static final float entityWidth = 0.6f;
 
     public EntityWingedCreeper(World world) {
-        super(world);
-
-        setSize(entityWidth, 1.625f);
+        super(world, entityWidth, 1.625f);
     }
 
     @Override
@@ -29,11 +24,23 @@ public class EntityWingedCreeper extends EntityCreeper {
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+    protected double getBaseKnockbackResistance() {
+        return 0.15d;
+    }
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(45);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.1);
+    @Override
+    protected double getBaseMaxHealth() {
+        return 55d;
+    }
+
+    @Override
+    protected double getBaseMovementSpeed() {
+        return 0.29d;
+    }
+
+    @Override
+    public float getExplosionStrength() {
+        return 3.1f;
     }
 
     @Nullable
@@ -53,16 +60,12 @@ public class EntityWingedCreeper extends EntityCreeper {
     }
 
     @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 2 + rand.nextInt(5 + lootingModifier));
+    public void fall(float distance, float damageMultiplier) {}
 
-        if (wasRecentlyHit) {
-            if (rand.nextBoolean())
-                dropItem(ItemRegister.tokensCreeponia, 1 + rand.nextInt(3 + lootingModifier));
-
-            if (rand.nextInt(4) == 0)
-                dropItem(Item.getItemFromBlock(BlockRegister.bannerCreepoid), 1);
-        }
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityWingedCreeper;
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.boss.hiveking.EntityHiveKing;
@@ -16,15 +17,20 @@ public class HiveSpawner extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityHiveKing hiveKing = new EntityHiveKing(player.world);
+		EntityHiveKing hiveKing = new EntityHiveKing(player.world, 0);
 
-		hiveKing.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		hiveKing.setLocationAndAngles(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
 		player.world.spawnEntity(hiveKing);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.hiveKing.spawn", player.getDisplayNameString()), blockPos);
 	}
 
 	@Override
+	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
+		return player.world.getEntitiesWithinAABB(EntityHiveKing.class, new AxisAlignedBB(pos).grow(20)).isEmpty();
+	}
+
+	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.hiveChunk;
+		return ItemRegister.hiveEgg;
 	}
 }

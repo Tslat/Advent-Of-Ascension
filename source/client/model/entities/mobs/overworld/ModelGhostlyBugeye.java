@@ -8,15 +8,15 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelGhostlyBugeye extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer leg5;
-	ModelRenderer leg6;
-	ModelRenderer body2;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer leg5;
+	private ModelRenderer leg6;
+	private ModelRenderer body2;
 
 	public ModelGhostlyBugeye() {
 		textureWidth = 64;

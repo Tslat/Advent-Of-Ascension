@@ -4,12 +4,14 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -26,17 +28,17 @@ public class Rosidons extends BasicFood {
 		super.onFoodEaten(stack, world, player);
 
 		if (!world.isRemote) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			if (player.dimension == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern || player.dimension == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
-				cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.item.rosidons.dimFail"));
+				plData.sendThrottledChatMessage("message.feedback.item.rosidons.dimFail");
 				return;
 			}
 
 			int calculatedY = WorldUtil.getTrueWorldHeight(world, (int)player.posX, (int)player.posZ);
 
 			if (calculatedY == 0) {
-				cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.item.rosidons.noHeightFail"));
+				plData.sendThrottledChatMessage("message.feedback.item.rosidons.noHeightFail");
 				return;
 			}
 
@@ -44,6 +46,7 @@ public class Rosidons extends BasicFood {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(StringUtil.getLocaleString("item.Rosidons.desc.1"));

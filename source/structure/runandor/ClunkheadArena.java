@@ -13,7 +13,6 @@ public class ClunkheadArena extends AoAStructure { //StructureSize: 24x14x20
 	private static final IBlockState runicGlass = BlockRegister.glassRunic.getDefaultState();
 	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
 	private static final IBlockState runicGuardianSpawner = BlockRegister.spawnerRunicGuardian.getDefaultState();
-	private static final IBlockState recreationStation = BlockRegister.recreationStation.getDefaultState();
 	private static final IBlockState clunkheadAltar = BlockRegister.clunkheadAltar.getDefaultState();
 
 	public ClunkheadArena() {
@@ -429,7 +428,6 @@ public class ClunkheadArena extends AoAStructure { //StructureSize: 24x14x20
 		addBlock(world, basePos, 10, 1, 18, runicConstructBricks);
 		addBlock(world, basePos, 11, 1, 1, runicConstructBricks);
 		addBlock(world, basePos, 11, 1, 5, runicConstructBricks);
-		addBlock(world, basePos, 11, 1, 7, recreationStation);
 		addBlock(world, basePos, 11, 1, 14, runicConstructBricks);
 		addBlock(world, basePos, 11, 1, 18, runicConstructBricks);
 		addBlock(world, basePos, 12, 1, 1, runicConstructBricks);

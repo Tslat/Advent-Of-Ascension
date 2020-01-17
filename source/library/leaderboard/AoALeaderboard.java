@@ -3,12 +3,12 @@ package net.tslat.aoa3.library.leaderboard;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.common.packet.leaderboard.PacketLeaderboardStats;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.PacketUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -44,7 +44,7 @@ public class AoALeaderboard extends Thread {
 				}
 			}
 			catch (Exception e) {
-				AdventOfAscension.getLogger().log(Level.INFO, "Exception encountered while running an AoALeaderboard task, skipping.");
+				AdventOfAscension.logMessage(Level.INFO, "Exception encountered while running an AoALeaderboard task, skipping.");
 				e.printStackTrace();
 			}
 		}
@@ -79,11 +79,14 @@ public class AoALeaderboard extends Thread {
 		taskQueue.offer(THREAD_KILLER);
 	}
 
-	public static void init() {
-		new AoALeaderboard().start();
+	public static AoALeaderboard init() {
+		AoALeaderboard thread = new AoALeaderboard();
+		thread.start();
 		running = true;
 		taskQueue.clear();
 		taskQueue.offer(new InitTask());
+
+		return thread;
 	}
 
 	public static void save() {
@@ -148,13 +151,13 @@ public class AoALeaderboard extends Thread {
 				skillLeaderboard.addOrUpdatePlayer(player, lvl);
 
 			if (totalsLeaderboard != null) {
-				final AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
+				final PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-				if (cap != null) {
+				if (plData != null) {
 					int total = 0;
 
 					for (Enums.Skills skill : Enums.Skills.values()) {
-						total += cap.getLevel(skill);
+						total += plData.stats().getLevel(skill);
 					}
 
 					totalsLeaderboard.addOrUpdatePlayer(player, total);

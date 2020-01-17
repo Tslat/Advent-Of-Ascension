@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.projectiles.staff;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityHaunterShot extends BaseEnergyShot {
 	public EntityHaunterShot(World world) {
@@ -21,8 +22,7 @@ public class EntityHaunterShot extends BaseEnergyShot {
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (getAge() % 4 == 0) {
-			world.createExplosion(getThrower(), posX, posY, posZ, 2.0f, false);
-		}
+		if (!world.isRemote && getAge() % 4 == 0)
+			WorldUtil.createExplosion(getThrower(), world, this, 2.0f);
 	}
 }

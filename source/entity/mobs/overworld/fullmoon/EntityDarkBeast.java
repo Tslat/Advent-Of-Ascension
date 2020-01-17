@@ -1,24 +1,18 @@
 package net.tslat.aoa3.entity.mobs.overworld.fullmoon;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityDarkBeast extends AoAMeleeMob implements HunterEntity {
+public class EntityDarkBeast extends AoAMeleeMob {
 	public static final float entityWidth = 1.15f;
 
 	public EntityDarkBeast(World world) {
@@ -32,22 +26,22 @@ public class EntityDarkBeast extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.5d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 65;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 8;
+		return 5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.329;
+		return 0.3;
 	}
 
 	@Nullable
@@ -66,29 +60,10 @@ public class EntityDarkBeast extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobDarkBeastHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.moonstone, 1);
-
-		if (rand.nextInt(50 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterMoonShiner, 1);
-
-		if (rand.nextInt(14 - lootingMod) == 0)
-			dropItem(ItemRegister.screamShield, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSoul), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityDarkBeast;
 	}
 
 	@Override
@@ -100,20 +75,5 @@ public class EntityDarkBeast extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
 		return Enums.CreatureEvents.FULL_MOON;
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 1;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 15;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 }

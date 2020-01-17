@@ -1,25 +1,29 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityPaladin extends AoAMeleeMob {
+public class EntityPaladin extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6875f;
 
 	public EntityPaladin(World world) {
 		super(world, entityWidth, 2.0f);
+
+		mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -29,22 +33,27 @@ public class EntityPaladin extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.2d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 300;
+		return 109;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 16d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.207d;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 18;
 	}
 
 	@Nullable
@@ -64,26 +73,20 @@ public class EntityPaladin extends AoAMeleeMob {
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(40 - lootingMod) == 0)
-			dropItem(WeaponRegister.shotgunPurityShotgun, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensRunandor, 1 + rand.nextInt(3 + lootingMod));
-
-		if (rand.nextInt(40 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneBarathos, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityPaladin;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
 	}
 
+	@Nonnull
 	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 150, 2, true, true));
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

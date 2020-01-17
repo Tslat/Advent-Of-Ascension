@@ -1,21 +1,34 @@
 package net.tslat.aoa3.entity.mobs.crystevia;
 
-import net.minecraft.item.Item;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityConstructStrength extends AoAMeleeMob {
+public class EntityConstructStrength extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 1f;
 
     public EntityConstructStrength(World world) {
         super(world, entityWidth, 2.375f);
+
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -25,22 +38,27 @@ public class EntityConstructStrength extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.5;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 30;
+        return 69;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 12;
+        return 15;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
         return 0.2875;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 3;
     }
 
     @Nullable
@@ -61,15 +79,49 @@ public class EntityConstructStrength extends AoAMeleeMob {
         return SoundsRegister.mobCrystalConstructHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(3) == 0)
-            dropItem(ItemRegister.tokensCrystevia, 1 + rand.nextInt(2 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityConstructOfStrength;
+    }
 
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.gemstonesRed, 3);
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
 
-        if (rand.nextInt(6) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerCrystal), 1);
+        if (isEntityAlive() && getHealth() < getMaxHealth())
+            heal(0.1f);
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
+    }
+
+    @Override
+    public void addPotionEffect(PotionEffect effect) {
+        if (effect.getPotion() == MobEffects.STRENGTH)
+            effect.combine(new PotionEffect(effect.getPotion(), effect.getDuration(), (effect.getAmplifier() + 1) * 4, effect.getIsAmbient(), effect.doesShowParticles()));
+
+        super.addPotionEffect(effect);
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity target) {
+        if (super.attackEntityAsMob(target)) {
+
+            if (!world.isRemote && target instanceof EntityPlayer && ((EntityPlayer)target).getHealth() > 0 && isPotionActive(MobEffects.STRENGTH) && ItemUtil.consumeItem((EntityPlayer)target, new ItemStack(ItemRegister.realmstoneBlank)))
+                ItemUtil.givePlayerItemOrDrop((EntityPlayer)target, new ItemStack(ItemRegister.realmstoneImmortallis));
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

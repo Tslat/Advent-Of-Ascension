@@ -23,5 +23,4 @@ public class EntityCannonball extends BaseBullet implements HardProjectile {
 	public EntityCannonball(World world, double x, double y, double z) {
 		super(world, x, y, z);
 	}
-
 }

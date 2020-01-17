@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.boss.skeletalarmy;
 
 import com.google.common.base.Predicate;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -85,6 +86,11 @@ public class EntityStrongSkeleHopper extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundEvents.ENTITY_SKELETON_HURT;
+	}
+
+	@Override
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override

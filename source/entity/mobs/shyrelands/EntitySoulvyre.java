@@ -1,16 +1,17 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -33,12 +34,12 @@ public class EntitySoulvyre extends AoAMeleeMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 95;
+        return 178;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 18.5;
     }
 
     @Override
@@ -64,27 +65,22 @@ public class EntitySoulvyre extends AoAMeleeMob {
         return SoundsRegister.mobSoulvyreHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entitySoulvyre;
+    }
+
     @Override
     public boolean getCanSpawnHere() {
         return posY < 35 && super.getCanSpawnHere();
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensShyrelands, 1 + rand.nextInt(3 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerShyre), 1);
-    }
-
-    @Override
     protected void doMeleeEffect(Entity target) {
-        if (isPotionActive(MobEffects.RESISTANCE))
-            addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 200, 0, true, true));
-
-        if (isPotionActive(MobEffects.STRENGTH))
-            addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 200, 1, true, true));
-
-        addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200, 1, true, true));
+        if (target instanceof EntityPlayerMP) {
+            if (PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 10, true))
+                heal(10);
+        }
     }
 }

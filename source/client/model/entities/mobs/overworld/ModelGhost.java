@@ -8,11 +8,11 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelGhost extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightarm;
-	ModelRenderer leftarm;
-	ModelRenderer body2;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightArm;
+	private ModelRenderer leftArm;
+	private ModelRenderer body2;
 
 	public ModelGhost() {
 		textureWidth = 64;
@@ -27,16 +27,16 @@ public class ModelGhost extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightarm = new ModelRenderer(this, 40, 16)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
-		rightarm.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm.setTextureSize(64, 32);
-		rightarm.mirror = true;
-		setRotation(rightarm, 0.0f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 40, 16)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
-		leftarm.setRotationPoint(5.0f, 2.0f, 0.0f);
-		leftarm.setTextureSize(64, 32);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.0f, 0.0f, 0.0f);
+		(rightArm = new ModelRenderer(this, 40, 16)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
+		rightArm.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm.setTextureSize(64, 32);
+		rightArm.mirror = true;
+		setRotation(rightArm, 0.0f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 40, 16)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
+		leftArm.setRotationPoint(5.0f, 2.0f, 0.0f);
+		leftArm.setTextureSize(64, 32);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 16, 16)).addBox(-4.0f, 0.0f, -2.0f, 8, 12, 4);
 		body2.setRotationPoint(0.0f, 0.0f, 0.0f);
 		body2.setTextureSize(64, 32);
@@ -51,8 +51,8 @@ public class ModelGhost extends ModelBase {
 		GlStateManager.blendFunc(770, 771);
 		head.render(par7);
 		body.render(par7);
-		rightarm.render(par7);
-		leftarm.render(par7);
+		rightArm.render(par7);
+		leftArm.render(par7);
 		body2.render(par7);
 		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
@@ -67,9 +67,9 @@ public class ModelGhost extends ModelBase {
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
 		head.rotateAngleY = par4 / 89.12676f;
 		head.rotateAngleX = par5 / 85.943665f;
-		rightarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
-		rightarm.rotateAngleZ = 0.0f;
-		leftarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm.rotateAngleZ = 0.0f;
+		rightArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
+		rightArm.rotateAngleZ = 0.0f;
+		leftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm.rotateAngleZ = 0.0f;
 	}
 }

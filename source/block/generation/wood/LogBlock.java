@@ -11,7 +11,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class LogBlock extends BlockLog {
 	public LogBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3", registryName);
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 		setResistance(0.5f);
@@ -22,7 +22,7 @@ public class LogBlock extends BlockLog {
 
 	public LogBlock(String name, String registryName, Material material, float hardness, float resistance) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3", registryName);
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 		setHardness(hardness);
@@ -43,7 +43,6 @@ public class LogBlock extends BlockLog {
 			case 0b1000:
 				return state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
 			case 0b1100:
-				return state.withProperty(LOG_AXIS, EnumAxis.NONE);
 			default:
 				return state.withProperty(LOG_AXIS, EnumAxis.NONE);
 		}
@@ -56,10 +55,9 @@ public class LogBlock extends BlockLog {
 				return 0b0100;
 			case Y:
 				return 0b0000;
-			case Z:
-				return 0b1000;
 			case NONE:
 				return 0b1100;
+			case Z:
 			default:
 				return 0b1000;
 		}

@@ -2,27 +2,30 @@ package net.tslat.aoa3.entity.mobs.abyss;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public class EntityFleshEater extends AoAMeleeMob implements HunterEntity {
+public class EntityFleshEater extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 1f;
 
 	public EntityFleshEater(World world) {
 		super(world, entityWidth, 1.25f);
+
+		mobProperties.add(Enums.MobProperties.STATUS_IMMUNE);
 	}
 
 	@Override
@@ -32,17 +35,17 @@ public class EntityFleshEater extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 95;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 9;
 	}
 
 	@Override
@@ -66,25 +69,18 @@ public class EntityFleshEater extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobFleshEaterHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensAbyss, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(19 - lootingMod) == 0)
-			dropItem(WeaponRegister.swordLegbone, 1);
-
-		if (rand.nextInt(9) == 0)
-			dropItem(ItemRegister.staringEye, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFleshEater;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-		dropItem(Items.ROTTEN_FLESH, 2 + rand.nextInt(2 + lootingMod));
+	public void addPotionEffect(PotionEffect effect) {}
 
-		if (rand.nextInt(4) == 0)
-			dropItem(ItemRegister.seedsEyeBulb, 1);
+	@Override
+	public boolean canBeHitWithPotion() {
+		return false;
 	}
 
 	@Override
@@ -94,15 +90,11 @@ public class EntityFleshEater extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	public int getHunterReq() {
-		return 35;
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
 	}
 
-	@Override
-	public float getHunterXp() {
-		return 120;
-	}
-
+	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
 		return mobProperties;

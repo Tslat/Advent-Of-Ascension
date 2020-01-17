@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
@@ -27,17 +28,17 @@ public class EntityShavo extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 200;
+		return 125;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 1;
+		return 8.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25d;
 	}
 
 	@Nullable
@@ -56,5 +57,11 @@ public class EntityShavo extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return SoundsRegister.mobFiendHit;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
 	}
 }

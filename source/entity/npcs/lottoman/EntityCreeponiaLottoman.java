@@ -1,14 +1,15 @@
 package net.tslat.aoa3.entity.npcs.lottoman;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoATraderRecipe;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class EntityCreeponiaLottoman extends EntityLottoman {
 	public EntityCreeponiaLottoman(World world) {
@@ -17,19 +18,31 @@ public class EntityCreeponiaLottoman extends EntityLottoman {
 
 	@Nullable
 	@Override
-	protected ITextComponent getInteractMessage() {
-		return StringUtil.getLocale("message.dialogue.creeponia_lottoman." + rand.nextInt(5));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCreeponiaLottoman;
 	}
 
 	@Override
-	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 10), new ItemStack(ItemRegister.totemCreepoidGreatblade)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 10), new ItemStack(ItemRegister.totemBoomBoom)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 40), new ItemStack(ItemRegister.tokensCreeponia, 35), new ItemStack(ItemRegister.totemCreepoidGreatblade, 10)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 40), new ItemStack(ItemRegister.tokensCreeponia, 35), new ItemStack(ItemRegister.totemBoomBoom, 10)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(ItemRegister.magicRepairDust)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 50), new ItemStack(ItemRegister.magicRepairDust, 15)));
+	protected boolean canDespawn() {
+		return world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.creeponia;
+	}
 
-		return newList;
+	@Nullable
+	@Override
+	public String getInteractMessage(ItemStack heldStack) {
+		if (heldStack.getItem() == ItemRegister.realmstoneBlank) {
+			return "message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3);
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 28), new ItemStack(ItemRegister.lottoTotem)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 15), new ItemStack(ItemRegister.weaponsCase)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 10), new ItemStack(ItemRegister.runeBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 21), new ItemStack(ItemRegister.treasureBox)));
 	}
 }

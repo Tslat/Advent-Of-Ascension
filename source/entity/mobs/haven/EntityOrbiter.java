@@ -1,13 +1,17 @@
 package net.tslat.aoa3.entity.mobs.haven;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
 
@@ -30,12 +34,12 @@ public class EntityOrbiter extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 15;
+		return 83;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 2;
+		return 7.5;
 	}
 
 	@Override
@@ -61,31 +65,33 @@ public class EntityOrbiter extends AoAMeleeMob {
 		return SoundsRegister.mobOrbiterHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityOrbiter;
+	}
+
 	@Override
 	protected SoundEvent getStepSound() {
 		return null;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensHaven, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(8), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			if (!pl.isSneaking()) {
-				pl.addVelocity(motionX * 0.05, 0.1, motionZ * 0.05);
-				pl.fallDistance = -0.5f;
-				pl.velocityChanged = true;
+	protected void doMeleeEffect(Entity target) {
+		if (!world.isRemote && target instanceof EntityLivingBase) {
+			switch (rand.nextInt(4)) {
+				case 0:
+					((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 0, true, true));
+					break;
+				case 1:
+					((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 0, true, true));
+					break;
+				case 2:
+					target.setFire(3);
+					break;
+				case 3:
+					EntityUtil.healEntity((EntityLivingBase)target, 3);
+					break;
 			}
 		}
 	}

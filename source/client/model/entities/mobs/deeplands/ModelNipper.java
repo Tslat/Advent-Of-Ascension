@@ -6,35 +6,35 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelNipper extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
-	ModelRenderer head7;
-	ModelRenderer head8;
-	ModelRenderer head9;
-	ModelRenderer head10;
-	ModelRenderer head11;
-	ModelRenderer head12;
-	ModelRenderer head13;
-	ModelRenderer head14;
-	ModelRenderer head15;
-	ModelRenderer head16;
-	ModelRenderer head17;
-	ModelRenderer head18;
-	ModelRenderer head19;
-	ModelRenderer head20;
-	ModelRenderer head21;
-	ModelRenderer head22;
-	ModelRenderer head23;
-	ModelRenderer head24;
-	ModelRenderer head25;
-	ModelRenderer head26;
-	ModelRenderer head27;
+	private ModelRenderer head;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
+	private ModelRenderer head7;
+	private ModelRenderer head8;
+	private ModelRenderer head9;
+	private ModelRenderer head10;
+	private ModelRenderer head11;
+	private ModelRenderer head12;
+	private ModelRenderer head13;
+	private ModelRenderer head14;
+	private ModelRenderer head15;
+	private ModelRenderer head16;
+	private ModelRenderer head17;
+	private ModelRenderer head18;
+	private ModelRenderer head19;
+	private ModelRenderer head20;
+	private ModelRenderer head21;
+	private ModelRenderer head22;
+	private ModelRenderer head23;
+	private ModelRenderer head24;
+	private ModelRenderer head25;
+	private ModelRenderer head26;
+	private ModelRenderer head27;
 
 	public ModelNipper() {
 		textureWidth = 128;
@@ -44,16 +44,16 @@ public class ModelNipper extends ModelBase {
 		head.setTextureSize(128, 32);
 		head.mirror = true;
 		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 4, 4);
-		rightleg.setRotationPoint(-4.0f, 20.0f, 0.0f);
-		rightleg.setTextureSize(128, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 4, 4);
-		leftleg.setRotationPoint(4.0f, 20.0f, 0.0f);
-		leftleg.setTextureSize(128, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 4, 4);
+		rightLeg.setRotationPoint(-4.0f, 20.0f, 0.0f);
+		rightLeg.setTextureSize(128, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 4, 4);
+		leftLeg.setRotationPoint(4.0f, 20.0f, 0.0f);
+		leftLeg.setTextureSize(128, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 50, 9)).addBox(-4.0f, -2.0f, -8.0f, 14, 2, 14);
 		head2.setRotationPoint(-3.0f, 20.0f, 0.0f);
 		head2.setTextureSize(128, 32);
@@ -189,8 +189,8 @@ public class ModelNipper extends ModelBase {
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head2.render(par7);
 		head3.render(par7);
 		head4.render(par7);
@@ -226,8 +226,8 @@ public class ModelNipper extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

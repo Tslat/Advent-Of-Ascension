@@ -4,13 +4,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.item.misc.CoinItem;
+import net.tslat.aoa3.item.misc.DimensionalTokensItem;
 
 import javax.annotation.Nullable;
 
@@ -28,17 +31,17 @@ public class EntityQuickpocket extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 75;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 8;
 	}
 
 	@Override
@@ -64,38 +67,28 @@ public class EntityQuickpocket extends AoAMeleeMob {
 		return SoundsRegister.mobQuickpocketHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(20 - lootingMod) == 0)
-			dropItem(WeaponRegister.sniperBoltRifle, 1);
-
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitGolden, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityQuickpocket;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityPlayer) {
+		if (target instanceof EntityPlayer && getRevengeTarget() == null) {
 			EntityPlayer pl = (EntityPlayer)target;
+			
+			for (ItemStack stack : pl.inventory.mainInventory) {
+				if (stack.getItem() instanceof CoinItem || stack.getItem() == ItemRegister.circusCoin || stack.getItem() instanceof DimensionalTokensItem) {
+					int dropAmount = rand.nextInt(stack.getCount() + 1);
 
-			if (pl.getHeldItem(EnumHand.MAIN_HAND) != ItemStack.EMPTY) {
-				ItemStack heldStack = pl.getHeldItem(EnumHand.MAIN_HAND).copy();
+					entityDropItem(new ItemStack(stack.getItem(), dropAmount), 0);
+					world.playSound(null, target.posX, target.posY, target.posZ, SoundsRegister.mobQuickpocketSteal, SoundCategory.HOSTILE, 1f, 1f);
+					stack.shrink(dropAmount);
+					pl.inventoryContainer.detectAndSendChanges();
 
-				pl.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-				entityDropItem(heldStack, 0.5f);
-				pl.inventoryContainer.detectAndSendChanges();
-			}
-			else if (pl.getHeldItem(EnumHand.OFF_HAND) != ItemStack.EMPTY) {
-				ItemStack heldStack = pl.getHeldItem(EnumHand.OFF_HAND).copy();
-
-				pl.setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
-				entityDropItem(heldStack, 0.5f);
-				pl.inventoryContainer.detectAndSendChanges();
+					return;
+				}
 			}
 		}
 	}

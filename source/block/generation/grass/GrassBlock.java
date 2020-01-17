@@ -15,15 +15,20 @@ import java.util.Random;
 public class GrassBlock extends BlockGrass {
 	protected final Block dirtBlock;
 
-	public GrassBlock(String name, String registryName, Block dirtBlock) {
+	public GrassBlock(String name, String registryName, Block dirtBlock, float hardness, float resistance) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName(registryName);
-		setHardness(0.6f);
+		setHardness(hardness);
+		setResistance(resistance);
 		setSoundType(SoundType.PLANT);
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 		setHarvestLevel("shovel", 0);
 		this.dirtBlock = dirtBlock;
+	}
+
+	public GrassBlock(String name, String registryName, Block dirtBlock) {
+		this(name, registryName, dirtBlock, 0.6f, 0.0f);
 	}
 
 	@Override

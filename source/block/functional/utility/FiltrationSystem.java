@@ -1,26 +1,19 @@
 package net.tslat.aoa3.block.functional.utility;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.tslat.aoa3.block.BasicNonCubeBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.Random;
 
@@ -42,10 +35,8 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 		boilingState = this;
 	}
 
-	public FiltrationSystem registerOnBlock(IForgeRegistry<Block> registry) {
-		registry.register(boilingState);
-
-		return this;
+	public FiltrationSystem getBoilingState() {
+		return boilingState;
 	}
 
 	@Override
@@ -60,6 +51,8 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		// TODO something here
+		/*
 		if (!world.isRemote) {
 			if (state.getBlock() == boilingState) {
 				if (player.getHeldItem(hand).getItem() == ItemRegister.metalTub && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.magicMendingCompound))) {
@@ -83,7 +76,7 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 				}
 			}
 
-		}
+		}*/
 
 		return true;
 	}

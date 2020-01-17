@@ -19,4 +19,9 @@ public class EntityRockFragmentFungal extends BaseBullet implements HardProjecti
 	public EntityRockFragmentFungal(World world, double x, double y, double z) {
 		super(world, x, y, z);
 	}
+
+	@Override
+	protected float getGravityVelocity() {
+		return 0.06f;
+	}
 }

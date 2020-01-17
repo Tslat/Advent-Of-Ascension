@@ -1,6 +1,11 @@
 package net.tslat.aoa3.dimension.ancientcavern;
 
+import net.minecraft.block.BlockTorch;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.audio.MusicTicker;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
@@ -36,6 +41,26 @@ public class WorldProviderAncientCavern extends WorldProvider implements AoAWorl
 	}
 
 	@Override
+	public boolean canInteractWith(EntityPlayer player, @Nullable BlockPos pos, @Nullable Entity interactedEntity, ItemStack heldStack) {
+		Item item = heldStack.getItem();
+
+		if (item instanceof ItemBlock || item instanceof ItemBucket || item instanceof ItemArmorStand || item instanceof ItemHangingEntity)
+			return false;
+
+		return true;
+	}
+
+	@Override
+	public boolean canPlaceBlock(EntityPlayer player, BlockPos pos, IBlockState block) {
+		return player.isCreative() || block.getBlock() instanceof BlockTorch;
+	}
+
+	@Override
+	public boolean canMineBlock(EntityPlayer player, BlockPos pos) {
+		return player.isCreative() || world.getBlockState(pos).getBlock() instanceof BlockTorch;
+	}
+
+	@Override
 	public AoATeleporter getTeleporter(WorldServer fromWorld) {
 		return new AncientCavernTeleporter(fromWorld);
 	}
@@ -68,7 +93,7 @@ public class WorldProviderAncientCavern extends WorldProvider implements AoAWorl
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable

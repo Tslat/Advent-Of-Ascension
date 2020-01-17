@@ -1,21 +1,17 @@
 package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -35,7 +31,7 @@ public class EntityUrv extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0.3d;
 	}
 
 	@Override
@@ -45,12 +41,12 @@ public class EntityUrv extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 14d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25d;
 	}
 
 	@Nullable
@@ -70,13 +66,10 @@ public class EntityUrv extends AoAMeleeMob {
 		return SoundsRegister.mobGolemStep;
 	}
 
+	@Nullable
 	@Override
-	public boolean attackEntityAsMob(Entity target) {
-		int modifier = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().grow(7), entity -> entity instanceof IMob).size();
-
-		addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 1, modifier % 4, true, false));
-
-		return super.attackEntityAsMob(target);
+	protected ResourceLocation getLootTable() {
+		return null;
 	}
 
 	@Override
@@ -98,12 +91,12 @@ public class EntityUrv extends AoAMeleeMob {
 				}
 
 				if (pl != null) {
-					AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					cap.addTribute(EREBON, 4);
+					plData.stats().addTribute(EREBON, 4);
 
-					if (cap.getTribute(EREBON) == 200)
-						cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.immortallisProgression.evilSpiritsEnd"));
+					if (plData.stats().getTribute(EREBON) == 200)
+						plData.sendThrottledChatMessage("message.feedback.immortallisProgression.evilSpiritsEnd");
 				}
 			}
 		}

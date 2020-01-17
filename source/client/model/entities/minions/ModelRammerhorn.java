@@ -6,13 +6,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRammerhorn extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body2;
-	ModelRenderer head2;
-	ModelRenderer head3;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
 
 	public ModelRammerhorn() {
 		textureWidth = 64;

@@ -1,9 +1,13 @@
 package net.tslat.aoa3.structure.iromine;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -13,7 +17,7 @@ public class EnforcerTower extends AoAStructure { //StructureSize: 12x17x12
 	private static final IBlockState stripedBrick = BlockRegister.bricksIroStriped.getDefaultState();
 	private static final IBlockState confusionTrap = BlockRegister.iroBrickTrap.getDefaultState();
 	private static final IBlockState enforcerSpawner = BlockRegister.spawnerEnforcer.getDefaultState();
-	private static final IBlockState iroCrate = BlockRegister.iroCrate.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST);
 
 	public EnforcerTower() {
 		super("EnforcerTower");
@@ -525,7 +529,7 @@ public class EnforcerTower extends AoAStructure { //StructureSize: 12x17x12
 		addBlock(world, basePos, 8, 12, 0, stripedBrick);
 		addBlock(world, basePos, 8, 12, 11, stripedBrick);
 		addBlock(world, basePos, 9, 12, 0, stripedBrick);
-		addBlock(world, basePos, 9, 12, 2, stripedBrick);
+		addBlock(world, basePos, 9, 12, 2, chest);
 		addBlock(world, basePos, 9, 12, 11, stripedBrick);
 		addBlock(world, basePos, 10, 12, 0, stripedBrick);
 		addBlock(world, basePos, 10, 12, 11, stripedBrick);
@@ -572,7 +576,6 @@ public class EnforcerTower extends AoAStructure { //StructureSize: 12x17x12
 		addBlock(world, basePos, 8, 13, 0, stripedBrick);
 		addBlock(world, basePos, 8, 13, 11, stripedBrick);
 		addBlock(world, basePos, 9, 13, 0, stripedBrick);
-		addBlock(world, basePos, 9, 13, 2, iroCrate);
 		addBlock(world, basePos, 9, 13, 11, stripedBrick);
 		addBlock(world, basePos, 10, 13, 0, stripedBrick);
 		addBlock(world, basePos, 10, 13, 11, stripedBrick);
@@ -776,5 +779,10 @@ public class EnforcerTower extends AoAStructure { //StructureSize: 12x17x12
 		addBlock(world, basePos, 10, 16, 8, stripedBrick);
 		addBlock(world, basePos, 10, 16, 9, stripedBrick);
 		addBlock(world, basePos, 10, 16, 10, stripedBrick);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureIroPassageChests, basePos.add(9, 12, 2));
 	}
 }

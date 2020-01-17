@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityHeavyBlueCannonball;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
@@ -21,13 +22,20 @@ import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CoralCannon extends BaseCannon implements AdventWeapon {
-	public CoralCannon(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("CoralCannon");
+	public CoralCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("CoralCannon");
 		setRegistryName("aoa3:coral_cannon");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunHighCannon;
 	}
 
 	@Override

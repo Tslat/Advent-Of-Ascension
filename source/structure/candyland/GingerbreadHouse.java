@@ -1,9 +1,13 @@
 package net.tslat.aoa3.structure.candyland;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -13,6 +17,7 @@ public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
 	private static final IBlockState redCandy = BlockRegister.candyRed.getDefaultState();
 	private static final IBlockState gingerbread = BlockRegister.gingerbread.getDefaultState();
 	private static final IBlockState gingerbreadManSpawner = BlockRegister.spawnerGingerbreadMan.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	public GingerbreadHouse() {
 		super("GingerbreadHouse");
@@ -52,7 +57,7 @@ public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
 		addBlock(world, basePos, 4, 0, 1, gingerbread);
 		addBlock(world, basePos, 4, 0, 2, gingerbread);
 		addBlock(world, basePos, 4, 0, 3, gingerbread);
-		addBlock(world, basePos, 4, 0, 4, gingerbread);
+		addBlock(world, basePos, 4, 0, 4, chest);
 		addBlock(world, basePos, 4, 0, 5, gingerbread);
 		addBlock(world, basePos, 4, 0, 6, gingerbread);
 		addBlock(world, basePos, 4, 0, 7, gingerbread);
@@ -61,7 +66,7 @@ public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
 		addBlock(world, basePos, 5, 0, 1, gingerbread);
 		addBlock(world, basePos, 5, 0, 2, gingerbread);
 		addBlock(world, basePos, 5, 0, 3, gingerbread);
-		addBlock(world, basePos, 5, 0, 4, gingerbread);
+		addBlock(world, basePos, 5, 0, 4, chest);
 		addBlock(world, basePos, 5, 0, 5, gingerbread);
 		addBlock(world, basePos, 5, 0, 6, gingerbread);
 		addBlock(world, basePos, 5, 0, 7, gingerbread);
@@ -422,5 +427,10 @@ public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
 		addBlock(world, basePos, 5, 10, 6, gingerbread);
 		addBlock(world, basePos, 5, 10, 7, gingerbread);
 		addBlock(world, basePos, 5, 10, 8, gingerbread);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureGingerbreadHouse, basePos.add(4, 0, 4), basePos.add(5, 0, 4));
 	}
 }

@@ -19,11 +19,9 @@ public class BiomeGardencia extends Biome {
 	private static final BiomeProperties properties = new BiomeProperties("Gardencia");
 
 	static {
-		properties.setRainDisabled();
 		properties.setTemperature(0.5f);
-		properties.setRainfall(7000);
+		properties.setRainfall(0.7f);
 		properties.setWaterColor(1691929);
-		properties.setRainDisabled();
 		properties.setBaseHeight(0f);
 		properties.setHeightVariation(0.3f);
 	}
@@ -31,8 +29,8 @@ public class BiomeGardencia extends Biome {
 	public BiomeGardencia() {
 		super(properties);
 		setRegistryName("aoa3", "gardencia");
-		this.topBlock = BlockRegister.grassGardencia.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtGardencia.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("gardencia_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("gardencia_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

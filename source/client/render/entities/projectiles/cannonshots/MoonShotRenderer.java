@@ -3,12 +3,15 @@ package net.tslat.aoa3.client.render.entities.projectiles.cannonshots;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityMoonShot;
 import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class MoonShotRenderer extends Render<EntityMoonShot> {
 	private final ResourceLocation texture;
 
@@ -47,8 +50,8 @@ public class MoonShotRenderer extends Render<EntityMoonShot> {
 					entity.toggle2 = !entity.toggle2;
 			}
 
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PINK, 10).create();
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 10).create();
+			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PINK, 10, 1).create();
+			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 10, 1).create();
 		}
 	}
 

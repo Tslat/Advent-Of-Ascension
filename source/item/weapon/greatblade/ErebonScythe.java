@@ -4,56 +4,46 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
 public class ErebonScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public ErebonScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("ErebonScythe");
+		setTranslationKey("ErebonScythe");
 		setRegistryName("aoa3:erebon_scythe");
 	}
 
 	@Override
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		super.attackEntity(stack, target, attacker, dmg);
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
+		float damagePercent = (float)dmg / dmgDealt;
 
-		if (attacker instanceof EntityPlayer && target instanceof EntityLivingBase) {
-			if (((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f) {
-				if (target.isBurning()) {
-					((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 2, true, true));
-				}
-				else {
-					target.setFire(3);
-				}
-			}
-		}
-		else {
-			target.setFire(10);
+		for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(target.posX, target.getEntityBoundingBox().minY, target.posZ, target.posX - 2, target.getEntityBoundingBox().minY + 1, target.posZ + 2), PredicateUtil.IS_HOSTILE_MOB)) {
+			entity.setFire((int)(5 * damagePercent));
 		}
 
-		if (attacker instanceof EntityPlayer && !attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null).consumeResource(Enums.Resources.ENERGY, 15, true))
-			EntityUtil.dealSelfHarmDamage(attacker, 4);
+		if (attacker instanceof EntityPlayerMP)
+			PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, 1 * damagePercent);
+
+		if (target instanceof EntityPlayerMP)
+			PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 1 * damagePercent, true);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.damage.fire", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.ErebonScythe.desc.1", TextFormatting.AQUA));
-		tooltip.add(StringUtil.getColourLocaleString("item.ErebonScythe.desc.2", TextFormatting.AQUA));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.ammo.energy", TextFormatting.DARK_GREEN, "15"));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ErebonScythe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.scythe", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

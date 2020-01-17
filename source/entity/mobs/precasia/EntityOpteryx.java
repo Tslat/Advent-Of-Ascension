@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.precasia;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -32,12 +33,12 @@ public class EntityOpteryx extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 75d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 8.5d;
 	}
 
 	@Override
@@ -63,21 +64,21 @@ public class EntityOpteryx extends AoAMeleeMob {
 		return SoundsRegister.mobChargerHit;
 	}
 
+	@Nullable
 	@Override
-	public void fall(float distance, float damageMultiplier) {}
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityOpteryx;
+	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.opteryxFeather, 1 + rand.nextInt(2 + lootingMod));
-	}
+	public void fall(float distance, float damageMultiplier) {}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
 		if (jumpCooldown <= 0) {
-			jumpCooldown = 70;
+			jumpCooldown = rand.nextInt(100) + 30;
 			motionY = 0.8;
 			motionX *= 1.2;
 			motionZ *= 1.2;

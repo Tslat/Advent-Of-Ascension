@@ -7,6 +7,8 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.tslat.aoa3.client.gui.render.ResourcesRenderer;
 import net.tslat.aoa3.library.Enums;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 
 public class ConfigurationUtil {
@@ -21,6 +23,10 @@ public class ConfigurationUtil {
 		@Config.LangKey("gui.aoaconfig.doVerboseDebugging")
 		public static boolean doVerboseDebugging = false;
 
+		@Config.Comment("Set this to false to disable the various animations for mobs. This may reduce memory usage and speed up boot time")
+		@Config.LangKey("gui.aoaconfig.customEntityAnimationsEnabled")
+		public static boolean customEntityAnimationsEnabled = true;
+
 		@Config.Comment("Set this to false to disable the small scrolling popups that appear when you gain xp in a skill")
 		@Config.LangKey("gui.aoaconfig.showXpParticles")
 		public static boolean showXpParticles = true;
@@ -28,6 +34,10 @@ public class ConfigurationUtil {
 		@Config.Comment("Set this to false to disable the messages that appear at sunrise and sunset. This does not affect tribute or event messages")
 		@Config.LangKey("gui.aoaconfig.showDailyMessages")
 		public static boolean showDailyMessages = true;
+
+		@Config.Comment("Set this to false to disable the message that welcomes you to Advent of Ascension when logging in")
+		@Config.LangKey("gui.aoaconfig.showWelcomeMessage")
+		public static boolean showWelcomeMessage = true;
 
 		@Config.Comment("Set this to false to hide player crowns for those that have them")
 		@Config.LangKey("gui.aoaconfig.showPlayerCrowns")
@@ -57,10 +67,27 @@ public class ConfigurationUtil {
 		@Config.LangKey("gui.aoaconfig.hudResourcesHorizontal")
 		public static boolean hudResourcesHorizontal = true;
 
+		@Config.Comment("Set this to false to use chat messages for mod feedback instead of toasts")
+		@Config.LangKey("gui.aoaconfig.useToasts")
+		public static boolean useToasts = true;
+
+		@Config.Comment("Set this to false to disable enchantments that breach level caps")
+		@Config.LangKey("gui.aoaconfig.allowUnsafeInfusion")
+		public static boolean allowUnsafeInfusion = true;
+
+		@Config.Comment("Adjust this value to modify how far to look for safe/existing portal locations. The lower the value, the faster it runs")
+		@Config.LangKey("gui.aoaconfig.portalSearchRadius")
+		public static int portalSearchRadius = 64;
+
 		@Config.RequiresMcRestart
-		@Config.Comment("Set this to false to disable the leaderboard functionality. Doing so on an existing leaderboard may cause issues with data accuracy on re-enabling until the mod catches back up")
+		@Config.Comment("Set this to true to enable the leaderboard functionality. Doing so on an existing leaderboard may cause issues with data accuracy on re-enabling until the mod catches back up")
 		@Config.LangKey("gui.aoaconfig.leaderboardEnabled")
-		public static boolean leaderboardEnabled = true;
+		public static boolean leaderboardEnabled = false;
+
+		@Config.RequiresWorldRestart
+		@Config.Comment("Set this to true to make Corrupted Travellers easier to find.")
+		@Config.LangKey("gui.aoaconfig.easyCorruptedTravellers")
+		public static boolean easyCorruptedTravellers = false;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("The amount of players to store as ranked on the leaderboard. Lower amounts generally have slightly better performance")
@@ -68,10 +95,32 @@ public class ConfigurationUtil {
 		@Config.RangeInt(min = 5, max = 9999)
 		public static int leaderboardCapacity = 100;
 
+		@Config.Comment("Set to false to stop non-player entities from using the AoA portal system")
+		@Config.LangKey("gui.aoaconfig.nonPlayerPortalUsage")
+		public static boolean allowNonPlayerPortalTravel = true;
+
+		@Config.Comment("Set this to true to remove sky lighting from floating dimensions, eliminating Minecraft's chunk-gen lag")
+		@Config.LangKey("gui.aoaconfig.fasterFloatingDimensions")
+		@Config.RequiresWorldRestart
+		public static boolean fasterFloatingDimensions = false;
+
 		@Config.Comment("Configure registered dimension IDs for all AoA dimensions. Don't change this unless you know what you are doing")
 		@Config.LangKey("gui.aoaconfig.dimensionIds")
 		@Config.RequiresMcRestart
 		public static final SubCategoryDimensionIds dimensionIds = new SubCategoryDimensionIds();
+
+		@Config.Comment("Configure random events that happen in the overworld each day or night")
+		@Config.LangKey("gui.aoaconfig.overworldEvents")
+		public static final SubCategoryOverworldEvents overworldEvents = new SubCategoryOverworldEvents();
+
+		@Config.Comment("Toggle random fun options on and off")
+		@Config.LangKey("gui.aoaconfig.funOptions")
+		public static final SubCategoryFunOptions funOptions = new SubCategoryFunOptions();
+
+		@Config.Comment("Enable/disable third-party mod interactions")
+		@Config.LangKey("gui.aoaconfig.thirdPartyMods")
+		@Config.RequiresMcRestart
+		public static final SubCategoryThirdPartyMods thirdPartyMods = new SubCategoryThirdPartyMods();
 
 		public static class SubCategoryDimensionIds {
 			@Config.LangKey("dimension.aoa.abyss")
@@ -139,6 +188,66 @@ public class ConfigurationUtil {
 
 			@Config.LangKey("dimension.aoa.voxPonds")
 			public int voxPonds = 821;
+		}
+
+		public static class SubCategoryOverworldEvents {
+			@Config.Comment("Set to false to disable all overworld events entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.enabled")
+			public boolean enabled = true;
+
+			@Config.Comment("Chance per day for the Big Day event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.bigDayChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int bigDayChance = 50;
+
+			@Config.Comment("Chance per day for the Creep Day event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.creepDayChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int creepDayChance = 45;
+
+			@Config.Comment("Chance per day for the Death Day event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.deathDayChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int deathDayChance = 37;
+
+			@Config.Comment("Chance per day for the Soul Scurry event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.soulScurryChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int soulScurryChance = 59;
+
+			@Config.Comment("Chance per day for the Blood Hunt event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.bloodHuntChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int bloodHuntChance = 31;
+
+			@Config.Comment("Chance per day for the Lunar Invasion event to occur. Value is represented as a chance of 1/n. Set to 0 to disable entirely.")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.lunarInvasionChance")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int lunarInvasionChance = 26;
+
+			@Config.Comment("Set to false to disable the Full Moon event on full moon nights in Minecraft")
+			@Config.LangKey("gui.aoaconfig.overworldEvents.fullMoonEnabled")
+			public boolean fullMoonEnabled = true;
+		}
+
+		public static class SubCategoryFunOptions {
+			@Config.Comment("Set this to true to enable AoA hardcore mode. When a player dies, they lose one level from every skill")
+			@Config.LangKey("gui.aoaconfig.funOptions.hardcoreMode")
+			public boolean hardcoreMode = false;
+
+			@Config.Comment("Set this to true to enable party deaths")
+			@Config.LangKey("gui.aoaconfig.funOptions.partyDeaths")
+			public boolean partyDeaths = false;
+
+			@Config.Comment("Set this to true for Chargers. All the chargers")
+			@Config.LangKey("gui.aoaconfig.funOptions.chargers")
+			public boolean alwaysChargers = false;
+		}
+
+		public static class SubCategoryThirdPartyMods {
+			@Config.Comment("Set this to false to disable integrations with Tinkers Construct, if the mod is present")
+			@Config.LangKey("gui.aoaconfig.thirdPartyMods.tinkersConstruct.active")
+			public boolean tinkersConstructActive = true;
 		}
 	}
 
@@ -245,17 +354,17 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Amethyst vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 5;
+			public int minOresPerVein = 3;
 			
 			@Config.Comment("Maximum ore blocks per Amethyst vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 9;
+			public int maxOresPerVein = 7;
 
 			@Config.Comment("Maximum number of Amethyst veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int maxVeinsPerChunk = 5;
+			public int maxVeinsPerChunk = 4;
 		}
 
 		public static class SubCategoryBaronyte {
@@ -272,7 +381,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Number of Baronyte veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.veinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int veinsPerChunk = 2;
+			public int veinsPerChunk = 3;
 		}
 
 		public static class SubCategoryBlazium {
@@ -381,17 +490,17 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Elecanium vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 4;
+			public int minOresPerVein = 2;
 
 			@Config.Comment("Maximum ore blocks per Elecanium vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 10;
+			public int maxOresPerVein = 5;
 
 			@Config.Comment("Number of Elecanium veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.veinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int veinsPerChunk = 2;
+			public int veinsPerChunk = 3;
 		}
 
 		public static class SubCategoryEmberstone {
@@ -500,17 +609,17 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Jade vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 2;
+			public int minOresPerVein = 3;
 
 			@Config.Comment("Maximum ore blocks per Jade vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 6;
+			public int maxOresPerVein = 9;
 
 			@Config.Comment("Maximum number of Jade veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int maxVeinsPerChunk = 3;
+			public int maxVeinsPerChunk = 5;
 		}
 
 		public static class SubCategoryJewelyte {
@@ -551,17 +660,17 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Limonite vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 10;
+			public int minOresPerVein = 4;
 
 			@Config.Comment("Maximum ore blocks per Limonite vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 19;
+			public int maxOresPerVein = 12;
 
 			@Config.Comment("Maximum number of Limonite veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int maxVeinsPerChunk = 6;
+			public int maxVeinsPerChunk = 8;
 		}
 
 		public static class SubCategoryLyon {
@@ -653,34 +762,34 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Rosite vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 2;
+			public int minOresPerVein = 3;
 
 			@Config.Comment("Maximum ore blocks per Rosite vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 6;
+			public int maxOresPerVein = 10;
 
 			@Config.Comment("Maximum number of Rosite veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int maxVeinsPerChunk = 3;
+			public int maxVeinsPerChunk = 5;
 		}
 
 		public static class SubCategoryRunium {
 			@Config.Comment("Minimum ore blocks per Runium vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 6;
+			public int minOresPerVein = 8;
 
 			@Config.Comment("Maximum ore blocks per Runium vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 15;
+			public int maxOresPerVein = 17;
 
 			@Config.Comment("Maximum number of Runium veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int maxVeinsPerChunk = 6;
+			public int maxVeinsPerChunk = 7;
 		}
 
 		public static class SubCategorySapphire {
@@ -692,7 +801,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Maximum ore blocks per Sapphire vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 6;
+			public int maxOresPerVein = 4;
 
 			@Config.Comment("Maximum number of Sapphire veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.maxVeinsPerChunk")
@@ -733,12 +842,12 @@ public class ConfigurationUtil {
 			@Config.Comment("Minimum ore blocks per Varsium vein")
 			@Config.LangKey("gui.aoaconfig.ores.minOresPerVein")
 			@Config.RangeInt(min = 1, max = 20)
-			public int minOresPerVein = 7;
+			public int minOresPerVein = 4;
 
 			@Config.Comment("Maximum ore blocks per Varsium vein")
 			@Config.LangKey("gui.aoaconfig.ores.maxOresPerVein")
 			@Config.RangeInt(min = 1, max = 30)
-			public int maxOresPerVein = 13;
+			public int maxOresPerVein = 8;
 
 			@Config.Comment("Number of Varsium veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.veinsPerChunk")
@@ -902,28 +1011,33 @@ public class ConfigurationUtil {
 			@Config.LangKey("gui.aoaconfig.structures.witherRuneShrine")
 			@Config.RangeInt(min = 0, max = 1000000)
 			public int witherRuneShrineSpawnChance = 650;
+
+			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
+			@Config.LangKey("gui.aoaconfig.structures.eyeBulbGrotto")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int eyeBulbGrottoSpawnChance = 140;
 		}
 
 		public static class SubCategoryBarathos {
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.baronessArena")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int baronessArenaSpawnChance = 1000;
+			public int baronessArenaSpawnChance = 1400;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.hiveNest")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int hiveNestSpawnChance = 650;
+			public int hiveNestSpawnChance = 900;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.baronCastle")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int baronCastleSpawnChance = 650;
+			public int baronCastleSpawnChance = 950;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.baronessHouse")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int baronessHouseSpawnChance = 600;
+			public int baronessHouseSpawnChance = 975;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.powerRuneShrine")
@@ -1173,7 +1287,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.iroPassage")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int iroPassageSpawnChance = 25;
+			public int iroPassageSpawnChance = 150;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.energyRuneShrine")
@@ -1345,7 +1459,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.ruinedTeleporterFrame")
 			@Config.RangeInt(min = 0, max = 1000000)
-			public int ruinedTeleporterFrameSpawnChance = 120;
+			public int ruinedTeleporterFrameSpawnChance = 130;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.windRuneShrine")
@@ -1363,11 +1477,6 @@ public class ConfigurationUtil {
 			@Config.LangKey("gui.aoaconfig.structures.skeletalArmyArena")
 			@Config.RangeInt(min = 0, max = 1000000)
 			public int skeletalArmyArenaSpawnChance = 1000;
-
-			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
-			@Config.LangKey("gui.aoaconfig.structures.tyrosaurStompingGround")
-			@Config.RangeInt(min = 0, max = 1000000)
-			public int tyrosaurStompingGroundSpawnChance = 800;
 
 			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
 			@Config.LangKey("gui.aoaconfig.structures.jungleLottoHut")
@@ -1432,6 +1541,11 @@ public class ConfigurationUtil {
 			@Config.LangKey("gui.aoaconfig.structures.shyreDungeon")
 			@Config.RangeInt(min = 0, max = 1000000)
 			public int shyreDungeonSpawnChance = 250;
+
+			@Config.Comment("Value is represented as a chance to spawn of 1/n per chunk")
+			@Config.LangKey("gui.aoaconfig.structures.whitewashingStation")
+			@Config.RangeInt(min = 0, max = 1000000)
+			public int whitewashingStationSpawnChance = 275;
 		}
 
 		public static class SubCategoryVoxPonds {
@@ -1477,6 +1591,35 @@ public class ConfigurationUtil {
 		}
 	}
 
+	@Config(modid = "aoa3", type = Config.Type.INSTANCE, name = "aoa3/entities_config")
+	@Config.LangKey("gui.aoaentityconfig.title")
+	public static class EntityConfig {
+		@Config.Comment("Add or remove Hunter entity attributes from creatures")
+		@Config.LangKey("gui.aoaconfig.hunterEntities")
+		@Config.RequiresMcRestart
+		public static final SubCategoryHunterEntities hunterEntities = new SubCategoryHunterEntities();
+
+		@Config.Comment("Override basic entity stats. Only applies to AoA creatures")
+		@Config.LangKey("gui.aoaconfig.entityStats")
+		@Config.RequiresMcRestart
+		@Config.Ignore
+		public static final SubCategoryEntityStats entityStats = new SubCategoryEntityStats();
+
+		public static class SubCategoryHunterEntities {
+			@Config.Comment("A list of entities with their associated hunter level and xp reward. Add to the list to include a new entity, or remove one to withdraw its hunter status")
+			@Config.LangKey("gui.aoaconfig.hunterEntities")
+			@Config.RequiresMcRestart
+			public String[] hunterEntities = new String[] {"aoa3:anemia lvl:1 xp:23.1", "aoa3:bloodmist lvl:1 xp:9", "aoa3:dark_beast lvl:1 xp:11.2", "aoa3:host lvl:1 xp:19", "aoa3:irkling lvl:1 xp:9.9", "aoa3:linger lvl:1 xp:10.8", "aoa3:modulo lvl:1 xp:11.9", "aoa3:night_watcher lvl:1 xp:9.5", "aoa3:rammerhead lvl:1 xp:10.8", "aoa3:roloscope lvl:1 xp:9", "aoa3:scrubby lvl:1 xp:7.6", "aoa3:skellox lvl:1 xp:7.6", "aoa3:terrestrial lvl:1 xp:13.4", "aoa3:urka lvl:1 xp:8.8", "aoa3:vertebron lvl:1 xp:9.5", "aoa3:void_walker lvl:1 xp:6.4", "aoa3:walker lvl:1 xp:6.6", "aoa3:death_hunter lvl:3 xp:11.4", "aoa3:headless_destroyer lvl:3 xp:12.1", "aoa3:reaper_twins lvl:3 xp:9", "aoa3:triclops lvl:3 xp:7.6", "aoa3:mother_void_walker lvl:5 xp:9.9", "aoa3:ice_giant lvl:9 xp:8.6", "aoa3:leafy_giant lvl:9 xp:7.4", "aoa3:sand_giant lvl:9 xp:10.2", "aoa3:stone_giant lvl:9 xp:15.5", "aoa3:wood_giant lvl:9 xp:12.4", "aoa3:amphibiyte lvl:12 xp:8.1", "aoa3:skeletal_cowman lvl:13 xp:12.8", "aoa3:kaiyu lvl:17 xp:10.5", "aoa3:zhinx lvl:19 xp:17.8", "aoa3:exohead lvl:23 xp:15.2", "aoa3:nethengeic_beast lvl:24 xp:16.3", "aoa3:diocus lvl:27 xp:29.9", "aoa3:paravite lvl:28 xp:21.4", "aoa3:spinoledon lvl:28 xp:21.4", "aoa3:iosaur lvl:29 xp:24.2", "aoa3:mushroom_spider lvl:29 xp:21.6", "aoa3:rawbone lvl:30 xp:24.6", "aoa3:enforcer lvl:31 xp:26.4", "aoa3:undead_troll lvl:32 xp:28.4", "aoa3:jawe lvl:33 xp:30.5", "aoa3:banshee lvl:34 xp:39.1", "aoa3:nightmare_spider lvl:34 xp:26.6", "aoa3:dawnlight lvl:35 xp:35.4", "aoa3:nightwing lvl:39 xp:47.8", "aoa3:flesh_eater lvl:40 xp:51.6", "aoa3:jumbo lvl:42 xp:90.2", "aoa3:phantom lvl:44 xp:70.3", "aoa3:cane_bug lvl:47 xp:88.9", "aoa3:gingerbird lvl:50 xp:112.8", "aoa3:gingerbread_man lvl:53 xp:143.6", "aoa3:pod_plant lvl:56 xp:183.1", "aoa3:vine_wizard lvl:59 xp:233.9", "aoa3:spectral_wizard lvl:64 xp:353.3", "aoa3:runic_guardian lvl:66 xp:417.2", "aoa3:mermage lvl:67 xp:453.5", "aoa3:amphibior lvl:69 xp:536", "aoa3:faceless_floater lvl:71 xp:634", "aoa3:zorp lvl:75 xp:888.4", "aoa3:zarg lvl:76 xp:966.9", "aoa3:baumba lvl:78 xp:1145.8", "aoa3:refluct lvl:79 xp:1247.6", "aoa3:inmate_x lvl:81 xp:1443.4", "aoa3:inmate_y lvl:81 xp:1640.8", "aoa3:merkyre lvl:83 xp:1755.3", "aoa3:crusilisk lvl:84 xp:1912.2", "aoa3:arkzyne lvl:86 xp:2270.2", "aoa3:shyre_troll lvl:90 xp:3203.6", "aoa3:lightwalker lvl:94 xp:4527.5", "aoa3:luxocron lvl:97 xp:5873.8"};
+		}
+
+		public static class SubCategoryEntityStats {
+			@Config.Comment("A list of entities to have their default stats overridden")
+			@Config.LangKey("gui.aoaconfig.entityStats")
+			@Config.RequiresMcRestart
+			public String[] entityStats = new String[] {};
+		}
+	}
+
 	public static void changeMainWindowTheme(Enums.MainWindowThemes newTheme) {
 		MainConfig.mainWindowTheme = newTheme;
 		postConfigChange("aoa/main_config", false);
@@ -1489,5 +1632,26 @@ public class ConfigurationUtil {
 
 		if (!ev.getResult().equals(Event.Result.DENY))
 			MinecraftForge.EVENT_BUS.post(new ConfigChangedEvent.PostConfigChangedEvent("aoa3", configPath, Minecraft.getMinecraft() != null, requiresRestart));
+	}
+
+	public static void doDebuggingPrintout(Logger logger) {
+		logger.log(Level.INFO, "AllowUnsafeInfusion: " + MainConfig.allowUnsafeInfusion);
+		logger.log(Level.INFO, "DisableOverworldMobs: " + MainConfig.disableOverworldMobs);
+		logger.log(Level.INFO, "DoVerboseDebugging: " + MainConfig.doVerboseDebugging);
+		logger.log(Level.INFO, "EasyCorruptedTravellers: " + MainConfig.easyCorruptedTravellers);
+		logger.log(Level.INFO, "HudResourcesHorizonal: " + MainConfig.hudResourcesHorizontal);
+		logger.log(Level.INFO, "HudResourcesPosition: " + MainConfig.hudResourcesPosition.toString());
+		logger.log(Level.INFO, "LeaderboardCapacity: " + MainConfig.leaderboardCapacity);
+		logger.log(Level.INFO, "LeaderboardEnabled: " + MainConfig.leaderboardEnabled);
+		logger.log(Level.INFO, "MainWindowPausesGame: " + MainConfig.mainWindowPausesGame);
+		logger.log(Level.INFO, "MainWindowTheme: " + MainConfig.mainWindowTheme.toString());
+		logger.log(Level.INFO, "PersonalCrownPreference: " + MainConfig.personalCrownPreference.toString());
+		logger.log(Level.INFO, "PortalSearchRadius: " + MainConfig.portalSearchRadius);
+		logger.log(Level.INFO, "Printing out current configuration settings...");
+		logger.log(Level.INFO, "ShowDailyMessages: " + MainConfig.showDailyMessages);
+		logger.log(Level.INFO, "ShowPlayerCrowns: " + MainConfig.showPlayerCrowns);
+		logger.log(Level.INFO, "ShowVanityLevels: " + MainConfig.showVanityLevels);
+		logger.log(Level.INFO, "ShowXpParticles: " + MainConfig.showXpParticles);
+		logger.log(Level.INFO, "UseToasts: " + MainConfig.useToasts);
 	}
 }

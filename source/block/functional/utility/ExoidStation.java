@@ -16,7 +16,7 @@ import net.tslat.aoa3.entity.mobs.voxponds.EntityExoid;
 public class ExoidStation extends Block {
 	public ExoidStation() {
 		super(Material.ROCK);
-		setUnlocalizedName("ExoidStation");
+		setTranslationKey("ExoidStation");
 		setRegistryName("aoa3:exoid_station");
 		setHardness(-1f);
 		setResistance(999999999f);

@@ -9,8 +9,12 @@ public class EntityFireflyShot extends BaseEnergyShot {
 		super(world);
 	}
 
-	public EntityFireflyShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge, float xMod, float yMod, float zMod) {
-		super(shooter, weapon, maxAge, xMod, yMod, zMod);
+	public EntityFireflyShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, EntityFireflyShot shot, double motionX, double motionY, double motionZ) {
+		super(shooter, weapon, shot.posX, shot.posY, shot.posZ, motionX, motionY, motionZ);
+	}
+
+	public EntityFireflyShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge) {
+		super(shooter, weapon, maxAge);
 	}
 
 	public EntityFireflyShot(World world, double x, double y, double z) {

@@ -1,26 +1,35 @@
 package net.tslat.aoa3.entity.mobs.overworld.soulscurry;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagicBall;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityGhostlyGoblin extends AoARangedMob {
+public class EntityGhostlyGoblin extends AoARangedMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntityGhostlyGoblin(World world) {
 		super(world, entityWidth, 1.8f);
+
+		mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
+		mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
 	}
 
 	@Override
@@ -30,7 +39,7 @@ public class EntityGhostlyGoblin extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0;
+		return 1f;
 	}
 
 	@Override
@@ -40,7 +49,7 @@ public class EntityGhostlyGoblin extends AoARangedMob {
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 7;
+		return 6;
 	}
 
 	@Override
@@ -72,16 +81,10 @@ public class EntityGhostlyGoblin extends AoARangedMob {
 		return SoundsRegister.shotWizardBlast;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerGhostly), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.ghostlyStone, 2 + rand.nextInt(2 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGhostlyGoblin;
 	}
 
 	@Override
@@ -96,6 +99,17 @@ public class EntityGhostlyGoblin extends AoARangedMob {
 	}
 
 	@Override
+	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+		if (target instanceof EntityPlayer)
+			PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 12f, true);
+	}
+
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isGunDamage(source) || EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
+	}
+
+	@Override
 	protected boolean isOverworldMob() {
 		return true;
 	}
@@ -103,5 +117,11 @@ public class EntityGhostlyGoblin extends AoARangedMob {
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

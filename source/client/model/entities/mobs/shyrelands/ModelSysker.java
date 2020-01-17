@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelSysker extends ModelBase {
-	ModelRenderer r1;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head;
-	ModelRenderer r2;
-	ModelRenderer r3;
-	ModelRenderer r4;
-	ModelRenderer r5;
-	ModelRenderer r6;
-	ModelRenderer r7;
-	ModelRenderer r8;
-	ModelRenderer r9;
-	ModelRenderer r10;
+	private ModelRenderer r1;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head;
+	private ModelRenderer r2;
+	private ModelRenderer r3;
+	private ModelRenderer r4;
+	private ModelRenderer r5;
+	private ModelRenderer r6;
+	private ModelRenderer r7;
+	private ModelRenderer r8;
+	private ModelRenderer r9;
+	private ModelRenderer r10;
 
 	public ModelSysker() {
 		textureWidth = 64;
@@ -30,18 +30,18 @@ public class ModelSysker extends ModelBase {
 		r1.setTextureSize(64, 32);
 		r1.mirror = true;
 		setRotation(r1, 0.0F, 0.0F, 0.0F);
-		rightleg = new ModelRenderer(this, 0, 16);
-		rightleg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
-		rightleg.setRotationPoint(-3.0F, 12.0F, 0.0F);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0F, 0.0F, 0.0F);
-		leftleg = new ModelRenderer(this, 0, 16);
-		leftleg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
-		leftleg.setRotationPoint(3.0F, 12.0F, 0.0F);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0F, 0.0F, 0.0F);
+		rightLeg = new ModelRenderer(this, 0, 16);
+		rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
+		rightLeg.setRotationPoint(-3.0F, 12.0F, 0.0F);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0F, 0.0F, 0.0F);
+		leftLeg = new ModelRenderer(this, 0, 16);
+		leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
+		leftLeg.setRotationPoint(3.0F, 12.0F, 0.0F);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0F, 0.0F, 0.0F);
 		head = new ModelRenderer(this, 0, 0);
 		head.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8);
 		head.setRotationPoint(0.0F, 9.466666F, 0.0F);
@@ -107,8 +107,8 @@ public class ModelSysker extends ModelBase {
 	public void render(Entity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		r1.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head.render(par7);
 		r2.render(par7);
 		r3.render(par7);
@@ -139,10 +139,10 @@ public class ModelSysker extends ModelBase {
 		r9.rotateAngleY = (par3 * 0.067F * 4.25F);
 		r10.rotateAngleY = (par3 * 0.067F * 4.25F);
 
-		rightleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
-		rightleg.rotateAngleY = 0.0F;
+		rightLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
+		rightLeg.rotateAngleY = 0.0F;
 
-		leftleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
+		leftLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
 
 		head.rotateAngleY = (par4 / 57.295776F);
 		head.rotateAngleX = (par5 / 54.11268F);

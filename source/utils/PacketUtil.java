@@ -12,7 +12,7 @@ public class PacketUtil {
 	public static SimpleNetworkWrapper network;
 
 	public static void init() {
-		NetworkRegistry.INSTANCE.registerGuiHandler(AdventOfAscension.instance, new GuiManager());
+		NetworkRegistry.INSTANCE.registerGuiHandler(AdventOfAscension.instance(), new GuiManager());
 		network = NetworkRegistry.INSTANCE.newSimpleChannel("AoAPackets");
 
 		registerPackets();
@@ -24,13 +24,14 @@ public class PacketUtil {
 		network.registerMessage(PacketHealthMod.Handler.class, PacketHealthMod.class, 2, Side.CLIENT);
 		network.registerMessage(PacketScreenOverlay.Handler.class, PacketScreenOverlay.class, 3, Side.CLIENT);
 		network.registerMessage(PacketRecoil.Handler.class, PacketRecoil.class, 4, Side.CLIENT);
-		network.registerMessage(PacketRevenge.Handler.class, PacketRevenge.class, 5, Side.CLIENT);
-		network.registerMessage(PacketSkillData.Handler.class, PacketSkillData.class, 6, Side.CLIENT);
-		network.registerMessage(PacketTributeData.Handler.class, PacketTributeData.class, 7, Side.CLIENT);
-		network.registerMessage(PacketGreatbladeHit.Handler.class, PacketGreatbladeHit.class, 8, Side.SERVER);
-		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 9, Side.CLIENT);
-		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 10, Side.CLIENT);
-		network.registerMessage(PacketChangedCrown.Handler.class, PacketChangedCrown.class, 11, Side.SERVER);
-		network.registerMessage(PacketPlayerCrownInfo.Handler.class, PacketPlayerCrownInfo.class, 12, Side.CLIENT);
+		network.registerMessage(PacketSkillData.Handler.class, PacketSkillData.class, 5, Side.CLIENT);
+		network.registerMessage(PacketTributeData.Handler.class, PacketTributeData.class, 6, Side.CLIENT);
+		network.registerMessage(PacketGreatbladeHit.Handler.class, PacketGreatbladeHit.class, 7, Side.SERVER);
+		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 8, Side.CLIENT);
+		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 9, Side.CLIENT);
+		network.registerMessage(PacketChangedCrown.Handler.class, PacketChangedCrown.class, 10, Side.SERVER);
+		network.registerMessage(PacketPlayerCrownInfo.Handler.class, PacketPlayerCrownInfo.class, 11, Side.CLIENT);
+		network.registerMessage(PacketToastPopup.Handler.class, PacketToastPopup.class, 12, Side.CLIENT);
+		network.registerMessage(PacketGuiData.Handler.class, PacketGuiData.class, 13, Side.SERVER);
 	}
 }

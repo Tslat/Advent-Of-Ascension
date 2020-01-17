@@ -4,35 +4,43 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.misc.RuneItem;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
 public class CandyStaff extends BaseStaff {
-	private static HashMap<RuneItem, Integer> runes = new HashMap<RuneItem, Integer>();
+	public CandyStaff(int durability) {
+		super(durability);
+		setTranslationKey("CandyStaff");
+		setRegistryName("aoa3:candy_staff");
+	}
 
-	static {
+	@Nullable
+	@Override
+	public SoundEvent getCastingSound() {
+		return SoundsRegister.staffCandy;
+	}
+
+	@Override
+	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
 		runes.put(ItemRegister.runeKinetic, 3);
 		runes.put(ItemRegister.runeStorm, 2);
 	}
 
-	public CandyStaff(SoundEvent sound, int durability) {
-		super(sound, durability);
-		setUnlocalizedName("CandyStaff");
-		setRegistryName("aoa3:candy_staff");
-	}
-
 	@Override
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), EntityUtil::isHostileMob);
+		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), PredicateUtil.IS_HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -41,21 +49,20 @@ public class CandyStaff extends BaseStaff {
 	}
 
 	@Override
-	public HashMap<RuneItem, Integer> getRunes() {
-		return runes;
-	}
-
-	@Override
 	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (EntityLivingBase e : (List<EntityLivingBase>)args) {
-			e.addVelocity(Math.signum(caster.posX - e.posX) * 2.229, 0.0, Math.signum(caster.posZ - e.posZ) * 2.229);
+		for (EntityLivingBase target : (List<EntityLivingBase>)args) {
+			double motionY = target.motionY;
+
+			EntityUtil.pullEntityIn(caster, target, 1.0f);
+
+			target.motionY = Math.min(target.motionY, motionY + 0.9);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.CandyStaff.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CandyStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

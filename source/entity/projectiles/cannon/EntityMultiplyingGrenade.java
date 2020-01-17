@@ -9,6 +9,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityMultiplyingGrenade extends BaseBullet implements HardProjectile {
 	private int count;
@@ -39,7 +40,7 @@ public class EntityMultiplyingGrenade extends BaseBullet implements HardProjecti
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(shooter, posX, posY, posZ, 1.5f, false);
+		WorldUtil.createExplosion(thrower, world, this, 1.5f);
 
 		if (!world.isRemote && getAge() < 10 && shooter instanceof EntityPlayer && count < 5) {
 			world.spawnEntity(new EntityMultiplyingGrenade(shooter, gun, hand, 120, count + 1));

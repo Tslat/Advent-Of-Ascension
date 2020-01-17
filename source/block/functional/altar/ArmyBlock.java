@@ -1,18 +1,37 @@
 package net.tslat.aoa3.block.functional.altar;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.boss.skeletalarmy.*;
 import net.tslat.aoa3.utils.StringUtil;
+
+import java.util.Random;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {
 		super("ArmyBlock", "army_block");
+
+		setTickRandomly(true);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
+		if (!player.world.isRemote && player.world.getEntitiesWithinAABB(EntityMob.class, new AxisAlignedBB(pos).grow(100), entity -> entity instanceof EntitySkeleElder || entity instanceof EntitySkeletron).size() == 0)
+			player.world.spawnEntity(new EntitySkeleElder(player.world, pos, 0));
+
+		return false;
+	}
+
+	@Override
+	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+		if (!worldIn.isRemote && random.nextBoolean() && worldIn.getEntitiesWithinAABB(EntitySkeleElder.class, new AxisAlignedBB(pos).grow(100)).isEmpty())
+			worldIn.spawnEntity(new EntitySkeleElder(worldIn, pos, 0));
 	}
 
 	@Override
@@ -391,6 +410,6 @@ public class ArmyBlock extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.ancientOrb;
+		return null;
 	}
 }

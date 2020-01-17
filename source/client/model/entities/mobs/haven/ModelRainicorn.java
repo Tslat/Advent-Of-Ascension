@@ -6,23 +6,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRainicorn extends ModelBase {
-	ModelRenderer horn3;
-	ModelRenderer horn1;
-	ModelRenderer part3;
-	ModelRenderer part4;
-	ModelRenderer leftSpikes;
-	ModelRenderer part6;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer part7;
-	ModelRenderer part8;
-	ModelRenderer part9;
-	ModelRenderer head;
-	ModelRenderer horn2;
-	ModelRenderer part10;
-	ModelRenderer rightSpikes;
+	private ModelRenderer horn3;
+	private ModelRenderer horn1;
+	private ModelRenderer part3;
+	private ModelRenderer part4;
+	private ModelRenderer leftSpikes;
+	private ModelRenderer part6;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer part7;
+	private ModelRenderer part8;
+	private ModelRenderer part9;
+	private ModelRenderer head;
+	private ModelRenderer horn2;
+	private ModelRenderer part10;
+	private ModelRenderer rightSpikes;
 
 	public ModelRainicorn() {
 		textureWidth = 128;

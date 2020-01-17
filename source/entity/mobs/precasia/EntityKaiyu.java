@@ -3,14 +3,12 @@ package net.tslat.aoa3.entity.mobs.precasia;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -46,22 +44,22 @@ public class EntityKaiyu extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 125;
+		return 70d;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 6;
+		return 9d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.207;
+		return 0.23d;
 	}
 
 	@Nullable
@@ -82,24 +80,10 @@ public class EntityKaiyu extends AoARangedMob {
 		return SoundsRegister.mobKaiyuHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(80 - lootingMod) == 0)
-			dropItem(WeaponRegister.staffKaiyu, 1);
-
-		if (rand.nextInt(30 - lootingMod) == 0)
-			dropItem(ItemRegister.ancientOrb, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerAncient), 1);
-
-		if (rand.nextInt(200 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitAncient, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityKaiyu;
 	}
 
 	@Override

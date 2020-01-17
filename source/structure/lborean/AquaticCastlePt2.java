@@ -1,6 +1,7 @@
 package net.tslat.aoa3.structure.lborean;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
@@ -10,9 +11,10 @@ import java.util.Random;
 public class AquaticCastlePt2 {
 	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
 	private static final IBlockState coralCage = BlockRegister.plantCoralCage.getDefaultState();
-	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getOffLamp().getDefaultState();
+	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getDefaultState();
 	private static final IBlockState amphibiorSpawner = BlockRegister.spawnerAmphibior.getDefaultState();
 	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 
 	protected static void addBlocks(AquaticCastle instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 5, 25, 4, coralBricks);
@@ -1114,6 +1116,7 @@ public class AquaticCastlePt2 {
 		instance.addBlock(world, basePos, 7, 33, 8, coralBricks);
 		instance.addBlock(world, basePos, 7, 33, 23, coralBricks);
 		instance.addBlock(world, basePos, 8, 33, 8, coralBricks);
+		instance.addBlock(world, basePos, 8, 33, 8, chest);
 		instance.addBlock(world, basePos, 8, 33, 23, coralBricks);
 		instance.addBlock(world, basePos, 9, 33, 8, coralBricks);
 		instance.addBlock(world, basePos, 9, 33, 10, coralBricks);
@@ -1122,6 +1125,7 @@ public class AquaticCastlePt2 {
 		instance.addBlock(world, basePos, 9, 33, 13, glass);
 		instance.addBlock(world, basePos, 9, 33, 14, glass);
 		instance.addBlock(world, basePos, 9, 33, 15, coralBricks);
+		instance.addBlock(world, basePos, 9, 33, 22, chest);
 		instance.addBlock(world, basePos, 9, 33, 23, coralBricks);
 		instance.addBlock(world, basePos, 10, 33, 8, coralBricks);
 		instance.addBlock(world, basePos, 10, 33, 10, glass);

@@ -3,48 +3,51 @@ package net.tslat.aoa3.item.weapon.greatblade;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
 public class PrimordialGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public PrimordialGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("PrimordialGreatblade");
+		setTranslationKey("PrimordialGreatblade");
 		setRegistryName("aoa3:primordial_greatblade");
 	}
 
 	@Override
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		super.attackEntity(stack, target, attacker, dmg);
-
+	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
 		if (!(target instanceof EntityLivingBase))
-			return;
+			return super.getDamageForAttack(stack, target, attacker, baseDmg);
 
-		if (attacker instanceof EntityPlayer) {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, (int)(100 * ((EntityPlayer)attacker).getCooledAttackStrength(0.0f)), 1));
+		float extraDmg = 0;
+		EntityLivingBase livingTarget = (EntityLivingBase)target;
+		float maxHealth = livingTarget.getMaxHealth();
+
+		if (maxHealth <= 100) {
+			extraDmg = maxHealth / 50f;
+		}
+		else if (maxHealth <= 300) {
+			extraDmg = maxHealth / 100f;
+		}
+		else if (maxHealth <= 1000) {
+			extraDmg = maxHealth / 250f;
 		}
 		else {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 1));
+			extraDmg = Math.min(maxHealth / 300f, 5);
 		}
 
-		if (itemRand.nextBoolean())
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 200, 0, true, true));
+		return (float)baseDmg + extraDmg;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.damage.wither", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.PrimordialGreatblade.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.PrimordialGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

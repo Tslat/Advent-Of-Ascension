@@ -1,24 +1,29 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityOmnilightShot;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityOmnilight extends AoAFlyingRangedMob {
+public class EntityOmnilight extends AoAFlyingRangedMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.9f;
 
     public EntityOmnilight(World world) {
         super(world, entityWidth, 0.9f);
+
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -28,12 +33,12 @@ public class EntityOmnilight extends AoAFlyingRangedMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 30;
+        return 156;
     }
 
     @Override
     public double getBaseProjectileDamage() {
-        return 8;
+        return 16;
     }
 
     @Override
@@ -65,9 +70,20 @@ public class EntityOmnilight extends AoAFlyingRangedMob {
         return SoundsRegister.mobOmnilightHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityOmnilight;
+    }
+
     @Override
     public boolean getCanSpawnHere() {
         return posY < 35 && super.getCanSpawnHere();
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
     }
 
     @Override
@@ -75,11 +91,9 @@ public class EntityOmnilight extends AoAFlyingRangedMob {
         return new EntityOmnilightShot(this, Enums.MobProjectileType.ENERGY);
     }
 
+    @Nonnull
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensShyrelands, 2 + rand.nextInt(4 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerLight), 1);
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

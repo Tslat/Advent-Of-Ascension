@@ -1,18 +1,16 @@
 package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityZorp extends AoAMeleeMob implements HunterEntity {
+public class EntityZorp extends AoAMeleeMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityZorp(World world) {
@@ -26,17 +24,17 @@ public class EntityZorp extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 114;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 15d;
 	}
 
 	@Override
@@ -62,19 +60,9 @@ public class EntityZorp extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobZorpHit;
 	}
 
+	@Nullable
 	@Override
-	public int getHunterReq() {
-		return 15;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 40;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityZorp;
 	}
 }

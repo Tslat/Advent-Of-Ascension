@@ -1,6 +1,9 @@
 package net.tslat.aoa3.structure;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
@@ -45,6 +48,15 @@ public abstract class AoAStructure extends WorldGenerator {
     public final void addBlock(World world, BlockPos pos, int xCoordOffset, int yCoordOffset, int zCoordOffset, IBlockState block) {
         world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block);
     }
+
+    protected void assignLootChests(World world, Random rand, ResourceLocation lootTable, BlockPos... positions) {
+    	for (BlockPos pos : positions) {
+    		TileEntity tileEntity = world.getTileEntity(pos);
+
+    		if (tileEntity instanceof TileEntityChest)
+				((TileEntityChest)tileEntity).setLootTable(lootTable, rand.nextLong());
+		}
+	}
 
     static final class EmptyStructure extends AoAStructure {
         EmptyStructure() {

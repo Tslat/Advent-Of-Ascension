@@ -3,13 +3,12 @@ package net.tslat.aoa3.entity.mobs.celeve;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -29,17 +28,17 @@ public class EntitySticky extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1f;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 95;
+		return 85;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 8.5d;
 	}
 
 	@Override
@@ -65,29 +64,15 @@ public class EntitySticky extends AoAMeleeMob {
 		return SoundsRegister.mobCeleveClownHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.circusCoin, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensCeleve, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(35 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneCandyland, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerClown), 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySticky;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 30, true, false));
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 0, true, true));
 	}
 }

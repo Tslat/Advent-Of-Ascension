@@ -1,18 +1,17 @@
 package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,17 +30,17 @@ public class EntityTerrestrial extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.2d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 120;
+		return 65;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 11;
+		return 6;
 	}
 
 	@Override
@@ -65,19 +64,10 @@ public class EntityTerrestrial extends AoAMeleeMob {
 		return SoundsRegister.mobTerrestrialHit;
 	}
 
+	@Nullable
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.realmstoneLunalus, 1);
-	}
-
-	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityTerrestrial;
 	}
 
 	@Override

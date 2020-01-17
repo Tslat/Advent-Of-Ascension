@@ -6,27 +6,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelCaveCreep extends ModelBase {
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer leg6;
-	ModelRenderer leg5;
-	ModelRenderer leg8;
-	ModelRenderer leg7;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer body8;
-	ModelRenderer body9;
-	ModelRenderer body10;
-	ModelRenderer body11;
-	ModelRenderer body12;
-	ModelRenderer body13;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer leg6;
+	private ModelRenderer leg5;
+	private ModelRenderer leg8;
+	private ModelRenderer leg7;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
+	private ModelRenderer body10;
+	private ModelRenderer body11;
+	private ModelRenderer body12;
+	private ModelRenderer body13;
 
 	public ModelCaveCreep() {
 		textureWidth = 64;

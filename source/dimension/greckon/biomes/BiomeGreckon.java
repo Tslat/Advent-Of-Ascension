@@ -32,8 +32,8 @@ public class BiomeGreckon extends Biome {
 	public BiomeGreckon() {
 		super(properties);
 		setRegistryName("aoa3", "greckon");
-		this.topBlock = BlockRegister.grassGreckon.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtGreckon.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("greckon_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("greckon_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

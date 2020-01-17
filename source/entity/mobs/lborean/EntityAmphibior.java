@@ -5,23 +5,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityAmphibior extends AoAMeleeMob implements HunterEntity {
+public class EntityAmphibior extends AoAMeleeMob {
 	public static final float entityWidth = 0.625f;
 
 	public EntityAmphibior(World world) {
@@ -48,17 +43,17 @@ public class EntityAmphibior extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 140;
+		return 122d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 13.5;
 	}
 
 	@Override
@@ -84,50 +79,23 @@ public class EntityAmphibior extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobAmphibiorHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(60 - lootingMod) == 0)
-			dropItem(ItemRegister.waterloggedCoralArchergun, 1);
-
-		if (rand.nextInt(25 - lootingMod) == 0)
-			dropItem(ItemRegister.pureCoralStone, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerBoreic), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityAmphibior;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isInWater() && getHealth() > 0)
+		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
 			heal(0.2f);
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (!world.isRemote && world.provider.getDimension() != -1)
+		if (!world.isRemote && !world.provider.doesWaterVaporize())
 			world.setBlockState(target.getPosition(), Blocks.FLOWING_WATER.getDefaultState());
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 73;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 750;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

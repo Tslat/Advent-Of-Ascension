@@ -5,53 +5,56 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public class EntityBanshee extends AoAMeleeMob implements HunterEntity {
+public class EntityBanshee extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.875f;
 
 	public EntityBanshee(World world) {
 		super(world, entityWidth, 2.375f);
+
+		mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return  1.90625f;
+		return 1.90625f;
 	}
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.2d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 70;
+		return 88d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 8;
+		return 9.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.27d;
 	}
 
 	@Nullable
@@ -72,23 +75,20 @@ public class EntityBanshee extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobBansheeHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBanshee;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.ghostlyPowder, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerHaunted), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isGunDamage(source);
 	}
 
 	@Override
@@ -100,16 +100,6 @@ public class EntityBanshee extends AoAMeleeMob implements HunterEntity {
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 150, 5, true, true));
 			}
 		}
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 20;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 60;
 	}
 
 	@Nonnull

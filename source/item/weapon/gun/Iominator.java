@@ -4,16 +4,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityToxicBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
+
 public class Iominator extends BaseGun implements AdventWeapon {
-	public Iominator(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("Iominator");
+	public Iominator(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("Iominator");
 		setRegistryName("aoa3:iominator");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunAbominator;
 	}
 
 	@Override

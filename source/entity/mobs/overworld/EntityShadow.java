@@ -1,13 +1,11 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -25,17 +23,17 @@ public class EntityShadow extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1.0;
+		return 1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 1;
+		return 0.5d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 2.5;
 	}
 
 	@Override
@@ -84,11 +82,6 @@ public class EntityShadow extends AoAMeleeMob {
 		}
 
 		this.setDead();
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

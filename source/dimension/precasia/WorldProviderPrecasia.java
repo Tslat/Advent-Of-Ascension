@@ -71,7 +71,7 @@ public class WorldProviderPrecasia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public float getCloudHeight() {
-		return 128f;
+		return 200f;
 	}
 
 	@Nullable
@@ -82,6 +82,6 @@ public class WorldProviderPrecasia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public boolean isSurfaceWorld() {
-		return false;
+		return true;
 	}
 }

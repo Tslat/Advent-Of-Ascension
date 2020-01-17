@@ -1,25 +1,21 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
 import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 
-public class EntityRammerhead extends AoAMeleeMob implements HunterEntity {
+public class EntityRammerhead extends AoAMeleeMob {
 	public static final float entityWidth = 1.5f;
 
 	public EntityRammerhead(World world) {
@@ -40,7 +36,7 @@ public class EntityRammerhead extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 55;
+		return 40;
 	}
 
 	@Override
@@ -74,20 +70,15 @@ public class EntityRammerhead extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRammerhead;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(4) == 0)
-			dropItem(ItemRegister.rammerheadHide, 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override
@@ -113,20 +104,5 @@ public class EntityRammerhead extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 12;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 26;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 }

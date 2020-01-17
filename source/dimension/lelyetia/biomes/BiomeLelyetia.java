@@ -29,8 +29,8 @@ public class BiomeLelyetia extends Biome {
 	public BiomeLelyetia() {
 		super(properties);
 		setRegistryName("aoa3", "lelyetia");
-		this.topBlock = BlockRegister.grassLelyetia.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneLelyetia.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("lelyetia_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("lelyetia_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

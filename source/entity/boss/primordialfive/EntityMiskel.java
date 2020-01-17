@@ -1,20 +1,14 @@
 package net.tslat.aoa3.entity.boss.primordialfive;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -27,9 +21,6 @@ import javax.annotation.Nullable;
 public class EntityMiskel extends AoARangedMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/miskel.png");
 	public static final float entityWidth = 0.7f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityMiskel(EntityKajaros kajaros) {
 		this(kajaros.world);
@@ -89,14 +80,15 @@ public class EntityMiskel extends AoARangedMob implements BossEntity {
 		return SoundsRegister.mobPrimordialDeath;
 	}
 
+	@Nullable
 	@Override
-	public boolean isNonBoss() {
-		return false;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityMiskel;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueMiskel), 1);
+	public boolean isNonBoss() {
+		return false;
 	}
 
 	@Override
@@ -111,6 +103,14 @@ public class EntityMiskel extends AoARangedMob implements BossEntity {
 		}
 
 		heal(40);
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -130,30 +130,17 @@ public class EntityMiskel extends AoARangedMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicPrimordialFive;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicPrimordialFive, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

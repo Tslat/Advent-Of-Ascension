@@ -48,8 +48,8 @@ public class ModelThinBipedShooting extends ModelBiped {
 		super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTickTime);
 	}
 
-	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
-		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float headPitch, float scaleFactor, Entity entityIn) {
+		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netheadYaw, headPitch, scaleFactor, entityIn);
 
 		ItemStack itemstack = ((EntityLivingBase)entityIn).getHeldItemMainhand();
 		AoARangedMob entity = (AoARangedMob)entityIn;

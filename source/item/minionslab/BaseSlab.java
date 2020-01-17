@@ -2,6 +2,7 @@ package net.tslat.aoa3.item.minionslab;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,14 +13,16 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,7 +34,7 @@ public abstract class BaseSlab extends Item {
 	public final float sacrificeXp;
 
 	public BaseSlab(String name, String registryName, int lvl, float creationCost, int sacrificeLvl, float sacrificeXp) {
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		this.lvl = lvl;
 		this.cost = creationCost;
@@ -45,20 +48,22 @@ public abstract class BaseSlab extends Item {
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (!world.isRemote) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-			if (!player.capabilities.isCreativeMode && !cap.hasLevel(Enums.Skills.CREATION, lvl)) {
-				cap.sendPlayerMessage(StringUtil.getColourLocaleWithArguments("message.feedback.minionSlab.levelFail", TextFormatting.RED, Integer.toString(lvl)));
+			if (!player.capabilities.isCreativeMode && !PlayerUtil.doesPlayerHaveLevel(player, Enums.Skills.CREATION, lvl)) {
+				if (player instanceof EntityPlayerMP)
+					PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.CREATION, lvl);
+
 				return ActionResult.newResult(EnumActionResult.FAIL, stack);
 			}
 
-			if (player.capabilities.isCreativeMode || cap.consumeResource(Enums.Resources.CREATION, cost, false)) {
+			if (player.capabilities.isCreativeMode || plData.stats().consumeResource(Enums.Resources.CREATION, cost, false)) {
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
 
 				AoAMinion minion = activateSlab(player, stack);
 
-				if (minion != null && cap.getArmourSetType() == Enums.ArmourSets.CREATION)
+				if (minion != null && plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.CREATION)
 					applyBuffs(minion);
 
 				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.useCreationSlab, SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -88,6 +93,7 @@ public abstract class BaseSlab extends Item {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
 		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.slab.cost", TextFormatting.LIGHT_PURPLE, Integer.toString((int)cost)));

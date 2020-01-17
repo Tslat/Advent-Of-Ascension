@@ -5,15 +5,15 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelBaronBomb extends ModelBase {
-	ModelRenderer r5;
-	ModelRenderer r4;
-	ModelRenderer r3;
-	ModelRenderer r2;
-	ModelRenderer r1;
-	ModelRenderer Shape1;
-	ModelRenderer r6;
-	ModelRenderer r7;
-	ModelRenderer r8;
+	private ModelRenderer r5;
+	private ModelRenderer r4;
+	private ModelRenderer r3;
+	private ModelRenderer r2;
+	private ModelRenderer r1;
+	private ModelRenderer shape1;
+	private ModelRenderer r6;
+	private ModelRenderer r7;
+	private ModelRenderer r8;
 
 	public ModelBaronBomb() {
 		textureWidth = 64;
@@ -49,12 +49,12 @@ public class ModelBaronBomb extends ModelBase {
 		r1.setTextureSize(64, 32);
 		r1.mirror = true;
 		setRotation(r1, 0F, 0F, 0F);
-		Shape1 = new ModelRenderer(this, 0, 0);
-		Shape1.addBox(-4F, -8F, -4F, 8, 8, 8);
-		Shape1.setRotationPoint(0F, 0F, 0F);
-		Shape1.setTextureSize(64, 32);
-		Shape1.mirror = true;
-		setRotation(Shape1, 0F, 0F, 0F);
+		shape1 = new ModelRenderer(this, 0, 0);
+		shape1.addBox(-4F, -8F, -4F, 8, 8, 8);
+		shape1.setRotationPoint(0F, 0F, 0F);
+		shape1.setTextureSize(64, 32);
+		shape1.mirror = true;
+		setRotation(shape1, 0F, 0F, 0F);
 		r6 = new ModelRenderer(this, 34, 0);
 		r6.addBox(1F, -13F, -4F, 3, 4, 3);
 		r6.setRotationPoint(0F, 0F, 0F);
@@ -82,7 +82,7 @@ public class ModelBaronBomb extends ModelBase {
 		r3.render(par7);
 		r2.render(par7);
 		r1.render(par7);
-		Shape1.render(par7);
+		shape1.render(par7);
 		r6.render(par7);
 		r7.render(par7);
 		r8.render(par7);

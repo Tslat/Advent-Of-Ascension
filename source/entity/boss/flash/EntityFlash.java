@@ -3,16 +3,11 @@ package net.tslat.aoa3.entity.boss.flash;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
@@ -66,6 +61,12 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundsRegister.mobImmortalDeath;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFlash;
 	}
 
 	@Nullable
@@ -130,43 +131,18 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueFlash), 1);
-
-		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
-			dropItem(ItemRegister.tokensDungeon, 7 + rand.nextInt(5 + lootingMod));
-
-		if (rand.nextInt(3) == 0) {
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(ArmourRegister.ArchaicHelmet, 1);
-					break;
-				case 1:
-					dropItem(ArmourRegister.ArchaicBody, 1);
-					break;
-				case 2:
-					dropItem(ArmourRegister.ArchaicLegs, 1);
-					break;
-				case 3:
-					dropItem(ArmourRegister.ArchaicBoots, 1);
-					break;
-			}
-		}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
-			dropItem(ItemRegister.progressCoin4, 1);
-	}
-
-	@Override
 	public boolean startRiding(Entity entity, boolean force) {
 		return false;
 	}
 
 	@Override
 	public ResourceLocation getBossBarTexture() {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
 		return null;
 	}
 
@@ -177,8 +153,4 @@ public class EntityFlash extends AoAMeleeMob implements BossEntity {
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

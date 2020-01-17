@@ -1,6 +1,8 @@
 package net.tslat.aoa3.item.weapon.archergun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,23 +14,32 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityHollyArrowShot;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class BaseArchergun extends BaseGun {
 	private double dmg;
-	private int firingDelay;
+	protected int firingDelay;
 
-	public BaseArchergun(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, sound, durability, fireDelayTicks, recoil);
+	public BaseArchergun(double dmg, int durability, int fireDelayTicks, float recoil) {
+		super(dmg, durability, fireDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = fireDelayTicks;
 		setCreativeTab(CreativeTabsRegister.archergunsTab);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunArchergun;
 	}
 
 	@Override
@@ -47,6 +58,12 @@ public abstract class BaseArchergun extends BaseGun {
 		}
 
 		return null;
+	}
+
+	@Override
+	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet arrow, float bulletDmgMultiplier) {
+		if (target != null && EntityUtil.dealRangedDamage(target, shooter, arrow, (float)dmg))
+			doImpactEffect(target, shooter, arrow, bulletDmgMultiplier);
 	}
 
 	@SideOnly(Side.CLIENT)

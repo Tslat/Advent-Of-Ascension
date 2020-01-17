@@ -1,22 +1,29 @@
 package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityRefluct extends AoAMeleeMob {
+public class EntityRefluct extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntityRefluct(World world) {
 		super(world, entityWidth, 2f);
+
+		mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
+		mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
 	}
 
 	@Override
@@ -26,17 +33,17 @@ public class EntityRefluct extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 122;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 13;
+		return 15;
 	}
 
 	@Override
@@ -62,42 +69,26 @@ public class EntityRefluct extends AoAMeleeMob {
 		return SoundsRegister.mobRefluctHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.milleniumUpgrader, 1);
-
-		if (rand.nextInt(30 - lootingMod) == 0)
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(ArmourRegister.SpacekingHelmet, 1);
-					break;
-				case 1:
-					dropItem(ArmourRegister.SpacekingBody, 1);
-					break;
-				case 2:
-					dropItem(ArmourRegister.SpacekingLegs, 1);
-					break;
-				case 3:
-					dropItem(ArmourRegister.SpacekingBoots, 1);
-					break;
-			}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.coinSilver, 1 + rand.nextInt(1 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRefluct;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		for (Entity e : world.getEntitiesInAABBexcluding(this, getEntityBoundingBox().grow(3), entity -> entity instanceof IProjectile)) {
+		for (Entity e : world.getEntitiesInAABBexcluding(this, getEntityBoundingBox().grow(3), entity -> entity instanceof BaseEnergyShot)) {
 			e.motionX *= -1;
 			e.motionY *= -1;
 			e.motionZ *= -1;
 		}
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }
