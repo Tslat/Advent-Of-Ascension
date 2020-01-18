@@ -1,5 +1,2 @@
-Un animal très agile, l'élan arpente les savanes de l'Overworld, se nourissant d'herbe et d'arbustes. Ils sont facilements effrayés, et il n'est donc pas recommandé de s'en approcher par derrière.
-
-Les élans sont très territoriaux et défendront leur habitat des intrus sans se soucier de leur sécurité. Leur haute mobilité et puissants bois tranchants en font des animaux qu'il est dangereux de confronter.
-
-De plus, leur haute mobilité les rend très évasifs et il est difficile de leur rendre la pareille. Une expérience antérieure en combat sera nécessaire pour avoir ne serait-ce qu'une chance contre ces créatures.
+Les élans sont des créatures paisibles parfois vues en train d'arpenter les plaines herbeuses de l'Overworld à la recherche de nourriture.
+Même s'ils se nourrissent principalement d'herbe, les élans adorent aussi les champignons; cependant leur appétit n'est généralement pas très grand, et ils ne mangent que lorsqu'ils se sentent en sécurité.
