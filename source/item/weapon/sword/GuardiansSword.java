@@ -54,6 +54,13 @@ public class GuardiansSword extends BaseSword implements AdventWeapon {
 	}
 
 	@Override
+	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+		stack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, EnumFacing.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+
+		return false;
+	}
+
+	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (world.getTotalWorldTime() % 10 == 0) {
 			CapabilityBaseMiscStackSerializable cap = stack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, null);

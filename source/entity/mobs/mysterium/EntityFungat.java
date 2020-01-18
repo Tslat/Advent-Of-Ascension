@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -71,8 +72,8 @@ public class EntityFungat extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 3d;
 	}
 
 	@Override

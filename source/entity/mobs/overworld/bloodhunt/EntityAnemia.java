@@ -16,6 +16,7 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityAnemiaBomb;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 import net.tslat.aoa3.utils.player.PlayerUtil;
@@ -109,8 +110,8 @@ public class EntityAnemia extends AoAFlyingRangedMob implements SpecialPropertyE
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 4;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 4d;
 	}
 
 	@Override

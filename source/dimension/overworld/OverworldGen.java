@@ -99,14 +99,14 @@ public class OverworldGen {
 			}
 		}
 
-		/*if (ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance) == 0) {
+		if (ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance) == 0) {
 			int posX = chunkX + rand.nextInt(16);
 			int posZ = chunkZ + rand.nextInt(15);
 			int posY = rand.nextInt(10) + 10;
 
 			if (world.getBlockState(new BlockPos(posX + 5, posY, posZ + 7)).getBlock() != Blocks.AIR)
 				StructuresHandler.generateStructure("RuinedTeleporterFrame", world, rand, new BlockPos(posX, posY, posZ));
-		}*/
+		}
 
 		if (ConfigurationUtil.StructureConfig.overworld.windRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.overworld.windRuneShrineSpawnChance) == 0) {
 			int posX = chunkX + rand.nextInt(16);

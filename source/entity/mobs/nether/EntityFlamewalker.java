@@ -86,7 +86,7 @@ public class EntityFlamewalker extends AoAMeleeMob implements SpecialPropertyEnt
     }
 
     @Override
-    protected float getSpawnChanceFactor() {
+    protected double getSpawnChanceFactor() {
         return 0.5f;
     }
 

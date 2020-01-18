@@ -1364,6 +1364,7 @@ gui.aoaconfig.dimensionIds=Dimension IDs
 gui.aoaconfig.disableOverworldMobs=Disable Overworld Spawns
 gui.aoaconfig.doVerboseDebugging=Verbose Debugging Enabled
 gui.aoaconfig.easyCorruptedTravellers=Easy Corrupted Travellers
+gui.aoaconfig.entitySpawnModifier=Mob Spawnrate Modifier
 gui.aoaconfig.entityStats=Override Entity Stats
 gui.aoaconfig.fasterFloatingDimensions=Faster Floating Dimensions
 gui.aoaconfig.funOptions.chargers=Always Chargers

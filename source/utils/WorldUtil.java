@@ -248,6 +248,13 @@ public class WorldUtil {
 
 		Chunk chunk = world.getChunk(position);
 
+		if (position.getY() > 255) {
+			position = new BlockPos(position.getX(), 255, position.getZ());
+		}
+		else if (position.getY() < 0) {
+			position = new BlockPos(position.getX(), 0, position.getZ());
+		}
+
 		if (ignoreSkyLight)
 			return chunk.getLightFor(EnumSkyBlock.BLOCK, position);
 

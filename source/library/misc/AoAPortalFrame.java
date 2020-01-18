@@ -39,7 +39,7 @@ public class AoAPortalFrame {
         }
     }
 
-    private static PortalDirection testNorthSouthPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
+    public static PortalDirection testNorthSouthPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
         Block carvedRuneTravel = null;
         Block carvedRuneReality = null;
         Block carvedRuneSpace = null;
@@ -101,7 +101,7 @@ public class AoAPortalFrame {
         return INVALID;
     }
 
-    private static PortalDirection testEastWestPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
+    public static PortalDirection testEastWestPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
         Block carvedRuneTravel = null;
         Block carvedRuneReality = null;
         Block carvedRuneSpace = null;

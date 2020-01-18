@@ -58,8 +58,6 @@ public class MechaStaff extends BaseStaff {
 			EntityLivingBase entity = (EntityLivingBase)target;
 			IAttributeInstance armour = entity.getEntityAttribute(SharedMonsterAttributes.ARMOR);
 
-			System.out.println(armour.getAttributeValue());
-
 			if (armour != null && armour.getAttributeValue() > 0 && !armour.hasModifier(AoAAttributes.MECHA_STAFF_DEBUFF)) {
 				EntityUtil.applyAttributeModifierSafely(entity, SharedMonsterAttributes.ARMOR, AoAAttributes.MECHA_STAFF_DEBUFF);
 

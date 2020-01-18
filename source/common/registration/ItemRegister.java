@@ -1061,7 +1061,7 @@ public class ItemRegister {
 		registerItem(registry, new SimpleItem("WhiteCrystal", "white_crystal"), "misc/misc/");
 		registerItem(registry, new SimpleItem("YellowCrystal", "yellow_crystal"), "misc/misc/");
 
-		registerItem(registry, new RuneItem("ChargedRune", "charged_rune", false), "misc/ammo/");
+		registerItem(registry, new RuneItem("ChargedRune", "charged_rune", true), "misc/ammo/");
 		registerItem(registry, new RuneItem("CompassRune", "compass_rune", true, BlockRegister.runePostCompass), "misc/ammo/", "aoaRune");
 		registerItem(registry, new RuneItem("DistortionRune", "distortion_rune", true, BlockRegister.runePostDistortion), "misc/ammo/", "aoaRune");
 		registerItem(registry, new RuneItem("EnergyRune", "energy_rune", false, BlockRegister.runePostEnergy), "misc/ammo/", "aoaRune");

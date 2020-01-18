@@ -1364,6 +1364,7 @@ gui.aoaconfig.dimensionIds=IDs des dimensions
 gui.aoaconfig.disableOverworldMobs=Désactiver les spawns de l'Overworld
 gui.aoaconfig.doVerboseDebugging=Débuggage précis activé
 gui.aoaconfig.easyCorruptedTravellers=Voyageurs corrompus faciles
+gui.aoaconfig.entitySpawnModifier=Mob Spawnrate Modifier
 gui.aoaconfig.entityStats=Remplacement des statistiques des entités
 gui.aoaconfig.fasterFloatingDimensions=Dimensions flottantes plus rapides
 gui.aoaconfig.funOptions.chargers=Chargeurs en folie

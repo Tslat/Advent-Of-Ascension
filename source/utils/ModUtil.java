@@ -12,6 +12,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.FluidsRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
@@ -70,8 +72,8 @@ public class ModUtil {
 
 			try {
 				String registryName = entryParts[0];
-				int levelReq = Math.min(100, Integer.parseInt(entryParts[1].replace("lvl:", "")));
-				float hunterXp = Math.max(0, Float.parseFloat(entryParts[2].replace("xp:", "")));
+				int levelReq = MathHelper.clamp(Integer.parseInt(entryParts[1].replace("lvl:", "")), 1, 100);
+				float hunterXp = MathHelper.clamp(Float.parseFloat(entryParts[2].replace("xp:", "")), 0, Float.MAX_VALUE);
 				EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(registryName));
 
 				if (entityEntry == null) {
@@ -181,7 +183,7 @@ public class ModUtil {
 		if (resourceURL != null) {
 			try {
 				String jsonString = Resources.toString(resourceURL, StandardCharsets.UTF_8);
-				newTable = ForgeHooks.loadLootTable(gson, lootTableToMergeIn, jsonString, false, ev.getLootTableManager());
+				newTable = ForgeHooks.loadLootTable(gson, lootTableToMergeIn, jsonString, true, ev.getLootTableManager());
 			} catch (IOException | JsonParseException e) {
 				AdventOfAscension.logMessage(Level.WARN, "Couldn't load loot table " + lootTableToMergeIn.toString() + " from " + resourceURL.toString());
 				e.printStackTrace();
@@ -190,7 +192,15 @@ public class ModUtil {
 			if (newTable == null)
 				return;
 
+			List<LootPool> frozenPools = ObfuscationReflectionHelper.getPrivateValue(LootTable.class, newTable, "field_186466_c");
 			List<LootPool> existingPools = ObfuscationReflectionHelper.getPrivateValue(LootTable.class, ev.getTable(), "field_186466_c");
+
+			ReflectionHelper.setPrivateValue(LootTable.class, newTable, false, "isFrozen");
+
+			for (LootPool pool : frozenPools) {
+				if (pool.isFrozen())
+					ReflectionHelper.setPrivateValue(LootPool.class, pool, false, "isFrozen");
+			}
 
 			for (LootPool pool : existingPools) {
 				if (!pool.getName().equals("main"))

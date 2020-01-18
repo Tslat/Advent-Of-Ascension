@@ -11,6 +11,7 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityConstructTerrorShot;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
@@ -81,8 +82,8 @@ public class EntityConstructTerror extends AoAFlyingRangedMob implements Special
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 4;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 4d;
 	}
 
 	@Nullable

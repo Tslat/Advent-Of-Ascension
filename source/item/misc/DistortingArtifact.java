@@ -30,6 +30,7 @@ public class DistortingArtifact extends SimpleItem {
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (!world.isRemote && itemSlot < 9 && entity.posY < -3) {
+			entity.posY = 257;
 			entity.setPositionAndUpdate(entity.posX, 257, entity.posZ);
 			entity.fallDistance = -20;
 

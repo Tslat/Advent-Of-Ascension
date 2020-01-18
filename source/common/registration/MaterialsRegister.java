@@ -34,7 +34,7 @@ public class MaterialsRegister {
 	public static final Item.ToolMaterial SWORD_ROCKPICK 		= EnumHelper.addToolMaterial("AOAROCKPICK", 			4, 1950, 	8.0f, 	12.0f, 10);
 	public static final Item.ToolMaterial SWORD_ROSIDIAN 		= EnumHelper.addToolMaterial("AOAROSIDIAN", 			4, 2000, 	4.0f, 	15.5f, 10);
 	public static final Item.ToolMaterial SWORD_ROSITE 			= EnumHelper.addToolMaterial("AOAROSITE", 			3, 700, 	4.0f, 	6.5f, 	6).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("rosite_ingot")));
-	public static final Item.ToolMaterial SWORD_RUNIC 			= EnumHelper.addToolMaterial("AOARUNIC", 			4, 2450, 	4.0f, 	18.0f, 10);
+	public static final Item.ToolMaterial SWORD_RUNIC 			= EnumHelper.addToolMaterial("AOARUNIC", 			4, 2450, 	4.0f, 	17.5f, 10);
 	public static final Item.ToolMaterial SWORD_SAPPHIRE 		= EnumHelper.addToolMaterial("AOASAPPHIRE", 			4, 1750, 	4.0f, 	10.0f, 19).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("sapphire")));
 	public static final Item.ToolMaterial SWORD_SHADOW 			= EnumHelper.addToolMaterial("AOASHADOW", 			4, 2300, 	4.0f, 	17.0f, 10);
 	public static final Item.ToolMaterial SWORD_SHROOMUS 		= EnumHelper.addToolMaterial("AOASHROOMUS", 			4, 2030, 	4.0f, 	15.0f, 10);

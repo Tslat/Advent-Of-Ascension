@@ -54,11 +54,12 @@ public class EntityZalGrocer extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 5), new ItemStack(Items.COOKIE, 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 15), new ItemStack(Items.COOKIE, 20)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 40), new ItemStack(Items.COOKIE, 64)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(Items.BEEF, 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 50), new ItemStack(Items.BEEF, 30)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(Items.BEEF, 64)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.CARROT, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.POTATO, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.MELON, 4)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(Items.FISH, 1, 0)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(Items.FISH, 1, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.BEETROOT, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.COOKIE, 3)));
 	}
 }

@@ -998,7 +998,7 @@ public class WeaponRegister {
 				new Germinator(				6.5f, 	1120, 8, 	4.0f), // Haven | Green Guardian
 				new GoldenFury(				26.0f, 	1520, 28, 	4.0f), // UPGRADE KIT
 				new HappyHaunter(			11.5f, 	1510, 12, 	3.0f), // UPGRADE KIT
-				new HaunterRifle(			11.5f, 	1420, 12, 	3.0f), // Greckon | Bane
+				new HaunterRifle(			11.0f, 	1420, 12, 	3.0f), // Greckon | Bane
 				new HeatWave(				11.0f, 	450, 	12, 	10.0f), // UPGRADE KIT
 				new Hiver(					11.5f, 	1490, 12, 	4.0f), // UPGRADE KIT
 				new HotShot(				14.5f, 	580, 	24, 	5.0f), // Nether | Crafting
@@ -1209,7 +1209,7 @@ public class WeaponRegister {
 				new PyroArchergun(		10.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
 				new RosidianArchergun(	14.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
 				new SkeletalArchergun(	12.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
-				new SpectralArchergun(	10.0f, 	1600, 8, 		3.0f), // Runandor | Crafting
+				new SpectralArchergun(	9.5f, 	1600, 8, 		3.0f), // Runandor | Crafting
 				new TrollsArchergun(	14.0f,	800, 	16, 	3.0f), // Overworld | Smash
 				new ViralArchergun(		13.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
 		);

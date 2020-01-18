@@ -31,6 +31,7 @@ import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
@@ -154,23 +155,19 @@ public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
     private boolean checkSpawnChance() {
         if (isOverworldMob()) {
             if (isDaylightMob()) {
-                if (rand.nextFloat() > 0.1)
-                    return false;
+                return !(rand.nextDouble() > getSpawnChanceFactor());
             }
-            else if (rand.nextFloat() > 0.4) {
-                return false;
+            else {
+                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
             }
         }
         else {
-            if (rand.nextFloat() > 0.1)
-                return false;
+            return !(rand.nextDouble() > getSpawnChanceFactor());
         }
-
-        return getSpawnChanceFactor() <= 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
     }
 
-    protected int getSpawnChanceFactor() {
-        return 1;
+    protected double getSpawnChanceFactor() {
+        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
     }
 
     @Override

@@ -9,16 +9,19 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.*;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.mobs.overworld.fullmoon.*;
 import net.tslat.aoa3.entity.mobs.shyrelands.EntityArcworm;
 import net.tslat.aoa3.item.weapon.blaster.ExperimentW801;
+import net.tslat.aoa3.utils.ItemUtil;
 
 public class ReservedItem extends SimpleItem {
 	private final String sequenceId;
@@ -43,7 +46,7 @@ public class ReservedItem extends SimpleItem {
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		Block block = world.getBlockState(pos).getBlock();
 
-		if (block == BlockRegister.logShyre) {
+		/*if (block == BlockRegister.logShyre) {
 			if (!world.isRemote) {
 				world.setBlockToAir(pos);
 				Block.spawnAsEntity(world, pos, ItemRegister.soulbone.newValidStack());
@@ -56,7 +59,7 @@ public class ReservedItem extends SimpleItem {
 
 			return EnumActionResult.SUCCESS;
 		}
-		else if (block == BlockRegister.chargingTable) {
+		else */if (block == BlockRegister.chargingTable) {
 			if (this == ItemRegister.fleshyBones) {
 				player.setHeldItem(hand, ItemRegister.darkBones.newValidStack());
 
@@ -169,6 +172,9 @@ public class ReservedItem extends SimpleItem {
 			return;
 
 		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase().startsWith("n"))
+			return;
+
+		if (ItemUtil.findItemInInventory(pl, ItemRegister.alienOrb) != -1)
 			return;
 
 		pl.entityDropItem(ItemRegister.alienOrb.newValidStack(), 0);

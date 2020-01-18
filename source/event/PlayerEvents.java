@@ -246,7 +246,7 @@ public class PlayerEvents {
 				if (bl instanceof BlockCrops) {
 					PlayerUtil.getAdventPlayer(pl).stats().addTribute(Enums.Deities.SELYAN, 2);
 
-					if (AdventOfAscension.rand.nextInt(500) == 0)
+					if (AdventOfAscension.rand.nextInt(2000) == 0)
 						pl.entityDropItem(new ItemStack(WeaponRegister.gunGardener), 0);
 				}
 

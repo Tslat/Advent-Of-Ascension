@@ -11,6 +11,7 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntitySkyShot;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
@@ -76,8 +77,8 @@ public class EntityAirhead extends AoAFlyingRangedMob implements SpecialProperty
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 10;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 7d;
 	}
 
 	@Nullable

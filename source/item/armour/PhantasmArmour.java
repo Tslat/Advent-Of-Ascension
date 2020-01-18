@@ -31,7 +31,7 @@ public class PhantasmArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
 		if (slots != null)
-			plData.player().addPotionEffect(new PotionEffect(MobEffects.LUCK, -1, slots.size(), true, false));
+			plData.player().addPotionEffect(new PotionEffect(MobEffects.LUCK, -1, slots.size() - 1, true, false));
 	}
 
 	@SideOnly(Side.CLIENT)

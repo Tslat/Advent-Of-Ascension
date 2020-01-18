@@ -113,6 +113,7 @@ import net.tslat.aoa3.client.render.entities.mobs.runandor.RuneTemplarRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRiderRenderer;
 import net.tslat.aoa3.entity.animals.*;
+import net.tslat.aoa3.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.entity.boss.bane.EntityBane;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneBig;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneClone;
@@ -561,7 +562,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityPodPlant.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelPodPlant(), EntityPodPlant.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/pod_plant.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPolarUrsa.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelUrsa(), EntityPolarUrsa.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/polar_ursa.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPolytom.class, renderManager -> new AoAFlyingRangedMobRenderer(renderManager, new ModelPolytom(), EntityPolytom.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/iromine/polytom.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPortalMaster.class, renderManager -> new AoATraderRenderer(renderManager, new ModelPortalMaster(), EntityPortalMaster.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/portal_master.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPortalMaster.class, renderManager -> new AoAAmbientNPCRenderer(renderManager, new ModelPortalMaster(), EntityPortalMaster.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/portal_master.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPrecasianLottoman.class, renderManager -> new AoATraderRenderer(renderManager, new ModelLottoman(), EntityPrecasianLottoman.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/precasian_lottoman.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPressureTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelPressureTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/pressure_tablet.png"), EnumParticleTypes.SPELL_MOB.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPrimitiveCarrotop.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelPrimitiveCarrotop(), EntityPrimitiveCarrotop.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/primitive_carrotop.png")));

@@ -312,7 +312,6 @@ public class CommandTslat extends CommandBase {
 					}
 					break;
 				case "weaponsprintout":
-					sender.sendMessage(new TextComponentString("Printing out all AoA weapon details to the launcher log..."));
 					System.out.print("AoA v" + AdventOfAscension.version + " weapons data printout below: \n");
 					System.out.print("\n");
 					System.out.print("---~~~---~~~---~~~\n");
@@ -567,9 +566,9 @@ public class CommandTslat extends CommandBase {
 					System.out.print("\n");
 					System.out.print("Total: " + (swords.size() + greatblades.size() + mauls.size() + shotguns.size() + snipers.size() + cannons.size() + blasters.size() + archerguns.size() + thrownWeapons.size() + guns.size() + vulcanes.size() + bows.size() + staves.size()) + "\n");
 					System.out.print("---~~~---~~~---~~~\n");
+					sender.sendMessage(new TextComponentString("Printed out all AoA weapon details to the launcher log"));
 					break;
 				case "mobsprintout":
-					sender.sendMessage(new TextComponentString("Printing out all AoA entity details to the launcher log..."));
 					System.out.print("AoA v" + AdventOfAscension.version + " entity data printout below: \n");
 					System.out.print("\n");
 					System.out.print("---~~~---~~~---~~~\n");
@@ -661,8 +660,8 @@ public class CommandTslat extends CommandBase {
 							System.out.print("Stats:\n");
 							System.out.print("    Health: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() + "\n");
 							System.out.print("    Armour: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.ARMOR).getBaseValue() + "\n");
-							System.out.print("    Knockback Resistance: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getBaseValue() + "\n");
-							System.out.print("    Movement Speed: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue() + "\n");
+							System.out.print("    Knockback Resistance: " + StringUtil.roundToNthDecimalPlace((float)livingEntity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getBaseValue(), 2) + "\n");
+							System.out.print("    Movement Speed: " + StringUtil.roundToNthDecimalPlace((float)livingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue(), 3) + "\n");
 
 							if (livingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
 								System.out.print("    Strength: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() + "\n");
@@ -670,8 +669,10 @@ public class CommandTslat extends CommandBase {
 							if (livingEntity instanceof EntityCreeponiaCreeper)
 								System.out.print("    Explosion Strength: " + ((EntityCreeponiaCreeper)livingEntity).getExplosionStrength() + "\n");
 
-							if (HunterUtil.isHunterCreature(livingEntity))
+							if (HunterUtil.isHunterCreature(livingEntity)) {
 								System.out.print("    Hunter Level: " + HunterUtil.getHunterLevel(livingEntity) + "\n");
+								System.out.print("    Hunter Xp: " + HunterUtil.getHunterXp(livingEntity) + "\n");
+							}
 
 							if (livingEntity instanceof SpecialPropertyEntity) {
 								System.out.print("    Immunities: \n");
@@ -698,6 +699,7 @@ public class CommandTslat extends CommandBase {
 					}
 
 					System.out.print("    Total: " + total + "\n");
+					sender.sendMessage(new TextComponentString("Printed out all AoA entity details to the launcher log"));
 					break;
 				case "testloottable":
 					World world = sender.getEntityWorld();

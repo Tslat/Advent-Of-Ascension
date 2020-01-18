@@ -30,6 +30,7 @@ import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -165,19 +166,19 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
     private boolean checkSpawnChance() {
         if (isOverworldMob()) {
             if (isDaylightMob()) {
-                return !(rand.nextFloat() > getSpawnChanceFactor());
+                return !(rand.nextDouble() > getSpawnChanceFactor());
             }
             else {
-                return !(rand.nextFloat() > getSpawnChanceFactor() * 4);
+                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
             }
         }
         else {
-            return !(rand.nextFloat() > getSpawnChanceFactor());
+            return !(rand.nextDouble() > getSpawnChanceFactor());
         }
     }
 
-    protected float getSpawnChanceFactor() {
-        return 0.1f;
+    protected double getSpawnChanceFactor() {
+        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
     }
 
     protected boolean canSpawnOnBlock(IBlockState block) {

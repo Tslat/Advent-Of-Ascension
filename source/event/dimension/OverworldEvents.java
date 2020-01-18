@@ -129,6 +129,7 @@ public class OverworldEvents {
 			case 12000:
 			case 12020:
 			case 12040:
+			case 13005:
 				deactivateEvent(ev.world, Enums.CreatureEvents.BIG_DAY);
 				deactivateEvent(ev.world, Enums.CreatureEvents.CREEP_DAY);
 				deactivateEvent(ev.world, Enums.CreatureEvents.DEATH_DAY);
@@ -147,6 +148,7 @@ public class OverworldEvents {
 			case 23080:
 			case 23100:
 			case 5:
+			case 1005:
 				deactivateEvent(ev.world, Enums.CreatureEvents.SOUL_SCURRY);
 				deactivateEvent(ev.world, Enums.CreatureEvents.BLOOD_HUNT);
 				deactivateEvent(ev.world, Enums.CreatureEvents.LUNAR_INVASION);

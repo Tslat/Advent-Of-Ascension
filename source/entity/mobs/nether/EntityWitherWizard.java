@@ -14,6 +14,7 @@ import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityWitherBall;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -91,7 +92,7 @@ public class EntityWitherWizard extends AoARangedMob {
     }
 
     @Override
-    protected float getSpawnChanceFactor() {
-        return 0.5f;
+    protected double getSpawnChanceFactor() {
+        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 2d;
     }
 }

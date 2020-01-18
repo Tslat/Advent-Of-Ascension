@@ -92,7 +92,7 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
     }
 
     @Override
-    protected float getSpawnChanceFactor() {
+    protected double getSpawnChanceFactor() {
         return 0.5f;
     }
 

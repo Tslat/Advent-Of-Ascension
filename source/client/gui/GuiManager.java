@@ -62,8 +62,6 @@ public class GuiManager implements IGuiHandler {
 					return getTraderContainer(player, EntityMetalloid.class, x);
 				case TRADER_NATURALIST:
 					return getTraderContainer(player, EntityNaturalist.class, x);
-				case TRADER_PORTAL_MASTER:
-					return getTraderContainer(player, EntityPortalMaster.class, x);
 				case TRADER_PRIMORDIAL_BANKER:
 					return getTraderContainer(player, EntityPrimordialBanker.class, x);
 				case TRADER_PRIMORDIAL_MERCHANT:
@@ -158,8 +156,6 @@ public class GuiManager implements IGuiHandler {
 					return getTraderGui(player, EntityMetalloid.class, x, "metalloid_trade");
 				case TRADER_NATURALIST:
 					return getTraderGui(player, EntityNaturalist.class, x, "naturalist_trade");
-				case TRADER_PORTAL_MASTER:
-					return getTraderGui(player, EntityPortalMaster.class, x, "portal_master_trade");
 				case TRADER_PRIMORDIAL_BANKER:
 					return getTraderGui(player, EntityPrimordialBanker.class, x, "primordial_trade");
 				case TRADER_PRIMORDIAL_MERCHANT:

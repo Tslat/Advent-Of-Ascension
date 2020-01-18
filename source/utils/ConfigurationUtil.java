@@ -1594,6 +1594,11 @@ public class ConfigurationUtil {
 	@Config(modid = "aoa3", type = Config.Type.INSTANCE, name = "aoa3/entities_config")
 	@Config.LangKey("gui.aoaentityconfig.title")
 	public static class EntityConfig {
+		@Config.Comment("Value represents a modifier to general spawn rates. Higher = more spawns. Value between 0 and 1")
+		@Config.LangKey("gui.aoaconfig.entitySpawnModifier")
+		@Config.RangeDouble(min = 0, max = 1)
+		public static double mobSpawnFrequencyModifier = 0.1d;
+
 		@Config.Comment("Add or remove Hunter entity attributes from creatures")
 		@Config.LangKey("gui.aoaconfig.hunterEntities")
 		@Config.RequiresMcRestart

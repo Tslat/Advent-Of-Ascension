@@ -14,6 +14,7 @@ import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityVolarShot;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -81,8 +82,8 @@ public class EntityVoliant extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 15;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 10d;
 	}
 
 	@Override
