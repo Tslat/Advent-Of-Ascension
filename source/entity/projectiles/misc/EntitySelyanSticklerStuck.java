@@ -6,6 +6,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntitySelyanSticklerStuck extends EntityThrowable {
 	private EntityLivingBase target;
@@ -50,14 +51,14 @@ public class EntitySelyanSticklerStuck extends EntityThrowable {
 			EntityUtil.healEntity(shooter, 0.03f);
 		}
 		else {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(thrower, world, this, 2.0f);
 
 			if (!world.isRemote)
 				setDead();
 		}
 
 		if (age >= 100) {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(thrower, world, posX, posY + 1, posZ, 2.0f);
 
 			if (!world.isRemote)
 				setDead();

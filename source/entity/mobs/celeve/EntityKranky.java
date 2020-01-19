@@ -1,14 +1,10 @@
 package net.tslat.aoa3.entity.mobs.celeve;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -28,7 +24,7 @@ public class EntityKranky extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1f;
+		return 0d;
 	}
 
 	@Override
@@ -38,12 +34,12 @@ public class EntityKranky extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 8;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.29d;
 	}
 
 	@Nullable
@@ -64,28 +60,9 @@ public class EntityKranky extends AoAMeleeMob {
 		return SoundsRegister.mobCeleveClownHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.circusCoin, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensCeleve, 1 + rand.nextInt(3 + lootingMod));
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerClown), 1);
-
-		if (rand.nextInt(200 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitSmiley, 1);
-	}
-
-	@Override
-	protected void doMeleeEffect(Entity target) {
-		addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 60, 30, true, true));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityKranky;
 	}
 }

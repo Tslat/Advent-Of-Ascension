@@ -1,8 +1,10 @@
 package net.tslat.aoa3.entity.mobs.barathos;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
 
@@ -27,12 +29,12 @@ public class EntityTharafly extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 55;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 6.5;
 	}
 
 	@Override
@@ -56,5 +58,11 @@ public class EntityTharafly extends AoAFlyingMeleeMob {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundsRegister.mobTharaflyDeath;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityTharafly;
 	}
 }

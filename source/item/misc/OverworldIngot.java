@@ -44,7 +44,7 @@ public class OverworldIngot extends SimpleItem {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		return I18n.translateToLocal("item." + getIngotType(stack) + "Ingot");
 	}
 }

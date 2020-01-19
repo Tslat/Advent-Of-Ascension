@@ -5,6 +5,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -12,27 +13,26 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.generation.misc.RunePostBlock;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class RuneShrine extends Block {
 	public RuneShrine() {
 		super(Material.ROCK);
-		setUnlocalizedName("RuneShrine");
+		setTranslationKey("RuneShrine");
 		setRegistryName("aoa3:rune_shrine");
 		setHardness(5.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
 		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
 	}
-
+	// TODO Fix level distribution across dimensions
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (world.isRemote)
@@ -45,10 +45,10 @@ public class RuneShrine extends Block {
 
 		BlockPos basePos = pos.up(2);
 		Block post1 = world.getBlockState(basePos.north(3).east(3)).getBlock();
-		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+		PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 		if (post1 instanceof RunePostBlock) {
-			if (((RunePostBlock)post1).getLevelReq() <= cap.getLevel(Enums.Skills.RUNATION)) {
+			if (((RunePostBlock)post1).getLevelReq() <= plData.stats().getLevel(Enums.Skills.RUNATION)) {
 				RuneItem rune = ((RunePostBlock)post1).getRune();
 
 				if (rune.isChargedRune() && heldStack.getItem() != ItemRegister.runeCharged)
@@ -59,26 +59,50 @@ public class RuneShrine extends Block {
 				Block post4 = world.getBlockState(basePos.south(3).west(3)).getBlock();
 
 				if (post1 == post2 && post2 == post3 && post3 == post4) {
-					ItemStack loot = new ItemStack(((RunePostBlock)post1).getRune(), 1);
+					int runeCount = heldStack.getCount();
 
-					if (cap.getArmourSetType() == Enums.ArmourSets.RUNATION)
-						loot.setCount(2);
+					if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.RUNATION)
+						runeCount *= 2;
 
-					if (!player.capabilities.isCreativeMode)
-						heldStack.shrink(1);
-
-					cap.addXp(Enums.Skills.RUNATION, ((RunePostBlock)post1).getXpGain(), false);
-					ItemUtil.givePlayerItemOrDrop(player, loot);
+					plData.stats().addXp(Enums.Skills.RUNATION, ((RunePostBlock)post1).getXpGain() * heldStack.getCount(), false);
 					player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
+
+					if (!player.capabilities.isCreativeMode) {
+						int handCount = Math.min(64, runeCount);
+
+						player.setHeldItem(hand, new ItemStack(rune, handCount));
+
+						runeCount -= handCount;
+
+						if (runeCount > 0)
+							ItemUtil.givePlayerItemOrDrop(player, new ItemStack(rune, runeCount));
+					}
+					else {
+						while (runeCount > 64) {
+							ItemUtil.givePlayerItemOrDrop(player, new ItemStack(rune, 64));
+
+							runeCount -= 64;
+						}
+
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(rune, runeCount));
+					}
+
+					player.inventoryContainer.detectAndSendChanges();
 				}
+			}
+			else if (player instanceof EntityPlayerMP) {
+				PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.RUNATION, ((RunePostBlock)post1).getLevelReq());
 			}
 		}
 		else {
-			if (!player.capabilities.isCreativeMode)
-				heldStack.shrink(1);
+			int count = heldStack.getCount();
 
-			cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.runeShrine.practice"));
-			cap.addXp(Enums.Skills.RUNATION, 2, false);
+
+			if (!player.capabilities.isCreativeMode)
+				player.setHeldItem(hand, ItemStack.EMPTY);
+
+			plData.sendThrottledChatMessage("message.feedback.runeShrine.practice");
+			plData.stats().addXp(Enums.Skills.RUNATION, 2 * count, false);
 			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			player.inventoryContainer.detectAndSendChanges();
 		}

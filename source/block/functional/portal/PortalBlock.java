@@ -8,6 +8,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
@@ -20,17 +21,20 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.block.UnbreakableBlock;
 import net.tslat.aoa3.block.functional.misc.CarvedRunicPortalBlock;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.client.fx.FXPortalFloater;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
-import net.tslat.aoa3.library.PortalCoordinatesContainer;
+import net.tslat.aoa3.dimension.nether.NetherTeleporter;
+import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -57,7 +61,6 @@ public class PortalBlock extends UnbreakableBlock {
 				return longAABB;
 			case EAST:
 			case WEST:
-				return latAABB;
 			default:
 				return latAABB;
 		}
@@ -85,7 +88,6 @@ public class PortalBlock extends UnbreakableBlock {
 		IBlockState adjacent = access.getBlockState(pos.offset(side));
 
 		if (adjacent.getBlock() == this) {
-
 			EnumFacing direction;
 
 			switch (state.getValue(BlockHorizontal.FACING)) {
@@ -114,7 +116,7 @@ public class PortalBlock extends UnbreakableBlock {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 
@@ -147,6 +149,28 @@ public class PortalBlock extends UnbreakableBlock {
 		}
 	}
 
+	@Override
+	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
+		if (world.isAirBlock(pos.up()) || world.isAirBlock(pos.down())) {
+			world.setBlockToAir(pos);
+
+			return;
+		}
+
+		switch (world.getBlockState(pos).getValue(BlockHorizontal.FACING)) {
+			case NORTH:
+			case SOUTH:
+				if (world.isAirBlock(pos.east()) || world.isAirBlock(pos.west()))
+					world.setBlockToAir(pos);
+				break;
+			case EAST:
+			case WEST:
+				if (world.isAirBlock(pos.north()) || world.isAirBlock(pos.south()))
+					world.setBlockToAir(pos);
+				break;
+		}
+	}
+
 	private boolean isCompatibleNeighbour(IBlockState state) {
 		Block bl = state.getBlock();
 
@@ -154,20 +178,33 @@ public class PortalBlock extends UnbreakableBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityPlayerMP && !entity.isRiding() && !entity.isBeingRidden()) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+		WorldProvider provider;
+		ITeleporter teleporter;
+
+		if (!world.isRemote && !entity.isRiding() && !entity.isBeingRidden()) {
+			if (!ConfigurationUtil.MainConfig.allowNonPlayerPortalTravel & !(entity instanceof EntityPlayer))
+				return;
+
 			if (entity.timeUntilPortal > 0) {
 				entity.timeUntilPortal = 30;
 
 				return;
 			}
 
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayerMP)entity);
-			WorldProvider provider = entity.getServer().getWorld(dimId).provider;
-			ITeleporter teleporter = provider instanceof AoAWorldProvider ? ((AoAWorldProvider)provider).getTeleporter((WorldServer)world) : ((WorldServer)world).getDefaultTeleporter();
-			PortalCoordinatesContainer portalLoc = cap.getPortalReturnLocation(world.provider.getDimension());
+			provider = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dimId).provider;
+			teleporter = provider instanceof AoAWorldProvider ? ((AoAWorldProvider)provider).getTeleporter((WorldServer)world) : dimId == -1 ? new NetherTeleporter((WorldServer)world) : ((WorldServer)world).getDefaultTeleporter();
+			PortalCoordinatesContainer portalLoc = null;
 
-			((EntityPlayerMP)entity).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+			if (entity instanceof EntityPlayer) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayerMP)entity);
+				portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
+
+				((EntityPlayerMP)entity).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+			}
+			else {
+				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+			}
 
 			if (portalLoc == null) {
 				if (world.provider.getDimension() == dimId) {
@@ -177,7 +214,7 @@ public class PortalBlock extends UnbreakableBlock {
 					entity = entity.changeDimension(dimId, teleporter);
 				}
 			}
-			else if (world.provider.getDimension() != dimId){
+			else if (world.provider.getDimension() != dimId) {
 				entity = entity.changeDimension(dimId, teleporter);
 			}
 			else {
@@ -185,7 +222,7 @@ public class PortalBlock extends UnbreakableBlock {
 			}
 
 			if (entity != null)
-				entity.timeUntilPortal = 200;
+				entity.timeUntilPortal = 100;
 		}
 	}
 
@@ -221,7 +258,7 @@ public class PortalBlock extends UnbreakableBlock {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 
 	public int getParticleColour() {
@@ -232,9 +269,9 @@ public class PortalBlock extends UnbreakableBlock {
 	@Override
 	public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random rand) {
 		for (int i = 0; i < 4; ++i) {
-			double posXStart = (double)((float)pos.getX() + rand.nextFloat());
-			double posYStart = (double)((float)pos.getY() + rand.nextFloat());
-			double posZStart = (double)((float)pos.getZ() + rand.nextFloat());
+			double posXStart = (float)pos.getX() + rand.nextFloat();
+			double posYStart = (float)pos.getY() + rand.nextFloat();
+			double posZStart = (float)pos.getZ() + rand.nextFloat();
 			double motionX = ((double)rand.nextFloat() - 0.5D) * 0.5D;
 			double motionY = ((double)rand.nextFloat() - 0.5D) * 0.5D;
 			double motionZ = ((double)rand.nextFloat() - 0.5D) * 0.5D;
@@ -242,11 +279,11 @@ public class PortalBlock extends UnbreakableBlock {
 
 			if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this) {
 				posXStart = (double)pos.getX() + 0.5D + 0.25D * (double)randomMod;
-				motionX = (double)(rand.nextFloat() * 2.0F * (float)randomMod);
+				motionX = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 			else {
 				posZStart = (double)pos.getZ() + 0.5D + 0.25D * (double)randomMod;
-				motionZ = (double)(rand.nextFloat() * 2.0F * (float)randomMod);
+				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
 			new FXPortalFloater(world, posXStart, posYStart, posZStart, motionX, motionY, motionZ, getParticleColour()).create();

@@ -6,20 +6,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelStrongSkelePig extends ModelBase {
-	ModelRenderer head1;
-	ModelRenderer body1;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg4;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer leg3;
+	private ModelRenderer head1;
+	private ModelRenderer body1;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg4;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer leg3;
 
 	public ModelStrongSkelePig() {
 		textureWidth = 64;

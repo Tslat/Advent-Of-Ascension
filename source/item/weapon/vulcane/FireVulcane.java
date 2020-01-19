@@ -16,13 +16,13 @@ import java.util.List;
 public class FireVulcane extends BaseVulcane implements AdventWeapon {
 	public FireVulcane(double dmg, int durability) {
 		super(dmg, durability);
-		setUnlocalizedName("FireVulcane");
+		setTranslationKey("FireVulcane");
 		setRegistryName("aoa3:fire_vulcane");
 	}
 
 	@Override
 	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer attacker) {
-		target.setFire(10);
+		target.setFire(8);
 	}
 
 	@SideOnly(Side.CLIENT)

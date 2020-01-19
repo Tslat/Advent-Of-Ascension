@@ -1,21 +1,27 @@
 package net.tslat.aoa3.entity.mobs.crystevia;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityConstructFlight extends AoAFlyingMeleeMob {
+public class EntityConstructFlight extends AoAFlyingMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.7f;
 
     public EntityConstructFlight(World world) {
         super(world, entityWidth, 0.84375f);
+
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -30,17 +36,22 @@ public class EntityConstructFlight extends AoAFlyingMeleeMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 40;
+        return 55;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 7.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
         return 0.1;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 3;
     }
 
     @Nullable
@@ -61,15 +72,28 @@ public class EntityConstructFlight extends AoAFlyingMeleeMob {
         return SoundsRegister.mobCrystalConstructHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(3) == 0)
-            dropItem(ItemRegister.tokensCrystevia, 1 + rand.nextInt(2 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityConstructOfFlight;
+    }
 
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.gemstonesBlue, 3);
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
 
-        if (rand.nextInt(6) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerCrystal), 1);
+        if (isEntityAlive() && getHealth() < getMaxHealth())
+            heal(0.1f);
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

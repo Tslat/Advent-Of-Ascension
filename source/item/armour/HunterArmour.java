@@ -1,28 +1,32 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOURHUNTER;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_HUNTER;
 
 public class HunterArmour extends AdventArmour implements SkillItem {
-	public HunterArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOURHUNTER, name, registryName, renderIndex, slot);
+	public HunterArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_HUNTER, name, registryName, slot);
 	}
 
 	@Override
@@ -41,40 +45,47 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 	}
 
 	@Override
-	public void setTickEffect(AdventPlayerCapability cap) {
-		EntityPlayer pl = cap.getPlayer();
+	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.addXpModifier(Enums.Skills.HUNTER, 0.3f);
+	}
 
-		pl.addPotionEffect(new PotionEffect(MobEffects.SPEED, 5, 2, true, false));
+	@Override
+	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.removeXpModifier(Enums.Skills.HUNTER, 0.3f);
+	}
 
-		if (pl.motionY == 0.0 && pl.isSneaking()) {
-			if (pl.motionX < 1.25 && pl.motionX > -1.25)
-				pl.motionX *= 1.2000000476837158;
+	@Override
+	public void onEquip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+		EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AoAAttributes.HUNTER_ARMOUR_KNOCKBACK);
+	}
 
-			if (pl.motionZ < 1.25 && pl.motionZ > -1.25)
-				pl.motionZ *= 1.2000000476837158;
-		}
+	@Override
+	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+		EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AoAAttributes.HUNTER_ARMOUR_KNOCKBACK);
+	}
 
-		if (pl.motionY > 0.0 && pl.motionY < 0.4)
-			pl.motionY *= 1.150000023841858;
+	@Override
+	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
+		if (HunterUtil.isHunterCreature(event.getEntityLiving()))
+			event.setAmount(event.getAmount() * 1.15f);
+	}
 
-		if (pl.motionY < 0.0)
-			pl.motionY *= 0.8999999761581421;
+	@Override
+	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
+		if (event.getSource().getTrueSource() instanceof EntityLivingBase && HunterUtil.isHunterCreature((EntityLivingBase)event.getSource().getTrueSource()))
+			event.setAmount(event.getAmount() * 0.85f);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.HunterArmour.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.HunterArmour.desc.2", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.HunterArmour.desc.3", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.HunterArmour.desc.4", TextFormatting.DARK_GREEN));
-
-		if (AdventGuiTabPlayer.getSkillLevel(getSkill()) >= 100) {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.GREEN, Integer.toString(100), StringUtil.getLocaleString("skills.hunter.name")));
-		}
-		else {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.RED, Integer.toString(100), StringUtil.getLocaleString("skills.hunter.name")));
-		}
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.skillXpBonus", Enums.ItemDescriptionType.POSITIVE, Integer.toString(30), StringUtil.getLocaleString("skills.hunter.name")));
+		tooltip.add(ItemUtil.getFormattedLevelRestrictedDescriptionText(Enums.Skills.HUNTER, 100));
 	}
 }

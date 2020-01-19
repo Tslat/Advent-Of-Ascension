@@ -1,14 +1,11 @@
 package net.tslat.aoa3.entity.boss.voxxulon;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -16,12 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -32,6 +25,7 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,9 +34,6 @@ import java.util.TreeSet;
 public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPropertyEntity, AoARangedAttacker {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/voxxulon.png");
 	public static final float entityWidth = 2f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityVoxxulon(World world) {
 		super(world, entityWidth, 2.375f);
@@ -93,13 +84,19 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 		return SoundsRegister.mobVoxxulonHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVoxxulon;
+	}
+
 	@Override
 	protected SoundEvent getStepSound() {
 		return null;
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isGunDamage(source);
 	}
 
@@ -109,23 +106,11 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueVoxxulon), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.bowToxin, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.gunVileVanquisher, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.sniperSludgeSniper, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.staffNoxious, 1);
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -176,6 +161,12 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicVoxxulon;
+	}
+
 	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
@@ -194,12 +185,12 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1f);
 	}
 
 	@Override
@@ -208,24 +199,5 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicVoxxulon, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

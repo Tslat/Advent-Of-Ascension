@@ -1,17 +1,12 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -34,7 +29,7 @@ public class EntityDicer extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 50;
+		return 45;
 	}
 
 	@Override
@@ -63,16 +58,10 @@ public class EntityDicer extends AoAMeleeMob {
 		return SoundsRegister.mobDicerHit;
 	}
 
+	@Nullable
 	@Override
-	protected void doMeleeEffect(Entity target) {
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(4), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			pl.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 65, 1, true, true));
-		}
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityDicer;
 	}
 
 	@Override

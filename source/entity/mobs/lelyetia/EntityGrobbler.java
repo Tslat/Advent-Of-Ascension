@@ -1,14 +1,12 @@
 package net.tslat.aoa3.entity.mobs.lelyetia;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
 
 import javax.annotation.Nullable;
 
@@ -26,22 +24,22 @@ public class EntityGrobbler extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.9d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 85d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 10;
+		return 8;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.3;
 	}
 
 	@Nullable
@@ -62,26 +60,9 @@ public class EntityGrobbler extends AoAMeleeMob {
 		return SoundsRegister.mobGrobblerHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.realmstoneLelyetia, 1);
-
-		if (rand.nextBoolean())
-			dropItem(WeaponRegister.sniperMonster, 1);
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(11), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			if (!pl.isSneaking())
-				pl.addVelocity(Math.signum(posX - pl.posX) * 0.089, 0, Math.signum(posZ - pl.posZ) * 0.089);
-		}
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGrobbler;
 	}
 }

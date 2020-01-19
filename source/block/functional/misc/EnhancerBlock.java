@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class EnhancerBlock extends Block {
 	public EnhancerBlock(String name, String registryName) {
 		super(Material.ROCK);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(10.0f);
 		setResistance(10.0f);

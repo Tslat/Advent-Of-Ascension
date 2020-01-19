@@ -4,16 +4,15 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +27,7 @@ public class EntitySwampCharger extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0f;
+		return 0d;
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class EntitySwampCharger extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 4;
 	}
 
 	@Override
@@ -67,6 +66,12 @@ public class EntitySwampCharger extends AoAMeleeMob {
 		return SoundsRegister.mobChargerHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySwampCharger;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -79,21 +84,8 @@ public class EntitySwampCharger extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (source.isFireDamage() || isBurning()) {
-			dropItem(ItemRegister.chargerShank, 1 + rand.nextInt(1 + lootingMod));
-		}
-		else {
-			dropItem(ItemRegister.chargerShankRaw, 1 + rand.nextInt(1 + lootingMod));
-		}
-
-		if (rand.nextInt(6) == 0)
-			dropItem(Items.FEATHER, 3 + rand.nextInt(1 + lootingMod));
-	}
-
-	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block);
+		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

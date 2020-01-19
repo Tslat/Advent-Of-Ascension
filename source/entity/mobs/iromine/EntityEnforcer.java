@@ -1,19 +1,28 @@
 package net.tslat.aoa3.entity.mobs.iromine;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityEnforcer extends AoAMeleeMob {
+public class EntityEnforcer extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.75f;
 
     public EntityEnforcer(World world) {
         super(world, entityWidth, 2.25f);
+
+        mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -23,22 +32,27 @@ public class EntityEnforcer extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.3;
+        return 0.4;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 30;
+        return 89;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 7;
+        return 10;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.25;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 4;
     }
 
     @Nullable
@@ -59,8 +73,20 @@ public class EntityEnforcer extends AoAMeleeMob {
         return SoundsRegister.mobEnforcerHit;
     }
 
+    @Nullable
     @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityEnforcer;
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

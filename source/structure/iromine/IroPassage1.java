@@ -1,9 +1,11 @@
 package net.tslat.aoa3.structure.iromine;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -14,7 +16,7 @@ public class IroPassage1 extends AoAStructure { //StructureSize: 14x6x20
 	private static final IBlockState confusionTrap = BlockRegister.iroBrickTrap.getDefaultState();
 	private static final IBlockState enforcerSpanwer = BlockRegister.spawnerEnforcer.getDefaultState();
 	private static final IBlockState mechyonSpawner = BlockRegister.spawnerMechyon.getDefaultState();
-	private static final IBlockState iroCrate = BlockRegister.iroCrate.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 
 	public IroPassage1() {
 		super("IroPassage1");
@@ -321,10 +323,10 @@ public class IroPassage1 extends AoAStructure { //StructureSize: 14x6x20
 		addBlock(world, basePos, 4, 2, 19, stripedBrick);
 		addBlock(world, basePos, 5, 2, 18, stripedBrick);
 		addBlock(world, basePos, 5, 2, 19, stripedBrick);
-		addBlock(world, basePos, 6, 2, 17, stripedBrick);
+		addBlock(world, basePos, 6, 2, 17, chest);
 		addBlock(world, basePos, 6, 2, 18, stripedBrick);
 		addBlock(world, basePos, 6, 2, 19, stripedBrick);
-		addBlock(world, basePos, 7, 2, 17, stripedBrick);
+		addBlock(world, basePos, 7, 2, 17, chest);
 		addBlock(world, basePos, 7, 2, 18, stripedBrick);
 		addBlock(world, basePos, 7, 2, 19, stripedBrick);
 		addBlock(world, basePos, 8, 2, 18, stripedBrick);
@@ -408,7 +410,6 @@ public class IroPassage1 extends AoAStructure { //StructureSize: 14x6x20
 		addBlock(world, basePos, 4, 3, 18, stripedBrick);
 		addBlock(world, basePos, 5, 3, 18, stripedBrick);
 		addBlock(world, basePos, 6, 3, 18, stripedBrick);
-		addBlock(world, basePos, 7, 3, 17, iroCrate);
 		addBlock(world, basePos, 7, 3, 18, stripedBrick);
 		addBlock(world, basePos, 8, 3, 18, stripedBrick);
 		addBlock(world, basePos, 9, 3, 1, stripedBrick);
@@ -615,5 +616,10 @@ public class IroPassage1 extends AoAStructure { //StructureSize: 14x6x20
 		addBlock(world, basePos, 11, 5, 15, dottedBrick);
 		addBlock(world, basePos, 11, 5, 16, dottedBrick);
 		addBlock(world, basePos, 11, 5, 17, dottedBrick);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureIroPassageChests, basePos.add(6, 2, 17), basePos.add(7, 2, 17));
 	}
 }

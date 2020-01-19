@@ -43,7 +43,7 @@ public class BasicNonCubeBlock extends BasicBlock {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

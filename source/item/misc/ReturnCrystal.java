@@ -5,14 +5,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.food.BasicFood;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,10 +30,10 @@ public class ReturnCrystal extends BasicFood {
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase eater) {
 		if (!world.isRemote) {
 			if (eater instanceof EntityPlayer) {
-				AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(((EntityPlayer)eater));
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer(((EntityPlayer)eater));
 
 				if (world.provider.getDimension() == DimensionRegister.dimensionImmortallis.getId()) {
-					cap.resetAllTribute();
+					plData.stats().resetAllTribute();
 					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin1));
 					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin2));
 					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin3));
@@ -43,7 +45,7 @@ public class ReturnCrystal extends BasicFood {
 					eater.setPositionAndUpdate(-5, 20, 3);
 				}
 				else {
-					cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.item.returnCrystal.wrongDim"));
+					plData.sendThrottledChatMessage("message.feedback.item.returnCrystal.wrongDim");
 				}
 			}
 		}
@@ -51,6 +53,7 @@ public class ReturnCrystal extends BasicFood {
 		return stack;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(StringUtil.getLocaleString("item.ReturnCrystal.desc.1"));

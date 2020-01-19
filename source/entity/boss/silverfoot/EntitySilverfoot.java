@@ -1,8 +1,6 @@
 package net.tslat.aoa3.entity.boss.silverfoot;
 
 import com.google.common.base.Predicate;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,18 +10,13 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.properties.BossEntity;
@@ -36,9 +29,6 @@ import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/silverfoot.png");
 	public static final float entityWidth = 1.1f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntitySilverfoot(World world) {
 		super(world, entityWidth, 2.5f);
@@ -113,29 +103,15 @@ public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
 	@Override
-	public boolean isNonBoss() {
-		return false;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySilverfoot;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueSilverfoot), 1);
-
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.greatbladeLyonic, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.staffLyonic, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.gunIroRifle, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.cannonIroCannon, 1);
-				break;
-		}
+	public boolean isNonBoss() {
+		return false;
 	}
 
 	@Override
@@ -151,6 +127,14 @@ public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 			target.addVelocity(motionX * 10.5 * resist, motionY * 0.5 * resist, motionZ * 10.5 * resist);
 			target.velocityChanged = true;
 		}
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -185,30 +169,17 @@ public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicSilverfoot;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicSilverfoot, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

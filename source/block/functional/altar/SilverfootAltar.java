@@ -18,7 +18,7 @@ public class SilverfootAltar extends BossAltarBlock {
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		EntitySilverfoot silverfoot = new EntitySilverfoot(player.world);
 
-		silverfoot.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		silverfoot.setLocationAndAngles(blockPos.getX() + 0.5, blockPos.getY() + 1, blockPos.getZ() + 0.5, -90, 0);
 		player.world.spawnEntity(silverfoot);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.silverfoot.spawn", player.getDisplayNameString()), blockPos);
 	}

@@ -3,19 +3,16 @@ package net.tslat.aoa3.client.gui.mainwindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.ScrollablePane;
+import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.RenderUtil;
-import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,38 +100,12 @@ public class AdventGuiTabGuides extends GuiScreen {
 
 	public static void prepAvailableBundles() {
 		infoBundles = new ArrayList<InfoBundle>(AvailableBundles.values().length);
-		ClassLoader classLoader = AdventOfAscension.instance.getClass().getClassLoader();
-		InputStream streamIn;
-		BufferedReader reader = null;
-		InputStreamReader streamReader = null;
 
 		for (AvailableBundles bundleEnum : AvailableBundles.values()) {
-			try {
-				streamIn = classLoader.getResourceAsStream("assets/aoa3/lang/guides/" + currentLanguage + "/" + bundleEnum.toString().toLowerCase() + ".txt");
+			String line = ModUtil.getTextFromResourceFile(new ResourceLocation("aoa3", "lang/other/" + currentLanguage + "/guides/" + bundleEnum.toString().toLowerCase()), "txt", new ResourceLocation("aoa3", "lang/other/en_us/guides/" + bundleEnum.toString().toLowerCase()));
 
-				if (streamIn == null)
-					streamIn = classLoader.getResourceAsStream("assets/aoa3/lang/guides/en_us/" + bundleEnum.toString().toLowerCase() + ".txt");
-
-				if (streamIn == null)
-					continue;
-
-				final StringBuilder content = new StringBuilder();
-				streamReader = new InputStreamReader(streamIn);
-				reader = new BufferedReader(streamReader);
-
-				reader.lines().forEach(line -> {content.append(line); content.append("\n");});
-				infoBundles.add(new InfoBundle(content.toString()));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			finally {
-				if (streamReader != null)
-					IOUtils.closeQuietly(streamReader);
-
-				if (reader != null)
-					IOUtils.closeQuietly(reader);
-			}
+			if (line != null)
+				infoBundles.add(new InfoBundle(line));
 		}
 	}
 

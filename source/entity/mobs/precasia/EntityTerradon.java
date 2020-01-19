@@ -4,9 +4,10 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -25,7 +26,7 @@ public class EntityTerradon extends AoAMeleeMob implements SpecialPropertyEntity
 	public EntityTerradon(World world) {
 		super(world, entityWidth, 1.875f);
 
-		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
+		this.mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 		setSlipperyMovement();
 		setAIMoveSpeed(1.8f);
 	}
@@ -44,17 +45,17 @@ public class EntityTerradon extends AoAMeleeMob implements SpecialPropertyEntity
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1;
+		return 0.8d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 160;
+		return 105d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 25;
+		return 10d;
 	}
 
 	@Override
@@ -85,26 +86,15 @@ public class EntityTerradon extends AoAMeleeMob implements SpecialPropertyEntity
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityTerradon;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.tokensPrecasian, 2 + rand.nextInt(4 + lootingMod));
-		dropItem(ItemRegister.heavyBoulder, 1);
-		dropItem(ItemRegister.realmstonePrecasia, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinSilver, 1 + rand.nextInt(4 + lootingMod));
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return EntityUtil.isGunDamage(source);
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
 	}
 
 	@Override

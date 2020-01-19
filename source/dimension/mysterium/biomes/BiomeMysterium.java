@@ -34,8 +34,8 @@ public class BiomeMysterium extends Biome {
 	public BiomeMysterium() {
 		super(properties);
 		setRegistryName("aoa3", "mysterium");
-		this.topBlock = BlockRegister.grassMysterium.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtMysterium.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("mysterium_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("mysterium_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

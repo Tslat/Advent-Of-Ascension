@@ -6,16 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelStoreKeeper extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightarm;
-	ModelRenderer leftarm;
-	ModelRenderer body2;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightArm;
+	private ModelRenderer leftArm;
+	private ModelRenderer body2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
 
 	public ModelStoreKeeper() {
 		textureWidth = 64;
@@ -30,16 +30,16 @@ public class ModelStoreKeeper extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightarm = new ModelRenderer(this, 40, 1)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
-		rightarm.setRotationPoint(-5.0f, 11.0f, 0.0f);
-		rightarm.setTextureSize(64, 32);
-		rightarm.mirror = true;
-		setRotation(rightarm, 0.0f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 40, 1)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
-		leftarm.setRotationPoint(5.0f, 11.0f, 0.0f);
-		leftarm.setTextureSize(64, 32);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.0f, 0.0f, 0.0f);
+		(rightArm = new ModelRenderer(this, 40, 1)).addBox(-3.0f, -2.0f, -2.0f, 4, 12, 4);
+		rightArm.setRotationPoint(-5.0f, 11.0f, 0.0f);
+		rightArm.setTextureSize(64, 32);
+		rightArm.mirror = true;
+		setRotation(rightArm, 0.0f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 40, 1)).addBox(-1.0f, -2.0f, -2.0f, 4, 12, 4);
+		leftArm.setRotationPoint(5.0f, 11.0f, 0.0f);
+		leftArm.setTextureSize(64, 32);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 0, 16)).addBox(-4.0f, 0.0f, -2.0f, 8, 10, 6);
 		body2.setRotationPoint(0.0f, 9.0f, 0.0f);
 		body2.setTextureSize(64, 32);
@@ -76,8 +76,8 @@ public class ModelStoreKeeper extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightarm.render(par7);
-		leftarm.render(par7);
+		rightArm.render(par7);
+		leftArm.render(par7);
 		body2.render(par7);
 		head2.render(par7);
 		head3.render(par7);
@@ -93,9 +93,9 @@ public class ModelStoreKeeper extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
-		rightarm.rotateAngleZ = 0.0f;
-		leftarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm.rotateAngleZ = 0.0f;
+		rightArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
+		rightArm.rotateAngleZ = 0.0f;
+		leftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm.rotateAngleZ = 0.0f;
 	}
 }

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.utils;
 
 import com.google.common.collect.Multimap;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,16 +12,24 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
+import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.item.misc.ItemTieredBullet;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class ItemUtil {
@@ -54,7 +63,7 @@ public class ItemUtil {
 			if (mod.getID().equals(attributeUUID)) {
 				double value = mod.getAmount();
 
-				if (mod.getID().equals(UUID.fromString(Enums.AttributeUUIDS.VANILLA_ATTACK_SPEED)))
+				if (mod.getID().equals(AoAAttributes.VANILLA_ATTACK_SPEED))
 					value += player.getEntityAttribute(baseAttribute).getBaseValue();
 
 				return mod.getOperation() != 1 && mod.getOperation() != 2 ? value : value * 100;
@@ -153,10 +162,9 @@ public class ItemUtil {
 		if (player.capabilities.isCreativeMode)
 			return true;
 
-
-		Enums.ArmourSets armour = player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null).getArmourSetType();
+		Enums.ArmourSets armour = PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet();
 		int archmage = allowBuffs ? EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.archmage, heldItem) : 0;
-		boolean nightmareArmour = allowBuffs && (armour == Enums.ArmourSets.NIGHTMARE || armour == Enums.ArmourSets.RUNATION);
+		boolean nightmareArmour = allowBuffs && armour == Enums.ArmourSets.NIGHTMARE;
 		boolean greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, heldItem) > 0;
 		HashMap<RuneItem, Integer> requiredRunes = new HashMap<RuneItem, Integer>();
 
@@ -210,7 +218,7 @@ public class ItemUtil {
 			}
 		}
 
-		if (offHandStack.getItem() instanceof RuneItem) {
+		if (!runeCounter.isEmpty() && offHandStack.getItem() instanceof RuneItem) {
 			RuneItem type = (RuneItem)offHandStack.getItem();
 
 			if (runeCounter.containsKey(type)) {
@@ -228,27 +236,29 @@ public class ItemUtil {
 			}
 		}
 
-		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-			ItemStack stack = player.inventory.getStackInSlot(i);
+		if (!runeCounter.isEmpty()) {
+			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
+				ItemStack stack = player.inventory.getStackInSlot(i);
 
-			if (stack.getItem() instanceof RuneItem) {
-				RuneItem type = (RuneItem)stack.getItem();
+				if (stack.getItem() instanceof RuneItem) {
+					RuneItem type = (RuneItem)stack.getItem();
 
-				if (runeCounter.containsKey(type)) {
-					int amount = runeCounter.get(type);
+					if (runeCounter.containsKey(type)) {
+						int amount = runeCounter.get(type);
 
-					runeSlots.add(i);
-					amount -= stack.getCount();
+						runeSlots.add(i);
+						amount -= stack.getCount();
 
-					if (amount > 0) {
-						runeCounter.put(type, amount);
+						if (amount > 0) {
+							runeCounter.put(type, amount);
+						}
+						else {
+							runeCounter.remove(type);
+						}
+
+						if (runeCounter.isEmpty())
+							break;
 					}
-					else {
-						runeCounter.remove(type);
-					}
-
-					if (runeCounter.isEmpty())
-						break;
 				}
 			}
 		}
@@ -304,6 +314,9 @@ public class ItemUtil {
 				else {
 					requiredRunes.put(type, remaining);
 				}
+
+				if (requiredRunes.isEmpty())
+					break;
 			}
 
 			return true;
@@ -324,7 +337,23 @@ public class ItemUtil {
 		return newStack;
 	}
 
+	public static void givePlayerMultipleItems(EntityPlayer pl, ItemStack... stacks) {
+		givePlayerMultipleItems(pl, Arrays.asList(stacks));
+	}
+
+	public static void givePlayerMultipleItems(EntityPlayer pl, Collection<ItemStack> stacks) {
+		for (ItemStack stack : stacks) {
+			if (!pl.inventory.addItemStackToInventory(stack))
+				pl.entityDropItem(stack, 0.5f);
+		}
+
+		pl.inventoryContainer.detectAndSendChanges();
+	}
+
 	public static void givePlayerItemOrDrop(EntityPlayer player, ItemStack stack) {
+		if (stack.isEmpty())
+			return;
+
 		if (!player.inventory.addItemStackToInventory(stack))
 			player.entityDropItem(stack, 0.5f);
 
@@ -384,5 +413,125 @@ public class ItemUtil {
 			return false;
 
 		return a.getTagCompound() == null ? b.getTagCompound() == null : b.getTagCompound() != null && a.getTagCompound().equals(b.getTagCompound());
+	}
+
+	public static ItemStack cloneItemStackForComparisons(ItemStack stackToClone) {
+		ItemStack newStack = new ItemStack(stackToClone.getItem(), 1, stackToClone.isItemStackDamageable() ? 0 : stackToClone.getItemDamage(), null);
+
+		if (stackToClone.getTagCompound() != null)
+			newStack.setTagCompound(stackToClone.getTagCompound());
+
+		return newStack;
+	}
+
+	public static ItemStack shallowCloneItemStack(ItemStack stackToClone) {
+		return new ItemStack(stackToClone.getItem(), 1, stackToClone.isItemStackDamageable() ? 0 : stackToClone.getItemDamage(), null);
+	}
+
+	public static String getFormattedDescriptionText(String langKey, Enums.ItemDescriptionType type, String... args) {
+		return StringUtil.getColourLocaleStringWithArguments(langKey, type.format, args);
+	}
+
+	public static String getFormattedDescriptionText(String langKey, Enums.ItemDescriptionType type) {
+		return StringUtil.getColourLocaleString(langKey, type.format);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static String getFormattedLevelRestrictedDescriptionText(Enums.Skills skill, int levelReq) {
+		boolean meetsReq = (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.capabilities.isCreativeMode) || AdventGuiTabPlayer.getSkillLevel(skill) >= levelReq;
+
+		return StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, Integer.toString(levelReq), StringUtil.getLocaleString("skills." + skill.toString().toLowerCase() + ".name"));
+	}
+
+	public static boolean hasLevelForItem(Item item, PlayerDataManager plData) {
+		if (item == null)
+			return false;
+
+		if (plData.player().capabilities.isCreativeMode || !(item instanceof SkillItem))
+			return true;
+
+		SkillItem skillItem = (SkillItem)item;
+
+		return skillItem.getLevelReq() <= plData.stats().getLevel(skillItem.getSkill());
+	}
+
+	@Nullable
+	public static ItemStack getStackFromHotbar(EntityPlayer player, Item item) {
+		for (int i = 0; i < 9; i++) {
+			ItemStack stack;
+
+			if ((stack = player.inventory.getStackInSlot(i)).getItem() == item)
+				return stack;
+		}
+
+		return null;
+	}
+
+	public static int findItemInInventory(EntityPlayer player, Item item) {
+		int i = 0;
+
+		for (ItemStack stack : player.inventory.mainInventory) {
+			if (stack.getItem() == item)
+				return i;
+
+			i++;
+		}
+
+		for (ItemStack stack : player.inventory.armorInventory) {
+			if (stack.getItem() == item)
+				return i;
+
+			i++;
+		}
+
+		for (ItemStack stack : player.inventory.offHandInventory) {
+			if (stack.getItem() == item)
+				return i;
+
+			i++;
+		}
+
+		return -1;
+	}
+
+	public static boolean hasAllItems(EntityPlayer player, Item... items) {
+		HashSet<Item> itemSet = new HashSet<Item>(Arrays.asList(items));
+
+		for (ItemStack stack : player.inventory.mainInventory) {
+			itemSet.removeIf(item -> item == stack.getItem());
+
+			if (itemSet.isEmpty())
+				return true;
+		}
+
+		for (ItemStack stack : player.inventory.armorInventory) {
+			itemSet.removeIf(item -> item == stack.getItem());
+
+			if (itemSet.isEmpty())
+				return true;
+		}
+
+		for (ItemStack stack : player.inventory.offHandInventory) {
+			itemSet.removeIf(item -> item == stack.getItem());
+
+			if (itemSet.isEmpty())
+				return true;
+		}
+
+		return false;
+	}
+
+	@Nullable
+	public static ItemStack getStackFromInventory(EntityPlayer player, Item item) {
+		int i = findItemInInventory(player, item);
+
+		if (i < 0)
+			return null;
+
+		return player.inventory.getStackInSlot(i);
+	}
+
+	public static boolean isHoldingItem(EntityLivingBase entity, Item item) {
+		return entity.getHeldItemMainhand().getItem() == item || entity.getHeldItemOffhand().getItem() == item;
 	}
 }

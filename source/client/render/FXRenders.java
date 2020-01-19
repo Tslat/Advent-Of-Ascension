@@ -1,24 +1,24 @@
 package net.tslat.aoa3.client.render;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.Particle;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.*;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 @SideOnly(Side.CLIENT)
 public class FXRenders {
-	private static HashMap<Integer, IParticleFactory> particleFactoryMap = new HashMap<Integer, IParticleFactory>();
+	private static HashMap<Integer, FXFactory> particleFactoryMap = new HashMap<Integer, FXFactory>();
 
-	public static void spawnParticle(int id, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int args) {
-		IParticleFactory factory = particleFactoryMap.get(id);
+	public static void spawnParticle(int id, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int textureOffsetIndex, float scale, int... args) {
+		FXFactory factory = particleFactoryMap.get(id);
 
 		if (factory != null)
-			factory.createParticle(0, Minecraft.getMinecraft().player.world, posX, posY, posZ, speedX, speedY, speedZ, args);
+			factory.createParticle(posX, posY, posZ, speedX, speedY, speedZ, textureOffsetIndex, scale, args);
 	}
 
 	@SubscribeEvent
@@ -35,5 +35,10 @@ public class FXRenders {
 		particleFactoryMap.put(FXLastingFluffyTrail.particleId, new FXLastingFluffyTrail.Factory());
 		particleFactoryMap.put(FXFluffyRainbowParticle.particleId, new FXFluffyRainbowParticle.Factory());
 		particleFactoryMap.put(FXPortalFloater.particleId, new FXPortalFloater.Factory());
+	}
+
+	public interface FXFactory {
+		@Nullable
+		Particle createParticle(double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int textureOffsetIndex, float scale, int... args);
 	}
 }

@@ -1,31 +1,24 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityGoalby extends AoAMeleeMob implements HunterEntity {
+public class EntityGoalby extends AoAMeleeMob {
 	public static final float entityWidth = 1.2f;
 
 	public EntityGoalby(World world) {
 		super(world, entityWidth, 2.5f);
-		this.mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
-		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
 	}
 
 	@Override
@@ -35,12 +28,12 @@ public class EntityGoalby extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7f;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 30;
 	}
 
 	@Override
@@ -69,35 +62,15 @@ public class EntityGoalby extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobGoalbyHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGoalby;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneHaven, 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 1;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 10;
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return EntityUtil.isRangedDamage(source, source.getImmediateSource(), 1) || EntityUtil.isGunDamage(source);
 	}
 
 	@Override
@@ -110,11 +83,6 @@ public class EntityGoalby extends AoAMeleeMob implements HunterEntity {
 		}
 
 		return false;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Override

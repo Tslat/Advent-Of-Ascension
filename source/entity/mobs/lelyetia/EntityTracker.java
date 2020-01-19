@@ -1,13 +1,11 @@
 package net.tslat.aoa3.entity.mobs.lelyetia;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
@@ -28,7 +26,7 @@ public class EntityTracker extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.5;
+		return 0.1d;
 	}
 
 	@Override
@@ -38,12 +36,12 @@ public class EntityTracker extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 6.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.329;
+		return 0.3d;
 	}
 
 	@Nullable
@@ -64,18 +62,9 @@ public class EntityTracker extends AoAMeleeMob {
 		return SoundsRegister.mobTrackerHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(WeaponRegister.gunGaugeRifle, 1);
-
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.tokensLelyetia, 1 + rand.nextInt(3 + lootingMod));
-
-		if (rand.nextInt(200 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitLelyetian, 1);
-
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerLelyetian), 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityTracker;
 	}
 }

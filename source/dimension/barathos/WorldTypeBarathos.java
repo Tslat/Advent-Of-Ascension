@@ -5,7 +5,7 @@ import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 
 public class WorldTypeBarathos extends WorldType {
 	public WorldTypeBarathos() {
@@ -14,7 +14,7 @@ public class WorldTypeBarathos extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(DimensionRegister.biomeBarathos);
+		return new BiomeProviderSingle(BiomeRegister.biomeBarathos);
 	}
 
 	@Override

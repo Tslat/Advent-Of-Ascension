@@ -2,11 +2,11 @@ package net.tslat.aoa3.entity.mobs.dustopia;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.penumbra.EntityPenumbra;
 
@@ -21,17 +21,17 @@ public class EntityBasilisk extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.3;
+        return 0.1;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 60;
+        return 119;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 14;
     }
 
     @Override
@@ -57,28 +57,17 @@ public class EntityBasilisk extends AoAMeleeMob {
         return SoundsRegister.mobBasiliskHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityBasilisk;
+    }
+
     @Override
     public void setAttackTarget(@Nullable EntityLivingBase target) {
         if (target instanceof EntityPenumbra)
             return;
 
         super.setAttackTarget(target);
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(25 - lootingMod) == 0)
-            dropItem(WeaponRegister.sniperDuster, 1);
-
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensDustopia, 1 + rand.nextInt(2 + lootingMod));
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitDarkly, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
     }
 }

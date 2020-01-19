@@ -2,14 +2,13 @@ package net.tslat.aoa3.entity.mobs.greckon;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.penumbra.EntityPenumbra;
@@ -31,17 +30,17 @@ public class EntityShifter extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.3;
+        return 0.1;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 50;
+        return 130;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 15;
     }
 
     @Override
@@ -67,6 +66,12 @@ public class EntityShifter extends AoAMeleeMob {
         return SoundsRegister.mobShifterHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityShifter;
+    }
+
     @Override
     public void setAttackTarget(@Nullable EntityLivingBase target) {
         if (target instanceof EntityPenumbra)
@@ -76,27 +81,13 @@ public class EntityShifter extends AoAMeleeMob {
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensGreckon, 1 + rand.nextInt(2 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerGhoul), 1);
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitHaunted, 1);
-
-        if (rand.nextInt(20 - lootingMod) == 0)
-            dropItem(ItemRegister.realmstoneDustopia, 1);
-    }
-
-    @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        cloakCooldown--;
+        if (cloakCooldown > 0)
+            cloakCooldown--;
 
-        if (cloakCooldown == 0) {
+        if (cloakCooldown == 0 && getAttackTarget() != null) {
             cloakCooldown = 160;
 
             addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 40, 2, true, true));

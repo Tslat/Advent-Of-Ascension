@@ -2,20 +2,16 @@ package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityBloodball;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -33,17 +29,17 @@ public class EntityBaumba extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 200;
+		return 134;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 7.5;
+		return 12;
 	}
 
 	@Override
@@ -63,45 +59,20 @@ public class EntityBaumba extends AoARangedMob {
 		return SoundsRegister.plantThump;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.moltenUpgrader, 1);
-
-		if (rand.nextInt(150 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterRevolution, 1);
-
-		if (rand.nextInt(30 - lootingMod) == 0) {
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(ArmourRegister.SpacekingBody, 1);
-					break;
-				case 1:
-					dropItem(ArmourRegister.SpacekingLegs, 1);
-					break;
-				case 2:
-					dropItem(ArmourRegister.SpacekingHelmet, 1);
-					break;
-				case 3:
-					dropItem(ArmourRegister.SpacekingBoots, 1);
-			}
-		}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.coinSilver, 1 + rand.nextInt(2 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBaumba;
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2f, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2f, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 
 	@Override

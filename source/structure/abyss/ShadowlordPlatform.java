@@ -1,16 +1,23 @@
 package net.tslat.aoa3.structure.abyss;
 
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.block.functional.lamps.LampBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
 
-public class ShadowlordPlatform extends AoAStructure { //StructureSize: 7x8x6
-	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
-	private static final IBlockState shadowAltar = BlockRegister.shadowAltar.getDefaultState();
+public class ShadowlordPlatform extends AoAStructure { //StructureSize: 5x7x5
+	private static final IBlockState planks = BlockRegister.planksShadow.getDefaultState();
+	private static final IBlockState altar = BlockRegister.shadowAltar.getDefaultState();
+	private static final IBlockState logShadowX = BlockRegister.logShadow.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.X);
+	private static final IBlockState logShadow = BlockRegister.logShadow.getDefaultState();
+	private static final IBlockState shadowFence = BlockRegister.fenceShadow.getDefaultState();
+	private static final IBlockState logShadowZ = BlockRegister.logShadow.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Z);
+	private static final IBlockState bloodstoneLamp = BlockRegister.lampBloodstone.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 
 	public ShadowlordPlatform() {
 		super("ShadowlordPlatform");
@@ -18,61 +25,96 @@ public class ShadowlordPlatform extends AoAStructure { //StructureSize: 7x8x6
 
 	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
-		addBlock(world, basePos, 1, 0, 1, bloodstoneBricks);
-		addBlock(world, basePos, 1, 0, 2, bloodstoneBricks);
-		addBlock(world, basePos, 2, 0, 1, bloodstoneBricks);
-		addBlock(world, basePos, 2, 0, 2, bloodstoneBricks);
-		addBlock(world, basePos, 6, 0, 5, bloodstoneBricks);
-		addBlock(world, basePos, 1, 1, 0, bloodstoneBricks);
-		addBlock(world, basePos, 1, 1, 1, bloodstoneBricks);
-		addBlock(world, basePos, 2, 1, 0, bloodstoneBricks);
-		addBlock(world, basePos, 2, 1, 1, bloodstoneBricks);
-		addBlock(world, basePos, 6, 1, 5, bloodstoneBricks);
-		addBlock(world, basePos, 2, 2, 1, bloodstoneBricks);
-		addBlock(world, basePos, 2, 2, 2, bloodstoneBricks);
-		addBlock(world, basePos, 3, 2, 1, bloodstoneBricks);
-		addBlock(world, basePos, 3, 2, 2, bloodstoneBricks);
-		addBlock(world, basePos, 6, 2, 5, bloodstoneBricks);
-		addBlock(world, basePos, 1, 3, 2, bloodstoneBricks);
-		addBlock(world, basePos, 1, 3, 3, bloodstoneBricks);
-		addBlock(world, basePos, 2, 3, 2, bloodstoneBricks);
-		addBlock(world, basePos, 2, 3, 3, bloodstoneBricks);
-		addBlock(world, basePos, 6, 3, 5, bloodstoneBricks);
-		addBlock(world, basePos, 0, 4, 1, bloodstoneBricks);
-		addBlock(world, basePos, 0, 4, 2, bloodstoneBricks);
-		addBlock(world, basePos, 1, 4, 1, bloodstoneBricks);
-		addBlock(world, basePos, 1, 4, 2, bloodstoneBricks);
-		addBlock(world, basePos, 6, 4, 5, bloodstoneBricks);
-		addBlock(world, basePos, 1, 5, 0, bloodstoneBricks);
-		addBlock(world, basePos, 1, 5, 1, bloodstoneBricks);
-		addBlock(world, basePos, 2, 5, 0, bloodstoneBricks);
-		addBlock(world, basePos, 2, 5, 1, bloodstoneBricks);
-		addBlock(world, basePos, 6, 5, 5, bloodstoneBricks);
-		addBlock(world, basePos, 2, 6, 1, bloodstoneBricks);
-		addBlock(world, basePos, 2, 6, 2, bloodstoneBricks);
-		addBlock(world, basePos, 2, 6, 3, bloodstoneBricks);
-		addBlock(world, basePos, 2, 6, 4, bloodstoneBricks);
-		addBlock(world, basePos, 2, 6, 5, bloodstoneBricks);
-		addBlock(world, basePos, 3, 6, 1, bloodstoneBricks);
-		addBlock(world, basePos, 3, 6, 2, bloodstoneBricks);
-		addBlock(world, basePos, 3, 6, 3, bloodstoneBricks);
-		addBlock(world, basePos, 3, 6, 4, bloodstoneBricks);
-		addBlock(world, basePos, 3, 6, 5, bloodstoneBricks);
-		addBlock(world, basePos, 4, 6, 1, bloodstoneBricks);
-		addBlock(world, basePos, 4, 6, 2, bloodstoneBricks);
-		addBlock(world, basePos, 4, 6, 3, bloodstoneBricks);
-		addBlock(world, basePos, 4, 6, 4, bloodstoneBricks);
-		addBlock(world, basePos, 4, 6, 5, bloodstoneBricks);
-		addBlock(world, basePos, 5, 6, 1, bloodstoneBricks);
-		addBlock(world, basePos, 5, 6, 2, bloodstoneBricks);
-		addBlock(world, basePos, 5, 6, 3, bloodstoneBricks);
-		addBlock(world, basePos, 5, 6, 4, bloodstoneBricks);
-		addBlock(world, basePos, 5, 6, 5, bloodstoneBricks);
-		addBlock(world, basePos, 6, 6, 1, bloodstoneBricks);
-		addBlock(world, basePos, 6, 6, 2, bloodstoneBricks);
-		addBlock(world, basePos, 6, 6, 3, bloodstoneBricks);
-		addBlock(world, basePos, 6, 6, 4, bloodstoneBricks);
-		addBlock(world, basePos, 6, 6, 5, bloodstoneBricks);
-		addBlock(world, basePos, 5, 7, 4, shadowAltar);
+		int y = basePos.getY() - 1;
+		BlockPos blockPos;
+
+		while (y > 0 && world.getBlockState((blockPos = new BlockPos(basePos.getX(), y, basePos.getZ() + 2))).getMaterial().isReplaceable()) {
+			world.setBlockState(blockPos, logShadow);
+
+			y--;
+		}
+
+		y = basePos.getY() - 1;
+
+		while (y > 0 && world.getBlockState((blockPos = new BlockPos(basePos.getX() + 4, y, basePos.getZ() + 2))).getMaterial().isReplaceable()) {
+			world.setBlockState(blockPos, logShadow);
+
+			y--;
+		}
+
+		y = basePos.getY() - 1;
+
+		while (y > 0 && world.getBlockState((blockPos = new BlockPos(basePos.getX() + 2, y, basePos.getZ()))).getMaterial().isReplaceable()) {
+			world.setBlockState(blockPos, logShadow);
+
+			y--;
+		}
+
+		y = basePos.getY() - 1;
+
+		while (y > 0 && world.getBlockState((blockPos = new BlockPos(basePos.getX() + 2, y, basePos.getZ() + 4))).getMaterial().isReplaceable()) {
+			world.setBlockState(blockPos, logShadow);
+
+			y--;
+		}
+
+		addBlock(world, basePos, 0, 0, 2, logShadow);
+		addBlock(world, basePos, 2, 0, 0, logShadow);
+		addBlock(world, basePos, 2, 0, 2, shadowFence);
+		addBlock(world, basePos, 2, 0, 4, logShadow);
+		addBlock(world, basePos, 4, 0, 2, logShadow);
+		addBlock(world, basePos, 0, 1, 2, logShadow);
+		addBlock(world, basePos, 2, 1, 0, logShadow);
+		addBlock(world, basePos, 2, 1, 2, shadowFence);
+		addBlock(world, basePos, 2, 1, 4, logShadow);
+		addBlock(world, basePos, 4, 1, 2, logShadow);
+		addBlock(world, basePos, 0, 2, 2, logShadow);
+		addBlock(world, basePos, 1, 2, 2, shadowFence);
+		addBlock(world, basePos, 2, 2, 0, logShadow);
+		addBlock(world, basePos, 2, 2, 1, shadowFence);
+		addBlock(world, basePos, 2, 2, 2, shadowFence);
+		addBlock(world, basePos, 2, 2, 3, shadowFence);
+		addBlock(world, basePos, 2, 2, 4, logShadow);
+		addBlock(world, basePos, 3, 2, 2, shadowFence);
+		addBlock(world, basePos, 4, 2, 2, logShadow);
+		addBlock(world, basePos, 0, 3, 2, logShadow);
+		addBlock(world, basePos, 2, 3, 0, logShadow);
+		addBlock(world, basePos, 2, 3, 2, shadowFence);
+		addBlock(world, basePos, 2, 3, 4, logShadow);
+		addBlock(world, basePos, 4, 3, 2, logShadow);
+		addBlock(world, basePos, 0, 4, 0, logShadow);
+		addBlock(world, basePos, 0, 4, 1, logShadowZ);
+		addBlock(world, basePos, 0, 4, 2, logShadowZ);
+		addBlock(world, basePos, 0, 4, 3, logShadowZ);
+		addBlock(world, basePos, 0, 4, 4, logShadow);
+		addBlock(world, basePos, 1, 4, 0, logShadowX);
+		addBlock(world, basePos, 1, 4, 1, planks);
+		addBlock(world, basePos, 1, 4, 2, planks);
+		addBlock(world, basePos, 1, 4, 3, planks);
+		addBlock(world, basePos, 1, 4, 4, logShadowX);
+		addBlock(world, basePos, 2, 4, 0, logShadowX);
+		addBlock(world, basePos, 2, 4, 1, planks);
+		addBlock(world, basePos, 2, 4, 2, shadowFence);
+		addBlock(world, basePos, 2, 4, 3, planks);
+		addBlock(world, basePos, 2, 4, 4, logShadowX);
+		addBlock(world, basePos, 3, 4, 0, logShadowX);
+		addBlock(world, basePos, 3, 4, 1, planks);
+		addBlock(world, basePos, 3, 4, 2, planks);
+		addBlock(world, basePos, 3, 4, 3, planks);
+		addBlock(world, basePos, 3, 4, 4, logShadowX);
+		addBlock(world, basePos, 4, 4, 0, logShadow);
+		addBlock(world, basePos, 4, 4, 1, logShadowZ);
+		addBlock(world, basePos, 4, 4, 2, logShadowZ);
+		addBlock(world, basePos, 4, 4, 3, logShadowZ);
+		addBlock(world, basePos, 4, 4, 4, logShadow);
+		addBlock(world, basePos, 0, 5, 0, shadowFence);
+		addBlock(world, basePos, 0, 5, 4, shadowFence);
+		addBlock(world, basePos, 2, 5, 2, altar);
+		addBlock(world, basePos, 4, 5, 0, shadowFence);
+		addBlock(world, basePos, 4, 5, 4, shadowFence);
+		addBlock(world, basePos, 0, 6, 0, bloodstoneLamp);
+		addBlock(world, basePos, 0, 6, 4, bloodstoneLamp);
+		addBlock(world, basePos, 4, 6, 0, bloodstoneLamp);
+		addBlock(world, basePos, 4, 6, 4, bloodstoneLamp);
 	}
 }

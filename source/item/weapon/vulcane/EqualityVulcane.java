@@ -15,15 +15,18 @@ import net.tslat.aoa3.utils.StringUtil;
 import java.util.List;
 
 public class EqualityVulcane extends BaseVulcane implements AdventWeapon {
+	private final double dmg;
+
 	public EqualityVulcane(double dmg, int durability) {
 		super(dmg, durability);
-		setUnlocalizedName("EqualityVulcane");
+		setTranslationKey("EqualityVulcane");
 		setRegistryName("aoa3:equality_vulcane");
+		this.dmg = dmg;
 	}
 
 	@Override
 	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer attacker) {
-		EntityUtil.healEntity(attacker, 6.0f);
+		EntityUtil.healEntity(attacker, (float)dmg / 2f);
 	}
 
 	@SideOnly(Side.CLIENT)

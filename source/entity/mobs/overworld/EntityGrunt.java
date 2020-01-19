@@ -1,13 +1,12 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -22,12 +21,12 @@ public class EntityGrunt extends AoAMeleeMob {
 
 	@Override
 	public float getEyeHeight() {
-		return 1.875f;
+		return 1.15625f;
 	}
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0f;
+		return 0d;
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class EntityGrunt extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 3;
 	}
 
 	@Override
@@ -61,20 +60,15 @@ public class EntityGrunt extends AoAMeleeMob {
 		return SoundsRegister.mobGruntHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGrunt;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(6) == 0)
-			dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(1 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

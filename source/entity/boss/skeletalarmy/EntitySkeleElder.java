@@ -1,7 +1,9 @@
 package net.tslat.aoa3.entity.boss.skeletalarmy;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -14,26 +16,32 @@ import javax.annotation.Nullable;
 
 public class EntitySkeleElder extends AoAMeleeMob {
 	public static final float entityWidth = 0.7f;
-	private final BlockPos armyBlockPos;
-	private final int wave;
+	private BlockPos armyBlockPos;
+	private int wave;
 
 	public EntitySkeleElder(World world, BlockPos armyBlockPos, int wave) {
 		super(world, entityWidth, 2.5625f);
 
 		int posX = armyBlockPos.getX() - 3 + rand.nextInt(6);
 		int posZ = armyBlockPos.getZ() - 3 + rand.nextInt(6);
-		int posY = world.getHeight(posX, posZ);
+		int posY = world.getHeight(posX, posZ) + 1;
 		this.armyBlockPos = armyBlockPos;
 		this.wave = wave;
 
 		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 0);
+		setHomePosAndDistance(armyBlockPos, 18);
 	}
 
 	public EntitySkeleElder(World world) {
 		super(world, entityWidth, 2.5625f);
 
 		this.armyBlockPos = null;
-		this.wave = 0;
+		this.wave = -1;
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return armyBlockPos == null || wave < 0;
 	}
 
 	@Override
@@ -85,10 +93,37 @@ public class EntitySkeleElder extends AoAMeleeMob {
 	}
 
 	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+
+		if (compound.hasKey("SkeletalArmyWave"))
+			wave = compound.getInteger("SkeletalArmyWave");
+
+		if (compound.hasKey("ArmyBlockPos"))
+			armyBlockPos = BlockPos.fromLong(compound.getLong("ArmyBlockPos"));
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
+
+		if (wave > 0)
+			compound.setInteger("SkeletalArmyWave", wave);
+
+		if (armyBlockPos != null)
+			compound.setLong("ArmyBlockPos", armyBlockPos.toLong());
+	}
+
+	@Override
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
+	}
+
+	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		if (wave > 0 && armyBlockPos != null) {
+		if (wave >= 0 && armyBlockPos != null && getDistanceSq(armyBlockPos) < 50 * 50) {
 			Block bl = world.getBlockState(armyBlockPos).getBlock();
 
 			if (bl == BlockRegister.armyBlock)

@@ -6,6 +6,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
@@ -13,12 +14,14 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.dimension.FloatingDimChunk;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +34,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeHaven;
+	private final Biome biome = BiomeRegister.biomeHaven;
 
 	private double[] noiseArray;
 	private double[] surfaceBuffer = new double[256];
@@ -62,18 +65,29 @@ public class ChunkGenHaven implements IChunkGenerator {
 		this.curChunkZ = chunkZ;
 		this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 		this.primer = new ChunkPrimer();
+		boolean populatedChunk = setBlocksInChunk();
 
-		setBlocksInChunk();
-		replaceBiomeBlocks();
+		Chunk chunk;
 
-		Chunk chunk = new Chunk(world, primer, curChunkX, curChunkZ);
-		byte[] biomeArray = chunk.getBiomeArray();
+		if (populatedChunk) {
+			replaceBiomeBlocks();
 
-		for (int i = 0; i < biomeArray.length; ++i) {
-			biomeArray[i] = (byte)Biome.getIdForBiome(biome);
+			chunk = new FloatingDimChunk(world, primer, curChunkX, curChunkZ);
+		}
+		else {
+			chunk = new FloatingDimChunk(world, curChunkX, curChunkZ);
 		}
 
-		chunk.generateSkylightMap();
+		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
+
+		if (populatedChunk) {
+			chunk.generateSkylightMap();
+		}
+		else {
+			chunk.setHeightMap(new int[256]);
+			chunk.setLightPopulated(true);
+		}
+
 		return chunk;
 	}
 
@@ -81,6 +95,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 		if (blockNoiseArray == null)
 			blockNoiseArray = new double[p_185963_5_ * p_185963_6_ * p_185963_7_];
 
+		boolean emptyChunk = true;
 		double d0 = 684.412D;
 		d0 = d0 * 2.0D;
 		this.mainNoiseRegion = this.mainPerlinNoise.generateNoiseOctaves(this.mainNoiseRegion, chunkXRef, chunkYRef, chunkZRef, p_185963_5_, p_185963_6_, p_185963_7_, d0 / 80.0D, 4.277575000000001D, d0 / 80.0D);
@@ -110,14 +125,14 @@ public class ChunkGenHaven implements IChunkGenerator {
 					int k1 = 32;
 
 					if (j1 > p_185963_6_ - k1) {
-						double d6 = (double)((float)(j1 - (p_185963_6_ - k1)) / 31);
+						double d6 = (float)(j1 - (p_185963_6_ - k1)) / 31;
 						d4 = d4 * (1.0D - d6) + -15.0D * d6;
 					}
 
 					k1 = 8;
 
 					if (j1 < k1) {
-						double d7 = (double)((float)(k1 - j1) / ((float)k1 - 1.0F));
+						double d7 = (float)(k1 - j1) / ((float)k1 - 1.0F);
 						d4 = d4 * (1.0D - d7) + -30.0D * d7;
 					}
 
@@ -130,8 +145,9 @@ public class ChunkGenHaven implements IChunkGenerator {
 		return blockNoiseArray;
 	}
 
-	private void setBlocksInChunk() {
+	private boolean setBlocksInChunk() {
 		this.noiseArray = this.generateNoiseField(this.noiseArray, curChunkX * 2, 0, curChunkZ * 2, 3, 33, 3);
+		boolean emptyChunk = true;
 
 		for (int i1 = 0; i1 < 2; ++i1) {
 			for (int j1 = 0; j1 < 2; ++j1) {
@@ -158,8 +174,10 @@ public class ChunkGenHaven implements IChunkGenerator {
 							for (int j2 = 0; j2 < 8; ++j2) {
 								IBlockState iblockstate = Blocks.AIR.getDefaultState();
 
-								if (d15 > 0.0D)
+								if (d15 > 0.0D) {
 									iblockstate = BlockRegister.stoneHaven.getDefaultState();
+									emptyChunk = false;
+								}
 
 								int k2 = i2 + i1 * 8;
 								int l2 = l1 + k1 * 4;
@@ -182,6 +200,8 @@ public class ChunkGenHaven implements IChunkGenerator {
 				}
 			}
 		}
+
+		return !emptyChunk;
 	}
 
 	private void replaceBiomeBlocks() {
@@ -197,7 +217,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 		}
 	}
 
-	private void generateBiomeTerrain(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+	private void generateBiomeTerrain(World world, Random rand, ChunkPrimer primer, int x, int z, double noiseVal) {
 		IBlockState topBlock = biome.topBlock;
 		IBlockState fillerBlock = biome.fillerBlock;
 		int j = -1;
@@ -206,7 +226,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 		int i1 = z & 15;
 
 		for (int j1 = 255; j1 >= 0; --j1) {
-			IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
+			IBlockState iblockstate2 = primer.getBlockState(i1, j1, l);
 
 			if (iblockstate2.getMaterial() == Material.AIR) {
 				j = -1;
@@ -215,11 +235,11 @@ public class ChunkGenHaven implements IChunkGenerator {
 				if (j == -1) {
 					j = k;
 
-					primer.setBlockState(i1, j1, l, topBlock);
+					this.primer.setBlockState(i1, j1, l, topBlock);
 				}
 				else if (j > 0) {
 					--j;
-					chunkPrimerIn.setBlockState(i1, j1, l, fillerBlock);
+					primer.setBlockState(i1, j1, l, fillerBlock);
 				}
 			}
 		}
@@ -285,6 +305,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

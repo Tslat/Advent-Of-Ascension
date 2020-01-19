@@ -1,39 +1,45 @@
 package net.tslat.aoa3.entity.mobs.abyss;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.penumbra.EntityPenumbra;
-import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
 
 public class EntityOcculent extends AoAMeleeMob {
 	public static final float entityWidth = 0.6f;
 
+	private EntityOcculent mirageHost = null;
+
 	public EntityOcculent(World world) {
 		super(world, entityWidth, 1.5f);
 	}
 
+	public EntityOcculent(World world, EntityOcculent mirageHost) {
+		super(world, entityWidth, 1.5f);
+
+		this.mirageHost = mirageHost;
+	}
+
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 98;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 8;
 	}
 
 	@Override
@@ -57,6 +63,12 @@ public class EntityOcculent extends AoAMeleeMob {
 		return SoundsRegister.mobOcculentHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityOcculent;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof EntityPenumbra)
@@ -66,26 +78,35 @@ public class EntityOcculent extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensAbyss, 1 + rand.nextInt(1 + lootingMod));
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (mirageHost != null) {
+			setDead();
 
-		if (rand.nextInt(75 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterSoulSpark, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+			return false;
+		}
+		else {
+			return super.attackEntityFrom(source, amount);
+		}
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (!world.isRemote && getAttackTarget() instanceof EntityPlayer && getAttackTarget().isEntityAlive() && getDistance(getAttackTarget()) < 10) {
-			if (EntityUtil.isPlayerLookingAtEntity((EntityPlayer)getAttackTarget(), this) && canEntityBeSeen(getAttackTarget()))
-				getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), 6.0f);
+		if (world.isRemote) {
+			if (mirageHost != null) {
+				if (ticksExisted >= 600 || mirageHost.isDead)
+					setDead();
+			}
+			else if (rand.nextInt(200) == 0) {
+				EntityOcculent occulent = new EntityOcculent(world, this);
+				double xPos = posX + (int)(rand.nextFloat() * 10 - 5);
+				double zPos = posZ + (int)(rand.nextFloat() * 10 - 5);
+				double yPos = world.getHeight((int)xPos, (int)zPos);
+
+				occulent.setPosition(xPos, yPos, zPos);
+				world.spawnEntity(occulent);
+			}
 		}
 	}
 }

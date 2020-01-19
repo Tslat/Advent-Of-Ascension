@@ -5,6 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -12,8 +13,8 @@ import java.util.Random;
 public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
 	private static final IBlockState hauntedBricks = BlockRegister.bricksHaunted.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState phantomSpawner = BlockRegister.spawnerPhantom.getDefaultState();
 	private static final IBlockState bansheeSpawner = BlockRegister.spawnerBanshee.getDefaultState();
+	private static final IBlockState undeadTrollSpawner = BlockRegister.spawnerUndeadTroll.getDefaultState();
 	private static final IBlockState nightmareSpiderSpawner = BlockRegister.spawnerNightmareSpider.getDefaultState();
 
 	public HauntedCastle() {
@@ -713,7 +714,7 @@ public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
 		addBlock(world, basePos, 12, 1, 3, hauntedBricks);
 		addBlock(world, basePos, 12, 1, 4, hauntedBricks);
 		addBlock(world, basePos, 12, 1, 8, hauntedBricks);
-		addBlock(world, basePos, 12, 1, 14, bansheeSpawner);
+		addBlock(world, basePos, 12, 1, 14, undeadTrollSpawner);
 		addBlock(world, basePos, 12, 1, 20, hauntedBricks);
 		addBlock(world, basePos, 12, 1, 24, hauntedBricks);
 		addBlock(world, basePos, 13, 1, 3, hauntedBricks);
@@ -2565,7 +2566,7 @@ public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
 		addBlock(world, basePos, 7, 10, 24, hauntedBricks);
 		addBlock(world, basePos, 8, 10, 4, hauntedBricks);
 		addBlock(world, basePos, 8, 10, 7, hauntedBricks);
-		addBlock(world, basePos, 8, 10, 14, phantomSpawner);
+		addBlock(world, basePos, 8, 10, 14, bansheeSpawner);
 		addBlock(world, basePos, 8, 10, 21, hauntedBricks);
 		addBlock(world, basePos, 8, 10, 24, hauntedBricks);
 		addBlock(world, basePos, 9, 10, 4, hauntedBricks);
@@ -2998,5 +2999,10 @@ public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
 		addBlock(world, basePos, 25, 12, 2, hauntedBricks);
 
 		HauntedCastlePt2.addBlocks(this, world, rand, basePos);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureHauntedCastleTopChest, basePos.add(11, 17, 5), basePos.add(12, 17, 5));
 	}
 }

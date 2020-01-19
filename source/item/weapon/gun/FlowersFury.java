@@ -6,30 +6,36 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.minions.EntityRosid;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class FlowersFury extends BaseGun implements AdventWeapon {
-	public FlowersFury(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("FlowersFury");
+	public FlowersFury(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("FlowersFury");
 		setRegistryName("aoa3:flowers_fury");
 	}
 
+	@Nullable
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunFastRifle;
+	}
 
-		if (EntityUtil.isHostileMob(target) && itemRand.nextInt(10) == 0) {
+	@Override
+	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (EntityUtil.isHostileMob(target) && itemRand.nextInt(20) == 0) {
 			EntityRosid rosid = new EntityRosid(shooter.world);
 
 			if (shooter instanceof EntityPlayer)
@@ -43,7 +49,7 @@ public class FlowersFury extends BaseGun implements AdventWeapon {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.FlowersFury.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FlowersFury.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,28 +1,23 @@
 package net.tslat.aoa3.entity.mobs.overworld.bloodhunt;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-import static net.tslat.aoa3.library.Enums.Resources.RAGE;
+import static net.tslat.aoa3.library.Enums.Resources.ENERGY;
 
-public class EntityBloodmist extends AoAMeleeMob implements HunterEntity {
+public class EntityBloodmist extends AoAMeleeMob {
 	public static final float entityWidth = 0.8f;
 
 	public EntityBloodmist(World world) {
@@ -36,22 +31,22 @@ public class EntityBloodmist extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 35;
+		return 40d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.26d;
 	}
 
 	@Nullable
@@ -70,44 +65,21 @@ public class EntityBloodmist extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobBloodmistHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneAbyss, 1);
-
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerBlood), 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBloodmist;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityPlayer)
-			PlayerUtil.getAdventPlayer((EntityPlayer)target).consumeResource(RAGE, 20, true);
+			PlayerUtil.consumeResource((EntityPlayer)target, ENERGY, 40f, true);
 	}
 
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 1;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 15;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Nonnull

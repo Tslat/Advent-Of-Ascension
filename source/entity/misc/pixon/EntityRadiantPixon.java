@@ -1,8 +1,10 @@
 package net.tslat.aoa3.entity.misc.pixon;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.item.misc.InfusionStone;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+
+import javax.annotation.Nonnull;
 
 public class EntityRadiantPixon extends EntityPixon {
     public EntityRadiantPixon(World world) {
@@ -14,13 +16,9 @@ public class EntityRadiantPixon extends EntityPixon {
         return 72;
     }
 
+    @Nonnull
     @Override
-    public float getHarvestXp() {
-        return 700f;
-    }
-
-    @Override
-    public InfusionStone getInfusionStoneType() {
-        return ItemRegister.infusionStoneRadiant;
+    public ResourceLocation getHarvestLootTable() {
+        return LootSystemRegister.pixonHarvestRadiant;
     }
 }

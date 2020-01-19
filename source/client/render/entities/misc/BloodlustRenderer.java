@@ -26,7 +26,7 @@ public class BloodlustRenderer extends RenderLiving<EntityBloodlust> {
 	public void doRender(EntityBloodlust entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-		new FXSwirlyTrail(entity.world, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 5).create();
+		new FXSwirlyTrail(entity.world, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 5, 1).create();
 	}
 
 	@Override

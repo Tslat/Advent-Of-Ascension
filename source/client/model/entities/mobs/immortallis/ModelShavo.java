@@ -8,23 +8,23 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelShavo extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer leg2p2;
-	ModelRenderer leg1p2;
-	ModelRenderer leg4p2;
-	ModelRenderer leg3p2;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
-	ModelRenderer head7;
-	ModelRenderer head8;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer leg2p2;
+	private ModelRenderer leg1p2;
+	private ModelRenderer leg4p2;
+	private ModelRenderer leg3p2;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
+	private ModelRenderer head7;
+	private ModelRenderer head8;
 
 	public ModelShavo() {
 		textureWidth = 64;

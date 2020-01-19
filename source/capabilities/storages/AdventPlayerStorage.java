@@ -12,12 +12,12 @@ public class AdventPlayerStorage implements Capability.IStorage<CapabilityBasePl
 	@Nullable
 	@Override
 	public NBTBase writeNBT(Capability<CapabilityBasePlayer> capability, CapabilityBasePlayer instance, EnumFacing side) {
-		return instance.saveNBTData();
+		return instance.getPlayerData().saveToNBT();
 	}
 
 	@Override
 	public void readNBT(Capability<CapabilityBasePlayer> capability, CapabilityBasePlayer instance, EnumFacing side, NBTBase nbt) {
 		if (nbt instanceof NBTTagCompound)
-			instance.loadNBTData((NBTTagCompound)nbt);
+			instance.getPlayerData().loadFromNBT((NBTTagCompound)nbt);
 	}
 }

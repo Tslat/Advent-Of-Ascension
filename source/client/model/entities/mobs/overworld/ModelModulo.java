@@ -7,22 +7,22 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelModulo extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer shape1;
-	ModelRenderer body;
-	ModelRenderer shape2;
-	ModelRenderer shape3;
-	ModelRenderer shape4;
-	ModelRenderer shape5;
-	ModelRenderer shape6;
-	ModelRenderer shape7;
-	ModelRenderer shape8;
-	ModelRenderer shape9;
-	ModelRenderer shape10;
-	ModelRenderer shape11;
-	ModelRenderer shape12;
-	ModelRenderer shape13;
-	ModelRenderer shape14;
+	private ModelRenderer head;
+	private ModelRenderer shape1;
+	private ModelRenderer body;
+	private ModelRenderer shape2;
+	private ModelRenderer shape3;
+	private ModelRenderer shape4;
+	private ModelRenderer shape5;
+	private ModelRenderer shape6;
+	private ModelRenderer shape7;
+	private ModelRenderer shape8;
+	private ModelRenderer shape9;
+	private ModelRenderer shape10;
+	private ModelRenderer shape11;
+	private ModelRenderer shape12;
+	private ModelRenderer shape13;
+	private ModelRenderer shape14;
 
 	public ModelModulo() {
 		textureWidth = 128;

@@ -17,8 +17,8 @@ import net.minecraft.world.gen.feature.WorldGenLakes;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -35,7 +35,7 @@ public class ChunkGenGreckon implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeGreckon;
+	private final Biome biome = BiomeRegister.biomeGreckon;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];

@@ -7,5 +7,5 @@ import net.minecraft.item.ItemStack;
 public interface LongReachWeapon {
 	public float getReach();
 
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg);
+	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg);
 }

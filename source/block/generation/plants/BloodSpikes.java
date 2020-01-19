@@ -15,7 +15,7 @@ public class BloodSpikes extends PlantStackable {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 3, true, true));
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 2, true, true));

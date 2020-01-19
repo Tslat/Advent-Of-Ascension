@@ -7,6 +7,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
@@ -17,8 +18,8 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -35,7 +36,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeAbyss;
+	private final Biome biome = BiomeRegister.biomeAbyss;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -209,85 +210,6 @@ public class ChunkGenAbyss implements IChunkGenerator {
 				}
 			}
 		}
-
-		// Xol's Gen code. Keep just in case
-		/*for (int j1 = 0; j1 < 5; ++j1) {
-			for (int k1 = 0; k1 < 5; ++k1) {
-				float f = 0.0F;
-				float f1 = 0.0F;
-				float f2 = 0.0F;
-				byte b0 = 2;
-
-				for (int l1 = -b0; l1 <= b0; ++l1) {
-					for (int i2 = -b0; i2 <= b0; ++i2) {
-						float f3 = biome.getBaseHeight();
-						float f4 = biome.getHeightVariation();
-						if (this.world.getWorldType() == WorldType.AMPLIFIED && f3 > 0.0F) {
-							f3 = 1.0F + f3 * 2.0F;
-							f4 = 1.0F + f4 * 4.0F;
-						}
-
-						float f5 = this.biomeWeights[l1 + 2 + (i2 + 2) * 5] / (f3 + 2.0F);
-
-						f += f4 * f5;
-						f1 += f3 * f5;
-						f2 += f5;
-					}
-				}
-
-				f /= f2;
-				f1 /= f2;
-				f = f * 0.9F + 0.1F;
-				f1 = (f1 * 4.0F - 1.0F) / 8.0F;
-				double d12 = this.depthRegion[j] / 8000.0D;
-
-				if (d12 < 0.0D) {
-					d12 = -d12 * 0.3D;
-				}
-
-				d12 = d12 * 3.0D - 2.0D;
-
-				if (d12 < 0.0D) {
-					d12 /= 2.0D;
-					if (d12 < -1.0D)
-						d12 = -1.0D;
-					d12 /= 1.4D;
-					d12 /= 2.0D;
-				}
-				else {
-					if (d12 > 1.0D)
-						d12 = 1.0D;
-					d12 /= 8.0D;
-				}
-
-				++j;
-				double d13 = (double)f1;
-				double d14 = (double)f;
-				d13 += d12 * 0.2D;
-				d13 = d13 * 8.5D / 8.0D;
-				double d5 = 8.5D + d13 * 4.0D;
-
-				for (int j2 = 0; j2 < 33; ++j2) {
-					double d6 = ((double)j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
-
-					if (d6 < 0.0D)
-						d6 *= 4.0D;
-
-					double d7 = this.minLimitRegion[i] / 512.0D;
-					double d8 = this.maxLimitRegion[i] / 512.0D;
-					double d9 = (this.mainNoiseRegion[i] / 10.0D + 1.0D) / 2.0D;
-					double d10 = MathHelper.clampedLerp(d7, d8, d9) - d6;
-
-					if (j2 > 29) {
-						double d11 = (double)((float)(j2 - 29) / 3.0F);
-						d10 = d10 * (1.0D - d11) + -10.0D * d11;
-					}
-
-					this.heightMap[i] = d10;
-					++i;
-				}
-			}
-		}*/
 	}
 
 	private void setBlocksInChunk() {
@@ -471,10 +393,19 @@ public class ChunkGenAbyss implements IChunkGenerator {
 		else if (ConfigurationUtil.StructureConfig.abyss.shadowlordPlatformSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.shadowlordPlatformSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);
 			z = baseZ + rand.nextInt(16);
-			y = world.getHeight(x + 6, z + 5);
+			y = world.getHeight(x + 2, z + 2) + 5 + rand.nextInt(5);
 
-			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 5)) == biome.topBlock)
+			if (world.getBlockState(pos.setPos(x + 2, y, z + 2)).getMaterial().isReplaceable())
 				StructuresHandler.generateStructure("ShadowlordPlatform", world, rand, pos.setPos(x, y, z));
+		}
+
+		if (ConfigurationUtil.StructureConfig.abyss.eyeBulbGrottoSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.eyeBulbGrottoSpawnChance) == 0) {
+			x = baseX + rand.nextInt(16);
+			z = baseZ + rand.nextInt(16);
+			y = world.getHeight(x + 1, z + 1);
+
+			if (world.getBlockState(pos.setPos(x + 1, y - 1, z + 1)) == biome.topBlock && !world.isAirBlock(pos.north()) && !world.isAirBlock(pos.south()) && !world.isAirBlock(pos.east()) && !world.isAirBlock(pos.west()))
+				StructuresHandler.generateStructure("EyeBulbGrotto", world, rand, pos.setPos(x, y - 1, z));
 		}
 
 		if (ConfigurationUtil.StructureConfig.abyss.witherRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.abyss.witherRuneShrineSpawnChance) == 0) {
@@ -488,6 +419,7 @@ public class ChunkGenAbyss implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

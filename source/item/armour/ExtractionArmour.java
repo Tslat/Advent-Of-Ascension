@@ -1,27 +1,27 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUREXTRACTION;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_EXTRACTION;
 
 public class ExtractionArmour extends AdventArmour implements SkillItem {
-	public ExtractionArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOUREXTRACTION, name, registryName, renderIndex, slot);
+	public ExtractionArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_EXTRACTION, name, registryName, slot);
 	}
 
 	@Override
@@ -40,34 +40,37 @@ public class ExtractionArmour extends AdventArmour implements SkillItem {
 	}
 
 	@Override
-	public void handleAttackImmunities(LivingAttackEvent event, AdventPlayerCapability cap) {
-		if (event.getSource().isFireDamage())
+	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.addXpModifier(Enums.Skills.EXTRACTION, 0.3f);
+	}
+
+	@Override
+	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null)
+			plBuffs.removeXpModifier(Enums.Skills.EXTRACTION, 0.3f);
+	}
+
+	@Override
+	public void onPreAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingAttackEvent event) {
+		if (slots == null && event.getSource().isFireDamage())
 			event.setCanceled(true);
 	}
 
 	@Override
-	public void setTickEffect(AdventPlayerCapability cap) {
-		if (cap.getPlayer().isInLava()) {
-			EntityPlayer pl = cap.getPlayer();
-
-			pl.motionX *= 1.8;
-			pl.motionZ *= 1.8;
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+		if (slots == null && plData.player().isInLava()) {
+			plData.player().motionX *= 1.8;
+			plData.player().motionZ *= 1.8;
 		}
-
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.ExtractionArmour.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.ExtractionArmour.desc.2", TextFormatting.DARK_GREEN));
-
-		if (AdventGuiTabPlayer.getSkillLevel(getSkill()) >= 100) {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.GREEN, Integer.toString(100), StringUtil.getLocaleString("skills.extraction.name")));
-		}
-		else {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.RED, Integer.toString(100), StringUtil.getLocaleString("skills.extraction.name")));
-		}
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ExtractionArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.skillXpBonus", Enums.ItemDescriptionType.POSITIVE, Integer.toString(30), StringUtil.getLocaleString("skills.extraction.name")));
+		tooltip.add(ItemUtil.getFormattedLevelRestrictedDescriptionText(Enums.Skills.EXTRACTION, 100));
 	}
 }

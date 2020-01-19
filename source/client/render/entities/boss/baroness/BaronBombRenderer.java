@@ -8,11 +8,15 @@ import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.entities.boss.baroness.ModelBaronBomb;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class BaronBombRenderer extends RenderEntity {
 	private final ResourceLocation texture;
 	private final ModelBase model = new ModelBaronBomb();
@@ -40,13 +44,14 @@ public class BaronBombRenderer extends RenderEntity {
 			GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 			GlStateManager.enableTexture2D();
 			GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-			GlStateManager.enableCull();
-			GlStateManager.popMatrix();
 		}
 		catch (Exception ex) {
-			AdventOfAscension.getLogger().error("Failed BaronBomb Render", ex);
+			AdventOfAscension.logMessage(Level.ERROR, "Failed BaronBomb Render", ex);
 			ex.printStackTrace();
 		}
+
+		GlStateManager.enableCull();
+		GlStateManager.popMatrix();
 	}
 
 	private void renderModel(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {

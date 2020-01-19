@@ -1,14 +1,14 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.item.misc.ReservedItem;
 
 import javax.annotation.Nullable;
 
@@ -26,17 +26,17 @@ public class EntityArcworm extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 163;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 16;
 	}
 
 	@Override
@@ -62,26 +62,26 @@ public class EntityArcworm extends AoAMeleeMob {
 		return SoundsRegister.mobArcwormHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityArcworm;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		ReservedItem.handleArcworm(this);
+	}
+
+	@Override
 	public boolean getCanSpawnHere() {
 		return posY < 35 && super.getCanSpawnHere();
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.tokensShyrelands, 1 + rand.nextInt(3 + lootingMod));
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerShyre), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(2 + lootingMod));
 	}
 }

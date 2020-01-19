@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.iromine;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -23,22 +24,22 @@ public class EntityMechachron extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.3;
+        return 0.7;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 180;
+        return 114;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 9;
+        return 10.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.295;
     }
 
     @Nullable
@@ -64,21 +65,9 @@ public class EntityMechachron extends AoAMeleeMob {
         return SoundsRegister.veryHeavyStep;
     }
 
+    @Nullable
     @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.realmstoneIromine, 1);
-
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.incompleteMechaStaff, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinGold, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityMechachron;
     }
 }

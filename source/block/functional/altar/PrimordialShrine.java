@@ -3,16 +3,33 @@ package net.tslat.aoa3.block.functional.altar;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.entity.boss.primordialfive.EntityKajaros;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class PrimordialShrine extends BossAltarBlock {
 	public PrimordialShrine() {
 		super("PrimordialShrine", "primordial_shrine");
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!world.isRemote && world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+			PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
+
+			return false;
+		}
+
+		if (!world.isRemote && checkActivationConditions(player, hand, state, pos))
+			doActivationEffect(player, hand, state, pos);
+
+		return true;
 	}
 
 	@Override
@@ -37,23 +54,33 @@ public class PrimordialShrine extends BossAltarBlock {
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		World world = player.world;
 		IBlockState lampOff = BlockRegister.dustopianLampOff.getDefaultState();
-		BlockPos lamp1 = blockPos.up(1).west(3).north(5);
-		BlockPos lamp2 = lamp1.south(10);
-		BlockPos lamp3 = blockPos.up(1).west(1).north(4);
-		BlockPos lamp4 = lamp3.south(8);
-		BlockPos lamp5 = blockPos.up(3).north(3).east(1);
-		BlockPos lamp6 = lamp5.south(6);
-		BlockPos lamp7 = blockPos.up(5).north(1).east(1);
-		BlockPos lamp8 = lamp7.south(2);
 
-		world.setBlockState(lamp1, lampOff);
-		world.setBlockState(lamp2, lampOff);
-		world.setBlockState(lamp3, lampOff);
-		world.setBlockState(lamp4, lampOff);
-		world.setBlockState(lamp5, lampOff);
-		world.setBlockState(lamp6, lampOff);
-		world.setBlockState(lamp7, lampOff);
-		world.setBlockState(lamp8, lampOff);
+		switch (player.getRNG().nextInt(8)) {
+			case 0:
+				world.setBlockState(blockPos.up().west(3).north(5), lampOff);
+				break;
+			case 1:
+				world.setBlockState(blockPos.up().west(3).south(5), lampOff);
+				break;
+			case 2:
+				world.setBlockState(blockPos.up().west().north(4), lampOff);
+				break;
+			case 3:
+				world.setBlockState(blockPos.up().west().south(4), lampOff);
+				break;
+			case 4:
+				world.setBlockState(blockPos.up(3).north(3).east(), lampOff);
+				break;
+			case 5:
+				world.setBlockState(blockPos.up(3).south(3).east(), lampOff);
+				break;
+			case 6:
+				world.setBlockState(blockPos.up(5).north().east(), lampOff);
+				break;
+			case 7:
+				world.setBlockState(blockPos.up(5).south().east(), lampOff);
+				break;
+		}
 
 		EntityKajaros kajaros = new EntityKajaros(player.world);
 

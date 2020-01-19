@@ -1,12 +1,20 @@
 Infusion (Skill)
 
 Quand tu as besoin d'un peu plus de pouvoir pour ton équipement, tu voudras peut-être imbuer des pouvoirs magiques dans ton épée ou ton casque.
-C'est exactement ce que l'infusion te permet de faire. Fabrique-toi une table d'infusion, collecte des amplificateurs d'infusion et construis une structure d'infusion et tu seras capable d'infuser les objets d'Advent of Ascension avec de nouveaux enchantements.
+C'est exactement ce que l'infusion te permet de faire. Fabrique une table d'infusion et des amplificateurs, place-la au sol, et ouvre son menu. A l'intérieur deux tâches possibles t'attendent; l'infusion, et l'incantation.
+
+Infusion:
+  L'infusion est l'art d'infuser l'essence des objets dans des cadres d'objets pré-créés. Faire ceçi crée un nouvel objet, souvent avec des effets ou des capacités utiles.
+  Pour performer une infusion, place un cadre (créé sur la table de cadres) dans l'emplacement de gauche, et les objets voulus dans la grille centrale, et l'objet infusé apparaîtra à droite.
+
+Incantation:
+  Incanter un objet permet de l'améliorer avec de la magie supplémentaire. Les effets de ce pouvoir peuvent varier, et certains effets sont plus puissants que d'autres.
+  Pour incanter un objet, placez-le sur l'emplacement de gauche, et ahjoutez les pierres de puissances et les améliorateurs correspondants au centre. L'objet incanté sera ensuite disponible à droite.
 
 Pour monter en infusion, tu as quelques options:
 
 Pixons:
-  Alors que tu erres à travers les mondes, tu recontreras de brillantes et clignotantes créatures qui semblent voyager sans but. Ces créatures sont des pixons. Si tu amènes un bol de pierre, tu seras capable de les récupérer et d'obtenir leur essence concentrée, donnant des pierres d'infusion et de l'exp. Il existe différents pixons dans différents mondes, et ils donnent des différentes pierres et taux d'exp.
+  Alors que tu erres à travers les mondes, tu recontreras de brillantes et clignotantes créatures qui semblent voyager sans but. Ces créatures sont des pixons. Si tu amènes un bol de pierre, tu seras capable de les récupérer et d'obtenir leur essence concentrée, donnant des pierres d'infusion ou de pouvoir, et de l'exp. Il existe différents pixons dans différents mondes, et ils donnent des différentes pierres et taux d'exp.
   Avec un assez haut niveau, tu seras capable de te faire un bol en diamant, qui te permet de récuperer les pixons de manière plus efficace.
 
 Pierres d'infusion:

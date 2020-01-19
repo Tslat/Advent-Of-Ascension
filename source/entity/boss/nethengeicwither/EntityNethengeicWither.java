@@ -1,11 +1,8 @@
 package net.tslat.aoa3.entity.boss.nethengeicwither;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +20,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
@@ -36,6 +33,7 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,9 +42,9 @@ import java.util.TreeSet;
 
 public class EntityNethengeicWither extends EntityMob implements BossEntity, IRangedAttackMob, SpecialPropertyEntity, AoARangedAttacker {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/nethengeic_wither.png");
-	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityNethengeicWither.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityNethengeicWither.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityNethengeicWither.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
 	private final float[] xRotationHeads = new float[2];
 	private final float[] yRotationHeads = new float[2];
@@ -56,9 +54,6 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 	private final int[] idleHeadUpdates = new int[2];
 	private final TreeSet<Enums.MobProperties> mobProperties = new TreeSet<Enums.MobProperties>();
 	public static final float entityWidth = 1.3f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	private int attackCooldown = 45;
 
@@ -95,7 +90,7 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 		super.applyEntityAttributes();
 
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1100);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(52);
 	}
 
@@ -124,9 +119,23 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 		return SoundsRegister.mobNethengeicWitherHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityNethengeicWither;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -314,7 +323,7 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 			double distanceFactorZ = posZ - projectile.posZ;
 			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-			projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+			projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 			world.spawnEntity(projectile);
 		}
 	}
@@ -366,6 +375,12 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicNethengeicWither;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
@@ -377,25 +392,6 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicNethengeicWither, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 
 	@Override
@@ -490,7 +486,7 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.newExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2, false, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 
 	@Override
@@ -506,6 +502,6 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 			}
 		}
 
-		world.newExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2, false, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 }

@@ -6,6 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -2986,5 +2987,10 @@ public class GuardianTower extends AoAStructure { //StructureSize: 29x83x29
 		addBlock(world, basePos, 6, 28, 14, whitewashBricks);
 
 		GuardianTowerPt2.addBlocks(this, world, rand, basePos);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureGuardianTowerChests, basePos.add(10, 64, 14), basePos.add(14, 64, 18), basePos.add(18, 64, 14));
 	}
 }

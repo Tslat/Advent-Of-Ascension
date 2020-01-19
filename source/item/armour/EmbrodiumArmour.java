@@ -1,26 +1,25 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUREMBRODIUM;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_EMBRODIUM;
 
 public class EmbrodiumArmour extends AdventArmour {
-	public EmbrodiumArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOUREMBRODIUM, name, registryName, renderIndex, slot);
+	public EmbrodiumArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_EMBRODIUM, name, registryName, slot);
 	}
 
 	@Override
@@ -29,15 +28,25 @@ public class EmbrodiumArmour extends AdventArmour {
 	}
 
 	@Override
-	public void handleDamageTriggers(LivingDamageEvent event, AdventPlayerCapability cap) {
-		if (EntityUtil.isMeleeDamage(event.getSource()) && event.getSource().getTrueSource() instanceof EntityLivingBase)
-			event.getSource().getTrueSource().setFire(5);
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+		if (slots == null) {
+			plData.stats().regenResource(Enums.Resources.ENERGY, 0.08f);
+		}
+		else {
+			EntityPlayer pl = plData.player();
+			float temp = pl.world.getBiome(pl.getPosition()).getTemperature(pl.getPosition());
+
+			if (temp > 0.8f)
+				plData.stats().regenResource(Enums.Resources.ENERGY, 0.08f * slots.size() * Math.min(1f, (temp / 2f)));
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.EmbrodiumArmour.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(pieceEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.EmbrodiumArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.EmbrodiumArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

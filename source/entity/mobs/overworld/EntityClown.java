@@ -1,17 +1,21 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityClownShot;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
@@ -30,12 +34,12 @@ public class EntityClown extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 20;
 	}
 
 	@Override
@@ -72,6 +76,12 @@ public class EntityClown extends AoARangedMob {
 		return SoundsRegister.shotClownFire;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityClown;
+	}
+
 	@Override
 	public boolean getCanSpawnHere() {
 		return posY < 50 && super.getCanSpawnHere();
@@ -81,18 +91,6 @@ public class EntityClown extends AoARangedMob {
 	protected void dropEquipment(boolean wasRecentlyHit, int lootingModifier) {}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(25 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterConfettiCannon, 1);
-
-		if (rand.nextInt(12 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneCeleve, 1);
-
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneDeeplands, 1);
-	}
-
-	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new EntityClownShot(this, Enums.MobProjectileType.ENERGY);
 	}
@@ -100,5 +98,17 @@ public class EntityClown extends AoARangedMob {
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
+	}
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+
+		if (!world.isRemote && cause.getTrueSource() instanceof EntityPlayer) {
+			EntityPlayer pl = (EntityPlayer)cause.getTrueSource();
+
+			if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == WeaponRegister.greatbladeLelyetian && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
+				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCeleve));
+		}
 	}
 }

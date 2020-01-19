@@ -25,7 +25,7 @@ public abstract class SlabBlock extends BlockSlab {
 
 	public SlabBlock(String name, String registryName, Material material) {
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + (isDouble() ? "double_" : "") + registryName);
 		setHardness(2.0f);
 
@@ -52,8 +52,8 @@ public abstract class SlabBlock extends BlockSlab {
 	}
 
 	@Override
-	public String getUnlocalizedName(int meta) {
-		return super.getUnlocalizedName();
+	public String getTranslationKey(int meta) {
+		return super.getTranslationKey();
 	}
 
 	@Override
@@ -78,6 +78,11 @@ public abstract class SlabBlock extends BlockSlab {
 	}
 
 	public HalfSlabBlock getHalfBlock() {
+		if (halfBlock != null)
+			return halfBlock;
+
+		halfBlock = new HalfSlabBlock(this.getTranslationKey().replace("tile.", ""), this.getRegistryName().toString().replace("aoa3:double_", ""), this.getMaterial(getDefaultState()));
+
 		return halfBlock;
 	}
 
@@ -120,7 +125,7 @@ public abstract class SlabBlock extends BlockSlab {
 		}
 
 		public DoubleSlabBlock registerHalfSlab(IForgeRegistry<Block> registry) {
-			HalfSlabBlock halfSlab = new SlabBlock.HalfSlabBlock(this.getUnlocalizedName().replace("tile.", ""), this.getRegistryName().toString().replace("aoa3:double_", ""), this.getMaterial(getDefaultState()));
+			HalfSlabBlock halfSlab = new SlabBlock.HalfSlabBlock(this.getTranslationKey().replace("tile.", ""), this.getRegistryName().toString().replace("aoa3:double_", ""), this.getMaterial(getDefaultState()));
 			setHalfBlock(halfSlab);
 			registry.register(halfSlab);
 

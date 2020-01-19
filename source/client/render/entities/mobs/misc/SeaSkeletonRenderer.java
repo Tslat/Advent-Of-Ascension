@@ -5,9 +5,12 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.model.entities.misc.ModelThinBipedShooting;
 import net.tslat.aoa3.entity.mobs.misc.EntitySeaSkeleton;
 
+@SideOnly(Side.CLIENT)
 public class SeaSkeletonRenderer extends RenderBiped<EntitySeaSkeleton> {
 	private final ResourceLocation texture;
 

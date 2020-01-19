@@ -2,20 +2,18 @@ package net.tslat.aoa3.entity.mobs.nether;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.penumbra.EntityPenumbra;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,17 +31,17 @@ public class EntityHellspot extends AoAMeleeMob implements SpecialPropertyEntity
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.2d;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 50;
+        return 60d;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 6d;
     }
 
     @Override
@@ -69,6 +67,12 @@ public class EntityHellspot extends AoAMeleeMob implements SpecialPropertyEntity
         return SoundsRegister.mobHellspotHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityHellspot;
+    }
+
     @Override
     public void setAttackTarget(@Nullable EntityLivingBase target) {
         if (target instanceof EntityPenumbra)
@@ -78,38 +82,19 @@ public class EntityHellspot extends AoAMeleeMob implements SpecialPropertyEntity
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensNether, 1 + rand.nextInt(3 + lootingMod));
-
-        if (rand.nextInt(80 - lootingMod) == 0)
-             dropItem(WeaponRegister.blasterLaserBlaster, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-    }
-
-    @Override
     protected void doMeleeEffect(Entity target) {
         if (target instanceof EntityLivingBase)
             ((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS,   150, 2, true, true));
     }
 
     @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return source.isFireDamage();
+    }
 
-        if (!world.isRemote) {
-            EntityPlayer target = world.getNearestPlayerNotCreative(this, 15);
-
-            if (target == null)
-                return;
-
-            if (EntityUtil.isPlayerLookingAtEntity(target, this) && canEntityBeSeen(target))
-                target.setPositionAndUpdate(posX, posY, posZ);
-        }
+    @Override
+    protected double getSpawnChanceFactor() {
+        return 0.5f;
     }
 
     @Nonnull

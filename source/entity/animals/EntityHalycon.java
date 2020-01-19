@@ -1,45 +1,47 @@
 package net.tslat.aoa3.entity.animals;
 
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.entity.base.AoAAnimal;
 import net.tslat.aoa3.utils.ItemUtil;
 
-public class EntityHalycon extends EntityCow {
+import javax.annotation.Nullable;
+
+public class EntityHalycon extends AoAAnimal {
 	public static float entityWidth = 0.9f;
 
 	public EntityHalycon(World world) {
-		super(world);
+		super(world, entityWidth, 1.4f);
 	}
 
 	@Override
-	protected void initEntityAI() {
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
-		this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Items.WHEAT, false));
-		this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
+	protected double getBaseMaxHealth() {
+		return 20d;
 	}
 
 	@Override
-	public boolean getCanSpawnHere() {
-		return rand.nextInt(15) == 0 && super.getCanSpawnHere();
+	protected double getBaseMovementSpeed() {
+		return 0.2d;
 	}
 
 	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+	protected double getBaseKnockbackResistance() {
+		return 0;
+	}
+
+	@Override
+	protected int getSpawnChanceFactor() {
+		return 15;
 	}
 
 	@Override
@@ -67,19 +69,25 @@ public class EntityHalycon extends EntityCow {
 	}
 
 	@Override
-	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-		if (!world.isRemote) {
-			if (source.isFireDamage() || isBurning()) {
-				dropItem(ItemRegister.halyconBeef, 1 + rand.nextInt(2 + lootingModifier));
-			}
-			else {
-				dropItem(ItemRegister.halyconBeefRaw, 1 + rand.nextInt(2 + lootingModifier));
-			}
-		}
+	protected boolean isBreedable() {
+		return true;
 	}
 
+	@Nullable
 	@Override
-	public EntityCow createChild(EntityAgeable ageable) {
-		return null;
+	protected Item getTemptItem() {
+		return Item.getItemFromBlock(BlockRegister.plantHavenGrass);
+	}
+
+	@Nullable
+	@Override
+	public EntityAgeable createChild(EntityAgeable mate) {
+		return new EntityHalycon(world);
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHalycon;
 	}
 }

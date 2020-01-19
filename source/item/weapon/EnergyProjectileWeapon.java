@@ -11,5 +11,5 @@ public interface EnergyProjectileWeapon {
 
 	void doBlockImpact(BaseEnergyShot shot, BlockPos block, EntityLivingBase shooter);
 
-	void doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter);
+	boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter);
 }

@@ -1,11 +1,10 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -14,10 +13,11 @@ import javax.annotation.Nullable;
 public class EntityRunicorn extends AoAMeleeMob {
 	public static final float entityWidth = 0.6875f;
 
-	public EntityRunicorn(EntityRunicornRider rider) {
+	public EntityRunicorn(EntityRunicornRider rider, float health) {
 		this(rider.world);
 
 		setLocationAndAngles(rider.posX, rider.posY, rider.posZ, rider.rotationYaw, rider.rotationPitch);
+		setHealth(health);
 	}
 
 	public EntityRunicorn(World world) {
@@ -34,22 +34,22 @@ public class EntityRunicorn extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.5;
+		return 0.15;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 132;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 14d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.329;
+		return 0.3;
 	}
 
 	@Nullable
@@ -70,12 +70,9 @@ public class EntityRunicorn extends AoAMeleeMob {
 		return SoundsRegister.mobRainicornHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensRunandor, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerRunic), 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRunicorn;
 	}
 }

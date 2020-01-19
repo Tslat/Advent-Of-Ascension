@@ -9,10 +9,11 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class StairsBlock extends BlockStairs {
 	public StairsBlock(String name, String registryName, Block baseBlock) {
 		super(baseBlock.getDefaultState());
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
 		useNeighborBrightness = true;
+
 		if (baseBlock.getMaterial(getDefaultState()) == Material.WOOD)
 			Blocks.FIRE.setFireInfo(this, 5, 20);
 	}

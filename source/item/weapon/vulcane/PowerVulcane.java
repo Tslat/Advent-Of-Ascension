@@ -18,13 +18,13 @@ import java.util.List;
 public class PowerVulcane extends BaseVulcane implements AdventWeapon {
 	public PowerVulcane(double dmg, int durability) {
 		super(dmg, durability);
-		setUnlocalizedName("PowerVulcane");
+		setTranslationKey("PowerVulcane");
 		setRegistryName("aoa3:power_vulcane");
 	}
 
 	@Override
 	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer attacker) {
-		target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, true, false));
+		target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 1, true, false));
 	}
 
 	@SideOnly(Side.CLIENT)

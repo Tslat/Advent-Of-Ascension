@@ -2,6 +2,7 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -9,38 +10,40 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectiles.staff.EntityMoonlightFall;
 import net.tslat.aoa3.item.misc.RuneItem;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
 public class MoonlightStaff extends BaseStaff {
-	private static HashMap<RuneItem, Integer> runes = new HashMap<RuneItem, Integer>();
-
-	static {
-		runes.put(ItemRegister.runeCompass, 1);
-		runes.put(ItemRegister.runeLunar, 2);
-		runes.put(ItemRegister.runeKinetic, 2);
-	}
-
-	public MoonlightStaff(SoundEvent sound, int durability) {
-		super(sound, durability);
-		setUnlocalizedName("MoonlightStaff");
+	public MoonlightStaff(int durability) {
+		super(durability);
+		setTranslationKey("MoonlightStaff");
 		setRegistryName("aoa3:moonlight_staff");
 	}
 
+	@Nullable
 	@Override
-	public HashMap<RuneItem, Integer> getRunes() {
-		return runes;
+	public SoundEvent getCastingSound() {
+		return SoundsRegister.staffMoonlight;
+	}
+
+	@Override
+	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+		runes.put(ItemRegister.runeCompass, 1);
+		runes.put(ItemRegister.runeLunar, 2);
+		runes.put(ItemRegister.runeKinetic, 2);
 	}
 
 	@Override
@@ -62,26 +65,37 @@ public class MoonlightStaff extends BaseStaff {
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, EntityLivingBase caster) {
-		caster.world.createExplosion(caster, shot.posX, shot.posY, shot.posZ, 1.5f, false);
-
-		for (EntityLivingBase e : caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), EntityUtil::isHostileMob)) {
-			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 2, true, true));
-		}
+		createCloud(shot, caster);
 	}
 
 	@Override
-	public void doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase caster) {
-		caster.world.createExplosion(caster, shot.posX, shot.posY, shot.posZ, 1.5f, false);
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase caster) {
+		if (!EntityUtil.isTypeImmune(target, Enums.MobProperties.MAGIC_IMMUNE)) {
+			createCloud(shot, caster);
 
-		for (EntityLivingBase e : caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), EntityUtil::isHostileMob)) {
-			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 2, true, true));
+			return true;
 		}
+
+		return false;
+	}
+
+	private void createCloud(BaseEnergyShot shot, EntityLivingBase caster) {
+		EntityAreaEffectCloud cloud = new EntityAreaEffectCloud(shot.world, shot.posX, shot.posY, shot.posZ);
+
+		cloud.setOwner(caster);
+		cloud.addEffect(new PotionEffect(MobEffects.SLOWNESS, 140, 1, false, true));
+		cloud.setRadius(0.1f);
+		cloud.setRadiusPerTick(1);
+		cloud.setDuration(10);
+		cloud.setWaitTime(0);
+
+		shot.world.spawnEntity(cloud);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.MoonlightStaff.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MoonlightStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,9 +1,13 @@
 package net.tslat.aoa3.structure.lborean;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -12,10 +16,11 @@ public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
 	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
 	private static final IBlockState carpet = BlockRegister.carpetBorean.getDefaultState();
 	private static final IBlockState coralCage = BlockRegister.plantCoralCage.getDefaultState();
-	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getOffLamp().getDefaultState();
+	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getDefaultState();
 	private static final IBlockState mermageSpawner = BlockRegister.spawnerMermage.getDefaultState();
 	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
 	private static final IBlockState decloggingTable = BlockRegister.decloggingTable.getDefaultState();
+	private static final IBlockState chestEast = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public AquaticCastle() {
 		super("AquaticCastle");
@@ -1095,6 +1100,7 @@ public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
 		addBlock(world, basePos, 17, 7, 18, coralBricks);
 		addBlock(world, basePos, 17, 7, 19, coralBricks);
 		addBlock(world, basePos, 18, 7, 4, coralBricks);
+		addBlock(world, basePos, 18, 7, 18, chestEast);
 		addBlock(world, basePos, 18, 7, 19, coralBricks);
 		addBlock(world, basePos, 19, 7, 4, coralBricks);
 		addBlock(world, basePos, 19, 7, 19, coralBricks);
@@ -2003,6 +2009,8 @@ public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
 		addBlock(world, basePos, 5, 15, 1, coralBricks);
 		addBlock(world, basePos, 5, 15, 6, coralBricks);
 		addBlock(world, basePos, 5, 15, 7, coralBricks);
+		addBlock(world, basePos, 5, 15, 14, chestEast);
+		addBlock(world, basePos, 5, 15, 15, chestEast);
 		addBlock(world, basePos, 5, 15, 16, coralBricks);
 		addBlock(world, basePos, 6, 15, 0, coralBricks);
 		addBlock(world, basePos, 6, 15, 1, coralBricks);
@@ -2998,5 +3006,10 @@ public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
 		addBlock(world, basePos, 4, 25, 19, coralBricks);
 
 		AquaticCastlePt2.addBlocks(this, world, rand, basePos);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureAquaticCastle, basePos.add(18, 7, 18), basePos.add(5, 15, 14), basePos.add(5, 15, 15), basePos.add(8, 33, 8), basePos.add(9, 33, 22));
 	}
 }

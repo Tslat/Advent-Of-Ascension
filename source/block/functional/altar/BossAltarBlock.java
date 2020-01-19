@@ -8,13 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.BasicBlock;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
+
+import javax.annotation.Nullable;
 
 public abstract class BossAltarBlock extends BasicBlock {
 	public BossAltarBlock(String name, String registryName) {
@@ -24,23 +26,30 @@ public abstract class BossAltarBlock extends BasicBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-			player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null).sendPlayerMessage(StringUtil.getLocale("message.feedback.spawnBoss.difficultyFail"));
-			return false;
-		}
-
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (!world.isRemote && (getActivationItem() == null || (!heldItem.isEmpty() && heldItem.getItem() == getActivationItem())) && checkActivationConditions(player, hand, state, pos)) {
-			if (!player.capabilities.isCreativeMode)
-				heldItem.shrink(1);
+		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
+			return false;
 
-			doActivationEffect(player, hand, state, pos);
+		if (!world.isRemote) {
+			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
+				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
+					PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
+					return false;
+				}
+				else if (checkActivationConditions(player, hand, state, pos)) {
+					if (!player.capabilities.isCreativeMode)
+						heldItem.shrink(1);
+
+					doActivationEffect(player, hand, state, pos);
+				}
+			}
 		}
 
 		return true;
 	}
 
+	@Nullable
 	protected abstract Item getActivationItem();
 
 	protected abstract void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos);
@@ -49,7 +58,7 @@ public abstract class BossAltarBlock extends BasicBlock {
 		return true;
 	}
 
-	protected void sendSpawnMessage(EntityPlayer player, ITextComponent msg, BlockPos pos) {
+	protected void sendSpawnMessage(EntityPlayer player, TextComponentTranslation msg, BlockPos pos) {
 		StringUtil.sendMessageWithinRadius(msg, player, 50);
 	}
 }

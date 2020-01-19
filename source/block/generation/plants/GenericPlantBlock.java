@@ -28,7 +28,7 @@ public class GenericPlantBlock extends Block implements IShearable {
 
 	public GenericPlantBlock(String name, String registryName, Material material, float hardness, Material... growthMaterials) {
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(hardness);
 		this.growthMaterials = Arrays.asList(growthMaterials);
@@ -96,7 +96,7 @@ public class GenericPlantBlock extends Block implements IShearable {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

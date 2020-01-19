@@ -3,6 +3,8 @@ package net.tslat.aoa3.client.render.entities.projectiles.mob;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
 import net.tslat.aoa3.client.fx.FXFluffyTrail;
 import net.tslat.aoa3.entity.projectiles.mob.EntityShadowlordShot;
@@ -10,6 +12,7 @@ import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class ShadowlordShotRenderer extends Render<EntityShadowlordShot> {
 	private final ResourceLocation texture;
 
@@ -37,10 +40,10 @@ public class ShadowlordShotRenderer extends Render<EntityShadowlordShot> {
 		}
 
 		if (entity.toggle) {
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 8).create();
+			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 8, 1).create();
 		}
 		else {
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 5).create();
+			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 5, 1).create();
 		}
 	}
 

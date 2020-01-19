@@ -19,7 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class LeavesBlock extends BlockLeaves {
 	public LeavesBlock(String name, String registryName) {
 		super();
 		AdventOfAscension.proxy.setFancyLeaves(this);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 		setSoundType(SoundType.PLANT);
@@ -53,7 +55,12 @@ public class LeavesBlock extends BlockLeaves {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return null;
+		return state.getBlock() == BlockRegister.leavesHaunted ? ItemRegister.seedsMagicMarang : null;
+	}
+
+	@Override
+	public int quantityDropped(IBlockState state, int fortune, Random random) {
+		return state.getBlock() == BlockRegister.leavesHaunted && random.nextInt(100) <= fortune ? 1 : 0;
 	}
 
 	@Override
@@ -64,8 +71,8 @@ public class LeavesBlock extends BlockLeaves {
 	@Nonnull
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
-		return Blocks.LEAVES.getBlockLayer();
+	public BlockRenderLayer getRenderLayer() {
+		return Blocks.LEAVES.getRenderLayer();
 	}
 
 	@Override

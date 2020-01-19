@@ -1,16 +1,28 @@
 package net.tslat.aoa3.entity.mobs.gardencia;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
 public class EntityArchvine extends AoAMeleeMob {
     public static final float entityWidth = 1.5f;
+    private boolean candiedWater = false;
 
     public EntityArchvine(World world) {
         super(world, entityWidth, 1.4375f);
@@ -23,22 +35,22 @@ public class EntityArchvine extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.3;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 140;
+        return 105;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 13;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.275;
     }
 
     @Nullable
@@ -59,37 +71,61 @@ public class EntityArchvine extends AoAMeleeMob {
         return SoundsRegister.mobArchvineHit;
     }
 
+    @Nullable
     @Override
-    public boolean getCanSpawnHere() {
-        return posY > 66 && super.getCanSpawnHere();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityArchvine;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(100 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitFloro, 1);
+    protected void onInsideBlock(IBlockState state) {
+        if (state.getBlock() == BlockRegister.candiedWater) {
+            if (!candiedWater) {
+                EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
 
-        if (rand.nextInt(40 - lootingMod) == 0)
-            dropItem(ItemRegister.smallPetalBlue, 1);
+                setHealth(getHealth() * 1.5f);
+            }
+        }
     }
 
     @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
 
-        if (rand.nextInt(3) == 0)
-            dropItem(ItemRegister.seedsFloracle, 1 + rand.nextInt(2 + lootingMod));
+        if (candiedWater)
+            compound.setBoolean("AoACandiedWater", true);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+
+        if (compound.hasKey("AoACandiedWater"))
+            candiedWater = true;
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (getHealth() > 0) {
-            if (world.isRaining())
+        if (isEntityAlive() && getHealth() < getMaxHealth()) {
+            if (isInWater()) {
                 heal(0.2f);
+            }
+            else if (world.isRainingAt(getPosition())) {
+                heal(0.1f);
+            }
 
-            heal((getMaxHealth() - getHealth()) / 100);
+            if (motionX == 0 && motionZ == 0)
+                heal(0.05f);
         }
+    }
+
+    @Override
+    public void onDeath(DamageSource cause) {
+        super.onDeath(cause);
+
+        if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBlank)))
+            ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBorean));
     }
 }

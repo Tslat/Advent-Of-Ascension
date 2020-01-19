@@ -5,8 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.vinocorne.EntityVinocorne;
 import net.tslat.aoa3.utils.StringUtil;
 
 public class VinocorneShrine extends BossAltarBlock {
@@ -15,12 +16,23 @@ public class VinocorneShrine extends BossAltarBlock {
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityVinocorne vinocorne = new EntityVinocorne(player.world);
+	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
+		return player.world.getBlockState(pos.up()).getBlock().isReplaceable(player.world, pos.up());
+	}
 
-		vinocorne.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.spawnEntity(vinocorne);
+	@Override
+	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
+		player.world.setBlockState(blockPos.up(), BlockRegister.livingGrowth.getDefaultState());
+		player.world.scheduleUpdate(blockPos.up(), BlockRegister.livingGrowth, 40);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.vinocorne.spawn", player.getDisplayNameString()), blockPos);
+	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		super.breakBlock(world, pos, state);
+
+		if (world.getBlockState(pos.up()).getBlock() == BlockRegister.livingGrowth)
+			world.setBlockToAir(pos.up());
 	}
 
 	@Override

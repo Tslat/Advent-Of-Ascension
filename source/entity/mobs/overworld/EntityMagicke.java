@@ -4,26 +4,30 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagickeShot;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public class EntityMagicke extends AoARangedMob implements HunterEntity {
+public class EntityMagicke extends AoARangedMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntityMagicke(World world) {
 		super(world, entityWidth, 2.1875f);
+
+		mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
 	}
 
 	@Override
@@ -38,12 +42,12 @@ public class EntityMagicke extends AoARangedMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 20;
+		return 15;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 2;
+		return 4;
 	}
 
 	@Override
@@ -75,20 +79,15 @@ public class EntityMagicke extends AoARangedMob implements HunterEntity {
 		return SoundsRegister.shotMagickeFire;
 	}
 
+	@Nullable
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityMagicke;
 	}
 
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(25- lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneHaven, 1);
 	}
 
 	@Override
@@ -98,14 +97,12 @@ public class EntityMagicke extends AoARangedMob implements HunterEntity {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1, false);
+		WorldUtil.createExplosion(this, world, projectile, 1f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		super.doProjectileBlockImpact(projectile, blockHit, pos, sideHit);
-
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1, false);
+		WorldUtil.createExplosion(this, world, projectile, 1f);
 	}
 
 	@Override
@@ -114,13 +111,8 @@ public class EntityMagicke extends AoARangedMob implements HunterEntity {
 	}
 
 	@Override
-	public int getHunterReq() {
-		return 1;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 7;
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isMagicDamage(source, this, damage);
 	}
 
 	@Override

@@ -3,12 +3,15 @@ package net.tslat.aoa3.client.render.entities.projectiles.blasters;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityReeferShot;
 import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class ReeferShotRenderer extends Render<EntityReeferShot> {
 	private final ResourceLocation texture;
 
@@ -48,8 +51,8 @@ public class ReeferShotRenderer extends Render<EntityReeferShot> {
 			}
 
 			for (int j = 0; j < 3; j++) {
-				new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25).create();
-				new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 25).create();
+				new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25, 1).create();
+				new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 25, 1).create();
 			}
 		}
 	}

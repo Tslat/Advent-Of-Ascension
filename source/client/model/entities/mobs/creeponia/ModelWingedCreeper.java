@@ -6,16 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelWingedCreeper extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer wingL1;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer body;
-	ModelRenderer wingR1;
-	ModelRenderer wingR2;
-	ModelRenderer wingL2;
+	private ModelRenderer head;
+	private ModelRenderer wingL1;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer body;
+	private ModelRenderer wingR1;
+	private ModelRenderer wingR2;
+	private ModelRenderer wingL2;
 
 	public ModelWingedCreeper() {
 		textureWidth = 64;

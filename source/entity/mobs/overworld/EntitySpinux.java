@@ -3,11 +3,12 @@ package net.tslat.aoa3.entity.mobs.overworld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -35,12 +36,12 @@ public class EntitySpinux extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 35;
+		return 25;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 4;
 	}
 
 	@Override
@@ -69,6 +70,12 @@ public class EntitySpinux extends AoAMeleeMob {
 		return SoundsRegister.mobSpinuxHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySpinux;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -76,7 +83,7 @@ public class EntitySpinux extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block);
+		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

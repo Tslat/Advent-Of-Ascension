@@ -2,16 +2,12 @@ package net.tslat.aoa3.entity.boss.penumbra;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.mobs.abyss.EntityApparition;
 import net.tslat.aoa3.entity.mobs.abyss.EntityOcculent;
@@ -79,23 +75,15 @@ public class EntityPenumbra extends AoARangedMob implements BossEntity {
 		return SoundsRegister.mobPenumbraHit;
 	}
 
+	@Nullable
 	@Override
-	public boolean isNonBoss() {
-		return false;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityPenumbra;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statuePenumbra), 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.cannonErebonStickler, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.greatbladeErebonScythe, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerErebon), 1);
+	public boolean isNonBoss() {
+		return false;
 	}
 
 	@Nullable
@@ -164,14 +152,24 @@ public class EntityPenumbra extends AoARangedMob implements BossEntity {
 	}
 
 	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicPenumbra;
+	}
+
+	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

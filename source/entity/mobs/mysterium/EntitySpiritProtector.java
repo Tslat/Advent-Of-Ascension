@@ -1,7 +1,9 @@
 package net.tslat.aoa3.entity.mobs.mysterium;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -30,17 +32,17 @@ public class EntitySpiritProtector extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0;
+		return 0.15f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 60;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 6;
+		return 11.5;
 	}
 
 	@Override
@@ -52,6 +54,12 @@ public class EntitySpiritProtector extends AoARangedMob {
 	@Override
 	protected SoundEvent getShootSound() {
 		return SoundsRegister.shotSpiritProtectorFire;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySpiritProtector;
 	}
 
 	@Override

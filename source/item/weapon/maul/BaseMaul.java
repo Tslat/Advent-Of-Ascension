@@ -18,23 +18,29 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class BaseMaul extends Item implements AdventWeapon {
@@ -98,7 +104,9 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 		if (entity instanceof EntityLivingBase)
 			attackEntity(stack, entity, player);
 
-		return false;
+		stack.getCapability(AdventMiscStackProvider.MISC_STACK, EnumFacing.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+
+		return true;
 	}
 
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker) {
@@ -117,12 +125,13 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 			if (weak != null)
 				dmg -= (weak.getAmplifier() + 1) * 4;
 
-			float cooldownMultiplier = (((EntityPlayer)attacker).getCooledAttackStrength(0f));
+			float cooldownMultiplier = ((EntityPlayer)attacker).getCooledAttackStrength(0f);
 			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.crush, stack);
 			final float finalDmg = dmg * cooldownMultiplier + 0.1f;
 
 			if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)target.getParts()[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
-				EntityUtil.doScaledKnockback((EntityLivingBase)target, attacker, (float) knockback * crushMod * cooldownMultiplier, attacker.posX - target.posX, attacker.posZ - target.posZ);
+				if (target instanceof EntityLivingBase)
+					EntityUtil.doScaledKnockback((EntityLivingBase)target, attacker, (float)knockback * crushMod * cooldownMultiplier, attacker.posX - target.posX, attacker.posZ - target.posZ);
 
 				if (attacker.world instanceof WorldServer && target instanceof EntityLivingBase) {
 					int hearts = (int) ((targetHealth - ((EntityLivingBase)target).getHealth()) / 2);
@@ -133,6 +142,7 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 				}
 
 				stack.damageItem(1, attacker);
+				doMeleeEffect(stack, (EntityPlayer)attacker, target, finalDmg, stack.getCapability(AdventMiscStackProvider.MISC_STACK, EnumFacing.NORTH).getValue());
 			}
 		}
 		else if (target instanceof EntityLivingBase) {
@@ -142,9 +152,17 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 		return false;
 	}
 
+	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {}
+
+	@Nullable
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+		return new AdventMiscStackProvider();
+	}
+
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.ingotRosite), false) || super.getIsRepairable(stack, repairMaterial);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -153,12 +171,17 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 	}
 
 	@Override
+	public int getItemEnchantability() {
+		return 8;
+	}
+
+	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.dmg, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.speed, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(dmg));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
 		}
 
 		return multimap;
@@ -166,6 +189,6 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.maul.knockback", TextFormatting.AQUA, Double.toString((int)(knockback * 700) / 100D)));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.maul.knockback", Enums.ItemDescriptionType.ITEM_TYPE_INFO, Double.toString((int)(knockback * 700) / 100D)));
 	}
 }

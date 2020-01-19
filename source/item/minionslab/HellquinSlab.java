@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityHellquin;
 
 public class HellquinSlab extends BaseSlab {
 	public HellquinSlab() {
-		super("HellquinSlab", "hellquin_slab", 34, 140, 45, 500);
+		super("HellquinSlab", "hellquin_slab", 45, 140, 45, 500);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.render.entities.boss.hiveking;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -23,11 +24,16 @@ public class HiveKingRenderer extends RenderLiving<EntityHiveKing> {
 	@Override
 	public void doRender(EntityHiveKing entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
+	}
 
-		if (partialTicks < 0.3)
-			entity.checkMusicStatus();
+	@Override
+	protected void preRenderCallback(EntityHiveKing hiveKing, float partialTickTime) {
+		float scaleFactor = hiveKing.getGrowthPercent() / 100f;
+
+		GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
 	}
 
 	@Nullable

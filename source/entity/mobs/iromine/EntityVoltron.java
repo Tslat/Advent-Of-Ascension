@@ -2,23 +2,28 @@ package net.tslat.aoa3.entity.mobs.iromine;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityVoltron extends AoAMeleeMob {
+public class EntityVoltron extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.7f;
 
 	public EntityVoltron(World world) {
 		super(world, entityWidth, 2f);
+
+		mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
 	}
 
 	@Override
@@ -28,22 +33,27 @@ public class EntityVoltron extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.2;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 94;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 12;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
 		return 0.2875;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 1.5d;
 	}
 
 	@Nullable
@@ -64,32 +74,29 @@ public class EntityVoltron extends AoAMeleeMob {
 		return SoundsRegister.mobVoltronHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVoltron;
+	}
+
 	@Override
 	public void onStruckByLightning(EntityLightningBolt lightningBolt) {}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensIromine, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(35 - lootingMod) == 0)
-			dropItem(WeaponRegister.staffStriker, 1);
-
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitGolden, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerMecha), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (!world.isRemote)
 			world.addWeatherEffect(new EntityLightningBolt(world, target.posX, target.posY, target.posZ, false));
+	}
+
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isBlasterDamage(source);
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

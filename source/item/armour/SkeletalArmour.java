@@ -1,25 +1,24 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOURSKELETAL;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_SKELETAL;
 
 public class SkeletalArmour extends AdventArmour {
-	public SkeletalArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOURSKELETAL, name, registryName, renderIndex, slot);
+	public SkeletalArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_SKELETAL, name, registryName, slot);
 	}
 
 	@Override
@@ -28,22 +27,15 @@ public class SkeletalArmour extends AdventArmour {
 	}
 
 	@Override
-	public void setTickEffect(AdventPlayerCapability cap) {
-		cap.getPlayer().getFoodStats().addExhaustion(-0.1f);
-		cap.getPlayer().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, -1, 0, true, false));
-	}
-
-	@Override
-	public void setUnequipEffect(AdventPlayerCapability cap) {
-		cap.getPlayer().getFoodStats().addExhaustion(10000.0f);
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+		if (slots == null && plData.player().getFoodStats().getSaturationLevel() < 1)
+			plData.player().getFoodStats().setFoodSaturationLevel(1);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.SkeletalArmour.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.SkeletalArmour.desc.2", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.SkeletalArmour.desc.3", TextFormatting.DARK_GREEN));
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SkeletalArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

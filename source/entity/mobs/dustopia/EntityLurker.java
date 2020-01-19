@@ -3,13 +3,12 @@ package net.tslat.aoa3.entity.mobs.dustopia;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -29,17 +28,17 @@ public class EntityLurker extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.6;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 75;
+        return 140;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 16.5;
     }
 
     @Override
@@ -65,18 +64,10 @@ public class EntityLurker extends AoAMeleeMob {
         return SoundsRegister.mobLurkerHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerDustopian), 1);
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitDarkly, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityLurker;
     }
 
     @Override

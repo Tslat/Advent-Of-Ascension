@@ -1,20 +1,31 @@
 package net.tslat.aoa3.entity.mobs.haven;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntitySeeker extends AoAFlyingMeleeMob {
+public class EntitySeeker extends AoAFlyingMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.75f;
 
 	public EntitySeeker(World world) {
 		super(world, entityWidth, 1.25f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -29,12 +40,12 @@ public class EntitySeeker extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 70;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 6;
 	}
 
 	@Override
@@ -60,20 +71,26 @@ public class EntitySeeker extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobSeekerHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensHaven, 1);
-
-		if (rand.nextInt(30 - lootingMod) == 0)
-			dropItem(ItemRegister.realmstoneLelyetia, 1);
-
-		if (rand.nextInt(85 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterVortexBlaster, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySeeker;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
+	}
+
+	@Override
+	protected void doMeleeEffect(Entity target) {
+		if (target instanceof EntityLivingBase)
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.GLOWING, 300, 0, false, true));
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

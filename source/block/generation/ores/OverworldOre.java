@@ -16,7 +16,7 @@ public class OverworldOre extends BlockOre {
 	private static final PropertyEnum<OreType> variant = PropertyEnum.create("ore", OreType.class);
 
 	public OverworldOre() {
-		setUnlocalizedName("OverworldOre");
+		setTranslationKey("OverworldOre");
 		setRegistryName("aoa3:overworld_ore");
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 		setDefaultState(blockState.getBaseState().withProperty(variant, OreType.LIMONITE));

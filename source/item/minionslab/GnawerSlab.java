@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityGnawer;
 
 public class GnawerSlab extends BaseSlab {
 	public GnawerSlab() {
-		super("GnawerSlab", "gnawer_slab", 68, 180, 60, 2000);
+		super("GnawerSlab", "gnawer_slab", 60, 180, 60, 2000);
 	}
 
 	@Override

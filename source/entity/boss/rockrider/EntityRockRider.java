@@ -1,15 +1,11 @@
 package net.tslat.aoa3.entity.boss.rockrider;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -19,12 +15,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -45,11 +37,8 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	private boolean alternateForm = false;
 	private int formCooldown = 300;
 
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
-
 	public EntityRockRider(World world) {
-		super(world, entityWidth, 3.375f	);
+		super(world, entityWidth, 3.375f);
 
 		this.mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
 		this.setSlipperyMovement();
@@ -105,6 +94,12 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRockRider;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
@@ -134,29 +129,11 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueRockrider), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		if (rand.nextInt(4) > 1)
-			dropItem(Items.COAL, 25 + rand.nextInt(3 + 4 * lootingMod));
-
-		if (rand.nextInt(4) > 1)
-			dropItem(Items.FLINT, 25 + rand.nextInt(3 + 4 * lootingMod));
-
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.swordRockbasher, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.swordRockPick, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.cannonJackRocker, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.shotgunLongshot, 1);
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -190,7 +167,7 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return alternateForm ? EntityUtil.isGunDamage(source) : EntityUtil.isMeleeDamage(source);
 	}
 
@@ -246,6 +223,12 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicRockRider;
+	}
+
 	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
@@ -258,24 +241,5 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicRockRider, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

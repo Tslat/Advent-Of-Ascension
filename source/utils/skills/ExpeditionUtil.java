@@ -6,16 +6,16 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class ExpeditionUtil {
-    public static void handleFallEvent(LivingFallEvent ev, AdventPlayerCapability cap) {
+    public static void handleFallEvent(LivingFallEvent ev, PlayerDataManager plData) {
         if (ev.isCanceled())
             return;
 
-        int lvl = cap.getLevel(Enums.Skills.EXPEDITION);
+        int lvl = plData.stats().getLevel(Enums.Skills.EXPEDITION);
 
         if (lvl >= 10) {
             if (lvl < 20) {
@@ -48,18 +48,18 @@ public class ExpeditionUtil {
         }
     }
 
-    public static void handleRunningTick(TickEvent.PlayerTickEvent ev, AdventPlayerCapability cap) {
-		int lvl = cap.getLevel(Enums.Skills.EXPEDITION);
+    public static void handleRunningTick(TickEvent.PlayerTickEvent ev, PlayerDataManager plData) {
+		int lvl = plData.stats().getLevel(Enums.Skills.EXPEDITION);
 
 		if (ev.player.isSprinting() && ev.player.ticksExisted % 140 == 0)
-			cap.addXp(Enums.Skills.EXPEDITION, cap.getXpReqForLevel(lvl) / getXpDenominator(lvl), false);
+			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false);
 
-		switch (cap.getExpeditionBoost()) {
+		switch (plData.stats().getSkillData(Enums.Skills.EXPEDITION)) {
 			case 1:
 				if (ev.player.isSprinting() && ev.player.ticksExisted % 600 == 0) {
 					if (AdventOfAscension.rand.nextInt(110) < lvl && !ev.player.isPotionActive(MobEffects.SPEED)) {
 						ev.player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 80, 4, true, false));
-						cap.sendPlayerMessage(StringUtil.getColourLocale("message.event.expedition.speed", TextFormatting.AQUA));
+						plData.sendThrottledChatMessage("message.event.expedition.speed", TextFormatting.AQUA);
 					}
 				}
 				break;
@@ -67,7 +67,7 @@ public class ExpeditionUtil {
 				if (ev.player.isSprinting() && ev.player.ticksExisted % 600 == 0) {
 					if (AdventOfAscension.rand.nextInt(110) < lvl) {
 						ev.player.getFoodStats().addStats(5, 0.3f);
-						cap.sendPlayerMessage(StringUtil.getColourLocale("message.event.expedition.food", TextFormatting.AQUA));
+						plData.sendThrottledChatMessage("message.event.expedition.food", TextFormatting.AQUA);
 					}
 				}
 				break;
@@ -75,7 +75,7 @@ public class ExpeditionUtil {
 				if (ev.player.isInWater() && ev.player.ticksExisted % 500 == 0) {
 					if (AdventOfAscension.rand.nextInt(110) < lvl) {
 						ev.player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 400, 0, true, false));
-						cap.sendPlayerMessage(StringUtil.getColourLocale("message.event.expedition.breath", TextFormatting.AQUA));
+						plData.sendThrottledChatMessage("message.event.expedition.breath", TextFormatting.AQUA);
 					}
 				}
 				break;

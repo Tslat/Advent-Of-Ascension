@@ -14,7 +14,7 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 public class DustopianLampOff extends Block {
 	public DustopianLampOff() {
 		super(Material.ROCK);
-		setUnlocalizedName("DustopianLampOff");
+		setTranslationKey("DustopianLampOff");
 		setRegistryName("aoa3:dustopian_lamp_off");
 		setHardness(5.0f);
 		setResistance(10.0f);
@@ -25,7 +25,7 @@ public class DustopianLampOff extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && !player.isSneaking() && player.getHeldItem(hand).getItem() == ItemRegister.primordialDust) {
+		if (!world.isRemote && !player.isSneaking() && player.getHeldItem(hand).getItem() == ItemRegister.darklyPowder) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 

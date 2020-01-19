@@ -1,13 +1,14 @@
 package net.tslat.aoa3.entity.mobs.dustopia;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
@@ -29,17 +30,17 @@ public class EntityStalkerPrime extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.3;
+        return 0.35;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 320;
+        return 146;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 10;
+        return 14;
     }
 
     @Override
@@ -65,31 +66,39 @@ public class EntityStalkerPrime extends AoAMeleeMob {
         return SoundsRegister.mobStalkerHit;
     }
 
+    @Nullable
     @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityStalkerPrime;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.realmstoneDustopia, 1);
+    public void onUpdate() {
+        super.onUpdate();
 
-        if (rand.nextBoolean())
-            dropItem(WeaponRegister.gunDustometer, 1);
-    }
+        if (getAttackTarget() instanceof EntityPlayerMP && canEntityBeSeen(getAttackTarget()) && EntityUtil.isPlayerLookingAtEntity((EntityPlayer)getAttackTarget(), this)) {
+            motionX = 0;
+            motionZ = 0;
 
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinSilver, 5 + rand.nextInt(9 + lootingMod));
-    }
-
-    @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-
-        if (!world.isRemote && getAttackTarget() instanceof EntityPlayerMP) {
-            if (EntityUtil.isPlayerLookingAtEntity((EntityPlayerMP)getAttackTarget(), this) && canEntityBeSeen(getAttackTarget()))
-                PacketUtil.network.sendTo(new PacketScreenOverlay(30, Enums.ScreenOverlays.STATIC), (EntityPlayerMP) getAttackTarget());
+            if (getAttackTarget().getDistanceSq(this) <= 2 * 2)
+                PacketUtil.network.sendTo(new PacketScreenOverlay(30, Enums.ScreenOverlays.STATIC), (EntityPlayerMP)getAttackTarget());
         }
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (super.attackEntityFrom(source, amount)) {
+            if (!world.isRemote && getAttackTarget() != null && getAttackTarget().getDistanceSq(this) <= 2 * 2) {
+                double posX = this.posX + rand.nextGaussian() * 64;
+                double posZ = this.posZ + rand.nextGaussian() * 64;
+                double posY = world.getHeight((int)posX, (int)posZ);
+
+                attemptTeleport(posX, posY, posZ);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

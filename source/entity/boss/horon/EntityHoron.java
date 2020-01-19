@@ -4,24 +4,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -85,51 +82,53 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHoron;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueHoron), 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.greatbladeLuxonScythe, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.cannonLuxonStickler, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerLuxon), 1);
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isRangedDamage(source, this, 1);
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityPlayer) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer((EntityPlayer)target);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)target);
 
-			cap.consumeResource(Enums.Resources.ENERGY, 60, true);
-			cap.consumeResource(Enums.Resources.CREATION, 20, true);
-			cap.consumeResource(Enums.Resources.SOUL, 20, true);
+			plData.stats().consumeResource(Enums.Resources.ENERGY, 60, true);
+			plData.stats().consumeResource(Enums.Resources.CREATION, 20, true);
+			plData.stats().consumeResource(Enums.Resources.SOUL, 20, true);
 		}
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (rand.nextInt(60) == 0)
-			world.createExplosion(this, posX, posY, posZ, 2, false);
+		if (!world.isRemote) {
+			if (rand.nextInt(60) == 0)
+				WorldUtil.createExplosion(this, world, 2f);
 
-		if (getAttackTarget() != null && rand.nextInt(400) == 0) {
-			setPositionAndUpdate(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
-			getAttackTarget().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 120, 3, true, true));
+			if (getAttackTarget() != null && rand.nextInt(400) == 0) {
+				setPositionAndUpdate(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
+				getAttackTarget().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 120, 3, true, true));
+			}
 		}
 	}
 
@@ -141,6 +140,12 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 	@Override
 	public ResourceLocation getBossBarTexture() {
 		return bossBarTexture;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicHoron;
 	}
 
 	@Nonnull
@@ -156,8 +161,4 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

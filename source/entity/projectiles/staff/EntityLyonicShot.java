@@ -13,6 +13,10 @@ public class EntityLyonicShot extends BaseEnergyShot {
 		super(shooter, weapon, maxAge);
 	}
 
+	public EntityLyonicShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge, float xMod, float yMod, float zMod) {
+		super(shooter, weapon, maxAge, xMod, yMod, zMod);
+	}
+
 	public EntityLyonicShot(World world, double x, double y, double z) {
 		super(world, x, y, z);
 	}

@@ -7,16 +7,16 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelConstructOfMind extends ModelBase {
-	ModelRenderer or1;
-	ModelRenderer ir1;
-	ModelRenderer or2;
-	ModelRenderer ir2;
-	ModelRenderer ir3;
-	ModelRenderer or3;
-	ModelRenderer ir4;
-	ModelRenderer or4;
-	ModelRenderer or5;
-	ModelRenderer or6;
+	private ModelRenderer or1;
+	private ModelRenderer ir1;
+	private ModelRenderer or2;
+	private ModelRenderer ir2;
+	private ModelRenderer ir3;
+	private ModelRenderer or3;
+	private ModelRenderer ir4;
+	private ModelRenderer or4;
+	private ModelRenderer or5;
+	private ModelRenderer or6;
 
 	public ModelConstructOfMind() {
 		textureWidth = 64;

@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class StrangeBlock extends Block {
 	public StrangeBlock() {
 		super(Material.ROCK);
-		setUnlocalizedName("StrangeBlock");
+		setTranslationKey("StrangeBlock");
 		setRegistryName("aoa3:strange_block");
 		setHardness(-1f);
 		setResistance(999999999f);

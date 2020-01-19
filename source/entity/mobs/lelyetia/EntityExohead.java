@@ -6,19 +6,16 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityExohead extends AoAMeleeMob implements HunterEntity {
+public class EntityExohead extends AoAMeleeMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityExohead(World world) {
@@ -32,17 +29,17 @@ public class EntityExohead extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 80;
+		return 55d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 9;
+		return 9d;
 	}
 
 	@Override
@@ -68,26 +65,10 @@ public class EntityExohead extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobExoheadHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.darkBones, 1);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 71;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 850;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityExohead;
 	}
 
 	@Override

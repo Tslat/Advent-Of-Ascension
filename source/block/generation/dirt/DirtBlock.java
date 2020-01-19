@@ -14,12 +14,13 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.block.CustomStateMapperBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
-public class DirtBlock extends BlockDirt {
+public class DirtBlock extends BlockDirt implements CustomStateMapperBlock {
 	public DirtBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.5f);
 		setSoundType(SoundType.GROUND);
@@ -28,6 +29,7 @@ public class DirtBlock extends BlockDirt {
 		setHarvestLevel("shovel", 0);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public StateMap getStateMapper() {
 		return (new StateMap.Builder().ignore(BlockDirt.VARIANT, BlockDirt.SNOWY).build());

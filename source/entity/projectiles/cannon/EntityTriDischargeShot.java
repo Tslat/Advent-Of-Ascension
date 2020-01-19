@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityTriDischargeShot extends BaseBullet implements HardProjectile {
 	public EntityTriDischargeShot(World world) {
@@ -26,6 +27,6 @@ public class EntityTriDischargeShot extends BaseBullet implements HardProjectile
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(getThrower(), posX, posY, posZ, 2.5f, false);
+		WorldUtil.createExplosion(thrower, world, this, 3.0f);
 	}
 }

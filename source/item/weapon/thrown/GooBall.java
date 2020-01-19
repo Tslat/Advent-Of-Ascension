@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,16 +23,23 @@ import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class GooBall extends BaseThrownWeapon {
 	public static final float dmg = 3.5f;
 
 	public GooBall() {
-		super(dmg, SoundEvents.ENTITY_ARROW_SHOOT, 7);
-		setUnlocalizedName("GooBall");
+		super(dmg, 7);
+		setTranslationKey("GooBall");
 		setRegistryName("aoa3:goo_ball");
 		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundEvents.ENTITY_ARROW_SHOOT;
 	}
 
 	@Override

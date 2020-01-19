@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -26,22 +27,22 @@ public class EntityRunicornRider extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.5;
+		return 0.2;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 132;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 11;
+		return 14d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.329;
+		return 0.29;
 	}
 
 	@Nullable
@@ -62,30 +63,21 @@ public class EntityRunicornRider extends AoAMeleeMob {
 		return SoundsRegister.mobRainicornHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRunicornRider;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.runicEnergy, 1);
-	}
+	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
+		super.damageEntity(damageSrc, damageAmount);
 
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-
-		if (!world.isRemote) {
-			EntityRunicorn runicorn = new EntityRunicorn(this);
+		if (!world.isRemote && getHealth() <= getMaxHealth() / 0.45f) {
+			EntityRunicorn runicorn = new EntityRunicorn(this, getHealth());
 
 			world.spawnEntity(runicorn);
-			setDead();
+			onDeath(damageSrc);
 		}
 	}
 }

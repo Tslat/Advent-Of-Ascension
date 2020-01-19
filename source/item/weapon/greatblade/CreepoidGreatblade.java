@@ -12,22 +12,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
 public class CreepoidGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public CreepoidGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("CreepoidGreatblade");
+		setTranslationKey("CreepoidGreatblade");
 		setRegistryName("aoa3:creepoid_greatblade");
 	}
 
 	@Override
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		super.attackEntity(stack, target, attacker, dmg);
+	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
+		if (super.attackEntity(stack, target, attacker, dmg)) {
+			if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f)
+				WorldUtil.createExplosion(attacker, target.world, target.posX, target.posY + target.height, target.posZ, 1.5f);
 
-		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f)
-			attacker.world.createExplosion(attacker, target.posX, target.posY + target.height, target.posZ, 1.5f, false);
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

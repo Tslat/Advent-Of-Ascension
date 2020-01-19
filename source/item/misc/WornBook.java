@@ -9,23 +9,27 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 public class WornBook extends ItemWrittenBook {
-	static NBTTagCompound contents = new NBTTagCompound();
+	private static final NBTTagCompound contents = new NBTTagCompound();
 
 	public WornBook() {
 		super();
 
+		this.setTranslationKey("WornBook");
 		this.setRegistryName("aoa3:worn_book");
-		this.setUnlocalizedName("WornBook");
 		setCreativeTab(CreativeTabsRegister.miscTab);
 	}
 
@@ -40,8 +44,21 @@ public class WornBook extends ItemWrittenBook {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack bookStack = player.getHeldItem(hand);
 
-		if (world.isRemote)
-			player.openGui(AdventOfAscension.instance, Enums.ModGuis.WORN_BOOK.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		if (world.isRemote) {
+			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.WORN_BOOK.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		}
+		else if (bookStack.getTagCompound() == null || !bookStack.getTagCompound().hasKey("DroppedBlankRealmstone")) {
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneBlank));
+			player.sendMessage(StringUtil.getLocale("message.feedback.wornBook.droppedRealmstone"));
+
+			NBTTagCompound flagCompound = bookStack.getTagCompound();
+
+			if (flagCompound == null)
+				flagCompound = new NBTTagCompound();
+
+			flagCompound.setBoolean("DroppedBlankRealmstone", true);
+			bookStack.setTagCompound(flagCompound);
+		}
 
 		return ActionResult.newResult(EnumActionResult.SUCCESS, bookStack);
 	}
@@ -50,21 +67,17 @@ public class WornBook extends ItemWrittenBook {
 	public static NBTTagCompound getBookContents() {
 		contents.setString("author", StringUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
 		contents.setString("title", StringUtil.getLocaleString("item.WornBook.name"));
+		String pageContents = ModUtil.getTextFromResourceFile(new ResourceLocation("aoa3", "lang/other/" + FMLCommonHandler.instance().getCurrentLanguage() + "/misc/worn_book"), "txt", new ResourceLocation("aoa3", "lang/other/en_us/misc/worn_book"));
+
+		if (pageContents == null)
+			return contents;
+
+		String[] lines = pageContents.split("\n");
 		NBTTagList pages = new NBTTagList();
 
-		int i = 1;
-
-		do {
-			String st = StringUtil.getLocaleString("message.book.worn." + i);
-
-			if (st.startsWith("message.book.worn.")) {
-				i = 0;
-			}
-			else {
-				pages.appendTag(new NBTTagString(st.replaceAll("<br>", "\n")));
-				i++;
-			}
-		} while (i != 0);
+		for (String line : lines) {
+			pages.appendTag(new NBTTagString(line.replaceAll("<br>", "\n")));
+		}
 
 		contents.setTag("pages", pages);
 

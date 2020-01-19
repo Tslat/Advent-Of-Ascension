@@ -1,11 +1,14 @@
 package net.tslat.aoa3.structure.lunalus;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityZalSpellbinder;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.entity.npcs.trader.EntityZalSpellbinder;
 import net.tslat.aoa3.entity.npcs.ambient.EntityZalChild;
 import net.tslat.aoa3.structure.AoAStructure;
 
@@ -18,6 +21,9 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 	private static final IBlockState lunarLamp = BlockRegister.lampLunar.getDefaultState().withProperty(FIXED_LAMP, true);
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 	private static final IBlockState lunarCarpet = BlockRegister.carpetLunar.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
+	private static final IBlockState chestSouth = chest.withProperty(BlockChest.FACING, EnumFacing.SOUTH);
+	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);
 
 	public SpellbinderHouse() {
 		super("SpellbinderHouse");
@@ -442,7 +448,7 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 		addBlock(world, basePos, 10, 3, 14, lunarBricks);
 		addBlock(world, basePos, 11, 3, 0, lunarBricks);
 		addBlock(world, basePos, 11, 3, 2, lunarBricks);
-		addBlock(world, basePos, 11, 3, 3, lunarCarpet);
+		addBlock(world, basePos, 11, 3, 3, chestSouth);
 		addBlock(world, basePos, 11, 3, 4, lunarCarpet);
 		addBlock(world, basePos, 11, 3, 5, lunarCarpet);
 		addBlock(world, basePos, 11, 3, 6, lunarCarpet);
@@ -450,7 +456,7 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 		addBlock(world, basePos, 11, 3, 8, lunarCarpet);
 		addBlock(world, basePos, 11, 3, 9, lunarCarpet);
 		addBlock(world, basePos, 11, 3, 10, lunarCarpet);
-		addBlock(world, basePos, 11, 3, 11, lunarCarpet);
+		addBlock(world, basePos, 11, 3, 11, chest);
 		addBlock(world, basePos, 11, 3, 12, lunarBricks);
 		addBlock(world, basePos, 11, 3, 14, lunarBricks);
 		addBlock(world, basePos, 12, 3, 0, lunarBricks);
@@ -497,7 +503,7 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 		addBlock(world, basePos, 15, 3, 4, lunarBricks);
 		addBlock(world, basePos, 15, 3, 5, lunarCarpet);
 		addBlock(world, basePos, 15, 3, 6, lunarCarpet);
-		addBlock(world, basePos, 15, 3, 7, lunarCarpet);
+		addBlock(world, basePos, 15, 3, 7, chestWest);
 		addBlock(world, basePos, 15, 3, 8, lunarCarpet);
 		addBlock(world, basePos, 15, 3, 9, lunarCarpet);
 		addBlock(world, basePos, 15, 3, 10, lunarBricks);
@@ -781,5 +787,10 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 		world.spawnEntity(zalChild);
 		world.spawnEntity(zalChild2);
 		world.spawnEntity(zalChild3);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureSpellbinderHouse, basePos.add(11, 3, 3), basePos.add(11, 3, 11), basePos.add(15, 3, 7));
 	}
 }

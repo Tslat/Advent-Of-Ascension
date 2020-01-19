@@ -1,16 +1,12 @@
 package net.tslat.aoa3.entity.mobs.greckon;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
 
@@ -28,17 +24,17 @@ public class EntitySilencer extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.7;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 50;
+        return 124;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 12;
     }
 
     @Override
@@ -49,64 +45,38 @@ public class EntitySilencer extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSilencerLiving;
+        return null;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSilencerDeath;
+        return null;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSilencerHit;
+        return null;
     }
 
+    @Nullable
     @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
+    protected SoundEvent getStepSound() {
+        return null;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextBoolean())
-            dropItem(WeaponRegister.staffGhoul, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinSilver, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entitySilencer;
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!world.isRemote) {
-            EntityPlayer pl = world.getClosestPlayer(posX, posY, posZ, 64, false);
-
-            if (pl != null && !pl.capabilities.isCreativeMode) {
-                if (pl.getHeldItem(EnumHand.MAIN_HAND) != ItemStack.EMPTY) {
-                    if (EntityUtil.isPlayerLookingAtEntity(pl, this) && canEntityBeSeen(pl)) {
-                        ItemStack heldStack = pl.getHeldItem(EnumHand.MAIN_HAND).copy();
-
-                        pl.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-                        pl.entityDropItem(heldStack, 0.5f);
-                        pl.inventoryContainer.detectAndSendChanges();
-                    }
-                }
-                else if (pl.getHeldItem(EnumHand.OFF_HAND) != ItemStack.EMPTY) {
-                    if (EntityUtil.isPlayerLookingAtEntity(pl, this) && canEntityBeSeen(pl)) {
-                        ItemStack heldStack = pl.getHeldItem(EnumHand.OFF_HAND).copy();
-
-                        pl.setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
-                        pl.entityDropItem(heldStack, 0.5f);
-                        pl.inventoryContainer.detectAndSendChanges();
-                    }
-                }
-            }
-        }
+        if (world.isRemote)
+            AdventOfAscension.proxy.doSilencerSilence(this);
     }
 }

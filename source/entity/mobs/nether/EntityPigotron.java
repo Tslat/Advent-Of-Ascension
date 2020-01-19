@@ -3,13 +3,12 @@ package net.tslat.aoa3.entity.mobs.nether;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
@@ -43,12 +42,12 @@ public class EntityPigotron extends AoAMeleeMob implements SpecialPropertyEntity
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.8d;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 25;
+        return 80;
     }
 
     @Override
@@ -79,15 +78,15 @@ public class EntityPigotron extends AoAMeleeMob implements SpecialPropertyEntity
         return SoundsRegister.mobPigotronHit;
     }
 
+    @Nullable
     @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
-        return source.isFireDamage();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityPigotron;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(25 - lootingMod) == 0)
-            dropItem(WeaponRegister.greatbladeGrandsword, 1);
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return source.isFireDamage();
     }
 
     @Nonnull
@@ -105,7 +104,6 @@ public class EntityPigotron extends AoAMeleeMob implements SpecialPropertyEntity
             if (attrib != null)
                 resist -= attrib.getAttributeValue();
 
-            ((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 50, 0, true, false));
             target.addVelocity(motionX * 10.5 * resist, motionY * 0.5 * resist, motionZ * 10.5 * resist);
             target.velocityChanged = true;
         }

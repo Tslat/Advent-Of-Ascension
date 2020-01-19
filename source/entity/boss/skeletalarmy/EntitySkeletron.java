@@ -2,20 +2,17 @@ package net.tslat.aoa3.entity.boss.skeletalarmy;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
@@ -89,9 +86,21 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySkeletron;
+	}
+
 	@Override
 	public ResourceLocation getBossBarTexture() {
 		return bossBarTexture;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicSkeletron;
 	}
 
 	@Override
@@ -100,43 +109,16 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueSkeletron), 1);
-
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.swordSkeletal, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.bowSkeletal, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.staffLightning, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.blasterBoneBlaster, 1);
-				break;
-		}
-
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(ArmourRegister.CommanderHelmet, 1);
-				break;
-			case 1:
-				dropItem(ArmourRegister.CommanderBody, 1);
-				break;
-			case 2:
-				dropItem(ArmourRegister.CommanderLegs, 1);
-				break;
-			case 3:
-				dropItem(ArmourRegister.CommanderBoots, 1);
-				break;
-		}
+	public boolean startRiding(Entity entity, boolean force) {
+		return false;
 	}
 
 	@Override
-	public boolean startRiding(Entity entity, boolean force) {
-		return false;
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -180,6 +162,7 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
+	}
 }

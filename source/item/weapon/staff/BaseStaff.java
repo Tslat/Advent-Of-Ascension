@@ -28,6 +28,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
 import net.tslat.aoa3.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
@@ -37,10 +38,9 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProjectileWeapon {
-	private final SoundEvent castSound;
+	protected final HashMap<RuneItem, Integer> runes = new HashMap<RuneItem, Integer>(2);
 
-	public BaseStaff(SoundEvent sound, int durability) {
-		this.castSound = sound;
+	public BaseStaff(int durability) {
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
@@ -65,8 +65,6 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 		}
 
 		if (cap.getNextFireTime() < GlobalEvents.tick) {
-			EnumActionResult result = EnumActionResult.SUCCESS;
-
 			if (!world.isRemote) {
 				Object preconditionResult = checkPreconditions(player, stack);
 
@@ -76,17 +74,19 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 				if (!findAndConsumeRunes(getRunes(), player, true, stack))
 					return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
+				if (getCastingSound() != null)
+					world.playSound(null, player.posX, player.posY, player.posZ, getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+
 				cap.setNextFireTime(10);
 				player.addStat(StatList.getObjectUseStats(this));
-				world.playSound(null, player.posX, player.posY, player.posZ, castSound, SoundCategory.PLAYERS, 1.0f, 1.0f);
 				stack.damageItem(1, player);
 				cast(world, stack, player, preconditionResult);
 			}
 
-			return ActionResult.newResult(result, stack);
+			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 		}
 		else if (cap.getNextFireTime() > GlobalEvents.tick + 20) {
-			cap.setNextFireTime(-GlobalEvents.tick);
+			cap.setNextFireTime(0);
 		}
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
@@ -96,24 +96,37 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 		return ItemUtil.findAndConsumeRunes(runes, player, allowBuffs, staff);
 	}
 
+	@Nullable
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
 		return new Object();
 	}
 
-	public abstract HashMap<RuneItem, Integer> getRunes();
+	public HashMap<RuneItem, Integer> getRunes() {
+		if (runes.isEmpty())
+			populateRunes(runes);
+
+		return runes;
+	}
+
+	@Nullable
+	public SoundEvent getCastingSound() {
+		return null;
+	}
+
+	protected abstract void populateRunes(HashMap<RuneItem, Integer> runes);
 
 	public abstract void cast(World world, ItemStack staff, EntityLivingBase caster, Object args);
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
 	}
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, EntityLivingBase shooter) {}
 
 	@Override
-	public void doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {}
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {return true;}
 
 	@Override
 	public EnumHand getWeaponHand() {
@@ -131,7 +144,7 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 
 	@Override
 	public int getItemEnchantability() {
-		return 0;
+		return 8;
 	}
 
 	@Nullable
@@ -144,12 +157,12 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		if (getDmg() > 0)
-			tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.magic", TextFormatting.DARK_RED, Float.toString(getDmg())));
+			tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.magic", Enums.ItemDescriptionType.ITEM_DAMAGE, Float.toString(getDmg())));
 
-		tooltip.add(StringUtil.getColourLocaleString("items.description.staff.runesRequired", TextFormatting.LIGHT_PURPLE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.staff.runesRequired", Enums.ItemDescriptionType.ITEM_AMMO_COST));
 
 		for (Map.Entry<RuneItem, Integer> runeEntry : getRunes().entrySet()) {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.staff.runesRequired.specific", TextFormatting.WHITE, Integer.toString(runeEntry.getValue()), StringUtil.getLocaleString(runeEntry.getKey().getUnlocalizedName() + ".name")));
+			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.staff.runesRequired.specific", TextFormatting.WHITE, Integer.toString(runeEntry.getValue()), StringUtil.getLocaleString(runeEntry.getKey().getTranslationKey() + ".name")));
 		}
 	}
 }

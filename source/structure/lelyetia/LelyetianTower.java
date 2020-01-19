@@ -1,30 +1,35 @@
 package net.tslat.aoa3.structure.lelyetia;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityLelyetianTrader;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.npcs.banker.EntityLelyetianBanker;
 import net.tslat.aoa3.entity.npcs.lottoman.EntityLelyetianLottoman;
 import net.tslat.aoa3.entity.npcs.skillmaster.EntityHunterMaster;
+import net.tslat.aoa3.entity.npcs.trader.EntityLelyetianTrader;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
 
-public class LelyetianTower extends AoAStructure { //StructureSize: 14x61x14
+public class LelyetianTower extends AoAStructure { // StructureSize: 14x61x14
 	private static final IBlockState lelyetianBricks = BlockRegister.bricksLelyetia.getDefaultState();
 	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
 	private static final IBlockState lelyetianGlass = BlockRegister.glassLelyetian.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
+	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);
 
 	public LelyetianTower() {
 		super("LelyetianTower");
 	}
 
 	@Override
-	protected void build(World world, Random rand, BlockPos basePos) {
+	protected void build(World world, Random rand, BlockPos basePos) {		
 		addBlock(world, basePos, 0, 0, 4, lelyetianBricks);
 		addBlock(world, basePos, 0, 0, 5, lelyetianBricks);
 		addBlock(world, basePos, 0, 0, 6, lelyetianBricks);
@@ -642,6 +647,12 @@ public class LelyetianTower extends AoAStructure { //StructureSize: 14x61x14
 		addBlock(world, basePos, 11, 9, 2, lelyetianBricks);
 		addBlock(world, basePos, 11, 9, 11, lelyetianBricks);
 		addBlock(world, basePos, 12, 9, 3, lelyetianBricks);
+		
+		if (rand.nextBoolean()) {
+			addBlock(world, basePos, 12, 9, 6, chestWest); 
+			addBlock(world, basePos, 12, 9, 7, chestWest); 
+		}
+		
 		addBlock(world, basePos, 12, 9, 10, lelyetianBricks);
 		addBlock(world, basePos, 13, 9, 4, lelyetianBricks);
 		addBlock(world, basePos, 13, 9, 5, lelyetianBricks);
@@ -1514,6 +1525,12 @@ public class LelyetianTower extends AoAStructure { //StructureSize: 14x61x14
 		addBlock(world, basePos, 11, 25, 2, lelyetianBricks);
 		addBlock(world, basePos, 11, 25, 11, lelyetianBricks);
 		addBlock(world, basePos, 12, 25, 3, lelyetianBricks);
+		
+		if (rand.nextBoolean()) {
+			addBlock(world, basePos, 12, 25, 6, chestWest); 
+			addBlock(world, basePos, 12, 25, 7, chestWest); 
+		}
+		
 		addBlock(world, basePos, 12, 25, 10, lelyetianBricks);
 		addBlock(world, basePos, 13, 25, 4, lelyetianBricks);
 		addBlock(world, basePos, 13, 25, 5, lelyetianBricks);
@@ -1942,8 +1959,10 @@ public class LelyetianTower extends AoAStructure { //StructureSize: 14x61x14
 		addBlock(world, basePos, 5, 33, 0, lelyetianBricks);
 		addBlock(world, basePos, 5, 33, 13, lelyetianBricks);
 		addBlock(world, basePos, 6, 33, 0, lelyetianBricks);
+		addBlock(world, basePos, 6, 33, 12, chest);
 		addBlock(world, basePos, 6, 33, 13, lelyetianBricks);
 		addBlock(world, basePos, 7, 33, 0, lelyetianBricks);
+		addBlock(world, basePos, 7, 33, 12, chest);
 		addBlock(world, basePos, 7, 33, 13, lelyetianBricks);
 		addBlock(world, basePos, 8, 33, 0, lelyetianBricks);
 		addBlock(world, basePos, 8, 33, 13, lelyetianBricks);
@@ -2642,5 +2661,10 @@ public class LelyetianTower extends AoAStructure { //StructureSize: 14x61x14
 		world.spawnEntity(trader);
 		world.spawnEntity(lottoman);
 		world.spawnEntity(hunterMaster);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureLelyetianTower, basePos.add(12, 9, 6), basePos.add(12, 9, 7), basePos.add(12, 25, 6), basePos.add(12, 25, 7), basePos.add(6, 33, 12), basePos.add(7, 33, 12));
 	}
 }

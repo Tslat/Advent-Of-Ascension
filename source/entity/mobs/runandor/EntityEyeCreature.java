@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -23,17 +24,17 @@ public class EntityEyeCreature extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.2;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 80;
+		return 130;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 13d;
 	}
 
 	@Override
@@ -59,8 +60,9 @@ public class EntityEyeCreature extends AoAMeleeMob {
 		return SoundsRegister.mobEyeCreatureHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityEyeCreature;
 	}
 }

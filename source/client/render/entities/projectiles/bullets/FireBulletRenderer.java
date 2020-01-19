@@ -7,12 +7,15 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFluffyTrail;
 import net.tslat.aoa3.entity.projectiles.gun.EntityFireBullet;
 import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class FireBulletRenderer extends Render<EntityFireBullet> {
 	private final ResourceLocation texture;
 
@@ -56,8 +59,8 @@ public class FireBulletRenderer extends Render<EntityFireBullet> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 5).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 5).create();
+			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 5, 1).create();
+			new FXFluffyTrail(entity.world, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 5, 1).create();
 		}
 	}
 

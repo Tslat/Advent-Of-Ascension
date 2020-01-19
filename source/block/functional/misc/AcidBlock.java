@@ -85,9 +85,9 @@ public class AcidBlock extends BasicBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (EntityUtil.isHostileMob(entity) || (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode)) {
-			entity.attackEntityFrom(new DamageSource("acid_block"), 8.0f);
+			entity.attackEntityFrom(new DamageSource("acid"), 8.0f);
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3));
 		}
 	}

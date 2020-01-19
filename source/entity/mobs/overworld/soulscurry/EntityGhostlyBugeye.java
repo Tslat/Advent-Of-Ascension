@@ -1,30 +1,36 @@
 package net.tslat.aoa3.entity.mobs.overworld.soulscurry;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PacketUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityGhostlyBugeye extends AoAMeleeMob {
+public class EntityGhostlyBugeye extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.9f;
 
 	public EntityGhostlyBugeye(World world) {
 		super(world, entityWidth, 1.125f);
+
+		mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
+		mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
 	}
 
 	@Override
@@ -34,22 +40,22 @@ public class EntityGhostlyBugeye extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1f;
+		return 1f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 100;
+		return 25;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 9;
+		return 4;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.29d;
 	}
 
 	@Nullable
@@ -68,27 +74,23 @@ public class EntityGhostlyBugeye extends AoAMeleeMob {
 		return SoundsRegister.mobBugeyeHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerGhostly), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.ghostlyStone, 2 + rand.nextInt(2 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGhostlyBugeye;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityPlayerMP)
+		if (target instanceof EntityPlayerMP) {
 			PacketUtil.network.sendTo(new PacketScreenOverlay(150, Enums.ScreenOverlays.SPIKEY_CIRCLES), (EntityPlayerMP)target);
+			PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 10f, true);
+		}
+	}
+
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isGunDamage(source) || EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
 	}
 
 	@Override
@@ -105,5 +107,11 @@ public class EntityGhostlyBugeye extends AoAMeleeMob {
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
 		return Enums.CreatureEvents.SOUL_SCURRY;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

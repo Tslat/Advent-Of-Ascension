@@ -1,20 +1,15 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
-import java.util.TreeSet;
-
-public class EntityHidingFungi extends AoAMeleeMob implements HunterEntity {
+public class EntityHidingFungi extends AoAMeleeMob {
 	public static final float entityWidth = 1.0f;
 
 	public EntityHidingFungi(World world) {
@@ -28,7 +23,7 @@ public class EntityHidingFungi extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	public boolean canBePushed() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -41,7 +36,7 @@ public class EntityHidingFungi extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 0.5;
+		return 1;
 	}
 
 	@Override
@@ -61,14 +56,17 @@ public class EntityHidingFungi extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source == DamageSource.OUT_OF_WORLD) {
-			this.setDead();
+		if (isEntityInvulnerable(source))
+			return false;
 
-			return true;
-		}
+		if (!world.isRemote && HunterUtil.canAttackTarget(this, source.getTrueSource(), true)) {
+			EntityLivingFungi livingFungi = new EntityLivingFungi(world);
 
-		if (source.getImmediateSource() instanceof EntityPlayer && PlayerUtil.doesPlayerHaveLevel((EntityPlayer)source.getImmediateSource(), Enums.Skills.HUNTER, getHunterReq())) {
-			transform();
+			livingFungi.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
+			world.spawnEntity(livingFungi);
+			livingFungi.attackEntityFrom(source, amount);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.mobLivingFungiSpawn, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			setDead();
 
 			return true;
 		}
@@ -76,37 +74,19 @@ public class EntityHidingFungi extends AoAMeleeMob implements HunterEntity {
 		return false;
 	}
 
-	private void transform() {
-		if (!world.isRemote) {
-			EntityLivingFungi livingFungi = new EntityLivingFungi(world);
-
-			livingFungi.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
-			world.spawnEntity(livingFungi);
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobLivingFungiSpawn, SoundCategory.HOSTILE, 1.0f, 1.0f);
-		}
-
-		this.setDead();
+	@Override
+	public boolean isPushedByWater() {
+		return false;
 	}
 
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
+	public void onCollideWithPlayer(EntityPlayer entityIn) {}
 
 	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
-	}
+	protected void collideWithEntity(Entity entityIn) {}
 
 	@Override
-	public int getHunterReq() {
-		return 77;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 0;
-	}
+	public void addVelocity(double x, double y, double z) {}
 
 	@Override
 	protected boolean isOverworldMob() {

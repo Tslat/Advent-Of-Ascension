@@ -1,33 +1,37 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityBoneCreature extends AoAMeleeMob {
+public class EntityBoneCreature extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 1.0f;
 
 	public EntityBoneCreature(World world) {
 		super(world, entityWidth, 1.6f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0d;
 	}
 
 	@Override
@@ -43,6 +47,11 @@ public class EntityBoneCreature extends AoAMeleeMob {
 	@Override
 	protected double getBaseMovementSpeed() {
 		return 0.2875;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 1d;
 	}
 
 	@Nullable
@@ -61,6 +70,12 @@ public class EntityBoneCreature extends AoAMeleeMob {
 		return SoundEvents.ENTITY_SKELETON_HURT;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBoneCreature;
+	}
+
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
@@ -68,26 +83,23 @@ public class EntityBoneCreature extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerEnergy), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Items.BONE, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.coinCopper, 2 + rand.nextInt(2 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
 	}
 
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
+	}
+
+	@Override
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

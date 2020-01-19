@@ -1,12 +1,21 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.util.SoundEvent;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 
+import javax.annotation.Nullable;
+
 public class Abominator extends BaseGun implements AdventWeapon {
-	public Abominator(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("Abominator");
+	public Abominator(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("Abominator");
 		setRegistryName("aoa3:abominator");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunAbominator;
 	}
 }

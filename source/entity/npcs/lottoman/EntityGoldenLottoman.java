@@ -1,14 +1,15 @@
 package net.tslat.aoa3.entity.npcs.lottoman;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoATraderRecipe;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 
 public class EntityGoldenLottoman extends EntityLottoman {
 	public EntityGoldenLottoman(World world) {
@@ -17,19 +18,20 @@ public class EntityGoldenLottoman extends EntityLottoman {
 
 	@Nullable
 	@Override
-	protected ITextComponent getInteractMessage() {
-		return StringUtil.getLocale("message.dialogue.golden_lottoman." + rand.nextInt(5));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGoldenLottoman;
 	}
 
 	@Override
-	protected ArrayList<AoATraderRecipe> getNewTrades(final ArrayList<AoATraderRecipe> newList) {
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 10), new ItemStack(ItemRegister.totemMechaBlaster)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 10), new ItemStack(ItemRegister.totemExplochronSword)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 40), new ItemStack(ItemRegister.tokensIromine, 35), new ItemStack(ItemRegister.totemMechaBlaster, 10)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 40), new ItemStack(ItemRegister.tokensIromine, 35), new ItemStack(ItemRegister.totemExplochronSword, 10)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 5), new ItemStack(ItemRegister.magicRepairDust)));
-		newList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 50), new ItemStack(ItemRegister.magicRepairDust, 15)));
+	protected boolean canDespawn() {
+		return world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.iromine;
+	}
 
-		return newList;
+	@Override
+	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 28), new ItemStack(ItemRegister.lottoTotem)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 15), new ItemStack(ItemRegister.weaponsCase)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 10), new ItemStack(ItemRegister.runeBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 21), new ItemStack(ItemRegister.treasureBox)));
 	}
 }

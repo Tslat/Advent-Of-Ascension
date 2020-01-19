@@ -8,13 +8,19 @@ import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
 public class EntityIonShot extends BaseEnergyShot {
 	public EntityIonShot(World world) {
 		super(world);
+
+		setSize(0.25f, 3f);
 	}
 
 	public EntityIonShot(EntityLivingBase shooter, EnergyProjectileWeapon weapon, int maxAge) {
 		super(shooter, weapon, maxAge);
+
+		setSize(0.25f, 3f);
 	}
 
 	public EntityIonShot(World world, double x, double y, double z) {
 		super(world, x, y, z);
+
+		setSize(0.25f, 3f);
 	}
 }

@@ -29,6 +29,7 @@ public class HoronRenderer extends RenderLiving<EntityHoron> {
 	@Override
 	public void doRender(EntityHoron entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
 	}

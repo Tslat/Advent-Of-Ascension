@@ -5,16 +5,16 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelRoloscope extends ModelBase {
-	ModelRenderer r1;
-	ModelRenderer Eye;
-	ModelRenderer r2;
-	ModelRenderer r3;
-	ModelRenderer r4;
-	ModelRenderer r5;
-	ModelRenderer r6;
-	ModelRenderer r7;
-	ModelRenderer r8;
-	ModelRenderer r9;
+	private ModelRenderer r1;
+	private ModelRenderer Eye;
+	private ModelRenderer r2;
+	private ModelRenderer r3;
+	private ModelRenderer r4;
+	private ModelRenderer r5;
+	private ModelRenderer r6;
+	private ModelRenderer r7;
+	private ModelRenderer r8;
+	private ModelRenderer r9;
 
 	public ModelRoloscope() {
 		textureWidth = 64;

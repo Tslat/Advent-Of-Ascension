@@ -1,100 +1,86 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
-import net.minecraft.block.BlockOre;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Enchantments;
-import net.minecraft.item.ItemEnchantedBook;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.item.SkillItem;
-import net.tslat.aoa3.item.tool.SpecialHarvestTool;
+import net.tslat.aoa3.common.registration.MaterialsRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class GoofyPickaxe extends ItemPickaxe implements SkillItem, SpecialHarvestTool {
-	public GoofyPickaxe(ToolMaterial material) {
-		super(material);
-		setUnlocalizedName("GoofyPickaxe");
-		setRegistryName("aoa3:goofy_pickaxe");
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+public class GoofyPickaxe extends BasePickaxe {
+	public GoofyPickaxe() {
+		super("GoofyPickaxe", "goofy_pickaxe", MaterialsRegister.TOOL_GOOFY);
 	}
 
-	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
-		if (e.getState().getBlock() instanceof BlockOre) {
-			if (AdventOfAscension.rand.nextBoolean()) {
-				ItemStack smeltedStack = FurnaceRecipes.instance().getSmeltingResult(e.getDrops().get(0)).copy();
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return oldStack.getItem() != newStack.getItem();
+	}
 
-				if (smeltedStack != ItemStack.EMPTY) {
-					smeltedStack.setCount(smeltedStack.getCount() * 3);
-					e.getDrops().set(0, smeltedStack);
-				}
-				else {
-					ItemStack dropStack = e.getDrops().get(0);
+	@Override
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		if (attacker instanceof EntityPlayerMP)
+			PlayerUtil.playSoundForPlayer((EntityPlayerMP)attacker, SoundsRegister.goofyToolFail, SoundCategory.PLAYERS, attacker.posX, attacker.posY, attacker.posZ, 1.0f, 1.0f);
 
-					dropStack.setCount(3);
-					e.getDrops().set(0, dropStack);
-				}
+		return false;
+	}
+
+	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+		if (!world.isRemote && stack.isItemDamaged()) {
+			int modulo;
+
+			if (isSelected) {
+				modulo = 120;
+			}
+			else if (slot < 9) {
+				modulo = 200;
 			}
 			else {
-				e.getDrops().clear();
+				modulo = 280;
+			}
+
+			if (world.getTotalWorldTime() % modulo == 0) {
+				stack.setItemDamage(stack.getItemDamage() - 1);
+
+				if (entity instanceof EntityPlayer)
+					((EntityPlayer)entity).inventoryContainer.detectAndSendChanges();
 			}
 		}
-	}
-
-	@Override
-	public Enums.Skills getSkill() {
-		return Enums.Skills.EXTRACTION;
-	}
-
-	@Override
-	public int getLevelReq() {
-		return 85;
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return enchantment != Enchantments.SILK_TOUCH;
-	}
-
-	@Override
-	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-		NBTTagList enchList = ItemEnchantedBook.getEnchantments(book);
-
-		for (int i = 0; i < enchList.tagCount(); i++) {
-			NBTTagCompound enchTag = enchList.getCompoundTagAt(i);
-
-			if (Enchantment.getEnchantmentByID(enchTag.getShort("id")) == Enchantments.SILK_TOUCH)
-				return false;
-		}
-
-		return true;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.GoofyPickaxe.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.GoofyPickaxe.desc.2", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GoofyPickaxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GoofyPickaxe.desc.2", Enums.ItemDescriptionType.NEGATIVE));
+	}
 
-		if (AdventGuiTabPlayer.getSkillLevel(getSkill()) >= 85) {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.GREEN, "85", StringUtil.getLocaleString("skills.extraction.name")));
+	@Override
+	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+		Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
+
+		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", -1, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, 0));
 		}
-		else {
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", TextFormatting.RED, "85", StringUtil.getLocaleString("skills.extraction.name")));
-		}
+
+		return multimap;
 	}
 }

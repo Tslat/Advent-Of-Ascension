@@ -16,17 +16,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 import net.tslat.aoa3.utils.skills.ExtractionUtil;
 
+import java.util.List;
 import java.util.Random;
 
 public class ExtractionDevice extends Block {
@@ -35,7 +36,7 @@ public class ExtractionDevice extends Block {
 	public ExtractionDevice(boolean full) {
 		super(Material.ROCK);
 		this.full = full;
-		setUnlocalizedName(full ? "ExtractionDeviceOn" : "ExtractionDevice");
+		setTranslationKey(full ? "ExtractionDeviceOn" : "ExtractionDevice");
 		setRegistryName("aoa3:" + (full ? "extraction_device_on" : "extraction_device"));
 		setHardness(5.0f);
 		setResistance(10.0f);
@@ -63,7 +64,7 @@ public class ExtractionDevice extends Block {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 
@@ -100,35 +101,46 @@ public class ExtractionDevice extends Block {
 			return false;
 
 		if (!world.isRemote && player.getHeldItem(hand).getItem() instanceof InfusionBowl) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			if (world.getBlockState(pos.down()).getMaterial().isReplaceable()) {
-				int lvl = cap.getLevel(Enums.Skills.EXTRACTION);
+				int lvl = plData.stats().getLevel(Enums.Skills.EXTRACTION);
 
-				world.setBlockState(pos.down(), Blocks.OBSIDIAN.getDefaultState());
+				if (plData.equipment().getCurrentFullArmourSet() != Enums.ArmourSets.EXTRACTION)
+					world.setBlockState(pos.down(), Blocks.OBSIDIAN.getDefaultState());
 
 				if (ExtractionUtil.shouldGetLoot(lvl)) {
-					ExtractionUtil.ExtractionDrop loot = ExtractionUtil.getLoot(lvl);
-					ItemStack lootDrop = loot.getLootStack();
-
 					if (!player.capabilities.isCreativeMode)
 						player.getHeldItem(hand).damageItem(1, player);
 
-					ItemUtil.givePlayerItemOrDrop(player, lootDrop);
-					cap.addXp(Enums.Skills.EXTRACTION, cap.getXpReqForLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false);
-					cap.sendPlayerMessage(StringUtil.getLocale(loot.feedbackLocale));
+					List<ItemStack> loot = ExtractionUtil.getLoot(player);
+
+					for (ItemStack stack : loot) {
+						if (!stack.isEmpty()) {
+							String name = StringUtil.getLocaleString(stack.getTranslationKey() + ".name");
+
+							player.sendMessage(StringUtil.getLocaleWithArguments("message.feedback.extraction", name));
+						}
+						else {
+							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.empty"));
+						}
+
+						ItemHandlerHelper.giveItemToPlayer(player, stack);
+					}
+
+					plData.stats().addXp(Enums.Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false);
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.extractionDeviceSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
 					world.setBlockState(pos, BlockRegister.extractionDevice.getDefaultState());
 
 					if (player.dimension == 0)
-						cap.addTribute(Enums.Deities.PLUTON, 4);
+						plData.stats().addTribute(Enums.Deities.PLUTON, 4);
 				}
 				else {
-					cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.extraction.fail"));
+					plData.sendThrottledChatMessage("message.feedback.extraction.fail");
 				}
 			}
 			else {
-				cap.sendPlayerMessage(StringUtil.getColourLocale("message.feedback.extraction.noSpace", TextFormatting.RED));
+				plData.sendThrottledChatMessage("message.feedback.extraction.noSpace", TextFormatting.RED);
 			}
 		}
 

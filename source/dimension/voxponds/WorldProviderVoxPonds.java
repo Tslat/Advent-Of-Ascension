@@ -67,6 +67,11 @@ public class WorldProviderVoxPonds extends WorldProvider implements AoAWorldProv
 		return true;
 	}
 
+	@Override
+	public double getVoidFogYFactor() {
+		return super.getVoidFogYFactor();
+	}
+
 	@Nullable
 	@Override
 	public MusicTicker.MusicType getMusicType() {

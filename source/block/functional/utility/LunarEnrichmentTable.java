@@ -19,10 +19,10 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class LunarEnrichmentTable extends Block {
 	public LunarEnrichmentTable() {
 		super(Material.ROCK);
-		setUnlocalizedName("LunarEnrichmentTable");
+		setTranslationKey("LunarEnrichmentTable");
 		setRegistryName("aoa3:lunar_enrichment_table");
-		setHardness(-1f);
-		setResistance(999999999f);
+		setHardness(5f);
+		setResistance(10f);
 		setSoundType(SoundType.STONE);
 		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
 	}

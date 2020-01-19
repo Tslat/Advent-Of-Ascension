@@ -1,23 +1,20 @@
 package net.tslat.aoa3.entity.boss.hiveking;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.EntityHiveSoldier;
 import net.tslat.aoa3.entity.properties.BossEntity;
@@ -27,14 +24,41 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 
 public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
+	private static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>createKey(EntityHiveKing.class, DataSerializers.VARINT);
+
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/hive_king.png");
 	public static final float entityWidth = 1.2f;
+	public static final float entityHeight = 1.5f;
 
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
+	private int growthPercent = 0;
 
 	public EntityHiveKing(World world) {
-		super(world, entityWidth, 1.5f);
+		super(world, entityWidth, entityHeight);
+
+		if (!world.isRemote) {
+			growthPercent = 100;
+
+			dataManager.set(GROWTH_PERCENT, 100);
+		}
+
+		setSize(entityWidth / (100 / (float)growthPercent), entityHeight / (100 / (float)growthPercent));
+	}
+
+	public EntityHiveKing(World world, int growthPercent) {
+		this(world);
+
+		this.growthPercent = growthPercent;
+
+		dataManager.set(GROWTH_PERCENT, growthPercent);
+		setHealth(Math.max(1, getMaxHealth() / (100 / (float)growthPercent)));
+		setNoAI(true);
+	}
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+
+		dataManager.register(GROWTH_PERCENT, 0);
 	}
 
 	@Override
@@ -75,33 +99,50 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 		return SoundsRegister.mobHiveKingLiving;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return growthPercent >= 100 ? LootSystemRegister.entityHiveKing : null;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueHiveKing), 1);
+	public int getGrowthPercent() {
+		return growthPercent;
+	}
 
-		switch (rand.nextInt(3)) {
-			case 0:
-				dropItem(WeaponRegister.cannonHiveHowitzer, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.staffHive, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.staffFirestorm, 1);
-				break;
-		}
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (!world.isRemote && rand.nextInt(80) == 0) {
+		if (growthPercent < 100) {
+			if (!world.isRemote) {
+				incrementGrowth();
+			}
+			else {
+				growthPercent = dataManager.get(GROWTH_PERCENT);
+			}
+
+			setSize(entityWidth / (100 / (float)growthPercent), entityHeight / (100 / (float)growthPercent));
+
+			if (growthPercent == 100)
+				setNoAI(false);
+
+			return;
+		}
+
+		if (!world.isRemote && rand.nextInt(500) == 0) {
 			EntityHiveWorker worker = new EntityHiveWorker(this);
 
 			world.spawnEntity(worker);
@@ -109,7 +150,28 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (growthPercent >= 100)
+			return super.attackEntityFrom(source, amount);
+
+		if (!world.isRemote)
+			setDead();
+
+		return true;
+	}
+
+	private void incrementGrowth() {
+		growthPercent++;
+
+		dataManager.set(GROWTH_PERCENT, growthPercent);
+		setHealth(getMaxHealth() / (100 / (float)growthPercent));
+	}
+
+	@Override
 	public void onDeath(DamageSource cause) {
+		if (growthPercent < 100)
+			return;
+
 		super.onDeath(cause);
 
 		if (!world.isRemote) {
@@ -138,6 +200,12 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicHiveKing;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
@@ -147,21 +215,7 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicHiveKing, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.ARTHROPOD;
 	}
 }

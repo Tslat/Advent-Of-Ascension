@@ -31,8 +31,8 @@ public class BiomeVoxPonds extends Biome {
 	public BiomeVoxPonds() {
 		super(properties);
 		setRegistryName("aoa3", "vox_ponds");
-		this.topBlock = BlockRegister.grassToxic.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtToxic.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("toxic_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("toxic_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

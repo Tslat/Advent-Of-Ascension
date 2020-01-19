@@ -31,7 +31,7 @@ public class ModelPlayerCrown extends ModelBase {
 	}
 
 	@Override
-	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float netHeadPitch, float scale) {
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netheadYaw, float netheadPitch, float scale) {
 		crown.render(scale);
 	}
 }

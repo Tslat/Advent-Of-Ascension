@@ -43,7 +43,6 @@ public class RenderUtil {
 		}
 
 		fontRenderer.drawString(msg, realX, realY, colour, renderType == StringRenderType.DROP_SHADOW);
-		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		GlStateManager.popMatrix();
 	}
 

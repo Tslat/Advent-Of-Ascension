@@ -39,7 +39,7 @@ public class PacketChangedCrown implements IMessage {
 			}
 			catch (IllegalArgumentException e) {
 				if (ConfigurationUtil.MainConfig.doVerboseDebugging) {
-					AdventOfAscension.getLogger().log(Level.WARN, "Error parsing crown info from client: " + msg.crownChoice);
+					AdventOfAscension.logMessage(Level.WARN, "Error parsing crown info from client: " + msg.crownChoice);
 					e.printStackTrace();
 				}
 			}

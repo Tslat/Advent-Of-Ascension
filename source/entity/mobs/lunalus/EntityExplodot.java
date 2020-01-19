@@ -2,10 +2,13 @@ package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -28,12 +31,12 @@ public class EntityExplodot extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 30;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 1;
 	}
 
 	@Override
@@ -59,11 +62,17 @@ public class EntityExplodot extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobExplodotHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityExplodot;
+	}
+
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		world.createExplosion(this, posX, posY, posZ, 3, false);
-
-		if (!world.isRemote)
+		if (!world.isRemote) {
+			WorldUtil.createExplosion(this, world, 1.75f);
 			setDead();
+		}
 	}
 }

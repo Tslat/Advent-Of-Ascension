@@ -1,21 +1,20 @@
 package net.tslat.aoa3.entity.mobs.nether;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public class EntityNethengeicBeast extends AoAMeleeMob implements HunterEntity {
+public class EntityNethengeicBeast extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 1.0f;
 
     public EntityNethengeicBeast(World world) {
@@ -23,7 +22,6 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements HunterEntity {
 
         this.isImmuneToFire = true;
         this.mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
-        this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
     }
 
     @Override
@@ -33,32 +31,22 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements HunterEntity {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 1;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 450;
+        return 65d;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 20;
+        return 7d;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
-    @Override
-    public int getHunterReq() {
-        return 65;
-    }
-
-    @Override
-    public float getHunterXp() {
-        return 560;
+        return 0.29d;
     }
 
     @Nullable
@@ -84,57 +72,15 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements HunterEntity {
         return SoundsRegister.heavyStep;
     }
 
+    @Nullable
     @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
-        return source.isFireDamage() || EntityUtil.isGunDamage(source);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityNethengeicBeast;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if(rand.nextInt(40 - lootingMod) == 0) {
-            switch (rand.nextInt(4)) {
-                case 0:
-                    dropItem(ArmourRegister.NethengeicBody, 1);
-                    break;
-                case 1:
-                    dropItem(ArmourRegister.NethengeicBoots, 1);
-                    break;
-                case 2:
-                    dropItem(ArmourRegister.NethengeicHelmet, 1);
-                    break;
-                case 3:
-                    dropItem(ArmourRegister.NethengeicLegs, 1);
-                    break;
-            }
-        }
-
-        if (rand.nextInt(100 - lootingMod) == 0)
-            dropItem(WeaponRegister.gunNethengeicSlugger, 1);
-
-        if (rand.nextInt(100 - lootingMod) == 0)
-            dropItem(WeaponRegister.swordNethengeic, 1);
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitNether, 1);
-
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensNether, 1 + rand.nextInt(2 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerNethengeic), 1);
-
-        if (rand.nextInt(20 - lootingMod) == 0)
-            dropItem(ItemRegister.nethengeicCallstone, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinSilver, 1 + rand.nextInt(2 + lootingMod));
-    }
-
-    @Override
-    protected void doMeleeEffect(Entity target) {
-        target.setFire(10);
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return source.isFireDamage();
     }
 
     @Nonnull

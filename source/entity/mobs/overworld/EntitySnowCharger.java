@@ -1,18 +1,16 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -37,7 +35,7 @@ public class EntitySnowCharger extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 4;
 	}
 
 	@Override
@@ -61,6 +59,12 @@ public class EntitySnowCharger extends AoAMeleeMob {
 		return SoundsRegister.mobChargerHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySnowCharger;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -69,25 +73,7 @@ public class EntitySnowCharger extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityPlayer)
-			PlayerUtil.getAdventPlayer((EntityPlayer)target).consumeResource(Enums.Resources.RAGE, 30, true);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (source.isFireDamage() || isBurning()) {
-			dropItem(ItemRegister.chargerShank, 1 + rand.nextInt(1 + lootingMod));
-		}
-		else {
-			dropItem(ItemRegister.chargerShankRaw, 1 + rand.nextInt(1 + lootingMod));
-		}
-
-		if (rand.nextInt(6) == 0)
-			dropItem(Items.FEATHER, 3 + rand.nextInt(1 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+			PlayerUtil.getAdventPlayer((EntityPlayer)target).stats().consumeResource(Enums.Resources.RAGE, 30, true);
 	}
 
 	@Override

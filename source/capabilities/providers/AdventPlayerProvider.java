@@ -18,7 +18,7 @@ public class AdventPlayerProvider implements ICapabilitySerializable<NBTTagCompo
 
 	public AdventPlayerProvider(EntityPlayer pl) {
 		if (instance != null)
-			instance.addPlayer(pl);
+			instance.init(pl);
 	}
 
 	@Override
@@ -34,11 +34,11 @@ public class AdventPlayerProvider implements ICapabilitySerializable<NBTTagCompo
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		return instance.saveNBTData();
+		return instance.getPlayerData().saveToNBT();
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		instance.loadNBTData(nbt);
+		instance.getPlayerData().loadFromNBT(nbt);
 	}
 }

@@ -8,14 +8,15 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class BaseBullet extends EntityThrowable implements HardProjectile {
@@ -48,7 +49,7 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 		float vectorX = -MathHelper.sin(shooter.rotationYaw * 0.017453292F) * MathHelper.cos(shooter.rotationPitch * 0.017453292F);
 		float vectorY = -MathHelper.sin((shooter.rotationPitch) * 0.017453292F);
 		float vectorZ = MathHelper.cos(shooter.rotationYaw * 0.017453292F) * MathHelper.cos(shooter.rotationPitch * 0.017453292F);
-		shoot((double)vectorX, (double)vectorY, (double)vectorZ, velocity, 0.0f);
+		shoot(vectorX, vectorY, vectorZ, velocity, 0.0f);
 	}
 
 	public BaseBullet(EntityLivingBase shooter, BaseGun gun, EnumHand hand, int maxAge, float dmgMultiplier, int piercingValue, float xMod, float yMod, float zMod) {
@@ -83,9 +84,7 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			setPosition(posX + ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)), posY - 0.2D, posZ + ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)));
 		}
 
-		shoot((double)(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI) + xMod),
-				(double)(-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI) + yMod),
-				(double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI) + zMod),
+		shoot(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI) + xMod, -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI) + yMod, MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI) + zMod,
 				3.0f,2.0f);
 
 		posX += motionX * 0.5;
@@ -125,9 +124,7 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			setPosition(posX + ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)), posY - 0.2D, posZ + ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)));
 		}
 
-		shoot((double)(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)),
-				(double)(-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI)),
-				(double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)),
+		shoot(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI), -MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI), MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI),
 				3.0f,2.0f);
 
 		posX += motionX * 0.5;
@@ -144,8 +141,27 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
+		if (world.isRemote)
+			return;
+
 		if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
 			IBlockState bl = world.getBlockState(result.getBlockPos());
+
+			if (WorldUtil.checkGameRule(world, "destructiveWeaponPhysics")) {
+				float hardness = bl.getBlockHardness(world, result.getBlockPos());
+
+				if (hardness >= 0 && hardness <= 0.3f) {
+					if (rand.nextBoolean()) {
+						world.destroyBlock(result.getBlockPos(), true);
+					}
+					else {
+						world.setBlockToAir(result.getBlockPos());
+					}
+
+					if (rand.nextFloat() > hardness / 1.5f)
+						return;
+				}
+			}
 
 			if (!bl.getMaterial().blocksMovement())
 				return;
@@ -153,7 +169,7 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			this.doImpactEffect();
 		}
 		else {
-			if (result.entityHit != lastPierceTarget && !world.isRemote) {
+			if (result.entityHit != lastPierceTarget) {
 				if (weapon == null) {
 					doEntityImpact(result.entityHit);
 				}
@@ -171,8 +187,7 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			}
 		}
 
-		if (!world.isRemote)
-			setDead();
+		setDead();
 	}
 
 	public void doEntityImpact(Entity target) {}
@@ -201,35 +216,34 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			}
 		}
 
-		Vec3d vec3d = new Vec3d(posX, posY, posZ);
-		Vec3d vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
-		RayTraceResult raytraceresult = world.rayTraceBlocks(vec3d, vec3d1);
-		vec3d = new Vec3d(posX, posY, posZ);
+		Vec3d position = new Vec3d(posX, posY, posZ);
+		Vec3d velocityAdjustedPosition = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
+		RayTraceResult intersectedBlocksTrace = world.rayTraceBlocks(position, velocityAdjustedPosition);
+		position = new Vec3d(posX, posY, posZ);
 
-		if (raytraceresult != null) {
-			vec3d1 = new Vec3d(raytraceresult.hitVec.x, raytraceresult.hitVec.y, raytraceresult.hitVec.z);
+		if (intersectedBlocksTrace != null) {
+			velocityAdjustedPosition = new Vec3d(intersectedBlocksTrace.hitVec.x, intersectedBlocksTrace.hitVec.y, intersectedBlocksTrace.hitVec.z);
 		}
 		else {
-			vec3d1 = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
+			velocityAdjustedPosition = new Vec3d(posX + motionX, posY + motionY, posZ + motionZ);
 		}
 
-		Entity entity = null;
+		Entity impactEntity = null;
 		List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, getEntityBoundingBox().expand(motionX, motionY, motionZ).grow(0.5D));
 		double d0 = 0.0D;
 
 		for (int i = 0; i < list.size(); ++i) {
-			Entity entity1 = list.get(i);
+			Entity collidedEntity = list.get(i);
 
-			if (entity1.canBeCollidedWith()) {
-				if (entity1 != ignoreEntity) {
-					AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().grow(0.30000001192092896D);
-					RayTraceResult raytraceresult1 = axisalignedbb.calculateIntercept(vec3d, vec3d1);
+			if (collidedEntity.canBeCollidedWith()) {
+				if (collidedEntity != ignoreEntity) {
+					RayTraceResult interceptTrace = collidedEntity.getEntityBoundingBox().grow(0.30000001192092896D).calculateIntercept(position, velocityAdjustedPosition);
 
-					if (raytraceresult1 != null) {
-						double d1 = vec3d.squareDistanceTo(raytraceresult1.hitVec);
+					if (interceptTrace != null) {
+						double d1 = position.squareDistanceTo(interceptTrace.hitVec);
 
 						if (d1 < d0 || d0 == 0.0D) {
-							entity = entity1;
+							impactEntity = collidedEntity;
 							d0 = d1;
 						}
 					}
@@ -237,31 +251,31 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 			}
 		}
 
-		if (entity != null)
-			raytraceresult = new RayTraceResult(entity);
+		if (impactEntity != null)
+			intersectedBlocksTrace = new RayTraceResult(impactEntity);
 
-		if (raytraceresult != null) {
-			if (!net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, raytraceresult))
-				onImpact(raytraceresult);
+		if (intersectedBlocksTrace != null) {
+			if (!net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, intersectedBlocksTrace))
+				onImpact(intersectedBlocksTrace);
 		}
 
 		posX += motionX;
 		posY += motionY;
 		posZ += motionZ;
 
-		float f1 = 0.99F;
+		float dragValue = 0.99F;
 
 		if (isInWater()) {
 			for (int j = 0; j < 4; ++j)	{
 				world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * 0.25D, posY - motionY * 0.25D, posZ - motionZ * 0.25D, motionX, motionY, motionZ);
 			}
 
-			f1 = 0.8F;
+			dragValue = 0.8F;
 		}
 
-		motionX *= (double)f1;
-		motionY *= (double)f1;
-		motionZ *= (double)f1;
+		motionX *= dragValue;
+		motionY *= dragValue;
+		motionZ *= dragValue;
 
 		motionY -= getGravityVelocity();
 
@@ -294,5 +308,10 @@ public class BaseBullet extends EntityThrowable implements HardProjectile {
 
 	public int getAge() {
 		return age;
+	}
+
+	@Nullable
+	public BaseGun getWeapon() {
+		return weapon;
 	}
 }

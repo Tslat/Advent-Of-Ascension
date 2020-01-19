@@ -1,25 +1,18 @@
 package net.tslat.aoa3.entity.boss.creep;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCreepBomb;
@@ -28,6 +21,7 @@ import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,9 +30,6 @@ import java.util.TreeSet;
 public class EntityCreep extends AoARangedMob implements BossEntity, SpecialPropertyEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/creep.png");
 	public static final float entityWidth = 0.7f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityCreep(World world) {
 		super(world, entityWidth, 1.75f);
@@ -91,6 +82,12 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 
 	@Nullable
 	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCreep;
+	}
+
+	@Nullable
+	@Override
 	protected SoundEvent getShootSound() {
 		return null;
 	}
@@ -106,27 +103,7 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueCreep), 1);
-
-		switch(rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.shotgunDischargeShotgun, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.cannonMissileMaker, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.staffConcussion, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.swordCreepified, 1);
-				break;
-		}
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return source.isExplosion();
 	}
 
@@ -134,6 +111,14 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
 		return mobProperties;
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -161,12 +146,12 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1.2f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1.2f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 1.2f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1.2f);
 	}
 
 	@Override
@@ -202,30 +187,17 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicCreep;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicCreep, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

@@ -6,24 +6,24 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelJawe extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body2;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
-	ModelRenderer head8;
-	ModelRenderer head9;
-	ModelRenderer head10;
-	ModelRenderer head11;
-	ModelRenderer head12;
-	ModelRenderer head13;
-	ModelRenderer leg4p2;
-	ModelRenderer leg3p2;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
+	private ModelRenderer head8;
+	private ModelRenderer head9;
+	private ModelRenderer head10;
+	private ModelRenderer head11;
+	private ModelRenderer head12;
+	private ModelRenderer head13;
+	private ModelRenderer leg4p2;
+	private ModelRenderer leg3p2;
 
 	public ModelJawe() {
 		textureWidth = 64;

@@ -1,11 +1,8 @@
 package net.tslat.aoa3.entity.boss.shadowlord;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,11 +20,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityShadowlordShot;
@@ -36,6 +29,7 @@ import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,9 +38,9 @@ import java.util.TreeSet;
 
 public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAttackMob, AoARangedAttacker, SpecialPropertyEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/shadowlord.png");
-	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityWither.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityShadowlord.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityShadowlord.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(EntityShadowlord.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
 	private final float[] xRotationHeads = new float[2];
 	private final float[] yRotationHeads = new float[2];
@@ -56,9 +50,6 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 	private final int[] idleHeadUpdates = new int[2];
 	private final TreeSet<Enums.MobProperties> mobProperties = new TreeSet<Enums.MobProperties>();
 	public static final float entityWidth = 4f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityShadowlord(World world) {
 		super(world);
@@ -89,7 +80,7 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 		super.applyEntityAttributes();
 
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2000);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(52);
 	}
 
@@ -118,9 +109,23 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 		return SoundsRegister.mobShadowlordHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityShadowlord;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -300,7 +305,7 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 		double distanceFactorZ = posZ - projectile.posZ;
 		double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 		world.spawnEntity(projectile);
 	}
 
@@ -327,12 +332,10 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 		return bossBarTexture;
 	}
 
+	@Nullable
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		super.handleStatusUpdate(id);
-
-		checkMusicStatus();
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicShadowlord;
 	}
 
 	@Override
@@ -346,25 +349,6 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicShadowlord, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 
 	@Override
@@ -468,24 +452,24 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof EntityLivingBase) {
-			final int healthPercent = EntityUtil.getCurrentHealthPercent(this);
+			final float healthPercent = EntityUtil.getCurrentHealthPercent(this);
 
-			if (healthPercent > 80) {
+			if (healthPercent > 0.8) {
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 7, true, true));
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 2, true, true));
-			} else if (healthPercent > 55) {
+			} else if (healthPercent > 0.55) {
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 5, true, true));
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 4, true, true));
-			} else if (healthPercent > 35) {
+			} else if (healthPercent > 0.35) {
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 3, true, true));
 			} else {
-				if (healthPercent > 25) {
+				if (healthPercent > 0.25) {
 					((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 6, true, true));
 				} else {
 					((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 8, true, true));
@@ -497,6 +481,6 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 100, 0, true, true));
 		}
 
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2, false);
+		WorldUtil.createExplosion(this, world, projectile, 2f);
 	}
 }

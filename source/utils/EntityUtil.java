@@ -10,11 +10,13 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.MobEffects;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumFacing;
@@ -25,30 +27,31 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
+import net.tslat.aoa3.entity.misc.EntityBossItem;
 import net.tslat.aoa3.entity.properties.BossEntity;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class EntityUtil {
-
-	public static int getCurrentHealthPercent(EntityLivingBase entity) {
-		float percentage = (entity.getHealth() / entity.getMaxHealth()) * 100;
-		return (int)percentage;
+	public static float getCurrentHealthPercent(EntityLivingBase entity) {
+		return entity.getHealth() / entity.getMaxHealth();
 	}
 
-	public static boolean checkAboveHealthPercentThreshold(EntityLivingBase entity, int thresholdPercent) {
+	public static boolean checkAboveHealthPercentThreshold(EntityLivingBase entity, float thresholdPercent) {
 		if (entity.getHealth() <= 0)
 			return false;
 
 		return getCurrentHealthPercent(entity) >= thresholdPercent;
 	}
 
-	public static boolean checkBelowHealthPercentThreshold(EntityLivingBase entity, int thresholdPercent) {
+	public static boolean checkBelowHealthPercentThreshold(EntityLivingBase entity, float thresholdPercent) {
 		if (entity.getHealth() <= 0)
 			return false;
 
@@ -56,8 +59,24 @@ public class EntityUtil {
 	}
 
 	public static void healEntity(EntityLivingBase entity, float healAmount) {
-		if (entity.getHealth() > 0.0f)
+		if (!entity.isDead && entity.getHealth() > 0.0f && entity.getHealth() < entity.getMaxHealth())
 			entity.heal(healAmount);
+	}
+
+	public static void killEntityCleanly(Entity entity) {
+		if (!(entity instanceof EntityLivingBase)) {
+			entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+			entity.setDead();
+
+			return;
+		}
+
+		EntityLivingBase target = (EntityLivingBase)entity;
+
+		target.attackEntityFrom(new DamageSource("magic").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage(), ((EntityLivingBase)entity).getHealth());
+
+		if (target.getHealth() > 0)
+			target.setHealth(0);
 	}
 
 	public static boolean dealAoeDamage(@Nullable Entity indirectSource, EntityLivingBase attacker, Entity target, float dmg, boolean bypassProtections) {
@@ -78,15 +97,8 @@ public class EntityUtil {
 		if (target.isEntityInvulnerable(damageSource))
 			return false;
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (target instanceof EntityLivingBase && !HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		return target.attackEntityFrom(damageSource, dmg);
@@ -96,6 +108,9 @@ public class EntityUtil {
 		DamageSource damageSource = new EntityDamageSourceIndirect("blaster", shot, attacker);
 
 		damageSource.setMagicDamage();
+
+		if (!(target instanceof EntityPlayer))
+			damageSource.setDamageBypassesArmor();
 
 		if (bypassProtections) {
 			damageSource.setDamageIsAbsolute();
@@ -111,14 +126,8 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		double velocityX = target.motionX;
@@ -143,14 +152,8 @@ public class EntityUtil {
 			damageSource.setDamageIsAbsolute();
 		}
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (target instanceof EntityLivingBase && !HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 
@@ -170,7 +173,10 @@ public class EntityUtil {
 			damageSource = attacker instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer)attacker) : DamageSource.causeMobDamage(attacker);
 		}
 
-		damageSource.setMagicDamage().setDamageBypassesArmor();
+		damageSource.setMagicDamage();
+
+		if (!(target instanceof EntityPlayer))
+			damageSource.setDamageBypassesArmor();
 
 		if (bypassProtections)
 			damageSource.setDamageIsAbsolute();
@@ -184,14 +190,8 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		return target.attackEntityFrom(damageSource, dmg);
@@ -222,14 +222,8 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		boolean success;
@@ -258,21 +252,15 @@ public class EntityUtil {
 		if (target.isEntityInvulnerable(source))
 			return false;
 
-		if (target instanceof HunterEntity) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!attacker.capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (!HunterUtil.canAttackTarget(target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		return target.attackEntityFrom(source, dmg);
 	}
 
 	public static boolean dealRangedDamage(Entity target, EntityLivingBase attacker, Entity projectile, float dmg) {
-		DamageSource source = DamageSource.causeThrownDamage(attacker, projectile);
+		DamageSource source = DamageSource.causeThrownDamage(projectile, attacker);
 
 		if (target.isEntityInvulnerable(source) || ((projectile instanceof EntityArrow || projectile instanceof EntityThrowable) && checkMobProperty(target, Enums.MobProperties.RANGED_IMMUNE)))
 			return false;
@@ -283,14 +271,8 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return false;
-			}
-		}
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return false;
 
 		target.hurtResistantTime = 0;
 		target.velocityChanged = true;
@@ -298,17 +280,10 @@ public class EntityUtil {
 	}
 
 	public static boolean isSpecExempt(Entity target, EntityLivingBase attacker) {
-		if (target instanceof HunterEntity && attacker instanceof EntityPlayer) {
-			AdventPlayerCapability cap = (AdventPlayerCapability)attacker.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (!((EntityPlayer)attacker).capabilities.isCreativeMode && cap.getLevel(Enums.Skills.HUNTER) < ((HunterEntity)target).getHunterReq()) {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.hunterRequirement", Integer.toString(((HunterEntity)target).getHunterReq())));
-				return true;
-			}
-		}
+		if (target instanceof EntityLivingBase && !HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+			return true;
 
 		return target instanceof EntityPlayer || target instanceof EntityWither || target instanceof EntityDragon || target instanceof BossEntity || target.getIsInvulnerable() || (target instanceof EntityLivingBase && ((EntityLivingBase)target).getMaxHealth() > 500);
-
 	}
 
 	public static void doScaledKnockback(EntityLivingBase target, Entity attacker, float strength, double xRatio, double zRatio) {
@@ -336,14 +311,16 @@ public class EntityUtil {
 			target.motionY += (double)strength;
 
 			if (target.motionY > 0.4000000059604645D)
-			{
 				target.motionY = 0.4000000059604645D;
-			}
 		}
 	}
 
 	public static boolean isMeleeDamage(DamageSource source) {
 		return source.getTrueSource() != null && !source.isProjectile() && !source.getDamageType().equals("thrown") && !source.isMagicDamage() && !source.isExplosion() && !source.isFireDamage() && source.getImmediateSource() == source.getTrueSource();
+	}
+
+	public static boolean isBlasterDamage(DamageSource source) {
+		return source.getDamageType().equals("blaster") && source.isMagicDamage();
 	}
 
 	public static boolean isMagicDamage(DamageSource source, Entity target, float dmg) {
@@ -367,7 +344,26 @@ public class EntityUtil {
 	}
 
 	public static boolean isEnvironmentalDamage(DamageSource source) {
-		return source.getTrueSource() == null && (source.isFireDamage() || source.isExplosion() || source.getDamageType().equals("cactus") || source.getDamageType().equals("acid_block") || source.getDamageType().equals("giant_snail_acid"));
+		if (source.getTrueSource() != null || !source.isExplosion())
+			return false;
+
+		switch (source.getDamageType()) {
+			case "onFire":
+			case "inFire":
+			case "cactus":
+			case "acid":
+			case "lightningBolt":
+			case "lava":
+			case "cramming":
+			case "inWall":
+			case "fallingBlock":
+			case "starve":
+			case "anvil":
+			case "outOfWorld":
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	public static BlockPos getBlockAimingAt(EntityPlayer pl, double distance) {
@@ -378,7 +374,7 @@ public class EntityUtil {
 		float sinPitch = MathHelper.sin(-pl.rotationPitch * 0.017453292F);
 		float angleX = sinYaw * cosPitch;
 		float angleZ = cosYaw * cosPitch;
-		Vec3d endVec = startVec.addVector((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
+		Vec3d endVec = startVec.add((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
 		RayTraceResult ray = pl.world.rayTraceBlocks(startVec, endVec, true, true, false);
 
 		if (ray == null)
@@ -419,41 +415,124 @@ public class EntityUtil {
 		return entity instanceof SpecialPropertyEntity && ((SpecialPropertyEntity)entity).getMobProperties().contains(property);
 	}
 
-	public static boolean applyAttributeModifier(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
-		IAttributeInstance att = entity.getEntityAttribute(attribute);
-
-		if (att != null && !att.hasModifier(modifier)) {
-			att.applyModifier(modifier);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean removeAttributeModifier(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
-		IAttributeInstance att = entity.getEntityAttribute(attribute);
-
-		if (att != null && att.hasModifier(modifier)) {
-			att.removeModifier(modifier);
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public static boolean isPlayerLookingAtEntity(EntityPlayer pl, Entity target) {
 		return isPlayerLookingAt(pl, target.posX, target.getEntityBoundingBox().minY + target.height / 2D, target.posZ) && pl.canEntityBeSeen(target);
 	}
 
 	public static boolean isPlayerLookingAt(EntityPlayer pl, double posX, double posY, double posZ) {
 		Vec3d playerLookVec = pl.getLookVec().normalize();
-		Vec3d requiredLookVec = new Vec3d(posX - pl.posX, posY - pl.posY + pl.getEyeHeight() / 2D,posZ - pl.posZ);
-		double requiredLookVecLength = requiredLookVec.lengthVector();
+		Vec3d requiredLookVec = new Vec3d(posX - pl.posX, posY - (pl.posY + pl.getEyeHeight()),posZ - pl.posZ);
+		double requiredLookVecLength = requiredLookVec.length();
 		requiredLookVec = requiredLookVec.normalize();
 		double vecDotProduct = playerLookVec.dotProduct(requiredLookVec);
 
-		return vecDotProduct > 0.8 - 0.025 / requiredLookVecLength;
+		return vecDotProduct > 1.0 - 0.025d / requiredLookVecLength;
+	}
+
+	public static EntityBossItem newBossEntityItemFromExisting(EntityItem item, EntityPlayer player) {
+		EntityBossItem bossItem = new EntityBossItem(item.world, player.posX, player.posY - 0.3 + player.getEyeHeight(), player.posZ, item.getItem(), player);
+
+		bossItem.setPickupDelay(10);
+		bossItem.setThrower(player.getName());
+
+		bossItem.motionX = -MathHelper.sin(player.rotationYaw * 0.017453292F) * MathHelper.cos(player.rotationPitch * 0.017453292F) * 0.3f;
+		bossItem.motionZ = MathHelper.cos(player.rotationYaw * 0.017453292F) * MathHelper.cos(player.rotationPitch * 0.017453292F) * 0.3f;
+		bossItem.motionY = -MathHelper.sin(player.rotationPitch * 0.017453292F) * 0.3f + 0.1F;
+
+		Random rand = player.getRNG();
+		float angleMod = rand.nextFloat() * (float)Math.PI * 2f;
+		float velocityMod = 0.02f * rand.nextFloat();
+
+		bossItem.motionX += Math.cos(angleMod) * velocityMod;
+		bossItem.motionY += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+		bossItem.motionZ += Math.sin(angleMod) * velocityMod;
+
+		item.setDead();
+
+		return bossItem;
+	}
+
+	public static void applyAttributeModifierSafely(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
+		IAttributeInstance instance = entity.getEntityAttribute(attribute);
+
+		if (instance != null && !instance.hasModifier(modifier))
+			instance.applyModifier(modifier);
+	}
+
+	public static void removeAttributeModifier(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
+		IAttributeInstance instance = entity.getEntityAttribute(attribute);
+
+		if (instance != null && instance.hasModifier(modifier))
+			instance.removeModifier(modifier);
+	}
+
+	public static void removeAttributeModifier(EntityLivingBase entity, IAttribute attribute, UUID modifierId) {
+		IAttributeInstance instance = entity.getEntityAttribute(attribute);
+
+		if (instance != null) {
+			AttributeModifier modifier = instance.getModifier(modifierId);
+
+			if (modifier != null)
+				instance.removeModifier(modifier);
+		}
+	}
+
+	public static boolean canPvp(EntityPlayer attacker, EntityPlayer target) {
+		return attacker.world.getMinecraftServer().isPVPEnabled() && attacker != target && !attacker.isOnSameTeam(target);
+	}
+
+	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
+		targetEntity.motionX = (targetEntity.posX - centralEntity.posX) * strength;
+		targetEntity.motionY = (targetEntity.posY - centralEntity.posY) * strength;
+		targetEntity.motionZ = (targetEntity.posZ - centralEntity.posZ) * strength;
+		targetEntity.velocityChanged = true;
+	}
+
+	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
+		targetEntity.motionX = (centralEntity.posX - targetEntity.posX) * strength;
+		targetEntity.motionY = (centralEntity.posY - targetEntity.posY) * strength;
+		targetEntity.motionZ = (centralEntity.posZ - targetEntity.posZ) * strength;
+		targetEntity.velocityChanged = true;
+	}
+
+	@Nullable
+	public static Vec3d preciseEntityInterceptCalculation(Entity impactedEntity, Entity impactingEntity, int granularity) {
+		final double velocityX = impactingEntity.motionX;
+		final double velocityY = impactingEntity.motionY;
+		final double velocityZ = impactingEntity.motionZ;
+		Vec3d impactVec = null;
+
+		for (int i = 0; i < granularity; i++) {
+			double projectionX = velocityX * (1 / (float)granularity) * i;
+			double projectionY = velocityY * (1 / (float)granularity) * i;
+			double projectionZ = velocityZ * (1 / (float)granularity) * i;
+			Vec3d initialVec = new Vec3d(impactingEntity.posX, impactingEntity.posY, impactingEntity.posZ);
+			Vec3d projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
+
+			List<Entity> entityList = impactingEntity.world.getEntitiesWithinAABBExcludingEntity(impactingEntity, impactingEntity.getEntityBoundingBox().grow(projectionX, projectionY, projectionZ));
+
+			for (Entity entity : entityList) {
+				if (entity != impactedEntity)
+					continue;
+
+				RayTraceResult intercept = entity.getEntityBoundingBox().calculateIntercept(initialVec, projectedVec);
+
+				if (intercept != null)
+					return intercept.hitVec;
+			}
+		}
+
+		return null;
+	}
+
+	public static void safelyRemovePotionEffects(EntityLivingBase entity, Potion... effects) {
+		for (Potion effect : effects) {
+			if (entity.isPotionActive(effect))
+				entity.removePotionEffect(effect);
+		}
+	}
+
+	public static boolean isTypeImmune(Entity entity, Enums.MobProperties property) {
+		return !entity.getIsInvulnerable() && entity instanceof SpecialPropertyEntity && ((SpecialPropertyEntity)entity).getMobProperties().contains(property);
 	}
 }

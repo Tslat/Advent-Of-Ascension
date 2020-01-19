@@ -4,19 +4,25 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class EntityLittleBam extends AoAMeleeMob {
 	public static final float entityWidth = 0.7f;
+	private boolean isMinion = false;
 
 	public EntityLittleBam(EntityKingBamBamBam kingBamBamBam) {
 		this(kingBamBamBam.world);
 
 		setLocationAndAngles(kingBamBamBam.posX, kingBamBamBam.posY, kingBamBamBam.posZ, rand.nextFloat() * 360, 0);
+
+		isMinion = true;
 	}
 
 	public EntityLittleBam(World world) {
@@ -74,8 +80,14 @@ public class EntityLittleBam extends AoAMeleeMob {
 		return SoundEvents.ENTITY_BAT_HURT;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return isMinion	? null : LootSystemRegister.entityLittleBam;
+	}
+
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		world.createExplosion(this, posX, posY, posZ, 2, false);
+		WorldUtil.createExplosion(this, world, 2f);
 	}
 }

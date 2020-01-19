@@ -1,9 +1,13 @@
 package net.tslat.aoa3.structure.iromine;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -14,7 +18,7 @@ public class IroPassage2 extends AoAStructure { //StructureSize: 17x5x16
 	private static final IBlockState confusionTrap = BlockRegister.iroBrickTrap.getDefaultState();
 	private static final IBlockState enforcerSpawner = BlockRegister.spawnerEnforcer.getDefaultState();
 	private static final IBlockState mechyonSpawner = BlockRegister.spawnerMechyon.getDefaultState();
-	private static final IBlockState iroCrate = BlockRegister.iroCrate.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	public IroPassage2() {
 		super("IroPassage2");
@@ -204,7 +208,7 @@ public class IroPassage2 extends AoAStructure { //StructureSize: 17x5x16
 		addBlock(world, basePos, 10, 1, 3, stripedBrick);
 		addBlock(world, basePos, 10, 1, 10, stripedBrick);
 		addBlock(world, basePos, 11, 1, 3, stripedBrick);
-		addBlock(world, basePos, 11, 1, 4, iroCrate);
+		addBlock(world, basePos, 11, 1, 4, chest);
 		addBlock(world, basePos, 11, 1, 10, stripedBrick);
 		addBlock(world, basePos, 11, 1, 11, dottedBrick);
 		addBlock(world, basePos, 12, 1, 3, stripedBrick);
@@ -498,5 +502,10 @@ public class IroPassage2 extends AoAStructure { //StructureSize: 17x5x16
 		addBlock(world, basePos, 16, 4, 13, dottedBrick);
 		addBlock(world, basePos, 16, 4, 14, dottedBrick);
 		addBlock(world, basePos, 16, 4, 15, dottedBrick);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureIroPassageChests, basePos.add(11, 1, 4));
 	}
 }

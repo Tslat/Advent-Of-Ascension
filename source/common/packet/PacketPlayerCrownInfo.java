@@ -56,7 +56,7 @@ public class PacketPlayerCrownInfo implements IMessage {
 	public static class Handler implements IMessageHandler<PacketPlayerCrownInfo, IMessage> {
 		public IMessage onMessage(final PacketPlayerCrownInfo msg, final MessageContext ctx) {
 			for (Map.Entry<UUID, PlayerCrownHandler.PlayerCrownContainer> entry : msg.crownsMap.entrySet()) {
-				PlayerCrownHandler.addOrSetCrown(entry.getKey(), entry.getValue().getPreferredCrown());
+				PlayerCrownHandler.setCrownChoice(entry.getKey(), entry.getValue().getPreferredCrown());
 			}
 
 			return null;

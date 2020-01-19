@@ -122,6 +122,7 @@ public class LucalusTree extends AoAStructure { //StructureSize: 12x21x12
 		addBlock(world, basePos, 5, 11, 8, lucalusLeaves);
 		addBlock(world, basePos, 5, 11, 9, lucalusLeaves);
 		addBlock(world, basePos, 5, 11, 10, lucalusLeaves);
+		addBlock(world, basePos, 6, 11, 1, lucalusLeaves);
 		addBlock(world, basePos, 6, 11, 2, lucalusLeaves);
 		addBlock(world, basePos, 6, 11, 3, lucalusLeaves);
 		addBlock(world, basePos, 6, 11, 5, lucalusLog);

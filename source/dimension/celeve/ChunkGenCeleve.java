@@ -14,12 +14,14 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraft.world.gen.NoiseGeneratorSimplex;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.dimension.FloatingDimChunk;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -32,7 +34,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeCeleve;
+	private final Biome biome = BiomeRegister.biomeCeleve;
 
 	private double[] noiseArray;
 	private double[] surfaceBuffer = new double[256];
@@ -73,18 +75,28 @@ public class ChunkGenCeleve implements IChunkGenerator {
 		this.curChunkZ = chunkZ;
 		this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 		this.primer = new ChunkPrimer();
+		boolean populatedChunk = setBlocksInChunk();
+		Chunk chunk;
 
-		setBlocksInChunk();
-		replaceBiomeBlocks();
+		if (populatedChunk) {
+			replaceBiomeBlocks();
 
-		Chunk chunk = new Chunk(world, primer, curChunkX, curChunkZ);
-		byte[] biomeArray = chunk.getBiomeArray();
-
-		for (int i = 0; i < biomeArray.length; ++i) {
-			biomeArray[i] = (byte)Biome.getIdForBiome(biome);
+			chunk = new FloatingDimChunk(world, primer, curChunkX, curChunkZ);
+		}
+		else {
+			chunk = new FloatingDimChunk(world, curChunkX, curChunkZ);
 		}
 
-		chunk.generateSkylightMap();
+		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
+
+		if (populatedChunk) {
+			chunk.generateSkylightMap();
+		}
+		else {
+			chunk.setHeightMap(new int[256]);
+			chunk.setLightPopulated(true);
+		}
+
 		return chunk;
 	}
 
@@ -146,12 +158,9 @@ public class ChunkGenCeleve implements IChunkGenerator {
 		return blockNoiseArray;
 	}
 
-	private void setBlocksInChunk() {
-		int i = 2;
-		int j = 3;
-		int k = 33;
-		int l = 3;
+	private boolean setBlocksInChunk() {
 		this.noiseArray = this.generateNoiseField(this.noiseArray, curChunkX * 2, 0, curChunkZ * 2, 3, 33, 3);
+		boolean emptyChunk = true;
 
 		for (int i1 = 0; i1 < 2; ++i1) {
 			for (int j1 = 0; j1 < 2; ++j1) {
@@ -166,7 +175,6 @@ public class ChunkGenCeleve implements IChunkGenerator {
 					double d8 = (this.noiseArray[((i1 + 1) * 3 + j1 + 1) * 33 + k1 + 1] - d4) * 0.25D;
 
 					for (int l1 = 0; l1 < 4; ++l1) {
-						double d9 = 0.125D;
 						double d10 = d1;
 						double d11 = d2;
 						double d12 = (d3 - d1) * 0.0025D;
@@ -178,16 +186,17 @@ public class ChunkGenCeleve implements IChunkGenerator {
 							double d16 = (d11 - d10) * 0.125D;
 
 							for (int j2 = 0; j2 < 8; ++j2) {
-								IBlockState iblockstate = Blocks.AIR.getDefaultState();
+								IBlockState blockState = Blocks.AIR.getDefaultState();
 
 								if (d15 > 0.0D) {
-									iblockstate = BlockRegister.dirtCeleve.getDefaultState();
+									blockState = BlockRegister.dirtCeleve.getDefaultState();
+									emptyChunk = false;
 								}
 
 								int k2 = i2 + i1 * 8;
 								int l2 = l1 + k1 * 4;
 								int i3 = j2 + j1 * 8;
-								primer.setBlockState(k2, l2, i3, iblockstate);
+								primer.setBlockState(k2, l2, i3, blockState);
 								d15 += d16;
 							}
 
@@ -203,6 +212,8 @@ public class ChunkGenCeleve implements IChunkGenerator {
 				}
 			}
 		}
+
+		return !emptyChunk;
 	}
 
 	private void replaceBiomeBlocks() {

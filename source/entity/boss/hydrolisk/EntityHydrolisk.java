@@ -6,7 +6,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -16,11 +15,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
@@ -111,6 +107,12 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 		return SoundsRegister.mobEmperorBeastStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHydrolisk;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
@@ -134,30 +136,11 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (!shielded) {
-			dropItem(Item.getItemFromBlock(BlockRegister.statueHydrolisk), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(ArmourRegister.HydroplateBoots, 1);
-					break;
-				case 1:
-					dropItem(ArmourRegister.HydroplateLegs, 1);
-					break;
-				case 2:
-					dropItem(ArmourRegister.HydroplateBody, 1);
-					break;
-				case 3:
-					dropItem(ArmourRegister.HydroplateHelmet, 1);
-					break;
-			}
-		}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinSilver, 5 + rand.nextInt(9 + lootingMod));
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -224,6 +207,12 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 		return this.dataManager.get(SHIELDED) ? shieldedBossBarTexture : bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicHydrolisk;
+	}
+
 	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
@@ -237,8 +226,4 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

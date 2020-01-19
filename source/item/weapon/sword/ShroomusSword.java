@@ -1,41 +1,50 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityMultiPart;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ShroomusSword extends BaseSword implements AdventWeapon {
-	public ShroomusSword(final ToolMaterial material, Float dmg, Double speed) {
-		super(material, dmg, speed);
-		setUnlocalizedName("ShroomusSword");
+	public ShroomusSword(final ToolMaterial material, final double speed) {
+		super(material, speed);
+		setTranslationKey("ShroomusSword");
 		setRegistryName("aoa3:shroomus_sword");
 	}
 
 	@Override
-	public boolean onLeftClickEntity(final ItemStack stack, final EntityPlayer player, final Entity target) {
-		if (player.world.isRemote || (!(target instanceof IEntityMultiPart) && !(target instanceof EntityLivingBase)))
-			return false;
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+		if (attackCooldown > 0.75) {
+			Collection<PotionEffect> effects = attacker.getActivePotionEffects();
 
-		if (EntityUtil.checkBelowHealthPercentThreshold(player, 50) && player.getCooledAttackStrength(0.0f) > 0.75f)
-			EntityUtil.healEntity(player, 2.0f);
+			if (!effects.isEmpty()) {
+				ArrayList<PotionEffect> removableEffects = new ArrayList<PotionEffect>(effects.size());
 
-		return false;
+				for (PotionEffect effect : effects) {
+					if (effect.getPotion().isBadEffect())
+						removableEffects.add(effect);
+				}
+
+				for (PotionEffect effect : removableEffects) {
+					target.addPotionEffect(effect);
+					attacker.removePotionEffect(effect.getPotion());
+				}
+			}
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.ShroomusSword.desc.1", TextFormatting.DARK_GREEN));
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ShroomusSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

@@ -1,20 +1,17 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.BlockDispenser;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
 import net.tslat.aoa3.entity.projectiles.arrow.EntitySpectralHollyArrow;
@@ -26,1366 +23,1467 @@ import net.tslat.aoa3.item.weapon.bow.*;
 import net.tslat.aoa3.item.weapon.cannon.*;
 import net.tslat.aoa3.item.weapon.greatblade.*;
 import net.tslat.aoa3.item.weapon.gun.*;
-import net.tslat.aoa3.item.weapon.maul.CoralstoneMaul;
-import net.tslat.aoa3.item.weapon.maul.CrystalMaul;
-import net.tslat.aoa3.item.weapon.maul.HorizonMaul;
+import net.tslat.aoa3.item.weapon.maul.*;
 import net.tslat.aoa3.item.weapon.shotgun.*;
-import net.tslat.aoa3.item.weapon.sniper.*;
 import net.tslat.aoa3.item.weapon.sniper.Terminator;
+import net.tslat.aoa3.item.weapon.sniper.*;
 import net.tslat.aoa3.item.weapon.staff.*;
 import net.tslat.aoa3.item.weapon.sword.*;
 import net.tslat.aoa3.item.weapon.thrown.*;
 import net.tslat.aoa3.item.weapon.vulcane.*;
 import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
+
 import static net.tslat.aoa3.common.registration.MaterialsRegister.*;
 
+@SuppressWarnings({"ConstantConditions", "unused"})
 @Mod.EventBusSubscriber
+@GameRegistry.ObjectHolder("aoa3")
 public class WeaponRegister {
-	public static final Item swordAmethyst = new AmethystSword(AMETHYST, null, null);
-	public static final Item swordBaron = new BaronSword(BARON, null, null);
-	public static final Item swordBloodfury = new BloodfurySword(BLOODFURY, null, null);
-	public static final Item swordBloodstone = new BloodstoneSword(BLOODSTONE, null, null);
-	public static final Item swordCandlefire = new CandlefireSword(CANDLEFIRE, null, null);
-	public static final Item swordCaramelCarver = new CaramelCarver(CARAMELCARVER, null, null);
-	public static final Item swordCoralstorm = new CoralstormSword(CORALSTORM, null, null);
-	public static final Item swordCreepified = new CreepifiedSword(CREEPIFIED, null, null);
-	public static final Item swordCrystallite = new CrystalliteSword(CRYSTALLITE, null, null);
-	public static final Item swordEmberstone = new EmberstoneSword(EMBERSTONE, null, null);
-	public static final Item swordExplochron = new ExplochronSword(EXPLOCHRON, null, null);
-	public static final Item swordFireborne = new FireborneSword(FIREBORNE, null, null);
-	public static final Item swordGuardians = new GuardiansSword(GUARDIAN, null, null);
-	public static final Item swordHarvester = new HarvesterSword(HARVESTER, null, null);
-	public static final Item swordHoly = new HolySword(HOLY, null, null);
-	public static final Item swordIllusion = new IllusionSword(ILLUSION, null, null);
-	public static final Item swordJade = new JadeSword(JADE, null, null);
-	public static final Item swordLegbone = new LegboneSword(LEGBONE, null, null);
-	public static final Item swordLightsWay = new LightsWay(LIGHTSWAY, null, null);
-	public static final Item swordLimonite = new LimoniteSword(LIMONITE, null, null);
-	public static final Item swordNethengeic = new NethengeicSword(NETHENGEIC, null, null);
-	public static final Item swordRockbasher = new RockbasherSword(ROCKBASHER, null, null);
-	public static final Item swordRockPick = new RockPickSword(ROCKPICK, null, null);
-	public static final Item swordRosidian = new RosidianSword(ROSIDIAN, null, null);
-	public static final Item swordRosite = new RositeSword(ROSITE, null, null);
-	public static final Item swordRunic = new RunicSword(RUNIC, null, null);
-	public static final Item swordSapphire = new SapphireSword(SAPPHIRE, null, null);
-	public static final Item swordShadow = new ShadowSword(SHADOW, null, null);
-	public static final Item swordShroomus = new ShroomusSword(SHROOMUS, null, null);
-	public static final Item swordSkeletal = new SkeletalSword(SKELETAL, null, null);
-	public static final Item swordSupremacy = new SupremacySword(SUPREMACY, null, null);
-	public static final Item swordSweet = new SweetSword(SWEET, null, null);
-	public static final Item swordTrollBasherAxe = new TrollBasherAxe(TROLLBASHERAXE, null, null);
-	public static final Item swordUltraflame = new Ultraflame(ULTRAFLAME, null, null);
-	public static final Item swordVoid = new VoidSword(VOID, null, null);
-	public static final Item swordVulcammer = new VulcammerSword(VULCAMMER, null, null);
+	@GameRegistry.ObjectHolder("amethyst_sword")
+	public static final BaseSword swordAmethyst = null;
+	@GameRegistry.ObjectHolder("baron_sword")
+	public static final BaseSword swordBaron = null;
+	@GameRegistry.ObjectHolder("bloodfury")
+	public static final BaseSword swordBloodfury = null;
+	@GameRegistry.ObjectHolder("bloodstone_sword")
+	public static final BaseSword swordBloodstone = null;
+	@GameRegistry.ObjectHolder("candlefire_sword")
+	public static final BaseSword swordCandlefire = null;
+	@GameRegistry.ObjectHolder("caramel_carver")
+	public static final BaseSword swordCaramelCarver = null;
+	@GameRegistry.ObjectHolder("coralstorm_sword")
+	public static final BaseSword swordCoralstorm = null;
+	@GameRegistry.ObjectHolder("creepified_sword")
+	public static final BaseSword swordCreepified = null;
+	@GameRegistry.ObjectHolder("crystallite_sword")
+	public static final BaseSword swordCrystallite = null;
+	@GameRegistry.ObjectHolder("emberstone_sword")
+	public static final BaseSword swordEmberstone = null;
+	@GameRegistry.ObjectHolder("explochron_sword")
+	public static final BaseSword swordExplochron = null;
+	@GameRegistry.ObjectHolder("fireborne_sword")
+	public static final BaseSword swordFireborne = null;
+	@GameRegistry.ObjectHolder("guardian_sword")
+	public static final BaseSword swordGuardians = null;
+	@GameRegistry.ObjectHolder("harvester_sword")
+	public static final BaseSword swordHarvester = null;
+	@GameRegistry.ObjectHolder("holy_sword")
+	public static final BaseSword swordHoly = null;
+	@GameRegistry.ObjectHolder("illusion_sword")
+	public static final BaseSword swordIllusion = null;
+	@GameRegistry.ObjectHolder("jade_sword")
+	public static final BaseSword swordJade = null;
+	@GameRegistry.ObjectHolder("legbone_sword")
+	public static final BaseSword swordLegbone = null;
+	@GameRegistry.ObjectHolder("lights_way")
+	public static final BaseSword swordLightsWay = null;
+	@GameRegistry.ObjectHolder("limonite_sword")
+	public static final BaseSword swordLimonite = null;
+	@GameRegistry.ObjectHolder("nethengeic_sword")
+	public static final BaseSword swordNethengeic = null;
+	@GameRegistry.ObjectHolder("primal_sword")
+	public static final BaseSword swordPrimal = null;
+	@GameRegistry.ObjectHolder("rockbasher_sword")
+	public static final BaseSword swordRockbasher = null;
+	@GameRegistry.ObjectHolder("rock_pick_sword")
+	public static final BaseSword swordRockPick = null;
+	@GameRegistry.ObjectHolder("rosidian_sword")
+	public static final BaseSword swordRosidian = null;
+	@GameRegistry.ObjectHolder("rosite_sword")
+	public static final BaseSword swordRosite = null;
+	@GameRegistry.ObjectHolder("runic_sword")
+	public static final BaseSword swordRunic = null;
+	@GameRegistry.ObjectHolder("sapphire_sword")
+	public static final BaseSword swordSapphire = null;
+	@GameRegistry.ObjectHolder("shadow_sword")
+	public static final BaseSword swordShadow = null;
+	@GameRegistry.ObjectHolder("shroomus_sword")
+	public static final BaseSword swordShroomus = null;
+	@GameRegistry.ObjectHolder("skeletal_sword")
+	public static final BaseSword swordSkeletal = null;
+	@GameRegistry.ObjectHolder("supremacy_sword")
+	public static final BaseSword swordSupremacy = null;
+	@GameRegistry.ObjectHolder("sweet_sword")
+	public static final BaseSword swordSweet = null;
+	@GameRegistry.ObjectHolder("troll_basher_axe")
+	public static final BaseSword swordTrollBasherAxe = null;
+	@GameRegistry.ObjectHolder("ultraflame")
+	public static final BaseSword swordUltraflame = null;
+	@GameRegistry.ObjectHolder("void_sword")
+	public static final BaseSword swordVoid = null;
 
-	public static final Item greatbladeBaron = new BaronGreatblade(23.0f, 0, 600);
-	public static final Item greatbladeCandyBlade = new CandyBlade(39.0f, 0, 500);
-	public static final Item greatbladeCoral = new CoralGreatblade(21.0f, 0, 450);
-	public static final Item greatbladeCottonCrusher = new CottonCrusher(24.0f, 0, 800);
-	public static final Item greatbladeCreepoid = new CreepoidGreatblade(25.0f, 0, 550);
-	public static final Item greatbladeCrystal = new CrystalGreatblade(22.0f, 0, 500);
-	public static final Item greatbladeErebonScythe = new ErebonScythe(22.0f, -2.6D, 1000);
-	public static final Item greatbladeGodsGreatblade = new GodsGreatblade(36.0f, 0, 800);
-	public static final Item greatbladeGoofy = new GoofyGreatblade(35.0f, 0, 600);
-	public static final Item greatbladeGrandsword = new Grandsword(16.0f, 0, 350);
-	public static final Item greatbladeHaunted = new HauntedGreatblade(37.0f, 0, 800);
-	public static final Item greatbladeKnightsGuard = new KnightsGuard(31.0f, 0, 600);
-	public static final Item greatbladeLelyetian = new LelyetianGreatblade(26.0f, 0, 450);
-	public static final Item greatbladeLunar = new LunarGreatblade(10.0f, 0, 600);
-	public static final Item greatbladeLuxonScythe = new LuxonScythe(22.0f, -2.6D, 1000);
-	public static final Item greatbladeLyonic = new LyonicGreatblade(22.0f, 0, 700);
-	public static final Item greatbladeMillenium = new MilleniumGreatblade(-1f, 0, 700);
-	public static final Item greatbladeNoxious = new NoxiousGreatblade(27.0f, 0, 600);
-	public static final Item greatbladePlutonScythe = new PlutonScythe(15, -2.6D, 1000);
-	public static final Item greatbladePrimordial = new PrimordialGreatblade(28.0f, 0, 800);
-	public static final Item greatbladeRosidian = new RosidianGreatblade(27.0f, 0, 700);
-	public static final Item greatbladeRoyal = new RoyalGreatblade(26.0f, 0, 500);
-	public static final Item greatbladeRunic = new RunicGreatblade(25.0f, 0, 600);
-	public static final Item greatbladeSelyanScythe = new SelyanScythe(22.0f, -2.6D, 1000);
-	public static final Item greatbladeShroomic = new ShroomicGreatblade(27.0f, 0, 500);
-	public static final Item greatbladeShyreSword = new ShyreSword(29.0f, 0, 500);
-	public static final Item greatbladeSubterranean = new SubterraneanGreatblade(28.0f, 0, 800);
-	public static final Item greatbladeTidal = new TidalGreatblade(23.0f, 0, 400);
-	public static final Item greatbladeUnderworld = new UnderworldGreatblade(27.0f, 0, 500);
+	@GameRegistry.ObjectHolder("baron_greatblade")
+	public static final BaseGreatblade greatbladeBaron = null;
+	@GameRegistry.ObjectHolder("candy_blade")
+	public static final BaseGreatblade greatbladeCandyBlade = null;
+	@GameRegistry.ObjectHolder("coral_greatblade")
+	public static final BaseGreatblade greatbladeCoral = null;
+	@GameRegistry.ObjectHolder("cotton_crusher")
+	public static final BaseGreatblade greatbladeCottonCrusher = null;
+	@GameRegistry.ObjectHolder("creepoid_greatblade")
+	public static final BaseGreatblade greatbladeCreepoid = null;
+	@GameRegistry.ObjectHolder("crystal_greatblade")
+	public static final BaseGreatblade greatbladeCrystal = null;
+	@GameRegistry.ObjectHolder("erebon_scythe")
+	public static final BaseGreatblade greatbladeErebonScythe = null;
+	@GameRegistry.ObjectHolder("gods_greatblade")
+	public static final BaseGreatblade greatbladeGodsGreatblade = null;
+	@GameRegistry.ObjectHolder("goofy_greatblade")
+	public static final BaseGreatblade greatbladeGoofy = null;
+	@GameRegistry.ObjectHolder("grandsword")
+	public static final BaseGreatblade greatbladeGrandsword = null;
+	@GameRegistry.ObjectHolder("haunted_greatblade")
+	public static final BaseGreatblade greatbladeHaunted = null;
+	@GameRegistry.ObjectHolder("knights_guard")
+	public static final BaseGreatblade greatbladeKnightsGuard = null;
+	@GameRegistry.ObjectHolder("lelyetian_greatblade")
+	public static final BaseGreatblade greatbladeLelyetian = null;
+	@GameRegistry.ObjectHolder("lunar_greatblade")
+	public static final BaseGreatblade greatbladeLunar = null;
+	@GameRegistry.ObjectHolder("luxon_scythe")
+	public static final BaseGreatblade greatbladeLuxonScythe = null;
+	@GameRegistry.ObjectHolder("lyonic_greatblade")
+	public static final BaseGreatblade greatbladeLyonic = null;
+	@GameRegistry.ObjectHolder("millenium_greatblade")
+	public static final BaseGreatblade greatbladeMillenium = null;
+	@GameRegistry.ObjectHolder("noxious_greatblade")
+	public static final BaseGreatblade greatbladeNoxious = null;
+	@GameRegistry.ObjectHolder("pluton_scythe")
+	public static final BaseGreatblade greatbladePlutonScythe = null;
+	@GameRegistry.ObjectHolder("primordial_greatblade")
+	public static final BaseGreatblade greatbladePrimordial = null;
+	@GameRegistry.ObjectHolder("rosidian_greatblade")
+	public static final BaseGreatblade greatbladeRosidian = null;
+	@GameRegistry.ObjectHolder("royal_greatblade")
+	public static final BaseGreatblade greatbladeRoyal = null;
+	@GameRegistry.ObjectHolder("runic_greatblade")
+	public static final BaseGreatblade greatbladeRunic = null;
+	@GameRegistry.ObjectHolder("selyan_scythe")
+	public static final BaseGreatblade greatbladeSelyanScythe = null;
+	@GameRegistry.ObjectHolder("shroomic_greatblade")
+	public static final BaseGreatblade greatbladeShroomic = null;
+	@GameRegistry.ObjectHolder("shyre_sword")
+	public static final BaseGreatblade greatbladeShyreSword = null;
+	@GameRegistry.ObjectHolder("subterranean_greatblade")
+	public static final BaseGreatblade greatbladeSubterranean = null;
+	@GameRegistry.ObjectHolder("tidal_greatblade")
+	public static final BaseGreatblade greatbladeTidal = null;
+	@GameRegistry.ObjectHolder("underworld_greatblade")
+	public static final BaseGreatblade greatbladeUnderworld = null;
 
-	public static final Item maulCoralstone = new CoralstoneMaul(15.0f, Enums.WeaponSpeed.HALF.value, 1.2D, 600);
-	public static final Item maulCrystal = new CrystalMaul(19.0f, Enums.WeaponSpeed.HALF.value, 1.6D, 800);
-	public static final Item maulHorizon = new HorizonMaul(12.0f, Enums.WeaponSpeed.HALF.value, 0.6D, 400);
+	@GameRegistry.ObjectHolder("coralstone_maul")
+	public static final BaseMaul maulCoralstone = null;
+	@GameRegistry.ObjectHolder("crystal_maul")
+	public static final BaseMaul maulCrystal = null;
+	@GameRegistry.ObjectHolder("electron_maul")
+	public static final BaseMaul maulElectron = null;
+	@GameRegistry.ObjectHolder("horizon_maul")
+	public static final BaseMaul maulHorizon = null;
+	@GameRegistry.ObjectHolder("vulcammer_maul")
+	public static final BaseMaul maulVulcammer = null;
 
-	public static final Item gunAbominator = new Abominator(20, SoundsRegister.gunAbominator, 400, 12, 3.0f);
-	public static final Item gunApocoAssaultRifle = new ApocoAssaultRifle(12, SoundsRegister.gunRevolver, 450, 8, 4.0f);
-	public static final Item gunApocoRifle = new ApocoRifle(0, SoundsRegister.gunDischargeGun, 500, 8, 2.0f);
-	public static final Item gunAquaMagnum = new AquaMagnum(39, SoundsRegister.gunFastRifle, 450, 40, 35.0f);
-	public static final Item gunArtifact = new Artifact(17, SoundsRegister.gunArtifact, 450, 12, 4.0f);
-	public static final Item gunBaronator = new Baronator(21, SoundsRegister.gunRevolver, 450, 20, 3.0f);
-	public static final Item gunBayonetteRifle = new BayonetteRifle(13, SoundsRegister.gunSniper, 600, 36, 4.0f);
-	public static final Item gunBigTop = new BigTop(7, SoundsRegister.gunRevolver, 600, 4, 3.0f);
-	public static final Item gunBloodIron = new BloodIron(20, SoundsRegister.gunSlugger, 450, 16, 14.0f);
-	public static final Item gunChainWrecker = new ChainWrecker(7, SoundsRegister.gunChaingun, 600, 4, 4.0f);
-	public static final Item gunChilliChugger = new ChilliChugger(16, SoundsRegister.gunChugger, 600, 8, 5.0f);
-	public static final Item gunClownershot = new Clownershot(8, SoundsRegister.gunWoodRifle, 450, 4, 7.0f);
-	public static final Item gunConstruct = new Construct(7, SoundsRegister.gunFastRifle, 400, 4, 14.0f);
-	public static final Item gunCoralClogger = new CoralClogger(33, SoundsRegister.gunSlugger, 500, 40, 15.0f);
-	public static final Item gunCoreRifle = new CoreRifle(9.5, SoundsRegister.gunFastRifle, 450, 8, 3.0f);
-	public static final Item gunCrystalCarver = new CrystalCarver(15, SoundsRegister.gunSniper, 400, 8, 23.0f);
-	public static final Item gunCyclone = new Cyclone(18, SoundsRegister.gunArtifact, 500, 16, 6.0f);
-	public static final Item gunDarkener = new Darkener(8, SoundsRegister.gunFastRifle, 450, 4, 13.0f);
-	public static final Item gunDartGun = new DartGun(7, SoundsRegister.gunBlowpipe, 450, 40, 0.2f);
-	public static final Item gunDestructionRifle = new DestructionRifle(16, SoundsRegister.gunRevolver, 450, 16, 3.0f);
-	public static final Item gunDischargeRifle = new DischargeRifle(0, SoundsRegister.gunDischargeGun, 450, 8, 4.0f);
-	public static final Item gunDraco = new Draco(18, SoundsRegister.gunRevolver, 600, 16, 2.0f);
-	public static final Item gunDragilator = new Dragilator(8.5, SoundsRegister.gunGolemGun, 450, 8, 4.0f);
-	public static final Item gunDustometer = new Dustometer(14, SoundsRegister.gunFastRifle, 450, 16, 7.0f);
-	public static final Item gunEchoGull = new EchoGull(16, SoundsRegister.gunFastRifle, 450, 12, 2.0f);
-	public static final Item gunElectinator = new Electinator(10, SoundsRegister.gunGolemGun, 450, 8, 4.0f);
-	public static final Item gunFlameWrecker = new FlameWrecker(8, SoundsRegister.gunChaingun, 450, 4, 4.0f);
-	public static final Item gunFlamingFury = new FlamingFury(40, SoundsRegister.gunFastRifle, 400, 24, 2.0f);
-	public static final Item gunFloroRifle = new FloroRifle(15, SoundsRegister.gunFastRifle, 450, 20, 4.0f);
-	public static final Item gunFlowersFury = new FlowersFury(16, SoundsRegister.gunFastRifle, 450, 20, 7.0f);
-	public static final Item gunFrosticator = new Frosticator(8.5, SoundsRegister.gunGolemGun, 450, 8, 4.0f);
-	public static final Item gunGardener = new Gardener(5, SoundsRegister.gunBlowpipe, 450, 4, 3.0f);
-	public static final Item gunGaugeRifle = new GaugeRifle(20, SoundsRegister.gunGaugeRifle, 450, 16, 6.0f);
-	public static final Item gunGerminator = new Germinator(8.5, SoundsRegister.gunGolemGun, 450, 8, 4.0f);
-	public static final Item gunGoldenFury = new GoldenFury(50, SoundsRegister.gunFastRifle, 450, 24, 2.0f);
-	public static final Item gunHappyHaunter = new HappyHaunter(45, SoundsRegister.gunRevolver, 450, 32, 2.0f);
-	public static final Item gunHaunterRifle = new HaunterRifle(40, SoundsRegister.gunRevolver, 400, 32, 2.0f);
-	public static final Item gunHeatWave = new HeatWave(11, SoundsRegister.gunHeatWave, 450, 12, 10.0f);
-	public static final Item gunHiver = new Hiver(8, SoundsRegister.gunFastRifle, 450, 4, 14.0f);
-	public static final Item gunHotShot = new HotShot(9, SoundsRegister.gunMiniPistol, 450, 24, 2.0f);
-	public static final Item gunHuntersRifle = new HuntersRifle(10, SoundsRegister.gunSniper, 450, 56, 10.0f);
-	public static final Item gunIominator = new Iominator(24, SoundsRegister.gunAbominator, 450, 12, 3.0f);
-	public static final Item gunIonRevolver = new IonRevolver(14, SoundsRegister.gunSpaceRevolver, 400, 8, 3.0f);
-	public static final Item gunIroRifle = new IroRifle(5, SoundsRegister.gunFastRifle, 600, 20, 2.0f);
-	public static final Item gunKrilinator = new Krilinator(8.5, SoundsRegister.gunGolemGun, 450, 8, 4.0f);
-	public static final Item gunLightIron = new LightIron(24, SoundsRegister.gunSlugger, 450, 16, 14.0f);
-	public static final Item gunLunarAssaultRifle = new LunarAssaultRifle(20, SoundsRegister.gunSpaceGun, 600, 20, 5.0f);
-	public static final Item gunMechanicalAssaultRifle = new MechanicalAssaultRifle(11, SoundsRegister.gunRevolver, 500, 8, 4.0f);
-	public static final Item gunMegagun = new Megagun(8, SoundsRegister.gunMinigun, 400, 4, 4.0f);
-	public static final Item gunMiasma = new Miasma(8, SoundsRegister.gunFastRifle, 450, 4, 3.0f);
-	public static final Item gunMinigun = new Minigun(6, SoundsRegister.gunMinigun, 600, 4, 8.0f);
-	public static final Item gunMintMagnum = new MintMagnum(35, SoundsRegister.gunFastRifle, 450, 40, 35.0f);
-	public static final Item gunMK = new MK(6, SoundsRegister.gunRevolver, 400, 4, 3.0f);
-	public static final Item gunMKFung = new MKFung(7, SoundsRegister.gunRevolver, 450, 4, 3.0f);
-	public static final Item gunNethenetteRifle = new NethenetteRifle(18, SoundsRegister.gunSniper, 450, 36, 4.0f);
-	public static final Item gunNethengeicSlugger = new NethengeicSlugger(25, SoundsRegister.gunSlugger, 500, 44, 15.0f);
-	public static final Item gunOvershot = new Overshot(7, SoundsRegister.gunWoodRifle, 500, 4, 7.0f);
-	public static final Item gunPrecasianSlugger = new PrecasianSlugger(29, SoundsRegister.gunSlugger, 450, 44, 15.0f);
-	public static final Item gunPredator = new Predator(29, SoundsRegister.gunSpaceGun, 450, 16, 4.0f);
-	public static final Item gunPredigun = new Predigun(7, SoundsRegister.gunMinigun, 450, 4, 8.0f);
-	public static final Item gunPulsator = new Pulsator(16, SoundsRegister.gunSpaceGun, 400, 12, 4.0f);
-	public static final Item gunPurityRifle = new PurityRifle(16, SoundsRegister.gunRevolver, 450, 16, 3.0f);
-	public static final Item gunRockerRifle = new RockerRifle(24, SoundsRegister.gunRevolver, 600, 32, 5.0f);
-	public static final Item gunRoulette = new Roulette(16, SoundsRegister.gunRoulette, 450, 8, 2.0f);
-	public static final Item gunShoeFlinger = new ShoeFlinger(24, SoundsRegister.gunFlinger, 400, 24, 7.0f);
-	public static final Item gunSkullette = new Skullette(17, SoundsRegister.gunRoulette, 450, 8, 2.0f);
-	public static final Item gunSkullifact = new Skullifact(22, SoundsRegister.gunArtifact, 450, 12, 4.0f);
-	public static final Item gunSpectacle = new Spectacle(6, SoundsRegister.gunFastRifle, 600, 4, 3.0f);
-	public static final Item gunSpineGun = new SpineGun(6.5, SoundsRegister.gunSquadGun, 450, 4, 8.0f);
-	public static final Item gunSquadGun = new SquadGun(6, SoundsRegister.gunSquadGun, 500, 4, 8.0f);
-	public static final Item gunStampede = new Stampede(18, SoundsRegister.gunStampede, 450, 36, 4.0f);
-	public static final Item gunStormer = new Stormer(17, SoundsRegister.gunFastRifle, 450, 24, 2.0f);
-	public static final Item gunSublimus = new Sublimus(7, SoundsRegister.gunGolemGun, 500, 4, 12.0f);
-	public static final Item gunTigerTommy = new TigerTommy(6, SoundsRegister.gunSquadGun, 450, 4, 5.0f);
-	public static final Item gunTommy = new Tommy(5.5, SoundsRegister.gunSquadGun, 450, 4, 5.0f);
-	public static final Item gunVileVanquisher = new VileVanquisher(14, SoundsRegister.gunFastRifle, 400, 16, 2.0f);
-	public static final Item gunWartGun = new WartGun(25, SoundsRegister.gunBlowpipe, 400, 32, 0.2f);
-	public static final Item gunWrecker = new Wrecker(7, SoundsRegister.gunFastRifle, 600, 4, 13.0f);
+	@GameRegistry.ObjectHolder("abominator")
+	public static final BaseGun gunAbominator = null;
+	@GameRegistry.ObjectHolder("apoco_assault_rifle")
+	public static final BaseGun gunApocoAssaultRifle = null;
+	@GameRegistry.ObjectHolder("apoco_rifle")
+	public static final BaseGun gunApocoRifle = null;
+	@GameRegistry.ObjectHolder("aqua_magnum")
+	public static final BaseGun gunAquaMagnum = null;
+	@GameRegistry.ObjectHolder("artifact")
+	public static final BaseGun gunArtifact = null;
+	@GameRegistry.ObjectHolder("baronator")
+	public static final BaseGun gunBaronator = null;
+	@GameRegistry.ObjectHolder("bayonette_rifle")
+	public static final BaseGun gunBayonetteRifle = null;
+	@GameRegistry.ObjectHolder("big_top")
+	public static final BaseGun gunBigTop = null;
+	@GameRegistry.ObjectHolder("blood_iron")
+	public static final BaseGun gunBloodIron = null;
+	@GameRegistry.ObjectHolder("chain_wrecker")
+	public static final BaseGun gunChainWrecker = null;
+	@GameRegistry.ObjectHolder("chilli_chugger")
+	public static final BaseGun gunChilliChugger = null;
+	@GameRegistry.ObjectHolder("clownershot")
+	public static final BaseGun gunClownershot = null;
+	@GameRegistry.ObjectHolder("construct")
+	public static final BaseGun gunConstruct = null;
+	@GameRegistry.ObjectHolder("coral_clogger")
+	public static final BaseGun gunCoralClogger = null;
+	@GameRegistry.ObjectHolder("core_rifle")
+	public static final BaseGun gunCoreRifle = null;
+	@GameRegistry.ObjectHolder("crystal_carver")
+	public static final BaseGun gunCrystalCarver = null;
+	@GameRegistry.ObjectHolder("cyclone")
+	public static final BaseGun gunCyclone = null;
+	@GameRegistry.ObjectHolder("darkener")
+	public static final BaseGun gunDarkener = null;
+	@GameRegistry.ObjectHolder("dart_gun")
+	public static final BaseGun gunDartGun = null;
+	@GameRegistry.ObjectHolder("destruction_rifle")
+	public static final BaseGun gunDestructionRifle = null;
+	@GameRegistry.ObjectHolder("discharge_rifle")
+	public static final BaseGun gunDischargeRifle = null;
+	@GameRegistry.ObjectHolder("draco")
+	public static final BaseGun gunDraco = null;
+	@GameRegistry.ObjectHolder("dragilator")
+	public static final BaseGun gunDragilator = null;
+	@GameRegistry.ObjectHolder("dustometer")
+	public static final BaseGun gunDustometer = null;
+	@GameRegistry.ObjectHolder("echo_gull")
+	public static final BaseGun gunEchoGull = null;
+	@GameRegistry.ObjectHolder("electinator")
+	public static final BaseGun gunElectinator = null;
+	@GameRegistry.ObjectHolder("flame_wrecker")
+	public static final BaseGun gunFlameWrecker = null;
+	@GameRegistry.ObjectHolder("flaming_fury")
+	public static final BaseGun gunFlamingFury = null;
+	@GameRegistry.ObjectHolder("floro_rifle")
+	public static final BaseGun gunFloroRifle = null;
+	@GameRegistry.ObjectHolder("flowers_fury")
+	public static final BaseGun gunFlowersFury = null;
+	@GameRegistry.ObjectHolder("frosticator")
+	public static final BaseGun gunFrosticator = null;
+	@GameRegistry.ObjectHolder("gardener")
+	public static final BaseGun gunGardener = null;
+	@GameRegistry.ObjectHolder("gauge_rifle")
+	public static final BaseGun gunGaugeRifle = null;
+	@GameRegistry.ObjectHolder("germinator")
+	public static final BaseGun gunGerminator = null;
+	@GameRegistry.ObjectHolder("golden_fury")
+	public static final BaseGun gunGoldenFury = null;
+	@GameRegistry.ObjectHolder("happy_haunter")
+	public static final BaseGun gunHappyHaunter = null;
+	@GameRegistry.ObjectHolder("haunter_rifle")
+	public static final BaseGun gunHaunterRifle = null;
+	@GameRegistry.ObjectHolder("heat_wave")
+	public static final BaseGun gunHeatWave = null;
+	@GameRegistry.ObjectHolder("hiver")
+	public static final BaseGun gunHiver = null;
+	@GameRegistry.ObjectHolder("hot_shot")
+	public static final BaseGun gunHotShot = null;
+	@GameRegistry.ObjectHolder("hunters_rifle")
+	public static final BaseGun gunHuntersRifle = null;
+	@GameRegistry.ObjectHolder("iominator")
+	public static final BaseGun gunIominator = null;
+	@GameRegistry.ObjectHolder("ion_revolver")
+	public static final BaseGun gunIonRevolver = null;
+	@GameRegistry.ObjectHolder("iro_rifle")
+	public static final BaseGun gunIroRifle = null;
+	@GameRegistry.ObjectHolder("krilinator")
+	public static final BaseGun gunKrilinator = null;
+	@GameRegistry.ObjectHolder("light_iron")
+	public static final BaseGun gunLightIron = null;
+	@GameRegistry.ObjectHolder("lunar_assault_rifle")
+	public static final BaseGun gunLunarAssaultRifle = null;
+	@GameRegistry.ObjectHolder("mechanical_assault_rifle")
+	public static final BaseGun gunMechanicalAssaultRifle = null;
+	@GameRegistry.ObjectHolder("megagun")
+	public static final BaseGun gunMegagun = null;
+	@GameRegistry.ObjectHolder("miasma")
+	public static final BaseGun gunMiasma = null;
+	@GameRegistry.ObjectHolder("minigun")
+	public static final BaseGun gunMinigun = null;
+	@GameRegistry.ObjectHolder("mint_magnum")
+	public static final BaseGun gunMintMagnum = null;
+	@GameRegistry.ObjectHolder("mk")
+	public static final BaseGun gunMK = null;
+	@GameRegistry.ObjectHolder("mk_fung")
+	public static final BaseGun gunMKFung = null;
+	@GameRegistry.ObjectHolder("nethenette_rifle")
+	public static final BaseGun gunNethenetteRifle = null;
+	@GameRegistry.ObjectHolder("nethengeic_slugger")
+	public static final BaseGun gunNethengeicSlugger = null;
+	@GameRegistry.ObjectHolder("overshot")
+	public static final BaseGun gunOvershot = null;
+	@GameRegistry.ObjectHolder("precasian_slugger")
+	public static final BaseGun gunPrecasianSlugger = null;
+	@GameRegistry.ObjectHolder("predator")
+	public static final BaseGun gunPredator = null;
+	@GameRegistry.ObjectHolder("predigun")
+	public static final BaseGun gunPredigun = null;
+	@GameRegistry.ObjectHolder("pulsator")
+	public static final BaseGun gunPulsator = null;
+	@GameRegistry.ObjectHolder("purity_rifle")
+	public static final BaseGun gunPurityRifle = null;
+	@GameRegistry.ObjectHolder("rocker_rifle")
+	public static final BaseGun gunRockerRifle = null;
+	@GameRegistry.ObjectHolder("roulette")
+	public static final BaseGun gunRoulette = null;
+	@GameRegistry.ObjectHolder("shoe_flinger")
+	public static final BaseGun gunShoeFlinger = null;
+	@GameRegistry.ObjectHolder("skullette")
+	public static final BaseGun gunSkullette = null;
+	@GameRegistry.ObjectHolder("skullifact")
+	public static final BaseGun gunSkullifact = null;
+	@GameRegistry.ObjectHolder("spectacle")
+	public static final BaseGun gunSpectacle = null;
+	@GameRegistry.ObjectHolder("spine_gun")
+	public static final BaseGun gunSpineGun = null;
+	@GameRegistry.ObjectHolder("squad_gun")
+	public static final BaseGun gunSquadGun = null;
+	@GameRegistry.ObjectHolder("stampede")
+	public static final BaseGun gunStampede = null;
+	@GameRegistry.ObjectHolder("stormer")
+	public static final BaseGun gunStormer = null;
+	@GameRegistry.ObjectHolder("sublimus")
+	public static final BaseGun gunSublimus = null;
+	@GameRegistry.ObjectHolder("tiger_tommy")
+	public static final BaseGun gunTigerTommy = null;
+	@GameRegistry.ObjectHolder("tommy")
+	public static final BaseGun gunTommy = null;
+	@GameRegistry.ObjectHolder("vile_vanquisher")
+	public static final BaseGun gunVileVanquisher = null;
+	@GameRegistry.ObjectHolder("wart_gun")
+	public static final BaseGun gunWartGun = null;
+	@GameRegistry.ObjectHolder("wrecker")
+	public static final BaseGun gunWrecker = null;
 
-	public static final Item shotgunAbyssro = new Abyssro(20, 3, SoundsRegister.gunRevolver, 140, 21, 7.0f);
-	public static final Item shotgunAmplifier = new Amplifier(10, 5, SoundsRegister.gunSlugger, 140, 20, 25.0f);
-	public static final Item shotgunBlastBarrel = new BlastBarrel(14, 5, SoundsRegister.gunSlugger, 100, 22, 15.0f);
-	public static final Item shotgunBlueBarrel = new BlueBarrel(15, 2, SoundsRegister.gunShotgun, 160, 37, 14.0f);
-	public static final Item shotgunBoulder = new Boulder(24, 5, SoundsRegister.gunSlugger, 140, 60, 30.0f);
-	public static final Item shotgunBrownBlaster = new BrownBlaster(6, 3, SoundsRegister.gunShotgun, 160, 55, 14.0f);
-	public static final Item shotgunDemolisher = new Demolisher(20, 5, SoundsRegister.gunSlugger, 160, 60, 30.0f);
-	public static final Item shotgunDestructionShotgun = new DestructionShotgun(24, 2, SoundsRegister.gunShotgun, 140, 37, 14.0f);
-	public static final Item shotgunDischargeShotgun = new DischargeShotgun(0, 4, SoundsRegister.gunDischargeGun, 160, 55, 15.0f);
-	public static final Item shotgunGimmick = new Gimmick(7, 3, SoundsRegister.gunShotgun, 160, 17, 9.0f);
-	public static final Item shotgunGingerBlaster = new GingerBlaster(8, 5, SoundsRegister.gunSlugger, 140, 20, 16.0f);
-	public static final Item shotgunLongshot = new LongShot(10, 2, SoundsRegister.gunRevolver, 160, 30, 4.0f);
-	public static final Item shotgunMechyro = new Mechyro(16, 3, SoundsRegister.gunRevolver, 100, 21, 6.0f);
-	public static final Item shotgunPurityShotgun = new PurityShotgun(24, 4, SoundsRegister.gunShotgun, 140, 47, 8.0f);
-	public static final Item shotgunPurplePunisher = new PurplePunisher(20, 2, SoundsRegister.gunShotgun, 120, 22, 16.0f);
-	public static final Item shotgunRedRocket = new RedRocket(19, 2, SoundsRegister.gunShotgun, 160, 27, 18.0f);
-	public static final Item shotgunVivo = new Vivo(12, 5, SoundsRegister.gunShotgun, 140, 27, 15.0f);
+	@GameRegistry.ObjectHolder("abyssro")
+	public static final BaseShotgun shotgunAbyssro = null;
+	@GameRegistry.ObjectHolder("amplifier")
+	public static final BaseShotgun shotgunAmplifier = null;
+	@GameRegistry.ObjectHolder("blast_barrel")
+	public static final BaseShotgun shotgunBlastBarrel = null;
+	@GameRegistry.ObjectHolder("blue_barrel")
+	public static final BaseShotgun shotgunBlueBarrel = null;
+	@GameRegistry.ObjectHolder("boulder")
+	public static final BaseShotgun shotgunBoulder = null;
+	@GameRegistry.ObjectHolder("brown_blaster")
+	public static final BaseShotgun shotgunBrownBlaster = null;
+	@GameRegistry.ObjectHolder("demolisher")
+	public static final BaseShotgun shotgunDemolisher = null;
+	@GameRegistry.ObjectHolder("destruction_shotgun")
+	public static final BaseShotgun shotgunDestructionShotgun = null;
+	@GameRegistry.ObjectHolder("discharge_shotgun")
+	public static final BaseShotgun shotgunDischargeShotgun = null;
+	@GameRegistry.ObjectHolder("gimmick")
+	public static final BaseShotgun shotgunGimmick = null;
+	@GameRegistry.ObjectHolder("ginger_blaster")
+	public static final BaseShotgun shotgunGingerBlaster = null;
+	@GameRegistry.ObjectHolder("longshot")
+	public static final BaseShotgun shotgunLongshot = null;
+	@GameRegistry.ObjectHolder("mechyro")
+	public static final BaseShotgun shotgunMechyro = null;
+	@GameRegistry.ObjectHolder("purity_shotgun")
+	public static final BaseShotgun shotgunPurityShotgun = null;
+	@GameRegistry.ObjectHolder("purple_punisher")
+	public static final BaseShotgun shotgunPurplePunisher = null;
+	@GameRegistry.ObjectHolder("red_rocket")
+	public static final BaseShotgun shotgunRedRocket = null;
+	@GameRegistry.ObjectHolder("vivo")
+	public static final BaseShotgun shotgunVivo = null;
 
-	public static final Item sniperBaronSSR = new BaronSSR(40, SoundsRegister.gunSniper, 60, 35, 13.0f);
-	public static final Item sniperBayonetteSR = new BayonetteSR(55, SoundsRegister.gunSniper, 60, 90, 14.0f);
-	public static final Item sniperBoltRifle = new BoltRifle(50, SoundsRegister.gunSniper, 80, 100, 13.0f);
-	public static final Item sniperCamoRifle = new CamoRifle(30, SoundsRegister.gunSniper, 80, 70, 13.0f);
-	public static final Item sniperClownCracker = new ClownCracker(20, SoundsRegister.gunSniper, 80, 15, 19.0f);
-	public static final Item sniperClownimator = new Clownimator(45, SoundsRegister.gunSniper, 80, 30, 13.0f);
-	public static final Item sniperCrystaneer = new Crystaneer(32, SoundsRegister.gunSniper, 60, 16, 25.0f);
-	public static final Item sniperDarkBeast = new DarkBeast(82, SoundsRegister.gunMonster, 80, 75, 13.0f);
-	public static final Item sniperDeadlock = new Deadlock(40, SoundsRegister.gunSniper, 80, 75, 25.0f);
-	public static final Item sniperDecimator = new Decimator(40, SoundsRegister.gunSniper, 90, 30, 13.0f);
-	public static final Item sniperDischargeSniper = new DischargeSniper(50, SoundsRegister.gunDischargeGun, 80, 70, 11.0f);
-	public static final Item sniperDualSight = new DualSight(49, SoundsRegister.gunSniper, 90, 24, 30.0f);
-	public static final Item sniperDuster = new Duster(40, SoundsRegister.gunSniper, 80, 100, 13.0f);
-	public static final Item sniperFloro500 = new Floro500(70, SoundsRegister.gunSniper, 80, 70, 13.0f);
-	public static final Item sniperHeadHunter = new HeadHunter(45, SoundsRegister.gunSniper, 80, 50, 13.0f);
-	public static final Item sniperHiveCracker = new HiveCracker(25, SoundsRegister.gunSniper, 80, 15, 19.0f);
-	public static final Item sniperKa500 = new Ka500(60, SoundsRegister.gunSniper, 100, 70, 13.0f);
-	public static final Item sniperMarkMaker = new MarkMaker(60, SoundsRegister.gunSniper, 90, 75, 8.0f);
-	public static final Item sniperMineral = new Mineral(77, SoundsRegister.gunSniper, 80, 140, 22.0f);
-	public static final Item sniperMonster = new Monster(75, SoundsRegister.gunMonster, 80, 75, 13.0f);
-	public static final Item sniperMoonMaker = new MoonMaker(75, SoundsRegister.gunSniper, 80, 75, 8.0f);
-	public static final Item sniperRosidRifle = new RosidRifle(35, SoundsRegister.gunSniper, 100, 100, 13.0f);
-	public static final Item sniperSabbath = new Sabbath(48, SoundsRegister.gunSniper, 90, 95, 25.0f);
-	public static final Item sniperSludgeSniper = new SludgeSniper(50, SoundsRegister.gunSniper, 100, 100, 13.0f);
-	public static final Item sniperSweetTooth = new SweetTooth(40, SoundsRegister.gunSniper, 80, 20, 25.0f);
-	public static final Item sniperTerminator = new Terminator(70, SoundsRegister.gunSniper, 60, 140, 22.0f);
-	public static final Item sniperViper1 = new Viper1(50, SoundsRegister.gunSniper, 60, 70, 13.0f);
+	@GameRegistry.ObjectHolder("baron_ssr")
+	public static final BaseSniper sniperBaronSSR = null;
+	@GameRegistry.ObjectHolder("bayonette_sr")
+	public static final BaseSniper sniperBayonetteSR = null;
+	@GameRegistry.ObjectHolder("bolt_rifle")
+	public static final BaseSniper sniperBoltRifle = null;
+	@GameRegistry.ObjectHolder("camo_rifle")
+	public static final BaseSniper sniperCamoRifle = null;
+	@GameRegistry.ObjectHolder("clown_cracker")
+	public static final BaseSniper sniperClownCracker = null;
+	@GameRegistry.ObjectHolder("clownimator")
+	public static final BaseSniper sniperClownimator = null;
+	@GameRegistry.ObjectHolder("crystaneer")
+	public static final BaseSniper sniperCrystaneer = null;
+	@GameRegistry.ObjectHolder("dark_beast")
+	public static final BaseSniper sniperDarkBeast = null;
+	@GameRegistry.ObjectHolder("deadlock")
+	public static final BaseSniper sniperDeadlock = null;
+	@GameRegistry.ObjectHolder("decimator")
+	public static final BaseSniper sniperDecimator = null;
+	@GameRegistry.ObjectHolder("discharge_sniper")
+	public static final BaseSniper sniperDischargeSniper = null;
+	@GameRegistry.ObjectHolder("dual_sight")
+	public static final BaseSniper sniperDualSight = null;
+	@GameRegistry.ObjectHolder("duster")
+	public static final BaseSniper sniperDuster = null;
+	@GameRegistry.ObjectHolder("floro_500")
+	public static final BaseSniper sniperFloro500 = null;
+	@GameRegistry.ObjectHolder("head_hunter")
+	public static final BaseSniper sniperHeadHunter = null;
+	@GameRegistry.ObjectHolder("hive_cracker")
+	public static final BaseSniper sniperHiveCracker = null;
+	@GameRegistry.ObjectHolder("ka_500")
+	public static final BaseSniper sniperKa500 = null;
+	@GameRegistry.ObjectHolder("mark_maker")
+	public static final BaseSniper sniperMarkMaker = null;
+	@GameRegistry.ObjectHolder("mineral")
+	public static final BaseSniper sniperMineral = null;
+	@GameRegistry.ObjectHolder("monster")
+	public static final BaseSniper sniperMonster = null;
+	@GameRegistry.ObjectHolder("moon_maker")
+	public static final BaseSniper sniperMoonMaker = null;
+	@GameRegistry.ObjectHolder("rosid_rifle")
+	public static final BaseSniper sniperRosidRifle = null;
+	@GameRegistry.ObjectHolder("sabbath")
+	public static final BaseSniper sniperSabbath = null;
+	@GameRegistry.ObjectHolder("sludge_sniper")
+	public static final BaseSniper sniperSludgeSniper = null;
+	@GameRegistry.ObjectHolder("sweet_tooth")
+	public static final BaseSniper sniperSweetTooth = null;
+	@GameRegistry.ObjectHolder("terminator")
+	public static final BaseSniper sniperTerminator = null;
+	@GameRegistry.ObjectHolder("viper1")
+	public static final BaseSniper sniperViper1 = null;
 
-	public static final Item cannonAncientBomber = new AncientBomber(10, SoundsRegister.gunBoomCannon, 300, 8, 4.0f);
-	public static final Item cannonAncientDischarger = new AncientDischarger(0, SoundsRegister.gunDischargeGun, 300, 20, 6.0f);
-	public static final Item cannonAquaCannon = new AquaCannon(14, SoundsRegister.gunBallCannon, 300, 35, 5.0f);
-	public static final Item cannonBalloonBomber = new BalloonBomber(14, SoundsRegister.gunBallCannon, 250, 12, 7.0f);
-	public static final Item cannonBigBlast = new BigBlast(35, SoundsRegister.gunBigBlast, 400, 60, 11.0f);
-	public static final Item cannonBlastCannon = new BlastCannon(20, SoundsRegister.gunBoomCannon, 350, 20, 15.0f);
-	public static final Item cannonBlissfulBlast = new BlissfulBlast(40, SoundsRegister.gunBigBlast, 300, 60, 11.0f);
-	public static final Item cannonBombLauncher = new BombLauncher(15, SoundsRegister.gunBoomCannon, 300, 45, 15.0f);
-	public static final Item cannonBoomBoom = new BoomBoom(15, SoundsRegister.gunShadowBlaster, 300, 40, 10.0f);
-	public static final Item cannonBoomCannon = new BoomCannon(8, SoundsRegister.gunBoomCannon, 400, 8, 4.0f);
-	public static final Item cannonBoulderBomber = new BoulderBomber(35, SoundsRegister.gunBigBlast, 400, 85, 15.0f);
-	public static final Item cannonBozoBlaster = new BozoBlaster(20, SoundsRegister.gunClowner, 250, 20, 11.0f);
-	public static final Item cannonBulbCannon = new BulbCannon(28, SoundsRegister.gunWitherCannon, 300, 25, 8.0f);
-	public static final Item cannonCarrotCannon = new CarrotCannon(8, SoundsRegister.gunCarrotCannon, 300, 8, 8.0f);
-	public static final Item cannonClownCannon = new ClownCannon(15, SoundsRegister.gunClowner, 400, 35, 11.0f);
-	public static final Item cannonClownoPulse = new ClownoPulse(41, SoundsRegister.gunShadowBlaster, 300, 35, 11.0f);
-	public static final Item cannonCoralCannon = new CoralCannon(12, SoundsRegister.gunHighCannon, 300, 15, 5.0f);
-	public static final Item cannonDischargeCannon = new DischargeCannon(0, SoundsRegister.gunDischargeGun, 400, 20, 6.0f);
-	public static final Item cannonEnergyCannon = new EnergyCannon(17, SoundsRegister.gunEnergyCannon, 250, 15, 3.0f);
-	public static final Item cannonErebonStickler = new ErebonStickler(22, SoundsRegister.gunCarrotCannon, 400, 45, 11.0f);
-	public static final Item cannonFloroRPG = new FloroRPG(14, SoundsRegister.gunRPG, 300, 14, 7.0f);
-	public static final Item cannonFlowerCannon = new FlowerCannon(14, SoundsRegister.gunBallCannon, 300, 25, 5.0f);
-	public static final Item cannonFungalCannon = new FungalCannon(18, SoundsRegister.gunBallCannon, 300, 25, 5.0f);
-	public static final Item cannonGhastBlaster = new GhastBlaster(10, SoundsRegister.gunLightCannon, 300, 10, 5.0f);
-	public static final Item cannonGhoulCannon = new GhoulCannon(14, SoundsRegister.gunBallCannon, 300, 22, 5.0f);
-	public static final Item cannonGigaCannon = new GigaCannon(6, SoundsRegister.gunUpperCannon, 250, 4, 3.0f);
-	public static final Item cannonGolderBomber = new GolderBomber(40, SoundsRegister.gunBigBlast, 300, 85, 15.0f);
-	public static final Item cannonHiveBlaster = new HiveBlaster(17, SoundsRegister.gunShadowBlaster, 300, 16, 7.0f);
-	public static final Item cannonHiveHowitzer = new HiveHowitzer(16, SoundsRegister.gunBallCannon, 400, 15, 5.0f);
-	public static final Item cannonIroCannon = new IroCannon(18, SoundsRegister.gunBallCannon, 400, 25, 5.0f);
-	public static final Item cannonJackFunger = new JackFunger(8, SoundsRegister.gunJackRocker, 300, 12, 2.0f);
-	public static final Item cannonJackRocker = new JackRocker(6, SoundsRegister.gunJackRocker, 400, 12, 2.0f);
-	public static final Item cannonLuxonStickler = new LuxonStickler(22, SoundsRegister.gunCarrotCannon, 400, 45, 11.0f);
-	public static final Item cannonMechaCannon = new MechaCannon(36, SoundsRegister.gunMechCannon, 250, 35, 5.0f);
-	public static final Item cannonMiniCannon = new MiniCannon(7, SoundsRegister.gunLowerCannon, 300, 20, 2.0f);
-	public static final Item cannonMissileMaker = new MissileMaker(12, SoundsRegister.gunMissileMaker, 400, 60, 35.0f);
-	public static final Item cannonMoonCannon = new MoonCannon(18, SoundsRegister.gunEnergyCannon, 300, 15, 3.0f);
-	public static final Item cannonPlutonStickler = new PlutonStickler(25, SoundsRegister.gunCarrotCannon, 400, 45, 11.0f);
-	public static final Item cannonPredatorianBlaster = new PredatorianBlaster(11, SoundsRegister.gunLightCannon, 300, 10, 5.0f);
-	public static final Item cannonPulseCannon = new PulseCannon(39, SoundsRegister.gunShadowBlaster, 400, 35, 11.0f);
-	public static final Item cannonRPG = new RPG(10, SoundsRegister.gunRPG, 300, 14, 6.0f);
-	public static final Item cannonSelyanStickler = new SelyanStickler(20, SoundsRegister.gunCarrotCannon, 400, 45, 11.0f);
-	public static final Item cannonShadowBlaster = new ShadowBlaster(16, SoundsRegister.gunShadowBlaster, 400, 16, 7.0f);
-	public static final Item cannonShyreBlaster = new ShyreBlaster(30, SoundsRegister.gunBigBlast, 300, 30, 12.0f);
-	public static final Item cannonSmileBlaster = new SmileBlaster(17, SoundsRegister.gunShadowBlaster, 300, 16, 7.0f);
-	public static final Item cannonSuperCannon = new SuperCannon(10, SoundsRegister.gunLowerCannon, 300, 13, 3.0f);
-	public static final Item cannonUltraCannon = new UltraCannon(6, SoundsRegister.gunUpperCannon, 300, 6, 3.0f);
-	public static final Item cannonVoxCannon = new VoxCannon(6, SoundsRegister.gunBallCannon, 300, 40, 5.0f);
-	public static final Item cannonWaterBalloonBomber = new WaterBalloonBomber(15, SoundsRegister.gunBallCannon, 300, 12, 7.0f);
-	public static final Item cannonWitherCannon = new WitherCannon(25, SoundsRegister.gunWitherCannon, 400, 25, 8.0f);
+	@GameRegistry.ObjectHolder("ancient_bomber")
+	public static final BaseCannon cannonAncientBomber = null;
+	@GameRegistry.ObjectHolder("ancient_discharger")
+	public static final BaseCannon cannonAncientDischarger = null;
+	@GameRegistry.ObjectHolder("aqua_cannon")
+	public static final BaseCannon cannonAquaCannon = null;
+	@GameRegistry.ObjectHolder("balloon_bomber")
+	public static final BaseCannon cannonBalloonBomber = null;
+	@GameRegistry.ObjectHolder("big_blast")
+	public static final BaseCannon cannonBigBlast = null;
+	@GameRegistry.ObjectHolder("blast_cannon")
+	public static final BaseCannon cannonBlastCannon = null;
+	@GameRegistry.ObjectHolder("blissful_blast")
+	public static final BaseCannon cannonBlissfulBlast = null;
+	@GameRegistry.ObjectHolder("bomb_launcher")
+	public static final BaseCannon cannonBombLauncher = null;
+	@GameRegistry.ObjectHolder("boom_boom")
+	public static final BaseCannon cannonBoomBoom = null;
+	@GameRegistry.ObjectHolder("boom_cannon")
+	public static final BaseCannon cannonBoomCannon = null;
+	@GameRegistry.ObjectHolder("boulder_bomber")
+	public static final BaseCannon cannonBoulderBomber = null;
+	@GameRegistry.ObjectHolder("bozo_blaster")
+	public static final BaseCannon cannonBozoBlaster = null;
+	@GameRegistry.ObjectHolder("bulb_cannon")
+	public static final BaseCannon cannonBulbCannon = null;
+	@GameRegistry.ObjectHolder("carrot_cannon")
+	public static final BaseCannon cannonCarrotCannon = null;
+	@GameRegistry.ObjectHolder("clown_cannon")
+	public static final BaseCannon cannonClownCannon = null;
+	@GameRegistry.ObjectHolder("clowno_pulse")
+	public static final BaseCannon cannonClownoPulse = null;
+	@GameRegistry.ObjectHolder("coral_cannon")
+	public static final BaseCannon cannonCoralCannon = null;
+	@GameRegistry.ObjectHolder("discharge_cannon")
+	public static final BaseCannon cannonDischargeCannon = null;
+	@GameRegistry.ObjectHolder("energy_cannon")
+	public static final BaseCannon cannonEnergyCannon = null;
+	@GameRegistry.ObjectHolder("erebon_stickler")
+	public static final BaseCannon cannonErebonStickler = null;
+	@GameRegistry.ObjectHolder("floro_rpg")
+	public static final BaseCannon cannonFloroRPG = null;
+	@GameRegistry.ObjectHolder("flower_cannon")
+	public static final BaseCannon cannonFlowerCannon = null;
+	@GameRegistry.ObjectHolder("fungal_cannon")
+	public static final BaseCannon cannonFungalCannon = null;
+	@GameRegistry.ObjectHolder("ghast_blaster")
+	public static final BaseCannon cannonGhastBlaster = null;
+	@GameRegistry.ObjectHolder("ghoul_cannon")
+	public static final BaseCannon cannonGhoulCannon = null;
+	@GameRegistry.ObjectHolder("giga_cannon")
+	public static final BaseCannon cannonGigaCannon = null;
+	@GameRegistry.ObjectHolder("golder_bomber")
+	public static final BaseCannon cannonGolderBomber = null;
+	@GameRegistry.ObjectHolder("hive_blaster")
+	public static final BaseCannon cannonHiveBlaster = null;
+	@GameRegistry.ObjectHolder("hive_howitzer")
+	public static final BaseCannon cannonHiveHowitzer = null;
+	@GameRegistry.ObjectHolder("iro_cannon")
+	public static final BaseCannon cannonIroCannon = null;
+	@GameRegistry.ObjectHolder("jack_funger")
+	public static final BaseCannon cannonJackFunger = null;
+	@GameRegistry.ObjectHolder("jack_rocker")
+	public static final BaseCannon cannonJackRocker = null;
+	@GameRegistry.ObjectHolder("luxon_sticker")
+	public static final BaseCannon cannonLuxonStickler = null;
+	@GameRegistry.ObjectHolder("mecha_cannon")
+	public static final BaseCannon cannonMechaCannon = null;
+	@GameRegistry.ObjectHolder("mini_cannon")
+	public static final BaseCannon cannonMiniCannon = null;
+	@GameRegistry.ObjectHolder("missile_maker")
+	public static final BaseCannon cannonMissileMaker = null;
+	@GameRegistry.ObjectHolder("moon_cannon")
+	public static final BaseCannon cannonMoonCannon = null;
+	@GameRegistry.ObjectHolder("pluton_stickler")
+	public static final BaseCannon cannonPlutonStickler = null;
+	@GameRegistry.ObjectHolder("predatorian_blaster")
+	public static final BaseCannon cannonPredatorianBlaster = null;
+	@GameRegistry.ObjectHolder("pulse_cannon")
+	public static final BaseCannon cannonPulseCannon = null;
+	@GameRegistry.ObjectHolder("rpg")
+	public static final BaseCannon cannonRPG = null;
+	@GameRegistry.ObjectHolder("selyan_stickler")
+	public static final BaseCannon cannonSelyanStickler = null;
+	@GameRegistry.ObjectHolder("shadow_blaster")
+	public static final BaseCannon cannonShadowBlaster = null;
+	@GameRegistry.ObjectHolder("shyre_blaster")
+	public static final BaseCannon cannonShyreBlaster = null;
+	@GameRegistry.ObjectHolder("smile_blaster")
+	public static final BaseCannon cannonSmileBlaster = null;
+	@GameRegistry.ObjectHolder("super_cannon")
+	public static final BaseCannon cannonSuperCannon = null;
+	@GameRegistry.ObjectHolder("ultra_cannon")
+	public static final BaseCannon cannonUltraCannon = null;
+	@GameRegistry.ObjectHolder("vox_cannon")
+	public static final BaseCannon cannonVoxCannon = null;
+	@GameRegistry.ObjectHolder("water_balloon_bomber")
+	public static final BaseCannon cannonWaterBalloonBomber = null;
+	@GameRegistry.ObjectHolder("wither_cannon")
+	public static final BaseCannon cannonWitherCannon = null;
 
-	public static final Item throwableGrenade = new Grenade();
-	public static final Item throwableSliceStar = new SliceStar();
-	public static final Item throwableChakram = new Chakram();
-	public static final Item throwableGooBall = new GooBall();
-	public static final Item throwableVulkram = new Vulkram();
-	public static final Item throwableHellfire = new Hellfire();
-	public static final Item throwableRunicBomb = new RunicBomb();
+	@GameRegistry.ObjectHolder("grenade")
+	public static final BaseThrownWeapon throwableGrenade = null;
+	@GameRegistry.ObjectHolder("slice_star")
+	public static final BaseThrownWeapon throwableSliceStar = null;
+	@GameRegistry.ObjectHolder("chakram")
+	public static final BaseThrownWeapon throwableChakram = null;
+	@GameRegistry.ObjectHolder("goo_ball")
+	public static final BaseThrownWeapon throwableGooBall = null;
+	@GameRegistry.ObjectHolder("vulkram")
+	public static final BaseThrownWeapon throwableVulkram = null;
+	@GameRegistry.ObjectHolder("hellfire")
+	public static final BaseThrownWeapon throwableHellfire = null;
+	@GameRegistry.ObjectHolder("runic_bomb")
+	public static final BaseThrownWeapon throwableRunicBomb = null;
 
-	public static final Item vulcane = new Vulcane(10, 300);
-	public static final Item vulcaneBattle = new BattleVulcane(25, 150);
-	public static final Item vulcaneEquality = new EqualityVulcane(15, 200);
-	public static final Item vulcaneFire = new FireVulcane(15, 200);
-	public static final Item vulcaneImpairment = new ImpairmentVulcane(15, 200);
-	public static final Item vulcanePoison = new PoisonVulcane(15, 200);
-	public static final Item vulcanePower = new PowerVulcane(15, 200);
-	public static final Item vulcaneWither = new WitherVulcane(15, 200);
+	@GameRegistry.ObjectHolder("vulcane")
+	public static final BaseVulcane vulcane = null;
+	@GameRegistry.ObjectHolder("battle_vulcane")
+	public static final BaseVulcane vulcaneBattle = null;
+	@GameRegistry.ObjectHolder("equality_vulcane")
+	public static final BaseVulcane vulcaneEquality = null;
+	@GameRegistry.ObjectHolder("fire_vulcane")
+	public static final BaseVulcane vulcaneFire = null;
+	@GameRegistry.ObjectHolder("impairment_vulcane")
+	public static final BaseVulcane vulcaneImpairment = null;
+	@GameRegistry.ObjectHolder("poison_vulcane")
+	public static final BaseVulcane vulcanePoison = null;
+	@GameRegistry.ObjectHolder("power_vulcane")
+	public static final BaseVulcane vulcanePower = null;
+	@GameRegistry.ObjectHolder("wither_vulcane")
+	public static final BaseVulcane vulcaneWither = null;
 
-	public static final Item bowAlacrity = new AlacrityBow(20, 1.33f, 600);
-	public static final Item bowAncient = new AncientBow(23, 1.33f, 700);
-	public static final Item bowAtlantic = new AtlanticBow(24, 1.33f, 800);
-	public static final Item bowBaron = new BaronBow(25, 1.33f, 800);
-	public static final Item bowBoreic = new BoreicBow(20, 1f, 900);
-	public static final Item bowDaybreaker = new DaybreakerBow(19, 1f, 700);
-	public static final Item bowDeep = new DeepBow(28, 0.55f, 700);
-	public static final Item bowExplosive = new ExplosiveBow(23, 1f, 900);
-	public static final Item bowHaunted = new HauntedBow(29, 1f, 900);
-	public static final Item bowIce = new IceBow(19, 1f, 600);
-	public static final Item bowInfernal = new InfernalBow(20, 1f, 600);
-	public static final Item bowJustice = new JusticeBow(24, 1f, 700);
-	public static final Item bowLunar = new LunarBow(14, 1f, 900);
-	public static final Item bowMecha = new MechaBow(21, 1f, 600);
-	public static final Item bowNightmare = new NightmareBow(18, 1f, 800);
-	public static final Item bowPoison = new PoisonBow(19, 1f, 600);
-	public static final Item bowPredatious = new PredatiousBow(20, 1f, 700);
-	public static final Item bowPrimordial = new PrimordialBow(25, 1f, 900);
-	public static final Item bowRosidian = new RosidianBow(23, 1f, 900);
-	public static final Item bowRunic = new RunicBow(22, 1f, 700);
-	public static final Item bowScreamer = new ScreamerBow(22, 1f, 800);
-	public static final Item bowShyregem = new ShyregemBow(13, 3f, 700);
-	public static final Item bowSkeletal = new SkeletalBow(12, 3f, 900);
-	public static final Item bowSkydriver = new SkydriverBow(26, 1f, 800);
-	public static final Item bowSlingshot = new Slingshot(24, 1f, 700);
-	public static final Item bowSoulfire = new SoulfireBow(24, 1.5f, 700);
-	public static final Item bowSpectral = new SpectralBow(23, 0.8f, 800);
-	public static final Item bowSpeed = new SpeedBow(15, 2, 600);
-	public static final Item bowSunshine = new SunshineBow(25, 1f, 700);
-	public static final Item bowToxin = new ToxinBow(26, 0.85f, 900);
-	public static final Item bowVoid = new VoidBow(15, 1f, 800);
-	public static final Item bowWeaken = new WeakenBow(19, 1f, 600);
-	public static final Item bowWither = new WitherBow(21, 1f, 600);
+	@GameRegistry.ObjectHolder("alacrity_bow")
+	public static final BaseBow bowAlacrity = null;
+	@GameRegistry.ObjectHolder("ancient_bow")
+	public static final BaseBow bowAncient = null;
+	@GameRegistry.ObjectHolder("atlantic_bow")
+	public static final BaseBow bowAtlantic = null;
+	@GameRegistry.ObjectHolder("baron_bow")
+	public static final BaseBow bowBaron = null;
+	@GameRegistry.ObjectHolder("boreic_bow")
+	public static final BaseBow bowBoreic = null;
+	@GameRegistry.ObjectHolder("daybreaker_bow")
+	public static final BaseBow bowDaybreaker = null;
+	@GameRegistry.ObjectHolder("deep_bow")
+	public static final BaseBow bowDeep = null;
+	@GameRegistry.ObjectHolder("explosive_bow")
+	public static final BaseBow bowExplosive = null;
+	@GameRegistry.ObjectHolder("haunted_bow")
+	public static final BaseBow bowHaunted = null;
+	@GameRegistry.ObjectHolder("ice_bow")
+	public static final BaseBow bowIce = null;
+	@GameRegistry.ObjectHolder("infernal_bow")
+	public static final BaseBow bowInfernal = null;
+	@GameRegistry.ObjectHolder("justice_bow")
+	public static final BaseBow bowJustice = null;
+	@GameRegistry.ObjectHolder("lunar_bow")
+	public static final BaseBow bowLunar = null;
+	@GameRegistry.ObjectHolder("mecha_bow")
+	public static final BaseBow bowMecha = null;
+	@GameRegistry.ObjectHolder("nightmare_bow")
+	public static final BaseBow bowNightmare = null;
+	@GameRegistry.ObjectHolder("poison_bow")
+	public static final BaseBow bowPoison = null;
+	@GameRegistry.ObjectHolder("predatious_bow")
+	public static final BaseBow bowPredatious = null;
+	@GameRegistry.ObjectHolder("primordial_bow")
+	public static final BaseBow bowPrimordial = null;
+	@GameRegistry.ObjectHolder("rosidian_bow")
+	public static final BaseBow bowRosidian = null;
+	@GameRegistry.ObjectHolder("runic_bow")
+	public static final BaseBow bowRunic = null;
+	@GameRegistry.ObjectHolder("screamer_bow")
+	public static final BaseBow bowScreamer = null;
+	@GameRegistry.ObjectHolder("shyregem_bow")
+	public static final BaseBow bowShyregem = null;
+	@GameRegistry.ObjectHolder("skeletal_bow")
+	public static final BaseBow bowSkeletal = null;
+	@GameRegistry.ObjectHolder("skydriver_bow")
+	public static final BaseBow bowSkydriver = null;
+	@GameRegistry.ObjectHolder("slingshot")
+	public static final BaseBow bowSlingshot = null;
+	@GameRegistry.ObjectHolder("soulfire_bow")
+	public static final BaseBow bowSoulfire = null;
+	@GameRegistry.ObjectHolder("spectral_bow")
+	public static final BaseBow bowSpectral = null;
+	@GameRegistry.ObjectHolder("speed_bow")
+	public static final BaseBow bowSpeed = null;
+	@GameRegistry.ObjectHolder("sunshine_bow")
+	public static final BaseBow bowSunshine = null;
+	@GameRegistry.ObjectHolder("toxin_bow")
+	public static final BaseBow bowToxin = null;
+	@GameRegistry.ObjectHolder("void_bow")
+	public static final BaseBow bowVoid = null;
+	@GameRegistry.ObjectHolder("weaken_bow")
+	public static final BaseBow bowWeaken = null;
+	@GameRegistry.ObjectHolder("wither_bow")
+	public static final BaseBow bowWither = null;
 
-	public static final Item archergunCoral = new CoralArchergun(13, SoundsRegister.gunArchergun, 600, 12, 3.0f);
-	public static final Item archergunLunar = new LunarArchergun(8, SoundsRegister.gunArchergun, 800, 12, 3.0f);
-	public static final Item archergunMecha = new MechaArchergun(16, SoundsRegister.gunArchergun, 600, 17, 3.0f);
-	public static final Item archergunPyro = new PyroArchergun(14, SoundsRegister.gunArchergun, 700, 12, 3.0f);
-	public static final Item archergunRosidian = new RosidianArchergun(14, SoundsRegister.gunArchergun, 650, 12, 3.0f);
-	public static final Item archergunSkeletal = new SkeletalArchergun(13, SoundsRegister.gunArchergun, 1000, 10, 3.0f);
-	public static final Item archergunSpectral = new SpectralArchergun(17, SoundsRegister.gunArchergun, 700, 16, 3.0f);
-	public static final Item archergunTrolls = new TrollsArchergun(12, SoundsRegister.gunArchergun, 800, 12, 3.0f);
-	public static final Item archergunViral = new ViralArchergun(14, SoundsRegister.gunArchergun, 650, 12, 3.0f);
+	@GameRegistry.ObjectHolder("coral_archergun")
+	public static final BaseArchergun archergunCoral = null;
+	@GameRegistry.ObjectHolder("lunar_archergun")
+	public static final BaseArchergun archergunLunar = null;
+	@GameRegistry.ObjectHolder("mecha_archergun")
+	public static final BaseArchergun archergunMecha = null;
+	@GameRegistry.ObjectHolder("pyro_archergun")
+	public static final BaseArchergun archergunPyro = null;
+	@GameRegistry.ObjectHolder("rosidian_archergun")
+	public static final BaseArchergun archergunRosidian = null;
+	@GameRegistry.ObjectHolder("skeletal_archergun")
+	public static final BaseArchergun archergunSkeletal = null;
+	@GameRegistry.ObjectHolder("spectral_archergun")
+	public static final BaseArchergun archergunSpectral = null;
+	@GameRegistry.ObjectHolder("trolls_archergun")
+	public static final BaseArchergun archergunTrolls = null;
+	@GameRegistry.ObjectHolder("viral_archergun")
+	public static final BaseArchergun archergunViral = null;
 
-	public static final Item staffAquatic = new AquaticStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffAtlantic = new AtlanticStaff(SoundsRegister.staffAtlantic, 300);
-	public static final Item staffBaron = new BaronStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffCandy = new CandyStaff(SoundsRegister.staffCandy, 300);
-	public static final Item staffCelestial = new CelestialStaff(SoundsRegister.staffCelestial, 350);
-	public static final Item staffConcussion = new ConcussionStaff(SoundsRegister.staffConcussion, 300);
-	public static final Item staffCoral = new CoralStaff(SoundsRegister.staffCoral, 150);
-	public static final Item staffCrystal = new CrystalStaff(SoundsRegister.staffCrystevia, 300);
-	public static final Item staffCrystik = new CrystikStaff(SoundsRegister.staffCrystevia, 300);
-	public static final Item staffCryston = new CrystonStaff(SoundsRegister.staffCrystevia, 300);
-	public static final Item staffDestruction = new DestructionStaff(SoundsRegister.staffBasic, 350);
-	public static final Item staffEmber = new EmberStaff(SoundsRegister.staffEmber, 200);
-	public static final Item staffEverfight = new EverfightStaff(SoundsRegister.staffEver, 300);
-	public static final Item staffEvermight = new EvermightStaff(SoundsRegister.staffEmber, 300);
-	public static final Item staffFire = new FireStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffFirefly = new FireflyStaff(SoundsRegister.staffFirefly, 400);
-	public static final Item staffFirestorm = new FirestormStaff(SoundsRegister.staffNightmare, 400);
-	public static final Item staffFungal = new FungalStaff(SoundsRegister.staffFungal, 300);
-	public static final Item staffGhoul = new GhoulStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffHaunters = new HauntersStaff(SoundsRegister.staffBasic, 350);
-	public static final Item staffHive = new HiveStaff(SoundsRegister.staffShadow, 200);
-	public static final Item staffJoker = new JokerStaff(SoundsRegister.staffJoker, 300);
-	public static final Item staffKaiyu = new KaiyuStaff(SoundsRegister.staffKaiyu, 100);
-	public static final Item staffLightning = new LightningStaff(SoundsRegister.staffBasic, 350);
-	public static final Item staffLightshine = new Lightshine(SoundsRegister.staffLightshine, 300);
-	public static final Item staffLunar = new LunarStaff(SoundsRegister.staffLunar, 300);
-	public static final Item staffLyonic = new LyonicStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffMecha = new MechaStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffMeteor = new MeteorStaff(SoundsRegister.staffMeteor, 400);
-	public static final Item staffMoonlight = new MoonlightStaff(SoundsRegister.staffMoonlight, 70);
-	public static final Item staffNature = new NatureStaff(SoundsRegister.staffNature, 150);
-	public static final Item staffNightmare = new NightmareStaff(SoundsRegister.staffNightmare, 400);
-	public static final Item staffNoxious = new NoxiousStaff(SoundsRegister.staffNoxious, 400);
-	public static final Item staffPhantom = new PhantomStaff(SoundsRegister.staffPhantom, 400);
-	public static final Item staffPoison = new PoisonStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffPower = new PowerStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffPrimordial = new PrimordialStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffReef = new ReefStaff(SoundsRegister.staffReef, 70);
-	public static final Item staffRejuvenation = new RejuvenationStaff(SoundsRegister.staffRejuvenation, 50);
-	public static final Item staffRosidian = new RosidianStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffRunic = new RunicStaff(SoundsRegister.staffRunic, 200);
-	public static final Item staffShadowlord = new ShadowlordStaff(SoundsRegister.staffShadow, 200);
-	public static final Item staffShow = new ShowStaff(SoundsRegister.staffShow, 300);
-	public static final Item staffShyre = new ShyreStaff(SoundsRegister.staffShyre, 400);
-	public static final Item staffSky = new SkyStaff(SoundsRegister.staffSky, 400);
-	public static final Item staffStriker = new StrikerStaff(SoundsRegister.staffBasic, 350);
-	public static final Item staffSun = new SunStaff(SoundsRegister.staffSun, 400);
-	public static final Item staffSurge = new SurgeStaff(SoundsRegister.staffSurge, 100);
-	public static final Item staffTangle = new TangleStaff(SoundsRegister.staffTangle, 400);
-	public static final Item staffUltimatum = new UltimatumStaff(SoundsRegister.staffUltimatum, 300);
-	public static final Item staffUnderworld = new UnderworldStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffWater = new WaterStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffWeb = new WebStaff(SoundsRegister.staffWeb, 70);
-	public static final Item staffWind = new WindStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffWither = new WitherStaff(SoundsRegister.staffBasic, 400);
-	public static final Item staffWizards = new WizardsStaff(SoundsRegister.staffBasic, 400);
+	@GameRegistry.ObjectHolder("aquatic_staff")
+	public static final BaseStaff staffAquatic = null;
+	@GameRegistry.ObjectHolder("atlantic_staff")
+	public static final BaseStaff staffAtlantic = null;
+	@GameRegistry.ObjectHolder("baron_staff")
+	public static final BaseStaff staffBaron = null;
+	@GameRegistry.ObjectHolder("candy_staff")
+	public static final BaseStaff staffCandy = null;
+	@GameRegistry.ObjectHolder("celestial_staff")
+	public static final BaseStaff staffCelestial = null;
+	@GameRegistry.ObjectHolder("concussion_staff")
+	public static final BaseStaff staffConcussion = null;
+	@GameRegistry.ObjectHolder("coral_staff")
+	public static final BaseStaff staffCoral = null;
+	@GameRegistry.ObjectHolder("crystal_staff")
+	public static final BaseStaff staffCrystal = null;
+	@GameRegistry.ObjectHolder("crystik_staff")
+	public static final BaseStaff staffCrystik = null;
+	@GameRegistry.ObjectHolder("cryston_staff")
+	public static final BaseStaff staffCryston = null;
+	@GameRegistry.ObjectHolder("destruction_staff")
+	public static final BaseStaff staffDestruction = null;
+	@GameRegistry.ObjectHolder("ember_staff")
+	public static final BaseStaff staffEmber = null;
+	@GameRegistry.ObjectHolder("everfight_staff")
+	public static final BaseStaff staffEverfight = null;
+	@GameRegistry.ObjectHolder("evermight_staff")
+	public static final BaseStaff staffEvermight = null;
+	@GameRegistry.ObjectHolder("fire_staff")
+	public static final BaseStaff staffFire = null;
+	@GameRegistry.ObjectHolder("firefly_staff")
+	public static final BaseStaff staffFirefly = null;
+	@GameRegistry.ObjectHolder("firestorm_staff")
+	public static final BaseStaff staffFirestorm = null;
+	@GameRegistry.ObjectHolder("fungal")
+	public static final BaseStaff staffFungal = null;
+	@GameRegistry.ObjectHolder("ghoul_staff")
+	public static final BaseStaff staffGhoul = null;
+	@GameRegistry.ObjectHolder("haunters_staff")
+	public static final BaseStaff staffHaunters = null;
+	@GameRegistry.ObjectHolder("hive_staff")
+	public static final BaseStaff staffHive = null;
+	@GameRegistry.ObjectHolder("joker_staff")
+	public static final BaseStaff staffJoker = null;
+	@GameRegistry.ObjectHolder("kaiyu_staff")
+	public static final BaseStaff staffKaiyu = null;
+	@GameRegistry.ObjectHolder("lightning_staff")
+	public static final BaseStaff staffLightning = null;
+	@GameRegistry.ObjectHolder("lightshine")
+	public static final BaseStaff staffLightshine = null;
+	@GameRegistry.ObjectHolder("lunar_staff")
+	public static final BaseStaff staffLunar = null;
+	@GameRegistry.ObjectHolder("lyonic_staff")
+	public static final BaseStaff staffLyonic = null;
+	@GameRegistry.ObjectHolder("mecha_staff")
+	public static final BaseStaff staffMecha = null;
+	@GameRegistry.ObjectHolder("meteor_staff")
+	public static final BaseStaff staffMeteor = null;
+	@GameRegistry.ObjectHolder("moonlight_staff")
+	public static final BaseStaff staffMoonlight = null;
+	@GameRegistry.ObjectHolder("nature_staff")
+	public static final BaseStaff staffNature = null;
+	@GameRegistry.ObjectHolder("nightmare_staff")
+	public static final BaseStaff staffNightmare = null;
+	@GameRegistry.ObjectHolder("noxious_staff")
+	public static final BaseStaff staffNoxious = null;
+	@GameRegistry.ObjectHolder("phantom_staff")
+	public static final BaseStaff staffPhantom = null;
+	@GameRegistry.ObjectHolder("poison_staff")
+	public static final BaseStaff staffPoison = null;
+	@GameRegistry.ObjectHolder("power_staff")
+	public static final BaseStaff staffPower = null;
+	@GameRegistry.ObjectHolder("primordial_staff")
+	public static final BaseStaff staffPrimordial = null;
+	@GameRegistry.ObjectHolder("reef_staff")
+	public static final BaseStaff staffReef = null;
+	@GameRegistry.ObjectHolder("rejuvenation_staff")
+	public static final BaseStaff staffRejuvenation = null;
+	@GameRegistry.ObjectHolder("rosidian_staff")
+	public static final BaseStaff staffRosidian = null;
+	@GameRegistry.ObjectHolder("runic_staff")
+	public static final BaseStaff staffRunic = null;
+	@GameRegistry.ObjectHolder("shadowlord_staff")
+	public static final BaseStaff staffShadowlord = null;
+	@GameRegistry.ObjectHolder("show_staff")
+	public static final BaseStaff staffShow = null;
+	@GameRegistry.ObjectHolder("shyre_staff")
+	public static final BaseStaff staffShyre = null;
+	@GameRegistry.ObjectHolder("sky_staff")
+	public static final BaseStaff staffSky = null;
+	@GameRegistry.ObjectHolder("striker_staff")
+	public static final BaseStaff staffStriker = null;
+	@GameRegistry.ObjectHolder("sun_staff")
+	public static final BaseStaff staffSun = null;
+	@GameRegistry.ObjectHolder("surge_staff")
+	public static final BaseStaff staffSurge = null;
+	@GameRegistry.ObjectHolder("tangle_staff")
+	public static final BaseStaff staffTangle = null;
+	@GameRegistry.ObjectHolder("ultimatum_staff")
+	public static final BaseStaff staffUltimatum = null;
+	@GameRegistry.ObjectHolder("underworld_staff")
+	public static final BaseStaff staffUnderworld = null;
+	@GameRegistry.ObjectHolder("warlock_staff")
+	public static final BaseStaff staffWarlock = null;
+	@GameRegistry.ObjectHolder("water_staff")
+	public static final BaseStaff staffWater = null;
+	@GameRegistry.ObjectHolder("web_staff")
+	public static final BaseStaff staffWeb = null;
+	@GameRegistry.ObjectHolder("wind_staff")
+	public static final BaseStaff staffWind = null;
+	@GameRegistry.ObjectHolder("wither_staff")
+	public static final BaseStaff staffWither = null;
+	@GameRegistry.ObjectHolder("wizards_staff")
+	public static final BaseStaff staffWizards = null;
 
-	public static final Item blasterApocoShower = new ApocoShower(0, SoundsRegister.gunSpiritShower, 600, 25, 50);
-	public static final Item blasterAtomizer = new Atomizer(12, SoundsRegister.gunAtomizer, 500, 20, 35);
-	public static final Item blasterBeamer = new Beamer(1, SoundsRegister.gunSprayer, 700, 1, 3);
-	public static final Item blasterBearBlaster = new BearBlaster(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterBeatSoundCannon = new BeatSoundCannon(12, null, 500, 10, 8);
-	public static final Item blasterBeeBlaster = new BeeBlaster(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterBlastChiller = new BlastChiller(8, SoundsRegister.gunMagicGun, 600, 15, 15);
-	public static final Item blasterBloodDrainer = new BloodDrainer(2, SoundsRegister.gunDrainGun, 600, 10, 40);
-	public static final Item blasterBoneBlaster = new BoneBlaster(15, SoundsRegister.gunMiniPistol, 800, 11, 20);
-	public static final Item blasterBubbleHorn = new BubbleHorn(13, SoundsRegister.gunBubbleGun, 700, 4, 10);
-	public static final Item blasterCamelCannon = new CamelCannon(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterColourCannon = new ColourCannon(40, SoundsRegister.gunColourCannon, 600, 40, 50);
-	public static final Item blasterConfettiCannon = new ConfettiCannon(0, SoundsRegister.gunConfettiCannon, 600, 40, 50);
-	public static final Item blasterConfettiCluster = new ConfettiCluster(0, SoundsRegister.gunConfettiCannon, 500, 20, 20);
-	public static final Item blasterDarkDestroyer = new DarkDestroyer(0, SoundsRegister.gunDoomGun, 600, 35, 40);
-	public static final Item blasterDarklyGuster = new DarklyGuster(8, SoundsRegister.gunDarkGun, 600, 5, 10);
-	public static final Item blasterDeathRay = new DeathRay(14, SoundsRegister.gunRayGun, 600, 20, 40);
-	public static final Item blasterDeerDetonator = new DeerDetonator(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterDoomBringer = new DoomBringer(0, SoundsRegister.gunDoomGun, 600, 100, 40);
-	public static final Item blasterDragonDestroyer = new DragonDestroyer(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterElectroSoundCannon = new ElectroSoundCannon(12, null, 500, 10, 8);
-	public static final Item blasterEradicator = new Eradicator(2, SoundsRegister.gunSprayer, 800, 1, 2);
-	public static final Item blasterFishFryer = new FishFryer(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterFlowercorne = new Flowercorne(3, SoundsRegister.gunSprayer, 500, 4, 10);
-	public static final Item blasterFragment = new Fragment(4, SoundsRegister.gunIllusionSMG, 600, 2, 3);
-	public static final Item blasterFroster = new Froster(2, SoundsRegister.gunSprayer, 500, 1, 2);
-	public static final Item blasterGasBlaster = new GasBlaster(16, SoundsRegister.gunGasGun, 600, 10, 25);
-	public static final Item blasterGhoulGasser = new GhoulGasser(25, SoundsRegister.gunGasGun, 800, 15, 25);
-	public static final Item blasterGoldBringer = new GoldBringer(0, SoundsRegister.gunDoomGun, 600, 100, 25);
-	public static final Item blasterGravityBlaster = new GravityBlaster(0, SoundsRegister.gunGravityBlaster, 600, 1, 1.5f);
-	public static final Item blasterHellHorn = new HellHorn(14, SoundsRegister.gunBubbleGun, 600, 4, 10);
-	public static final Item blasterHoundHoncho = new HoundHoncho(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterIllusionRevolver = new IllusionRevolver(16, SoundsRegister.gunIllusionRevolver, 800, 10, 25);
-	public static final Item blasterIllusionSMG = new IllusionSMG(7, SoundsRegister.gunIllusionSMG, 800, 4, 8);
-	public static final Item blasterIonBlaster = new IonBlaster(8, SoundsRegister.gunIonBlaster, 500, 10, 20);
-	public static final Item blasterIroMiner = new IroMiner(22, SoundsRegister.gunMoonShiner, 600, 18, 30);
-	public static final Item blasterLaserBlaster = new LaserBlaster(1, SoundsRegister.gunIllusionSMG, 600, 1, 3);
-	public static final Item blasterLightBlaster = new LightBlaster(63, SoundsRegister.gunMindBlaster, 500, 40, 50);
-	public static final Item blasterLightSpark = new LightSpark(0, SoundsRegister.gunSoulSpark, 2, 1, 200);
-	public static final Item blasterLunaBlaster = new LunaBlaster(4, SoundsRegister.gunSpaceRevolver, 500, 3, 4);
-	public static final Item blasterMechaBlaster = new MechaBlaster(30, SoundsRegister.gunMechCannon, 500, 30, 40);
-	public static final Item blasterMindBlaster = new MindBlaster(55, SoundsRegister.gunMindBlaster, 800, 40, 50);
-	public static final Item blasterMoonDestroyer = new MoonDestroyer(0, SoundsRegister.gunDoomGun, 600, 35, 20);
-	public static final Item blasterMoonShiner = new MoonShiner(20, SoundsRegister.gunMoonShiner, 600, 70, 60);
-	public static final Item blasterOdious = new Odious(1.3d, SoundsRegister.gunSprayer, 500, 1, 2);
-	public static final Item blasterOrbocron = new Orbocron(16, SoundsRegister.gunShadowBlaster, 600, 30, 100);
-	public static final Item blasterParalyzer = new Paralyzer(17, SoundsRegister.gunParalyzer, 800, 25, 25);
-	public static final Item blasterPartyPopper = new PartyPopper(17, SoundsRegister.gunPartyPopper, 500, 25, 20);
-	public static final Item blasterPenguinBlaster = new PenguinBlaster(6, SoundsRegister.gunAnimalBlaster, 500, 5, 16);
-	public static final Item blasterPoisonPlunger = new PoisonPlunger(1, SoundsRegister.gunGasGun, 600, 8, 40);
-	public static final Item blasterPowerRay = new PowerRay(8, SoundsRegister.gunRayGun, 700, 20, 40);
-	public static final Item blasterProton = new Proton(3, SoundsRegister.gunIllusionSMG, 600, 2, 3);
-	public static final Item blasterReefer = new Reefer(55, SoundsRegister.gunReefer, 600, 35, 100);
-	public static final Item blasterRevolution = new Revolution(10, SoundsRegister.gunRevolution, 600, 35, 50);
-	public static final Item blasterSeaocron = new Seaocron(20, SoundsRegister.gunShadowBlaster, 600, 30, 100);
-	public static final Item blasterSkulloBlaster = new SkulloBlaster(6, SoundsRegister.gunSpaceRevolver, 600, 3, 4);
-	public static final Item blasterSoulDrainer = new SoulDrainer(3, SoundsRegister.gunDrainGun, 550, 10, 30);
-	public static final Item blasterSoulSpark = new SoulSpark(0, SoundsRegister.gunSoulSpark, 1, 30, 200);
-	public static final Item blasterSoulStorm = new SoulStorm(1, SoundsRegister.gunSprayer, 600, 1, 2);
-	public static final Item blasterSpiritShower = new SpiritShower(0, SoundsRegister.gunSpiritShower, 600, 30, 50);
-	public static final Item blasterStepSoundCannon = new StepSoundCannon(12, null, 500, 10, 8);
-	public static final Item blasterSwarmotron = new Swarmotron(20, SoundsRegister.gunSwarmotron, 500, 35, 50);
-	public static final Item blasterSynthSoundCannon = new SynthSoundCannon(12, null, 500, 10, 8);
-	public static final Item blasterToxicTerrorizer = new ToxicTerrorizer(9, SoundsRegister.gunMagicGun, 600, 12, 8);
-	public static final Item blasterVibeSoundCannon = new VibeSoundCannon(12, null, 500, 10, 8);
-	public static final Item blasterVortexBlaster = new VortexBlaster(0, SoundsRegister.gunGravityBlaster, 600, 60, 30);
-	public static final Item blasterWhimsyWinder = new WhimsyWinder(5, SoundsRegister.gunWhimsyWinder, 500, 5, 10);
-	public static final Item blasterWithersWrath = new WithersWrath(11, SoundsRegister.gunWithersWrath, 800, 6, 20);
+	@GameRegistry.ObjectHolder("apoco_shower")
+	public static final BaseBlaster blasterApocoShower = null;
+	@GameRegistry.ObjectHolder("atomizer")
+	public static final BaseBlaster blasterAtomizer = null;
+	@GameRegistry.ObjectHolder("beamer")
+	public static final BaseBlaster blasterBeamer = null;
+	@GameRegistry.ObjectHolder("blast_chiller")
+	public static final BaseBlaster blasterBlastChiller = null;
+	@GameRegistry.ObjectHolder("blood_drainer")
+	public static final BaseBlaster blasterBloodDrainer = null;
+	@GameRegistry.ObjectHolder("bone_blaster")
+	public static final BaseBlaster blasterBoneBlaster = null;
+	@GameRegistry.ObjectHolder("bubble_horn")
+	public static final BaseBlaster blasterBubbleHorn = null;
+	@GameRegistry.ObjectHolder("colour_cannon")
+	public static final BaseBlaster blasterColourCannon = null;
+	@GameRegistry.ObjectHolder("confetti_cannon")
+	public static final BaseBlaster blasterConfettiCannon = null;
+	@GameRegistry.ObjectHolder("confetti_cluster")
+	public static final BaseBlaster blasterConfettiCluster = null;
+	@GameRegistry.ObjectHolder("dark_destroyer")
+	public static final BaseBlaster blasterDarkDestroyer = null;
+	@GameRegistry.ObjectHolder("darkly_guster")
+	public static final BaseBlaster blasterDarklyGuster = null;
+	@GameRegistry.ObjectHolder("death_ray")
+	public static final BaseBlaster blasterDeathRay = null;
+	@GameRegistry.ObjectHolder("doom_bringer")
+	public static final BaseBlaster blasterDoomBringer = null;
+	@GameRegistry.ObjectHolder("eradicator")
+	public static final BaseBlaster blasterEradicator = null;
+	@GameRegistry.ObjectHolder("experiment_w801")
+	public static final BaseBlaster blasterExperimentW801 = null;
+	@GameRegistry.ObjectHolder("flowercorne")
+	public static final BaseBlaster blasterFlowercorne = null;
+	@GameRegistry.ObjectHolder("fragment")
+	public static final BaseBlaster blasterFragment = null;
+	@GameRegistry.ObjectHolder("froster")
+	public static final BaseBlaster blasterFroster = null;
+	@GameRegistry.ObjectHolder("gas_blaster")
+	public static final BaseBlaster blasterGasBlaster = null;
+	@GameRegistry.ObjectHolder("ghoul_gasser")
+	public static final BaseBlaster blasterGhoulGasser = null;
+	@GameRegistry.ObjectHolder("gold_bringer")
+	public static final BaseBlaster blasterGoldBringer = null;
+	@GameRegistry.ObjectHolder("gravity_blaster")
+	public static final BaseBlaster blasterGravityBlaster = null;
+	@GameRegistry.ObjectHolder("hell_horn")
+	public static final BaseBlaster blasterHellHorn = null;
+	@GameRegistry.ObjectHolder("illusion_revolver")
+	public static final BaseBlaster blasterIllusionRevolver = null;
+	@GameRegistry.ObjectHolder("illusion_smg")
+	public static final BaseBlaster blasterIllusionSMG = null;
+	@GameRegistry.ObjectHolder("ion_blaster")
+	public static final BaseBlaster blasterIonBlaster = null;
+	@GameRegistry.ObjectHolder("iro_miner")
+	public static final BaseBlaster blasterIroMiner = null;
+	@GameRegistry.ObjectHolder("laser_blaster")
+	public static final BaseBlaster blasterLaserBlaster = null;
+	@GameRegistry.ObjectHolder("light_blaster")
+	public static final BaseBlaster blasterLightBlaster = null;
+	@GameRegistry.ObjectHolder("light_spark")
+	public static final BaseBlaster blasterLightSpark = null;
+	@GameRegistry.ObjectHolder("luna_blaster")
+	public static final BaseBlaster blasterLunaBlaster = null;
+	@GameRegistry.ObjectHolder("mecha_blaster")
+	public static final BaseBlaster blasterMechaBlaster = null;
+	@GameRegistry.ObjectHolder("mind_blaster")
+	public static final BaseBlaster blasterMindBlaster = null;
+	@GameRegistry.ObjectHolder("moon_destroyer")
+	public static final BaseBlaster blasterMoonDestroyer = null;
+	@GameRegistry.ObjectHolder("moon_shiner")
+	public static final BaseBlaster blasterMoonShiner = null;
+	@GameRegistry.ObjectHolder("odious")
+	public static final BaseBlaster blasterOdious = null;
+	@GameRegistry.ObjectHolder("orbocron")
+	public static final BaseBlaster blasterOrbocron = null;
+	@GameRegistry.ObjectHolder("paralyzer")
+	public static final BaseBlaster blasterParalyzer = null;
+	@GameRegistry.ObjectHolder("party_popper")
+	public static final BaseBlaster blasterPartyPopper = null;
+	@GameRegistry.ObjectHolder("poison_plunger")
+	public static final BaseBlaster blasterPoisonPlunger = null;
+	@GameRegistry.ObjectHolder("power_ray")
+	public static final BaseBlaster blasterPowerRay = null;
+	@GameRegistry.ObjectHolder("proton")
+	public static final BaseBlaster blasterProton = null;
+	@GameRegistry.ObjectHolder("reefer")
+	public static final BaseBlaster blasterReefer = null;
+	@GameRegistry.ObjectHolder("revolution")
+	public static final BaseBlaster blasterRevolution = null;
+	@GameRegistry.ObjectHolder("seaocron")
+	public static final BaseBlaster blasterSeaocron = null;
+	@GameRegistry.ObjectHolder("skullo_blaster")
+	public static final BaseBlaster blasterSkulloBlaster = null;
+	@GameRegistry.ObjectHolder("soul_drainer")
+	public static final BaseBlaster blasterSoulDrainer = null;
+	@GameRegistry.ObjectHolder("soul_spark")
+	public static final BaseBlaster blasterSoulSpark = null;
+	@GameRegistry.ObjectHolder("soul_storm")
+	public static final BaseBlaster blasterSoulStorm = null;
+	@GameRegistry.ObjectHolder("spirit_shower")
+	public static final BaseBlaster blasterSpiritShower = null;
+	@GameRegistry.ObjectHolder("swarmotron")
+	public static final BaseBlaster blasterSwarmotron = null;
+	@GameRegistry.ObjectHolder("toxic_terrorizer")
+	public static final BaseBlaster blasterToxicTerrorizer = null;
+	@GameRegistry.ObjectHolder("vortex_blaster")
+	public static final BaseBlaster blasterVortexBlaster = null;
+	@GameRegistry.ObjectHolder("whimsy_winder")
+	public static final BaseBlaster blasterWhimsyWinder = null;
+	@GameRegistry.ObjectHolder("withers_wrath")
+	public static final BaseBlaster blasterWithersWrath = null;
 
 	@SubscribeEvent
 	public static void registerWeapon(final RegistryEvent.Register<Item> ev) {
 		final IForgeRegistry<Item> registry = ev.getRegistry();
 
-		registry.registerAll(
-				swordAmethyst,
-				swordBaron,
-				swordBloodfury,
-				swordBloodstone,
-				swordCandlefire,
-				swordCaramelCarver,
-				swordCoralstorm,
-				swordCreepified,
-				swordCrystallite,
-				swordEmberstone,
-				swordExplochron,
-				swordFireborne,
-				swordGuardians,
-				swordHarvester,
-				swordHoly,
-				swordIllusion,
-				swordJade,
-				swordLegbone,
-				swordLightsWay,
-				swordLimonite,
-				swordNethengeic,
-				swordRockbasher,
-				swordRockPick,
-				swordRosidian,
-				swordRosite,
-				swordRunic,
-				swordSapphire,
-				swordShadow,
-				swordShroomus,
-				swordSkeletal,
-				swordSupremacy,
-				swordSweet,
-				swordTrollBasherAxe,
-				swordUltraflame,
-				swordVoid,
-				swordVulcammer,
-				greatbladeBaron,
-				greatbladeCandyBlade,
-				greatbladeCoral,
-				greatbladeCottonCrusher,
-				greatbladeCreepoid,
-				greatbladeCrystal,
-				greatbladeErebonScythe,
-				greatbladeGodsGreatblade,
-				greatbladeGoofy,
-				greatbladeGrandsword,
-				greatbladeHaunted,
-				greatbladeKnightsGuard,
-				greatbladeLelyetian,
-				greatbladeLunar,
-				greatbladeLuxonScythe,
-				greatbladeLyonic,
-				greatbladeMillenium,
-				greatbladeNoxious,
-				greatbladePlutonScythe,
-				greatbladePrimordial,
-				greatbladeRosidian,
-				greatbladeRoyal,
-				greatbladeRunic,
-				greatbladeSelyanScythe,
-				greatbladeShroomic,
-				greatbladeShyreSword,
-				greatbladeSubterranean,
-				greatbladeTidal,
-				greatbladeUnderworld,
-				maulCrystal,
-				maulHorizon,
-				maulCoralstone,
-				gunAbominator,
-				gunApocoAssaultRifle,
-				gunApocoRifle,
-				gunAquaMagnum,
-				gunArtifact,
-				gunBaronator,
-				gunBayonetteRifle,
-				gunBigTop,
-				gunBloodIron,
-				gunChainWrecker,
-				gunChilliChugger,
-				gunClownershot,
-				gunConstruct,
-				gunCoralClogger,
-				gunCoreRifle,
-				gunCrystalCarver,
-				gunCyclone,
-				gunDarkener,
-				gunDartGun,
-				gunDestructionRifle,
-				gunDischargeRifle,
-				gunDraco,
-				gunDragilator,
-				gunDustometer,
-				gunEchoGull,
-				gunElectinator,
-				gunFlameWrecker,
-				gunFlamingFury,
-				gunFloroRifle,
-				gunFlowersFury,
-				gunFrosticator,
-				gunGardener,
-				gunGaugeRifle,
-				gunGerminator,
-				gunGoldenFury,
-				gunHappyHaunter,
-				gunHaunterRifle,
-				gunHeatWave,
-				gunHiver,
-				gunHotShot,
-				gunHuntersRifle,
-				gunIominator,
-				gunIonRevolver,
-				gunIroRifle,
-				gunKrilinator,
-				gunLightIron,
-				gunLunarAssaultRifle,
-				gunMechanicalAssaultRifle,
-				gunMegagun,
-				gunMiasma,
-				gunMinigun,
-				gunMintMagnum,
-				gunMK,
-				gunMKFung,
-				gunNethenetteRifle,
-				gunNethengeicSlugger,
-				gunOvershot,
-				gunPrecasianSlugger,
-				gunPredator,
-				gunPredigun,
-				gunPulsator,
-				gunPurityRifle,
-				gunRockerRifle,
-				gunRoulette,
-				gunShoeFlinger,
-				gunSkullette,
-				gunSkullifact,
-				gunSpectacle,
-				gunSpineGun,
-				gunSquadGun,
-				gunStampede,
-				gunStormer,
-				gunSublimus,
-				gunTigerTommy,
-				gunTommy,
-				gunVileVanquisher,
-				gunWartGun,
-				gunWrecker,
-				shotgunAbyssro,
-				shotgunAmplifier,
-				shotgunBlastBarrel,
-				shotgunBlueBarrel,
-				shotgunBoulder,
-				shotgunBrownBlaster,
-				shotgunDemolisher,
-				shotgunDestructionShotgun,
-				shotgunDischargeShotgun,
-				shotgunGimmick,
-				shotgunGingerBlaster,
-				shotgunLongshot,
-				shotgunMechyro,
-				shotgunPurityShotgun,
-				shotgunPurplePunisher,
-				shotgunRedRocket,
-				shotgunVivo,
-				sniperBaronSSR,
-				sniperBayonetteSR,
-				sniperBoltRifle,
-				sniperCamoRifle,
-				sniperClownCracker,
-				sniperClownimator,
-				sniperCrystaneer,
-				sniperDarkBeast,
-				sniperDeadlock,
-				sniperDecimator,
-				sniperDischargeSniper,
-				sniperDualSight,
-				sniperDuster,
-				sniperFloro500,
-				sniperHeadHunter,
-				sniperHiveCracker,
-				sniperKa500,
-				sniperMarkMaker,
-				sniperMineral,
-				sniperMonster,
-				sniperMoonMaker,
-				sniperRosidRifle,
-				sniperSabbath,
-				sniperSludgeSniper,
-				sniperSweetTooth,
-				sniperTerminator,
-				sniperViper1,
-				cannonAncientBomber,
-				cannonAncientDischarger,
-				cannonAquaCannon,
-				cannonBalloonBomber,
-				cannonBigBlast,
-				cannonBlastCannon,
-				cannonBlissfulBlast,
-				cannonBombLauncher,
-				cannonBoomBoom,
-				cannonBoomCannon,
-				cannonBoulderBomber,
-				cannonBozoBlaster,
-				cannonBulbCannon,
-				cannonCarrotCannon,
-				cannonClownCannon,
-				cannonClownoPulse,
-				cannonCoralCannon,
-				cannonDischargeCannon,
-				cannonEnergyCannon,
-				cannonErebonStickler,
-				cannonFloroRPG,
-				cannonFlowerCannon,
-				cannonFungalCannon,
-				cannonGhastBlaster,
-				cannonGhoulCannon,
-				cannonGigaCannon,
-				cannonGolderBomber,
-				cannonHiveBlaster,
-				cannonHiveHowitzer,
-				cannonIroCannon,
-				cannonJackFunger,
-				cannonJackRocker,
-				cannonLuxonStickler,
-				cannonMechaCannon,
-				cannonMiniCannon,
-				cannonMissileMaker,
-				cannonMoonCannon,
-				cannonPlutonStickler,
-				cannonPredatorianBlaster,
-				cannonPulseCannon,
-				cannonRPG,
-				cannonSelyanStickler,
-				cannonShadowBlaster,
-				cannonShyreBlaster,
-				cannonSmileBlaster,
-				cannonSuperCannon,
-				cannonUltraCannon,
-				cannonVoxCannon,
-				cannonWaterBalloonBomber,
-				cannonWitherCannon,
-				throwableGrenade,
-				throwableSliceStar,
-				throwableVulkram,
-				throwableChakram,
-				throwableRunicBomb,
-				throwableGooBall,
-				throwableHellfire,
-				vulcane,
-				vulcaneBattle,
-				vulcaneEquality,
-				vulcaneFire,
-				vulcaneImpairment,
-				vulcanePoison,
-				vulcanePower,
-				vulcaneWither,
-				bowAlacrity,
-				bowAncient,
-				bowAtlantic,
-				bowBaron,
-				bowBoreic,
-				bowDaybreaker,
-				bowDeep,
-				bowExplosive,
-				bowHaunted,
-				bowIce,
-				bowInfernal,
-				bowJustice,
-				bowLunar,
-				bowMecha,
-				bowNightmare,
-				bowPoison,
-				bowPredatious,
-				bowPrimordial,
-				bowRosidian,
-				bowRunic,
-				bowScreamer,
-				bowShyregem,
-				bowSkeletal,
-				bowSkydriver,
-				bowSlingshot,
-				bowSoulfire,
-				bowSpectral,
-				bowSpeed,
-				bowSunshine,
-				bowToxin,
-				bowVoid,
-				bowWeaken,
-				bowWither,
-				archergunCoral,
-				archergunLunar,
-				archergunMecha,
-				archergunPyro,
-				archergunRosidian,
-				archergunSkeletal,
-				archergunSpectral,
-				archergunTrolls,
-				archergunViral,
-				staffAquatic,
-				staffAtlantic,
-				staffBaron,
-				staffCandy,
-				staffCelestial,
-				staffConcussion,
-				staffCoral,
-				staffCrystal,
-				staffCrystik,
-				staffCryston,
-				staffDestruction,
-				staffEmber,
-				staffEverfight,
-				staffEvermight,
-				staffFire,
-				staffFirefly,
-				staffFirestorm,
-				staffFungal,
-				staffGhoul,
-				staffHaunters,
-				staffHive,
-				staffJoker,
-				staffKaiyu,
-				staffLightning,
-				staffLightshine,
-				staffLunar,
-				staffLyonic,
-				staffMecha,
-				staffMeteor,
-				staffMoonlight,
-				staffNature,
-				staffNightmare,
-				staffNoxious,
-				staffPhantom,
-				staffPoison,
-				staffPower,
-				staffPrimordial,
-				staffReef,
-				staffRejuvenation,
-				staffRosidian,
-				staffRunic,
-				staffShadowlord,
-				staffShow,
-				staffShyre,
-				staffSky,
-				staffStriker,
-				staffSun,
-				staffSurge,
-				staffTangle,
-				staffUltimatum,
-				staffUnderworld,
-				staffWater,
-				staffWeb,
-				staffWind,
-				staffWither,
-				staffWizards,
-				blasterApocoShower,
-				blasterAtomizer,
-				blasterBeamer,
-				blasterBearBlaster,
-				blasterBeatSoundCannon,
-				blasterBeeBlaster,
-				blasterBlastChiller,
-				blasterBloodDrainer,
-				blasterBoneBlaster,
-				blasterBubbleHorn,
-				blasterCamelCannon,
-				blasterColourCannon,
-				blasterConfettiCannon,
-				blasterConfettiCluster,
-				blasterDarkDestroyer,
-				blasterDarklyGuster,
-				blasterDeathRay,
-				blasterDeerDetonator,
-				blasterDoomBringer,
-				blasterDragonDestroyer,
-				blasterElectroSoundCannon,
-				blasterEradicator,
-				blasterFishFryer,
-				blasterFlowercorne,
-				blasterFragment,
-				blasterFroster,
-				blasterGasBlaster,
-				blasterGhoulGasser,
-				blasterGoldBringer,
-				blasterGravityBlaster,
-				blasterHellHorn,
-				blasterHoundHoncho,
-				blasterIllusionRevolver,
-				blasterIllusionSMG,
-				blasterIonBlaster,
-				blasterIroMiner,
-				blasterLaserBlaster,
-				blasterLightBlaster,
-				blasterLightSpark,
-				blasterLunaBlaster,
-				blasterMechaBlaster,
-				blasterMindBlaster,
-				blasterMoonDestroyer,
-				blasterMoonShiner,
-				blasterOdious,
-				blasterOrbocron,
-				blasterParalyzer,
-				blasterPartyPopper,
-				blasterPenguinBlaster,
-				blasterPoisonPlunger,
-				blasterPowerRay,
-				blasterProton,
-				blasterReefer,
-				blasterRevolution,
-				blasterSeaocron,
-				blasterSkulloBlaster,
-				blasterSoulDrainer,
-				blasterSoulSpark,
-				blasterSoulStorm,
-				blasterSpiritShower,
-				blasterStepSoundCannon,
-				blasterSwarmotron,
-				blasterSynthSoundCannon,
-				blasterToxicTerrorizer,
-				blasterVibeSoundCannon,
-				blasterVortexBlaster,
-				blasterWhimsyWinder,
-				blasterWithersWrath
+		registerSwords(registry,
+				new AmethystSword(		SWORD_AMETHYST, 		0), // Overworld | Crafting
+				new BaronSword(			SWORD_BARON, 			0), // Barathos | Crafting
+				new BloodfurySword(		SWORD_BLOODFURY, 		-2.2D), // Abyss | Crafting
+				new BloodstoneSword(	SWORD_BLOODSTONE, 		0), // Abyss | Crafting
+				new CandlefireSword(	SWORD_CANDLEFIRE, 		0), // UPGRADE KIT Nether
+				new CaramelCarver(		SWORD_CARAMEL_CARVER, 	0), // Candyland | Gingerbread Man
+				new CoralstormSword(	SWORD_CORALSTORM, 		0), // Overworld | Troll Trader
+				new CreepifiedSword(	SWORD_CREEPIFIED, 		0), // Creeponia | CREEP
+				new CrystalliteSword(	SWORD_CRYSTALLITE, 		0), // Haven | Crafting
+				new EmberstoneSword(	SWORD_EMBERSTONE, 		0), // Nether | Crafting
+				new ExplochronSword(	SWORD_EXPLOCHRON, 		0), // Iromine | Crafting
+				new FireborneSword(		SWORD_FIREBORNE, 		0), // Nether | Crafting
+				new GuardiansSword(		SWORD_GUARDIAN, 		0), // Haven | Four Guardians
+				new HarvesterSword(		SWORD_HARVESTER, 		0), // Dustopia | Crusilisk
+				new HolySword(			SWORD_HOLY, 			Enums.WeaponSpeed.TRIPLE.value), // Tribute
+				new IllusionSword(		SWORD_ILLUSION, 		0), // Abyss | Elusive
+				new JadeSword(			SWORD_JADE, 			0), // Overworld | Crafting
+				new LegboneSword(		SWORD_LEGBONE, 			0), // Precasia | Iosaur
+				new LightsWay(			SWORD_LIGHTS_WAY, 		Enums.WeaponSpeed.DOUBLE.value), // Shyrelands | Crafting
+				new LimoniteSword(		SWORD_LIMONITE, 		0), // Overworld | Crafting
+				new NethengeicSword(	SWORD_NETHENGEIC, 		0), // Nether | Nethengeic Wither
+				new PrimalSword(		SWORD_PRIMAL, 			0), // Precasia | Tyrosaur
+				new RockbasherSword(	SWORD_ROCKBASHER, 		0), // Haven | Rock Rider
+				new RockPickSword(		SWORD_ROCKPICK, 		0), // Deeplands | Arocknid
+				new RosidianSword(		SWORD_ROSIDIAN, 		0), // Gardencia | Vinocorne
+				new RositeSword(		SWORD_ROSITE, 			0), // Overworld | Crafting
+				new RunicSword(			SWORD_RUNIC, 			0), // Runandor | Clunkhead
+				new SapphireSword(		SWORD_SAPPHIRE, 		0), // Overworld | Crafting
+				new ShadowSword(		SWORD_SHADOW, 			0), // Dustopia | Crafting
+				new ShroomusSword(		SWORD_SHROOMUS, 		0), // Mysterium | King Shroomus
+				new SkeletalSword(		SWORD_SKELETAL, 		-2D), // Precasia | Skeletron
+				new SupremacySword(		SWORD_SUPREMACY, 		0), // Celeve | Crafting
+				new SweetSword(			SWORD_SWEET, 			0), // Candyland | Crafting
+				new TrollBasherAxe(		TROLL_BASHER_AXE, 		0), // Overworld | Smash
+				new Ultraflame(			SWORD_ULTRAFLAME, 		0), // Lunalus | Gorb Engineer
+				new VoidSword(			SWORD_VOID, 			0) // Overworld | Mother Void Walker
+		);
+
+		registerGreatblades(registry,
+				new BaronGreatblade(		19.5f, 	0, 		1200), // Barathos | Baroness
+				new CandyBlade(				23.0f, 	0, 		1450), // Candyland | Gingerbread House Loot
+				new CoralGreatblade(		24.5f, 	0, 		1800), // LBorean | Crafting
+				new CottonCrusher(			24.0f,	0, 		1600), // Candyland | Cotton Candor
+				new CreepoidGreatblade(		19.0f, 	0, 		1080), // Creeponia | Crafting
+				new CrystalGreatblade(		22.0f, 	0, 		1480), // Crystevia | Crystal Trader
+				new ErebonScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Penumbra
+				new GodsGreatblade(			29.5f, 	0, 		2000), // Shyrelands | Xxeus
+				new GoofyGreatblade(		22.0f, 	0, 		1300), // Celeve | Crafting
+				new Grandsword(				21.0f, 	0, 		1350), // Abyss | Crafting
+				new HauntedGreatblade(		22.0f, 	0, 		1370), // Mysterium | Haunted Castle
+				new KnightsGuard(			26.5, 	0, 		2050), // Shyrelands | Crafting
+				new LelyetianGreatblade(	18.5f, 	0, 		1100), // Lelyetia | Crafting
+				new LunarGreatblade(		25.0f, 	0, 		1850), // Lunalus | Lunar Village Loot
+				new LuxonScythe(			17.5f, 	-2.8D, 	1750), // Ancient Cavern | Horon
+				new LyonicGreatblade(		20.0f, 	-3.1D, 	1500), // Iromine | Silverfoot
+				new MilleniumGreatblade(	26.5f, 	0, 		2050), // UPGRADE KIT
+				new NoxiousGreatblade(		23.0f, 	0, 		1580), // Vox Ponds | Voxxulon
+				new PlutonScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Goldorth
+				new PrimordialGreatblade(	25.5f, 	0, 		1900), // Dustopia | Primordial Five
+				new RosidianGreatblade(		22.5f, 	0, 		1470), // Gardencia | Floro Castle Loot
+				new RoyalGreatblade(		19.0f, 	0, 		1130), // Barathos | Crafting
+				new RunicGreatblade(		24.5f, 	0, 		1800), // Runandor | Crafting
+				new SelyanScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Coniferon
+				new ShroomicGreatblade(		21.5f, 	0, 		1300), // Mysterium | Crafting
+				new ShyreSword(				26.0f, 	0, 		2000), // Shyrelands | Crafting
+				new SubterraneanGreatblade(	21.5f, 	0, 		1160), // Deeplands | Kror
+				new TidalGreatblade(		24.0f, 	0, 		1750), // Hauling
+				new UnderworldGreatblade(	18.5f, 	0, 		1050) // Deeplands | Crafting
+		);
+
+		registerMauls(registry,
+				new CoralstoneMaul(	26.5f, 	Enums.WeaponSpeed.THIRD.value, 	3.6D, 	1600), // LBorean | Crafting
+				new CrystalMaul(	23.5f, 	Enums.WeaponSpeed.THIRD.value, 	3.1D, 	1400), // Crystevia | Crystal Trader
+				new ElectronMaul(	25.0f, 	Enums.WeaponSpeed.THIRD.value, 	3.5D, 	1500), // Iromine | Mechbot
+				new HorizonMaul(	23.0f, 	Enums.WeaponSpeed.THIRD.value, 	3.0D, 	1300), // Haven | Crafting
+				new VulcammerMaul(	28.0f, 	Enums.WeaponSpeed.THIRD.value, 	3.5D, 	1750) // Immortallis | Token Collector
+		);
+
+		registerGuns(registry,
+				new Abominator(				10.5f,	1180, 12, 	3.0f), // Greckon | Crafting
+				new ApocoAssaultRifle(		22.5f, 	1480, 24, 	6.0f), // UPGRADE KIT
+				new ApocoRifle(				10.0f, 	1490, 24, 	6.0f), // UPGRADE KIT
+				new AquaMagnum(				7.5f, 	1520, 8, 	4.0f), // UPGRADE KIT
+				new Artifact(				19.0f, 	1500, 20, 	3.0f), // UPGRADE KIT
+				new Baronator(				12.0f, 	620, 	20, 	3.0f), // Barathos | Crafting
+				new BayonetteRifle(			12.5f, 	630, 	20, 	4.0f), // Precasia | Crafting
+				new BigTop(					12.5f, 	920, 	16, 	4.0f), // Celeve | Crafting
+				new BloodIron(				24.5f, 	870, 	32, 	14.0f), // Abyss | Crafting
+				new ChainWrecker(			6.0f, 	960, 	8, 	2.0f), // Iromine | Crafting
+				new ChilliChugger(			12.0f, 	890, 	16, 	2.0f), // Gardencia | Crafting
+				new Clownershot(			8.0f, 	1470, 16, 	7.0f), // UPGRADE KIT
+				new Construct(				9.5f, 	910, 	12, 	4.0f), // Crystevia | Crafting
+				new CoralClogger(			33.0f, 	500, 	40, 	15.0f), // TODO LBorean Minigame
+				new CoreRifle(				7.5f, 	630, 	12, 	3.0f), // Lelyetia | Crafting
+				new CrystalCarver(			12.0f, 	870, 	16, 	5.0f), // Crystevia | Crafting
+				new Cyclone(				9.5f, 	1100, 12, 	3.0f), // Celeve | Gyro
+				new Darkener(				11.5f, 	1510, 12, 	7.0f), // UPGRADE KIT
+				new DartGun(				10.0f, 	360, 	20, 	0.2f), // Overworld | Amphibiyte
+				new DestructionRifle(		12.5f, 	610, 	20, 	5.0f), // Deeplands | Crafting
+				new DischargeRifle(			5.0f, 	570, 	24, 	6.0f), // Creeponia | Crafting
+				new Draco(					15.0f, 	1390, 16, 	2.0f), // LBorean | Dracyon
+				new Dragilator(				6.5f, 	1120, 8, 	4.0f), // Haven | Red Guardian
+				new Dustometer(				21.0f, 	1180, 24, 	7.0f), // Dustopia | Crafting
+				new EchoGull(				17.5f, 	580, 	28, 	6.0f), // Barathos | Crafting
+				new Electinator(			6.5f, 	1120, 8, 	4.0f), // Haven | Yellow Guardian
+				new FlameWrecker(			7.5f, 	1530, 8, 	2.0f), // UPGRADE KIT
+				new FlamingFury(			20.5f, 	860, 	28, 	4.0f), // The End | Ender Dragon
+				new FloroRifle(				15.0f, 	1500, 16, 	4.0f), // UPGRADE KIT
+				new FlowersFury(			13.0f, 	1100,	16, 	5.0f), // Gardencia | Vinocorne
+				new Frosticator(			6.5f, 	1120, 8, 	4.0f), // Haven | Blue Guardian
+				new Gardener(				7.0f, 	630, 	12, 	2.0f), // Overworld | Farming
+				new GaugeRifle(				22.5f, 	590, 	36, 	8.0f), // Lelyetia | Lelyetian Trader
+				new Germinator(				6.5f, 	1120, 8, 	4.0f), // Haven | Green Guardian
+				new GoldenFury(				26.0f, 	1520, 28, 	4.0f), // UPGRADE KIT
+				new HappyHaunter(			11.5f, 	1510, 12, 	3.0f), // UPGRADE KIT
+				new HaunterRifle(			11.0f, 	1420, 12, 	3.0f), // Greckon | Bane
+				new HeatWave(				11.0f, 	450, 	12, 	10.0f), // UPGRADE KIT
+				new Hiver(					11.5f, 	1490, 12, 	4.0f), // UPGRADE KIT
+				new HotShot(				14.5f, 	580, 	24, 	5.0f), // Nether | Crafting
+				new HuntersRifle(			21.5f, 	900, 	28, 	4.0f), // Vox Ponds | Crafting
+				new Iominator(				11.5f, 	1500, 12, 	3.0f), // UPGRADE KIT
+				new IonRevolver(			9.5f, 	930, 	12, 	3.0f), // Crystevia | Crafting
+				new IroRifle(				12.5f, 	910, 	16, 	4.0f), // Iromine | Crafting
+				new Krilinator(				15.0f, 	900, 	20, 	4.0f), // Mysterium | Crafting
+				new LightIron(				30.5f, 	1470, 32, 	14.0f), // UPGRADE KIT
+				new LunarAssaultRifle(		11.5f, 	1430, 12, 	5.0f), // Lunalus | Visualent
+				new MechanicalAssaultRifle(	18.5f, 	940, 	24, 	6.0f), // Iromine | Repair
+				new Megagun(				7.5f, 	1530, 8, 	3.0f), // UPGRADE KIT
+				new Miasma(					9.0f, 	940, 	12, 	3.0f), // Gardencia | Crafting
+				new Minigun(				5.0f, 	670, 	8, 	3.0f), // Lelyetia | Lelyetian Tower
+				new MintMagnum(				6.0f, 	900, 	8, 	4.0f), // Candyland | Crafting
+				new MK(						14.5f, 	1240, 16, 	3.0f), // LBorean | Aquatic Castle
+				new MKFung(					15.0f, 	1490, 16, 	3.0f), // UPGRADE KIT
+				new NethenetteRifle(		18.5f, 	1500, 20, 	4.0f), // UPGRADE KIT
+				new NethengeicSlugger(		22.5f, 	780, 	32, 	9.0f), // Nether | Nethengeic Wither
+				new Overshot(				6.5f, 	990, 	16, 	7.0f), // Iromine | Enforcer
+				new PrecasianSlugger(		29.5f, 	1490, 32, 	9.0f), // UPGRADE KIT
+				new Predator(				25.5f, 	1480, 28, 	6.0f), // UPGRADE KIT
+				new Predigun(				7.5f, 	1530, 8, 	3.0f), // UPGRADE KIT
+				new Pulsator(				25.0f, 	1190, 28, 	6.0f), // Lunalus | Crafting
+				new PurityRifle(			18.0f, 	1200, 20, 	3.0f), // Runandor | Crafting
+				new RockerRifle(			10.0f, 	630, 	16, 	0.0f), // Deeplands | Deep Case
+				new Roulette(				22.5f, 	1470, 24, 	8.0f), // UPGRADE KIT
+				new ShoeFlinger(			24.0f, 	400, 	24, 	7.0f), // SPECIAL | Crafting
+				new Skullette(				23.5f, 	1580, 24, 	8.0f), // UPGRADE KIT
+				new Skullifact(				19.5f, 	1570, 20, 	3.0f), // UPGRADE KIT
+				new Spectacle(				11.0f, 	880, 	16, 	3.0f), // Celeve | Jumbo
+				new SpineGun(				11.5f, 	1510, 12, 	7.0f), // UPGRADE KIT
+				new SquadGun(				10.5f, 	1210, 12, 	7.0f), // Dustopia | Crafting
+				new Stampede(				12.0f, 	300, 	24, 	8.0f), // Overworld | Crafting
+				new Stormer(				15.0f, 	900, 	20, 	3.0f), // Candyland | Crafting
+				new Sublimus(				11.0f, 	1530,	12, 	5.0f), // Shyrelands | Crafting
+				new TigerTommy(				11.5f, 	1490, 12, 	7.0f), // UPGRADE KIT
+				new Tommy(					6.0f, 	330, 	12, 	7.0f), // Overworld | Crafting
+				new VileVanquisher(			14.5f, 	930, 	16, 	3.0f), // Vox Ponds | Crafting
+				new WartGun(				16.5f, 	580, 	28, 	1.0f), // Nether | Crafting
+				new Wrecker(				9.5f, 	920, 	12, 	7.0f) // Candyland | Crafting
+		);
+
+		registerShotguns(registry,
+				new Abyssro(			18.5f, 	2, 	1100, 46, 	0.3f, 	18.0f), // UPGRADE KIT
+				new Amplifier(			9.0f, 	5, 	1100, 56, 	0.2f, 	25.0f), // Shyrelands | Crafting
+				new BlastBarrel(		13.0f, 	3, 	740, 	62, 	0.4f, 	23.0f), // Haven | Dawnlight Dungeon
+				new BlueBarrel(			14.5f, 	3, 	1120, 54, 	0.4f, 	16.0f), // UPGRADE KIT Seaside
+				new Boulder(			11.5f, 	4,	1080, 58, 	0.4f, 	30.0f), // UPGRADE KIT
+				new BrownBlaster(		6.0f, 	3, 	300, 	54, 	0.4f, 	16.0f), // Overworld | Crafting
+				new Demolisher(			8.5f, 	4, 	730, 	58, 	0.4f, 	30.0f), // Iromine | Professor
+				new DestructionShotgun(	10.5f, 	3, 	690, 	56, 	0.4f, 	14.0f), // Celeve | Crafting
+				new DischargeShotgun(	0.0f, 	4, 	160, 	55, 	0f, 		15.0f), // TODO Creeponia Minigame
+				new Gimmick(			4.5f, 	10, 	800, 	68, 	0.2f, 	28.0f), // Celeve | Gyro
+				new GingerBlaster(		7.0f, 	5, 	720, 	60, 	0.4f, 	19.0f), // Candyland | Crafting
+				new LongShot(			15.5f, 	2, 	730, 	54, 	0.2f, 	12.0f), // Gardencia | Crafting
+				new Mechyro(			13.0f, 	2, 	720, 	46, 	0.3f, 	18.0f), // Iromine | Professor Trade
+				new PurityShotgun(		15.0f, 	3, 	1090, 56, 	0.4f, 	14.0f), // UPGRADE KIT Runic
+				new PurplePunisher(		20.5f, 	2, 	1120, 52, 	0.785f, 	23.0f), // UPGRADE KIT Haunted
+				new RedRocket(			11.5f, 	2, 	500, 	52, 	0.785f, 	23.0f), // Barathos | Crafting
+				new Vivo(				7.0f, 	3, 	710, 	36, 	0.3f, 	8.0f) // Iromine | Crafting
+		);
+
+		registerSnipers(registry,
+				new BaronSSR(		35.0f, 		240, 	88, 	20.0f), // Barathos | Baroness
+				new BayonetteSR(	33.0f, 		300, 	86, 	18.0f), // Mysterium | Crafting
+				new BoltRifle(		30.0f, 		100, 	100, 	26.0f), // Overworld | Crafting
+				new CamoRifle(		31.5f, 		150, 	84, 	19.0f), // Precasia | Crafting
+				new ClownCracker(	33.5f, 		305, 	84, 	17.0f), // Celeve | Crafting
+				new Clownimator(	49.5f, 		545, 	95, 	18.0f), // UPGRADE KIT
+				new Crystaneer(		37.5f, 		345, 	88, 	21.0f), // Crystevia | Crafting
+				new DarkBeast(		50.5f, 		560, 	96, 	25.0f), // UPGRADE KIT
+				new Deadlock(		25.5f, 		120, 	90, 	25.0f), // Overworld | Crafting
+				new Decimator(		33.0f, 		180, 	95, 	18.0f), // Lelyetia | Crafting
+				new DischargeSniper(10.0f, 		540, 	24, 	11.0f), // UPGRADE KIT
+				new DualSight(		38.5f, 		350, 	91, 	30.0f), // Crystevia | Crafting
+				new Duster(			21.0f, 		170, 	60, 	18.0f), // Barathos | Crafting
+				new Floro500(		37.0f, 		550, 	70, 	13.0f), // UPGRADE KIT
+				new HeadHunter(		41.5f, 		380, 	92, 	23.0f), // Haven | Rock Rider
+				new HiveCracker(	44.0f, 		555, 	84, 	17.0f), // UPGRADE KIT
+				new Ka500(			30.0f, 		360, 	70, 	13.0f), // Gardencia | Crafting
+				new MarkMaker(		36.5f, 		530, 	70, 	13.0f), // UPGRADE KIT
+				new Mineral(		58.5f, 		560, 	112, 	22.0f), // UPGRADE KIT
+				new Monster(		38.0f, 		250, 	96, 	25.0f), // Lelyetia | Graw
+				new MoonMaker(		38.5f, 		570, 	70, 	13.0f), // UPGRADE KIT
+				new RosidRifle(		45.5f, 		405, 	102, 	19.0f), // Gardencia | Vinocorne
+				new Sabbath(		44.0f, 		450, 	97, 	22.0f), // Greckon | Crafting
+				new SludgeSniper(	37.0f, 		350, 	87, 	18.0f), // Vox Ponds | Crafting
+				new SweetTooth(		32.5f, 		460, 	77, 	17.0f), // Candyland | Crafting
+				new Terminator(		53.0f, 		470, 	112, 	22.0f), // Dustopia | Crafting
+				new Viper1(			30.0f, 		185, 	89, 	17.0f) // Deeplands | Crafting
+		);
+
+		registerCannons(registry,
+				new AncientBomber(		23.5f, 		855, 	28, 	14.0f), // UPGRADE KIT
+				new AncientDischarger(	0.0f, 		850, 	20, 	6.0f), // UPGRADE KIT
+				new AquaCannon(			14.0f, 		300, 	35, 	5.0f), // TODO LBorean Minigame
+				new BalloonBomber(		12.5f, 		505, 	24, 	7.0f), // Celeve | Toy Merchant
+				new BigBlast(			28.0f, 		550, 	60, 	19.0f), // Abyss | Shadowlord
+				new BlastCannon(		17.0f, 		510, 	27, 	17.0f), // Crystevia | Crafting
+				new BlissfulBlast(		33.5f, 		835, 	60, 	19.0f), // UPGRADE KIT
+				new BombLauncher(		23.0f, 		840, 	27, 	17.0f), // UPGRADE KIT
+				new BoomBoom(			18.5f, 		390, 	36, 	11.0f), // Creeponia | Crafting
+				new BoomCannon(			17.5f, 		510, 	28, 	14.0f), // Iromine | Crafting
+				new BoulderBomber(		18.5f,		475, 	62, 	20.0f), // Deeplands | Kror
+				new BozoBlaster(		12.5f, 		505, 	20, 	11.0f), // Celeve | Crafting
+				new BulbCannon(			25.0f, 		860, 	30, 	8.0f), // UPGRADE KIT
+				new CarrotCannon(		10.0f, 		520, 	16, 	8.0f), // Gardencia | Crafting
+				new ClownCannon(		22.5f, 		570, 	32, 	10.0f), // Celeve | Gyro
+				new ClownoPulse(		35.5f, 		845, 	42, 	11.0f), // UPGRADE KIT
+				new CoralCannon(		12.0f, 		300, 	15, 	5.0f), // TODO LBorean Minigame
+				new DischargeCannon(	0.0f, 		400, 	20, 	6.0f), // TODO Creeponia Minigame
+				new EnergyCannon(		18.5f, 		610, 	25, 	3.0f), // Runandor | Crafting
+				new ErebonStickler(		35.0f, 		750, 	48, 	11.0f), // Ancient Cavern | Penumbra
+				new FloroRPG(			14.0f, 		300, 	14, 	7.0f), // UPGRADE KIT
+				new FlowerCannon(		14.5f, 		510, 	23, 	17.0f), // Gardencia | Crafting
+				new FungalCannon(		19.5f, 		850, 	23, 	17.0f), // UPGRADE KIT
+				new GhastBlaster(		20.0f, 		600, 	28, 	16.0f), // Greckon | Crafting
+				new GhoulCannon(		25.5f, 		590, 	34, 	18.0f), // Greckon | Crafting
+				new GigaCannon(			25.5f, 		700, 	30, 	6.0f), // Shyrelands | Shyre Archer
+				new GolderBomber(		26.0f, 		840, 	62, 	20.0f), // UPGRADE KIT
+				new HiveBlaster(		20.5f, 		850, 	24, 	13.0f), // UPGRADE KIT
+				new HiveHowitzer(		13.0f, 		375, 	24, 	6.5f), // Barathos | Crafting
+				new IroCannon(			25.5f, 		580, 	36, 	10.0f), // Iromine | Silverfoot
+				new JackFunger(			17.0f, 		860, 	20, 	6.0f), // UPGRADE KIT
+				new JackRocker(			10.5f, 		400, 	20, 	6.0f), // Deeplands | Crafting
+				new LuxonStickler(		35.0f, 		750, 	48, 	11.0f), // Ancient Cavern | Horon
+				new MechaCannon(		26.5f, 		525, 	42, 	11.0f), // Iromine | Repairing
+				new MiniCannon(			15.0f, 		415, 	30, 	3.0f), // Precasia | Diocus
+				new MissileMaker(		0.0f, 		495, 	60, 	10.0f), // Iromine | Crafting
+				new MoonCannon(			21.0f, 		855, 	25, 	3.0f), // UPGRADE KIT
+				new PlutonStickler(		35.0f, 		750, 	48, 	11.0f), // Ancient Cavern | Goldorth
+				new PredatorianBlaster(	23.5f, 		845, 	28, 	16.0f), // UPGRADE KIT
+				new PulseCannon(		26.0f, 		510, 	42, 	11.0f), // Crystevia | Crafting
+				new RPG(				14.0f, 		320, 	50, 	24.0f), // Overworld | Crafting
+				new SelyanStickler(		35.0f, 		750, 	48, 	11.0f), // Ancient Cavern | Coniferon
+				new ShadowBlaster(		15.0f, 		515, 	24, 	13.0f), // Abyss | Crafting
+				new ShyreBlaster(		25.5f, 		850, 	30, 	12.0f), // Shyrelands | Crafting
+				new SmileBlaster(		20.5f, 		840, 	24, 	13.0f), // UPGRADE KIT
+				new SuperCannon(		18.5f, 		510, 	30, 	4.0f), // Iromine | Professor
+				new UltraCannon(		22.5f, 		605, 	30, 	5.0f), // Lunalus | Zal Spellbinder
+				new VoxCannon(			6.0f, 		440, 	26, 	13.0f), // Vox Ponds | Nightwing
+				new WaterBalloonBomber(	20.5f, 		855, 	24, 	7.0f), // UPGRADE KIT
+				new WitherCannon(		17.0f, 		460, 	30, 	8.0f) // Nether | Wither
+		);
+
+		registerThrownWeapons(registry,
+				new Grenade(),
+				new SliceStar(),
+				new Chakram(),
+				new GooBall(),
+				new Vulkram(),
+				new Hellfire(),
+				new RunicBomb()
+		);
+
+		registerVulcanes(registry,
+				new Vulcane(			15, 	50), // Overworld | Crafting
+				new BattleVulcane(		20, 	75), // Immortallis | Token Collector
+				new EqualityVulcane(	20, 	75), // Immortallis | Token Collector
+				new FireVulcane(		20, 	75), // Immortallis | Token Collector
+				new ImpairmentVulcane(	20, 	75), // Immortallis | Token Collector
+				new PoisonVulcane(		20, 	75), // Immortallis | Token Collector
+				new PowerVulcane(		20, 	75), // Immortallis | Token Collector
+				new WitherVulcane(		20, 	75) // Immortallis | Token Collector
+		);
+
+		registerBows(registry,
+				new AlacrityBow(	9.5f, 		1f, 		600), // Overworld | Crafting
+				new AncientBow(		22.0f, 	1f, 		1510), // UPGRADE KIT Ancient
+				new AtlanticBow(	24.5f, 	0.9f, 	1480), // UPGRADE KIT Seaside
+				new BaronBow(		12.5f, 	1f, 		650), // Barathos | Crafting
+				new BoreicBow(		14.0f, 	1.3f, 	1190), // LBorean | Amphibior
+				new DaybreakerBow(	17.5f, 	1f, 		1180), // Dustopia | Primordial Merchant
+				new DeepBow(		15.5f, 	0.85f, 	700), // Deeplands | Deep Case
+				new ExplosiveBow(	17.0f, 	0.8f, 	900), // Nether | King BamBamBam
+				new HauntedBow(		17.0f,		1f, 		920),	// Greckon | Crafting
+				new IceBow(			8.5f, 		1f, 		580), // Overworld | Crafting
+				new InfernalBow(	11.5f, 	1f, 		710), // Barathos | Crafting
+				new JusticeBow(		14.5f,		1f, 		920), // Haven | Crafting
+				new LunarBow(		17.5f, 	1f, 		900), // Lunalus | Crafting
+				new MechaBow(		20.5f,		0.75f, 	930), // Iromine | Repairing
+				new NightmareBow(	13.5f,		1f, 		890), // Abyss | Crafting
+				new PoisonBow(		15.0f, 	1f, 		950), // Mysterium | Mushroom Spider
+				new PredatiousBow(	14.0f, 	0.9f, 	690), // Precasia | Crafting
+				new PrimordialBow(	18.5f,		1f, 		1350), // Dustopia | Primordial Five
+				new RosidianBow(	15.5f, 	1f, 		900), // Gardencia | Crafting
+				new RunicBow(		20.5f,		1f, 		1320), // Runandor | Clunkhead
+				new ScreamerBow(	12.0f, 	1f, 		665), // Deeplands | Crafting
+				new ShyregemBow(	7.5f, 		3.0f, 	1500), // Shyrelands | Crafting
+				new SkeletalBow(	8.5f, 		1.5f, 	720), // Precasia | Crafting
+				new SkydriverBow(	14.5f, 	1f, 		850), // Lelyetia | Graw
+				new Slingshot(		17.0f, 	1f, 		1200), // Lunalus | Lunarade Vendor
+				new SoulfireBow(	23.5f, 	0.75f, 	1100), // Runandor | Crafting
+				new SpectralBow(	12.0f, 	1.3f, 	900), // Crystevia | Crafting
+				new SpeedBow(		8.0f, 		2, 		930), // Haven | Crafting
+				new SunshineBow(	27.0f, 	0.8f, 	1530), // Shyrelands | Shyre Archer
+				new ToxinBow(		14.0f, 	0.85f, 	900), // Vox Ponds | Crafting
+				new VoidBow(		9.0f, 		1.2f,	 	600), // Overworld | Crafting
+				new WeakenBow(		12.5f, 	1f, 		700), // Lelyetia | Crafting
+				new WitherBow(		13.5f, 	1f, 		835) // Nether | Wither
+		);
+
+		registerArcherguns(registry,
+				new CoralArchergun(		13.0f, 	600, 	12, 	3.0f), // TODO LBorean Minigame
+				new LunarArchergun(		16.0f, 	1530, 12, 	3.0f), // Lunalus | Crafting
+				new MechaArchergun(		17.5f, 	1300, 16, 	3.0f), // Iromine | Repairing Incomplete
+				new PyroArchergun(		10.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
+				new RosidianArchergun(	14.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
+				new SkeletalArchergun(	12.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
+				new SpectralArchergun(	9.5f, 	1600, 8, 		3.0f), // Runandor | Crafting
+				new TrollsArchergun(	14.0f,	800, 	16, 	3.0f), // Overworld | Smash
+				new ViralArchergun(		13.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
+		);
+
+		registerStaves(registry,
+				new AquaticStaff(		1220), // LBorean | Crafting
+				new AtlanticStaff(		1250), // LBorean | Mermage
+				new BaronStaff(			1200), // Barathos | Crafting
+				new CandyStaff(			950), // Candyland | Cane Bug
+				new CelestialStaff(		1150), // Haven | Crafting
+				new ConcussionStaff(	1150), // Creeponia | CREEP
+				new CoralStaff(			950), // Overworld | Corallus
+				new CrystalStaff(		1230), // Crystevia | Crystocore
+				new CrystikStaff(		1140), // Crystevia | Crafting
+				new CrystonStaff(		1240), // Crystevia | Crystocore
+				new DestructionStaff(	1170), // Iromine | Crafting
+				new EmberStaff(			1400), // Nether | Crafting
+				new EverfightStaff(		1050), // TODO Random Event Minigame
+				new EvermightStaff(		1050), // TODO Random Event Minigame
+				new FireStaff(			850), // Overworld | Crafting
+				new FireflyStaff(		1230), // Barathos | Baron Castle
+				new FirestormStaff(		990), // Abyss | Crafting
+				new FungalStaff(		1130), // Mysterium | King Shroomus
+				new GhoulStaff(			400), // Greckon | Bane
+				new HauntersStaff(		1225), // Greckon |  Bane
+				new HiveStaff(			1130), // Barathos | Hive King
+				new JokerStaff(			300), // Celeve | Gyro
+				new KaiyuStaff(			900), // Precasia | Kaiyu
+				new LightningStaff(		1070), // UPGRADE KIT Predator
+				new Lightshine(			700), // Shyrelands | Lightwalker
+				new LunarStaff(			1250), // Lunalus | Visualent
+				new LyonicStaff(		1100), // Iromine | Crafting
+				new MechaStaff(			1110), // Iromine | Repairing
+				new MeteorStaff(		1190), // Immortallis | Token Collector
+				new MoonlightStaff(		1130), // Greckon | Crafting
+				new NatureStaff(		1450), // Precasia | Diocus
+				new NightmareStaff(		1200), // End | Ender Dragon
+				new NoxiousStaff(		1210), // Vox Ponds | Voxxulon
+				new PhantomStaff(		1060), // Mysterium | Phantom
+				new PoisonStaff(		850), // Overworld | Crafting
+				new PowerStaff(			1010), // Deeplands | Crafting
+				new PrimordialStaff(	1230), // Dustopia | Primordial Five
+				new ReefStaff(			1230), // LBorean | Hydrolisk
+				new RejuvenationStaff(	870), // Gardencia | Crafting
+				new RosidianStaff(		1180), // Gardencia | Crafting
+				new RunicStaff(			1000), // Runandor | Runic Guardian
+				new ShadowlordStaff(	1200), // Abyss | Shadowlord
+				new ShowStaff(			900), // Celeve | Crafting
+				new ShyreStaff(			1380), // Shyrelands | Crafting
+				new SkyStaff(			1480), // Haven | Crafting
+				new StrikerStaff(		850), // Overworld | Crafting
+				new SunStaff(			960), // Lunalus | Inmate-X
+				new SurgeStaff(			1270), // Celeve | Crafting
+				new TangleStaff(		1140), // Gardencia | Vine Wizard
+				new UltimatumStaff(		750), // Shyrelands | Xxeus
+				new UnderworldStaff(	1140), // Abyss | Crafting
+				new WarlockStaff(		1050), // Barathos | Baroness
+				new WaterStaff(			850), // Overworld | Crafting
+				new WebStaff(			1420), // Lelyetia | Paravite
+				new WindStaff(			850), /// Overworld | Crafting
+				new WitherStaff(		850), // Overworld | Crafting
+				new WizardsStaff(		800) // Runandor | Spectral Wizard
+		);
+
+		registerBlasters(registry,
+				new ApocoShower(		0.0f, 	3760, 10, 	80f), // UPGRADE KIT
+				new Atomizer(			11.0f, 	3150, 8, 		15f), // Crafting | Runandor
+				new Beamer(				1.0f, 	3240, 1, 		3f), // LBorean | Aquatic Castle
+				new BlastChiller(		4.0f, 	1750, 6, 		20f), // Overworld | Crafting
+				new BloodDrainer(		0.1f, 	2750, 1, 		2.5f), // Abyss | Crafting
+				new BoneBlaster(		6.0f, 	2430, 6, 		20f), // Precasia | Crafting
+				new BubbleHorn(			11.0f, 	3200, 8, 		15.5f), // LBorean | Crafting
+				new ColourCannon(		45.0f, 	1000, 40, 	110f), // Rare Table
+				new ConfettiCannon(		0.0f, 	1000, 10, 	0f), // Overworld | Clown
+				new ConfettiCluster(	0.0f, 	1500, 5, 		0f), // Celeve | Toy Merchant
+				new DarkDestroyer(		0.0f, 	3180, 100, 	80f), // Dustopia | Merkyre
+				new DarklyGuster(		8.0f, 	3790,	5, 	7f), // UPGRADE KIT
+				new DeathRay(			19f, 		3840, 12, 	17f), // UPGRADE KIT
+				new DoomBringer(		0.0f, 	2820, 3, 		15.5f), // Crystevia | Crafting
+				new Eradicator(			1.0f, 	2790, 1, 		2f), // Vox Ponds | Crafting
+				new ExperimentW801(		37.0f, 	5000, 50, 	90.0f), // Alien Orb
+				new Flowercorne(		2.5f, 	2910, 4, 		20f), // Gardencia | Pod Plant
+				new Fragment(			3.0f, 	3830,	2, 	2.5f), // UPGRADE KIT
+				new Froster(			3.5f, 	2800, 3, 		7.5f), // Candyland | Crafting
+				new GasBlaster(			0.0f, 	2860, 1, 		0.5f), // Gardencia | Crafting
+				new GhoulGasser(		0.0f, 	3210, 1, 		1f), // Greckon | Crafting
+				new GoldBringer(		0.0f, 	3830, 3, 		12.5f), // UPGRADE KIT
+				new GravityBlaster(		4.0f, 	600, 	1, 	120f), // Haven | Crafting
+				new HellHorn(			12.5f, 	3800, 8, 		11.5f), // UPGRADE KIT
+				new IllusionRevolver(	14.0f, 	3200, 10, 	20f), // Runandor | Crafting
+				new IllusionSMG(		4.0f, 	3240, 3, 		7f), // Abyss | Elusive
+				new IonBlaster(			13.0f, 	2810, 11, 	28.5f),  // Crystevia | Crafting
+				new IroMiner(			4.0f, 	3060, 4, 		7f), // Iromine | Mechbot
+				new LaserBlaster(		1.2f, 	2840, 1, 		2.5f), // Mysterium | Gorb Arms Dealer
+				new LightBlaster(		22.5f, 	3810, 14, 	20.5f), // UPGRADE KIT
+				new LightSpark(			0.0f, 	7, 	1, 	0f), // UPGRADE KIT
+				new LunaBlaster(		3.0f, 	3200, 2, 		4f), // Lunalus | Crafting
+				new MechaBlaster(		36.0f, 	2770, 30, 	80f), // Iromine | Crafting
+				new MindBlaster(		19.5f, 	3180, 14, 	27.5f), // Runandor | Crafting
+				new MoonDestroyer(		0.0f, 	3750, 100, 	60f), // UPGRADE KIT
+				new MoonShiner(			3.5f, 	1810, 5, 		17.5f), // Overworld | Crafting
+				new Odious(				1.0f, 	3190, 1, 		1.5f), // Dustopia | Crafting
+				new Orbocron(			18.5f,  	3230, 13, 	26.5f), // Lunalus |  Crafting
+				new Paralyzer(			1.5f, 	3900, 1, 		1.5f), // Shyrelands | Shyre Troll
+				new PartyPopper(		1.5f, 	2810, 1, 		3f), // Celeve | Crafting
+				new PoisonPlunger(		0.0f, 	2600, 20, 	50f), // Mysterium | Crafting
+				new PowerRay(			12.5f, 	2490, 12, 	38.5f), // Lelyetia | Zhinx
+				new Proton(				2.5f, 	3000, 2, 		4.5f), // Crystevia | Crystocore
+				new Reefer(				5.0f, 	3600, 4, 		7f), // TODO LBorean Minigame
+				new Revolution(			0.0f, 	2800, 20, 	66f), // Iromine | Crafting
+				new Seaocron(			20.5f, 	3800, 13, 	18.5f), // UPGRADE KIT
+				new SkulloBlaster(		3.5f, 	3780, 2, 		3f), // UPGRADE KIT
+				new SoulDrainer(		0.2f, 	3770, 1, 		2f), // UPGRADE KIT Runic
+				new SoulSpark(			0.0f, 	5, 	1, 	0f), // Shyrelands | Luxocron
+				new SoulStorm(			1.5f, 	3190, 1, 		2f), // Greckon | Crafting
+				new SpiritShower(		0.0f, 	2870, 10, 	100f), // Abyss | Jawe
+				new Swarmotron(			2.0f, 	2400, 12, 	33f),  // Barathos | Crafting
+				new ToxicTerrorizer(	0.0f, 	2760, 7, 		22f), // Vox Ponds | Crafting
+				new VortexBlaster(		0.0f, 	2870, 1, 		130f), // Haven | Dawnlight
+				new WhimsyWinder(		6.0f, 	2830,	5, 	13f), // Celeve | Crafting
+				new WithersWrath(		7.5f, 	800, 	7, 	21f) // Nether | Nethengeic Wither
 		);
 	}
 
-	@SubscribeEvent
-	public static void registerWeaponRender(final ModelRegistryEvent ev) {
-		registerRender(swordAmethyst, "swords/amethyst");
-		registerRender(swordBaron, "swords/baron");
-		registerRender(swordBloodfury, "swords/bloodfury");
-		registerRender(swordBloodstone, "swords/bloodstone");
-		registerRender(swordCandlefire, "swords/candlefire");
-		registerRender(swordCaramelCarver, "swords/caramel_carver");
-		registerRender(swordCoralstorm, "swords/coralstorm");
-		registerRender(swordCreepified, "swords/creepified");
-		registerRender(swordCrystallite, "swords/crystallite");
-		registerRender(swordEmberstone, "swords/emberstone");
-		registerRender(swordExplochron, "swords/explochron");
-		registerRender(swordFireborne, "swords/fireborne");
-		registerRender(swordGuardians, "swords/guardians");
-		registerRender(swordHarvester, "swords/harvester");
-		registerRender(swordHoly, "swords/holy");
-		registerRender(swordIllusion, "swords/illusion");
-		registerRender(swordJade, "swords/jade");
-		registerRender(swordLegbone, "swords/legbone");
-		registerRender(swordLightsWay, "swords/lights_way");
-		registerRender(swordLimonite, "swords/limonite");
-		registerRender(swordNethengeic, "swords/nethengeic");
-		registerRender(swordRockbasher, "swords/rockbasher");
-		registerRender(swordRockPick, "swords/rock_pick");
-		registerRender(swordRosidian, "swords/rosidian");
-		registerRender(swordRosite, "swords/rosite");
-		registerRender(swordRunic, "swords/runic");
-		registerRender(swordSapphire, "swords/sapphire");
-		registerRender(swordShadow, "swords/shadow");
-		registerRender(swordShroomus, "swords/shroomus");
-		registerRender(swordSkeletal, "swords/skeletal");
-		registerRender(swordSupremacy, "swords/supremacy");
-		registerRender(swordSweet, "swords/sweet");
-		registerRender(swordTrollBasherAxe, "swords/troll_basher_axe");
-		registerRender(swordUltraflame, "swords/ultraflame");
-		registerRender(swordVoid, "swords/void");
-		registerRender(swordVulcammer, "swords/vulcammer");
-		registerRender(greatbladeBaron, "greatblades/baron");
-		registerRender(greatbladeCandyBlade, "greatblades/candy_blade");
-		registerRender(greatbladeCoral, "greatblades/coral");
-		registerRender(greatbladeCottonCrusher, "greatblades/cotton_crusher");
-		registerRender(greatbladeCreepoid, "greatblades/creepoid");
-		registerRender(greatbladeCrystal, "greatblades/crystal");
-		registerRender(greatbladeErebonScythe, "greatblades/erebon_scythe");
-		registerRender(greatbladeGodsGreatblade, "greatblades/gods");
-		registerRender(greatbladeGoofy, "greatblades/goofy");
-		registerRender(greatbladeGrandsword, "greatblades/grandsword");
-		registerRender(greatbladeHaunted, "greatblades/haunted");
-		registerRender(greatbladeKnightsGuard, "greatblades/knights_guard");
-		registerRender(greatbladeLelyetian, "greatblades/lelyetian");
-		registerRender(greatbladeLunar, "greatblades/lunar");
-		registerRender(greatbladeLuxonScythe, "greatblades/luxon_scythe");
-		registerRender(greatbladeLyonic, "greatblades/lyonic");
-		registerRender(greatbladeMillenium, "greatblades/millenium");
-		registerRender(greatbladeNoxious, "greatblades/noxious");
-		registerRender(greatbladePlutonScythe, "greatblades/pluton_scythe");
-		registerRender(greatbladePrimordial, "greatblades/primordial");
-		registerRender(greatbladeRosidian, "greatblades/rosidian");
-		registerRender(greatbladeRoyal, "greatblades/royal");
-		registerRender(greatbladeRunic, "greatblades/runic");
-		registerRender(greatbladeSelyanScythe, "greatblades/selyan_scythe");
-		registerRender(greatbladeShroomic, "greatblades/shroomic");
-		registerRender(greatbladeShyreSword, "greatblades/shyre_sword");
-		registerRender(greatbladeSubterranean, "greatblades/subterranean");
-		registerRender(greatbladeTidal, "greatblades/tidal");
-		registerRender(greatbladeUnderworld, "greatblades/underworld");
-		registerRender(maulCrystal, "mauls/crystal");
-		registerRender(maulHorizon, "mauls/horizon");
-		registerRender(maulCoralstone, "mauls/coralstone");
-		registerRender(gunAbominator, "guns/abominator");
-		registerRender(gunApocoAssaultRifle, "guns/apoco_assault_rifle");
-		registerRender(gunApocoRifle, "guns/apoco_rifle");
-		registerRender(gunAquaMagnum, "guns/aqua_magnum");
-		registerRender(gunArtifact, "guns/artifact");
-		registerRender(gunBaronator, "guns/baronator");
-		registerRender(gunBayonetteRifle, "guns/bayonette_rifle");
-		registerRender(gunBigTop, "guns/big_top");
-		registerRender(gunBloodIron, "guns/blood_iron");
-		registerRender(gunChainWrecker, "guns/chain_wrecker");
-		registerRender(gunChilliChugger, "guns/chilli_chugger");
-		registerRender(gunClownershot, "guns/clownershot");
-		registerRender(gunConstruct, "guns/construct");
-		registerRender(gunCoralClogger, "guns/coral_clogger");
-		registerRender(gunCoreRifle, "guns/core_rifle");
-		registerRender(gunCrystalCarver, "guns/crystal_carver");
-		registerRender(gunCyclone, "guns/cyclone");
-		registerRender(gunDarkener, "guns/darkener");
-		registerRender(gunDartGun, "guns/dart_gun");
-		registerRender(gunDestructionRifle, "guns/destruction_rifle");
-		registerRender(gunDischargeRifle, "guns/discharge_rifle");
-		registerRender(gunDraco, "guns/draco");
-		registerRender(gunDragilator, "guns/dragilator");
-		registerRender(gunDustometer, "guns/dustometer");
-		registerRender(gunEchoGull, "guns/echo_gull");
-		registerRender(gunElectinator, "guns/electinator");
-		registerRender(gunFlameWrecker, "guns/flame_wrecker");
-		registerRender(gunFlamingFury, "guns/flaming_fury");
-		registerRender(gunFloroRifle, "guns/floro_rifle");
-		registerRender(gunFlowersFury, "guns/flowers_fury");
-		registerRender(gunFrosticator, "guns/frosticator");
-		registerRender(gunGardener, "guns/gardener");
-		registerRender(gunGaugeRifle, "guns/gauge_rifle");
-		registerRender(gunGerminator, "guns/germinator");
-		registerRender(gunGoldenFury, "guns/golden_fury");
-		registerRender(gunHappyHaunter, "guns/happy_haunter");
-		registerRender(gunHaunterRifle, "guns/haunter_rifle");
-		registerRender(gunHeatWave, "guns/heat_wave");
-		registerRender(gunHiver, "guns/hiver");
-		registerRender(gunHotShot, "guns/hot_shot");
-		registerRender(gunHuntersRifle, "guns/hunters_rifle");
-		registerRender(gunIominator, "guns/iominator");
-		registerRender(gunIonRevolver, "guns/ion_revolver");
-		registerRender(gunIroRifle, "guns/iro_rifle");
-		registerRender(gunKrilinator, "guns/krilinator");
-		registerRender(gunLightIron, "guns/light_iron");
-		registerRender(gunLunarAssaultRifle, "guns/lunar_assault_rifle");
-		registerRender(gunMechanicalAssaultRifle, "guns/mechanical_assault_rifle");
-		registerRender(gunMegagun, "guns/megagun");
-		registerRender(gunMiasma, "guns/miasma");
-		registerRender(gunMinigun, "guns/minigun");
-		registerRender(gunMintMagnum, "guns/mint_magnum");
-		registerRender(gunMK, "guns/mk");
-		registerRender(gunMKFung, "guns/mk_fung");
-		registerRender(gunNethenetteRifle, "guns/nethenette_rifle");
-		registerRender(gunNethengeicSlugger, "guns/nethengeic_slugger");
-		registerRender(gunOvershot, "guns/overshot");
-		registerRender(gunPrecasianSlugger, "guns/precasian_slugger");
-		registerRender(gunPredator, "guns/predator");
-		registerRender(gunPredigun, "guns/predigun");
-		registerRender(gunPulsator, "guns/pulsator");
-		registerRender(gunPurityRifle, "guns/purity_rifle");
-		registerRender(gunRockerRifle, "guns/rocker_rifle");
-		registerRender(gunRoulette, "guns/roulette");
-		registerRender(gunShoeFlinger, "guns/shoe_flinger");
-		registerRender(gunSkullette, "guns/skullette");
-		registerRender(gunSkullifact, "guns/skullifact");
-		registerRender(gunSpectacle, "guns/spectacle");
-		registerRender(gunSpineGun, "guns/spine_gun");
-		registerRender(gunSquadGun, "guns/squad_gun");
-		registerRender(gunStampede, "guns/stampede");
-		registerRender(gunStormer, "guns/stormer");
-		registerRender(gunSublimus, "guns/sublimus");
-		registerRender(gunTigerTommy, "guns/tiger_tommy");
-		registerRender(gunTommy, "guns/tommy");
-		registerRender(gunVileVanquisher, "guns/vile_vanquisher");
-		registerRender(gunWartGun, "guns/wart_gun");
-		registerRender(gunWrecker, "guns/wrecker");
-		registerRender(shotgunAbyssro, "shotguns/abyssro");
-		registerRender(shotgunAmplifier, "shotguns/amplifier");
-		registerRender(shotgunBlastBarrel, "shotguns/blast_barrel");
-		registerRender(shotgunBlueBarrel, "shotguns/blue_barrel");
-		registerRender(shotgunBoulder, "shotguns/boulder");
-		registerRender(shotgunBrownBlaster, "shotguns/brown_blaster");
-		registerRender(shotgunDemolisher, "shotguns/demolisher");
-		registerRender(shotgunDestructionShotgun, "shotguns/destruction_shotgun");
-		registerRender(shotgunDischargeShotgun, "shotguns/discharge_shotgun");
-		registerRender(shotgunGimmick, "shotguns/gimmick");
-		registerRender(shotgunGingerBlaster, "shotguns/ginger_blaster");
-		registerRender(shotgunLongshot, "shotguns/long_shot");
-		registerRender(shotgunMechyro, "shotguns/mechyro");
-		registerRender(shotgunPurityShotgun, "shotguns/purity_shotgun");
-		registerRender(shotgunPurplePunisher, "shotguns/purple_punisher");
-		registerRender(shotgunRedRocket, "shotguns/red_rocket");
-		registerRender(shotgunVivo, "shotguns/vivo");
-		registerRender(sniperBaronSSR, "snipers/baron_ssr");
-		registerRender(sniperBayonetteSR, "snipers/bayonette_sr");
-		registerRender(sniperBoltRifle, "snipers/bolt_rifle");
-		registerRender(sniperCamoRifle, "snipers/camo_rifle");
-		registerRender(sniperClownCracker, "snipers/clown_cracker");
-		registerRender(sniperClownimator, "snipers/clownimator");
-		registerRender(sniperCrystaneer, "snipers/crystaneer");
-		registerRender(sniperDarkBeast, "snipers/dark_beast");
-		registerRender(sniperDeadlock, "snipers/deadlock");
-		registerRender(sniperDecimator, "snipers/decimator");
-		registerRender(sniperDischargeSniper, "snipers/discharge_sniper");
-		registerRender(sniperDualSight, "snipers/dual_sight");
-		registerRender(sniperDuster, "snipers/duster");
-		registerRender(sniperFloro500, "snipers/floro500");
-		registerRender(sniperHeadHunter, "snipers/head_hunter");
-		registerRender(sniperHiveCracker, "snipers/hive_cracker");
-		registerRender(sniperKa500, "snipers/ka500");
-		registerRender(sniperMarkMaker, "snipers/mark_maker");
-		registerRender(sniperMineral, "snipers/mineral");
-		registerRender(sniperMonster, "snipers/monster");
-		registerRender(sniperMoonMaker, "snipers/moon_maker");
-		registerRender(sniperRosidRifle, "snipers/rosid_rifle");
-		registerRender(sniperSabbath, "snipers/sabbath");
-		registerRender(sniperSludgeSniper, "snipers/sludge_sniper");
-		registerRender(sniperSweetTooth, "snipers/sweet_tooth");
-		registerRender(sniperTerminator, "snipers/terminator");
-		registerRender(sniperViper1, "snipers/viper1");
-		registerRender(cannonAncientBomber, "cannons/ancient_bomber");
-		registerRender(cannonAncientDischarger, "cannons/ancient_discharger");
-		registerRender(cannonAquaCannon, "cannons/aqua_cannon");
-		registerRender(cannonBalloonBomber, "cannons/balloon_bomber");
-		registerRender(cannonBigBlast, "cannons/big_blast");
-		registerRender(cannonBlastCannon, "cannons/blast_cannon");
-		registerRender(cannonBlissfulBlast, "cannons/blissful_blast");
-		registerRender(cannonBombLauncher, "cannons/bomb_launcher");
-		registerRender(cannonBoomBoom, "cannons/boom_boom");
-		registerRender(cannonBoomCannon, "cannons/boom_cannon");
-		registerRender(cannonBoulderBomber, "cannons/boulder_bomber");
-		registerRender(cannonBozoBlaster, "cannons/bozo_blaster");
-		registerRender(cannonBulbCannon, "cannons/bulb_cannon");
-		registerRender(cannonCarrotCannon, "cannons/carrot_cannon");
-		registerRender(cannonClownCannon, "cannons/clown_cannon");
-		registerRender(cannonClownoPulse, "cannons/clowno_pulse");
-		registerRender(cannonCoralCannon, "cannons/coral_cannon");
-		registerRender(cannonDischargeCannon, "cannons/discharge_cannon");
-		registerRender(cannonEnergyCannon, "cannons/energy_cannon");
-		registerRender(cannonErebonStickler, "cannons/erebon_stickler");
-		registerRender(cannonFloroRPG, "cannons/floro_rpg");
-		registerRender(cannonFlowerCannon, "cannons/flower_cannon");
-		registerRender(cannonFungalCannon, "cannons/fungal_cannon");
-		registerRender(cannonGhastBlaster, "cannons/ghast_blaster");
-		registerRender(cannonGhoulCannon, "cannons/ghoul_cannon");
-		registerRender(cannonGigaCannon, "cannons/giga_cannon");
-		registerRender(cannonGolderBomber, "cannons/golder_bomber");
-		registerRender(cannonHiveBlaster, "cannons/hive_blaster");
-		registerRender(cannonHiveHowitzer, "cannons/hive_howitzer");
-		registerRender(cannonIroCannon, "cannons/iro_cannon");
-		registerRender(cannonJackFunger, "cannons/jack_funger");
-		registerRender(cannonJackRocker, "cannons/jack_rocker");
-		registerRender(cannonLuxonStickler, "cannons/luxon_stickler");
-		registerRender(cannonMechaCannon, "cannons/mecha_cannon");
-		registerRender(cannonMiniCannon, "cannons/mini_cannon");
-		registerRender(cannonMissileMaker, "cannons/missile_maker");
-		registerRender(cannonMoonCannon, "cannons/moon_cannon");
-		registerRender(cannonPlutonStickler, "cannons/pluton_stickler");
-		registerRender(cannonPredatorianBlaster, "cannons/predatorian_blaster");
-		registerRender(cannonPulseCannon, "cannons/pulse_cannon");
-		registerRender(cannonRPG, "cannons/rpg");
-		registerRender(cannonSelyanStickler, "cannons/selyan_stickler");
-		registerRender(cannonShadowBlaster, "cannons/shadow_blaster");
-		registerRender(cannonShyreBlaster, "cannons/shyre_blaster");
-		registerRender(cannonSmileBlaster, "cannons/smile_blaster");
-		registerRender(cannonSuperCannon, "cannons/super_cannon");
-		registerRender(cannonUltraCannon, "cannons/ultra_cannon");
-		registerRender(cannonVoxCannon, "cannons/vox_cannon");
-		registerRender(cannonWaterBalloonBomber, "cannons/water_balloon_bomber");
-		registerRender(cannonWitherCannon, "cannons/wither_cannon");
-		registerRender(throwableGrenade, "thrown/grenade");
-		registerRender(throwableHellfire, "thrown/hellfire");
-		registerRender(throwableSliceStar, "thrown/slice_star");
-		registerRender(throwableChakram, "thrown/chakram");
-		registerRender(throwableVulkram, "thrown/vulkram");
-		registerRender(throwableGooBall, "thrown/goo_ball");
-		registerRender(throwableRunicBomb, "thrown/runic_bomb");
-		registerRender(vulcane, "vulcanes/vulcane");
-		registerRender(vulcaneBattle, "vulcanes/battle_vulcane");
-		registerRender(vulcaneEquality, "vulcanes/equality_vulcane");
-		registerRender(vulcaneFire, "vulcanes/fire_vulcane");
-		registerRender(vulcaneImpairment, "vulcanes/impairment_vulcane");
-		registerRender(vulcanePoison, "vulcanes/poison_vulcane");
-		registerRender(vulcanePower, "vulcanes/power_vulcane");
-		registerRender(vulcaneWither, "vulcanes/wither_vulcane");
-		registerRender(bowAlacrity, "bows/alacrity_bow");
-		registerRender(bowAncient, "bows/ancient_bow");
-		registerRender(bowAtlantic, "bows/atlantic_bow");
-		registerRender(bowBaron, "bows/baron_bow");
-		registerRender(bowBoreic, "bows/boreic_bow");
-		registerRender(bowDaybreaker, "bows/daybreaker_bow");
-		registerRender(bowDeep, "bows/deep_bow");
-		registerRender(bowExplosive, "bows/explosive_bow");
-		registerRender(bowHaunted, "bows/haunted_bow");
-		registerRender(bowIce, "bows/ice_bow");
-		registerRender(bowInfernal, "bows/infernal_bow");
-		registerRender(bowJustice, "bows/justice_bow");
-		registerRender(bowLunar, "bows/lunar_bow");
-		registerRender(bowMecha, "bows/mecha_bow");
-		registerRender(bowNightmare, "bows/nightmare_bow");
-		registerRender(bowPoison, "bows/poison_bow");
-		registerRender(bowPredatious, "bows/predatious_bow");
-		registerRender(bowPrimordial, "bows/primordial_bow");
-		registerRender(bowRosidian, "bows/rosidian_bow");
-		registerRender(bowRunic, "bows/runic_bow");
-		registerRender(bowScreamer, "bows/screamer_bow");
-		registerRender(bowShyregem, "bows/shyregem_bow");
-		registerRender(bowSkeletal, "bows/skeletal_bow");
-		registerRender(bowSkydriver, "bows/skydriver_bow");
-		registerRender(bowSlingshot, "bows/slingshot");
-		registerRender(bowSoulfire, "bows/soulfire_bow");
-		registerRender(bowSpectral, "bows/spectral_bow");
-		registerRender(bowSpeed, "bows/speed_bow");
-		registerRender(bowSunshine, "bows/sunshine_bow");
-		registerRender(bowToxin, "bows/toxin_bow");
-		registerRender(bowVoid, "bows/void_bow");
-		registerRender(bowWeaken, "bows/weaken_bow");
-		registerRender(bowWither, "bows/wither_bow");
-		registerRender(archergunCoral, "archerguns/coral_archergun");
-		registerRender(archergunLunar, "archerguns/lunar_archergun");
-		registerRender(archergunMecha, "archerguns/mecha_archergun");
-		registerRender(archergunPyro, "archerguns/pyro_archergun");
-		registerRender(archergunRosidian, "archerguns/rosidian_archergun");
-		registerRender(archergunSkeletal, "archerguns/skeletal_archergun");
-		registerRender(archergunSpectral, "archerguns/spectral_archergun");
-		registerRender(archergunTrolls, "archerguns/trolls_archergun");
-		registerRender(archergunViral, "archerguns/viral_archergun");
-		registerRender(staffAquatic, "staves/aquatic_staff");
-		registerRender(staffAtlantic, "staves/atlantic_staff");
-		registerRender(staffBaron, "staves/baron_staff");
-		registerRender(staffCandy, "staves/candy_staff");
-		registerRender(staffCelestial, "staves/celestial_staff");
-		registerRender(staffConcussion, "staves/concussion_staff");
-		registerRender(staffCoral, "staves/coral_staff");
-		registerRender(staffCrystal, "staves/crystal_staff");
-		registerRender(staffCrystik, "staves/crystik_staff");
-		registerRender(staffCryston, "staves/cryston_staff");
-		registerRender(staffDestruction, "staves/destruction_staff");
-		registerRender(staffEmber, "staves/ember_staff");
-		registerRender(staffEverfight, "staves/everfight_staff");
-		registerRender(staffEvermight, "staves/evermight_staff");
-		registerRender(staffFire, "staves/fire_staff");
-		registerRender(staffFirefly, "staves/firefly_staff");
-		registerRender(staffFirestorm, "staves/firestorm_staff");
-		registerRender(staffFungal, "staves/fungal_staff");
-		registerRender(staffGhoul, "staves/ghoul_staff");
-		registerRender(staffHaunters, "staves/haunters_staff");
-		registerRender(staffHive, "staves/hive_staff");
-		registerRender(staffJoker, "staves/joker_staff");
-		registerRender(staffKaiyu, "staves/kaiyu_staff");
-		registerRender(staffLightning, "staves/lightning_staff");
-		registerRender(staffLightshine, "staves/lightshine");
-		registerRender(staffLunar, "staves/lunar_staff");
-		registerRender(staffLyonic, "staves/lyonic_staff");
-		registerRender(staffMecha, "staves/mecha_staff");
-		registerRender(staffMeteor, "staves/meteor_staff");
-		registerRender(staffMoonlight, "staves/moonlight_staff");
-		registerRender(staffNature, "staves/nature_staff");
-		registerRender(staffNightmare, "staves/nightmare_staff");
-		registerRender(staffNoxious, "staves/noxious_staff");
-		registerRender(staffPhantom, "staves/phantom_staff");
-		registerRender(staffPoison, "staves/poison_staff");
-		registerRender(staffPower, "staves/power_staff");
-		registerRender(staffPrimordial, "staves/primordial_staff");
-		registerRender(staffReef, "staves/reef_staff");
-		registerRender(staffRejuvenation, "staves/rejuvenation_staff");
-		registerRender(staffRosidian, "staves/rosidian_staff");
-		registerRender(staffRunic, "staves/runic_staff");
-		registerRender(staffShadowlord, "staves/shadowlord_staff");
-		registerRender(staffShow, "staves/show_staff");
-		registerRender(staffShyre, "staves/shyre_staff");
-		registerRender(staffSky, "staves/sky_staff");
-		registerRender(staffStriker, "staves/striker_staff");
-		registerRender(staffSun, "staves/sun_staff");
-		registerRender(staffSurge, "staves/surge_staff");
-		registerRender(staffTangle, "staves/tangle_staff");
-		registerRender(staffUltimatum, "staves/ultimatum_staff");
-		registerRender(staffUnderworld, "staves/underworld_staff");
-		registerRender(staffWater, "staves/water_staff");
-		registerRender(staffWeb, "staves/web_staff");
-		registerRender(staffWind, "staves/wind_staff");
-		registerRender(staffWither, "staves/wither_staff");
-		registerRender(staffWizards, "staves/wizards_staff");
-		registerRender(blasterApocoShower, "blasters/apoco_shower");
-		registerRender(blasterAtomizer, "blasters/atomizer");
-		registerRender(blasterBeamer, "blasters/beamer");
-		registerRender(blasterBearBlaster, "blasters/bear_blaster");
-		registerRender(blasterBeatSoundCannon, "blasters/beat_sound_cannon");
-		registerRender(blasterBeeBlaster, "blasters/bee_blaster");
-		registerRender(blasterBlastChiller, "blasters/blast_chiller");
-		registerRender(blasterBloodDrainer, "blasters/blood_drainer");
-		registerRender(blasterBoneBlaster, "blasters/bone_blaster");
-		registerRender(blasterBubbleHorn, "blasters/bubble_horn");
-		registerRender(blasterCamelCannon, "blasters/camel_cannon");
-		registerRender(blasterColourCannon, "blasters/colour_cannon");
-		registerRender(blasterConfettiCannon, "blasters/confetti_cannon");
-		registerRender(blasterConfettiCluster, "blasters/confetti_cluster");
-		registerRender(blasterDarkDestroyer, "blasters/dark_destroyer");
-		registerRender(blasterDarklyGuster, "blasters/darkly_guster");
-		registerRender(blasterDeathRay, "blasters/death_ray");
-		registerRender(blasterDeerDetonator, "blasters/deer_detonator");
-		registerRender(blasterDoomBringer, "blasters/doom_bringer");
-		registerRender(blasterDragonDestroyer, "blasters/dragon_destroyer");
-		registerRender(blasterElectroSoundCannon, "blasters/electro_sound_cannon");
-		registerRender(blasterEradicator, "blasters/eradicator");
-		registerRender(blasterFishFryer, "blasters/fish_fryer");
-		registerRender(blasterFlowercorne, "blasters/flowercorne");
-		registerRender(blasterFragment, "blasters/fragment");
-		registerRender(blasterFroster, "blasters/froster");
-		registerRender(blasterGasBlaster, "blasters/gas_blaster");
-		registerRender(blasterGhoulGasser, "blasters/ghoul_gasser");
-		registerRender(blasterGoldBringer, "blasters/gold_bringer");
-		registerRender(blasterGravityBlaster, "blasters/gravity_blaster");
-		registerRender(blasterHellHorn, "blasters/hell_horn");
-		registerRender(blasterHoundHoncho, "blasters/hound_honcho");
-		registerRender(blasterIllusionRevolver, "blasters/illusion_revolver");
-		registerRender(blasterIllusionSMG, "blasters/illusion_smg");
-		registerRender(blasterIonBlaster, "blasters/ion_blaster");
-		registerRender(blasterIroMiner, "blasters/iro_miner");
-		registerRender(blasterLaserBlaster, "blasters/laser_blaster");
-		registerRender(blasterLightBlaster, "blasters/light_blaster");
-		registerRender(blasterLightSpark, "blasters/light_spark");
-		registerRender(blasterLunaBlaster, "blasters/luna_blaster");
-		registerRender(blasterMechaBlaster, "blasters/mecha_blaster");
-		registerRender(blasterMindBlaster, "blasters/mind_blaster");
-		registerRender(blasterMoonDestroyer, "blasters/moon_destroyer");
-		registerRender(blasterMoonShiner, "blasters/moon_shiner");
-		registerRender(blasterOdious, "blasters/odious");
-		registerRender(blasterOrbocron, "blasters/orbocron");
-		registerRender(blasterParalyzer, "blasters/paralyzer");
-		registerRender(blasterPartyPopper, "blasters/party_popper");
-		registerRender(blasterPenguinBlaster, "blasters/penguin_blaster");
-		registerRender(blasterPoisonPlunger, "blasters/poison_plunger");
-		registerRender(blasterPowerRay, "blasters/power_ray");
-		registerRender(blasterProton, "blasters/proton");
-		registerRender(blasterReefer, "blasters/reefer");
-		registerRender(blasterRevolution, "blasters/revolution");
-		registerRender(blasterSeaocron, "blasters/seaocron");
-		registerRender(blasterSkulloBlaster, "blasters/skullo_blaster");
-		registerRender(blasterSoulDrainer, "blasters/soul_drainer");
-		registerRender(blasterSoulSpark, "blasters/soul_spark");
-		registerRender(blasterSoulStorm, "blasters/soul_storm");
-		registerRender(blasterSpiritShower, "blasters/spirit_shower");
-		registerRender(blasterStepSoundCannon, "blasters/step_sound_cannon");
-		registerRender(blasterSwarmotron, "blasters/swarmotron");
-		registerRender(blasterSynthSoundCannon, "blasters/synth_sound_cannon");
-		registerRender(blasterToxicTerrorizer, "blasters/toxic_terrorizer");
-		registerRender(blasterVibeSoundCannon, "blasters/vibe_sound_cannon");
-		registerRender(blasterVortexBlaster, "blasters/vortex_blaster");
-		registerRender(blasterWhimsyWinder, "blasters/whimsy_winder");
-		registerRender(blasterWithersWrath, "blasters/withers_wrath");
+	private static void registerSwords(IForgeRegistry<Item> registry, BaseSword... swords) {
+		for (BaseSword sword : swords) {
+			ItemRegister.registerItem(registry, sword, "weapons/swords/");
+		}
 	}
 
-	private static void registerRender(Item item, String location) {
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation("aoa3:weapons/" + location), "inventory"));
+	private static void registerGreatblades(IForgeRegistry<Item> registry, BaseGreatblade... greatblades) {
+		for (BaseGreatblade greatblade : greatblades) {
+			ItemRegister.registerItem(registry, greatblade, "weapons/greatblades/");
+		}
+	}
+
+	private static void registerMauls(IForgeRegistry<Item> registry, BaseMaul... mauls) {
+		for (BaseMaul maul : mauls) {
+			ItemRegister.registerItem(registry, maul, "weapons/mauls/");
+		}
+	}
+	
+	private static void registerGuns(IForgeRegistry<Item> registry, BaseGun... guns) {
+		for (BaseGun gun : guns) {
+			ItemRegister.registerItem(registry, gun, "weapons/guns/");
+		}
+	}
+
+	private static void registerShotguns(IForgeRegistry<Item> registry, BaseShotgun... shotguns) {
+		for (BaseShotgun shotgun : shotguns) {
+			ItemRegister.registerItem(registry, shotgun, "weapons/shotguns/");
+		}
+	}
+
+	private static void registerSnipers(IForgeRegistry<Item> registry, BaseSniper... snipers) {
+		for (BaseSniper sniper : snipers) {
+			ItemRegister.registerItem(registry, sniper, "weapons/snipers/");
+		}
+	}
+
+	private static void registerCannons(IForgeRegistry<Item> registry, BaseCannon... cannons) {
+		for (BaseCannon cannon : cannons) {
+			ItemRegister.registerItem(registry, cannon, "weapons/cannons/");
+		}
+	}
+
+	private static void registerThrownWeapons(IForgeRegistry<Item> registry, BaseThrownWeapon... thrownWeapons) {
+		for (BaseThrownWeapon thrownWeapon : thrownWeapons) {
+			ItemRegister.registerItem(registry, thrownWeapon, "weapons/thrown/");
+		}
+	}
+
+	private static void registerVulcanes(IForgeRegistry<Item> registry, BaseVulcane... vulcanes) {
+		for (BaseVulcane vulcane : vulcanes) {
+			ItemRegister.registerItem(registry, vulcane, "weapons/vulcanes/");
+		}
+	}
+
+	private static void registerBows(IForgeRegistry<Item> registry, BaseBow... bows) {
+		for (BaseBow bow : bows) {
+			ItemRegister.registerItem(registry, bow, "weapons/bows/");
+		}
+	}
+
+	private static void registerArcherguns(IForgeRegistry<Item> registry, BaseArchergun... archerguns) {
+		for (BaseArchergun archergun : archerguns) {
+			ItemRegister.registerItem(registry, archergun, "weapons/archerguns/");
+		}
+	}
+
+	private static void registerStaves(IForgeRegistry<Item> registry, BaseStaff... staffs) {
+		for (BaseStaff staff : staffs) {
+			ItemRegister.registerItem(registry, staff, "weapons/staves/");
+		}
+	}
+
+	private static void registerBlasters(IForgeRegistry<Item> registry, BaseBlaster... blasters) {
+		for (BaseBlaster blaster : blasters) {
+			ItemRegister.registerItem(registry, blaster, "weapons/blasters/");
+		}
 	}
 
 	public static void registerDispensables() {
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableHellfire, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityHellfire(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableGrenade, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityGrenade(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableChakram, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityChakram(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableGooBall, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityGooBall(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableRunicBomb, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityRunicBomb(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableVulkram, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntityVulkram(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableSliceStar, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				return new EntitySliceStar(world, pos.getX(), pos.getY(), pos.getZ());
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrow, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
-				return new EntityHollyArrow(world, pos.getX(), pos.getY(), pos.getZ());
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
+				EntityHollyArrow arrow = new EntityHollyArrow(world, pos.getX(), pos.getY(), pos.getZ());
+
+				arrow.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
+				return arrow;
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrowTipped, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
 				EntityTippedHollyArrow arrow = new EntityTippedHollyArrow(world, pos.getX(), pos.getY(), pos.getZ());
 
 				arrow.setPotionEffect(stack);
@@ -1393,10 +1491,15 @@ public class WeaponRegister {
 				return arrow;
 			}
 		});
+
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrowSpectral, new BehaviorProjectileDispense() {
+			@Nonnull
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack stack) {
-				return new EntitySpectralHollyArrow(world, pos.getX(), pos.getY(), pos.getZ());
+			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
+				EntitySpectralHollyArrow arrow = new EntitySpectralHollyArrow(world, pos.getX(), pos.getY(), pos.getZ());
+
+				arrow.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
+				return arrow;
 			}
 		});
 	}

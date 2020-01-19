@@ -53,6 +53,11 @@ public abstract class EntityRunicLifeform extends AoAMeleeMob {
 		return 0.2875;
 	}
 
+	@Override
+	protected double getBaseArmour() {
+		return 1;
+	}
+
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {

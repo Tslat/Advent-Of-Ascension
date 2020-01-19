@@ -5,15 +5,16 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -67,6 +68,12 @@ public class EntityGoldum extends AoAMeleeMob {
 		return SoundsRegister.mobAutomatonHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
+	}
+
 	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
@@ -86,9 +93,9 @@ public class EntityGoldum extends AoAMeleeMob {
 				}
 
 				if (pl != null) {
-					AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					if (cap.getTribute(Enums.Deities.PLUTON) < 100 && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.impureGold))) {
+					if (plData.stats().getTribute(Enums.Deities.PLUTON) < 100 && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.impureGold))) {
 						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.impureGold));
 						pl.inventoryContainer.detectAndSendChanges();
 					}

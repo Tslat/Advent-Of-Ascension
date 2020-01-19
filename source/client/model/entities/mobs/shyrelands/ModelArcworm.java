@@ -6,24 +6,24 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelArcworm extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer leg5;
-	ModelRenderer leg6;
-	ModelRenderer leg7;
-	ModelRenderer leg8;
-	ModelRenderer body8;
-	ModelRenderer body9;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer leg5;
+	private ModelRenderer leg6;
+	private ModelRenderer leg7;
+	private ModelRenderer leg8;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
 
 	public ModelArcworm() {
 		textureWidth = 64;

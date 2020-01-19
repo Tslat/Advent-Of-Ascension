@@ -11,6 +11,7 @@ import net.tslat.aoa3.entity.mobs.mysterium.EntityRunicGolem;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityRunicBomb extends BaseBullet implements HardProjectile {
 	private float explosionStrength = 1.5f;
@@ -44,7 +45,7 @@ public class EntityRunicBomb extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(shooter, posX, posY, posZ, explosionStrength, false);
+		WorldUtil.createExplosion(shooter, world, this, explosionStrength);
 
 		for (EntityMob e : world.getEntitiesWithinAABB(EntityMob.class, getEntityBoundingBox().grow(3.0D))) {
 			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 30, 100, true, false));
@@ -56,7 +57,7 @@ public class EntityRunicBomb extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		world.createExplosion(shooter, posX, posY, posZ, explosionStrength, false);
+		WorldUtil.createExplosion(shooter, world, this, explosionStrength);
 
 		for (EntityMob e : world.getEntitiesWithinAABB(EntityMob.class, getEntityBoundingBox().grow(3.0D))) {
 			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 30, 100, true, false));

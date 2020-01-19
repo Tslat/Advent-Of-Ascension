@@ -7,7 +7,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class VinesBlock extends BlockVine {
 	public VinesBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.2f);
 		setSoundType(SoundType.PLANT);

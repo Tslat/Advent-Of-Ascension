@@ -2,19 +2,15 @@ package net.tslat.aoa3.entity.mobs.mysterium;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
 
 import javax.annotation.Nullable;
 
@@ -37,12 +33,12 @@ public class EntityFungung extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 200;
+		return 100;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 11;
 	}
 
 	@Override
@@ -68,43 +64,15 @@ public class EntityFungung extends AoAMeleeMob {
 		return SoundsRegister.mobFungiHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 20;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.seedsMysticShroom, 1);
-		dropItem(Item.getItemFromBlock(BlockRegister.bannerFungal), 1);
-		dropItem(ItemRegister.shroomStone, 1);
-		dropItem(ItemRegister.realmstoneMysterium, 1);
-
-		if (rand.nextBoolean())
-			dropItem(WeaponRegister.greatbladeShroomic, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinSilver, 1 + rand.nextInt(4 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFungung;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1, true, true));
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		if (isDead)
-			return;
-
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(11), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			if (!pl.isSneaking())
-				pl.addVelocity(Math.signum(posX - pl.posX) * 0.029, 0, Math.signum(posZ - pl.posZ) * 0.029);
-		}
 	}
 }

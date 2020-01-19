@@ -1,30 +1,36 @@
 package net.tslat.aoa3.entity.mobs.overworld.soulscurry;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityGhostlyNightReaper extends AoAMeleeMob {
+public class EntityGhostlyNightReaper extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 1f;
 
 	public EntityGhostlyNightReaper(World world) {
 		super(world, entityWidth, 2.375f);
+
+		mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
+		mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
 	}
 
 	@Override
@@ -34,22 +40,22 @@ public class EntityGhostlyNightReaper extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 50;
+		return 45;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 11;
+		return 6;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.23;
 	}
 
 	@Nullable
@@ -68,27 +74,25 @@ public class EntityGhostlyNightReaper extends AoAMeleeMob {
 		return SoundsRegister.mobReaperHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerGhostly), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.ghostlyStone, 2 + rand.nextInt(2 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGhostlyNightReaper;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase)
+		if (target instanceof EntityLivingBase) {
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 7, true, true));
+
+			if (target instanceof EntityPlayer)
+				PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 20f, true);
+		}
 	}
 
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isGunDamage(source) || EntityUtil.isMeleeDamage(source) || EntityUtil.isRangedDamage(source, this, damage);
 	}
 
 	@Override
@@ -105,5 +109,11 @@ public class EntityGhostlyNightReaper extends AoAMeleeMob {
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

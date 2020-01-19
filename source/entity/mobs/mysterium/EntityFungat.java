@@ -3,15 +3,15 @@ package net.tslat.aoa3.entity.mobs.mysterium;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -34,12 +34,12 @@ public class EntityFungat extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 30;
+		return 80;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 8;
 	}
 
 	@Override
@@ -65,34 +65,20 @@ public class EntityFungat extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobFungiHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFungat;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(ItemRegister.seedsMysticShroom, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerFungal), 1);
-
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.shroomStone, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensMysterium, 1 + rand.nextInt(2 + lootingMod));
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 3d;
 	}
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 1, true, true));
 	}
 }

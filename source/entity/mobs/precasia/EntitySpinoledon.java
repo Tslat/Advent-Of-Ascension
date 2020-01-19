@@ -1,24 +1,16 @@
 package net.tslat.aoa3.entity.mobs.precasia;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntitySpinoledon extends AoAMeleeMob implements HunterEntity {
+public class EntitySpinoledon extends AoAMeleeMob {
 	public static final float entityWidth = 0.7f;
 
 	public EntitySpinoledon(World world) {
@@ -32,17 +24,17 @@ public class EntitySpinoledon extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.75;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 72;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 7d;
 	}
 
 	@Override
@@ -73,42 +65,9 @@ public class EntitySpinoledon extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.dinoStep;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensPrecasian, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(200 - lootingMod) == 0)
-			dropItem(WeaponRegister.gunSquadGun, 1);
-
-		if (rand.nextInt(200 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitPrecasian, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase && getHealth() < 60)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 20, 2, true, true));
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 59;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 240;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySpinoledon;
 	}
 }

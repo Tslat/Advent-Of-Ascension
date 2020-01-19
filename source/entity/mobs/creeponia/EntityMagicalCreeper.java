@@ -2,35 +2,31 @@ package net.tslat.aoa3.entity.mobs.creeponia;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCreeperShot;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class EntityMagicalCreeper extends EntityCreeper implements AoARangedAttacker {
+public class EntityMagicalCreeper extends EntityCreeponiaCreeper implements AoARangedAttacker {
     public static final float entityWidth = 0.6f;
 
     public EntityMagicalCreeper(World world) {
-        super(world);
+        super(world, entityWidth, 2.37f);
 
-        setSize(entityWidth, 2.37f);
+        addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 1000000, 0, false, true));
     }
 
     @Override
@@ -39,11 +35,23 @@ public class EntityMagicalCreeper extends EntityCreeper implements AoARangedAtta
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+    protected double getBaseKnockbackResistance() {
+        return 0d;
+    }
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.95);
+    @Override
+    protected double getBaseMaxHealth() {
+        return 55;
+    }
+
+    @Override
+    protected double getBaseMovementSpeed() {
+        return 0.3d;
+    }
+
+    @Override
+    public float getExplosionStrength() {
+        return 3f;
     }
 
     @Nullable
@@ -62,22 +70,15 @@ public class EntityMagicalCreeper extends EntityCreeper implements AoARangedAtta
         return SoundsRegister.mobCreepoidHit;
     }
 
+    @Nullable
     @Override
-    public boolean getCanSpawnHere() {
-        return posY < 50 && super.getCanSpawnHere();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityMagicalCreeper;
     }
 
     @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 2 + rand.nextInt(5 + lootingModifier));
-
-        if (wasRecentlyHit) {
-            if (rand.nextBoolean())
-                dropItem(ItemRegister.tokensCreeponia, 1 + rand.nextInt(3 + lootingModifier));
-
-            if (rand.nextInt(4) == 0)
-                dropItem(Item.getItemFromBlock(BlockRegister.bannerCreepy), 1);
-        }
+    public boolean getCanSpawnHere() {
+        return posY < 50 && super.getCanSpawnHere();
     }
 
     @Override
@@ -98,7 +99,7 @@ public class EntityMagicalCreeper extends EntityCreeper implements AoARangedAtta
             double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
             world.playSound(null, posX, posY, posZ, SoundsRegister.shotMagicCreeperFire, SoundCategory.HOSTILE, 1.0f, 1.0f);
-            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
             world.spawnEntity(projectile);
         }
     }
@@ -111,11 +112,11 @@ public class EntityMagicalCreeper extends EntityCreeper implements AoARangedAtta
 
     @Override
     public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-        world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2f, false);
+        WorldUtil.createExplosion(this, world, projectile, 2f);
     }
 
     @Override
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-        world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2f, false);
+        WorldUtil.createExplosion(this, world, projectile, 2f);
     }
 }

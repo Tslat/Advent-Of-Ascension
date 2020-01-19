@@ -1,17 +1,15 @@
 package net.tslat.aoa3.entity.mobs.greckon;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.PacketUtil;
@@ -20,6 +18,8 @@ import javax.annotation.Nullable;
 
 public class EntityGrillface extends AoAMeleeMob {
     public static final float entityWidth = 0.6875f;
+
+    private int scareCooldown = 0;
 
     public EntityGrillface(World world) {
         super(world, entityWidth, 2.25f);
@@ -32,17 +32,17 @@ public class EntityGrillface extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.4;
+        return 0.2;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 70;
+        return 131;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 16;
     }
 
     @Override
@@ -68,38 +68,27 @@ public class EntityGrillface extends AoAMeleeMob {
         return SoundsRegister.mobGrillfaceHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(35 - lootingMod) == 0)
-            dropItem(WeaponRegister.cannonGhastBlaster, 1);
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerGhoul), 1);
-
-        if (rand.nextInt(200 - lootingMod) == 0)
-            dropItem(ItemRegister.upgradeKitHaunted, 1);
-
-        if (rand.nextInt(20 - lootingMod) == 0)
-            dropItem(ItemRegister.realmstoneDustopia, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityGrillface;
     }
 
     @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected void doMeleeEffect(Entity target) {
+        if (target instanceof EntityPlayerMP && getRevengeTarget() == null && scareCooldown <= 0) {
+            world.playSound(null, posX, posY, posZ, SoundsRegister.mobGrillfaceScare, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            PacketUtil.network.sendTo(new PacketScreenOverlay(20, Enums.ScreenOverlays.GRILLFACE), (EntityPlayerMP)target);
+
+            scareCooldown = 100;
+        }
     }
 
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!world.isRemote && rand.nextInt(400) == 0 && getAttackTarget() != null) {
-            EntityLivingBase target = getAttackTarget();
-
-            setPosition(target.posX, target.posY, target.posZ);
-            world.playSound(null, posX, posY, posZ, SoundsRegister.mobGrillfaceScare, SoundCategory.HOSTILE, 1.0f, 1.0f);
-
-            if (target instanceof EntityPlayerMP)
-                PacketUtil.network.sendTo(new PacketScreenOverlay(20, Enums.ScreenOverlays.GRILLFACE), (EntityPlayerMP)target);
-        }
+        if (scareCooldown > 0)
+            scareCooldown--;
     }
 }

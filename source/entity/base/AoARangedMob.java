@@ -1,6 +1,5 @@
 package net.tslat.aoa3.entity.base;
 
-import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -11,6 +10,7 @@ import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -22,18 +22,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,15 +51,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
     public AoARangedMob(World world, float entityWidth, float entityHeight) {
         super(world);
 
-        if (this instanceof SpecialPropertyEntity) {
-            mobProperties = new TreeSet<Enums.MobProperties>();
-
-            if (this instanceof HunterEntity)
-                mobProperties.add(Enums.MobProperties.HUNTER_ENTITY);
-        }
-        else {
-            mobProperties = null;
-        }
+        mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
 
         setSize(entityWidth, entityHeight);
         setXpValue((int)getBaseMaxHealth() / 10);
@@ -76,18 +72,20 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         tasks.addTask(4, new EntityAIWanderAvoidWater(this, 1.0d));
         tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f));
         tasks.addTask(5, new EntityAILookIdle(this));
-        targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, AoAMinion.class, 10, true, false, (Predicate<AoAMinion>)minion -> minion.isTamed()));
+        targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, AoAMinion.class, 10, true, false, EntityTameable::isTamed));
         targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-        targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
     }
 
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
+
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
     }
 
     protected abstract double getBaseKnockbackResistance();
@@ -97,6 +95,10 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
     public abstract double getBaseProjectileDamage();
 
     protected abstract double getBaseMovementSpeed();
+
+    protected double getBaseArmour() {
+        return 0;
+    }
 
     @Nullable
     @Override
@@ -137,7 +139,34 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
 
     @Override
     protected boolean isValidLightLevel() {
-        return !isOverworldMob() || ((isDaylightMob() && world.isDaytime()) || super.isValidLightLevel());
+        if (isDaylightMob() || !isOverworldMob()) {
+            if (!world.isDaytime() && isDaylightMob())
+                return false;
+
+            return WorldUtil.getLightLevel(world, getPosition(), true, false) <= rand.nextInt(8);
+        }
+
+        BlockPos blockPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+
+        if (world.getLightFor(EnumSkyBlock.SKY, blockPos) > rand.nextInt(32)) {
+            return false;
+        }
+        else {
+            int light;
+
+            if (world.isThundering()) {
+                int skylightSubtracted = world.getSkylightSubtracted();
+
+                world.setSkylightSubtracted(10);
+                light = world.getLightFromNeighbors(blockPos);
+                world.setSkylightSubtracted(skylightSubtracted);
+            }
+            else {
+                light = world.getLightFromNeighbors(blockPos);
+            }
+
+            return light <= rand.nextInt(8);
+        }
     }
 
     protected boolean isDaylightMob() {
@@ -145,11 +174,21 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
     }
 
     private boolean checkSpawnChance() {
-        return getSpawnChanceFactor() == 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
+        if (isOverworldMob()) {
+            if (isDaylightMob()) {
+                return !(rand.nextDouble() > getSpawnChanceFactor());
+            }
+            else {
+                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
+            }
+        }
+        else {
+            return !(rand.nextDouble() > getSpawnChanceFactor());
+        }
     }
 
-    protected int getSpawnChanceFactor() {
-        return 1;
+    protected double getSpawnChanceFactor() {
+        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
     }
 
     protected boolean canSpawnOnBlock(IBlockState block) {
@@ -173,6 +212,11 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
     @Nullable
     protected Enums.CreatureEvents getEventRequirement() {
         return null;
+    }
+
+    @Override
+    public int getMaxSpawnedInChunk() {
+        return 1;
     }
 
     @Override
@@ -207,7 +251,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         if (getShootSound() != null)
             world.playSound(null, posX, posY, posZ, getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 
-        projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - world.getDifficulty().getDifficultyId()));
+        projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - world.getDifficulty().getId()));
         world.spawnEntity(projectile);
     }
 
@@ -255,68 +299,33 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         if (getIsInvulnerable())
             return true;
 
-        if (this instanceof HunterEntity) {
-            Entity trueSource = source.getTrueSource();
-            EntityPlayer pl = null;
-
-            if (trueSource instanceof EntityPlayer) {
-                pl = (EntityPlayer)trueSource;
-            }
-            else if (trueSource instanceof EntityTameable && ((EntityTameable)trueSource).getOwner() instanceof EntityPlayer) {
-                pl = (EntityPlayer)((EntityTameable)trueSource).getOwner();
-            }
-
-            if (pl != null) {
-                if (!isSpecialImmuneTo(source))
-                    return !pl.capabilities.isCreativeMode && !PlayerUtil.doesPlayerHaveLevel(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterReq());
-
-                return true;
-            }
-        }
-
-        return isSpecialImmuneTo(source);
+        return isSpecialImmuneTo(source, 1);
     }
 
-    protected boolean isSpecialImmuneTo(DamageSource source) {
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
         return false;
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
+        if (getLootTable() != null) {
+            LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(getLootTable());
 
-        if (this instanceof HunterEntity) {
-            Entity trueSource = cause.getTrueSource();
-            EntityPlayer pl = null;
+            LootContext.Builder lootBuilder = (new LootContext.Builder((WorldServer)world)).withLootedEntity(this).withDamageSource(source);
 
-            if (trueSource instanceof EntityPlayer) {
-                pl = (EntityPlayer)trueSource;
+            if (wasRecentlyHit && attackingPlayer != null)
+                lootBuilder.withPlayer(attackingPlayer).withLuck(attackingPlayer.getLuck() + lootingModifier);
+
+            for (ItemStack stack : lootTable.generateLootForPools(rand, lootBuilder.build())) {
+                entityDropItem(stack, 0);
             }
-            else if (trueSource instanceof EntityTameable && ((EntityTameable)trueSource).getOwner() instanceof EntityPlayer) {
-                pl = (EntityPlayer)((EntityTameable)trueSource).getOwner();
-            }
 
-            if (pl != null && PlayerUtil.doesPlayerHaveLevel(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterReq()))
-                PlayerUtil.giveXpToPlayer(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterXp());
+            dropEquipment(wasRecentlyHit, lootingModifier);
+        }
+        else {
+            super.dropLoot(wasRecentlyHit, lootingModifier, source);
         }
     }
-
-    @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        if (this instanceof HunterEntity && (!(source.getTrueSource() instanceof EntityPlayer) && (!(source.getTrueSource() instanceof EntityTameable) || !(((EntityTameable)source.getTrueSource()).getOwner() instanceof EntityPlayer))))
-            return;
-
-        lootingModifier = MathHelper.clamp(lootingModifier, 0, 9);
-
-        dropGuaranteedItems(lootingModifier, source);
-
-        if (wasRecentlyHit)
-            dropSpecialItems(lootingModifier, source);
-    }
-
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {}
-
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {}
 
     @Override
     public void travel(float strafe, float vertical, float forward) {
@@ -332,7 +341,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
                         double lookVecHypot = Math.sqrt(lookVec.x * lookVec.x + lookVec.z * lookVec.z);
                         double motion = Math.sqrt(motionX * motionX + motionZ * motionZ);
                         float pitchAngle = MathHelper.cos(lookPitch);
-                        pitchAngle = (float)((double)pitchAngle * (double)pitchAngle * Math.min(1.0D, lookVec.lengthVector() / 0.4D));
+                        pitchAngle = (float)((double)pitchAngle * (double)pitchAngle * Math.min(1.0D, lookVec.length() / 0.4D));
                         motionY += -0.08D + (double)pitchAngle * 0.06D;
 
                         if (motionY < 0.0D && lookVecHypot > 0.0D) {
@@ -430,7 +439,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
                         else {
                             checkPos.setPos(posX, 0.0D, posZ);
 
-                            if (!world.isRemote || world.isBlockLoaded(checkPos) && world.getChunkFromBlockCoords(checkPos).isLoaded()) {
+                            if (!world.isRemote || world.isBlockLoaded(checkPos) && world.getChunk(checkPos).isLoaded()) {
                                 if (!hasNoGravity())
                                     motionY -= 0.08D;
                             }

@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class BasicBlock extends Block {
 	public BasicBlock(String name, String registryName, Material material, float hardness, float resistance) {
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(hardness);
 		setResistance(resistance);

@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client.fx;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -9,6 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.client.render.FXRenders;
+
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class FXFluffyRainbowParticle extends Particle {
@@ -18,22 +20,23 @@ public class FXFluffyRainbowParticle extends Particle {
 
 	public final int textureOffsetIndex;
 
-	public FXFluffyRainbowParticle(World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int textureOffsetIndex, float... scale) {
+	public FXFluffyRainbowParticle(World world, double posX, double posY, double posZ) {
+		this(world, posX, posY, posZ, 0, 0, 0, 0, 1);
+	}
+
+	public FXFluffyRainbowParticle(World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int textureOffsetIndex, float scale) {
 		super(world, posX, posY, posZ, speedX, speedY, speedZ);
 		this.textureOffsetIndex = textureOffsetIndex;
 		this.motionX = speedX + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
 		this.motionY = speedY + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
 		this.motionZ = speedZ + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
-		this.particleScale = rand.nextFloat() * rand.nextFloat() * 6.0f + 1.0f;
+		this.particleScale = (rand.nextFloat() * rand.nextFloat() * 6.0f + 1.0f) * scale;
+		this.particleMaxAge = (int)(20.0 / (rand.nextFloat() * 0.8 + 0.2));
+		this.particleRed = (float)rand.nextGaussian();
+		this.particleGreen = (float)rand.nextGaussian();
+		this.particleBlue = (float)rand.nextGaussian();
+		this.particleAlpha = 1.0f;
 
-		if (scale.length > 0)
-			particleScale *= scale[0];
-
-		particleMaxAge = (int)(20.0 / (rand.nextFloat() * 0.8 + 0.2));
-		particleRed = (float)rand.nextGaussian();
-		particleGreen = (float)rand.nextGaussian();
-		particleBlue = (float)rand.nextGaussian();
-		particleAlpha = 1.0f;
 		setParticleTexture(Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString()));
 	}
 
@@ -118,12 +121,14 @@ public class FXFluffyRainbowParticle extends Particle {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static class Factory implements IParticleFactory {
+	public static class Factory implements FXRenders.FXFactory {
+		@Nullable
 		@Override
-		public Particle createParticle(int id, World world, double x, double y, double z, double vX, double vY, double vZ, int... args) {
-			Particle particle = new FXFluffyRainbowParticle(world, x, y, z, vX, vY, vZ, args[0]);
+		public Particle createParticle(double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int textureOffsetIndex, float scale, int... args) {
+			Particle particle = new FXFluffyRainbowParticle(Minecraft.getMinecraft().world, posX, posY, posZ, velocityX, velocityY, velocityZ, textureOffsetIndex, scale);
 
 			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+
 			return particle;
 		}
 	}

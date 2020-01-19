@@ -6,21 +6,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelMuckopede extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg4;
-	ModelRenderer leg3;
-	ModelRenderer body;
-	ModelRenderer body2;
-	ModelRenderer leg5;
-	ModelRenderer leg7;
-	ModelRenderer leg9;
-	ModelRenderer leg6;
-	ModelRenderer leg8;
-	ModelRenderer leg10;
-	ModelRenderer leg12;
-	ModelRenderer leg11;
+	private ModelRenderer head;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg4;
+	private ModelRenderer leg3;
+	private ModelRenderer body;
+	private ModelRenderer body2;
+	private ModelRenderer leg5;
+	private ModelRenderer leg7;
+	private ModelRenderer leg9;
+	private ModelRenderer leg6;
+	private ModelRenderer leg8;
+	private ModelRenderer leg10;
+	private ModelRenderer leg12;
+	private ModelRenderer leg11;
 
 	public ModelMuckopede() {
 		textureWidth = 64;

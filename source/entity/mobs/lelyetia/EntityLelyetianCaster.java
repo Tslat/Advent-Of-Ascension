@@ -3,15 +3,16 @@ package net.tslat.aoa3.entity.mobs.lelyetia;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityLelyetianShot;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -39,12 +40,12 @@ public class EntityLelyetianCaster extends AoARangedMob {
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 4;
+		return 7;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.207;
+		return 0.23;
 	}
 
 	@Nullable
@@ -65,19 +66,16 @@ public class EntityLelyetianCaster extends AoARangedMob {
 		return SoundsRegister.mobLelyetianHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(6) == 0)
-			dropItem(ItemRegister.seedsChilli, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(20 - lootingMod) == 0)
-			dropItem(ItemRegister.guardiansEye, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityLelyetianCaster;
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof EntityPlayer)
-			PlayerUtil.getAdventPlayer((EntityPlayer)target).consumeResource(Enums.Resources.ENERGY, 50, true);
+			PlayerUtil.getAdventPlayer((EntityPlayer)target).stats().consumeResource(Enums.Resources.ENERGY, 50, true);
 	}
 
 	@Nullable

@@ -1,22 +1,18 @@
 package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -25,8 +21,16 @@ import static net.tslat.aoa3.library.Enums.Deities.EREBON;
 public class EntityVisage extends AoAMeleeMob {
 	public static final float entityWidth = 0.7f;
 
+	private EntityVisage mirageHost = null;
+
 	public EntityVisage(World world) {
 		super(world, entityWidth, 1.5f);
+	}
+
+	public EntityVisage(World world, EntityVisage mirageHost) {
+		super(world, entityWidth, 1.5f);
+
+		this.mirageHost = mirageHost;
 	}
 
 	@Override
@@ -36,17 +40,17 @@ public class EntityVisage extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 60d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 11d;
 	}
 
 	@Override
@@ -72,17 +76,47 @@ public class EntityVisage extends AoAMeleeMob {
 		return SoundsRegister.mobPenumbraHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase) {
-			int modifier = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().grow(7), entity -> entity instanceof IMob).size();
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (mirageHost != null) {
+			setDead();
 
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 60, Math.min(20, modifier)));
+			return false;
+		}
+		else {
+			return super.attackEntityFrom(source, amount);
+		}
+	}
+
+	@Override
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+
+		if (world.isRemote) {
+			if (mirageHost != null) {
+				if (ticksExisted >= 600 || mirageHost.isDead)
+					setDead();
+			}
+			else if (rand.nextInt(200) == 0) {
+				EntityVisage visage = new EntityVisage(world, this);
+				double xPos = posX + (int)(rand.nextFloat() * 10 - 5);
+				double zPos = posZ + (int)(rand.nextFloat() * 10 - 5);
+				double yPos = world.getHeight((int)xPos, (int)zPos);
+
+				visage.setPosition(xPos, yPos, zPos);
+				world.spawnEntity(visage);
+			}
 		}
 	}
 
@@ -105,12 +139,12 @@ public class EntityVisage extends AoAMeleeMob {
 				}
 
 				if (pl != null) {
-					AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					cap.addTribute(EREBON, 4);
+					plData.stats().addTribute(EREBON, 4);
 
-					if (cap.getTribute(EREBON) == 200)
-						cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.immortallisProgression.evilSpiritsEnd"));
+					if (plData.stats().getTribute(EREBON) == 200)
+						plData.sendThrottledChatMessage("message.feedback.immortallisProgression.evilSpiritsEnd");
 				}
 			}
 		}

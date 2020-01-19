@@ -1,17 +1,15 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.TreeSet;
@@ -21,7 +19,7 @@ public class EntitySphinx extends AoAMeleeMob implements SpecialPropertyEntity {
 
 	public EntitySphinx(World world) {
 		super(world, entityWidth, 1);
-		this.mobProperties.add(Enums.MobProperties.MELEE_IMMUNE);
+		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
 	}
 
 	@Override
@@ -31,12 +29,12 @@ public class EntitySphinx extends AoAMeleeMob implements SpecialPropertyEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 30;
+		return 20;
 	}
 
 	@Override
@@ -65,25 +63,20 @@ public class EntitySphinx extends AoAMeleeMob implements SpecialPropertyEntity {
 		return SoundsRegister.mobSphinxHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySphinx;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return EntityUtil.isMeleeDamage(source);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(Item.getItemFromBlock(Blocks.SAND), rand.nextInt(3 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isGunDamage(source);
 	}
 
 	@Override

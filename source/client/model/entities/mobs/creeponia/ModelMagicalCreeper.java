@@ -6,16 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelMagicalCreeper extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
 
 	public ModelMagicalCreeper() {
 		textureWidth = 64;

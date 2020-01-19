@@ -5,17 +5,26 @@ import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.projectiles.cannon.EntityGreenBall;
+import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.entity.projectiles.cannon.EntitySuperGreenBall;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
+
 public class SuperCannon extends BaseCannon implements AdventWeapon {
-	public SuperCannon(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("SuperCannon");
+	public SuperCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("SuperCannon");
 		setRegistryName("aoa3:super_cannon");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunLowerCannon;
 	}
 
 	@Override
@@ -23,7 +32,7 @@ public class SuperCannon extends BaseCannon implements AdventWeapon {
 		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.cannonball, player.getHeldItem(hand));
 
 		if (ammo != null)
-			return new EntityGreenBall(player, gun, hand, 120, 0);
+			return new EntitySuperGreenBall(player, gun, hand, 120, 0);
 
 		return null;
 	}

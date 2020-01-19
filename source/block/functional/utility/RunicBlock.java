@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class RunicBlock extends Block {
 	public RunicBlock() {
 		super(Material.ROCK);
-		setUnlocalizedName("RunicBlock");
+		setTranslationKey("RunicBlock");
 		setRegistryName("aoa3:runic_block");
 		setHardness(10.0f);
 		setResistance(15.0f);

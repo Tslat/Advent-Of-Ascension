@@ -42,11 +42,16 @@ public class PlantMultiStackable extends PlantStackable {
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		Block block = world.getBlockState(pos = pos.up()).getBlock();
+		IBlockState blockState = world.getBlockState(pos = pos.up());
+		Block block = blockState.getBlock();
 
 		while (stemBlocks.contains(block) || block == hatBlock) {
+			if (block.quantityDropped(RANDOM) > 0)
+				block.dropBlockAsItem(world, pos, blockState, 0);
+
 			world.setBlockToAir(pos);
-			block = world.getBlockState(pos = pos.up()).getBlock();
+			blockState = world.getBlockState(pos = pos.up());
+			block = blockState.getBlock();
 		}
 	}
 }

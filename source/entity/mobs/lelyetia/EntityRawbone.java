@@ -6,23 +6,27 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public class EntityRawbone extends AoAMeleeMob implements HunterEntity {
+public class EntityRawbone extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.625f;
 
 	public EntityRawbone(World world) {
 		super(world, entityWidth, 1.0625f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -32,12 +36,12 @@ public class EntityRawbone extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 80;
+		return 64;
 	}
 
 	@Override
@@ -68,10 +72,10 @@ public class EntityRawbone extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobRawboneHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.fleshyBones, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityRawbone;
 	}
 
 	@Override
@@ -86,13 +90,8 @@ public class EntityRawbone extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	public int getHunterReq() {
-		return 78;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 1000;
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
 	}
 
 	@Nonnull

@@ -1,45 +1,57 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SweetSword extends BaseSword implements AdventWeapon {
-	public SweetSword(final ToolMaterial material, Float dmg, Double speed) {
-		super(material, dmg, speed);
-		setUnlocalizedName("SweetSword");
+	private static final ArrayList<ItemStack> candyList = new ArrayList<ItemStack>();
+	private static boolean populated = false;
+
+	public SweetSword(final ToolMaterial material, final double speed) {
+		super(material, speed);
+		setTranslationKey("SweetSword");
 		setRegistryName("aoa3:sweet_sword");
 	}
 
 	@Override
-	public boolean onLeftClickEntity(final ItemStack stack, final EntityPlayer player, final Entity target) {
-		if (player.world.isRemote)
-			return false;
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+		if (itemRand.nextFloat() < 0.2 * attackCooldown) {
+			if (!populated)
+				populateCandyList();
 
-		if (player.getCooledAttackStrength(0.0f) > 0.75f) {
-			final int size = player.world.getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().grow(2.5f), EntityUtil::isHostileMob).size();
-
-			if (size > 0)
-				EntityUtil.healEntity(player, Math.min(6, size * 0.5f));
+			target.entityDropItem(candyList.get(itemRand.nextInt(candyList.size())), target.height / 2f);
 		}
+	}
 
-		return false;
+	private static void populateCandyList() {
+		candyList.add(new ItemStack(Items.SUGAR, 3));
+		OreDictionary.getOres("listAllSugar").forEach(stack -> candyList.add(stack));
+		OreDictionary.getOres("foodCandy").forEach(stack -> candyList.add(stack));
+
+		populated = true;
+	}
+
+	public static void addCandyDrop(ItemStack stack) {
+		if (!populated)
+			populateCandyList();
+
+		candyList.add(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.SweetSword.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.SweetSword.desc.2", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SweetSword.desc.1", Enums.ItemDescriptionType.UNIQUE));
 	}
 }

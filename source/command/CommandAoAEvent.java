@@ -66,7 +66,7 @@ public class CommandAoAEvent extends CommandBase {
 				for (Enums.CreatureEvents ev : Enums.CreatureEvents.values()) {
 					if (OverworldEvents.isEventActive(ev)) {
 						builder.append(", ");
-						builder.append(StringUtil.capitaliseAllWords(ev.name().toLowerCase().replace("_", " ")));
+						builder.append(StringUtil.toTitleCase(ev.name().toLowerCase().replace("_", " ")));
 					}
 				}
 
@@ -100,7 +100,7 @@ public class CommandAoAEvent extends CommandBase {
 					return;
 				}
 
-				messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaevent.starting", StringUtil.capitaliseAllWords(eventName));
+				messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaevent.starting", StringUtil.toTitleCase(eventName));
 				OverworldEvents.activateEvent(sender.getEntityWorld(), event);
 				break;
 			case "stop":
@@ -128,7 +128,7 @@ public class CommandAoAEvent extends CommandBase {
 					return;
 				}
 
-				messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaevent.stopping", StringUtil.capitaliseAllWords(eventName));
+				messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaevent.stopping", StringUtil.toTitleCase(eventName));
 				OverworldEvents.deactivateEvent(sender.getEntityWorld(), event);
 				break;
 			default:

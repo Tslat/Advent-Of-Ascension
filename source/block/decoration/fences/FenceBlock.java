@@ -10,7 +10,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class FenceBlock extends BlockFence {
 	public FenceBlock(String name, String registryName, Material material) {
 		super(material, BlockPlanks.EnumType.DARK_OAK.getMapColor());
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(2.0f);
 		setResistance(5.0f);

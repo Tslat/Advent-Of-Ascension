@@ -10,12 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.block.CustomStateMapperBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
-public class CarpetBlock extends BlockCarpet {
+public class CarpetBlock extends BlockCarpet implements CustomStateMapperBlock {
 	public CarpetBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.3f);
 		setResistance(0.0f);
@@ -25,6 +26,7 @@ public class CarpetBlock extends BlockCarpet {
 		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public StateMap getStateMapper() {
 		return (new StateMap.Builder().ignore(BlockCarpet.COLOR).build());

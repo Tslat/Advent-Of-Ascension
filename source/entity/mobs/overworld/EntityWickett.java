@@ -1,28 +1,21 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityWickett extends AoAMeleeMob implements SpecialPropertyEntity {
+public class EntityWickett extends AoAMeleeMob {
 	public static final float entityWidth = 1.0f;
 
 	public EntityWickett(World world) {
 		super(world, entityWidth, 1.125f);
-		this.mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
-		this.mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
-		this.mobProperties.add(Enums.MobProperties.EXPLOSION_IMMUNE);
 	}
 
 	@Override
@@ -32,17 +25,17 @@ public class EntityWickett extends AoAMeleeMob implements SpecialPropertyEntity 
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 25;
+		return 20;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 3;
 	}
 
 	@Override
@@ -66,34 +59,20 @@ public class EntityWickett extends AoAMeleeMob implements SpecialPropertyEntity 
 		return SoundEvents.ENTITY_SKELETON_HURT;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityWickett;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
-		return true;
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return source.isExplosion() || source.isFireDamage() || EntityUtil.isMagicDamage(source, this, 1.0f);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
 	protected boolean isOverworldMob() {
 		return true;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Override

@@ -1,14 +1,16 @@
 package net.tslat.aoa3.entity.mobs.haven;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityVolarShot;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -31,7 +33,7 @@ public class EntityVolar extends AoAFlyingRangedMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 20;
+		return 86;
 	}
 
 	@Override
@@ -64,23 +66,23 @@ public class EntityVolar extends AoAFlyingRangedMob {
 
 	@Nullable
 	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVolar;
+	}
+
+	@Nullable
+	@Override
 	protected SoundEvent getShootSound() {
 		return null;
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 4;
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 4d;
 	}
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new EntityVolarShot(this, Enums.MobProjectileType.PHYSICAL);
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensHaven, 1);
 	}
 }

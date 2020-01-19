@@ -3,38 +3,28 @@ package net.tslat.aoa3.entity.mobs.overworld;
 import com.google.common.base.Predicate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityPincher extends AoAMeleeMob implements HunterEntity {
-	public static final float entityWidth = 1.7f;
+public class EntityPincher extends AoAMeleeMob {
+	public static final float entityWidth = 1f;
 
 	public EntityPincher(World world) {
-		super(world, entityWidth, 0.75f);
-
-		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
+		super(world, 1f, 0.75f);
 	}
 
 	@Override
@@ -56,18 +46,23 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
+	protected double getBaseArmour() {
+		return 4d;
+	}
+
+	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 25;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 17;
+		return 4;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.3286;
+		return 0.29d;
 	}
 
 	@Nullable
@@ -86,6 +81,12 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobPincherHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityPincher;
+	}
+
 	@Override
 	public boolean handleWaterMovement() {
 		return false;
@@ -102,22 +103,8 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 5;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(75 - lootingMod) == 0)
-			dropItem(WeaponRegister.staffAtlantic, 1);
-
-		if (rand.nextInt(75 - lootingMod) == 0)
-			dropItem(WeaponRegister.bowAtlantic, 1);
-	}
-
-	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && (block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block));
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override
@@ -130,16 +117,6 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 		if (isInWater() && getAttackTarget() != null && getAttackTarget().posY > posY)
 			motionY = 0.25;
 
-		EntityPlayer nearestPlayer = world.getNearestPlayerNotCreative(this, 15.0);
-
-		if (nearestPlayer == null)
-			return;
-
-		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(nearestPlayer);
-
-		if (!nearestPlayer.isInWater() && cap.getLevel(Enums.Skills.HUNTER) >= getHunterReq())
-			nearestPlayer.addVelocity(Math.signum(posX - nearestPlayer.posX) * 0.029, Math.signum(posY - nearestPlayer.posY) * 0.015, Math.signum(posZ - nearestPlayer.posZ) * 0.029);
-
 		if (isInWater()) {
 			if (motionX > -1.100000023841858 && motionX < 1.100000023841858)
 				motionX *= 1.100000023841858;
@@ -151,18 +128,12 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase) {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 50, 0, true, false));
-
-			if (target instanceof EntityPlayer) {
-				target.velocityChanged = true;
-				target.addVelocity(motionX * -5, motionY * -2, motionZ * -5);
-			}
-		}
+		if (!world.isRemote && isInWater() && target.isInWater())
+			WorldUtil.createExplosion(this, world, 1.5f);
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isRangedDamage(source, this, 1f);
 	}
 
@@ -174,21 +145,5 @@ public class EntityPincher extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 93;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 6000;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

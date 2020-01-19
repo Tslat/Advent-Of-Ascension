@@ -2,7 +2,7 @@ package net.tslat.aoa3.block.functional.portal;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,8 +16,11 @@ public class RunandorPortalBlock extends PortalBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (!(entity instanceof EntityPlayerMP) || (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.runandor || ((EntityPlayerMP)entity).capabilities.isCreativeMode || ((EntityPlayerMP)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
-			super.onEntityCollidedWithBlock(world, pos, state, entity);
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+		if (world.isRemote)
+			return;
+
+		if (!(entity instanceof EntityPlayer) || (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.runandor || ((EntityPlayer)entity).capabilities.isCreativeMode || ((EntityPlayer)entity).inventory.hasItemStack(new ItemStack(ItemRegister.realmTravelTicket))))
+			super.onEntityCollision(world, pos, state, entity);
 	}
 }

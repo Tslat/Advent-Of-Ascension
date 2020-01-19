@@ -1,26 +1,28 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOURCRYSTALLIS;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_CRYSTALLIS;
 
 public class CrystallisArmour extends AdventArmour {
-	public CrystallisArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOURCRYSTALLIS, name, registryName, renderIndex, slot);
+	public CrystallisArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_CRYSTALLIS, name, registryName, slot);
 	}
 
 	@Override
@@ -29,23 +31,26 @@ public class CrystallisArmour extends AdventArmour {
 	}
 
 	@Override
-	public void handleAttackBuffs(LivingHurtEvent event, AdventPlayerCapability cap) {
-		DamageSource source = event.getSource();
-
-		if (EntityUtil.isMeleeDamage(event.getSource())) {
-			if (itemRand.nextInt(5) == 0)
-				EntityUtil.dealSelfHarmDamage(cap.getPlayer(), event.getAmount() * 0.50f);
-
-			if (itemRand.nextInt(100) <= 66)
-				event.setAmount(event.getAmount() * 2.0f);
+	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
+		if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
+			if (slots == null && EntityUtil.isMeleeDamage(event.getSource()) || EntityUtil.isRangedDamage(event.getSource(), plData.player(), event.getAmount())) {
+				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount());
+				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
+			}
+			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && EntityUtil.isMeleeDamage(event.getSource())) {
+				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount() / (5 - slots.size()));
+				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
+			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.CrystallisArmour.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.CrystallisArmour.desc.2", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystallisArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(pieceEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystallisArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystallisArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

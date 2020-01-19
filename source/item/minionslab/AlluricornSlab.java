@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntityAlluricorn;
 
 public class AlluricornSlab extends BaseSlab {
 	public AlluricornSlab() {
-		super("AlluricornSlab", "alluricorn_slab", 81, 180, 80, 4000);
+		super("AlluricornSlab", "alluricorn_slab", 80, 180, 80, 4000);
 	}
 
 	@Override

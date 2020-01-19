@@ -6,26 +6,26 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelHunter extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer connect1;
-	ModelRenderer leg4;
-	ModelRenderer connect2;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg1p2;
-	ModelRenderer leg4p2;
-	ModelRenderer leg3p2;
-	ModelRenderer leg2p2;
-	ModelRenderer connect4;
-	ModelRenderer connect3;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer connect1;
+	private ModelRenderer leg4;
+	private ModelRenderer connect2;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg1p2;
+	private ModelRenderer leg4p2;
+	private ModelRenderer leg3p2;
+	private ModelRenderer leg2p2;
+	private ModelRenderer connect4;
+	private ModelRenderer connect3;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
 
 	public ModelHunter() {
 		textureWidth = 128;

@@ -1,6 +1,5 @@
 package net.tslat.aoa3.entity.projectiles.staff;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +16,9 @@ import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
 import java.util.List;
 
 public class BaseEnergyShot extends EntityThrowable {
-	private int lifespan;
+	protected int lifespan;
 	private int age;
-	private EnergyProjectileWeapon weapon;
+	protected EnergyProjectileWeapon weapon;
 
 	public BaseEnergyShot(World world) {
 		super(world);
@@ -121,9 +120,9 @@ public class BaseEnergyShot extends EntityThrowable {
 			setPosition(posX + ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)), posY - 0.2D, posZ + ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)));
 		}
 
-		shoot((double)(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)),
-				(double)(-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI)),
-				(double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)),
+		shoot(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI),
+				-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI),
+				MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI),
 				3.0f,1.0f);
 
 		posX += motionX * 0.5;
@@ -138,18 +137,18 @@ public class BaseEnergyShot extends EntityThrowable {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (!world.isRemote && result.typeOfHit == RayTraceResult.Type.BLOCK) {
-			IBlockState bl = world.getBlockState(result.getBlockPos());
+		if (!world.isRemote) {
+			if (weapon != null) {
+				if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
+					weapon.doBlockImpact(this, result.getBlockPos(), this.thrower);
+				}
+				else if (result.entityHit != null) {
+					weapon.doEntityImpact(this, result.entityHit, thrower);
+				}
+			}
 
-			weapon.doBlockImpact(this, result.getBlockPos(), this.thrower);
-		}
-		else {
-			if (!world.isRemote && result.entityHit != null)
-				weapon.doEntityImpact(this, result.entityHit, thrower);
-		}
-
-		if (!world.isRemote)
 			setDead();
+		}
 	}
 
 	@Override

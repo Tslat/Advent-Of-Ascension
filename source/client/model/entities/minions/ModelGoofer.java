@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelGoofer extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer leg1p2;
-	ModelRenderer leg3p2;
-	ModelRenderer leg2p2;
-	ModelRenderer leg4p2;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer leg1p2;
+	private ModelRenderer leg3p2;
+	private ModelRenderer leg2p2;
+	private ModelRenderer leg4p2;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
 
 	public ModelGoofer() {
 		textureWidth = 64;

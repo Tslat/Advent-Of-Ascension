@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class SeedsItem extends ItemSeeds {
 	public SeedsItem(String name, String registryName, CropBlock plant, Block growthMaterial) {
 		super(plant, growthMaterial);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setCreativeTab(CreativeTabsRegister.miscTab);
 		plant.setSeeds(this);

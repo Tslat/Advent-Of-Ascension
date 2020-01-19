@@ -9,19 +9,19 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.tslat.aoa3.client.gui.KeyBinder;
+import net.tslat.aoa3.client.event.KeyBinder;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 import org.lwjgl.opengl.GL11;
 
 import java.util.TreeSet;
 
 public class EntityPropertiesRenderer {
 	@SubscribeEvent
-	public void renderIcons(final RenderLivingEvent.Specials.Pre ev) {
-		if (!KeyBinder.statusCreatureStats || !(ev.getEntity() instanceof SpecialPropertyEntity))
+	public void renderIcons(final RenderLivingEvent.Specials.Pre<EntityLivingBase> ev) {
+		if (!KeyBinder.statusCreatureStats)
 				return;
 
 		EntityLivingBase entity = ev.getEntity();
@@ -29,10 +29,39 @@ public class EntityPropertiesRenderer {
 		if (entity.posX == 0 && entity.posY == 0 && entity.posZ == 0)
 			return;
 
-		TreeSet<Enums.MobProperties> mobProps = ((SpecialPropertyEntity)entity).getMobProperties();
+		int hunterReq = HunterUtil.getHunterLevel(entity);
+		int propsSize = 0;
+		TreeSet<Enums.MobProperties> mobProps = null;
+
+		if (hunterReq > 0)
+			propsSize += 1;
+
+		if (entity instanceof SpecialPropertyEntity) {
+			mobProps = ((SpecialPropertyEntity)entity).getMobProperties();
+			propsSize += mobProps.size();
+		}
+
+		if (hunterReq <= 0 && mobProps == null)
+			return;
+
 		float yOffset = 0;
-		float xOffset = Math.max(-5, -mobProps.size()) * 0.45f / 2.0f + 0.2f;
+		final float baseXOffset = Math.max(-5, -propsSize) * 0.45f / 2.0f + 0.2f;
+		float xOffset = baseXOffset;
 		float rowMax = 0.875f;
+
+		if (hunterReq > 0) {
+			if (Minecraft.getMinecraft().player.capabilities.isCreativeMode || AdventGuiTabPlayer.getSkillLevel(Enums.Skills.HUNTER) >= hunterReq) {
+				renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/hunter_entity_available.png"), xOffset, yOffset, ev);
+			}
+			else {
+				renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/hunter_entity_unavailable.png"), xOffset, yOffset, ev);
+			}
+
+			xOffset += 0.45f;
+		}
+
+		if (mobProps == null)
+			return;
 
 		for (Enums.MobProperties prop : mobProps) {
 			switch (prop) {
@@ -50,14 +79,6 @@ public class EntityPropertiesRenderer {
 					break;
 				case MELEE_IMMUNE:
 					renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/melee_immunity.png"), xOffset, yOffset, ev);
-					break;
-				case HUNTER_ENTITY:
-					if (AdventGuiTabPlayer.getSkillLevel(Enums.Skills.HUNTER) >= ((HunterEntity)entity).getHunterReq()) {
-						renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/hunter_entity_available.png"), xOffset, yOffset, ev);
-					}
-					else {
-						renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/hunter_entity_unavailable.png"), xOffset, yOffset, ev);
-					}
 					break;
 				case STATUS_IMMUNE:
 					renderIcon(new ResourceLocation("aoa3", "textures/gui/mobproperties/status_immunity.png"), xOffset, yOffset, ev);
@@ -77,7 +98,7 @@ public class EntityPropertiesRenderer {
 
 			if (xOffset > rowMax) {
 				yOffset += 0.45f;
-				xOffset = Math.max(-5, -mobProps.size()) * 0.45f / 2.0f + 0.2f;
+				xOffset = baseXOffset;
 			}
 		}
 	}

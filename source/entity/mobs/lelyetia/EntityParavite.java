@@ -1,20 +1,17 @@
 package net.tslat.aoa3.entity.mobs.lelyetia;
 
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityParavite extends AoAMeleeMob implements HunterEntity {
+public class EntityParavite extends AoAMeleeMob {
 	public static final float entityWidth = 0.625f;
 
 	public EntityParavite(World world) {
@@ -28,17 +25,17 @@ public class EntityParavite extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0.15d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 100;
+		return 68;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 12;
+		return 9.5d;
 	}
 
 	@Override
@@ -64,33 +61,14 @@ public class EntityParavite extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobParaviteHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(110 - lootingMod) == 0)
-			dropItem(WeaponRegister.bowSkydriver, 1);
-
-		if (rand.nextInt(110 - lootingMod) == 0)
-			dropItem(WeaponRegister.gunOvershot, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityParavite;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinSilver, 2 + rand.nextInt(3 + lootingMod));
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 81;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 2100;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.ARTHROPOD;
 	}
 }

@@ -1,25 +1,28 @@
 package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PredicateUtil;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityWalker extends AoAMeleeMob {
+public class EntityWalker extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntityWalker(World world) {
 		super(world, entityWidth, 1.9375f);
+
+		mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
+		isImmuneToFire = true;
 	}
 
 	@Override
@@ -29,22 +32,22 @@ public class EntityWalker extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 90;
+		return 45;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 3.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25;
 	}
 
 	@Nullable
@@ -63,19 +66,15 @@ public class EntityWalker extends AoAMeleeMob {
 		return SoundsRegister.mobWalkerHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityWalker;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.orbulon, 1);
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override
@@ -84,23 +83,25 @@ public class EntityWalker extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
+	protected void doMeleeEffect(Entity target) {
+		if (!world.isRemote)
+			target.setFire(30);
+	}
 
-		if (isAIDisabled())
-			return;
-
-		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(5), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-			if (!canEntityBeSeen(pl) || pl.isInWater())
-				continue;
-
-			pl.setFire(3);
-		}
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return source.isFireDamage();
 	}
 
 	@Nonnull
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
 		return Enums.CreatureEvents.LUNAR_INVASION;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

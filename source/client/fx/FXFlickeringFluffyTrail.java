@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client.fx;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
@@ -9,6 +8,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.client.render.FXRenders;
+import net.tslat.aoa3.library.Enums;
+
+import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
 public class FXFlickeringFluffyTrail extends Particle {
@@ -18,23 +21,27 @@ public class FXFlickeringFluffyTrail extends Particle {
 
 	public final int textureOffsetIndex;
 
-	public FXFlickeringFluffyTrail(World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int colour, int textureOffsetIndex, float... scale) {
+	public FXFlickeringFluffyTrail(World world, double posX, double posY, double posZ, int colour) {
+		this(world, posX, posY, posZ, 0, 0, 0, colour, 0, 1);
+	}
+
+	public FXFlickeringFluffyTrail(World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int colour, int textureOffsetIndex, float scale) {
 		super(world, posX, posY, posZ, speedX, speedY, speedZ);
 		this.motionX = speedX + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
 		this.motionY = speedY + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
 		this.motionZ = speedZ + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
-		this.particleScale = rand.nextFloat() * rand.nextFloat() * 6.0f + 1.0f;
-
-		if (scale.length > 0)
-			particleScale *= scale[0];
-
+		this.particleScale = (rand.nextFloat() * rand.nextFloat() * 6.0f + 1.0f) * scale;
 		this.textureOffsetIndex = textureOffsetIndex;
-		particleMaxAge = (int)(3.0 / (rand.nextFloat() * 0.8 + 0.2));
+		this.particleMaxAge = (int)(3.0 / (rand.nextFloat() * 0.8 + 0.2));
 		float colorMod = rand.nextFloat() * 0.7f + 0.3f;
-		particleRed = ((colour >> 16) / 255.0f) * colorMod;
-		particleGreen = (((colour >> 8) & 0xff) / 255.0f) * colorMod;
-		particleBlue = ((colour & 0xff) / 255.0f) * colorMod;
-		particleAlpha = 1.0f;
+		this.particleRed = ((colour >> 16) / 255.0f) * colorMod;
+		this.particleGreen = (((colour >> 8) & 0xff) / 255.0f) * colorMod;
+		this.particleBlue = ((colour & 0xff) / 255.0f) * colorMod;
+		this.particleAlpha = (colour >> 24) / 255.0f;
+
+		if (particleAlpha == 0)
+			particleAlpha = 1f;
+
 		setParticleTexture(Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString()));
 	}
 
@@ -119,12 +126,14 @@ public class FXFlickeringFluffyTrail extends Particle {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static class Factory implements IParticleFactory {
+	public static class Factory implements FXRenders.FXFactory {
+		@Nullable
 		@Override
-		public Particle createParticle(int id, World world, double x, double y, double z, double vX, double vY, double vZ, int... args) {
-			Particle particle = new FXFlickeringFluffyTrail(world, x, y, z, vX, vY, vZ, args[0], args[1], args[2]);
+		public Particle createParticle(double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int textureOffsetIndex, float scale, int... args) {
+			Particle particle = new FXFlickeringFluffyTrail(Minecraft.getMinecraft().world, posX, posY, posZ, velocityX, velocityY, velocityZ, args.length > 0 ? args[0] : Enums.RGBIntegers.WHITE, textureOffsetIndex, scale);
 
 			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+
 			return particle;
 		}
 	}

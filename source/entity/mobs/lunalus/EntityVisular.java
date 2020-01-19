@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.lunalus;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
 
@@ -28,12 +29,12 @@ public class EntityVisular extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 110;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 3;
+		return 12;
 	}
 
 	@Override
@@ -59,9 +60,9 @@ public class EntityVisular extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobVisularHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.upgradeKitLunar, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVisular;
 	}
 }
