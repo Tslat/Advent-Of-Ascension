@@ -3,8 +3,9 @@ package net.tslat.aoa3.structure.iromine;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.block.functional.lamps.LampBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityProfessor;
+import net.tslat.aoa3.entity.npcs.trader.EntityProfessor;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -16,6 +17,7 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 	private static final IBlockState iropole = BlockRegister.iropole.getDefaultState();
 	private static final IBlockState cogBlock = BlockRegister.cogBlock.getDefaultState();
 	private static final IBlockState carpet = BlockRegister.carpetIro.getDefaultState();
+	private static final IBlockState iroLamp = BlockRegister.lampIro.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 
 	public ProfessorsLab() {
 		super("ProfessorsLab");
@@ -36,11 +38,11 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 3, 0, 7, dottedBrick);
 		addBlock(world, basePos, 3, 0, 10, iropole);
 		addBlock(world, basePos, 4, 0, 1, dottedBrick);
-		addBlock(world, basePos, 4, 0, 2, carpet);
+		addBlock(world, basePos, 4, 0, 2, iropole);
 		addBlock(world, basePos, 4, 0, 3, carpet);
 		addBlock(world, basePos, 4, 0, 4, carpet);
 		addBlock(world, basePos, 4, 0, 5, carpet);
-		addBlock(world, basePos, 4, 0, 6, carpet);
+		addBlock(world, basePos, 4, 0, 6, iropole);
 		addBlock(world, basePos, 4, 0, 7, dottedBrick);
 		addBlock(world, basePos, 5, 0, 1, dottedBrick);
 		addBlock(world, basePos, 5, 0, 2, carpet);
@@ -85,7 +87,7 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 10, 0, 6, carpet);
 		addBlock(world, basePos, 10, 0, 7, dottedBrick);
 		addBlock(world, basePos, 11, 0, 1, dottedBrick);
-		addBlock(world, basePos, 11, 0, 2, carpet);
+		addBlock(world, basePos, 11, 0, 2, iropole);
 		addBlock(world, basePos, 11, 0, 3, carpet);
 		addBlock(world, basePos, 11, 0, 4, carpet);
 		addBlock(world, basePos, 11, 0, 5, carpet);
@@ -123,6 +125,8 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 3, 1, 7, dottedBrick);
 		addBlock(world, basePos, 3, 1, 10, iropole);
 		addBlock(world, basePos, 4, 1, 1, stripedBrick);
+		addBlock(world, basePos, 4, 1, 2, iroLamp);
+		addBlock(world, basePos, 4, 1, 6, iroLamp);
 		addBlock(world, basePos, 4, 1, 7, stripedBrick);
 		addBlock(world, basePos, 5, 1, 1, stripedBrick);
 		addBlock(world, basePos, 5, 1, 7, stripedBrick);
@@ -134,6 +138,7 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 10, 1, 1, stripedBrick);
 		addBlock(world, basePos, 10, 1, 7, dottedBrick);
 		addBlock(world, basePos, 11, 1, 1, stripedBrick);
+		addBlock(world, basePos, 11, 1, 2, iroLamp);
 		addBlock(world, basePos, 11, 1, 7, stripedBrick);
 		addBlock(world, basePos, 12, 1, 1, dottedBrick);
 		addBlock(world, basePos, 12, 1, 2, dottedBrick);
@@ -346,11 +351,11 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 3, 5, 8, dottedBrick);
 		addBlock(world, basePos, 3, 5, 10, iropole);
 		addBlock(world, basePos, 4, 5, 1, dottedBrick);
-		addBlock(world, basePos, 4, 5, 2, carpet);
+		addBlock(world, basePos, 4, 5, 2, iropole);
 		addBlock(world, basePos, 4, 5, 3, carpet);
 		addBlock(world, basePos, 4, 5, 4, carpet);
 		addBlock(world, basePos, 4, 5, 5, carpet);
-		addBlock(world, basePos, 4, 5, 6, carpet);
+		addBlock(world, basePos, 4, 5, 6, iropole);
 		addBlock(world, basePos, 4, 5, 7, dottedBrick);
 		addBlock(world, basePos, 5, 5, 1, dottedBrick);
 		addBlock(world, basePos, 5, 5, 2, carpet);
@@ -444,6 +449,8 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 		addBlock(world, basePos, 3, 6, 9, dottedBrick);
 		addBlock(world, basePos, 3, 6, 10, dottedBrick);
 		addBlock(world, basePos, 4, 6, 1, stripedBrick);
+		addBlock(world, basePos, 4, 6, 2, iroLamp);
+		addBlock(world, basePos, 4, 6, 6, iroLamp);
 		addBlock(world, basePos, 4, 6, 7, stripedBrick);
 		addBlock(world, basePos, 5, 6, 1, glass);
 		addBlock(world, basePos, 5, 6, 7, glass);

@@ -1,23 +1,28 @@
 package net.tslat.aoa3.entity.mobs.gardencia;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.item.Item;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
-
 public class EntityBroccohead extends AoAMeleeMob {
 	public static final float entityWidth = 0.5625f;
+	private boolean candiedWater = false;
 
 	public EntityBroccohead(World world) {
 		super(world, entityWidth, 2.3625f);
@@ -25,17 +30,17 @@ public class EntityBroccohead extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1;
+		return 0.25;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 103;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 7;
+		return 10;
 	}
 
 	@Override
@@ -55,44 +60,58 @@ public class EntityBroccohead extends AoAMeleeMob {
 		return SoundsRegister.plantThump;
 	}
 
+	@Nullable
 	@Override
-	public boolean getCanSpawnHere() {
-		return posY > 66 && super.getCanSpawnHere();
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBroccohead;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(4) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerRosidian), 1);
-	}
+	protected void onInsideBlock(IBlockState state) {
+		if (state.getBlock() == BlockRegister.candiedWater) {
+			if (!candiedWater) {
+				EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
 
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.seedsRosidon, 1);
-	}
-
-	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase) {
-			double resist = 1;
-			IAttributeInstance attrib = ((EntityLivingBase)target).getEntityAttribute(KNOCKBACK_RESISTANCE);
-
-			if (attrib != null)
-				resist -= attrib.getAttributeValue();
-
-			target.addVelocity(motionX * 6.5 * resist, motionY * 0.5 * resist, motionZ * 6.5 * resist);
-			target.velocityChanged = true;
+				setHealth(getHealth() * 1.5f);
+			}
 		}
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
+
+		if (candiedWater)
+			compound.setBoolean("AoACandiedWater", true);
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+
+		if (compound.hasKey("AoACandiedWater"))
+			candiedWater = true;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (world.isRaining() && getHealth() > 0)
-			heal(0.2f);
+		if (isEntityAlive() && getHealth() < getMaxHealth()) {
+			if (isInWater()) {
+				heal(0.2f);
+			}
+			else if (world.isRainingAt(getPosition())) {
+				heal(0.1f);
+			}
+		}
+	}
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+
+		if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBlank)))
+			ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBorean));
 	}
 }

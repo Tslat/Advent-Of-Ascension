@@ -5,8 +5,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityGorbArmsDealer;
-import net.tslat.aoa3.entity.npcs.EntityGorbEngineer;
+import net.tslat.aoa3.entity.npcs.trader.EntityGorbArmsDealer;
+import net.tslat.aoa3.entity.npcs.trader.EntityGorbEngineer;
 import net.tslat.aoa3.entity.npcs.ambient.EntityGorbCitizen;
 import net.tslat.aoa3.structure.AoAStructure;
 

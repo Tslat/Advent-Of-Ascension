@@ -1,5 +1,6 @@
 package net.tslat.aoa3.dimension.candyland.biomes;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -29,8 +30,8 @@ public class BiomeCandyland extends Biome {
 	public BiomeCandyland() {
 		super(properties);
 		setRegistryName("aoa3", "candyland");
-		this.topBlock = BlockRegister.grassCandyland.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtCandyland.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("candyland_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("candyland_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -56,7 +57,7 @@ public class BiomeCandyland extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX, posZ);
 
-				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
+				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock && world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
 					switch (rand.nextInt(5)) {
 						case 0:
 							StructuresHandler.generateStructure("CandyTube", world, rand, pos.setPos(posX, posY, posZ));
@@ -82,7 +83,7 @@ public class BiomeCandyland extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX, posZ);
 
-				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
+				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock && world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
 					if (rand.nextBoolean()) {
 						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCandyGrass.getDefaultState());
 					}

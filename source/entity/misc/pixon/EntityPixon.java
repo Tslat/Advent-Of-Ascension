@@ -2,6 +2,7 @@ package net.tslat.aoa3.entity.misc.pixon;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -10,25 +11,23 @@ import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.misc.InfusionStone;
 import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public abstract class EntityPixon extends EntityCreature {
@@ -38,9 +37,10 @@ public abstract class EntityPixon extends EntityCreature {
     public EntityPixon(World world) {
         super(world);
         setSize(entityWidth, 1.3f);
+
         this.isImmuneToFire = true;
     }
-
+    // TODO Fix level distribution across dimensions
     @Override
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAISwimming(this));
@@ -58,9 +58,20 @@ public abstract class EntityPixon extends EntityCreature {
     }
 
     @Override
-    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount) {
-        return type == EnumCreatureType.AMBIENT;
+    public void addPotionEffect(PotionEffect effect) {}
+
+    @Override
+    public boolean canBeHitWithPotion() {
+        return false;
     }
+
+    @Override
+    public boolean isCreatureType(EnumCreatureType type, boolean forSpawnCount) {
+        return forSpawnCount ? type == EnumCreatureType.AMBIENT : type == EnumCreatureType.CREATURE;
+    }
+
+    @Override
+    protected void collideWithEntity(Entity entity) {}
 
     @Override
     public boolean canBePushed() {
@@ -77,55 +88,27 @@ public abstract class EntityPixon extends EntityCreature {
         if (getHealth() <= 0)
             return false;
 
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack heldStack = player.getHeldItem(hand);
 
-        if (!world.isRemote && world.getTotalWorldTime() >= this.nextHarvestTick && stack.getItem() instanceof InfusionBowl) {
-            AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+        if (!world.isRemote && world.getTotalWorldTime() >= this.nextHarvestTick && heldStack.getItem() instanceof InfusionBowl) {
+            InfusionBowl bowl = ((InfusionBowl)heldStack.getItem());
 
-            if (stack.getItem() == ItemRegister.stoneBowl) {
-                if (player.capabilities.isCreativeMode || cap.getLevel(Enums.Skills.INFUSION) >= getHarvestLevelReq()) {
-                    if (!player.capabilities.isCreativeMode)
-                        stack.damageItem(1, player);
-
-                    cap.addXp(Enums.Skills.INFUSION, getHarvestXp(), false);
-                    cap.addTribute(Enums.Deities.LUXON, 5);
-                    setHealth(getHealth() - 10);
-                    setRevengeTarget(player);
-                    ItemUtil.givePlayerItemOrDrop(player, new ItemStack(getInfusionStoneType()));
-                    world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), SoundsRegister.entityPixonHarvest, SoundCategory.MASTER, 1.0f, 1.0f);
-                    this.nextHarvestTick = world.getTotalWorldTime() + 8 + rand.nextInt(32);
-
-                    return true;
-                }
-                else {
-                    cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.pixon.harvestReq", Integer.toString(getHarvestLevelReq())));
-                    return true;
-                }
+            if (player.capabilities.isCreativeMode || PlayerUtil.doesPlayerHaveLevel(player, Enums.Skills.INFUSION, getHarvestLevelReq() + bowl.getHarvestReqModifier())) {
+                bowl.handlePixonHarvest(player, this, heldStack);
             }
-            else if (stack.getItem() == ItemRegister.diamondBowl) {
-                if (player.capabilities.isCreativeMode || cap.getLevel(Enums.Skills.INFUSION) >= getHarvestLevelReq() + 10) {
-                    if (!player.capabilities.isCreativeMode)
-                        stack.damageItem(1, player);
-
-                    int harvestCount = (int)Math.ceil(Math.min(getHealth(), 100) / 10f);
-
-                    for (int i = 0; i < harvestCount; i++) {
-                        ItemUtil.givePlayerItemOrDrop(player, new ItemStack(getInfusionStoneType()));
-                    }
-
-                    cap.addXp(Enums.Skills.INFUSION, getHarvestXp() * harvestCount, false);
-                    cap.addTribute(Enums.Deities.LUXON, 5 * harvestCount);
-                    world.playSound(null, getPosition().getX(), getPosition().getY(), getPosition().getZ(), SoundsRegister.entityPixonHarvest, SoundCategory.MASTER, 1.0f, 1.0f);
-                    this.setHealth(0);
-                    this.setDead();
-
-                    return true;
-                }
-                else {
-                    cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.pixon.harvestReq", Integer.toString(getHarvestLevelReq() + 10)));
-                    return true;
-                }
+            else {
+                if (player instanceof EntityPlayerMP)
+                    PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.INFUSION, getHarvestLevelReq() + bowl.getHarvestReqModifier());
             }
+
+            if (getHealth() <= 0) {
+                player.awardKillScore(this, 1, DamageSource.GENERIC);
+            }
+            else {
+                this.nextHarvestTick = world.getTotalWorldTime() + 8 + rand.nextInt(32);
+            }
+
+            return true;
         }
 
         return false;
@@ -136,11 +119,11 @@ public abstract class EntityPixon extends EntityCreature {
         if (world.getWorldType() == WorldType.FLAT)
             return false;
 
-        int height = world.getHeight((int)posX, (int)posZ);
-        IBlockState block = world.getBlockState(new BlockPos(posX, height - 1, posZ));
-        Biome biome = world.getBiome(new BlockPos(posX, height, posZ));
+        BlockPos position = new BlockPos(posX, posY, posZ);
+        Biome biome = world.getBiome(position);
+        IBlockState blockState = world.getBlockState(position);
 
-        return posY >= height && (block == biome.topBlock || block == biome.fillerBlock) && block.canEntitySpawn(this);
+        return blockState == biome.topBlock && blockState.canEntitySpawn(this);
     }
 
     @Override
@@ -155,7 +138,7 @@ public abstract class EntityPixon extends EntityCreature {
 
     @Override
     protected boolean canDespawn() {
-        return true;
+        return false;
     }
 
     @Override
@@ -191,7 +174,6 @@ public abstract class EntityPixon extends EntityCreature {
 
     public abstract int getHarvestLevelReq();
 
-    public abstract float getHarvestXp();
-
-    public abstract InfusionStone getInfusionStoneType();
+    @Nonnull
+    public abstract ResourceLocation getHarvestLootTable();
 }

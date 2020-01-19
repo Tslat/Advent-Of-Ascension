@@ -12,14 +12,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.block.CustomStateMapperBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
 import java.util.Random;
 
-public class CactusBlock extends BlockCactus {
+public class CactusBlock extends BlockCactus implements CustomStateMapperBlock {
 	public CactusBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.4f);
 		setTickRandomly(false);
@@ -28,6 +29,7 @@ public class CactusBlock extends BlockCactus {
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public StateMap getStateMapper() {
 		return (new StateMap.Builder().ignore(BlockCactus.AGE)).build();
@@ -44,7 +46,7 @@ public class CactusBlock extends BlockCactus {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		entity.attackEntityFrom(DamageSource.CACTUS, 2.0f);
 	}
 

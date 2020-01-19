@@ -1,17 +1,19 @@
 package net.tslat.aoa3.item.weapon.archergun;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.entity.projectiles.gun.EntityLunarHollyArrowShot;
+import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
@@ -20,27 +22,31 @@ public class LunarArchergun extends BaseArchergun {
 	private final double maxDamage = 19;
 	private final int firingDelay;
 
-	public LunarArchergun(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, sound, durability, fireDelayTicks, recoil);
+	public LunarArchergun(double dmg, int durability, int fireDelayTicks, float recoil) {
+		super(dmg, durability, fireDelayTicks, recoil);
 		this.baseDmg = dmg;
-		setUnlocalizedName("LunarArchergun");
+		setTranslationKey("LunarArchergun");
 		setRegistryName("aoa3:lunar_archergun");
 		this.firingDelay = fireDelayTicks;
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target != null) {
-			bullet.doImpactEffect();
-			EntityUtil.dealGunDamage(target, shooter, bullet, ((float)baseDmg + itemRand.nextInt((int)maxDamage + 1 - (int)baseDmg)) * bulletDmgMultiplier);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand, boolean consume) {
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.hollyArrow, player.getHeldItem(hand));
+
+		if (ammo != null) {
+			EntityLunarHollyArrowShot arrow = new EntityLunarHollyArrowShot(player, gun, hand,120, 0);
+			//arrow.motionY += 0.25f;
+			return arrow;
 		}
+
+		return null;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.damage.random", TextFormatting.DARK_GREEN, Double.toString(baseDmg), Double.toString(maxDamage)));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.arrows", TextFormatting.LIGHT_PURPLE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LunarArchergun.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		super.addInformation(stack, world, tooltip, flag);
 	}
 }

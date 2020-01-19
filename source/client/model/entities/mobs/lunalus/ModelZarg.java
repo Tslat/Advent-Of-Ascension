@@ -6,25 +6,25 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelZarg extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer body8;
-	ModelRenderer body9;
-	ModelRenderer body10;
-	ModelRenderer body11;
-	ModelRenderer body12;
-	ModelRenderer body13;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
+	private ModelRenderer body10;
+	private ModelRenderer body11;
+	private ModelRenderer body12;
+	private ModelRenderer body13;
 
 	public ModelZarg() {
 		textureWidth = 64;
@@ -39,16 +39,16 @@ public class ModelZarg extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 8, 4);
-		rightleg.setRotationPoint(-4.0f, 16.0f, 0.0f);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 8, 4);
-		leftleg.setRotationPoint(4.0f, 16.0f, 0.0f);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 8, 4);
+		rightLeg.setRotationPoint(-4.0f, 16.0f, 0.0f);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 8, 4);
+		leftLeg.setRotationPoint(4.0f, 16.0f, 0.0f);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -6.0f, -3.0f, 6, 6, 6);
 		head2.setRotationPoint(-4.0f, -3.0f, 0.0f);
 		head2.setTextureSize(64, 32);
@@ -130,8 +130,8 @@ public class ModelZarg extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head2.render(par7);
 		head3.render(par7);
 		head4.render(par7);
@@ -158,8 +158,8 @@ public class ModelZarg extends ModelBase {
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
 		head2.rotateAngleY = par4 / (float)(180f / Math.PI);
 		head4.rotateAngleY = par4 / (float)(180f / Math.PI);
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.StringUtil;
 public class RecreationStation extends Block {
 	public RecreationStation() {
 		super(Material.ROCK);
-		setUnlocalizedName("RecreationStation");
+		setTranslationKey("RecreationStation");
 		setRegistryName("aoa3:recreation_station");
 		setHardness(-1f);
 		setResistance(999999999f);
@@ -29,7 +29,7 @@ public class RecreationStation extends Block {
 		if (!world.isRemote) {
 			player.sendMessage(StringUtil.getColourLocaleWithArguments("message.feedback.item.labriconRealmstone.create", TextFormatting.LIGHT_PURPLE, player.getDisplayNameString()));
 			return true;
-		}//TODO EVENTUALLY
+		}
 
 		return true;
 	}

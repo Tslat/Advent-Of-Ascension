@@ -15,7 +15,7 @@ public class MysticBush extends GenericPlantBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer)
 			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 30, 3, true, true));
 	}

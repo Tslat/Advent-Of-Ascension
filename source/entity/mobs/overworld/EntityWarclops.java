@@ -1,18 +1,18 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -42,7 +42,7 @@ public class EntityWarclops extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 5.5;
 	}
 
 	@Override
@@ -66,14 +66,15 @@ public class EntityWarclops extends AoAMeleeMob {
 		return SoundsRegister.mobCyclopsHit;
 	}
 
+	@Nullable
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityWarclops;
 	}
 
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
+	protected boolean isDaylightMob() {
+		return true;
 	}
 
 	@Override

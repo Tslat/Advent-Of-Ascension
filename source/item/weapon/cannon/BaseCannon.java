@@ -8,8 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -18,6 +16,7 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityCannonball;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -25,8 +24,8 @@ import net.tslat.aoa3.utils.StringUtil;
 import java.util.List;
 
 public abstract class BaseCannon extends BaseGun {
-	public BaseCannon(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, sound, durability, fireDelayTicks, recoil);
+	public BaseCannon(double dmg, int durability, int fireDelayTicks, float recoil) {
+		super(dmg, durability, fireDelayTicks, recoil);
 		setCreativeTab(CreativeTabsRegister.cannonsTab);
 	}
 
@@ -34,9 +33,10 @@ public abstract class BaseCannon extends BaseGun {
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target != null) {
 			if (target instanceof EntityLivingBase)
-				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 6.66) / 100;
+				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 1.50) / 100;
 
-			EntityUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier);
+			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier))
+				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
 		}
 	}
 
@@ -53,9 +53,9 @@ public abstract class BaseCannon extends BaseGun {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.gun", TextFormatting.DARK_RED, Double.toString(dmg)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.cannon.damage", TextFormatting.AQUA));
+		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.gun", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.cannon.damage", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.cannonballs", TextFormatting.LIGHT_PURPLE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.cannonballs", Enums.ItemDescriptionType.ITEM_AMMO_COST));
 	}
 }

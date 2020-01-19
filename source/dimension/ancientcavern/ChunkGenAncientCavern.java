@@ -7,7 +7,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.structure.ancientcavern.AncientCavern;
 
 import javax.annotation.Nullable;
@@ -21,7 +21,7 @@ public class ChunkGenAncientCavern implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeAncientCavern;
+	private final Biome biome = BiomeRegister.biomeAncientCavern;
 
 	protected ChunkGenAncientCavern(World world) {
 		this.world = world;

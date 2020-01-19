@@ -1,11 +1,18 @@
 package net.tslat.aoa3.entity.mobs.creeponia;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -59,21 +66,41 @@ public class EntityCreepird extends AoAFlyingMeleeMob {
 		return SoundsRegister.mobCreepirdHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.tokensCreeponia, 1 + rand.nextInt(3 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCreepird;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 2 + rand.nextInt(5 + lootingMod));
+	public boolean getCanSpawnHere() {
+		return posY > 50 && super.getCanSpawnHere();
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public boolean attackEntityAsMob(Entity target) {
+		boolean success = super.attackEntityAsMob(target);
 
-		world.createExplosion(this, posX, posY, posZ, 1.5f, false);
+		if (success) {
+			WorldUtil.createExplosion(this, world, 2.5f);
+			setDead();
+		}
+
+		return success;
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		boolean success = super.attackEntityFrom(source, amount);
+
+		if (!world.isRemote && success && EntityUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.consumeItem(attackingPlayer, new ItemStack(ItemRegister.realmstoneBlank)))
+			ItemUtil.givePlayerItemOrDrop(attackingPlayer, new ItemStack(ItemRegister.realmstoneMysterium));
+
+		return success;
+	}
+
+	@Override
+	public void onDeath(DamageSource source) {
+		super.onDeath(source);
 	}
 }

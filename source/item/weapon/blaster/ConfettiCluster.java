@@ -4,35 +4,44 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityConfettiCluster;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ConfettiCluster extends BaseBlaster {
-	public ConfettiCluster(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float energyCost) {
-		super(dmg, sound, durability, fireDelayTicks, energyCost);
-		setUnlocalizedName("ConfettiCluster");
+	public ConfettiCluster(double dmg, int durability, int fireDelayTicks, float energyCost) {
+		super(dmg, durability, fireDelayTicks, energyCost);
+		setTranslationKey("ConfettiCluster");
 		setRegistryName("aoa3:confetti_cluster");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunConfettiCannon;
 	}
 
 	@Override
 	public void fire(ItemStack blaster, EntityLivingBase shooter) {
 		EntityConfettiCluster shot = new EntityConfettiCluster(shooter, this, 1);
-		shot.motionX = 0;
-		shot.motionY = 0;
-		shot.motionZ = 0;
+		shot.motionX *= 0.25;
+		shot.motionY *= 0.25;
+		shot.motionZ *= 0.25;
+
 		shooter.world.spawnEntity(shot);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.ConfettiCluster.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ConfettiCluster.desc.1", Enums.ItemDescriptionType.UNIQUE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

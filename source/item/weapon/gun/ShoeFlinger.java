@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityShoeShot;
 import net.tslat.aoa3.entity.properties.BossEntity;
@@ -25,19 +26,26 @@ import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ShoeFlinger extends BaseGun implements AdventWeapon {
 	double dmg;
 	int firingDelay;
 
-	public ShoeFlinger(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
+	public ShoeFlinger(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
-		setUnlocalizedName("ShoeFlinger");
+		setTranslationKey("ShoeFlinger");
 		setRegistryName("aoa3:shoe_flinger");
 		setCreativeTab(null);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunFlinger;
 	}
 
 	@Override

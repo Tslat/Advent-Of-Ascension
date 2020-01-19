@@ -6,12 +6,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRosid extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
+	private ModelRenderer head;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
 
 	public ModelRosid() {
 		textureWidth = 64;
@@ -21,16 +21,16 @@ public class ModelRosid extends ModelBase {
 		head.setTextureSize(64, 32);
 		head.mirror = true;
 		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 6, 2);
-		rightleg.setRotationPoint(-2.0f, 18.0f, 0.0f);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 6, 2);
-		leftleg.setRotationPoint(2.0f, 18.0f, 0.0f);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 6, 2);
+		rightLeg.setRotationPoint(-2.0f, 18.0f, 0.0f);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 6, 2);
+		leftLeg.setRotationPoint(2.0f, 18.0f, 0.0f);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 0, 0)).addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8);
 		head2.setRotationPoint(0.0f, 18.0f, 0.0f);
 		head2.setTextureSize(64, 32);
@@ -51,8 +51,8 @@ public class ModelRosid extends ModelBase {
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head2.render(par7);
 		head3.render(par7);
 		head4.render(par7);
@@ -65,8 +65,8 @@ public class ModelRosid extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

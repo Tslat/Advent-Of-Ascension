@@ -29,28 +29,10 @@ public class UriohRenderer extends RenderLiving<EntityUrioh> {
 
 	@Override
 	protected void preRenderCallback(EntityUrioh entity, float partialTickTime) {
-		float health = entity.getHealth();
+		float scale = Math.max(0.1f, entity.getHealth() / entity.getMaxHealth());
 
-		if (health < 10) {
-			GlStateManager.scale(0.1, 0.1, 0.1);
-			this.shadowSize = shadowScale * 0.1f;
-		}
-		else if (health < 25) {
-			GlStateManager.scale(0.2, 0.2, 0.2);
-			this.shadowSize = shadowScale * 0.2f;
-		}
-		else if (health < 40) {
-			GlStateManager.scale(0.4, 0.4, 0.4);
-			this.shadowSize = shadowScale * 0.4f;
-		}
-		else if (health < 60) {
-			GlStateManager.scale(0.6, 0.6, 0.6);
-			this.shadowSize = shadowScale * 0.6f;
-		}
-		else {
-			GlStateManager.scale(1, 1, 1);
-			this.shadowSize = shadowScale;
-		}
+		GlStateManager.scale(scale, scale, scale);
+		shadowSize = shadowScale * scale;
 	}
 
 	@Nullable

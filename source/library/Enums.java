@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
 
-public class Enums {
+public final class Enums {
 	@SideOnly(Side.CLIENT)
 	public static final MusicTicker.MusicType NULL_MUSIC = EnumHelperClient.addMusicType("null", SoundsRegister.nullMusic, 0, 1);
 
@@ -152,7 +152,7 @@ public class Enums {
 
 	public enum Dimensions {
 		ABYSS,
-		ANCIENTCAVERN,
+		ANCIENT_CAVERN,
 		BARATHOS,
 		CANDYLAND,
 		CELEVE,
@@ -169,10 +169,13 @@ public class Enums {
 		LELYETIA,
 		LUNALUS,
 		MYSTERIUM,
+		NETHER,
+		OVERWORLD,
 		PRECASIA,
 		RUNANDOR,
 		SHYRELANDS,
-		VOXPONDS
+		THE_END,
+		VOX_PONDS
 	}
 
 	public enum Resources {
@@ -189,6 +192,7 @@ public class Enums {
 		HYDROPLATE,
 		KNIGHT,
 		MERCURIAL,
+		NECRO,
 		ROSID,
 		RUNIC
 	}
@@ -265,13 +269,15 @@ public class Enums {
 		}
 	}
 
-	public class RGBIntegers {
+	public static final class RGBIntegers {
 		public static final int BLACK = 0;
 		public static final int BLUE = 255;
 		public static final int BONE = 16448150;
 		public static final int BRIGHT_TURQUOISE = 58861;
 		public static final int BROWN = 9593401;
 		public static final int CYAN = 65535;
+		public static final int DARK_GRAY = 1973526;
+		public static final int DARK_LIME_GREEN = 39168;
 		public static final int DARK_VIOLET = 8519858;
 		public static final int DE_YORK = 8699004;
 		public static final int DEEP_PINK = 16711794;
@@ -296,6 +302,7 @@ public class Enums {
 		public static final int RED_2 = 15007744;
 		public static final int SILVER = 11908533;
 		public static final int TANGERINE_YELLOW = 15257600;
+		public static final int TOXIC_GREEN = 3368448;
 		public static final int TYRIAN_PURPLE = 7012434;
 		public static final int WHITE = 16777215;
 		public static final int YELLOW = 16776960;
@@ -330,15 +337,6 @@ public class Enums {
 
 	public enum HelmetScreens {
 		NIGHT_VISION_GOGGLES
-	}
-
-	public class AttributeUUIDS {
-		public static final String MAX_HEALTH = "00e6648a-d6ee-4894-95e3-f9668d58339d";
-		public static final String MOVEMENT_SPEED = "a1371c64-c09e-4ed6-adfd-5afbaea79369";
-		public static final String ATTACK_SPEED_MAINHAND = "99fdc256-279e-4c8e-b1c6-9209571f134e";
-		public static final String ATTACK_SPEED_OFFHAND = "63f030a6-7269-444d-b26c-ae3514b36e1b";
-		public static final String VANILLA_ATTACK_SPEED = "FA233E1C-4180-4865-B01B-BCCE9785ACA3";
-		public static final String MOB_BLOODTHIRST_BUFF = "2803f9b4-57ed-471f-8a0e-7a41fa100608";
 	}
 
 	public enum Runes {
@@ -406,7 +404,6 @@ public class Enums {
 	}
 
 	public enum MobProperties {
-		HUNTER_ENTITY,
 		RANGED_IMMUNE,
 		BLASTER_IMMUNE,
 		MAGIC_IMMUNE,
@@ -441,27 +438,32 @@ public class Enums {
 		TRADER_LOTTOMAN(11),
 		TRADER_METALLOID(12),
 		TRADER_NATURALIST(13),
-		TRADER_PORTAL_MASTER(14),
-		TRADER_PRIMORDIAL_BANKER(15),
-		TRADER_PRIMORDIAL_MERCHANT(16),
-		TRADER_PRIMORDIAL_SPELLBINDER(17),
-		TRADER_PRIMORDIAL_WIZARD(18),
-		TRADER_PROFESSOR(19),
-		TRADER_REALMSHIFTER(20),
-		TRADER_SHYRE_ARCHER(21),
-		TRADER_SHYRE_BANKER(22),
-		TRADER_SKILL_MASTER(23),
-		TRADER_SOUL_AGENT(24),
-		TRADER_STORE_KEEPER(25),
-		TRADER_TOKEN_COLLECTOR(26),
-		TRADER_TOY_MERCHANT(27),
-		TRADER_TROLL_TRADER(28),
-		TRADER_ZAL_BANKER(29),
-		TRADER_ZAL_GROCER(30),
-		TRADER_ZAL_HERBALIST(31),
-		TRADER_ZAL_SPELLBINDER(32),
-		TRADER_ZAL_VENDOR(33),
-		ADVENT_MAIN_WINDOW(100);
+		TRADER_PRIMORDIAL_BANKER(14),
+		TRADER_PRIMORDIAL_MERCHANT(15),
+		TRADER_PRIMORDIAL_SPELLBINDER(16),
+		TRADER_PRIMORDIAL_WIZARD(17),
+		TRADER_PROFESSOR(18),
+		TRADER_REALMSHIFTER(19),
+		TRADER_SHYRE_ARCHER(20),
+		TRADER_SHYRE_BANKER(21),
+		TRADER_SKILL_MASTER(22),
+		TRADER_UNDEAD_HERALD(23),
+		TRADER_STORE_KEEPER(24),
+		TRADER_TOKEN_COLLECTOR(25),
+		TRADER_TOY_MERCHANT(26),
+		TRADER_TROLL_TRADER(27),
+		TRADER_ZAL_BANKER(28),
+		TRADER_ZAL_GROCER(29),
+		TRADER_ZAL_HERBALIST(30),
+		TRADER_ZAL_SPELLBINDER(31),
+		TRADER_ZAL_VENDOR(32),
+		ADVENT_MAIN_WINDOW(100),
+		INFUSION_TABLE(101),
+		FRAME_BENCH(102),
+		REALMSTONE_MENU(103),
+		MENDING_TABLE(104),
+		WHITEWASHING_TABLE(105),
+		DIVINE_STATION(106);
 
 		public int guiId;
 
@@ -501,47 +503,57 @@ public class Enums {
 				case 13:
 					return TRADER_NATURALIST;
 				case 14:
-					return TRADER_PORTAL_MASTER;
-				case 15:
 					return TRADER_PRIMORDIAL_BANKER;
-				case 16:
+				case 15:
 					return TRADER_PRIMORDIAL_MERCHANT;
-				case 17:
+				case 16:
 					return TRADER_PRIMORDIAL_SPELLBINDER;
-				case 18:
+				case 17:
 					return TRADER_PRIMORDIAL_WIZARD;
-				case 19:
+				case 18:
 					return TRADER_PROFESSOR;
-				case 20:
+				case 19:
 					return TRADER_REALMSHIFTER;
-				case 21:
+				case 20:
 					return TRADER_SHYRE_ARCHER;
-				case 22:
+				case 21:
 					return TRADER_SHYRE_BANKER;
-				case 23:
+				case 22:
 					return TRADER_SKILL_MASTER;
+				case 23:
+					return TRADER_UNDEAD_HERALD;
 				case 24:
-					return TRADER_SOUL_AGENT;
-				case 25:
 					return TRADER_STORE_KEEPER;
-				case 26:
+				case 25:
 					return TRADER_TOKEN_COLLECTOR;
-				case 27:
+				case 26:
 					return TRADER_TOY_MERCHANT;
-				case 28:
+				case 27:
 					return TRADER_TROLL_TRADER;
-				case 29:
+				case 28:
 					return TRADER_ZAL_BANKER;
-				case 30:
+				case 29:
 					return TRADER_ZAL_GROCER;
-				case 31:
+				case 30:
 					return TRADER_ZAL_HERBALIST;
-				case 32:
+				case 31:
 					return TRADER_ZAL_SPELLBINDER;
-				case 33:
+				case 32:
 					return TRADER_ZAL_VENDOR;
 				case 100:
 					return ADVENT_MAIN_WINDOW;
+				case 101:
+					return INFUSION_TABLE;
+				case 102:
+					return FRAME_BENCH;
+				case 103:
+					return REALMSTONE_MENU;
+				case 104:
+					return MENDING_TABLE;
+				case 105:
+					return WHITEWASHING_TABLE;
+				case 106:
+					return DIVINE_STATION;
 				default:
 					return null;
 			}
@@ -569,7 +581,8 @@ public class Enums {
 		Default,
 		Jungle,
 		Ancient_Ruins,
-		Hell
+		Hell,
+		Crystals
 	}
 
 	public enum PlayerCrownTypes {
@@ -598,5 +611,59 @@ public class Enums {
 				}
 			}
 		}
+	}
+
+	public enum ArmourListenerTypes {
+		AFTER_ATTACK,
+		ATTACK_RECEIVED,
+		DAMAGE_DEALT,
+		DEATH,
+		EQUIP,
+		FALL,
+		INCOMING_ATTACK,
+		TICK,
+		UNEQUIP
+	}
+
+	public enum BlockUpdateFlags {
+		BLOCK_UPDATE(1),
+		SYNC_CLIENT(2),
+		PREVENT_RERENDER(4),
+		DESYNC_RENDERS(8),
+		NO_OBSERVERS(16);
+
+		public int value;
+
+		BlockUpdateFlags(int flagValue) {
+			this.value = flagValue;
+		}
+	}
+
+	public enum ItemDescriptionType {
+		POSITIVE(TextFormatting.DARK_GREEN),
+		NEGATIVE(TextFormatting.RED),
+		NEUTRAL(TextFormatting.DARK_GRAY),
+		UNIQUE(TextFormatting.DARK_PURPLE),
+		ITEM_TYPE_INFO(TextFormatting.AQUA),
+		ITEM_DAMAGE(TextFormatting.DARK_RED),
+		ITEM_AMMO_COST(TextFormatting.LIGHT_PURPLE);
+
+		public final TextFormatting format;
+
+		ItemDescriptionType(TextFormatting format) {
+			this.format = format;
+		}
+	}
+
+	public static final class EntityAnimations {
+		public static final String ATTACK_1 = "ATTACK_1";
+		public static final String ATTACK_2 = "ATTACK_2";
+		public static final String HURT_1 = "HURT_1";
+		public static final String HURT_2 = "HURT_2";
+		public static final String DEATH = "DEATH";
+		public static final String IDLE_1 = "IDLE_1";
+		public static final String IDLE_2 = "IDLE_2";
+		public static final String IDLE_3 = "IDLE_3";
+		public static final String INTERACT = "INTERACT";
 	}
 }

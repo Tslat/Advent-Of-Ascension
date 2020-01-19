@@ -5,17 +5,17 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelBaumba extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightarm;
-	ModelRenderer leftarm;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer body8;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightArm;
+	private ModelRenderer leftArm;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer body8;
 
 	public ModelBaumba() {
 		textureWidth = 64;
@@ -30,16 +30,16 @@ public class ModelBaumba extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightarm = new ModelRenderer(this, 0, 20)).addBox(-3.0f, -2.0f, -2.0f, 4, 8, 4);
-		rightarm.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm.setTextureSize(64, 32);
-		rightarm.mirror = true;
-		setRotation(rightarm, 0.5235988f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 0, 20)).addBox(-1.0f, -2.0f, -2.0f, 4, 8, 4);
-		leftarm.setRotationPoint(5.0f, 2.0f, 0.0f);
-		leftarm.setTextureSize(64, 32);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.5235988f, 0.0f, 0.0f);
+		(rightArm = new ModelRenderer(this, 0, 20)).addBox(-3.0f, -2.0f, -2.0f, 4, 8, 4);
+		rightArm.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm.setTextureSize(64, 32);
+		rightArm.mirror = true;
+		setRotation(rightArm, 0.5235988f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 0, 20)).addBox(-1.0f, -2.0f, -2.0f, 4, 8, 4);
+		leftArm.setRotationPoint(5.0f, 2.0f, 0.0f);
+		leftArm.setTextureSize(64, 32);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.5235988f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 20, 15)).addBox(-4.0f, 11.0f, -4.0f, 8, 6, 2);
 		body2.setRotationPoint(0.0f, 0.0f, 0.0f);
 		body2.setTextureSize(64, 32);
@@ -81,8 +81,8 @@ public class ModelBaumba extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightarm.render(par7);
-		leftarm.render(par7);
+		rightArm.render(par7);
+		leftArm.render(par7);
 		body2.render(par7);
 		body3.render(par7);
 		body4.render(par7);

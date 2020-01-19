@@ -2,6 +2,7 @@ package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
@@ -23,7 +24,7 @@ public class EntityFenix extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
@@ -33,30 +34,36 @@ public class EntityFenix extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 20;
+		return 15;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.27d;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFadeLiving;
+		return SoundsRegister.mobFenixLiving;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFadeDeath;
+		return SoundsRegister.mobFenixDeath;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFadeHit;
+		return SoundsRegister.mobFenixHit;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
 	}
 
 	@Override

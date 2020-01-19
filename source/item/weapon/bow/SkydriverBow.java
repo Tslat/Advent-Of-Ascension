@@ -18,7 +18,7 @@ import java.util.List;
 public class SkydriverBow extends BaseBow {
 	public SkydriverBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
-		setUnlocalizedName("SkydriverBow");
+		setTranslationKey("SkydriverBow");
 		setRegistryName("aoa3:skydriver_bow");
 	}
 
@@ -27,7 +27,7 @@ public class SkydriverBow extends BaseBow {
 		if (!arrow.inGround && arrow.ticksExisted > 1) {
 			BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(arrow.getPosition());
 
-			while (arrow.world.isAirBlock(testPos.move(EnumFacing.DOWN))) {
+			while (testPos.getY() >= 0 && arrow.world.isAirBlock(testPos.move(EnumFacing.DOWN))) {
 				;
 			}
 

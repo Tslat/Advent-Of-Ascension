@@ -1,12 +1,21 @@
 package net.tslat.aoa3.entity.properties;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.SoundEvent;
+import net.tslat.aoa3.advent.AdventOfAscension;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public interface BossEntity {
 	public ResourceLocation getBossBarTexture();
 
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus();
+	@Nullable
+	public SoundEvent getBossMusic();
+
+	default void playMusic(@Nonnull Entity entity) {
+		if (entity.world.isRemote && getBossMusic() != null)
+			AdventOfAscension.proxy.playMusic(getBossMusic(), entity);
+	}
 }

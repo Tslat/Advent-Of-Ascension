@@ -18,8 +18,8 @@ import net.minecraftforge.event.terraingen.ChunkGeneratorEvent;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -37,7 +37,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeCrystevia;
+	private final Biome biome = BiomeRegister.biomeCrystevia;
 
 	private double[] noiseArray;
 	private double[] depthBuffer = new double[256];
@@ -221,9 +221,8 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 							for (int k2 = 0; k2 < 4; ++k2) {
 								IBlockState iblockstate = null;
 
-								if (d15 > 0.0D) {
+								if (d15 > 0.0D)
 									iblockstate = BlockRegister.stoneCrystevia.getDefaultState();
-								}
 
 								int l2 = j2 + j1 * 4;
 								int i3 = i2 + l1 * 8;

@@ -7,17 +7,17 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelUrioh extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer head2;
-	ModelRenderer r1;
-	ModelRenderer head3;
-	ModelRenderer r2;
-	ModelRenderer r3;
-	ModelRenderer r4;
-	ModelRenderer r5;
-	ModelRenderer r6;
-	ModelRenderer r7;
-	ModelRenderer r8;
+	private ModelRenderer head;
+	private ModelRenderer head2;
+	private ModelRenderer r1;
+	private ModelRenderer head3;
+	private ModelRenderer r2;
+	private ModelRenderer r3;
+	private ModelRenderer r4;
+	private ModelRenderer r5;
+	private ModelRenderer r6;
+	private ModelRenderer r7;
+	private ModelRenderer r8;
 
 	public ModelUrioh() {
 		textureWidth = 64;

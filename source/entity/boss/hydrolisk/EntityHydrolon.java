@@ -3,15 +3,17 @@ package net.tslat.aoa3.entity.boss.hydrolisk;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -84,12 +86,10 @@ public class EntityHydrolon extends AoAMeleeMob {
 		return SoundsRegister.mobCoralonHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.hydroStone, 1);
-
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerBoreic), 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHydrolon;
 	}
 
 	@Override
@@ -98,5 +98,13 @@ public class EntityHydrolon extends AoAMeleeMob {
 
 		if (isInWater())
 			heal(0.8f);
+	}
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+
+		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lborean)
+			entityDropItem(new ItemStack(ItemRegister.hydroStone, 1), 0);
 	}
 }

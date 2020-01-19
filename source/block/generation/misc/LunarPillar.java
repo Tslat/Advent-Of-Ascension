@@ -16,7 +16,7 @@ public class LunarPillar extends BasicDecorationBlock {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT_MIPPED;
 	}
 }

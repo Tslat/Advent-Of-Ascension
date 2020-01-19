@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.LongReachWeapon;
 public class CoralGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public CoralGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("CoralGreatblade");
+		setTranslationKey("CoralGreatblade");
 		setRegistryName("aoa3:coral_greatblade");
 	}
 }

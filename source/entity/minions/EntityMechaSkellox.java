@@ -8,11 +8,13 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
@@ -90,6 +92,12 @@ public class EntityMechaSkellox extends AoAMinion {
 		return SoundsRegister.mobMechyonDeath;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityMechaSkellox;
+	}
+
 	@Override
 	public void travel(float strafe, float vertical, float forward) {
 		if (this.isServerWorld() || this.canPassengerSteer()) {
@@ -103,7 +111,7 @@ public class EntityMechaSkellox extends AoAMinion {
 						float f = this.rotationPitch * 0.017453292F;
 						double d6 = Math.sqrt(vec3d.x * vec3d.x + vec3d.z * vec3d.z);
 						double d8 = Math.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-						double d1 = vec3d.lengthVector();
+						double d1 = vec3d.length();
 						float f4 = MathHelper.cos(f);
 						f4 = (float)((double)f4 * (double)f4 * Math.min(1.0D, d1 / 0.4D));
 						this.motionY += -0.08D + (double)f4 * 0.06D;
@@ -187,7 +195,7 @@ public class EntityMechaSkellox extends AoAMinion {
 						else {
 							checkPos.setPos(this.posX, 0.0D, this.posZ);
 
-							if (!this.world.isRemote || this.world.isBlockLoaded(checkPos) && this.world.getChunkFromBlockCoords(checkPos).isLoaded()) {
+							if (!this.world.isRemote || this.world.isBlockLoaded(checkPos) && this.world.getChunk(checkPos).isLoaded()) {
 								if (!this.hasNoGravity())
 									this.motionY -= 0.08D;
 							}

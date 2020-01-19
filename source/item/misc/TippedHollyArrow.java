@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityTippedHollyArrow;
 import net.tslat.aoa3.item.weapon.bow.BaseBow;
+import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -52,7 +53,7 @@ public class TippedHollyArrow extends HollyArrow {
 		String translated = I18n.translateToLocal(("item.TippedHollyArrow.") + ".name");
 
 		if (translated.startsWith("item."))
-			translated = PotionUtils.getPotionFromItem(stack).getNamePrefixed(I18n.translateToLocal("item.TippedHollyArrow.generic.name"));
+			translated = StringUtil.toTitleCase(PotionUtils.getPotionFromItem(stack).getNamePrefixed(I18n.translateToLocal("item.TippedHollyArrow.generic.name")));
 
 		return translated;
 	}

@@ -4,7 +4,10 @@ import com.google.common.collect.Multimap;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MultiPartEntityPart;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,6 +35,7 @@ import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
+import net.tslat.aoa3.library.misc.AoAAttributes;
 
 public abstract class BaseGreatblade extends Item implements AdventWeapon, LongReachWeapon {
 	protected double dmg;
@@ -64,7 +68,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 	@Override
 	public int getItemEnchantability() {
-		return 0;
+		return 8;
 	}
 
 	@Override
@@ -108,64 +112,77 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		return false;
 	}
 
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
+	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
+		return this.dmg;
+	}
+
+	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
+		float damageDealt = 0;
+
 		if (attacker instanceof EntityPlayer) {
 			if (target instanceof EntityFireball) {
-				target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), dmg);
-				return;
+				if (target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), dmg))
+					damageDealt = dmg;
 			}
+			else {
 
-			if (dmg < 0)
-				dmg = (float)this.dmg;
+				if (dmg < 0)
+					dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg);
 
-			dmg++;
+				dmg++;
 
-			PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
-			PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
-			float targetHealth = 0;
+				PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
+				PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
+				float targetHealth = 0;
 
-			if (target instanceof EntityLivingBase)
-				targetHealth = ((EntityLivingBase)target).getHealth();
+				if (target instanceof EntityLivingBase)
+					targetHealth = ((EntityLivingBase)target).getHealth();
 
-			if (str != null)
-				dmg += (str.getAmplifier() + 1) * 3;
+				if (str != null)
+					dmg += (str.getAmplifier() + 1) * 3;
 
-			if (weak != null)
-				dmg -= (weak.getAmplifier() + 1) * 4;
+				if (weak != null)
+					dmg -= (weak.getAmplifier() + 1) * 4;
 
-			float cooldownMultiplier = (((EntityPlayer)attacker).getCooledAttackStrength(0f));
-			final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
-			final float finalDmg = (dmg + severModifier) * (cooldownMultiplier + 0.01f);
+				float cooldownMultiplier = (((EntityPlayer)attacker).getCooledAttackStrength(0f));
+				final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
+				final float finalDmg = (dmg + severModifier * 1.5f) * (cooldownMultiplier + 0.01f);
 
-			if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)(target.getParts())[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
-				if (attacker.world instanceof WorldServer) {
-					if (cooldownMultiplier >= 1.0) {
-						double d0 = (double)(-MathHelper.sin(attacker.rotationYaw * 0.017453292F));
-						double d1 = (double)MathHelper.cos(attacker.rotationYaw * 0.017453292F);
+				if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)(target.getParts())[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
+					if (attacker.world instanceof WorldServer) {
+						if (cooldownMultiplier >= 1.0) {
+							double d0 = -MathHelper.sin(attacker.rotationYaw * 0.017453292F);
+							double d1 = MathHelper.cos(attacker.rotationYaw * 0.017453292F);
 
-						((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, target.posX + d0, target.posY + (double)target.height * 0.5D, target.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
-						attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, 1.0f);
+							((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, target.posX + d0, target.posY + (double)target.height * 0.5D, target.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
+							attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, SoundCategory.PLAYERS, 1.0f, 1.0f);
+						}
+
+						int hearts = 0;
+
+						if (target instanceof EntityLivingBase) {
+							damageDealt = targetHealth - ((EntityLivingBase)target).getHealth();
+							hearts = (int)(damageDealt / 2);
+						}
+						else {
+							damageDealt = dmg;
+						}
+
+						if (hearts > 0)
+							((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, target.posX, target.posY + (double)(target.height * 0.5F), target.posZ, hearts, 0.1D, 0.0D, 0.1D, 0.2D);
 					}
 
-					int hearts = 0;
-
-					if (target instanceof EntityLivingBase)
-						hearts = (int)((targetHealth - ((EntityLivingBase)target).getHealth()) / 2);
-
-					if (hearts > 0) {
-						((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, target.posX, target.posY + (double)(target.height * 0.5F), target.posZ, hearts, 0.1D, 0.0D, 0.1D, 0.2D);
-					}
+					stack.damageItem(1, attacker);
 				}
-
-				stack.damageItem(1, attacker);
 			}
 		}
 		else {
 			if (dmg < 0)
-				dmg = (float)this.dmg;
+				dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg);
 
 			PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 			PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
+			double health = target instanceof EntityLivingBase ? ((EntityLivingBase)target).getHealth() : 0;
 
 			if (str != null)
 				dmg += (str.getAmplifier() + 1) * 3;
@@ -175,13 +192,26 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 			dmg += EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
 
-			target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg);
+			if (target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)) {
+				if (health > 0)
+					damageDealt = (float)health - ((EntityLivingBase)target).getHealth();
+			}
 		}
+
+		if (damageDealt > 0) {
+			doMeleeEffect(stack, attacker, target, damageDealt);
+
+			return true;
+		}
+
+		return false;
 	}
+
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {}
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.ingotRosite), false) || super.getIsRepairable(stack, repairMaterial);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -194,8 +224,8 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", this.dmg, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", this.speed, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(dmg));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
 		}
 
 		return multimap;

@@ -4,19 +4,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class CandylandEvents {
-    public static void doPlayerTick(AdventPlayerCapability cap) {
-        EntityPlayer pl = cap.getPlayer();
+    public static void doPlayerTick(PlayerDataManager plData) {
+        EntityPlayer pl = plData.player();
 
-        if (pl.world.isRemote || pl.capabilities.isCreativeMode || pl.isSpectator())
+        if (!PlayerUtil.shouldPlayerBeAffected(pl))
             return;
 
         if (pl.isInWater()) {
             if (!pl.isPotionActive(MobEffects.SLOWNESS))
-                cap.sendPlayerMessage(StringUtil.getColourLocale("message.event.candyland.sticky", TextFormatting.LIGHT_PURPLE));
+                plData.sendThrottledChatMessage("message.event.candyland.sticky", TextFormatting.LIGHT_PURPLE);
 
             pl.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 6, 2, true, false));
         }

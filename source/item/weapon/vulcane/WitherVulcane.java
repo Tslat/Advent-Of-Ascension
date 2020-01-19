@@ -18,13 +18,13 @@ import java.util.List;
 public class WitherVulcane extends BaseVulcane implements AdventWeapon {
 	public WitherVulcane(double dmg, int durability) {
 		super(dmg, durability);
-		setUnlocalizedName("WitherVulcane");
+		setTranslationKey("WitherVulcane");
 		setRegistryName("aoa3:wither_vulcane");
 	}
 
 	@Override
 	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer attacker) {
-		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 0, true, false));
+		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 70, 2, true, true));
 	}
 
 	@SideOnly(Side.CLIENT)

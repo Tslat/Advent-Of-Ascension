@@ -3,17 +3,17 @@ package net.tslat.aoa3.utils.skills;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 public class InfusionUtil {
 	public static void infuseStack(EntityPlayer pl, ItemStack stack, Enchantment enchant) {
-		AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+		PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-		int lvl = cap.getLevel(Enums.Skills.INFUSION);
+		int lvl = plData.stats().getLevel(Enums.Skills.INFUSION);
 
-		switch (enchant.getRegistryName().getResourcePath()) {
+		switch (enchant.getRegistryName().getPath()) {
 			case "sharpness":
 				if (lvl < 16) {
 					stack.addEnchantment(enchant, 2);

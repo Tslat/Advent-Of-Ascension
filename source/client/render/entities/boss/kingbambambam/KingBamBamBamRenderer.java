@@ -23,11 +23,9 @@ public class KingBamBamBamRenderer extends RenderLiving<EntityKingBamBamBam> {
 	@Override
 	public void doRender(EntityKingBamBamBam entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
-
-		if (partialTicks < 0.3)
-			entity.checkMusicStatus();
 	}
 
 	@Nullable

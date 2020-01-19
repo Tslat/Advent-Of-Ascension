@@ -1,16 +1,15 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagicBall;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +27,7 @@ public class EntityGoblin extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0;
+		return 0d;
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class EntityGoblin extends AoARangedMob {
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -70,14 +69,10 @@ public class EntityGoblin extends AoARangedMob {
 		return SoundsRegister.shotWizardBlast;
 	}
 
+	@Nullable
 	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.runeWind, 2 + rand.nextInt(2 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGoblin;
 	}
 
 	@Override

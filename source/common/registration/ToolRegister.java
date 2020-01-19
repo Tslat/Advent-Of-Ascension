@@ -1,154 +1,168 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.tslat.aoa3.item.tool.axe.*;
 import net.tslat.aoa3.item.tool.pickaxe.*;
 import net.tslat.aoa3.item.tool.shovel.*;
 
+@SuppressWarnings({"unused"})
 @Mod.EventBusSubscriber
+@GameRegistry.ObjectHolder("aoa3")
 public class ToolRegister {
-	public static final Item pickaxeAmethyst = new AmethystPickaxe(MaterialsRegister.AMETHYSTTOOL);
-	public static final Item pickaxeEmberstone = new EmberstonePickaxe(MaterialsRegister.EMBERSTONETOOL);
-	public static final Item pickaxeEnergistic = new EnergisticPickaxe(MaterialsRegister.ENERGISTICTOOL);
-	public static final Item pickaxeGemcracker = new Gemcracker(MaterialsRegister.GEMCRACKER);
-	public static final Item pickaxeGoofy = new GoofyPickaxe(MaterialsRegister.GOOFYTOOL);
-	public static final Item pickaxeJade = new JadePickaxe(MaterialsRegister.JADETOOL);
-	public static final Item pickaxeLimonite = new LimonitePickaxe(MaterialsRegister.LIMONITETOOL);
-	public static final Item pickaxeOccult = new OccultPickaxe(MaterialsRegister.OCCULTTOOL);
-	public static final Item pickaxeOrnamyte = new OrnamytePickaxe(MaterialsRegister.ORNAMYTETOOL);
-	public static final Item pickaxePickmax = new Pickmax(MaterialsRegister.PICKMAX);
-	public static final Item pickaxeRosite = new RositePickaxe(MaterialsRegister.ROSITETOOL);
-	public static final Item pickaxeSapphire = new SapphirePickaxe(MaterialsRegister.SAPPHIRETOOL);
-	public static final Item pickaxeSkeletal = new SkeletalPickaxe(MaterialsRegister.SKELETALTOOL);
-	public static final Item pickaxeSoulstone = new SoulstonePickaxe(MaterialsRegister.SOULSTONETOOL);
+	@GameRegistry.ObjectHolder("amethyst_pickaxe")
+	public static final Item pickaxeAmethyst = null;
+	@GameRegistry.ObjectHolder("emberstone_pickaxe")
+	public static final Item pickaxeEmberstone = null;
+	@GameRegistry.ObjectHolder("energistic_pickaxe")
+	public static final Item pickaxeEnergistic = null;
+	@GameRegistry.ObjectHolder("gemcracker")
+	public static final Item pickaxeGemcracker = null;
+	@GameRegistry.ObjectHolder("goofy_pickaxe")
+	public static final Item pickaxeGoofy = null;
+	@GameRegistry.ObjectHolder("jade_pickaxe")
+	public static final Item pickaxeJade = null;
+	@GameRegistry.ObjectHolder("limonite_pickaxe")
+	public static final Item pickaxeLimonite = null;
+	@GameRegistry.ObjectHolder("occult_pickaxe")
+	public static final Item pickaxeOccult = null;
+	@GameRegistry.ObjectHolder("ornamyte_pickaxe")
+	public static final Item pickaxeOrnamyte = null;
+	@GameRegistry.ObjectHolder("pickmax")
+	public static final Item pickaxePickmax = null;
+	@GameRegistry.ObjectHolder("rosite_pickaxe")
+	public static final Item pickaxeRosite = null;
+	@GameRegistry.ObjectHolder("sapphire_pickaxe")
+	public static final Item pickaxeSapphire = null;
+	@GameRegistry.ObjectHolder("skeletal_pickaxe")
+	public static final Item pickaxeSkeletal = null;
+	@GameRegistry.ObjectHolder("soulstone_pickaxe")
+	public static final Item pickaxeSoulstone = null;
 
-	public static final Item shovelAmethyst = new AmethystShovel(MaterialsRegister.AMETHYSTTOOL);
-	public static final Item shovelEmberstone = new EmberstoneShovel(MaterialsRegister.EMBERSTONETOOL);
-	public static final Item shovelEnergistic = new EnergisticShovel(MaterialsRegister.ENERGISTICTOOL);
-	public static final Item shovelGoofy = new GoofyShovel(MaterialsRegister.GOOFYTOOL);
-	public static final Item shovelJade = new JadeShovel(MaterialsRegister.JADETOOL);
-	public static final Item shovelLimonite = new LimoniteShovel(MaterialsRegister.LIMONITETOOL);
-	public static final Item shovelOccult = new OccultShovel(MaterialsRegister.OCCULTTOOL);
-	public static final Item shovelOrnamyte = new OrnamyteShovel(MaterialsRegister.ORNAMYTETOOL);
-	public static final Item shovelRosite = new RositeShovel(MaterialsRegister.ROSITETOOL);
-	public static final Item shovelSapphire = new SapphireShovel(MaterialsRegister.SAPPHIRETOOL);
-	public static final Item shovelSkeletal = new SkeletalShovel(MaterialsRegister.SKELETALTOOL);
-	public static final Item shovelSoulstone = new SoulstoneShovel(MaterialsRegister.SOULSTONETOOL);
+	@GameRegistry.ObjectHolder("amethyst_shovel")
+	public static final Item shovelAmethyst = null;
+	@GameRegistry.ObjectHolder("emberstone_shovel")
+	public static final Item shovelEmberstone = null;
+	@GameRegistry.ObjectHolder("energistic_shovel")
+	public static final Item shovelEnergistic = null;
+	@GameRegistry.ObjectHolder("goofy_shovel")
+	public static final Item shovelGoofy = null;
+	@GameRegistry.ObjectHolder("jade_shovel")
+	public static final Item shovelJade = null;
+	@GameRegistry.ObjectHolder("limonite_shovel")
+	public static final Item shovelLimonite = null;
+	@GameRegistry.ObjectHolder("occult_shovel")
+	public static final Item shovelOccult = null;
+	@GameRegistry.ObjectHolder("ornamyte_shovel")
+	public static final Item shovelOrnamyte = null;
+	@GameRegistry.ObjectHolder("rosite_shovel")
+	public static final Item shovelRosite = null;
+	@GameRegistry.ObjectHolder("sapphire_shovel")
+	public static final Item shovelSapphire = null;
+	@GameRegistry.ObjectHolder("skeletal_shovel")
+	public static final Item shovelSkeletal = null;
+	@GameRegistry.ObjectHolder("soulstone_shovel")
+	public static final Item shovelSoulstone = null;
 
-	public static final Item axeAmethyst = new AmethystAxe(MaterialsRegister.AMETHYSTTOOL);
-	public static final Item axeEmberstone = new EmberstoneAxe(MaterialsRegister.EMBERSTONETOOL);
-	public static final Item axeEnergistic = new EnergisticAxe(MaterialsRegister.ENERGISTICTOOL);
-	public static final Item axeGoofy = new GoofyAxe(MaterialsRegister.GOOFYTOOL);
-	public static final Item axeJade = new JadeAxe(MaterialsRegister.JADETOOL);
-	public static final Item axeLimonite = new LimoniteAxe(MaterialsRegister.LIMONITETOOL);
-	public static final Item axeOccult = new OccultAxe(MaterialsRegister.OCCULTTOOL);
-	public static final Item axeOrnamyte = new OrnamyteAxe(MaterialsRegister.ORNAMYTETOOL);
-	public static final Item axeRosite = new RositeAxe(MaterialsRegister.ROSITETOOL);
-	public static final Item axeSapphire = new SapphireAxe(MaterialsRegister.SAPPHIRETOOL);
-	public static final Item axeSkeletal = new SkeletalAxe(MaterialsRegister.SKELETALTOOL);
-	public static final Item axeSoulstone = new SoulstoneAxe(MaterialsRegister.SOULSTONETOOL);
-	
-	public static final Item chainsaw = new Chainsaw(MaterialsRegister.CHAINSAWTOOL);
+	@GameRegistry.ObjectHolder("amethyst_axe")
+	public static final Item axeAmethyst = null;
+	@GameRegistry.ObjectHolder("emberstone_axe")
+	public static final Item axeEmberstone = null;
+	@GameRegistry.ObjectHolder("energistic_axe")
+	public static final Item axeEnergistic = null;
+	@GameRegistry.ObjectHolder("goofy_axe")
+	public static final Item axeGoofy = null;
+	@GameRegistry.ObjectHolder("jade_axe")
+	public static final Item axeJade = null;
+	@GameRegistry.ObjectHolder("limonite_axe")
+	public static final Item axeLimonite = null;
+	@GameRegistry.ObjectHolder("occult_axe")
+	public static final Item axeOccult = null;
+	@GameRegistry.ObjectHolder("ornamyte_axe")
+	public static final Item axeOrnamyte = null;
+	@GameRegistry.ObjectHolder("rosite_axe")
+	public static final Item axeRosite = null;
+	@GameRegistry.ObjectHolder("sapphire_axe")
+	public static final Item axeSapphire = null;
+	@GameRegistry.ObjectHolder("skeletal_axe")
+	public static final Item axeSkeletal = null;
+	@GameRegistry.ObjectHolder("soulstone_axe")
+	public static final Item axeSoulstone = null;
+
+	@GameRegistry.ObjectHolder("chainsaw")
+	public static final Item chainsaw = null;
 	
 	@SubscribeEvent
-	public static void registerWeapon(final RegistryEvent.Register<Item> ev) {
+	public static void registerTools(final RegistryEvent.Register<Item> ev) {
 		final IForgeRegistry<Item> registry = ev.getRegistry();
 
-		registry.registerAll(
-				axeAmethyst,
-				pickaxeAmethyst,
-				shovelAmethyst,
-				axeEmberstone,
-				pickaxeEmberstone,
-				shovelEmberstone,
-				axeEnergistic,
-				pickaxeEnergistic,
-				shovelEnergistic,
-				axeGoofy,
-				pickaxeGoofy,
-				shovelGoofy,
-				axeJade,
-				pickaxeJade,
-				shovelJade,
-				axeLimonite,
-				pickaxeLimonite,
-				shovelLimonite,
-				axeOccult,
-				pickaxeOccult,
-				shovelOccult,
-				axeOrnamyte,
-				pickaxeOrnamyte,
-				shovelOrnamyte,
-				axeRosite,
-				pickaxeRosite,
-				shovelRosite,
-				axeSapphire,
-				pickaxeSapphire,
-				shovelSapphire,
-				axeSkeletal,
-				pickaxeSkeletal,
-				shovelSkeletal,
-				axeSoulstone,
-				pickaxeSoulstone,
-				shovelSoulstone,
-				pickaxePickmax,
-				pickaxeGemcracker,
-				chainsaw
+		registerPickaxes(registry,
+				new BasePickaxe("AmethystPickaxe", "amethyst_pickaxe", MaterialsRegister.TOOL_AMETHYST),
+				new EmberstonePickaxe(),
+				new EnergisticPickaxe(),
+				new Gemcracker(),
+				new GoofyPickaxe(),
+				new BasePickaxe("JadePickaxe", "jade_pickaxe", MaterialsRegister.TOOL_JADE),
+				new BasePickaxe("LimonitePickaxe", "limonite_pickaxe", MaterialsRegister.TOOL_LIMONITE),
+				new OccultPickaxe(),
+				new OrnamytePickaxe(),
+				new Pickmax(),
+				new BasePickaxe("RositePickaxe", "rosite_pickaxe", MaterialsRegister.TOOL_ROSITE),
+				new BasePickaxe("SapphirePickaxe", "sapphire_pickaxe", MaterialsRegister.TOOL_SAPPHIRE),
+				new SkeletalPickaxe(),
+				new SoulstonePickaxe()
+		);
+
+		registerShovels(registry,
+				new BaseShovel("AmethystShovel", "amethyst_shovel", MaterialsRegister.TOOL_AMETHYST),
+				new EmberstoneShovel(),
+				new EnergisticShovel(),
+				new GoofyShovel(),
+				new BaseShovel("JadeShovel", "jade_shovel", MaterialsRegister.TOOL_JADE),
+				new BaseShovel("LimoniteShovel", "limonite_shovel", MaterialsRegister.TOOL_LIMONITE),
+				new OccultShovel(),
+				new OrnamyteShovel(),
+				new BaseShovel("RositeShovel", "rosite_shovel", MaterialsRegister.TOOL_ROSITE),
+				new BaseShovel("SapphireShovel", "sapphire_shovel", MaterialsRegister.TOOL_SAPPHIRE),
+				new SkeletalShovel(),
+				new SoulstoneShovel()
+		);
+
+		registerAxes(registry,
+				new BaseAxe("AmethystAxe", "amethyst_axe", MaterialsRegister.TOOL_AMETHYST),
+				new EmberstoneAxe(),
+				new EnergisticAxe(),
+				new GoofyAxe(),
+				new BaseAxe("JadeAxe", "jade_axe", MaterialsRegister.TOOL_JADE),
+				new BaseAxe("LimoniteAxe", "limonite_axe", MaterialsRegister.TOOL_LIMONITE),
+				new OccultAxe(),
+				new OrnamyteAxe(),
+				new BaseAxe("RositeAxe", "rosite_axe", MaterialsRegister.TOOL_ROSITE),
+				new BaseAxe("SapphireAxe", "sapphire_axe", MaterialsRegister.TOOL_SAPPHIRE),
+				new SkeletalAxe(),
+				new SoulstoneAxe(),
+				new Chainsaw()
 		);
 	}
 
-	@SubscribeEvent
-	public static void registerWeaponRender(final ModelRegistryEvent ev) {
-		registerRender(pickaxeAmethyst, "pickaxes/amethyst_pickaxe");
-		registerRender(pickaxeEmberstone, "pickaxes/emberstone_pickaxe");
-		registerRender(pickaxeEnergistic, "pickaxes/energistic_pickaxe");
-		registerRender(pickaxeGemcracker, "pickaxes/gemcracker");
-		registerRender(pickaxeGoofy, "pickaxes/goofy_pickaxe");
-		registerRender(pickaxeJade, "pickaxes/jade_pickaxe");
-		registerRender(pickaxeLimonite, "pickaxes/limonite_pickaxe");
-		registerRender(pickaxeOccult, "pickaxes/occult_pickaxe");
-		registerRender(pickaxeOrnamyte, "pickaxes/ornamyte_pickaxe");
-		registerRender(pickaxePickmax, "pickaxes/pickmax");
-		registerRender(pickaxeRosite, "pickaxes/rosite_pickaxe");
-		registerRender(pickaxeSapphire, "pickaxes/sapphire_pickaxe");
-		registerRender(pickaxeSkeletal, "pickaxes/skeletal_pickaxe");
-		registerRender(pickaxeSoulstone, "pickaxes/soulstone_pickaxe");
-		registerRender(axeAmethyst, "axes/amethyst_axe");
-		registerRender(axeEmberstone, "axes/emberstone_axe");
-		registerRender(axeEnergistic, "axes/energistic_axe");
-		registerRender(axeGoofy, "axes/goofy_axe");
-		registerRender(axeJade, "axes/jade_axe");
-		registerRender(axeLimonite, "axes/limonite_axe");
-		registerRender(axeOccult, "axes/occult_axe");
-		registerRender(axeOrnamyte, "axes/ornamyte_axe");
-		registerRender(axeRosite, "axes/rosite_axe");
-		registerRender(axeSapphire, "axes/sapphire_axe");
-		registerRender(axeSkeletal, "axes/skeletal_axe");
-		registerRender(axeSoulstone, "axes/soulstone_axe");
-		registerRender(shovelAmethyst, "shovels/amethyst_shovel");
-		registerRender(shovelEmberstone, "shovels/emberstone_shovel");
-		registerRender(shovelEnergistic, "shovels/energistic_shovel");
-		registerRender(shovelGoofy, "shovels/goofy_shovel");
-		registerRender(shovelJade, "shovels/jade_shovel");
-		registerRender(shovelLimonite, "shovels/limonite_shovel");
-		registerRender(shovelOccult, "shovels/occult_shovel");
-		registerRender(shovelOrnamyte, "shovels/ornamyte_shovel");
-		registerRender(shovelRosite, "shovels/rosite_shovel");
-		registerRender(shovelSapphire, "shovels/sapphire_shovel");
-		registerRender(shovelSkeletal, "shovels/skeletal_shovel");
-		registerRender(shovelSoulstone, "shovels/soulstone_shovel");
-		registerRender(chainsaw, "axes/chainsaw");
+	private static void registerAxes(IForgeRegistry<Item> registry, BaseAxe... axes) {
+		for (BaseAxe axe : axes) {
+			ItemRegister.registerItem(registry, axe, "tools/axes/");
+		}
 	}
 
-	private static void registerRender(Item item, String location) {
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(new ResourceLocation("aoa3:tools/" + location), "inventory"));
+	private static void registerPickaxes(IForgeRegistry<Item> registry, BasePickaxe... pickaxes) {
+		for (BasePickaxe pickaxe : pickaxes) {
+			ItemRegister.registerItem(registry, pickaxe, "tools/pickaxes/");
+		}
+	}
+	private static void registerShovels(IForgeRegistry<Item> registry, BaseShovel... shovels) {
+		for (BaseShovel shovel : shovels) {
+			ItemRegister.registerItem(registry, shovel, "tools/shovels/");
+		}
 	}
 }

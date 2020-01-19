@@ -34,8 +34,8 @@ public class BiomeCrystevia extends Biome {
 	public BiomeCrystevia() {
 		super(properties);
 		setRegistryName("aoa3", "crystevia");
-		this.topBlock = BlockRegister.stoneCrystevia.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneCrystevia.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("crystevia_stone").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("crystevia_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -218,7 +218,7 @@ public class BiomeCrystevia extends Biome {
 			BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(posX, posY, posZ);
 
 			if (world.getBlockState(testPos).getBlock() == Blocks.AIR) {
-				while (world.getBlockState(testPos.move(EnumFacing.DOWN)).getBlock() == Blocks.AIR) {
+				while (testPos.getY() >= 0 && world.getBlockState(testPos.move(EnumFacing.DOWN)).getBlock() == Blocks.AIR) {
 					;
 				}
 

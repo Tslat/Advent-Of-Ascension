@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 public class CloudBlock extends Block {
 	public CloudBlock(String name, String registryName, Material material) {
 		super(material);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(-1f);
 		setResistance(999999999f);
@@ -35,7 +35,7 @@ public class CloudBlock extends Block {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 

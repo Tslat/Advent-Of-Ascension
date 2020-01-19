@@ -6,24 +6,21 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntitySkipper extends AoAMeleeMob implements HunterEntity {
+public class EntitySkipper extends AoAMeleeMob {
 	public static final float entityWidth = 1.0f;
 
 	public EntitySkipper(World world) {
@@ -65,12 +62,17 @@ public class EntitySkipper extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 8;
+		return 3;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
 		return 0.32857;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 1d;
 	}
 
 	@Override
@@ -94,9 +96,10 @@ public class EntitySkipper extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobSkipperHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 12;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySkipper;
 	}
 
 	@Override
@@ -110,13 +113,8 @@ public class EntitySkipper extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Items.CLAY_BALL, 2 + rand.nextInt(5 + lootingMod));
-	}
-
-	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && (block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block));
+		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
 	}
 
 	@Override
@@ -139,20 +137,5 @@ public class EntitySkipper extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected boolean isOverworldMob() {
 		return true;
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 5;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 20;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 }

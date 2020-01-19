@@ -9,6 +9,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -93,6 +94,6 @@ public class EntityElusiveClone extends AoAMeleeMob {
 		super.onDeath(cause);
 
 		if (!world.isRemote && elusive != null)
-			world.createExplosion(elusive, posX, posY, posZ, 2, false);
+			WorldUtil.createExplosion(elusive, world, posX, posY, posZ, 2f);
 	}
 }

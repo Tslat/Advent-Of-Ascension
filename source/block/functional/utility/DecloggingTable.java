@@ -19,7 +19,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 public class DecloggingTable extends Block {
 	public DecloggingTable() {
 		super(Material.ROCK);
-		setUnlocalizedName("DecloggingTable");
+		setTranslationKey("DecloggingTable");
 		setRegistryName("aoa3:declogging_Table");
 		setHardness(-1f);
 		setResistance(999999999f);

@@ -8,13 +8,13 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +45,7 @@ public class EntitySkeledon extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 11.5f;
 	}
 
 	@Override
@@ -71,6 +71,12 @@ public class EntitySkeledon extends AoAMeleeMob {
 		return SoundEvents.ENTITY_SKELETON_HURT;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
@@ -84,10 +90,10 @@ public class EntitySkeledon extends AoAMeleeMob {
 
 		if (cloakCooldown == 0) {
 			cloakCooldown = 80;
-			motionX *= 1.5;
-			motionZ *= 1.5;
+			motionX *= 0.5;
+			motionZ *= 0.5;
 
-			addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 20, 2, true, true));
+			addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 20, 0, false, true));
 		}
 	}
 
@@ -110,13 +116,13 @@ public class EntitySkeledon extends AoAMeleeMob {
 				}
 
 				if (pl != null) {
-					AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					if (cap.getTribute(EREBON) < 100)
-						cap.addTribute(EREBON, Math.min(4, 100 - cap.getTribute(EREBON)));
+					if (plData.stats().getTribute(EREBON) < 100)
+						plData.stats().addTribute(EREBON, Math.min(4, 100 - plData.stats().getTribute(EREBON)));
 
-					if (cap.getTribute(EREBON) >= 100)
-						cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.immortallisProgression.skeletalSpiritsEnd"));
+					if (plData.stats().getTribute(EREBON) >= 100)
+						plData.sendThrottledChatMessage("message.feedback.immortallisProgression.skeletalSpiritsEnd");
 				}
 			}
 		}

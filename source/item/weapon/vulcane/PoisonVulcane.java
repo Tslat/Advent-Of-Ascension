@@ -18,13 +18,13 @@ import java.util.List;
 public class PoisonVulcane extends BaseVulcane implements AdventWeapon {
 	public PoisonVulcane(double dmg, int durability) {
 		super(dmg, durability);
-		setUnlocalizedName("PoisonVulcane");
+		setTranslationKey("PoisonVulcane");
 		setRegistryName("aoa3:poison_vulcane");
 	}
 
 	@Override
 	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer attacker) {
-		target.addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 0, true, false));
+		target.addPotionEffect(new PotionEffect(MobEffects.POISON, 140, 1, true, false));
 	}
 
 	@SideOnly(Side.CLIENT)

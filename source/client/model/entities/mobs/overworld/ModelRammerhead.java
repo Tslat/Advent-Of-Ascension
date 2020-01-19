@@ -6,17 +6,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRammerhead extends ModelBase {
-	ModelRenderer eye1;
-	ModelRenderer fin1;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer headbar;
-	ModelRenderer neck;
-	ModelRenderer eye2;
-	ModelRenderer body;
-	ModelRenderer fin2;
+	private ModelRenderer eye1;
+	private ModelRenderer fin1;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer headbar;
+	private ModelRenderer neck;
+	private ModelRenderer eye2;
+	private ModelRenderer body;
+	private ModelRenderer fin2;
 
 	public ModelRammerhead() {
 		textureWidth = 128;

@@ -1,22 +1,30 @@
 package net.tslat.aoa3.entity.mobs.candyland;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntitySkyShot;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityAirhead extends AoAFlyingRangedMob {
+public class EntityAirhead extends AoAFlyingRangedMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 1.0f;
 
 	public EntityAirhead(World world) {
 		super(world, entityWidth, 1.6875f);
+
+		mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
 	}
 
 	@Override
@@ -36,7 +44,7 @@ public class EntityAirhead extends AoAFlyingRangedMob {
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 40;
+		return 14;
 	}
 
 	@Override
@@ -62,9 +70,15 @@ public class EntityAirhead extends AoAFlyingRangedMob {
 		return SoundsRegister.mobAirheadDeath;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 10;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityAirhead;
+	}
+
+	@Override
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 7d;
 	}
 
 	@Nullable
@@ -74,16 +88,18 @@ public class EntityAirhead extends AoAFlyingRangedMob {
 	}
 
 	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isBlasterDamage(source);
+	}
+
+	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new EntitySkyShot(this, Enums.MobProjectileType.PHYSICAL);
 	}
 
+	@Nonnull
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.sourGummy, 1);
-
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.tokensCandyland, 1 + rand.nextInt(3 + lootingMod));
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

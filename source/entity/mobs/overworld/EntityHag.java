@@ -5,10 +5,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityHagShot;
@@ -35,7 +36,7 @@ public class EntityHag extends AoARangedMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 30;
+		return 15;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class EntityHag extends AoARangedMob {
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.207;
+		return 0.23;
 	}
 
 	@Override
@@ -77,15 +78,15 @@ public class EntityHag extends AoARangedMob {
 		return SoundsRegister.shotHagFire;
 	}
 
+	@Nullable
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHag;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(75 - lootingMod) == 0)
-			dropItem(WeaponRegister.sniperCamoRifle, 1);
+	protected boolean isDaylightMob() {
+		return true;
 	}
 
 	@Override

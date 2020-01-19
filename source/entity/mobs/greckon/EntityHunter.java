@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.greckon;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -25,22 +26,22 @@ public class EntityHunter extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.5;
+        return 0.25;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 25;
+        return 123;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 7;
+        return 13.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.329;
+        return 0.3;
     }
 
     @Nullable
@@ -61,17 +62,9 @@ public class EntityHunter extends AoAMeleeMob {
         return SoundsRegister.mobHunterHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensGreckon, 1 + rand.nextInt(2 + lootingMod));
-
-        if (rand.nextInt(20 - lootingMod) == 0)
-            dropItem(ItemRegister.realmstoneDustopia, 1);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityHunter;
     }
 }

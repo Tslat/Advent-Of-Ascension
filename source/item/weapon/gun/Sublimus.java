@@ -5,32 +5,40 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Sublimus extends BaseGun implements AdventWeapon {
-	public Sublimus(double dmg, SoundEvent sound, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, sound, durability, firingDelayTicks, recoil);
-		setUnlocalizedName("Sublimus");
+	public Sublimus(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("Sublimus");
 		setRegistryName("aoa3:sublimus");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunGolemGun;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		return super.findAndConsumeAmmo(player, gun, hand,itemRand.nextInt(4) > 0);
+		return super.findAndConsumeAmmo(player, gun, hand, !player.world.isDaytime() || !player.world.canSeeSky(player.getPosition()));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.noConsume.25", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Sublimus.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

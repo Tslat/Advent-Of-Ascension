@@ -19,15 +19,26 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.WorldInfo;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.GameData;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.entity.base.*;
+import net.tslat.aoa3.entity.mobs.creeponia.EntityCreeponiaCreeper;
 import net.tslat.aoa3.entity.properties.BossEntity;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.archergun.BaseArchergun;
@@ -43,11 +54,18 @@ import net.tslat.aoa3.item.weapon.staff.BaseStaff;
 import net.tslat.aoa3.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.item.weapon.thrown.BaseThrownWeapon;
 import net.tslat.aoa3.item.weapon.vulcane.BaseVulcane;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.utils.skills.HunterUtil;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CommandTslat extends CommandBase {
     private BlockPos structureMinPos = null;
@@ -70,7 +88,9 @@ public class CommandTslat extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if (sender instanceof EntityPlayer && sender.getName().equals("Tslat")) {
+		if (sender instanceof EntityPlayer && (sender.getName().equals("Tslat") || sender.getName().equals("Ursun_"))) {
+			EntityPlayer player;
+
             if (args.length == 0) {
                 sender.sendMessage(new TextComponentString("Welcome back."));
                 return;
@@ -150,19 +170,19 @@ public class CommandTslat extends CommandBase {
 
 										String comment = builder.length() > 4 ? builder.toString() : "";
 
-										System.out.print("        addBlock(world, basePos, " + (x - structureMinPos.getX()) + ", " + (y - structureMinPos.getY()) + ", " + (z - structureMinPos.getZ()) + ", " + block.getUnlocalizedName().replace("tile.", "") + "); " + comment + "\n");
+										System.out.print("        addBlock(world, basePos, " + (x - structureMinPos.getX()) + ", " + (y - structureMinPos.getY()) + ", " + (z - structureMinPos.getZ()) + ", " + block.getTranslationKey().replace("tile.", "") + "); " + comment + "\n");
 									}
                                 }
                             }
                         }
 
                         System.out.print("    }\n");
-                        System.out.println();
+                        System.out.print("\n");
 
                         for (IBlockState capturedBlock : capturedBlocks) {
-                            String blockName = capturedBlock.getBlock().getUnlocalizedName().replace("tile.","").toUpperCase();
+                            String blockName = capturedBlock.getBlock().getTranslationKey().replace("tile.","").toUpperCase();
 
-                            System.out.print("    private static final IBlockState " + blockName + " = " + (capturedBlock.getBlock().getRegistryName().getResourceDomain().equals("minecraft") ? "Blocks" : "BlockRegister") + "." + blockName + ".getDefaultState();\n");
+                            System.out.print("    private static final IBlockState " + blockName + " = " + (capturedBlock.getBlock().getRegistryName().getNamespace().equals("minecraft") ? "Blocks" : "BlockRegister") + "." + blockName + ".getDefaultState();\n");
                         }
 
                         sender.sendMessage(new TextComponentString("Finished capturing structure. Stats:"));
@@ -234,13 +254,64 @@ public class CommandTslat extends CommandBase {
                     sender.sendMessage(new TextComponentString("Total enchantments registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size() + "/" + maxEnchantments));
                     break;
 				case "heal":
-					if (!((EntityPlayer)sender).world.isRemote) {
-						((EntityPlayer)sender).heal(((EntityPlayer)sender).getMaxHealth());
-						((EntityPlayer)sender).getFoodStats().addStats(999, 1f);
+					player = (EntityPlayer)sender;
+
+					if (!player.world.isRemote) {
+						player.heal(player.getMaxHealth());
+						player.getFoodStats().addStats(999, 1f);
+						player.extinguish();
+
+						PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+
+						plData.stats().regenResource(Enums.Resources.RAGE, 200);
+						plData.stats().regenResource(Enums.Resources.SOUL, 200);
+						plData.stats().regenResource(Enums.Resources.ENERGY, 200);
+						plData.stats().regenResource(Enums.Resources.CREATION, 200);
+					}
+					break;
+				case "explode":
+					player = (EntityPlayer)sender;
+
+					if (!player.world.isRemote) {
+						float strength = 7f;
+
+						if (args.length > 1) {
+							float altStrength = StringUtil.toFloat(args[1]);
+
+							if (altStrength > 0)
+								strength = altStrength;
+						}
+
+						WorldUtil.createExplosion(player, player.world, strength);
+					}
+					break;
+				case "toggledebugsetup":
+					player = (EntityPlayer)sender;
+					GameRules gameRules = player.world.getGameRules();
+					WorldInfo worldInfo = player.world.getWorldInfo();
+
+					if (gameRules.getBoolean("doMobSpawning")) {
+						gameRules.setOrCreateGameRule("doMobSpawning", "false");
+						gameRules.setOrCreateGameRule("doWeatherCycle", "false");
+						gameRules.setOrCreateGameRule("doDaylightCycle", "false");
+						worldInfo.setCleanWeatherTime(20000000);
+						worldInfo.setRainTime(0);
+						worldInfo.setThunderTime(0);
+						worldInfo.setRaining(false);
+						worldInfo.setThundering(false);
+						player.world.setWorldTime(1000);
+						player.sendMessage(new TextComponentString("Enabled Debug settings"));
+					}
+					else {
+						gameRules.setOrCreateGameRule("doMobSpawning", "true");
+						gameRules.setOrCreateGameRule("doWeatherCycle", "true");
+						gameRules.setOrCreateGameRule("doDaylightCycle", "true");
+						worldInfo.setCleanWeatherTime(((300 + AdventOfAscension.rand.nextInt(600)) * 20));
+						player.world.setWorldTime(1000);
+						player.sendMessage(new TextComponentString("Disabled Debug settings"));
 					}
 					break;
 				case "weaponsprintout":
-					sender.sendMessage(new TextComponentString("Printing out all AoA weapon details to the launcher log..."));
 					System.out.print("AoA v" + AdventOfAscension.version + " weapons data printout below: \n");
 					System.out.print("\n");
 					System.out.print("---~~~---~~~---~~~\n");
@@ -311,7 +382,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + sword.getAttackDamage() + "\n");
 						System.out.print("    Durability: " + sword.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeValue(new ItemStack(sword), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")) + "\n");
+						System.out.print("    Attack Speed: " + ItemUtil.getStackAttributeValue(new ItemStack(sword), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.VANILLA_ATTACK_SPEED) + "\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -323,7 +394,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + greatblade.getDamage() + "\n");
 						System.out.print("    Durability: " + greatblade.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(greatblade), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")), 2) + "\n");
+						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(greatblade), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.VANILLA_ATTACK_SPEED), 2) + "\n");
 						System.out.print("    Reach: " + ((int)greatblade.getReach()) + " blocks\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
@@ -336,7 +407,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("Stats: \n");
 						System.out.print("    Damage: " + maul.getDamage() + "\n");
 						System.out.print("    Durability: " + maul.getMaxDamage() + "\n");
-						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(maul), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3")), 2) + "\n");
+						System.out.print("    Attack Speed: " + StringUtil.roundToNthDecimalPlace((float)ItemUtil.getStackAttributeValue(new ItemStack(maul), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.VANILLA_ATTACK_SPEED), 2) + "\n");
 						System.out.print("    Knockback: " + (maul.getBaseKnockback()) + "\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
@@ -353,7 +424,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Firing Speed: " + (2000 / shotgun.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + shotgun.getRecoil() + "\n");
 
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(shotgun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(shotgun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.ATTACK_SPEED_MAINHAND)) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -367,7 +438,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + sniper.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / sniper.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + sniper.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(sniper), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(sniper), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.ATTACK_SPEED_MAINHAND)) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -381,7 +452,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + gun.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / gun.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + gun.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(gun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(gun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.ATTACK_SPEED_MAINHAND)) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -395,7 +466,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + cannon.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / cannon.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + cannon.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(cannon), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(cannon), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.ATTACK_SPEED_MAINHAND)) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -409,7 +480,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + blaster.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / blaster.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Energy Cost: " + blaster.getEnergyCost() + "\n");
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (float)(ItemUtil.getStackAttributeValue(new ItemStack(blaster), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3"))), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (float)(ItemUtil.getStackAttributeValue(new ItemStack(blaster), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.VANILLA_ATTACK_SPEED)), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -423,7 +494,7 @@ public class CommandTslat extends CommandBase {
 						System.out.print("    Durability: " + archergun.getMaxDamage() + "\n");
 						System.out.print("    Firing Speed: " + (2000 / archergun.getFiringDelay()) / (double)100 + "/sec\n");
 						System.out.print("    Recoil: " + archergun.getRecoil() + "\n");
-						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(archergun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e"))) / 100f))) / 100f), 2) + "s\n");
+						System.out.print("    Unholster Time: " + StringUtil.roundToNthDecimalPlace(1 / (((int)(400 * (1 - (-ItemUtil.getStackAttributeValue(new ItemStack(archergun), SharedMonsterAttributes.ATTACK_SPEED, (EntityPlayer)sender, EntityEquipmentSlot.MAINHAND, AoAAttributes.ATTACK_SPEED_MAINHAND)) / 100f))) / 100f), 2) + "s\n");
 						System.out.print("---~~~---~~~---~~~\n");
 					}
 
@@ -495,9 +566,9 @@ public class CommandTslat extends CommandBase {
 					System.out.print("\n");
 					System.out.print("Total: " + (swords.size() + greatblades.size() + mauls.size() + shotguns.size() + snipers.size() + cannons.size() + blasters.size() + archerguns.size() + thrownWeapons.size() + guns.size() + vulcanes.size() + bows.size() + staves.size()) + "\n");
 					System.out.print("---~~~---~~~---~~~\n");
+					sender.sendMessage(new TextComponentString("Printed out all AoA weapon details to the launcher log"));
 					break;
 				case "mobsprintout":
-					sender.sendMessage(new TextComponentString("Printing out all AoA entity details to the launcher log..."));
 					System.out.print("AoA v" + AdventOfAscension.version + " entity data printout below: \n");
 					System.out.print("\n");
 					System.out.print("---~~~---~~~---~~~\n");
@@ -540,13 +611,13 @@ public class CommandTslat extends CommandBase {
 							type = "Flying Ranged Mob";
 							mobCounts.merge("Flying Ranged Mob", 1, Integer::sum);
 						}
-						else if (entity instanceof EntityAnimal) {
-							type = "Animal";
-							mobCounts.merge("Animal", 1, Integer::sum);
-						}
 						else if (entity instanceof AoAAmbientNPC) {
 							type = "NPC";
 							mobCounts.merge("NPC", 1, Integer::sum);
+						}
+						else if (entity instanceof EntityAnimal) {
+							type = "Animal";
+							mobCounts.merge("Animal", 1, Integer::sum);
 						}
 						else if (entity instanceof AoATrader) {
 							type = "Trader";
@@ -557,6 +628,9 @@ public class CommandTslat extends CommandBase {
 							mobCounts.merge("Projectile", 1, Integer::sum);
 						}
 						else {
+							if (entity instanceof EntityCreeponiaCreeper)
+								type = "Creepoid";
+
 							mobCounts.merge("Other", 1, Integer::sum);
 						}
 
@@ -586,11 +660,27 @@ public class CommandTslat extends CommandBase {
 							System.out.print("Stats:\n");
 							System.out.print("    Health: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() + "\n");
 							System.out.print("    Armour: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.ARMOR).getBaseValue() + "\n");
-							System.out.print("    Knockback Resistance: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getBaseValue() + "\n");
-							System.out.print("    Movement Speed: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue() + "\n");
+							System.out.print("    Knockback Resistance: " + StringUtil.roundToNthDecimalPlace((float)livingEntity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getBaseValue(), 2) + "\n");
+							System.out.print("    Movement Speed: " + StringUtil.roundToNthDecimalPlace((float)livingEntity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue(), 3) + "\n");
 
 							if (livingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
 								System.out.print("    Strength: " + livingEntity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() + "\n");
+
+							if (livingEntity instanceof EntityCreeponiaCreeper)
+								System.out.print("    Explosion Strength: " + ((EntityCreeponiaCreeper)livingEntity).getExplosionStrength() + "\n");
+
+							if (HunterUtil.isHunterCreature(livingEntity)) {
+								System.out.print("    Hunter Level: " + HunterUtil.getHunterLevel(livingEntity) + "\n");
+								System.out.print("    Hunter Xp: " + HunterUtil.getHunterXp(livingEntity) + "\n");
+							}
+
+							if (livingEntity instanceof SpecialPropertyEntity) {
+								System.out.print("    Immunities: \n");
+
+								for (Enums.MobProperties property : ((SpecialPropertyEntity)livingEntity).getMobProperties()) {
+									System.out.print("        " + StringUtil.capitaliseFirstLetter(property.toString()) + "\n");
+								}
+							}
 						}
 						else {
 							System.out.print("Size: " + entity.width + "W x " + entity.height + "H\n");
@@ -609,6 +699,156 @@ public class CommandTslat extends CommandBase {
 					}
 
 					System.out.print("    Total: " + total + "\n");
+					sender.sendMessage(new TextComponentString("Printed out all AoA entity details to the launcher log"));
+					break;
+				case "testloottable":
+					World world = sender.getEntityWorld();
+
+					if (!world.isRemote) {
+						if (args.length < 2) {
+							sender.sendMessage(new TextComponentString("What loot table do you want to test?"));
+
+							break;
+						}
+
+						try {
+							LootTable table = world.getLootTableManager().getLootTableFromLocation(new ResourceLocation(args[1]));
+
+							if (table == null) {
+								sender.sendMessage(new TextComponentString("Unable to find loot table: " + args[1]));
+
+								break;
+							}
+
+							int luck = 0;
+							player = sender instanceof EntityPlayer ? (EntityPlayer)sender : null;
+							int timesToTest = 1;
+							boolean printToConsole = false;
+							LootPool specificPool = null;
+
+							for (String arg : args) {
+								if (arg.contains("luck:")) {
+									luck = Integer.valueOf(arg.split("luck:")[1]);
+								}
+								else if (arg.contains("times:")) {
+									timesToTest = Integer.valueOf(arg.split("times:")[1]);
+								}
+								else if (arg.contains("printtoconsole")) {
+									printToConsole = true;
+								}
+								else if (arg.contains("pool:")) {
+									specificPool = table.getPool(arg.split("pool:")[1]);
+								}
+							}
+
+							LootContext.Builder builder = new LootContext.Builder((WorldServer)world).withLuck(luck);
+							LootContext context;
+
+							if (player != null) {
+								builder.withPlayer(player);
+							}
+
+							context = builder.build();
+
+							HashMap<String, Integer> lootMap = new HashMap<String, Integer>();
+
+							for (int i = 0; i < timesToTest; i++) {
+								List<ItemStack> lootStacks;
+
+								if (specificPool != null) {
+									specificPool.generateLoot(lootStacks = new ArrayList<ItemStack>(), world.rand, context);
+								}
+								else {
+									lootStacks = table.generateLootForPools(world.rand, context);
+								}
+
+								if (lootStacks.isEmpty())
+									lootMap.merge("empty", 1, Integer::sum);
+
+								for (ItemStack stack : lootStacks) {
+									lootMap.merge(stack.getTranslationKey(), 1, Integer::sum);
+								}
+							}
+
+							HashMap<String, Integer> sortedLootMap = lootMap.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2) -> v2, LinkedHashMap::new));
+
+							if (printToConsole || player == null) {
+								System.out.print("---~~~---~~~---~~~\n");
+								System.out.print("AoA v" + AdventOfAscension.version + " loot table printout: " + args[1] + "\n");
+
+								if (specificPool != null)
+									System.out.print("Pool: " + specificPool.getName());
+
+								System.out.print("\n");
+								System.out.print("---~~~---~~~---~~~\n");
+								System.out.print("    Total rolls: " + timesToTest + "\n");
+								System.out.print("    With luck: " + luck + "\n");
+
+								if (player != null)
+									System.out.print("    Tested as a player\n");
+
+								System.out.print("    Drops:\n");
+
+								int count = 0;
+								Integer emptyDrops = sortedLootMap.get("empty");
+
+								if (emptyDrops == null)
+									emptyDrops = 0;
+
+								for (Integer val : sortedLootMap.values()) {
+									count += val;
+								}
+
+								System.out.print("        " + TextFormatting.DARK_GRAY + "Empty: " + TextFormatting.GRAY + emptyDrops + TextFormatting.RESET + " times. (" + TextFormatting.GRAY + StringUtil.roundToNthDecimalPlace((emptyDrops / (float)timesToTest) * 100, 5) + "%" + TextFormatting.RESET + ")\n");
+
+								sortedLootMap.remove("empty");
+
+								for (Map.Entry<String, Integer> entry : sortedLootMap.entrySet()) {
+									System.out.print("        " + TextFormatting.DARK_GRAY + "Item: " + TextFormatting.GOLD + StringUtil.getLocaleString(entry.getKey() + ".name") + TextFormatting.RESET + ", dropped " + TextFormatting.GRAY + entry.getValue() + TextFormatting.RESET + " times. (" + TextFormatting.GRAY + StringUtil.roundToNthDecimalPlace((entry.getValue() / (float)count) * 100, 5) + "%" + TextFormatting.RESET + ")\n");
+								}
+
+								int dropCount = count - emptyDrops;
+
+								System.out.print("\n");
+								System.out.print("Total drops: " + dropCount + ". Drop ratio: " + dropCount + "/" + timesToTest + " (" + StringUtil.roundToNthDecimalPlace(dropCount / (float)timesToTest, 5) + ")\n");
+								System.out.print("---~~~---~~~---~~~\n");
+							}
+							else {
+								System.out.print("---~~~---~~~---~~~\n");
+								sender.sendMessage(new TextComponentString("AoA v" + AdventOfAscension.version + " loot table printout: " + args[1]));
+								sender.sendMessage(new TextComponentString("---~~~---~~~---~~~"));
+								sender.sendMessage(new TextComponentString("Total rolls: " + timesToTest));
+								sender.sendMessage(new TextComponentString("With luck: " + luck));
+								sender.sendMessage(new TextComponentString("Drops:"));
+
+								int count = 0;
+								Integer emptyDrops = sortedLootMap.get("empty");
+
+								if (emptyDrops == null)
+									emptyDrops = 0;
+
+								for (Integer val : sortedLootMap.values()) {
+									count += val;
+								}
+
+								sender.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + "Empty: " + TextFormatting.GRAY + emptyDrops + TextFormatting.RESET + " times. (" + TextFormatting.GRAY + StringUtil.roundToNthDecimalPlace((emptyDrops / (float)timesToTest) * 100, 5) + "%" + TextFormatting.RESET + ")"));
+
+								sortedLootMap.remove("empty");
+
+								for (Map.Entry<String, Integer> entry : sortedLootMap.entrySet()) {
+									sender.sendMessage(new TextComponentString(TextFormatting.DARK_GRAY + "Item: " + TextFormatting.GOLD + StringUtil.getLocaleString(entry.getKey() + ".name") + TextFormatting.RESET + ", dropped " + TextFormatting.GRAY + entry.getValue() + TextFormatting.RESET + " times. (" + TextFormatting.GRAY + StringUtil.roundToNthDecimalPlace((entry.getValue() / (float)count) * 100, 5) + "%" + TextFormatting.RESET + ")"));
+								}
+
+								int dropCount = count - 0;
+
+								sender.sendMessage(new TextComponentString("Total drops: " + dropCount + ". Drop ratio: " + dropCount + "/" + timesToTest + " (" + StringUtil.roundToNthDecimalPlace(dropCount / (float)timesToTest, 5) + ")"));
+							}
+						}
+						catch (Exception e) {
+							sender.sendMessage(new TextComponentString("Unable to test loot table: " + args[1]));
+							e.printStackTrace();
+						}
+					}
 					break;
                 default:
                     break;
@@ -623,6 +863,6 @@ public class CommandTslat extends CommandBase {
 
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-		return sender instanceof EntityPlayer && AdventOfAscension.instance.isTslat(((EntityPlayer)sender).getGameProfile().getId());
+		return sender instanceof EntityPlayer && (AdventOfAscension.instance().isTslat(((EntityPlayer)sender).getGameProfile().getId()) || AdventOfAscension.instance().isUrsun(((EntityPlayer)sender).getGameProfile().getId()));
 	}
 }

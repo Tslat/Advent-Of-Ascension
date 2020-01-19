@@ -5,27 +5,31 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCyanShot;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntitySeaTroll extends AoARangedMob {
+public class EntitySeaTroll extends AoARangedMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
 
 	public EntitySeaTroll(World world) {
 		super(world, entityWidth, 1.8125f);
+
+		mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
 	}
 
 	public EntitySeaTroll(World world, double posX, double posY, double posZ) {
@@ -40,17 +44,17 @@ public class EntitySeaTroll extends AoARangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 20;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 6;
+		return 4;
 	}
 
 	@Override
@@ -82,18 +86,15 @@ public class EntitySeaTroll extends AoARangedMob {
 		return SoundsRegister.shotWizardBlast;
 	}
 
+	@Nullable
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySeaTroll;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSea), 1);
-
-		if (rand.nextInt(20 - lootingMod) == 0)
-			dropItem(WeaponRegister.gunDartGun, 1);
+	protected boolean isDaylightMob() {
+		return true;
 	}
 
 	@Override
@@ -108,12 +109,23 @@ public class EntitySeaTroll extends AoARangedMob {
 	}
 
 	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isMagicDamage(source, this, damage);
+	}
+
+	@Override
 	protected boolean isOverworldMob() {
 		return true;
 	}
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block);
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

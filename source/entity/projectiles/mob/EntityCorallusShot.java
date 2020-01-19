@@ -11,6 +11,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.boss.corallus.EntityCorallus;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -96,22 +97,20 @@ public class EntityCorallusShot extends EntityFlying {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		world.createExplosion(this, posX, posY, posZ, 1.0f, false);
-
-		if (!world.isRemote)
+		if (!world.isRemote) {
+			WorldUtil.createExplosion(corallus, world, this, 1.0f);
 			setDead();
+		}
 
 		return true;
 	}
 
 	@Override
 	protected void collideWithEntity(Entity entityIn) {
-		if (entityIn == target) {
+		if (!world.isRemote && entityIn == target) {
 			target.attackEntityFrom(DamageSource.causeMobDamage(this), dmg);
-			world.createExplosion(this, posX, posY, posZ, 1.0f, false);
-
-			if (!world.isRemote)
-				setDead();
+			WorldUtil.createExplosion(corallus, world, this, 1.0f);
+			setDead();
 		}
 	}
 
@@ -155,7 +154,7 @@ public class EntityCorallusShot extends EntityFlying {
 		public void updateTask() {
 			if (this.shot.target == null || !this.shot.target.isEntityAlive()) {
 				if (!world.isRemote) {
-					world.createExplosion(this.shot, this.shot.posX, this.shot.posY, this.shot.posZ, 1.0f, false);
+					WorldUtil.createExplosion(corallus, world, shot, 1.0f);
 					setDead();
 				}
 			}

@@ -1,57 +1,67 @@
 package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class KnightsGuard extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public KnightsGuard(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("KnightsGuard");
+		setTranslationKey("KnightsGuard");
 		setRegistryName("aoa3:knights_guard");
+		this.addPropertyOverride(new ResourceLocation("blocking"), new IItemPropertyGetter()
+		{
+			@SideOnly(Side.CLIENT)
+			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entity)
+			{
+				return entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F;
+			}
+		});
 	}
 
 	@Override
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		super.attackEntity(stack, target, attacker, dmg);
+	public EnumAction getItemUseAction(ItemStack stack) {
+		return EnumAction.BLOCK;
+	}
 
-		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f) {
-			Potion effect = null;
-			switch (itemRand.nextInt(4)) {
-				case 0:
-					effect = MobEffects.STRENGTH;
-					break;
-				case 1:
-					effect = MobEffects.RESISTANCE;
-					break;
-				case 2:
-					effect = MobEffects.SPEED;
-					break;
-				case 3:
-					effect = MobEffects.REGENERATION;
-					break;
-			}
+	@Override
+	public boolean isShield(ItemStack stack, @Nullable EntityLivingBase entity) {
+		return true;
+	}
 
-			attacker.addPotionEffect(new PotionEffect(effect, 60, 0));
-		}
+	@Override
+	public int getMaxItemUseDuration(ItemStack stack) {
+		return 72000;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+
+		player.setActiveHand(hand);
+
+		return new ActionResult(EnumActionResult.SUCCESS, stack);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.KnightsGuard.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.KnightsGuard.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

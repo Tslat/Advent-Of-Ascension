@@ -1,28 +1,22 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOURICE;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_ICE;
 
 public class IceArmour extends AdventArmour {
-	public IceArmour(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOURICE, name, registryName, renderIndex, slot);
+	public IceArmour(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_ICE, name, registryName, slot);
 	}
 
 	@Override
@@ -31,15 +25,14 @@ public class IceArmour extends AdventArmour {
 	}
 
 	@Override
-	public void handleDamageTriggers(LivingDamageEvent event, AdventPlayerCapability cap) {
-		if (EntityUtil.isMeleeDamage(event.getSource()) && event.getSource().getTrueSource() instanceof EntityLivingBase)
-			((EntityLivingBase)event.getSource().getTrueSource()).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, (int)event.getAmount() * 13, 1, false, true));
+	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
+		if (!world.isRemote && stack.getItemDamage() > 0 && player.getRNG().nextFloat() < 0.02f && world.getBiome(player.getPosition()).getTemperature(player.getPosition()) < 0.15f)
+			stack.setItemDamage(stack.getItemDamage() - 1);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.fullSetBonus", TextFormatting.GOLD));
-		tooltip.add(StringUtil.getColourLocaleString("item.IceArmour.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.IceArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

@@ -9,11 +9,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PlayerUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,24 +33,25 @@ public class SkillCrystal extends SimpleItem {
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-			AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(player);
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-			Enums.Skills sk = cap.getLowestSkillWithLimit(lowerLimit);
+			Enums.Skills skill = PlayerUtil.getLowestSkillWithLimit(plData, lowerLimit);
 
-			if (sk != null) {
-				cap.addXp(sk, cap.getXpReqForLevel(cap.getLevel(sk)) / denominator, false);
+			if (skill != null) {
+				plData.stats().addXp(skill, PlayerUtil.getXpRequiredForNextLevel(plData.stats().getLevel(skill)) / denominator, false);
 
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);
 			}
 			else {
-				cap.sendPlayerMessage(StringUtil.getLocaleWithArguments("message.feedback.item.skillCrystal.levelFail", Integer.toString(lowerLimit)));
+				plData.sendThrottledChatMessage("message.feedback.item.skillCrystal.levelFail",  Integer.toString(lowerLimit));
 			}
 		}
 
 		return EnumActionResult.PASS;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(StringUtil.getColourLocaleString("items.description.skillCrystal.desc.1", TextFormatting.GOLD));

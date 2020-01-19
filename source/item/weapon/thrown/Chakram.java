@@ -9,6 +9,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,16 +21,23 @@ import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Chakram extends BaseThrownWeapon {
 	public static final float dmg = 4f;
 
 	public Chakram() {
-		super(dmg, SoundEvents.ENTITY_ARROW_SHOOT, 7);
-		setUnlocalizedName("Chakram");
+		super(dmg, 7);
+		setTranslationKey("Chakram");
 		setRegistryName("aoa3:chakram");
 		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundEvents.ENTITY_ARROW_SHOOT;
 	}
 
 	@Override

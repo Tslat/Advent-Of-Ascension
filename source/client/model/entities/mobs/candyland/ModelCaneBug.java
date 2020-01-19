@@ -6,15 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelCaneBug extends ModelBase {
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer leg6;
-	ModelRenderer leg5;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer leg6;
+	private ModelRenderer leg5;
 
 	public ModelCaneBug() {
 		textureWidth = 128;

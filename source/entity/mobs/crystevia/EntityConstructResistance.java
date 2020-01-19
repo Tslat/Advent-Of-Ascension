@@ -1,11 +1,12 @@
 package net.tslat.aoa3.entity.mobs.crystevia;
 
-import net.minecraft.item.Item;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -22,11 +23,7 @@ public class EntityConstructResistance extends AoAMeleeMob implements SpecialPro
     public EntityConstructResistance(World world) {
         super(world, entityWidth, 2.375f);
 
-        mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
-        mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
-        mobProperties.add(Enums.MobProperties.EXPLOSION_IMMUNE);
-
-        isImmuneToFire = true;
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -36,22 +33,27 @@ public class EntityConstructResistance extends AoAMeleeMob implements SpecialPro
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.15;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 150;
+        return 80;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 4;
+        return 7;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.28;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 15;
     }
 
     @Nullable
@@ -72,30 +74,36 @@ public class EntityConstructResistance extends AoAMeleeMob implements SpecialPro
         return SoundsRegister.mobCrystalConstructHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityConstructOfResistance;
+    }
+
     @Override
     public boolean isImmuneToExplosions() {
         return true;
     }
 
     @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
-        if (source.isFireDamage() || source.isExplosion())
-            return true;
+    public void addPotionEffect(PotionEffect effect) {
+        if (effect.getPotion() == MobEffects.RESISTANCE)
+            effect.combine(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier() + 1, effect.getIsAmbient(), effect.doesShowParticles()));
 
-        return EntityUtil.isMagicDamage(source, this, 1);
-
+        super.addPotionEffect(effect);
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(3) == 0)
-            dropItem(ItemRegister.tokensCrystevia, 1 + rand.nextInt(2 + lootingMod));
+    public void onUpdate() {
+        super.onUpdate();
 
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.gemstonesWhite, 3);
+        if (isEntityAlive() && getHealth() < getMaxHealth())
+            heal(0.1f);
+    }
 
-        if (rand.nextInt(6) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerCrystal), 1);
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
     }
 
     @Nonnull

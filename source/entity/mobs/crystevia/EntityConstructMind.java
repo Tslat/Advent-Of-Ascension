@@ -1,24 +1,27 @@
 package net.tslat.aoa3.entity.mobs.crystevia;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityConstructMind extends AoAMeleeMob {
+public class EntityConstructMind extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 2f;
 
     public EntityConstructMind(World world) {
         super(world, entityWidth, 2f);
+
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -28,22 +31,27 @@ public class EntityConstructMind extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.4;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 200;
+        return 74;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 8;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
         return 0.2875;
+    }
+
+    @Override
+    protected double getBaseArmour() {
+        return 3;
     }
 
     @Nullable
@@ -64,29 +72,28 @@ public class EntityConstructMind extends AoAMeleeMob {
         return SoundsRegister.mobCrystalConstructHit;
     }
 
+    @Nullable
     @Override
-    protected int getSpawnChanceFactor() {
-        return 5;
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityConstructOfMind;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.realmstoneCrystevia, 1);
+    public void onUpdate() {
+        super.onUpdate();
 
-        if (rand.nextInt(3) == 0)
-            dropItem(ItemRegister.tokensCrystevia, 1+ rand.nextInt(2 + lootingMod));
-
-        if (rand.nextBoolean())
-            dropItem(WeaponRegister.blasterOrbocron, 1);
+        if (isEntityAlive() && getHealth() < getMaxHealth())
+            heal(0.1f);
     }
 
     @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
+    }
 
-        for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(16), PredicateUtil.IS_VULNERABLE_PLAYER)) {
-            pl.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 65, 1, true, false));
-            pl.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 65, 5, true, false));
-        }
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

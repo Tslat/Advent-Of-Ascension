@@ -5,16 +5,19 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.dimension.FloatingDimChunk;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -25,7 +28,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeLelyetia;
+	private final Biome biome = BiomeRegister.biomeLelyetia;
 
 	private int x;
 	private int y;
@@ -45,14 +48,11 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 
 		setBlocksInChunk();
 
-		Chunk chunk = new Chunk(world, primer, chunkX, chunkZ);
-		byte[] biomeArray = chunk.getBiomeArray();
+		Chunk chunk = new FloatingDimChunk(world, primer, chunkX, chunkZ);
 
-		for (int i = 0; i < biomeArray.length; ++i) {
-			biomeArray[i] = (byte)Biome.getIdForBiome(biome);
-		}
-
+		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
 		chunk.generateSkylightMap();
+
 		return chunk;
 	}
 
@@ -288,6 +288,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

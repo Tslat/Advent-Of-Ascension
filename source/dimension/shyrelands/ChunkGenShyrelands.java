@@ -6,12 +6,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -27,7 +28,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeShyrelands;
+	private final Biome biome = BiomeRegister.biomeShyrelands;
 
 	private int x;
 	private int y;
@@ -417,12 +418,22 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 
-		if (ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance) == 0) {
+		if (ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance) == 0) {
+			x = baseX + 3;
+			z = baseZ + 3;
+			y = 31;
+
+			StructuresHandler.generateStructure("CraexxeusTower", world, rand, pos.setPos(x, y, z));
+		}
+		else if (ConfigurationUtil.StructureConfig.shyrelands.whitewashingStationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.whitewashingStationSpawnChance) == 0) {
+			StructuresHandler.generateStructure("WhitewashingStation", world, rand, pos.setPos(baseX, 31, baseZ));
+		}
+		else if (ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.shyreDecorationSpawnChance) == 0) {
 			AoAStructure structure = StructuresHandler.EMPTY_STRUCTURE;
 
 			switch (rand.nextInt(7)) {
 				case 0:
-					structure = StructuresHandler.getStructure("AncientShrine");
+					structure = StructuresHandler.getStructure("DivinePlatform");
 					break;
 				case 1:
 					structure = StructuresHandler.getStructure("ArcWizardCheckpoint");
@@ -445,14 +456,6 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 			}
 
 			StructuresHandler.generateStructure(structure, world, rand, pos.setPos(baseX, 31, baseZ));
-		}
-
-		if (ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.craexxeusTowerSpawnChance) == 0) {
-			x = baseX + 3;
-			z = baseZ + 3;
-			y = 31;
-
-			StructuresHandler.generateStructure("CraexxeusTower", world, rand, pos.setPos(x, y, z));
 		}
 
 		if (ConfigurationUtil.StructureConfig.shyrelands.shyreDungeonSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.shyrelands.shyreDungeonSpawnChance) == 0) {
@@ -483,6 +486,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

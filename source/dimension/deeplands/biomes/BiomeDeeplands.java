@@ -32,8 +32,8 @@ public class BiomeDeeplands extends Biome {
 	public BiomeDeeplands() {
 		super(properties);
 		setRegistryName("aoa3", "deeplands");
-		this.topBlock = BlockRegister.stoneDeeplands.getDefaultState();
-		this.fillerBlock = BlockRegister.stoneDeeplands.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("deeplands_stone").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("deeplands_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -54,9 +54,9 @@ public class BiomeDeeplands extends Biome {
 	public class BiomeDeeplandsDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-				for (int i = 0; i < ConfigurationUtil.OreConfig.chargedRunium.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreChargedRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chargedRunium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chargedRunium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
-				}
+			for (int i = 0; i < ConfigurationUtil.OreConfig.chargedRunium.veinsPerChunk; i++) {
+				new WorldGenMinable(BlockRegister.oreChargedRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chargedRunium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chargedRunium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+			}
 
 			for (int i = 0; i < 4; i++) {
 				new WorldGenMinable(BlockRegister.deepCase.getDefaultState(), 5, BlockMatcher.forBlock(BlockRegister.stoneDeeplands))

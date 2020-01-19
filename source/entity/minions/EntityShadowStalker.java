@@ -1,14 +1,27 @@
 package net.tslat.aoa3.entity.minions;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
 
 public class EntityShadowStalker extends AoAMinion {
 	public static final float entityWidth = 1.125f;
+
+	public EntityShadowStalker(World world, EntityLivingBase caster) {
+		this(world);
+
+		if (caster instanceof EntityPlayer)
+			setTamedBy((EntityPlayer)caster);
+
+		setPosition(caster.posX, caster.posY, caster.posZ);
+	}
 
 	public EntityShadowStalker(final World world){
 		super(world, 250, entityWidth, 1.59375f);
@@ -55,5 +68,11 @@ public class EntityShadowStalker extends AoAMinion {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundsRegister.mobDistorterDeath;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityShadowStalker;
 	}
 }

@@ -1,14 +1,12 @@
 package net.tslat.aoa3.entity.mobs.overworld;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -36,12 +34,12 @@ public class EntityBushBaby extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 2;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.5227;
+		return 0.329;
 	}
 
 	@Nullable
@@ -60,28 +58,15 @@ public class EntityBushBaby extends AoAMeleeMob {
 		return SoundsRegister.mobBushBabyHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityBushBaby;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(30 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterGravityBlaster, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.realmstonePrecasia, 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(10 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

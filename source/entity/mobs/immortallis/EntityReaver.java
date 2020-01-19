@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -28,22 +29,27 @@ public class EntityReaver extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 50;
+		return 40;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 4;
+		return 12d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
 		return 0.2875;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 1d;
 	}
 
 	@Nullable
@@ -61,6 +67,12 @@ public class EntityReaver extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getStepSound() {
 		return SoundsRegister.mobGolemStep;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
 	}
 
 	@Override

@@ -6,21 +6,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelNightmareSpider extends ModelBase {
-	ModelRenderer Ear2;
-	ModelRenderer Body;
-	ModelRenderer RearEnd2;
-	ModelRenderer Leg8;
-	ModelRenderer Leg6;
-	ModelRenderer Leg4;
-	ModelRenderer Leg2;
-	ModelRenderer Leg7;
-	ModelRenderer Leg5;
-	ModelRenderer Leg3;
-	ModelRenderer Leg1;
-	ModelRenderer RearEnd;
-	ModelRenderer RearEnd3;
-	ModelRenderer Head;
-	ModelRenderer Ear1;
+	private ModelRenderer Ear2;
+	private ModelRenderer body;
+	private ModelRenderer RearEnd2;
+	private ModelRenderer Leg8;
+	private ModelRenderer Leg6;
+	private ModelRenderer Leg4;
+	private ModelRenderer Leg2;
+	private ModelRenderer Leg7;
+	private ModelRenderer Leg5;
+	private ModelRenderer Leg3;
+	private ModelRenderer Leg1;
+	private ModelRenderer RearEnd;
+	private ModelRenderer RearEnd3;
+	private ModelRenderer head;
+	private ModelRenderer Ear1;
 
 	public ModelNightmareSpider() {
 		textureWidth = 128;
@@ -30,11 +30,11 @@ public class ModelNightmareSpider extends ModelBase {
 		Ear2.setTextureSize(64, 32);
 		Ear2.mirror = true;
 		setRotation(Ear2, 0.0f, 0.0f, 0.0f);
-		(Body = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -5.0f, -3.0f, 6, 6, 6);
-		Body.setRotationPoint(0.0f, 18.0f, 0.0f);
-		Body.setTextureSize(64, 32);
-		Body.mirror = true;
-		setRotation(Body, 0.0f, 0.0f, 0.0f);
+		(body = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -5.0f, -3.0f, 6, 6, 6);
+		body.setRotationPoint(0.0f, 18.0f, 0.0f);
+		body.setTextureSize(64, 32);
+		body.mirror = true;
+		setRotation(body, 0.0f, 0.0f, 0.0f);
 		(RearEnd2 = new ModelRenderer(this, 68, 1)).addBox(-1.0f, -6.0f, -6.0f, 2, 4, 9);
 		RearEnd2.setRotationPoint(2.0f, 14.0f, 11.0f);
 		RearEnd2.setTextureSize(64, 32);
@@ -90,11 +90,11 @@ public class ModelNightmareSpider extends ModelBase {
 		RearEnd3.setTextureSize(64, 32);
 		RearEnd3.mirror = true;
 		setRotation(RearEnd3, 0.6108652f, 0.0f, 0.0f);
-		(Head = new ModelRenderer(this, 32, 4)).addBox(-4.0f, -6.0f, -8.0f, 8, 8, 8);
-		Head.setRotationPoint(0.0f, 18.0f, -3.0f);
-		Head.setTextureSize(64, 32);
-		Head.mirror = true;
-		setRotation(Head, 0.0f, 0.0f, 0.0f);
+		(head = new ModelRenderer(this, 32, 4)).addBox(-4.0f, -6.0f, -8.0f, 8, 8, 8);
+		head.setRotationPoint(0.0f, 18.0f, -3.0f);
+		head.setTextureSize(64, 32);
+		head.mirror = true;
+		setRotation(head, 0.0f, 0.0f, 0.0f);
 		(Ear1 = new ModelRenderer(this, 92, 4)).addBox(-4.0f, -10.0f, -7.0f, 2, 4, 2);
 		Ear1.setRotationPoint(0.0f, 18.0f, -3.0f);
 		Ear1.setTextureSize(64, 32);
@@ -105,7 +105,7 @@ public class ModelNightmareSpider extends ModelBase {
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		Ear2.render(par7);
-		Body.render(par7);
+		body.render(par7);
 		RearEnd2.render(par7);
 		Leg8.render(par7);
 		Leg6.render(par7);
@@ -117,7 +117,7 @@ public class ModelNightmareSpider extends ModelBase {
 		Leg1.render(par7);
 		RearEnd.render(par7);
 		RearEnd3.render(par7);
-		Head.render(par7);
+		head.render(par7);
 		Ear1.render(par7);
 	}
 
@@ -128,7 +128,7 @@ public class ModelNightmareSpider extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		Head.rotateAngleY = par4 / 57.295776f;
+		head.rotateAngleY = par4 / 57.295776f;
 		Ear1.rotateAngleY = par4 / 57.295776f;
 		Ear2.rotateAngleY = par4 / 57.295776f;
 		final float var8 = 0.7853982f;

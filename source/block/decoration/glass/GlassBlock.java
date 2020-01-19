@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 public class GlassBlock extends BlockGlass {
 	public GlassBlock(String name, String registryName, float hardness, float resistance) {
 		super(Material.GLASS, true);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(hardness);
 		setResistance(resistance);
@@ -42,7 +42,7 @@ public class GlassBlock extends BlockGlass {
 	@Nonnull
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 

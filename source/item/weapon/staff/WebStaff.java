@@ -5,45 +5,46 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
 public class WebStaff extends BaseStaff {
-	private static HashMap<RuneItem, Integer> runes = new HashMap<RuneItem, Integer>();
+	public WebStaff(int durability) {
+		super(durability);
+		setTranslationKey("WebStaff");
+		setRegistryName("aoa3:web_staff");
+	}
 
-	static {
+	@Nullable
+	@Override
+	public SoundEvent getCastingSound() {
+		return SoundsRegister.staffWeb;
+	}
+
+	@Override
+	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
 		runes.put(ItemRegister.runeDistortion, 4);
 		runes.put(ItemRegister.runeEnergy, 4);
 	}
 
-	public WebStaff(SoundEvent sound, int durability) {
-		super(sound, durability);
-		setUnlocalizedName("WebStaff");
-		setRegistryName("aoa3:web_staff");
-	}
-
 	@Override
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		for (Potion pot : caster.getActivePotionMap().keySet()) {
-			if (pot.isBadEffect())
+		for (Potion potion : caster.getActivePotionMap().keySet()) {
+			if (potion.isBadEffect())
 				return new Object();
 		}
 
 		return null;
-	}
-
-
-	@Override
-	public HashMap<RuneItem, Integer> getRunes() {
-		return runes;
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class WebStaff extends BaseStaff {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.WebStaff.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.WebStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

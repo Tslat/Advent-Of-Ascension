@@ -19,8 +19,14 @@ public class LunarIsland1 extends AoAStructure { //StructureSize: 15x15x15
 
 	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
-		if (rand.nextInt(50) == 0)
-			addBlock(world, basePos, 5, 5, 5, moonlightOrb);
+		if (rand.nextInt(10) == 0) {
+			if (rand.nextInt(5) == 0) {
+				addBlock(world, basePos, 5, 5, 5, BlockRegister.lunarOrbDarklight.getDefaultState());
+			}
+			else {
+				addBlock(world, basePos, 5, 5, 5, moonlightOrb);
+			}
+		}
 
 		addBlock(world, basePos, 5, 0, 6, lunasoleDirt);
 		addBlock(world, basePos, 5, 0, 7, lunasoleDirt);

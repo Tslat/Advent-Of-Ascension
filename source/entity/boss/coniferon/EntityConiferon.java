@@ -5,18 +5,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -83,28 +79,28 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 		return SoundsRegister.mobConiferonHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityConiferon;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
 		return EntityUtil.isGunDamage(source);
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueConiferon), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.greatbladeSelyanScythe, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(WeaponRegister.cannonSelyanStickler, 1);
-
-		if (rand.nextInt(10) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSelyan), 1);
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -151,6 +147,12 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicConiferon;
+	}
+
 	@Override
 	public boolean startRiding(Entity entity, boolean force) {
 		return false;
@@ -169,8 +171,4 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

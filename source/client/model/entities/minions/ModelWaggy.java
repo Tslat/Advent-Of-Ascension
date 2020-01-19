@@ -6,23 +6,23 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelWaggy extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer head4;
-	ModelRenderer body8;
-	ModelRenderer body9;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer head4;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
 
 	public ModelWaggy() {
 		textureWidth = 64;

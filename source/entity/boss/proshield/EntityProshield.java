@@ -3,19 +3,14 @@ package net.tslat.aoa3.entity.boss.proshield;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
-import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
@@ -70,20 +65,15 @@ public class EntityProshield extends AoAMeleeMob implements BossEntity {
 		return SoundEvents.BLOCK_ANVIL_LAND;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityProshield;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueProshield), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis)
-			dropItem(ItemRegister.progressCoin2, 1);
 	}
 
 	@Override
@@ -108,6 +98,12 @@ public class EntityProshield extends AoAMeleeMob implements BossEntity {
 		return null;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return null;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
@@ -115,8 +111,4 @@ public class EntityProshield extends AoAMeleeMob implements BossEntity {
 
 		super.setAttackTarget(target);
 	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {}
 }

@@ -1,33 +1,25 @@
 package net.tslat.aoa3.entity.mobs.mysterium;
 
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityAquaball;
 import net.tslat.aoa3.entity.projectiles.mob.EntityBloodball;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityUndeadTroll extends AoARangedMob implements HunterEntity {
+public class EntityUndeadTroll extends AoARangedMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityUndeadTroll(World world) {
 		super(world, entityWidth, 1.8125f);
-
-		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
 	}
 
 	@Override
@@ -42,12 +34,12 @@ public class EntityUndeadTroll extends AoARangedMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 25;
+		return 67d;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 25;
+		return 8d;
 	}
 
 	@Override
@@ -73,21 +65,10 @@ public class EntityUndeadTroll extends AoARangedMob implements HunterEntity {
 		return SoundsRegister.mobGoblinHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.trollSkull, 1);
-
-		if (rand.nextInt(50 - lootingMod) == 0)
-			dropItem(WeaponRegister.staffSurge, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerHaunted), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityUndeadTroll;
 	}
 
 	@Nullable
@@ -109,26 +90,5 @@ public class EntityUndeadTroll extends AoARangedMob implements HunterEntity {
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return EntityUtil.isGunDamage(source);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 28;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 80;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

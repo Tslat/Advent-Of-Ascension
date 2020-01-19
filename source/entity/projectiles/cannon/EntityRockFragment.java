@@ -1,6 +1,5 @@
 package net.tslat.aoa3.entity.projectiles.cannon;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -21,5 +20,8 @@ public class EntityRockFragment extends BaseBullet implements HardProjectile {
 		super(world, x, y, z);
 	}
 
-	public void doImpactEffect(Entity target) {}
+	@Override
+	protected float getGravityVelocity() {
+		return 0.06f;
+	}
 }

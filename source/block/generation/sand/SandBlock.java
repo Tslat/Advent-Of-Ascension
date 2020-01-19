@@ -10,12 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.block.CustomStateMapperBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
-public class SandBlock extends BlockSand {
+public class SandBlock extends BlockSand implements CustomStateMapperBlock {
 	public SandBlock(String name, String registryName) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.5f);
 		setDefaultState(blockState.getBaseState());
@@ -23,6 +24,7 @@ public class SandBlock extends BlockSand {
 		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public StateMap getStateMapper() {
 		return (new StateMap.Builder().ignore(BlockSand.VARIANT)).build();

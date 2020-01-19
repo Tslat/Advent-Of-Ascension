@@ -1,5 +1,6 @@
 package net.tslat.aoa3.entity.boss.skeletalarmy;
 
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -90,6 +91,11 @@ public class EntitySkeleman extends AoARangedMob {
 			return false;
 
 		return super.attackEntityFrom(source, amount);
+	}
+
+	@Override
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override

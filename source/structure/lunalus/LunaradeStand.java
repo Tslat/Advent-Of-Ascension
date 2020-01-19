@@ -1,11 +1,14 @@
 package net.tslat.aoa3.structure.lunalus;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityZalVendor;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.entity.npcs.trader.EntityZalVendor;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -17,6 +20,7 @@ public class LunaradeStand extends AoAStructure { //StructureSize: 7x6x7
 	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
 	private static final IBlockState lunidePlanks = BlockRegister.planksLunide.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public LunaradeStand() {
 		super("LunaradeStand");
@@ -79,6 +83,7 @@ public class LunaradeStand extends AoAStructure { //StructureSize: 7x6x7
 		addBlock(world, basePos, 0, 1, 5, stainedGlass);
 		addBlock(world, basePos, 0, 1, 6, lunarBricks);
 		addBlock(world, basePos, 1, 1, 0, stainedGlass);
+		addBlock(world, basePos, 1, 1, 4, chest);
 		addBlock(world, basePos, 1, 1, 6, stainedGlass);
 		addBlock(world, basePos, 2, 1, 0, stainedGlass);
 		addBlock(world, basePos, 2, 1, 6, stainedGlass);
@@ -103,5 +108,10 @@ public class LunaradeStand extends AoAStructure { //StructureSize: 7x6x7
 
 		lunaradeVendor.setLocationAndAngles(basePos.getX() + 2, basePos.getY() + 2, basePos.getZ() + 3, rand.nextFloat() * 360, 0);
 		world.spawnEntity(lunaradeVendor);
+	}
+
+	@Override
+	protected void doPostBuildOps(World world, Random rand, BlockPos basePos) {
+		assignLootChests(world, rand, LootSystemRegister.structureLunaradeStand, basePos.add(1, 1, 4));
 	}
 }

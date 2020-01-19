@@ -1,11 +1,10 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -25,17 +24,17 @@ public class EntityArcbeast extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 160;
+        return 170;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 13;
+        return 15;
     }
 
     @Override
@@ -61,16 +60,14 @@ public class EntityArcbeast extends AoAMeleeMob {
         return SoundsRegister.mobArcbeastHit;
     }
 
+    @Nullable
     @Override
-    public boolean getCanSpawnHere() {
-        return posY < 35 && super.getCanSpawnHere();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityArcbeast;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.tokensShyrelands, 1 + rand.nextInt(4 + lootingMod));
-
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerShyre), 1);
+    public boolean getCanSpawnHere() {
+        return posY < 35 && super.getCanSpawnHere();
     }
 }

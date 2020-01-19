@@ -7,25 +7,31 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.entity.projectiles.cannon.EntityGreenBall;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.entity.projectiles.cannon.EntityMiniGreenBall;
 
 import javax.annotation.Nullable;
 
-public class GreenBallRenderer extends Render<EntityGreenBall> {
+@SideOnly(Side.CLIENT)
+public class GreenBallRenderer extends Render<EntityMiniGreenBall> {
 	private final ResourceLocation texture;
+	private final float scale;
 
-	public GreenBallRenderer(final RenderManager manager, final ResourceLocation textureResource) {
+	public GreenBallRenderer(final RenderManager manager, final float scale, final ResourceLocation textureResource) {
 		super(manager);
-		texture = textureResource;
+
+		this.texture = textureResource;
+		this.scale = scale;
 	}
 
 	@Override
-	public void doRender(EntityGreenBall entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(EntityMiniGreenBall entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
+		GlStateManager.scale(0.5f, 0.5f, 0.5f);
 		bindEntityTexture(entity);
 		GlStateManager.translate((float)x, (float)y,(float)z);
 		GlStateManager.enableRescaleNormal();
-		GlStateManager.scale(0.5f, 0.5f, 0.5f);
 
 		Tessellator tess = Tessellator.getInstance();
 		BufferBuilder buffer = tess.getBuffer();
@@ -38,6 +44,7 @@ public class GreenBallRenderer extends Render<EntityGreenBall> {
 			GlStateManager.enableOutlineMode(getTeamColor(entity));
 		}
 
+		GlStateManager.scale(scale, scale, scale);
 		buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 		buffer.pos(-0.5D, -0.25D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
 		buffer.pos(0.5D, -0.25D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
@@ -51,12 +58,13 @@ public class GreenBallRenderer extends Render<EntityGreenBall> {
 		}
 
 		GlStateManager.disableRescaleNormal();
+		GlStateManager.scale(1 / scale, 1 / scale, 1 / scale);
 		GlStateManager.popMatrix();
 	}
 
 	@Nullable
 	@Override
-	protected ResourceLocation getEntityTexture(EntityGreenBall entity) {
+	protected ResourceLocation getEntityTexture(EntityMiniGreenBall entity) {
 		return texture;
 	}
 }

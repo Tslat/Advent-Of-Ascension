@@ -31,6 +31,7 @@ public class HydroliskRenderer extends RenderLiving<EntityHydrolisk> {
 	@Override
 	public void doRender(EntityHydrolisk entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
 	}

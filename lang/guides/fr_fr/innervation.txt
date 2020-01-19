@@ -2,6 +2,5 @@ Létalité (Skill)
 
 La létalité est le skill de la vitalité. A chaque fois que tu tues une créature, elle droppera peut-être un petit fragment de sa vitalité sous la forme d'un coeur de pierre. Tu peut ensuite ramasser ce coeur de pierre pour obtenir un peu d'exp de létalité.
 
-Alors que tu montes ta létalité, tu seras capable parfois d'utiliser cette vitalité pour supporter ou esquiver les attaques ennemies, ou même les utiliser à ton avantage!
-
-C'est pas si dur, si?
+Alors que tu montes ta létalité, tu verras ta vie maximale augmenter au-delà de ses anciennes limites. Plus tu as un bon niveau, plus ta vie est augmentée!
+Cette vitalité augmentée est permanente, c'est donc un atout vital pour les tâches dangereuses.

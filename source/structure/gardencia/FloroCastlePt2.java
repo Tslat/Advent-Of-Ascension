@@ -1,6 +1,9 @@
 package net.tslat.aoa3.structure.gardencia;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
@@ -10,6 +13,9 @@ import java.util.Random;
 public class FloroCastlePt2 {
 	private static final IBlockState unbreakableStem = BlockRegister.unbreakablePlantStem.getDefaultState();
 	private static final IBlockState blackPetals = BlockRegister.petalsBlack.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
+	private static final IBlockState chestEast = chest.withProperty(BlockChest.FACING, EnumFacing.EAST);
+	private static final IBlockState chestSouth = chest.withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	protected static void addBlocks(FloroCastle instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 14, 9, 24, unbreakableStem);
@@ -1513,6 +1519,7 @@ public class FloroCastlePt2 {
 		instance.addBlock(world, basePos, 20, 14, 6, unbreakableStem);
 		instance.addBlock(world, basePos, 20, 14, 8, unbreakableStem);
 		instance.addBlock(world, basePos, 20, 14, 15, unbreakableStem);
+		instance.addBlock(world, basePos, 20, 14, 16, chestSouth);
 		instance.addBlock(world, basePos, 20, 14, 18, unbreakableStem);
 		instance.addBlock(world, basePos, 20, 14, 19, unbreakableStem);
 		instance.addBlock(world, basePos, 21, 14, 6, unbreakableStem);
@@ -2374,6 +2381,7 @@ public class FloroCastlePt2 {
 		instance.addBlock(world, basePos, 4, 18, 6, unbreakableStem);
 		instance.addBlock(world, basePos, 4, 18, 8, unbreakableStem);
 		instance.addBlock(world, basePos, 4, 18, 16, unbreakableStem);
+		instance.addBlock(world, basePos, 4, 18, 17, chestEast);
 		instance.addBlock(world, basePos, 4, 18, 18, unbreakableStem);
 		instance.addBlock(world, basePos, 4, 18, 19, unbreakableStem);
 		instance.addBlock(world, basePos, 5, 18, 4, unbreakableStem);
@@ -2559,6 +2567,7 @@ public class FloroCastlePt2 {
 		instance.addBlock(world, basePos, 22, 18, 8, unbreakableStem);
 		instance.addBlock(world, basePos, 22, 18, 9, unbreakableStem);
 		instance.addBlock(world, basePos, 22, 18, 10, unbreakableStem);
+		instance.addBlock(world, basePos, 22, 18, 13, chest);
 		instance.addBlock(world, basePos, 22, 18, 14, unbreakableStem);
 		instance.addBlock(world, basePos, 22, 18, 15, unbreakableStem);
 		instance.addBlock(world, basePos, 22, 18, 16, unbreakableStem);

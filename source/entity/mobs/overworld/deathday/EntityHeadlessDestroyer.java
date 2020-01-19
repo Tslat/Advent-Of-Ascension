@@ -1,6 +1,5 @@
 package net.tslat.aoa3.entity.mobs.overworld.deathday;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,19 +8,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
-import java.util.TreeSet;
+import javax.annotation.Nullable;
 
-public class EntityHeadlessDestroyer extends AoAMeleeMob implements HunterEntity {
+public class EntityHeadlessDestroyer extends AoAMeleeMob {
 	public static final float entityWidth = 1.2f;
 
 	public EntityHeadlessDestroyer(World world) {
@@ -35,22 +33,22 @@ public class EntityHeadlessDestroyer extends AoAMeleeMob implements HunterEntity
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1d;
+		return 0.3f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 140;
+		return 55;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 23;
+		return 9;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.25d;
 	}
 
 	@Override
@@ -68,20 +66,15 @@ public class EntityHeadlessDestroyer extends AoAMeleeMob implements HunterEntity
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHeadlessDestroyer;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(1 + lootingMod));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override
@@ -95,21 +88,6 @@ public class EntityHeadlessDestroyer extends AoAMeleeMob implements HunterEntity
 			EntityItem playerHead = new EntityItem(world, victim.posX, victim.posY, victim.posZ, headStack);
 			world.spawnEntity(playerHead);
 		}
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 1;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 35;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Override

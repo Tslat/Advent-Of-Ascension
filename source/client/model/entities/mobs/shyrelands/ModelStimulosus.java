@@ -6,25 +6,25 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelStimulosus extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightleg2;
-	ModelRenderer leftleg2;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer head2;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer body8;
-	ModelRenderer body9;
-	ModelRenderer body10;
-	ModelRenderer body11;
-	ModelRenderer body12;
-	ModelRenderer body13;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightLeg2;
+	private ModelRenderer leftLeg2;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer head2;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer body8;
+	private ModelRenderer body9;
+	private ModelRenderer body10;
+	private ModelRenderer body11;
+	private ModelRenderer body12;
+	private ModelRenderer body13;
 
 	public ModelStimulosus() {
 		textureWidth = 64;
@@ -42,30 +42,30 @@ public class ModelStimulosus extends ModelBase {
 		body.setTextureSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0F, 0.0F, 0.0F);
-		rightleg2 = new ModelRenderer(this, 0, 27);
-		rightleg2.addBox(-2.0F, 6.0F, -4.0F, 4, 2, 6);
-		rightleg2.setRotationPoint(-3.0F, 16.0F, 0.0F);
-		rightleg2.setTextureSize(64, 32);
-		rightleg2.mirror = true;
-		setRotation(rightleg2, 0.0F, 0.0F, 0.0F);
-		leftleg2 = new ModelRenderer(this, 0, 27);
-		leftleg2.addBox(-2.0F, 6.0F, -4.0F, 4, 2, 6);
-		leftleg2.setRotationPoint(3.0F, 16.0F, 0.0F);
-		leftleg2.setTextureSize(64, 32);
-		leftleg2.mirror = true;
-		setRotation(leftleg2, 0.0F, 0.0F, 0.0F);
-		rightleg = new ModelRenderer(this, 0, 16);
-		rightleg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4);
-		rightleg.setRotationPoint(-3.0F, 16.0F, 0.0F);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0F, 0.0F, 0.0F);
-		leftleg = new ModelRenderer(this, 0, 16);
-		leftleg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4);
-		leftleg.setRotationPoint(3.0F, 16.0F, 0.0F);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0F, 0.0F, 0.0F);
+		rightLeg2 = new ModelRenderer(this, 0, 27);
+		rightLeg2.addBox(-2.0F, 6.0F, -4.0F, 4, 2, 6);
+		rightLeg2.setRotationPoint(-3.0F, 16.0F, 0.0F);
+		rightLeg2.setTextureSize(64, 32);
+		rightLeg2.mirror = true;
+		setRotation(rightLeg2, 0.0F, 0.0F, 0.0F);
+		leftLeg2 = new ModelRenderer(this, 0, 27);
+		leftLeg2.addBox(-2.0F, 6.0F, -4.0F, 4, 2, 6);
+		leftLeg2.setRotationPoint(3.0F, 16.0F, 0.0F);
+		leftLeg2.setTextureSize(64, 32);
+		leftLeg2.mirror = true;
+		setRotation(leftLeg2, 0.0F, 0.0F, 0.0F);
+		rightLeg = new ModelRenderer(this, 0, 16);
+		rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4);
+		rightLeg.setRotationPoint(-3.0F, 16.0F, 0.0F);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0F, 0.0F, 0.0F);
+		leftLeg = new ModelRenderer(this, 0, 16);
+		leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 6, 4);
+		leftLeg.setRotationPoint(3.0F, 16.0F, 0.0F);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0F, 0.0F, 0.0F);
 		body2 = new ModelRenderer(this, 38, 16);
 		body2.addBox(-2.0F, 0.0F, 0.0F, 4, 9, 1);
 		body2.setRotationPoint(6.0F, 0.0F, 2.0F);
@@ -150,10 +150,10 @@ public class ModelStimulosus extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightleg2.render(par7);
-		leftleg2.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg2.render(par7);
+		leftLeg2.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		body2.render(par7);
 		body3.render(par7);
 		body4.render(par7);
@@ -176,13 +176,13 @@ public class ModelStimulosus extends ModelBase {
 	}
 
 	public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity) {
-		rightleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
-		rightleg.rotateAngleY = 0.0F;
+		rightLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
+		rightLeg.rotateAngleY = 0.0F;
 
-		rightleg2.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
-		rightleg2.rotateAngleY = 0.0F;
+		rightLeg2.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
+		rightLeg2.rotateAngleY = 0.0F;
 
-		leftleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
-		leftleg2.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
+		leftLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
+		leftLeg2.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
 	}
 }

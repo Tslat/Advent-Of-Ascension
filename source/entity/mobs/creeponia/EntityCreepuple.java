@@ -1,21 +1,20 @@
 package net.tslat.aoa3.entity.mobs.creeponia;
 
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class EntityCreepuple extends EntityCreeper {
+public class EntityCreepuple extends EntityCreeponiaCreeper {
     public static final float entityWidth = 0.6f;
 
     public EntityCreepuple(World world) {
-        super(world);
-
-        setSize(entityWidth, 1.5625f);
+        super(world, entityWidth, 1.5625f);
     }
 
     @Override
@@ -24,12 +23,23 @@ public class EntityCreepuple extends EntityCreeper {
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+    protected double getBaseKnockbackResistance() {
+        return 0.1d;
+    }
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.95);
-        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.329);
+    @Override
+    protected double getBaseMaxHealth() {
+        return 60d;
+    }
+
+    @Override
+    protected double getBaseMovementSpeed() {
+        return 0.28d;
+    }
+
+    @Override
+	public float getExplosionStrength() {
+        return 2.4f;
     }
 
     @Nullable
@@ -44,17 +54,26 @@ public class EntityCreepuple extends EntityCreeper {
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return SoundsRegister.mobCreepoidHit;
     }
 
+    @Nullable
     @Override
-    public boolean getCanSpawnHere() {
-        return posY < 50 && super.getCanSpawnHere();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityCreepuple;
     }
 
     @Override
-    protected boolean isValidLightLevel() {
-        return true;
+    protected void explode() {
+        if (!world.isRemote) {
+            for (int i = 0; i < 3; i++) {
+                WorldUtil.createExplosion(this, world, posX + (rand.nextDouble() * 3) - 1, posY + (rand.nextDouble() * 3) - 1, posZ + (rand.nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (getPowered() ? 2f : 1f), WorldUtil.checkGameRule(world, "doStrongerMobGriefing"));
+            }
+
+            world.createExplosion(this, posX, posY, posZ, getExplosionStrength() * (getPowered() ? 2f : 1f), WorldUtil.checkGameRule(world, "doStrongerMobGriefing"));
+            setDead();
+            spawnLingeringCloud();
+        }
     }
 }

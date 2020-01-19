@@ -2,8 +2,10 @@ package net.tslat.aoa3.entity.minions;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
@@ -61,5 +63,11 @@ public class EntityHealingGolem extends AoAMinion {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundsRegister.mobAutomatonDeath;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityHealingGolem;
 	}
 }

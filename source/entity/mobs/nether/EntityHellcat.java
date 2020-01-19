@@ -4,9 +4,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -33,22 +34,22 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 1;
+        return 0.8d;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 80;
+        return 85d;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 7.5d;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.28d;
     }
 
     @Nullable
@@ -74,25 +75,25 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
         return SoundsRegister.dinoStep;
     }
 
+    @Nullable
     @Override
-    protected boolean isSpecialImmuneTo(DamageSource source) {
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityHellcat;
+    }
+
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
         return source.isFireDamage();
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextBoolean())
-            dropItem(ItemRegister.tokensNether, 1 + rand.nextInt(3 + lootingMod));
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.fieryChops, 2 + rand.nextInt(3 + lootingMod));
     }
 
     @Override
     protected void doMeleeEffect(Entity target) {
         addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 0, 0, true, true));
+    }
+
+    @Override
+    protected double getSpawnChanceFactor() {
+        return 0.5f;
     }
 
     @Nonnull

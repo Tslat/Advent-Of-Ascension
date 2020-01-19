@@ -6,17 +6,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelAxiolight extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body2;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer r1;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer body;
-	ModelRenderer body3;
-	ModelRenderer body4;
+	private ModelRenderer head;
+	private ModelRenderer body2;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer r1;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer body;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
 
 	public ModelAxiolight() {
 		textureWidth = 64;
@@ -34,18 +34,18 @@ public class ModelAxiolight extends ModelBase {
 		body2.setTextureSize(64, 32);
 		body2.mirror = true;
 		setRotation(body2, 0.0F, 0.0F, 0.0F);
-		rightleg = new ModelRenderer(this, 0, 53);
-		rightleg.addBox(-3.0F, 0.0F, -3.0F, 6, 4, 6);
-		rightleg.setRotationPoint(-4.0F, 20.0F, 0.0F);
-		rightleg.setTextureSize(64, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0F, 0.0F, 0.0F);
-		leftleg = new ModelRenderer(this, 0, 53);
-		leftleg.addBox(-3.0F, 0.0F, -3.0F, 6, 4, 6);
-		leftleg.setRotationPoint(4.0F, 20.0F, 0.0F);
-		leftleg.setTextureSize(64, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0F, 0.0F, 0.0F);
+		rightLeg = new ModelRenderer(this, 0, 53);
+		rightLeg.addBox(-3.0F, 0.0F, -3.0F, 6, 4, 6);
+		rightLeg.setRotationPoint(-4.0F, 20.0F, 0.0F);
+		rightLeg.setTextureSize(64, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0F, 0.0F, 0.0F);
+		leftLeg = new ModelRenderer(this, 0, 53);
+		leftLeg.addBox(-3.0F, 0.0F, -3.0F, 6, 4, 6);
+		leftLeg.setRotationPoint(4.0F, 20.0F, 0.0F);
+		leftLeg.setTextureSize(64, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0F, 0.0F, 0.0F);
 		r1 = new ModelRenderer(this, 51, 0);
 		r1.addBox(-2.0F, -12.0F, -1.0F, 4, 6, 2);
 		r1.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -94,8 +94,8 @@ public class ModelAxiolight extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body2.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		r1.render(par7);
 		head2.render(par7);
 		head3.render(par7);
@@ -112,10 +112,10 @@ public class ModelAxiolight extends ModelBase {
 	}
 
 	public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity) {
-		rightleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
-		rightleg.rotateAngleY = 0.0F;
+		rightLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2);
+		rightLeg.rotateAngleY = 0.0F;
 
-		leftleg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
+		leftLeg.rotateAngleX = (MathHelper.cos(par1 * 0.6662F + 3.1415927F) * 1.4F * par2);
 
 		r1.rotateAngleY = (par3 * 0.067F * 1.25F);
 	}

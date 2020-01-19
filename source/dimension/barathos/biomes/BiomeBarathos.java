@@ -24,7 +24,6 @@ public class BiomeBarathos extends Biome {
 		properties.setRainDisabled();
 		properties.setTemperature(2.0f);
 		properties.setRainfall(500);
-		properties.setWaterColor(Color.ORANGE.getRGB());
 		properties.setRainDisabled();
 		properties.setBaseHeight(0.0f);
 		properties.setHeightVariation(0.35f);
@@ -33,8 +32,8 @@ public class BiomeBarathos extends Biome {
 	public BiomeBarathos() {
 		super(properties);
 		setRegistryName("aoa3", "barathos");
-		topBlock = BlockRegister.baronGround.getDefaultState();
-		fillerBlock = BlockRegister.stoneBaron.getDefaultState();
+		topBlock = BlockRegister.getUnmappedBlock("baron_ground").getDefaultState();
+		fillerBlock = BlockRegister.getUnmappedBlock("baron_stone").getDefaultState();
 		spawnableCaveCreatureList.clear();
 		spawnableCreatureList.clear();
 		spawnableMonsterList.clear();
@@ -52,17 +51,12 @@ public class BiomeBarathos extends Biome {
 		return Color.ORANGE.getRGB();
 	}
 
-	public class BiomeBarathosDecorator extends AoABiomeDecorator {
+	public static class BiomeBarathosDecorator extends AoABiomeDecorator {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.varsium.veinsPerChunk; i++) {
 				new WorldGenMinable(BlockRegister.oreVarsium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.varsium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.varsium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
 						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(38) + 25, rand.nextInt(16)));
-			}
-
-			for (int i = 0; i < ConfigurationUtil.OreConfig.elecanium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
-						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 25, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.baronyte.veinsPerChunk; i++) {

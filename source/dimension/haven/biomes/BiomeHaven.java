@@ -32,8 +32,8 @@ public class BiomeHaven extends Biome {
 	public BiomeHaven() {
 		super(properties);
 		setRegistryName("aoa3", "haven");
-		this.topBlock = BlockRegister.grassHaven.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtHaven.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("haven_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("haven_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

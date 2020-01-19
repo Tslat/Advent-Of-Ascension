@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelClunkhead extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head2;
-	ModelRenderer head3;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head6;
-	ModelRenderer head7;
-	ModelRenderer head8;
-	ModelRenderer head9;
-	ModelRenderer head10;
-	ModelRenderer head11;
+	private ModelRenderer head;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head6;
+	private ModelRenderer head7;
+	private ModelRenderer head8;
+	private ModelRenderer head9;
+	private ModelRenderer head10;
+	private ModelRenderer head11;
 
 	public ModelClunkhead() {
 		textureWidth = 256;
@@ -28,16 +28,16 @@ public class ModelClunkhead extends ModelBase {
 		head.setTextureSize(256, 32);
 		head.mirror = true;
 		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 14)).addBox(-3.0f, 0.0f, -3.0f, 6, 12, 6);
-		rightleg.setRotationPoint(-4.0f, 12.0f, 0.0f);
-		rightleg.setTextureSize(256, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 14)).addBox(-3.0f, 0.0f, -3.0f, 6, 12, 6);
-		leftleg.setRotationPoint(4.0f, 12.0f, 0.0f);
-		leftleg.setTextureSize(256, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 14)).addBox(-3.0f, 0.0f, -3.0f, 6, 12, 6);
+		rightLeg.setRotationPoint(-4.0f, 12.0f, 0.0f);
+		rightLeg.setTextureSize(256, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 14)).addBox(-3.0f, 0.0f, -3.0f, 6, 12, 6);
+		leftLeg.setRotationPoint(4.0f, 12.0f, 0.0f);
+		leftLeg.setTextureSize(256, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 68, 0)).addBox(-8.0f, -18.0f, -2.0f, 16, 18, 6);
 		head2.setRotationPoint(0.0f, 12.0f, 4.0f);
 		head2.setTextureSize(256, 32);
@@ -93,8 +93,8 @@ public class ModelClunkhead extends ModelBase {
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head2.render(par7);
 		head3.render(par7);
 		head4.render(par7);
@@ -114,8 +114,8 @@ public class ModelClunkhead extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

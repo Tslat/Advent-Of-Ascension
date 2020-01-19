@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,8 +26,8 @@ public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
 	double dmg;
 	int firingDelay;
 
-	public BaseThrownWeapon(double dmg, SoundEvent sound, int fireDelayTicks) {
-		super(dmg, sound, 1, fireDelayTicks, 0.0f);
+	public BaseThrownWeapon(double dmg, int fireDelayTicks) {
+		super(dmg, 1, fireDelayTicks, 0.0f);
 		setMaxDamage(0);
 		setMaxStackSize(64);
 		this.dmg = dmg;

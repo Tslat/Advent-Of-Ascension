@@ -1,11 +1,10 @@
 package net.tslat.aoa3.entity.mobs.lunalus;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -25,22 +24,22 @@ public class EntityInmateY extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.2;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 145;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 15;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.27d;
 	}
 
 	@Nullable
@@ -61,20 +60,9 @@ public class EntityInmateY extends AoAMeleeMob {
 		return SoundsRegister.mobCyclopsHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(25 - lootingMod) == 0)
-			dropItem(ItemRegister.unchargedOrb, 1);
-
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensLunar, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerLunar), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityInmateY;
 	}
 }

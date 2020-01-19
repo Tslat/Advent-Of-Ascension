@@ -1,25 +1,27 @@
 package net.tslat.aoa3.entity.mobs.creeponia;
 
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityBoneCreeper extends EntityCreeper {
+public class EntityBoneCreeper extends EntityCreeponiaCreeper implements SpecialPropertyEntity {
     public static final float entityWidth = 0.5f;
 
     public EntityBoneCreeper(World world) {
-        super(world);
+        super(world, entityWidth, 1.625f);
 
-        setSize(entityWidth, 1.625f);
+        mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
     }
 
     @Override
@@ -28,11 +30,23 @@ public class EntityBoneCreeper extends EntityCreeper {
     }
 
     @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+    protected double getBaseKnockbackResistance() {
+        return 0d;
+    }
 
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.95);
+    @Override
+    protected double getBaseMaxHealth() {
+        return 45d;
+    }
+
+    @Override
+    protected double getBaseMovementSpeed() {
+        return 0.3d;
+    }
+
+    @Override
+	public float getExplosionStrength() {
+        return 2.75f;
     }
 
     @Nullable
@@ -56,21 +70,20 @@ public class EntityBoneCreeper extends EntityCreeper {
         return SoundEvents.ENTITY_SKELETON_HURT;
     }
 
+    @Nullable
     @Override
-    protected boolean isValidLightLevel() {
-        return true;
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityBoneCreeper;
     }
 
     @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 2 + rand.nextInt(5 + lootingModifier));
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isRangedDamage(source, this, damage);
+    }
 
-        if (wasRecentlyHit) {
-            if (rand.nextBoolean())
-                dropItem(ItemRegister.tokensCreeponia, 1 + rand.nextInt(3 + lootingModifier));
-
-            if (rand.nextInt(4) == 0)
-                dropItem(Item.getItemFromBlock(BlockRegister.bannerCreepoid), 1);
-        }
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

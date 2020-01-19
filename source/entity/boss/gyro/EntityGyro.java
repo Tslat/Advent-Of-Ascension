@@ -1,7 +1,5 @@
 package net.tslat.aoa3.entity.boss.gyro;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIFindEntityNearest;
@@ -9,17 +7,12 @@ import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingRangedAttack;
@@ -37,8 +30,11 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/gyro.png");
 	public static final float entityWidth = 1.375f;
 
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
+	public EntityGyro(EntityGyrocopter copter) {
+		this(copter.world);
+
+		setLocationAndAngles(copter.posX, copter.posY, copter.posZ, copter.rotationYaw, copter.rotationPitch);
+	}
 
 	public EntityGyro(World world) {
 		super(world, entityWidth, 1.625f);
@@ -103,32 +99,23 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 		return SoundsRegister.gunMinigun;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGyro;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueGyro), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		switch (rand.nextInt(5)) {
-			case 0:
-				dropItem(WeaponRegister.cannonClownCannon, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.shotgunGimmick, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.gunSpectacle, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.gunBigTop, 1);
-				break;
-			case 4:
-				dropItem(WeaponRegister.sniperClownCracker, 1);
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -163,30 +150,17 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicGyro;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicGyro, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

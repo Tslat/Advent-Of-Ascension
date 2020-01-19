@@ -3,12 +3,11 @@ package net.tslat.aoa3.entity.base;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.EntityAIFindEntityNearest;
-import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -23,21 +22,25 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingFindNearestAttackableTargetHunter;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingRangedAttack;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
-import net.tslat.aoa3.entity.properties.HunterEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,16 +53,7 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     public AoAFlyingRangedMob(World world, float entityWidth, float entityHeight) {
         super(world);
 
-        if (this instanceof SpecialPropertyEntity) {
-            mobProperties = new TreeSet<Enums.MobProperties>();
-
-            if (this instanceof HunterEntity)
-                mobProperties.add(Enums.MobProperties.HUNTER_ENTITY);
-        }
-        else {
-            mobProperties = null;
-        }
-
+        mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
         moveHelper = new RoamingFlightMoveHelper(this);
 
         setSize(entityWidth, entityHeight);
@@ -79,18 +73,19 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
         tasks.addTask(2, new EntityAIFlyingLookAround(this));
         tasks.addTask(3, new EntityAILookIdle(this));
         tasks.addTask(4, new EntityAIFlyingRangedAttack(this, 40, 80));
-        targetTasks.addTask(1, new EntityAIFindEntityNearest(this, AoAMinion.class));
-        targetTasks.addTask(2, new EntityAIFindEntityNearestPlayer(this));
+        targetTasks.addTask(1, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, AoAMinion.class, EntityTameable::isTamed));
+        targetTasks.addTask(2, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, EntityPlayer.class));
     }
 
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(52);
+        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(42);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
     }
 
     protected abstract double getBaseKnockbackResistance();
@@ -100,6 +95,10 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     public abstract double getBaseProjectileDamage();
 
     protected abstract double getBaseMovementSpeed();
+
+    protected double getBaseArmour() {
+        return 0;
+    }
 
     @Nullable
     @Override
@@ -135,25 +134,30 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     }
 
     protected boolean isValidLightLevel() {
-        if (!isOverworldMob() || ((isDaylightMob() && world.isDaytime())))
-            return true;
+        if (isDaylightMob() || !isOverworldMob()) {
+            if (!world.isDaytime() && isDaylightMob())
+                return false;
 
-        BlockPos blockpos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+            return WorldUtil.getLightLevel(world, getPosition(), true, false) <= rand.nextInt(8);
+        }
 
-        if (world.getLightFor(EnumSkyBlock.SKY, blockpos) > rand.nextInt(32)) {
+        BlockPos blockPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+
+        if (world.getLightFor(EnumSkyBlock.SKY, blockPos) > rand.nextInt(32)) {
             return false;
         }
         else {
-            int light = world.getLightFromNeighbors(blockpos);
+            int light;
 
-            if (this.world.isThundering()) {
-                int skyLight = world.getSkylightSubtracted();
+            if (world.isThundering()) {
+                int skylightSubtracted = world.getSkylightSubtracted();
 
                 world.setSkylightSubtracted(10);
-
-                light = world.getLightFromNeighbors(blockpos);
-
-                world.setSkylightSubtracted(skyLight);
+                light = world.getLightFromNeighbors(blockPos);
+                world.setSkylightSubtracted(skylightSubtracted);
+            }
+            else {
+                light = world.getLightFromNeighbors(blockPos);
             }
 
             return light <= rand.nextInt(8);
@@ -165,10 +169,25 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     }
 
     private boolean checkSpawnChance() {
-        return getSpawnChanceFactor() == 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
+        if (isOverworldMob()) {
+            if (isDaylightMob()) {
+                return !(rand.nextDouble() > getSpawnChanceFactor());
+            }
+            else {
+                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
+            }
+        }
+        else {
+            return !(rand.nextDouble() > getSpawnChanceFactor());
+        }
     }
 
-    protected int getSpawnChanceFactor() {
+    protected double getSpawnChanceFactor() {
+        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
+    }
+
+    @Override
+    public int getMaxSpawnedInChunk() {
         return 1;
     }
 
@@ -237,7 +256,7 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
         if (getShootSound() != null)
             world.playSound(null, posX, posY, posZ, getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 
-        projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - world.getDifficulty().getDifficultyId()));
+        projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - world.getDifficulty().getId()));
         world.spawnEntity(projectile);
     }
 
@@ -284,30 +303,32 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
         if (getIsInvulnerable())
             return true;
 
-        if (this instanceof HunterEntity) {
-            Entity trueSource = source.getTrueSource();
-            EntityPlayer pl = null;
-
-            if (trueSource instanceof EntityPlayer) {
-                pl = (EntityPlayer)trueSource;
-            }
-            else if (trueSource instanceof EntityTameable && ((EntityTameable)trueSource).getOwner() instanceof EntityPlayer) {
-                pl = (EntityPlayer)((EntityTameable)trueSource).getOwner();
-            }
-
-            if (pl != null) {
-                if (!isSpecialImmuneTo(source))
-                    return !pl.capabilities.isCreativeMode && !PlayerUtil.doesPlayerHaveLevel(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterReq());
-
-                return true;
-            }
-        }
-
-        return isSpecialImmuneTo(source);
+        return isSpecialImmuneTo(source, 1);
     }
 
-    protected boolean isSpecialImmuneTo(DamageSource source) {
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
         return false;
+    }
+
+    @Override
+    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
+        if (getLootTable() != null) {
+            LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(getLootTable());
+
+            LootContext.Builder lootBuilder = (new LootContext.Builder((WorldServer)world)).withLootedEntity(this).withDamageSource(source);
+
+            if (wasRecentlyHit && attackingPlayer != null)
+                lootBuilder.withPlayer(attackingPlayer).withLuck(attackingPlayer.getLuck() + lootingModifier);
+
+            for (ItemStack stack : lootTable.generateLootForPools(rand, lootBuilder.build())) {
+                entityDropItem(stack, 0);
+            }
+
+            dropEquipment(wasRecentlyHit, lootingModifier);
+        }
+        else {
+            super.dropLoot(wasRecentlyHit, lootingModifier, source);
+        }
     }
 
     @Override
@@ -317,41 +338,4 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
         if (!world.isRemote && world.getDifficulty() == EnumDifficulty.PEACEFUL)
             setDead();
     }
-
-    @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
-
-        if (this instanceof HunterEntity) {
-            Entity trueSource = cause.getTrueSource();
-            EntityPlayer pl = null;
-
-            if (trueSource instanceof EntityPlayer) {
-                pl = (EntityPlayer)trueSource;
-            }
-            else if (trueSource instanceof EntityTameable && ((EntityTameable)trueSource).getOwner() instanceof EntityPlayer) {
-                pl = (EntityPlayer)((EntityTameable)trueSource).getOwner();
-            }
-
-            if (pl != null && PlayerUtil.doesPlayerHaveLevel(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterReq()))
-                PlayerUtil.giveXpToPlayer(pl, Enums.Skills.HUNTER, ((HunterEntity)this).getHunterXp());
-        }
-    }
-
-    @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        if (this instanceof HunterEntity && (!(source.getTrueSource() instanceof EntityPlayer) && (!(source.getTrueSource() instanceof EntityTameable) || !(((EntityTameable)source.getTrueSource()).getOwner() instanceof EntityPlayer))))
-            return;
-
-        lootingModifier = MathHelper.clamp(lootingModifier, 0, 9);
-
-        dropGuaranteedItems(lootingModifier, source);
-
-        if (wasRecentlyHit)
-            dropSpecialItems(lootingModifier, source);
-    }
-
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {}
-
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {}
 }

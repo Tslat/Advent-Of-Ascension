@@ -4,14 +4,10 @@ Feeling a bit lost and don't know what to do? Here's a checklist of things you c
 
 1. Make a shelter
 2. Dig underground and find a ruined portal frame
-3. Use the ancient rock collected from that portal frame to make your own portal at home
-4. Go hunting for portal runes located in various loot chests in dungeons and temples
-5. Obtain some realmstones from various mobs around the world, and use one to light your portal
-6. Explore the new world through your portal and kill the various creatures
-7. Complete the necessary requirement to challenge the boss of that world
-8. Kill the boss and get its loot & trophy
-9. Kill it more and get enough to make a gold trophy
-10. Look through the advancements list and complete lots of advancements
-11. Collect banners, trophies, and mob loot
-12. Level up your skills and get them to max
-13. Complete everything!
+3. Obtain a Worn Book and Blank Realmstone from the Corrupted Traveller
+4. Collect Ancient Rock from the portal frame to use later
+5. Adventure through dungeons, caves, temples, and villages until you find all four Carved Runic Blocks
+6. Craft the fifth Carved Runic Block - "Carved Rune of Power"
+7. Assemble your own portal with a 5x6 frame of Ancient Rock, placing each of the four Carved Runic Blocks somewhere in the frame, and the Carved Rune of Power in the middle at the bottom
+8. Complete challenges from the Blank Realmstone to unlock new realmstones
+9. Use your new realmstones on the Carved Rune of Power to activate new portals to other dimensions!

@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.BasicBlock;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -38,6 +39,6 @@ public class DeeplandsTrapExplosion extends BasicBlock {
 	@Override
 	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		if (!player.capabilities.isCreativeMode)
-			world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 2f, true);
+			WorldUtil.createExplosion(null, world, pos.getX(), pos.getY(), pos.getZ(), 2f);
 	}
 }

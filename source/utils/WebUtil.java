@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.scheduling.UpdateCrownsMapTask;
+import net.tslat.aoa3.library.scheduling.async.UpdateCrownsMapTask;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
@@ -23,6 +23,7 @@ public class WebUtil {
 	private static String latestVersion = AdventOfAscension.version;
 
 	public static void doHTTPTasks() {
+		AdventOfAscension.logOptionalMessage("Starting web tasks");
 		ForgeVersion.CheckResult updateCheckResult = ForgeVersion.getResult(Loader.instance().activeModContainer());
 
 		if (updateCheckResult.status != ForgeVersion.Status.FAILED) {
@@ -33,7 +34,9 @@ public class WebUtil {
 		}
 	}
 
-	public static HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer>  fillCrownsMap(HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> crownsMap) {
+	public static HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> fillCrownsMap(HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> crownsMap) {
+		AdventOfAscension.logOptionalMessage("Updating player crowns map");
+
 		BufferedReader fileReader = null;
 
 		try {
@@ -42,8 +45,11 @@ public class WebUtil {
 			connection.setConnectTimeout(1000);
 			connection.connect();
 
-			if (HttpURLConnection.HTTP_OK != connection.getResponseCode())
+			if (HttpURLConnection.HTTP_OK != connection.getResponseCode()) {
+				AdventOfAscension.logOptionalMessage("Failed connection to cloud based crowns map, response code " + connection.getResponseMessage());
+
 				return crownsMap;
+			}
 
 			fileReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line;
@@ -62,7 +68,7 @@ public class WebUtil {
 							}
 							catch (IllegalArgumentException ex) {
 								if (ConfigurationUtil.MainConfig.doVerboseDebugging)
-									AdventOfAscension.getLogger().log(Level.WARN, "Invalid UUID format from web: " + lineSplit[1]);
+									AdventOfAscension.logMessage(Level.WARN, "Invalid UUID format from web: " + lineSplit[1]);
 
 								continue;
 							}
@@ -72,11 +78,12 @@ public class WebUtil {
 									crownsSet.add(Enums.PlayerCrownTypes.valueOf(lineSplit[i]));
 								} catch (IllegalArgumentException ex) {
 									if (ConfigurationUtil.MainConfig.doVerboseDebugging)
-										AdventOfAscension.getLogger().log(Level.WARN, "Invalid crown type from web: " + lineSplit[i]);
+										AdventOfAscension.logMessage(Level.WARN, "Invalid crown type from web: " + lineSplit[i]);
 								}
 							}
 
 							crownsMap.put(uuid, new PlayerCrownHandler.PlayerCrownContainer(crownsSet));
+							AdventOfAscension.logOptionalMessage("Found player crown for " + uuid.toString());
 						}
 					}
 				}
@@ -85,7 +92,7 @@ public class WebUtil {
 			connection.disconnect();
 		}
 		catch (Exception e) {
-			AdventOfAscension.getLogger().log(Level.WARN, "Error while performing HTTP Tasks, dropping this portion.");
+			AdventOfAscension.logMessage(Level.WARN, "Error while performing HTTP Tasks, dropping.");
 
 			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 				e.printStackTrace();
@@ -103,7 +110,7 @@ public class WebUtil {
 
 		if (newMap != null) {
 			fillCrownsMap(newMap);
-			ModUtil.scheduleTask(new UpdateCrownsMapTask(), 30, TimeUnit.MINUTES);
+			ModUtil.scheduleAsyncTask(new UpdateCrownsMapTask(), 30, TimeUnit.MINUTES);
 		}
 	}
 

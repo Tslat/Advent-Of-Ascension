@@ -5,9 +5,12 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.model.entities.misc.ModelFlyingBipedShooting;
 import net.tslat.aoa3.entity.mobs.lunalus.EntityLunarcher;
 
+@SideOnly(Side.CLIENT)
 public class LunarcherRenderer extends RenderBiped<EntityLunarcher> {
 	private final ResourceLocation texture;
 

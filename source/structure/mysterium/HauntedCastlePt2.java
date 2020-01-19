@@ -1,7 +1,9 @@
 package net.tslat.aoa3.structure.mysterium;
 
+import net.minecraft.block.BlockChest;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
@@ -11,7 +13,8 @@ import java.util.Random;
 public class HauntedCastlePt2 {
 	private static final IBlockState hauntedBricks = BlockRegister.bricksHaunted.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState undeadTrollSpawner = BlockRegister.spawnerUndeadTroll.getDefaultState();
+	private static final IBlockState phantomSpawner = BlockRegister.spawnerPhantom.getDefaultState();
+	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	protected static void addBlocks(HauntedCastle instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 25, 12, 3, hauntedBricks);
@@ -1007,11 +1010,13 @@ public class HauntedCastlePt2 {
 		instance.addBlock(world, basePos, 10, 17, 15, hauntedBricks);
 		instance.addBlock(world, basePos, 10, 17, 24, ironBars);
 		instance.addBlock(world, basePos, 11, 17, 4, hauntedBricks);
+		instance.addBlock(world, basePos, 11, 17, 5, chest);
 		instance.addBlock(world, basePos, 11, 17, 13, hauntedBricks);
 		instance.addBlock(world, basePos, 11, 17, 14, hauntedBricks);
 		instance.addBlock(world, basePos, 11, 17, 15, hauntedBricks);
 		instance.addBlock(world, basePos, 11, 17, 24, ironBars);
 		instance.addBlock(world, basePos, 12, 17, 4, hauntedBricks);
+		instance.addBlock(world, basePos, 12, 17, 5, chest);
 		instance.addBlock(world, basePos, 12, 17, 13, hauntedBricks);
 		instance.addBlock(world, basePos, 12, 17, 14, hauntedBricks);
 		instance.addBlock(world, basePos, 12, 17, 15, hauntedBricks);
@@ -1160,7 +1165,7 @@ public class HauntedCastlePt2 {
 		instance.addBlock(world, basePos, 9, 18, 14, hauntedBricks);
 		instance.addBlock(world, basePos, 9, 18, 24, hauntedBricks);
 		instance.addBlock(world, basePos, 10, 18, 4, hauntedBricks);
-		instance.addBlock(world, basePos, 10, 18, 14, undeadTrollSpawner);
+		instance.addBlock(world, basePos, 10, 18, 14, phantomSpawner);
 		instance.addBlock(world, basePos, 10, 18, 24, hauntedBricks);
 		instance.addBlock(world, basePos, 11, 18, 4, hauntedBricks);
 		instance.addBlock(world, basePos, 11, 18, 24, hauntedBricks);

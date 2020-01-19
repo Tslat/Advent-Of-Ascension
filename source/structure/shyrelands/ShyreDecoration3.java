@@ -4,7 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityShyreArcher;
+import net.tslat.aoa3.entity.npcs.trader.EntityShyreArcher;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;

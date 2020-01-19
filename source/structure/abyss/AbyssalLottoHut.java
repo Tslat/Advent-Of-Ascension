@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class AbyssalLottoHut extends AoAStructure { //StructureSize: 8x6x8
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState glass = Blocks.GLASS.getDefaultState();
+	private static final IBlockState glass = BlockRegister.glassAbyssal.getDefaultState();
 	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
 	private static final IBlockState bloodStrands = BlockRegister.plantBloodStrands.getDefaultState();
 	private static final IBlockState eyeBlock = BlockRegister.eyeBlock.getDefaultState();

@@ -50,7 +50,7 @@ public class PacketLeaderboardStats implements IMessage {
 		}
 		catch (Exception e) {
 			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
-				AdventOfAscension.getLogger().log(Level.WARN, "Unable to deserialize packet for leaderboard stats, skipping");
+				AdventOfAscension.logMessage(Level.WARN, "Unable to deserialize packet for leaderboard stats, skipping");
 		}
 		finally {
 			this.entries = readEntries;
@@ -80,7 +80,7 @@ public class PacketLeaderboardStats implements IMessage {
 		}
 		catch (Exception e) {
 			if (ConfigurationUtil.MainConfig.doVerboseDebugging)
-				AdventOfAscension.getLogger().log(Level.WARN, "Failed to serialize packet for leaderboard stats, skipping");
+				AdventOfAscension.logMessage(Level.WARN, "Failed to serialize packet for leaderboard stats, skipping");
 
 			return;
 		}

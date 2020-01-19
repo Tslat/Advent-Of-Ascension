@@ -6,16 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelDaysee extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body;
-	ModelRenderer rightarm;
-	ModelRenderer leftarm;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer head2;
-	ModelRenderer head4;
-	ModelRenderer head5;
-	ModelRenderer head3;
+	private ModelRenderer head;
+	private ModelRenderer body;
+	private ModelRenderer rightArm;
+	private ModelRenderer leftArm;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer head2;
+	private ModelRenderer head4;
+	private ModelRenderer head5;
+	private ModelRenderer head3;
 
 	public ModelDaysee() {
 		textureWidth = 128;
@@ -30,26 +30,26 @@ public class ModelDaysee extends ModelBase {
 		body.setTextureSize(128, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
-		(rightarm = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 4, 12, 4);
-		rightarm.setRotationPoint(-5.0f, 2.0f, 0.0f);
-		rightarm.setTextureSize(128, 32);
-		rightarm.mirror = true;
-		setRotation(rightarm, 0.0f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 4, 12, 4);
-		leftarm.setRotationPoint(5.0f, 2.0f, 0.0f);
-		leftarm.setTextureSize(128, 32);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 17)).addBox(-2.0f, 0.0f, -2.0f, 3, 12, 3);
-		rightleg.setRotationPoint(-3.0f, 12.0f, 0.0f);
-		rightleg.setTextureSize(128, 32);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 17)).addBox(-1.0f, 0.0f, -2.0f, 3, 12, 3);
-		leftleg.setRotationPoint(3.0f, 12.0f, 0.0f);
-		leftleg.setTextureSize(128, 32);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightArm = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 4, 12, 4);
+		rightArm.setRotationPoint(-5.0f, 2.0f, 0.0f);
+		rightArm.setTextureSize(128, 32);
+		rightArm.mirror = true;
+		setRotation(rightArm, 0.0f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 4, 12, 4);
+		leftArm.setRotationPoint(5.0f, 2.0f, 0.0f);
+		leftArm.setTextureSize(128, 32);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 17)).addBox(-2.0f, 0.0f, -2.0f, 3, 12, 3);
+		rightLeg.setRotationPoint(-3.0f, 12.0f, 0.0f);
+		rightLeg.setTextureSize(128, 32);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 17)).addBox(-1.0f, 0.0f, -2.0f, 3, 12, 3);
+		leftLeg.setRotationPoint(3.0f, 12.0f, 0.0f);
+		leftLeg.setTextureSize(128, 32);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -3.0f, -2.0f, 6, 6, 3);
 		head2.setRotationPoint(0.0f, 0.0f, -1.0f);
 		head2.setTextureSize(128, 32);
@@ -76,10 +76,10 @@ public class ModelDaysee extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		body.render(par7);
-		rightarm.render(par7);
-		leftarm.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightArm.render(par7);
+		leftArm.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		head2.render(par7);
 		head4.render(par7);
 		head5.render(par7);
@@ -93,12 +93,12 @@ public class ModelDaysee extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
-		rightarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
-		rightarm.rotateAngleZ = 0.0f;
-		leftarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm.rotateAngleZ = 0.0f;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
+		rightArm.rotateAngleZ = 0.0f;
+		leftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm.rotateAngleZ = 0.0f;
 	}
 }

@@ -5,24 +5,28 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAIFullPanic;
 
 import javax.annotation.Nullable;
 
 public class EntityEeo extends AoAMeleeMob {
 	public static final float entityWidth = 0.375f;
 
-	public EntityEeo(EntityEeoRunner runner) {
-		this(runner.world);
-
-		setLocationAndAngles(runner.posX, runner.posY, runner.posZ, runner.rotationYaw, runner.rotationPitch);
-	}
-
 	public EntityEeo(World world) {
 		super(world, entityWidth, 1.25f);
+	}
+
+	@Override
+	protected void initEntityAI() {
+		super.initEntityAI();
+
+		tasks.addTask(1, new EntityAIFullPanic(this, 200, 1.1d));
 	}
 
 	@Override
@@ -32,27 +36,22 @@ public class EntityEeo extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 1;
+		return 45;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 1;
+		return 7.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
+		return 0.3;
 	}
 
 	@Nullable
@@ -73,6 +72,12 @@ public class EntityEeo extends AoAMeleeMob {
 		return SoundsRegister.mobHunchHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityEeo;
+	}
+
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
@@ -80,28 +85,23 @@ public class EntityEeo extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (super.attackEntityFrom(source, amount)) {
+			if (!world.isRemote && source != DamageSource.OUT_OF_WORLD) {
+				if (rand.nextBoolean()) {
+					EntitySpiritGuardian guardian = new EntitySpiritGuardian(this);
 
-		if (!world.isRemote && cause != DamageSource.OUT_OF_WORLD) {
-			if (rand.nextBoolean()) {
-				EntitySpiritGuardian guardian = new EntitySpiritGuardian(this);
+					world.spawnEntity(guardian);
+				} else {
+					EntitySpiritProtector protector = new EntitySpiritProtector(this);
 
-				world.spawnEntity(guardian);
+					world.spawnEntity(protector);
+				}
 			}
-			else {
-				EntitySpiritProtector protector = new EntitySpiritProtector(this);
 
-				world.spawnEntity(protector);
-			}
-
-			if (cause.getTrueSource() instanceof EntityLivingBase)
-				setRevengeTarget((EntityLivingBase)cause.getTrueSource());
-
-			EntityEeoRunner runner = new EntityEeoRunner(this);
-
-			world.spawnEntity(runner);
-			setDead();
+			return true;
 		}
+
+		return false;
 	}
 }

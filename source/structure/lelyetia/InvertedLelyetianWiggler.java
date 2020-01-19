@@ -30,6 +30,6 @@ public class InvertedLelyetianWiggler extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, -y, 0, BlockRegister.plantLelyetianWigglerTop.getDefaultState());
+		addBlock(world, basePos, 0, -y, 0, BlockRegister.plantLelyetianWigglerBottom.getDefaultState());
 	}
 }

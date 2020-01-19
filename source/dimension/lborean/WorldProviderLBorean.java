@@ -64,7 +64,7 @@ public class WorldProviderLBorean extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable

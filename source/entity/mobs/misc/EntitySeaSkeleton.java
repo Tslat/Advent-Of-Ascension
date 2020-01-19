@@ -5,18 +5,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIAttackAdventBow;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedMob;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAIAttackAdventBow;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -71,6 +68,11 @@ public class EntitySeaSkeleton extends AoARangedMob {
 	}
 
 	@Override
+	protected double getBaseArmour() {
+		return 1d;
+	}
+
+	@Override
 	protected boolean isDaylightMob() {
 		return true;
 	}
@@ -100,18 +102,19 @@ public class EntitySeaSkeleton extends AoARangedMob {
 	}
 
 	@Override
-	protected BaseMobProjectile getNewProjectileInstance() {
-		return null;
-	}
-
-	@Override
 	protected SoundEvent getStepSound() {
 		return SoundEvents.ENTITY_SKELETON_STEP;
 	}
 
+	@Nullable
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Items.BONE, 1 + rand.nextInt(3 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySeaSkeleton;
+	}
+
+	@Override
+	protected BaseMobProjectile getNewProjectileInstance() {
+		return null;
 	}
 
 	@Override
@@ -129,7 +132,7 @@ public class EntitySeaSkeleton extends AoARangedMob {
 		if (getShootSound() != null)
 			world.playSound(null, posX, posY, posZ, getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+		projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 		world.spawnEntity(projectile);
 	}
 

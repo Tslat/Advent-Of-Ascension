@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
@@ -27,13 +28,22 @@ public class WorldProviderHaven extends WorldProvider implements AoAWorldProvide
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = true;
+		this.hasSkyLight = !ConfigurationUtil.MainConfig.fasterFloatingDimensions;
 		this.biomeProvider = DimensionRegister.worldTypeHaven.getBiomeProvider(world);
+	}
+
+	public void setHasSkylight(boolean hasSkyLight) {
+		this.hasSkyLight = hasSkyLight;
 	}
 
 	@Override
 	public AoATeleporter getTeleporter(WorldServer fromWorld) {
 		return new HavenTeleporter(fromWorld);
+	}
+
+	@Override
+	public boolean shouldClientCheckLighting() {
+		return false;
 	}
 
 	@Override
@@ -64,7 +74,7 @@ public class WorldProviderHaven extends WorldProvider implements AoAWorldProvide
 
 	@Override
 	public boolean doesXZShowFog(int x, int z) {
-		return true;
+		return false;
 	}
 
 	@Nullable
@@ -107,5 +117,10 @@ public class WorldProviderHaven extends WorldProvider implements AoAWorldProvide
 	@Override
 	public float calculateCelestialAngle(long worldTime, float partialTicks) {
 		return 0.0f;
+	}
+
+	@Override
+	public double getHorizon() {
+		return 0;
 	}
 }

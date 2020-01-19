@@ -7,7 +7,7 @@ import net.tslat.aoa3.entity.minions.EntitySpikeback;
 
 public class SpikebackSlab extends BaseSlab {
 	public SpikebackSlab() {
-		super("SpikebackSlab", "spikeback_slab", 35, 140, 16, 12);
+		super("SpikebackSlab", "spikeback_slab", 16, 140, 16, 220);
 	}
 
 	@Override

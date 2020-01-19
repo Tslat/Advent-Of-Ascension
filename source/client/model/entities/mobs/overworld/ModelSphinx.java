@@ -6,15 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelSphinx extends ModelBase {
-	ModelRenderer body;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg4;
-	ModelRenderer leg3;
-	ModelRenderer body2;
-	ModelRenderer head1;
-	ModelRenderer head2;
-	ModelRenderer head3;
+	private ModelRenderer body;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg4;
+	private ModelRenderer leg3;
+	private ModelRenderer body2;
+	private ModelRenderer head1;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
 
 	public ModelSphinx() {
 		textureWidth = 64;

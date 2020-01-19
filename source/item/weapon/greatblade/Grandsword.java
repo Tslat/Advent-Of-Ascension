@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.LongReachWeapon;
 public class Grandsword extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public Grandsword(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("Grandsword");
+		setTranslationKey("Grandsword");
 		setRegistryName("aoa3:grandsword");
 	}
 }

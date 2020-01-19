@@ -1,14 +1,11 @@
 package net.tslat.aoa3.entity.boss.corallus;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -18,10 +15,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCorallusShot;
 import net.tslat.aoa3.entity.properties.BossEntity;
@@ -36,9 +31,6 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/corallus.png");
 	public static final float entityWidth = 0.75f;
 	private static final DataParameter<Boolean> ENRAGED = EntityDataManager.<Boolean>createKey(EntityCorallus.class, DataSerializers.BOOLEAN);
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	private int shotCooldown = 7;
 	private int shootStageTimer = 0;
@@ -109,35 +101,15 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 		return SoundsRegister.heavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCorallus;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueCorallus), 1);
-
-		if (rand.nextBoolean())
-			dropItem(WeaponRegister.staffCoral, 1);
-
-		switch (rand.nextInt(3)) {
-			case 0:
-				dropItem(ArmourRegister.OceanusHelmet, 1);
-				break;
-			case 1:
-				dropItem(ArmourRegister.SealordHelmet, 1);
-				break;
-			case 2:
-				dropItem(ArmourRegister.AchelosHelmet, 1);
-				break;
-		}
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.slabCorby, 5 + rand.nextInt(5 + lootingMod));
-		dropItem(ItemRegister.realmstoneBorean, 1);
 	}
 
 	@Override
@@ -151,6 +123,14 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 
 	public boolean isEnraged() {
 		return this.dataManager.get(ENRAGED);
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -261,31 +241,17 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicCorallus;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicCorallus, this);
-
-				Minecraft.getMinecraft().getMusicTicker();
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

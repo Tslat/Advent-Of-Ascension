@@ -3,9 +3,10 @@ package net.tslat.aoa3.entity.mobs.nether;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
@@ -19,6 +20,7 @@ public class EntityEmbrake extends AoAMeleeMob implements SpecialPropertyEntity 
 
 	public EntityEmbrake(World world) {
 		super(world, entityWidth, 1f);
+
 		this.mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
 		this.isImmuneToFire = true;
 	}
@@ -30,17 +32,17 @@ public class EntityEmbrake extends AoAMeleeMob implements SpecialPropertyEntity 
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1;
+		return 0.2d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 120;
+		return 70d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 7d;
 	}
 
 	@Override
@@ -69,10 +71,10 @@ public class EntityEmbrake extends AoAMeleeMob implements SpecialPropertyEntity 
 		return SoundsRegister.dinoStep;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensNether, 2 + rand.nextInt(2 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityEmbrake;
 	}
 
 	@Override
@@ -84,9 +86,13 @@ public class EntityEmbrake extends AoAMeleeMob implements SpecialPropertyEntity 
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(2 + lootingMod));
-		dropItem(ItemRegister.runeFire, 10 + rand.nextInt(1 + lootingMod * 5));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return source.isFireDamage();
+	}
+
+	@Override
+	protected double getSpawnChanceFactor() {
+		return 0.5f;
 	}
 
 	@Override

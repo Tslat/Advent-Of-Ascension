@@ -28,8 +28,8 @@ public class BiomePrecasia extends Biome {
 	public BiomePrecasia() {
 		super(properties);
 		setRegistryName("aoa3", "precasia");
-		this.topBlock = BlockRegister.grassPrecasia.getDefaultState();
-		this.fillerBlock = BlockRegister.stonePrecasiaHigh.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("precasia_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("high_precasia_stone").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -83,7 +83,7 @@ public class BiomePrecasia extends Biome {
 		@Override
 		protected void doTreeGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < 3; i++) {
-				switch (rand.nextInt(4)) {
+				switch (rand.nextInt(3)) {
 					case 0:
 						posX = basePos.getX() + rand.nextInt(14);
 						posZ = basePos.getZ() + rand.nextInt(14);
@@ -101,14 +101,6 @@ public class BiomePrecasia extends Biome {
 							StructuresHandler.generateStructure("StranglewoodTree2", world, rand, pos.setPos(posX, posY, posZ));
 						break;
 					case 2:
-						posX = basePos.getX() + rand.nextInt(14);
-						posZ = basePos.getZ() + rand.nextInt(14);
-						posY = world.getHeight(posX + 8, posZ + 8);
-
-						if (world.getBlockState(pos.setPos(posX + 8, posY - 1, posZ + 8)) == biome.topBlock)
-							StructuresHandler.generateStructure("StranglewoodTree3", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 3:
 						posX = basePos.getX() + rand.nextInt(16);
 						posZ = basePos.getZ() + rand.nextInt(16);
 						posY = world.getHeight(posX + 6, posZ + 6);

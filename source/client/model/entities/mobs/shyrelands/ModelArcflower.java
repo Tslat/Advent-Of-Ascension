@@ -5,8 +5,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelArcflower extends ModelBase {
-	ModelRenderer body5;
-	ModelRenderer body9;
+	private ModelRenderer body5;
+	private ModelRenderer body9;
 
 	public ModelArcflower() {
 		textureWidth = 64;

@@ -6,19 +6,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelSpinux extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer head2;
-	ModelRenderer rightarm;
-	ModelRenderer leftarm;
-	ModelRenderer rightleg;
-	ModelRenderer leftleg;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer head3;
-	ModelRenderer body6;
-	ModelRenderer leftarm2;
-	ModelRenderer rightarm2;
+	private ModelRenderer head;
+	private ModelRenderer head2;
+	private ModelRenderer rightArm;
+	private ModelRenderer leftArm;
+	private ModelRenderer rightLeg;
+	private ModelRenderer leftLeg;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer head3;
+	private ModelRenderer body6;
+	private ModelRenderer leftArm2;
+	private ModelRenderer rightArm2;
 
 	public ModelSpinux() {
 		textureWidth = 64;
@@ -33,26 +33,26 @@ public class ModelSpinux extends ModelBase {
 		head2.setTextureSize(64, 64);
 		head2.mirror = true;
 		setRotation(head2, 0.0f, 0.0f, 0.0f);
-		(rightarm = new ModelRenderer(this, 40, 11)).addBox(0.0f, -2.0f, -2.0f, 1, 2, 2);
-		rightarm.setRotationPoint(-3.0f, 2.0f, 0.0f);
-		rightarm.setTextureSize(64, 64);
-		rightarm.mirror = true;
-		setRotation(rightarm, 0.0f, 0.0f, 0.0f);
-		(leftarm = new ModelRenderer(this, 40, 11)).addBox(-1.0f, -2.0f, -2.0f, 1, 2, 2);
-		leftarm.setRotationPoint(3.0f, 2.0f, 0.0f);
-		leftarm.setTextureSize(64, 64);
-		leftarm.mirror = true;
-		setRotation(leftarm, 0.0f, 0.0f, 0.0f);
-		(rightleg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 12, 2);
-		rightleg.setRotationPoint(-2.0f, 12.0f, 0.0f);
-		rightleg.setTextureSize(64, 64);
-		rightleg.mirror = true;
-		setRotation(rightleg, 0.0f, 0.0f, 0.0f);
-		(leftleg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 12, 2);
-		leftleg.setRotationPoint(2.0f, 12.0f, 0.0f);
-		leftleg.setTextureSize(64, 64);
-		leftleg.mirror = true;
-		setRotation(leftleg, 0.0f, 0.0f, 0.0f);
+		(rightArm = new ModelRenderer(this, 40, 11)).addBox(0.0f, -2.0f, -2.0f, 1, 2, 2);
+		rightArm.setRotationPoint(-3.0f, 2.0f, 0.0f);
+		rightArm.setTextureSize(64, 64);
+		rightArm.mirror = true;
+		setRotation(rightArm, 0.0f, 0.0f, 0.0f);
+		(leftArm = new ModelRenderer(this, 40, 11)).addBox(-1.0f, -2.0f, -2.0f, 1, 2, 2);
+		leftArm.setRotationPoint(3.0f, 2.0f, 0.0f);
+		leftArm.setTextureSize(64, 64);
+		leftArm.mirror = true;
+		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
+		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 12, 2);
+		rightLeg.setRotationPoint(-2.0f, 12.0f, 0.0f);
+		rightLeg.setTextureSize(64, 64);
+		rightLeg.mirror = true;
+		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
+		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -1.0f, 2, 12, 2);
+		leftLeg.setRotationPoint(2.0f, 12.0f, 0.0f);
+		leftLeg.setTextureSize(64, 64);
+		leftLeg.mirror = true;
+		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(body2 = new ModelRenderer(this, 16, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 12, 4);
 		body2.setRotationPoint(0.0f, 0.0f, 0.0f);
 		body2.setTextureSize(64, 64);
@@ -78,33 +78,33 @@ public class ModelSpinux extends ModelBase {
 		body6.setTextureSize(64, 64);
 		body6.mirror = true;
 		setRotation(body6, -1.047198f, 0.0f, 0.0f);
-		(leftarm2 = new ModelRenderer(this, 40, 16)).addBox(0.0f, -2.0f, -2.0f, 2, 15, 2);
-		leftarm2.setRotationPoint(3.0f, 2.0f, 0.0f);
-		leftarm2.setTextureSize(64, 64);
-		leftarm2.mirror = true;
-		setRotation(leftarm2, 0.0f, 0.0f, 0.0f);
-		(rightarm2 = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 2, 15, 2);
-		rightarm2.setRotationPoint(-3.0f, 2.0f, 0.0f);
-		rightarm2.setTextureSize(64, 64);
-		rightarm2.mirror = true;
-		setRotation(rightarm2, 0.0f, 0.0f, 0.0f);
+		(leftArm2 = new ModelRenderer(this, 40, 16)).addBox(0.0f, -2.0f, -2.0f, 2, 15, 2);
+		leftArm2.setRotationPoint(3.0f, 2.0f, 0.0f);
+		leftArm2.setTextureSize(64, 64);
+		leftArm2.mirror = true;
+		setRotation(leftArm2, 0.0f, 0.0f, 0.0f);
+		(rightArm2 = new ModelRenderer(this, 40, 16)).addBox(-2.0f, -2.0f, -2.0f, 2, 15, 2);
+		rightArm2.setRotationPoint(-3.0f, 2.0f, 0.0f);
+		rightArm2.setTextureSize(64, 64);
+		rightArm2.mirror = true;
+		setRotation(rightArm2, 0.0f, 0.0f, 0.0f);
 	}
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		head.render(par7);
 		head2.render(par7);
-		rightarm.render(par7);
-		leftarm.render(par7);
-		rightleg.render(par7);
-		leftleg.render(par7);
+		rightArm.render(par7);
+		leftArm.render(par7);
+		rightLeg.render(par7);
+		leftLeg.render(par7);
 		body2.render(par7);
 		body3.render(par7);
 		body4.render(par7);
 		head3.render(par7);
 		body6.render(par7);
-		leftarm2.render(par7);
-		rightarm2.render(par7);
+		leftArm2.render(par7);
+		rightArm2.render(par7);
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
@@ -117,16 +117,16 @@ public class ModelSpinux extends ModelBase {
 		head.rotateAngleY = par4 / (float)(180f / Math.PI);
 		head2.rotateAngleY = par4 / (float)(180f / Math.PI);
 		head3.rotateAngleY = par4 / (float)(180f / Math.PI);
-		rightarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
-		rightarm.rotateAngleZ = 0.0f;
-		rightarm2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
-		rightarm2.rotateAngleZ = 0.0f;
-		leftarm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm.rotateAngleZ = 0.0f;
-		leftarm2.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
-		leftarm2.rotateAngleZ = 0.0f;
-		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
-		rightleg.rotateAngleY = 0.0f;
-		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
+		rightArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
+		rightArm.rotateAngleZ = 0.0f;
+		rightArm2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 2.0f * par2 * 0.5f;
+		rightArm2.rotateAngleZ = 0.0f;
+		leftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm.rotateAngleZ = 0.0f;
+		leftArm2.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 2.0f * par2 * 0.5f;
+		leftArm2.rotateAngleZ = 0.0f;
+		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
+		rightLeg.rotateAngleY = 0.0f;
+		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 	}
 }

@@ -26,9 +26,6 @@ public class SmashRenderer extends RenderLiving<EntitySmash> {
 
 		if (x + y + z != 0)
 			BossBarRenderer.boss = entity;
-
-		if (partialTicks < 0.3)
-			entity.checkMusicStatus();
 	}
 
 	@Nullable

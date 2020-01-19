@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.entity.boss.skeletalarmy.EntitySkeleElder;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -514,5 +515,10 @@ public class SkeletalArmyArena extends AoAStructure { //StructureSize: 30x11x23
 		addBlock(world, basePos, 27, 10, 11, skeletalLamp); 
 		addBlock(world, basePos, 28, 10, 11, skeletalBricks);
 		addBlock(world, basePos, 29, 10, 11, skeletalBricks);
+	}
+
+	@Override
+	protected void spawnEntities(World world, Random rand, BlockPos basePos) {
+		world.spawnEntity(new EntitySkeleElder(world, basePos.add(22, 3, 13), 0));
 	}
 }

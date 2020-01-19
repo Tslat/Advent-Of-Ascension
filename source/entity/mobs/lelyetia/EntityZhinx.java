@@ -1,19 +1,16 @@
 package net.tslat.aoa3.entity.mobs.lelyetia;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityZhinx extends AoAMeleeMob implements HunterEntity {
+public class EntityZhinx extends AoAMeleeMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityZhinx(World world) {
@@ -27,22 +24,22 @@ public class EntityZhinx extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 100;
+		return 60d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 7;
+		return 6.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.28d;
 	}
 
 	@Nullable
@@ -63,25 +60,9 @@ public class EntityZhinx extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobZhinxHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(8) == 0)
-			dropItem(ItemRegister.zhinxDust, 1 + rand.nextInt(4 + lootingMod));
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 82;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 1250;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityZhinx;
 	}
 }

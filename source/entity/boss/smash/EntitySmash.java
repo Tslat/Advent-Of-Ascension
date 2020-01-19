@@ -1,24 +1,17 @@
 package net.tslat.aoa3.entity.boss.smash;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.utils.EntityUtil;
@@ -32,9 +25,6 @@ import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 public class EntitySmash extends AoAMeleeMob implements BossEntity {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/smash.png");
 	public static final float entityWidth = 0.8f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntitySmash(World world) {
 		super(world, entityWidth, 2.6f);
@@ -64,6 +54,12 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 	@Override
 	protected SoundEvent getStepSound() {
 		return SoundsRegister.heavyStep;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySmash;
 	}
 
 	@Override
@@ -97,35 +93,11 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueSmash), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.archergunTrolls, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.swordTrollBasherAxe, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.shotgunBlueBarrel, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.cannonBoomCannon, 1);
-				break;
-		}
-
-		switch (rand.nextInt(3)) {
-			case 0:
-				dropItem(Items.DIAMOND, 10 + rand.nextInt(5 + lootingMod));
-				break;
-			case 1:
-				dropItem(Items.COAL, 30 + rand.nextInt(15 + lootingMod));
-				break;
-			case 2:
-				dropItem(Items.LEATHER, 5 + rand.nextInt(5 + lootingMod));
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -178,6 +150,9 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 			if (killer != null)
 				StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.smash.kill", killer.getDisplayNameString()), this, 50);
 		}
+		else if (getBossMusic() != null) {
+			AdventOfAscension.proxy.stopMusic();
+		}
 	}
 
 	@Override
@@ -191,30 +166,17 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicSmash;
+	}
+
 	@Override
 	public void setAttackTarget(@Nullable EntityLivingBase target) {
 		if (target instanceof BossEntity)
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicSmash, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

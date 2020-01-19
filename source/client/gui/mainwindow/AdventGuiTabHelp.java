@@ -12,6 +12,7 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.RenderUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import org.apache.logging.log4j.Level;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,7 +25,7 @@ public class AdventGuiTabHelp extends GuiScreen {
 	private int tipNumber = 0;
 
 	AdventGuiTabHelp() {
-		tipNumber = AdventOfAscension.rand.nextInt(15);
+		tipNumber = AdventOfAscension.rand.nextInt(16);
 	}
 
 	@Override
@@ -56,14 +57,14 @@ public class AdventGuiTabHelp extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.adjustedMouseX = (int)(mouseX * AdventMainGui.scaleInverse);
 		this.adjustedMouseY = (int)(mouseY * AdventMainGui.scaleInverse);
-
+		drawGradientRect(AdventMainGui.scaledTabRootX + 35, AdventMainGui.scaledTabRootY + 55, AdventMainGui.scaledTabRootX + 590, AdventMainGui.scaledTabRootY + 280, -1072689136, -804253680);
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.theme"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 10, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		RenderUtil.drawCenteredScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.links"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 100, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 		RenderUtil.drawScaledString(mc.fontRenderer, StringUtil.getLocaleString("gui.aoamain.help.1"), AdventMainGui.scaledTabRootX + 80, AdventMainGui.scaledTabRootY + 25, 2.5f, Enums.RGBIntegers.LIGHT_CORAL, RenderUtil.StringRenderType.OUTLINED);
 
 		GlStateManager.scale(1.5625f, 1.5625f, 1.5625f);
-		mc.fontRenderer.drawSplitString(StringUtil.getLocaleString("gui.aoamain.help.2").replace("<br>", "\n"), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, Enums.RGBIntegers.BLACK);
+		mc.fontRenderer.drawSplitString(StringUtil.getLocaleString("gui.aoamain.help.2").replace("<br>", "\n"), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, Enums.RGBIntegers.WHITE);
 		GlStateManager.scale(0.64f, 0.64f, 0.64f);
 		RenderUtil.drawScaledString(mc.fontRenderer, StringUtil.getLocaleStringWithArguments("gui.aoamain.help.tip", StringUtil.getLocaleString("gui.aoamain.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -95,7 +96,7 @@ public class AdventGuiTabHelp extends GuiScreen {
 		} catch (Throwable throwable1) {
 			Throwable throwable = throwable1.getCause();
 
-			AdventOfAscension.getLogger().error("Couldn't open link: {}", (throwable == null ? "<UNKNOWN>" : throwable.getMessage()));
+			AdventOfAscension.logMessage(Level.ERROR, "Couldn't open link: " + (throwable == null ? "<UNKNOWN>" : throwable.getMessage()));
 		}
 	}
 

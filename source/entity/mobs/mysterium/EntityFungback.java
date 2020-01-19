@@ -1,17 +1,18 @@
 package net.tslat.aoa3.entity.mobs.mysterium;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
 
@@ -29,22 +30,22 @@ public class EntityFungback extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.7;
+		return 0.1;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 90;
+		return 90d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 8.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.27;
 	}
 
 	@Nullable
@@ -65,34 +66,31 @@ public class EntityFungback extends AoAMeleeMob {
 		return SoundsRegister.mobFungiHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 3;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFungback;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(5) == 0)
-			dropItem(ItemRegister.seedsMysticShroom, 1);
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (super.attackEntityFrom(source, amount) && !EntityUtil.isEnvironmentalDamage(source)) {
+			EntityAreaEffectCloud effectCloud = new EntityAreaEffectCloud(world, posX, posY, posZ);
 
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerFungal), 1);
+			effectCloud.setDuration(30);
+			effectCloud.setRadius(1.5f);
+			effectCloud.setOwner(this);
+			effectCloud.setWaitTime(0);
+			effectCloud.setColor(Enums.RGBIntegers.TOXIC_GREEN);
+			effectCloud.setPotion(PotionTypes.POISON);
+			effectCloud.addEffect(new PotionEffect(MobEffects.POISON, 40, 2, false, true));
+			effectCloud.setRadiusPerTick(-(effectCloud.getRadius() - 0.5f) / (float)effectCloud.getDuration());
 
-		if (rand.nextInt(100 - lootingMod) == 0)
-			dropItem(ItemRegister.shroomStone, 1);
+			world.spawnEntity(effectCloud);
 
-		if (rand.nextBoolean())
-			dropItem(ItemRegister.tokensMysterium, 1 + rand.nextInt(2 + lootingMod));
-	}
+			return true;
+		}
 
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-	}
-
-	@Override
-	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 1, true, true));
+		return false;
 	}
 }

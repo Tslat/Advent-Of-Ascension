@@ -37,7 +37,7 @@ public class BannerBlock extends Block {
 
 	public BannerBlock(String name, String registryName) {
 		super(Material.CLOTH);
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(1.5f);
 		setResistance(1.0f);
@@ -79,7 +79,7 @@ public class BannerBlock extends Block {
 	}
 
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

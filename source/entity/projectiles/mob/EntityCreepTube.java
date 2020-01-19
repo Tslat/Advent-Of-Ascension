@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.projectiles.mob;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityCreepTube extends BaseMobProjectile {
 	public EntityCreepTube(World world) {
@@ -17,8 +18,8 @@ public class EntityCreepTube extends BaseMobProjectile {
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (ticksExisted % 4 == 0)
-			world.createExplosion(this, posX, posY, posZ, 2, false);
+		if (!world.isRemote && ticksExisted % 4 == 0)
+			WorldUtil.createExplosion(getThrower(), world, this, 2f);
 	}
 
 	@Override

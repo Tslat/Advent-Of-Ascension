@@ -5,21 +5,22 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 
+import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOURNIGHTVISIONGOGGLES;
+import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_NIGHT_VISION_GOGGLES;
 
 public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArmour {
-	public NightVisionGoggles(String name, String registryName, int renderIndex, EntityEquipmentSlot slot) {
-		super(ARMOURNIGHTVISIONGOGGLES, name, registryName, renderIndex, slot);
+	public NightVisionGoggles(String name, String registryName, EntityEquipmentSlot slot) {
+		super(ARMOUR_NIGHT_VISION_GOGGLES, name, registryName, slot);
 	}
 
 	@Override
@@ -28,38 +29,27 @@ public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArm
 	}
 
 	@Override
-	public void setTickEffect(AdventPlayerCapability cap) {
-		PotionEffect nightVision = cap.getPlayer().getActivePotionEffect(MobEffects.NIGHT_VISION);
-
-		if (!cap.getPlayer().world.isRemote) {
-			if (cap.getPlayer().getBrightness() < 0.4) {
-				if (nightVision == null || nightVision.getDuration() < 250)
-					cap.getPlayer().addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, true, false));
-			}
-			else {
-				if (nightVision != null)
-					cap.getPlayer().removePotionEffect(MobEffects.NIGHT_VISION);
-			}
-		}
-	}
-
-	@Override
 	public Enums.HelmetScreens getOverlay() {
 		return Enums.HelmetScreens.NIGHT_VISION_GOGGLES;
 	}
 
 	@Override
-	public void setUnequipEffect(AdventPlayerCapability cap) {
-		PotionEffect nightVision = cap.getPlayer().getActivePotionEffect(MobEffects.NIGHT_VISION);
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+		plData.player().addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, true, false));
+	}
+
+	@Override
+	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+		PotionEffect nightVision = plData.player().getActivePotionEffect(MobEffects.NIGHT_VISION);
 
 		if (nightVision != null && nightVision.getDuration() < 300)
-			cap.getPlayer().removePotionEffect(MobEffects.NIGHT_VISION);
+			plData.player().removePotionEffect(MobEffects.NIGHT_VISION);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.NightVisionGoggles.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getColourLocaleString("item.NightVisionGoggles.desc.2", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NightVisionGoggles.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(anySetEffectHeader());
 	}
 }

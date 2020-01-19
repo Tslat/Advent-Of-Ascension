@@ -28,8 +28,8 @@ public class BiomeLBorean extends Biome {
 	public BiomeLBorean() {
 		super(properties);
 		setRegistryName("aoa3", "lborean");
-		this.topBlock = BlockRegister.grassBorean.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtBorean.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("borean_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("borean_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();
@@ -55,23 +55,28 @@ public class BiomeLBorean extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX, posZ);
 
-				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
-					switch (rand.nextInt(5)) {
-						case 0:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantBurealStocks.getDefaultState());
-							break;
-						case 1:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantWaterweedsGreen.getDefaultState());
-							break;
-						case 2:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantWaterweedsWhite.getDefaultState());
-							break;
-						case 3:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantWaterweedsYellow.getDefaultState());
-							break;
-						case 4:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantOcealitesBlue.getDefaultState());
-							break;
+				if (world.getBlockState(pos.setPos(posX, posY, posZ).down()) == biome.topBlock) {
+					if (rand.nextInt(6500) == 0) {
+						world.setBlockState(pos, BlockRegister.plantWaterweedsRed.getDefaultState());
+					}
+					else {
+						switch (rand.nextInt(5)) {
+							case 0:
+								world.setBlockState(pos, BlockRegister.plantBurealStocks.getDefaultState());
+								break;
+							case 1:
+								world.setBlockState(pos, BlockRegister.plantWaterweedsGreen.getDefaultState());
+								break;
+							case 2:
+								world.setBlockState(pos, BlockRegister.plantWaterweedsWhite.getDefaultState());
+								break;
+							case 3:
+								world.setBlockState(pos, BlockRegister.plantWaterweedsYellow.getDefaultState());
+								break;
+							case 4:
+								world.setBlockState(pos, BlockRegister.plantOcealitesBlue.getDefaultState());
+								break;
+						}
 					}
 				}
 			}

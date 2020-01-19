@@ -4,15 +4,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.PacketUtil;
@@ -33,17 +32,17 @@ public class EntityLightwalker extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.7;
+        return 0.1;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 70;
+        return 168;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 6;
+        return 15;
     }
 
     @Override
@@ -69,18 +68,15 @@ public class EntityLightwalker extends AoAMeleeMob {
         return SoundsRegister.mobVoidWalkerHit;
     }
 
+    @Nullable
     @Override
-    public boolean getCanSpawnHere() {
-        return posY < 35 && super.getCanSpawnHere();
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityLightwalker;
     }
 
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (rand.nextInt(7) == 0)
-            dropItem(Item.getItemFromBlock(BlockRegister.bannerShiny), 1);
-
-        if (rand.nextInt(50 - lootingMod) == 0)
-            dropItem(WeaponRegister.greatbladeShyreSword, 1);
+    public boolean getCanSpawnHere() {
+        return posY < 35 && super.getCanSpawnHere();
     }
 
     @Override

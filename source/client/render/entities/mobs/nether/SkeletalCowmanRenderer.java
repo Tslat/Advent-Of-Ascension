@@ -5,9 +5,12 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.model.entities.misc.ModelBipedShooting;
 import net.tslat.aoa3.entity.mobs.nether.EntitySkeletalCowman;
 
+@SideOnly(Side.CLIENT)
 public class SkeletalCowmanRenderer extends RenderBiped<EntitySkeletalCowman> {
 	private final ResourceLocation texture;
 

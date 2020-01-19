@@ -6,14 +6,10 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityFakeZorp extends AoAMeleeMob implements SpecialPropertyEntity {
+public class EntityFakeZorp extends AoAMeleeMob {
 	public static final float entityWidth = 0.6f;
 
 	public EntityFakeZorp(Entity target) {
@@ -24,8 +20,6 @@ public class EntityFakeZorp extends AoAMeleeMob implements SpecialPropertyEntity
 
 	public EntityFakeZorp(World world) {
 		super(world, entityWidth, 1.875f);
-
-		this.mobProperties.add(Enums.MobProperties.SPECIAL_COMBAT_ENTITY);
 	}
 
 	@Override
@@ -35,12 +29,12 @@ public class EntityFakeZorp extends AoAMeleeMob implements SpecialPropertyEntity
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 114;
 	}
 
 	@Override
@@ -82,11 +76,5 @@ public class EntityFakeZorp extends AoAMeleeMob implements SpecialPropertyEntity
 
 		if (ticksExisted >= 200)
 			setDead();
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

@@ -29,7 +29,7 @@ public class Shadonantium extends BasicBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (!(entity instanceof EntityItem) && !(entity instanceof IProjectile))
 			entity.motionY = 2.0f;
 	}

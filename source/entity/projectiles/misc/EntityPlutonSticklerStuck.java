@@ -1,10 +1,14 @@
 package net.tslat.aoa3.entity.projectiles.misc;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityPlutonSticklerStuck extends EntityThrowable {
 	private EntityLivingBase target;
@@ -48,17 +52,33 @@ public class EntityPlutonSticklerStuck extends EntityThrowable {
 			setLocationAndAngles(target.posX, target.posY + target.getEyeHeight(), target.posZ, 0, 360);
 		}
 		else {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(shooter, world, this, 2.0f);
+			explodeCoins();
 
 			if (!world.isRemote)
 				setDead();
 		}
 
 		if (age >= 100) {
-			world.createExplosion(shooter, posX, posY, posZ, 2.0f, false);
+			WorldUtil.createExplosion(shooter, world, posX, posY + 1, posZ, 2.0f);
+			explodeCoins();
 
 			if (!world.isRemote)
 				setDead();
+		}
+	}
+
+	private void explodeCoins() {
+		for (float x = -0.5f; x <= 0.5f; x += 0.5f) {
+			for (float y = -0.5f; y <= 0.5f; y += 0.5f) {
+				for (float z = -0.5f; z <= 0.5f; z += 0.5f) {
+					EntityItem coin = new EntityItem(world, posX, posY, posZ, new ItemStack(ItemRegister.coinCopper));
+
+					coin.setPickupDelay(10);
+					coin.addVelocity(x, y, z);
+					world.spawnEntity(coin);
+				}
+			}
 		}
 	}
 }

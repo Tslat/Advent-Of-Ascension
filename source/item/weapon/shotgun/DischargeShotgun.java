@@ -13,23 +13,32 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
 	private int firingDelay;
 
-	public DischargeShotgun(final double dmg, final int pellets, final SoundEvent sound, final int durability, final int fireDelayTicks, final float recoil) {
-		super(dmg, pellets, sound, durability, fireDelayTicks, recoil);
+	public DischargeShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
+		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
 		firingDelay = fireDelayTicks;
-		setUnlocalizedName("DischargeShotgun");
+		setTranslationKey("DischargeShotgun");
 		setRegistryName("aoa3:discharge_shotgun");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunDischargeGun;
 	}
 
 	@Override
@@ -37,7 +46,7 @@ public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
 		if (target != null)
 			bullet.doImpactEffect();
 
-		bullet.world.createExplosion(shooter, bullet.posX, bullet.posY, bullet.posZ, 2.5f, false);
+		WorldUtil.createExplosion(shooter, bullet.world, bullet, 2.5f);
 	}
 
 	@Override

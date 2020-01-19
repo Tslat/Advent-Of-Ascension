@@ -5,39 +5,39 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelHost extends ModelBase {
-	ModelRenderer Body1;
-	ModelRenderer r1;
-	ModelRenderer Body2;
-	ModelRenderer r2;
-	ModelRenderer r3;
-	ModelRenderer r4;
-	ModelRenderer r5;
-	ModelRenderer r6;
-	ModelRenderer r7;
-	ModelRenderer r8;
-	ModelRenderer r9;
-	ModelRenderer r10;
-	ModelRenderer r11;
-	ModelRenderer r12;
+	private ModelRenderer body1;
+	private ModelRenderer r1;
+	private ModelRenderer body2;
+	private ModelRenderer r2;
+	private ModelRenderer r3;
+	private ModelRenderer r4;
+	private ModelRenderer r5;
+	private ModelRenderer r6;
+	private ModelRenderer r7;
+	private ModelRenderer r8;
+	private ModelRenderer r9;
+	private ModelRenderer r10;
+	private ModelRenderer r11;
+	private ModelRenderer r12;
 
 	public ModelHost() {
 		textureWidth = 64;
 		textureHeight = 64;
-		(Body1 = new ModelRenderer(this, 0, 21)).addBox(-4.0f, 0.0f, -4.0f, 8, 5, 8);
-		Body1.setRotationPoint(0.0f, 17.0f, 0.0f);
-		Body1.setTextureSize(64, 64);
-		Body1.mirror = true;
-		setRotation(Body1, 0.0f, 0.0f, 0.0f);
+		(body1 = new ModelRenderer(this, 0, 21)).addBox(-4.0f, 0.0f, -4.0f, 8, 5, 8);
+		body1.setRotationPoint(0.0f, 17.0f, 0.0f);
+		body1.setTextureSize(64, 64);
+		body1.mirror = true;
+		setRotation(body1, 0.0f, 0.0f, 0.0f);
 		(r1 = new ModelRenderer(this, 0, 49)).addBox(9.0f, 9.0f, 5.0f, 2, 3, 2);
 		r1.setRotationPoint(0.0f, 11.0f, 0.0f);
 		r1.setTextureSize(64, 64);
 		r1.mirror = true;
 		setRotation(r1, 0.0f, 0.0f, 0.0f);
-		(Body2 = new ModelRenderer(this, 0, 0)).addBox(-7.0f, 0.0f, -7.0f, 14, 6, 14);
-		Body2.setRotationPoint(0.0f, 11.0f, 0.0f);
-		Body2.setTextureSize(64, 64);
-		Body2.mirror = true;
-		setRotation(Body2, 0.0f, 0.0f, 0.0f);
+		(body2 = new ModelRenderer(this, 0, 0)).addBox(-7.0f, 0.0f, -7.0f, 14, 6, 14);
+		body2.setRotationPoint(0.0f, 11.0f, 0.0f);
+		body2.setTextureSize(64, 64);
+		body2.mirror = true;
+		setRotation(body2, 0.0f, 0.0f, 0.0f);
 		(r2 = new ModelRenderer(this, 0, 42)).addBox(5.0f, 9.0f, -11.0f, 2, 3, 2);
 		r2.setRotationPoint(0.0f, 11.0f, 0.0f);
 		r2.setTextureSize(64, 64);
@@ -97,9 +97,9 @@ public class ModelHost extends ModelBase {
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
-		Body1.render(par7);
+		body1.render(par7);
 		r1.render(par7);
-		Body2.render(par7);
+		body2.render(par7);
 		r2.render(par7);
 		r3.render(par7);
 		r4.render(par7);

@@ -1,21 +1,63 @@
 package net.tslat.aoa3.item.tool.shovel;
 
-import net.minecraft.item.ItemSpade;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.MaterialsRegister;
+import net.tslat.aoa3.item.tool.SpecialHarvestTool;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
-public class SkeletalShovel extends ItemSpade {
-	public SkeletalShovel(ToolMaterial material) {
-		super(material);
-		setUnlocalizedName("SkeletalShovel");
-		setRegistryName("aoa3:skeletal_shovel");
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+import javax.annotation.Nullable;
+import java.util.List;
+
+public class SkeletalShovel extends BaseShovel implements SpecialHarvestTool {
+	public SkeletalShovel() {
+		super("SkeletalShovel", "skeletal_shovel", MaterialsRegister.TOOL_SKELETAL);
+	}
+
+	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
+		if (!e.getWorld().isRemote) {
+			int dropChoice = itemRand.nextInt(200);
+			ItemStack drop;
+
+			if (dropChoice == 0) {
+				Item bone = ItemRegister.boneFragmentSkullbone;
+
+				switch (itemRand.nextInt(4)) {
+					case 0:
+						bone = ItemRegister.boneFragmentSkullbone;
+						break;
+					case 1:
+						bone = ItemRegister.boneFragmentChestbone;
+						break;
+					case 2:
+						bone = ItemRegister.boneFragmentLegbone;
+						break;
+					case 3:
+						bone = ItemRegister.boneFragmentFootbone;
+						break;
+				}
+
+				drop = new ItemStack(bone);
+			}
+			else if (dropChoice < 10) {
+				drop = new ItemStack(Items.DYE, 0);
+			}
+			else {
+				drop = new ItemStack(Items.BONE);
+			}
+
+			e.getDrops().add(drop);
+		}
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.ingotRosite), false) || super.getIsRepairable(stack, repairMaterial);
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.tool.skeletal", Enums.ItemDescriptionType.UNIQUE));
 	}
 }

@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -13,17 +14,17 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
-import net.tslat.aoa3.library.PortalCoordinatesContainer;
+import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.HashMap;
 
 public abstract class AoATeleporter implements ITeleporter {
 	protected final WorldServer fromWorld;
-
-	protected static final int searchRadius = 64;
 
 	public AoATeleporter(WorldServer fromWorld) {
 		this.fromWorld = fromWorld;
@@ -31,21 +32,36 @@ public abstract class AoATeleporter implements ITeleporter {
 
 	@Override
 	public void placeEntity(World world, Entity entity, float yaw) {
-		AdventPlayerCapability cap = null;
+		PlayerDataManager plData = null;
 
 		if (entity.hasCapability(AdventPlayerProvider.ADVENT_PLAYER, null)) {
-			PortalCoordinatesContainer loc = (cap = (AdventPlayerCapability)entity.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null)).getPortalReturnLocation(world.provider.getDimension());
+			entity.setNoGravity(false);
+			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((EntityPlayer)entity)).getPortalReturnLocation(world.provider.getDimension());
 			BlockPos locPos;
 
-			if (loc != null && world.getBlockState(locPos = loc.asBlockPos()).getBlock() == getPortalBlock()) {
-				placeInPortal(world, entity, locPos);
+			if (loc != null) {
+				Block locationBlock = world.getBlockState(locPos = loc.asBlockPos()).getBlock();
 
-				PortalCoordinatesContainer newLoc = new PortalCoordinatesContainer(entity.world.provider.getDimension(), locPos.getX(), locPos.getY(), locPos.getZ());
+				if (locationBlock == getPortalBlock()) {
+					placeInPortal(world, entity, locPos);
 
-				cap.setPortalReturnLocation(world.provider.getDimension(), newLoc);
-
-				return;
+					return;
+				}
+				else if (!(locationBlock instanceof PortalBlock)) {
+					plData.removePortalReturnLocation(world.provider.getDimension());
+				}
 			}
+		}
+
+		double movementFactor = world.provider.getMovementFactor() / fromWorld.provider.getMovementFactor();
+
+		if (movementFactor != 1)
+			entity.setPositionAndUpdate(entity.posX * movementFactor, entity.posY, entity.posZ * movementFactor);
+
+		if (fromWorld.getBlockState(entity.getPosition()).getBlock() == getPortalBlock()) {
+			ChunkPos chunkPos = fromWorld.getChunk(entity.getPosition()).getPos();
+
+			getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), entity.getPosition());
 		}
 
 		BlockPos pos = findExistingPortal(world, entity);
@@ -56,16 +72,19 @@ public abstract class AoATeleporter implements ITeleporter {
 		else {
 			pos = findSuitablePortalLocation(world, entity);
 			pos = makePortal(world, entity, pos);
+
 			placeInPortal(world, entity, pos);
+		}
 
-			ChunkPos chunkPos = world.getChunkFromBlockCoords(pos).getPos();
+		ChunkPos chunkPos = world.getChunk(pos).getPos();
 
-			getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), pos);
+		getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), pos);
 
-			if (cap != null) {
-				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(entity.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ());
-				cap.setPortalReturnLocation(world.provider.getDimension(), portalLoc);
-			}
+		if (plData != null) {
+			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
+
+			if (portalLoc == null || entity.world.provider.getDimension() == portalLoc.fromDim || entity.getDistanceSq(portalLoc.asBlockPos()) > ConfigurationUtil.MainConfig.portalSearchRadius)
+				plData.setPortalReturnLocation(world.provider.getDimension(), new PortalCoordinatesContainer(entity.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ()));
 		}
 	}
 
@@ -73,7 +92,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		int posX = (int)Math.floor(entity.posX);
 		int posY = (int)Math.floor(entity.posY);
 		int posZ = (int)Math.floor(entity.posZ);
-		ChunkPos chunkPos = world.getChunkFromBlockCoords(new BlockPos(posX, posY, posZ)).getPos();
+		ChunkPos chunkPos = world.getChunk(new BlockPos(posX, posY, posZ)).getPos();
 		Long chunkPosLong = ChunkPos.asLong(chunkPos.x, chunkPos.z);
 		HashMap<Long, BlockPos> cachedPortalMap = getCachedPortalMap();
 
@@ -89,6 +108,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		}
 
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
+		int searchRadius = ConfigurationUtil.MainConfig.portalSearchRadius;
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; ++x) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; ++z) {
@@ -100,9 +120,10 @@ public abstract class AoATeleporter implements ITeleporter {
 							;
 						}
 
-						Chunk chunk = world.getChunkFromBlockCoords(checkPos.move(EnumFacing.UP));
+						Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
 
 						cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
+
 						return checkPos;
 					}
 				}
@@ -117,6 +138,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		BlockPos pos = entity.getPosition();
 		BlockPos.MutableBlockPos planBPos = new BlockPos.MutableBlockPos(entity.getPosition());
 		double planBDistance = 10000;
+		int searchRadius = ConfigurationUtil.MainConfig.portalSearchRadius;
 
 		for (int x = pos.getX() - (searchRadius / 4); x <= pos.getX() + (searchRadius / 4); x++) {
 			for (int z = pos.getZ() - (searchRadius / 4); z <= pos.getZ() + (searchRadius / 4); z++) {
@@ -143,6 +165,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 						if (distance < planBDistance) {
 							planBPos.setPos(checkPos);
+
 							planBDistance = distance;
 						}
 
@@ -192,8 +215,6 @@ public abstract class AoATeleporter implements ITeleporter {
 				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() + 1), portal);
 				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() + 2), border);
 			}
-
-			//returnPos = returnPos.south();
 		}
 		else {
 			portal = portal.withProperty(BlockHorizontal.FACING, EnumFacing.NORTH);
@@ -210,8 +231,6 @@ public abstract class AoATeleporter implements ITeleporter {
 				world.setBlockState(new BlockPos(pos.getX() + 1, y, pos.getZ()), portal);
 				world.setBlockState(new BlockPos(pos.getX() + 2, y, pos.getZ()), border);
 			}
-
-			//returnPos = returnPos.east();
 		}
 
 		if (!world.getBlockState(pos = pos.down()).isOpaqueCube())

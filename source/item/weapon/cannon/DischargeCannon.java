@@ -11,22 +11,30 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class DischargeCannon extends BaseCannon {
 	private final int firingDelay;
 
-	public DischargeCannon(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, sound, durability, fireDelayTicks, recoil);
-		setUnlocalizedName("DischargeCannon");
+	public DischargeCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+		super(dmg, durability, firingDelayTicks, recoil);
+		setTranslationKey("DischargeCannon");
 		setRegistryName("aoa3:discharge_cannon");
-		this.firingDelay = fireDelayTicks;
+		this.firingDelay = firingDelayTicks;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunDischargeGun;
 	}
 
 	@Override

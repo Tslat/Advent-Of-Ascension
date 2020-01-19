@@ -1,9 +1,6 @@
 package net.tslat.aoa3.structure.haven;
 
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTrapDoor;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -30,14 +27,19 @@ public class GuardianTowerPt3 {
 	private static final IBlockState eastChest = Blocks.CHEST.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
 	private static final IBlockState crystalliteStairsTopNorth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
 	private static final IBlockState crystalliteStairsTopSouth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState leverNorth = Blocks.LEVER.getDefaultState();
+	private static final IBlockState leverSouth = Blocks.LEVER.getDefaultState().withProperty(BlockLever.FACING, BlockLever.EnumOrientation.SOUTH);
+	private static final IBlockState leverWest = Blocks.LEVER.getDefaultState().withProperty(BlockLever.FACING, BlockLever.EnumOrientation.WEST);
+	private static final IBlockState leverEast = Blocks.LEVER.getDefaultState().withProperty(BlockLever.FACING, BlockLever.EnumOrientation.EAST);
+	private static final IBlockState redstone = Blocks.REDSTONE_WIRE.getDefaultState();
 
 	protected static void addBlocks(GuardianTower instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 20, 62, 8, havenStone);
 		instance.addBlock(world, basePos, 20, 62, 9, havenStone);
 		instance.addBlock(world, basePos, 20, 62, 10, crystalliteBricks);
 		instance.addBlock(world, basePos, 20, 62, 11, crystalliteBricks);
-		instance.addBlock(world, basePos, 20, 62, 12, crystalliteStairsTopNorth);
-		instance.addBlock(world, basePos, 20, 62, 16, crystalliteStairsTopSouth);
+		instance.addBlock(world, basePos, 20, 62, 12, crystalliteStairsTopNorth); 
+		instance.addBlock(world, basePos, 20, 62, 16, crystalliteStairsTopSouth); 
 		instance.addBlock(world, basePos, 20, 62, 17, crystalliteBricks);
 		instance.addBlock(world, basePos, 20, 62, 18, crystalliteBricks);
 		instance.addBlock(world, basePos, 20, 62, 19, havenStone);
@@ -1509,12 +1511,14 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 1, 72, 7, havenStone);
 		instance.addBlock(world, basePos, 1, 72, 8, havenStone);
 		instance.addBlock(world, basePos, 1, 72, 9, havenStone);
+		instance.addBlock(world, basePos, 1, 72, 14, redstone);
 		instance.addBlock(world, basePos, 1, 72, 19, havenStone);
 		instance.addBlock(world, basePos, 1, 72, 20, havenStone);
 		instance.addBlock(world, basePos, 1, 72, 21, havenStone);
 		instance.addBlock(world, basePos, 1, 72, 22, havenStone);
 		instance.addBlock(world, basePos, 2, 72, 5, havenStone);
 		instance.addBlock(world, basePos, 2, 72, 6, havenStone);
+		instance.addBlock(world, basePos, 2, 72, 14, redstone);
 		instance.addBlock(world, basePos, 2, 72, 22, havenStone);
 		instance.addBlock(world, basePos, 2, 72, 23, havenStone);
 		instance.addBlock(world, basePos, 3, 72, 4, havenStone);
@@ -1544,7 +1548,11 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 13, 72, 0, havenStone);
 		instance.addBlock(world, basePos, 13, 72, 28, havenStone);
 		instance.addBlock(world, basePos, 14, 72, 0, havenStone);
+		instance.addBlock(world, basePos, 14, 72, 1, redstone);
+		instance.addBlock(world, basePos, 14, 72, 2, redstone);
 		instance.addBlock(world, basePos, 14, 72, 14, guardianAltar);
+		instance.addBlock(world, basePos, 14, 72, 26, redstone);
+		instance.addBlock(world, basePos, 14, 72, 27, redstone);
 		instance.addBlock(world, basePos, 14, 72, 28, havenStone);
 		instance.addBlock(world, basePos, 15, 72, 0, havenStone);
 		instance.addBlock(world, basePos, 15, 72, 28, havenStone);
@@ -1574,12 +1582,14 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 25, 72, 24, havenStone);
 		instance.addBlock(world, basePos, 26, 72, 5, havenStone);
 		instance.addBlock(world, basePos, 26, 72, 6, havenStone);
+		instance.addBlock(world, basePos, 26, 72, 14, redstone);
 		instance.addBlock(world, basePos, 26, 72, 22, havenStone);
 		instance.addBlock(world, basePos, 26, 72, 23, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 6, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 7, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 8, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 9, havenStone);
+		instance.addBlock(world, basePos, 27, 72, 14, redstone);
 		instance.addBlock(world, basePos, 27, 72, 19, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 20, havenStone);
 		instance.addBlock(world, basePos, 27, 72, 21, havenStone);
@@ -1610,6 +1620,7 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 1, 73, 7, havenStone);
 		instance.addBlock(world, basePos, 1, 73, 8, havenStone);
 		instance.addBlock(world, basePos, 1, 73, 9, havenStone);
+		instance.addBlock(world, basePos, 1, 73, 14, leverEast);
 		instance.addBlock(world, basePos, 1, 73, 19, havenStone);
 		instance.addBlock(world, basePos, 1, 73, 20, havenStone);
 		instance.addBlock(world, basePos, 1, 73, 21, havenStone);
@@ -1645,6 +1656,8 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 13, 73, 0, havenStone);
 		instance.addBlock(world, basePos, 13, 73, 28, havenStone);
 		instance.addBlock(world, basePos, 14, 73, 0, havenStone);
+		instance.addBlock(world, basePos, 14, 73, 1, leverSouth);
+		instance.addBlock(world, basePos, 14, 73, 27, leverNorth);
 		instance.addBlock(world, basePos, 14, 73, 28, havenStone);
 		instance.addBlock(world, basePos, 15, 73, 0, havenStone);
 		instance.addBlock(world, basePos, 15, 73, 28, havenStone);
@@ -1680,6 +1693,7 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 27, 73, 7, havenStone);
 		instance.addBlock(world, basePos, 27, 73, 8, havenStone);
 		instance.addBlock(world, basePos, 27, 73, 9, havenStone);
+		instance.addBlock(world, basePos, 27, 73, 14, leverWest);
 		instance.addBlock(world, basePos, 27, 73, 19, havenStone);
 		instance.addBlock(world, basePos, 27, 73, 20, havenStone);
 		instance.addBlock(world, basePos, 27, 73, 21, havenStone);
@@ -1959,9 +1973,5 @@ public class GuardianTowerPt3 {
 		instance.addBlock(world, basePos, 23, 81, 5, havenStone);
 		instance.addBlock(world, basePos, 23, 81, 23, havenStone);
 		instance.addBlock(world, basePos, 25, 81, 14, havenStone);
-		instance.addBlock(world, basePos, 3, 82, 14, havenStone);
-		instance.addBlock(world, basePos, 14, 82, 3, havenStone);
-		instance.addBlock(world, basePos, 14, 82, 25, havenStone);
-		instance.addBlock(world, basePos, 25, 82, 14, havenStone);
 	}
 }

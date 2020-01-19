@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.tslat.aoa3.client.gui.KeyBinder;
+import net.tslat.aoa3.client.event.KeyBinder;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -35,7 +35,7 @@ public class ResourcesRenderer {
 
 			if (!mc.player.getActivePotionEffects().isEmpty()) {
 				for (PotionEffect effect : mc.player.getActivePotionEffects()) {
-					if (effect.getDuration() > 0) {
+					if (effect.getDuration() > 0 && effect.getPotion().shouldRenderHUD(effect) && effect.doesShowParticles()) {
 						if (effect.getPotion().isBadEffect()) {
 							effectRenderYOffset = 100;
 							break;
@@ -50,6 +50,7 @@ public class ResourcesRenderer {
 			GlStateManager.pushMatrix();
 			GlStateManager.disableDepth();
 			GlStateManager.scale(0.5f, 0.5f, 0.5f);
+			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
 			final ScaledResolution res = new ScaledResolution(mc);
 
@@ -143,7 +144,7 @@ public class ResourcesRenderer {
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 200, rootY, 0, 250, percentComplete * 50, 50, percentComplete * 50, 50, 100, 550);
 
 			currentMax = AuguryUtil.getMaxSoul(AdventGuiTabPlayer.getSkillLevel(Enums.Skills.AUGURY));
-			percentComplete = AdventGuiTabPlayer.resourceCreation / currentMax;
+			percentComplete = AdventGuiTabPlayer.resourceSoul / currentMax;
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 250, rootY, 0, 300, 50, 50, 50, 50, 100, 550);
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 250, rootY, 0, 350, percentComplete * 50, 50, percentComplete * 50, 50, 100, 550);

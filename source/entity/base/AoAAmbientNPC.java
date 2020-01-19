@@ -7,18 +7,21 @@ import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
-import net.tslat.aoa3.utils.PlayerUtil;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
+import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -75,7 +78,7 @@ public abstract class AoAAmbientNPC extends EntityCreature implements INpc {
 	protected abstract double getBaseMovementSpeed();
 
 	@Nullable
-	protected abstract ITextComponent getInteractMessage();
+	protected abstract String getInteractMessage(ItemStack heldItem);
 
 	protected boolean isFixedTradesList() {
 		return false;
@@ -87,7 +90,7 @@ public abstract class AoAAmbientNPC extends EntityCreature implements INpc {
 	}
 
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return block.canEntitySpawn(this);
+		return block.canEntitySpawn(this) && WorldUtil.isNaturalDimensionBlock(world, getPosition(), block);
 	}
 
 	protected int getSpawnChanceFactor() {
@@ -119,6 +122,27 @@ public abstract class AoAAmbientNPC extends EntityCreature implements INpc {
 	}
 
 	@Override
+	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
+		if (getLootTable() != null) {
+			LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(getLootTable());
+
+			LootContext.Builder lootBuilder = (new LootContext.Builder((WorldServer)world)).withLootedEntity(this).withDamageSource(source);
+
+			if (wasRecentlyHit && attackingPlayer != null)
+				lootBuilder.withPlayer(attackingPlayer).withLuck(attackingPlayer.getLuck() + lootingModifier);
+
+			for (ItemStack stack : lootTable.generateLootForPools(rand, lootBuilder.build())) {
+				entityDropItem(stack, 0);
+			}
+
+			dropEquipment(wasRecentlyHit, lootingModifier);
+		}
+		else {
+			super.dropLoot(wasRecentlyHit, lootingModifier, source);
+		}
+	}
+
+	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
@@ -130,20 +154,13 @@ public abstract class AoAAmbientNPC extends EntityCreature implements INpc {
 
 		if (!world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
-				ITextComponent msg = getInteractMessage();
+				String msg = getInteractMessage(heldStack);
 
-				if (msg != null) {
-					msg.setStyle(new Style().setColor(TextFormatting.GRAY));
-					PlayerUtil.getAdventPlayer(player).sendPlayerMessage(msg);
-				}
+				if (msg != null)
+					PlayerUtil.notifyPlayer((EntityPlayerMP)player, msg, TextFormatting.GRAY);
 			}
 		}
 
 		return super.processInteract(player, hand);
-	}
-
-	@Override
-	protected boolean canDespawn() {
-		return world.provider.getDimension() == 0;
 	}
 }

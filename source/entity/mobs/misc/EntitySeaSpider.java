@@ -1,7 +1,6 @@
 package net.tslat.aoa3.entity.mobs.misc;
 
 import com.google.common.base.Predicate;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -16,11 +15,12 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -57,7 +57,7 @@ public class EntitySeaSpider extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.4;
+		return 0.15;
 	}
 
 	@Override
@@ -99,6 +99,12 @@ public class EntitySeaSpider extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getStepSound() {
 		return SoundEvents.ENTITY_SPIDER_STEP;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entitySeaSpider;
 	}
 
 	@Override
@@ -165,11 +171,6 @@ public class EntitySeaSpider extends AoAMeleeMob {
 		}
 
 		return false;
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

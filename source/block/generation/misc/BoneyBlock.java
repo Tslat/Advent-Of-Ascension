@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
 public class BoneyBlock extends Block {
 	public BoneyBlock() {
 		super(Material.ROCK);
-		setUnlocalizedName("BoneyBlock");
+		setTranslationKey("BoneyBlock");
 		setRegistryName("aoa3:boney_block");
 		setHardness(3.0f);
 		setResistance(3.0f);
@@ -26,7 +26,7 @@ public class BoneyBlock extends Block {
 	@Nonnull
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 

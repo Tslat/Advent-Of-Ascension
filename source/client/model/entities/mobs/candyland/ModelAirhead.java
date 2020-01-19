@@ -7,12 +7,12 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelAirhead extends ModelBase {
-	ModelRenderer R2;
-	ModelRenderer Shape2;
-	ModelRenderer Shape3;
-	ModelRenderer R1;
-	ModelRenderer R3;
-	ModelRenderer R4;
+	private ModelRenderer R2;
+	private ModelRenderer shape2;
+	private ModelRenderer shape3;
+	private ModelRenderer R1;
+	private ModelRenderer R3;
+	private ModelRenderer R4;
 
 	public ModelAirhead() {
 		textureWidth = 64;
@@ -22,16 +22,16 @@ public class ModelAirhead extends ModelBase {
 		R2.setTextureSize(64, 64);
 		R2.mirror = true;
 		setRotation(R2, 0.0f, 0.0f, 0.0f);
-		(Shape2 = new ModelRenderer(this, 0, 0)).addBox(0.0f, 0.0f, 0.0f, 16, 16, 16);
-		Shape2.setRotationPoint(-8.0f, -3.0f, -8.0f);
-		Shape2.setTextureSize(64, 64);
-		Shape2.mirror = true;
-		setRotation(Shape2, 0.0f, 0.0f, 0.0f);
-		(Shape3 = new ModelRenderer(this, 0, 34)).addBox(0.0f, 0.0f, 0.0f, 6, 7, 6);
-		Shape3.setRotationPoint(-3.0f, 13.0f, -3.0f);
-		Shape3.setTextureSize(64, 64);
-		Shape3.mirror = true;
-		setRotation(Shape3, 0.0f, 0.0f, 0.0f);
+		(shape2 = new ModelRenderer(this, 0, 0)).addBox(0.0f, 0.0f, 0.0f, 16, 16, 16);
+		shape2.setRotationPoint(-8.0f, -3.0f, -8.0f);
+		shape2.setTextureSize(64, 64);
+		shape2.mirror = true;
+		setRotation(shape2, 0.0f, 0.0f, 0.0f);
+		(shape3 = new ModelRenderer(this, 0, 34)).addBox(0.0f, 0.0f, 0.0f, 6, 7, 6);
+		shape3.setRotationPoint(-3.0f, 13.0f, -3.0f);
+		shape3.setTextureSize(64, 64);
+		shape3.mirror = true;
+		setRotation(shape3, 0.0f, 0.0f, 0.0f);
 		(R1 = new ModelRenderer(this, 26, 47)).addBox(-8.5f, 4.0f, -4.0f, 1, 1, 10);
 		R1.setRotationPoint(0.0f, 17.0f, -1.0f);
 		R1.setTextureSize(64, 64);
@@ -55,8 +55,8 @@ public class ModelAirhead extends ModelBase {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(770, 771);
 		R2.render(par7);
-		Shape2.render(par7);
-		Shape3.render(par7);
+		shape2.render(par7);
+		shape3.render(par7);
 		R1.render(par7);
 		R3.render(par7);
 		R4.render(par7);

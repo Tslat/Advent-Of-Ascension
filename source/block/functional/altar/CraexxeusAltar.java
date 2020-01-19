@@ -18,7 +18,10 @@ public class CraexxeusAltar extends BossAltarBlock {
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		EntityCraexxeus craexxeus = new EntityCraexxeus(player.world);
 
-		craexxeus.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 1, blockPos.getZ(), 0, 0);
+		int offsetX = player.getRNG().nextBoolean() ? -11 : 11;
+		int offsetZ = player.getRNG().nextBoolean() ? -11 : 11;
+
+		craexxeus.setLocationAndAngles(blockPos.getX() + offsetX, blockPos.getY(), blockPos.getZ() + offsetZ, 0, 0);
 		player.world.spawnEntity(craexxeus);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.craexxeus.spawn", player.getDisplayNameString()), blockPos);
 	}

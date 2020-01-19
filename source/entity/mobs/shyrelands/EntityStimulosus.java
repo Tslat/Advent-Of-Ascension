@@ -1,20 +1,29 @@
 package net.tslat.aoa3.entity.mobs.shyrelands;
 
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityStimulosus extends AoAMeleeMob {
+public class EntityStimulosus extends AoAMeleeMob implements SpecialPropertyEntity {
     public static final float entityWidth = 0.6f;
 
     public EntityStimulosus(World world) {
         super(world, entityWidth, 1.875f);
+
+        mobProperties.add(Enums.MobProperties.BLASTER_IMMUNE);
     }
 
     @Override
@@ -24,17 +33,17 @@ public class EntityStimulosus extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.1;
+        return 0.15;
     }
 
     @Override
     protected double getBaseMaxHealth() {
-        return 350;
+        return 180;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 9;
+        return 17;
     }
 
     @Override
@@ -60,12 +69,15 @@ public class EntityStimulosus extends AoAMeleeMob {
         return SoundsRegister.mobStimuloHit;
     }
 
+    @Nullable
     @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.realmstoneShyrelands, 1);
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityStimulosus;
+    }
 
-        if (rand.nextBoolean())
-            dropItem(WeaponRegister.cannonShyreBlaster, 1);
+    @Override
+    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+        return EntityUtil.isBlasterDamage(source);
     }
 
     @Override
@@ -77,7 +89,24 @@ public class EntityStimulosus extends AoAMeleeMob {
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (ticksExisted % 200 == 0)
-            heal(getHealth());
+        if (!world.isRemote) {
+            float healthPercent = EntityUtil.getCurrentHealthPercent(this);
+
+            if (healthPercent < 0.25) {
+                addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 1, true, false));
+            }
+            else if (healthPercent < 0.50) {
+                addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 2, true, false));
+            }
+            else if (healthPercent < 0.75) {
+                addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 3, true, false));
+            }
+        }
+    }
+
+    @Nonnull
+    @Override
+    public TreeSet<Enums.MobProperties> getMobProperties() {
+        return mobProperties;
     }
 }

@@ -42,7 +42,7 @@ public class ToxicWaste extends BasicBlock {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 7));
 			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 150, 5));

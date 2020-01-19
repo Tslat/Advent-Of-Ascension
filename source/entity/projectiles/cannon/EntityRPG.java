@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityRPG extends BaseBullet implements HardProjectile {
 	private EntityLivingBase shooter;
@@ -25,6 +26,7 @@ public class EntityRPG extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(shooter, posX, posY, posZ, 3.0f, false);
+		if (!world.isRemote)
+			WorldUtil.createExplosion(shooter, world, this, 2.7f);
 	}
 }

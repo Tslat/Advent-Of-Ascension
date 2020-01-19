@@ -1,20 +1,19 @@
 package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -35,17 +34,17 @@ public class EntityVertebron extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 45;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 9;
+		return 5;
 	}
 
 	@Override
@@ -69,14 +68,15 @@ public class EntityVertebron extends AoAMeleeMob {
 		return SoundsRegister.mobVertebronHit;
 	}
 
+	@Nullable
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVertebron;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.orbulon, 1);
+	protected boolean isDaylightMob() {
+		return true;
 	}
 
 	@Override
@@ -93,11 +93,6 @@ public class EntityVertebron extends AoAMeleeMob {
 			target.addVelocity(motionX * 2.1 * resist / velocity, 0.1 * resist, motionZ * 2.1 * resist / velocity);
 			target.velocityChanged = true;
 		}
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class LayerPlayerCrown implements LayerRenderer<AbstractClientPlayer> {
 	}
 
 	@Override
-	public void doRenderLayer(AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+	public void doRenderLayer(AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netheadYaw, float headPitch, float scale) {
 		if (player.hasPlayerInfo() && !player.isInvisible()) {
 			Enums.PlayerCrownTypes chosenCrown = PlayerCrownHandler.getCrown(player.getUniqueID());
 
@@ -60,8 +60,8 @@ public class LayerPlayerCrown implements LayerRenderer<AbstractClientPlayer> {
 			GlStateManager.depthMask(true);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680, 0);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
-			ModelRenderer playerHeadModelRenderer = playerRenderer.getMainModel().bipedHead;
-			ModelBase.copyModelAngles(playerHeadModelRenderer, crownModel.crown);
+			ModelRenderer playerheadModelRenderer = playerRenderer.getMainModel().bipedHead;
+			ModelBase.copyModelAngles(playerheadModelRenderer, crownModel.crown);
 			crownModel.crown.renderWithRotation(scale);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, player.getBrightnessForRender() % 65536, player.getBrightnessForRender() / 65536f);

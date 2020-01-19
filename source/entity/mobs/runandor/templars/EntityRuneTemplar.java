@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -15,12 +14,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.LootUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -115,8 +116,6 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 	@Override
 	public void addVelocity(double x, double y, double z) {}
 
-	protected abstract Item getRuneFragment();
-
 	protected abstract EntityRunicLifeform getLifeForm();
 
 	protected abstract RuneItem getActivationRune();
@@ -149,7 +148,7 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 			setHealth(getHealth() - 0.25f);
 
 			if (getHealth() < 1) {
-				dropItem(getRuneFragment(), 1);
+				doDrops();
 				changeState(true);
 				setHealth(getMaxHealth());
 
@@ -173,12 +172,24 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 	@Override
 	public void onDeath(DamageSource cause) {}
 
+	private void doDrops() {
+		float luck = 0;
+
+		for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(8))) {
+			float plLuck = pl.getLuck();
+
+			if (plLuck > luck)
+				luck = plLuck;
+		}
+
+		for (ItemStack stack : LootUtil.generateLootWithCustomLuck(getLootTable(), (WorldServer)world, luck)) {
+			entityDropItem(stack, 0);
+		}
+	}
+
 	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
 		return mobProperties;
 	}
-
-	@Override
-	public void checkMusicStatus() {}
 }

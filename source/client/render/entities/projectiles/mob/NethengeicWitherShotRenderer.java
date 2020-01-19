@@ -5,10 +5,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.mob.EntityNethengeicWitherShot;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class NethengeicWitherShotRenderer extends Render<EntityNethengeicWitherShot> {
 	private final ResourceLocation texture;
 	private final ModelSkeletonHead headModel = new ModelSkeletonHead();

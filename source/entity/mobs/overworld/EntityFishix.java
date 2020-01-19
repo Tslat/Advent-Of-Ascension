@@ -3,18 +3,16 @@ package net.tslat.aoa3.entity.mobs.overworld;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityFishix extends AoAMeleeMob implements HunterEntity {
+public class EntityFishix extends AoAMeleeMob {
 	public static final float entityWidth = 1.2f;
 
 	public EntityFishix(World world) {
@@ -33,12 +31,12 @@ public class EntityFishix extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 35;
+		return 30;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 4;
 	}
 
 	@Override
@@ -67,6 +65,12 @@ public class EntityFishix extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobFishixHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityFishix;
+	}
+
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
@@ -74,22 +78,7 @@ public class EntityFishix extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER || WorldUtil.isNaturalOverworldBlock(block);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 6;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 20;
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
+		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

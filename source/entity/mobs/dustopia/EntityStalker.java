@@ -1,12 +1,14 @@
 package net.tslat.aoa3.entity.mobs.dustopia;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.penumbra.EntityPenumbra;
@@ -35,17 +37,17 @@ public class EntityStalker extends AoAMeleeMob {
 
     @Override
     protected double getBaseMaxHealth() {
-        return 60;
+        return 138;
     }
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 5;
+        return 13.5;
     }
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.2875;
+        return 0.3;
     }
 
     @Nullable
@@ -66,26 +68,48 @@ public class EntityStalker extends AoAMeleeMob {
         return SoundsRegister.mobStalkerHit;
     }
 
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        return LootSystemRegister.entityStalker;
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+
+        if (getAttackTarget() instanceof EntityPlayerMP && canEntityBeSeen(getAttackTarget()) && EntityUtil.isPlayerLookingAtEntity((EntityPlayer)getAttackTarget(), this)) {
+            motionX = 0;
+            motionZ = 0;
+
+            if (getAttackTarget().getDistanceSq(this) <= 2 * 2)
+                PacketUtil.network.sendTo(new PacketScreenOverlay(30, Enums.ScreenOverlays.STATIC), (EntityPlayerMP)getAttackTarget());
+        }
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (super.attackEntityFrom(source, amount)) {
+            if (!world.isRemote && getAttackTarget() != null && getAttackTarget().getDistanceSq(this) <= 2 * 2) {
+                double posX = this.posX + rand.nextGaussian() * 64;
+                double posZ = this.posZ + rand.nextGaussian() * 64;
+                double posY = world.getHeight((int)posX, (int)posZ);
+
+                if (posY > 0)
+                    attemptTeleport(posX, posY, posZ);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void setAttackTarget(@Nullable EntityLivingBase target) {
         if (target instanceof EntityPenumbra)
             return;
 
         super.setAttackTarget(target);
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
-    }
-
-    @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
-
-        if (!world.isRemote && getAttackTarget() instanceof EntityPlayerMP) {
-            if (EntityUtil.isPlayerLookingAtEntity((EntityPlayerMP)getAttackTarget(), this) && canEntityBeSeen(getAttackTarget()))
-                PacketUtil.network.sendTo(new PacketScreenOverlay(30, Enums.ScreenOverlays.STATIC), (EntityPlayerMP) getAttackTarget());
-        }
     }
 }

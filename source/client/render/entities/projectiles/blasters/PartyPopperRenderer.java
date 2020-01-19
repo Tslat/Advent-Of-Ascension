@@ -7,10 +7,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityPartyPopper;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class PartyPopperRenderer extends Render<EntityPartyPopper> {
 	private final ResourceLocation texture;
 
@@ -32,6 +35,7 @@ public class PartyPopperRenderer extends Render<EntityPartyPopper> {
 
 		GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
 
 		if (renderOutlines) {
 			GlStateManager.enableColorMaterial();

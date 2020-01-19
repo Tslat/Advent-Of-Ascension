@@ -1,20 +1,18 @@
 package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PlayerUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -39,12 +37,12 @@ public class EntityGhastus extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 1;
+		return 15;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 20;
+		return 10.5d;
 	}
 
 	@Override
@@ -70,6 +68,12 @@ public class EntityGhastus extends AoAMeleeMob {
 		return SoundsRegister.mobApparitionHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
+	}
+
 	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.UNDEAD;
@@ -79,9 +83,7 @@ public class EntityGhastus extends AoAMeleeMob {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		int modifier = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().grow(7), entity -> entity instanceof IMob).size();
-
-		heal(0.5F * modifier);
+		heal(1f);
 	}
 
 	@Override
@@ -103,12 +105,12 @@ public class EntityGhastus extends AoAMeleeMob {
 				}
 
 				if (pl != null) {
-					AdventPlayerCapability cap = PlayerUtil.getAdventPlayer(pl);
+					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					cap.addTribute(EREBON, 4);
+					plData.stats().addTribute(EREBON, 4);
 
-					if (cap.getTribute(EREBON) == 200)
-						cap.sendPlayerMessage(StringUtil.getLocale("message.feedback.immortallisProgression.evilSpiritsEnd"));
+					if (plData.stats().getTribute(EREBON) == 200)
+						plData.sendThrottledChatMessage("message.feedback.immortallisProgression.evilSpiritsEnd");
 				}
 			}
 		}

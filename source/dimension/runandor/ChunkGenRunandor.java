@@ -5,12 +5,13 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEntitySpawner;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -25,7 +26,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeRunandor;
+	private final Biome biome = BiomeRegister.biomeRunandor;
 
 	private int x;
 	private int y;
@@ -63,8 +64,8 @@ public class ChunkGenRunandor implements IChunkGenerator {
 	}
 
 	private void setBlocksInChunk() {
-		setAllBlocksBetweenYCoords(0, 10 + count, BlockRegister.stoneRunic.getDefaultState());
-		setAllBlocksBetweenYCoords(10 + count, 11 + count, BlockRegister.grassRunic.getDefaultState());
+		setAllBlocksBetweenYCoords(0, 11 + count, BlockRegister.stoneRunic.getDefaultState());
+		setAllBlocksBetweenYCoords(11 + count, 11 + count, 11 + count <= 14 ? BlockRegister.stoneRunic.getDefaultState() : BlockRegister.grassRunic.getDefaultState());
 
 		if (count < 4) {
 			for (x = 0; x <= 15; x++) {
@@ -159,6 +160,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 
 		this.rand.setSeed(chunkX * a + chunkZ * b ^ this.world.getSeed());
 		biome.decorate(world, rand, basePos);
+		WorldEntitySpawner.performWorldGenSpawning(world, biome, baseX + 8, baseZ + 8, 16, 16, rand);
 	}
 
 	@Override

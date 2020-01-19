@@ -17,8 +17,8 @@ import net.minecraft.world.gen.NoiseGeneratorPerlin;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.InitNoiseGensEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
@@ -35,7 +35,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = DimensionRegister.biomeBarathos;
+	private final Biome biome = BiomeRegister.biomeBarathos;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -114,13 +114,18 @@ public class ChunkGenBarathos implements IChunkGenerator {
 
 		for (int x = 0; x <= 15; x++) {
 			for (int z = 0; z <= 15; z++) {
-				for (int y = 29; y > 0; y--) {
-					if (y > 25) {
-						if (y < 25 + rand.nextInt(4) && primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
+				for (int y = 29; y >= 0; y--) {
+					if (y <= 2) {
+						primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+					}
+					else {
+						if (y > 25) {
+							if (y < 25 + rand.nextInt(4) && primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
+								primer.setBlockState(x, y, z, BlockRegister.stoneBarathos.getDefaultState());
+						}
+						else if (primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
 							primer.setBlockState(x, y, z, BlockRegister.stoneBarathos.getDefaultState());
 					}
-					else if (primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
-						primer.setBlockState(x, y, z, BlockRegister.stoneBarathos.getDefaultState());
 				}
 			}
 		}

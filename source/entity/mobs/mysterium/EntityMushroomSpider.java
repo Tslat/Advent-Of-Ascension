@@ -12,20 +12,16 @@ import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityMushroomSpider extends AoAMeleeMob implements HunterEntity {
+public class EntityMushroomSpider extends AoAMeleeMob {
 	public static final float entityWidth = 1.4f;
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(EntityMushroomSpider.class, DataSerializers.BYTE);
 
@@ -51,22 +47,22 @@ public class EntityMushroomSpider extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.4;
+		return 0.1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 100;
+		return 61d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 8;
+		return 7.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.28d;
 	}
 
 	@Nullable
@@ -90,6 +86,12 @@ public class EntityMushroomSpider extends AoAMeleeMob implements HunterEntity {
 	@Override
 	protected SoundEvent getStepSound() {
 		return SoundEvents.ENTITY_SPIDER_STEP;
+	}
+
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityMushroomSpider;
 	}
 
 	@Override
@@ -131,34 +133,10 @@ public class EntityMushroomSpider extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.seedsMysticShroom, 1);
-
-		if (rand.nextInt(70 - lootingMod) == 0)
-			dropItem(WeaponRegister.shotgunVivo, 1);
-	}
-
-	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 80, 1, true, true));
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 80, 1, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 80, 1, false, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 80, 0, false, true));
 		}
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 70;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 700;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

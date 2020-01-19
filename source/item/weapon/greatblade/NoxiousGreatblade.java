@@ -2,45 +2,54 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
 public class NoxiousGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	public NoxiousGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setUnlocalizedName("NoxiousGreatblade");
+		setTranslationKey("NoxiousGreatblade");
 		setRegistryName("aoa3:noxious_greatblade");
 	}
 
 	@Override
-	public void attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		super.attackEntity(stack, target, attacker, dmg);
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
+		if (target instanceof EntityLivingBase) {
+			if (((EntityLivingBase)target).isPotionActive(MobEffects.POISON)) {
+				EntityAreaEffectCloud cloud = new EntityAreaEffectCloud(target.world, target.posX, target.posY, target.posZ);
 
-		if (!(target instanceof EntityLivingBase))
-			return;
+				cloud.setRadius(2);
+				cloud.setPotion(PotionTypes.STRONG_POISON);
+				cloud.addEffect(new PotionEffect(MobEffects.POISON, 60, 2, true, true));
+				cloud.setDuration(3);
+				cloud.setColor(Enums.RGBIntegers.TOXIC_GREEN);
+				cloud.setOwner(attacker);
 
-		if (attacker instanceof EntityPlayer) {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, (int)(100 * ((EntityPlayer)attacker).getCooledAttackStrength(0.0f)), 3));
-		}
-		else {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 3));
+				target.world.spawnEntity(cloud);
+			}
+			else {
+				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 1, true, true));
+			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.damage.poisonStrong", TextFormatting.DARK_GREEN));
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NoxiousGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NoxiousGreatblade.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		super.addInformation(stack, world, tooltip, flag);
 	}
 }

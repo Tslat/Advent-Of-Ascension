@@ -1,40 +1,35 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RockbasherSword extends BaseSword implements AdventWeapon {
-	public RockbasherSword(final ToolMaterial material, Float dmg, Double speed) {
-		super(material, dmg, speed);
-		setUnlocalizedName("RockbasherSword");
+	public RockbasherSword(final ToolMaterial material, final double speed) {
+		super(material, speed);
+		setTranslationKey("RockbasherSword");
 		setRegistryName("aoa3:rockbasher_sword");
 	}
 
 	@Override
-	public boolean onLeftClickEntity(final ItemStack stack, final EntityPlayer player, final Entity target) {
-		if (player.world.isRemote || !(target instanceof EntityLivingBase))
-			return false;
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+		double armour = target.getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
 
-		((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, (int)(40 * player.getCooledAttackStrength(0.0f)), 1));
-
-		return false;
+		if (armour > 0)
+			WorldUtil.createExplosion(attacker, attacker.world, target.posX, target.posY + target.height / 1.5, target.posZ, 0.5f + (float)(3 * armour / 30f));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("items.description.damage.weak", TextFormatting.DARK_GREEN));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RockbasherSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

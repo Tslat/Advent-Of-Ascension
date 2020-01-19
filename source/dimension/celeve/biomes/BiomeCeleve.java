@@ -28,8 +28,8 @@ public class BiomeCeleve extends Biome {
 	public BiomeCeleve() {
 		super(properties);
 		setRegistryName("aoa3", "celeve");
-		this.topBlock = BlockRegister.grassCeleve.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtCeleve.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("celeve_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("celeve_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

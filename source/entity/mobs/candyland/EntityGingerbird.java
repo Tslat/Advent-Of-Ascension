@@ -1,22 +1,27 @@
 package net.tslat.aoa3.entity.mobs.candyland;
 
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityGingerbird extends AoAFlyingMeleeMob {
+public class EntityGingerbird extends AoAFlyingMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.5f;
 
 	public EntityGingerbird(World world) {
 		super(world, entityWidth, 0.5625f);
+
+		mobProperties.add(Enums.MobProperties.FIRE_IMMUNE);
+		isImmuneToFire = true;
 	}
 
 	@Override
@@ -31,12 +36,12 @@ public class EntityGingerbird extends AoAFlyingMeleeMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 79;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 8;
 	}
 
 	@Override
@@ -56,24 +61,20 @@ public class EntityGingerbird extends AoAFlyingMeleeMob {
 		return SoundsRegister.plantThump;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.gingerbreadWing, 1);
-
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.tokensCandyland, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(5) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerGingerbread), 1);
-
-		if (rand.nextInt(70 - lootingMod) == 0)
-			dropItem(WeaponRegister.swordSweet, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGingerbird;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.gingerbread), 2 + rand.nextInt(3 + lootingMod));
-		dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(3 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return source.isFireDamage();
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

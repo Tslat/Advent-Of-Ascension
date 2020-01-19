@@ -1,39 +1,36 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
 
 import java.util.List;
 
 public class Ultraflame extends BaseSword implements AdventWeapon {
-	public Ultraflame(final ToolMaterial material, Float dmg, Double speed) {
-		super(material, dmg, speed);
-		setUnlocalizedName("Ultraflame");
+	public Ultraflame(final ToolMaterial material, final double speed) {
+		super(material, speed);
+		setTranslationKey("Ultraflame");
 		setRegistryName("aoa3:ultraflame");
 	}
 
 	@Override
-	public boolean onLeftClickEntity(final ItemStack stack, final EntityPlayer player, final Entity target) {
-		if (player.world.isRemote || !(target instanceof EntityLivingBase))
-			return false;
-
-		target.setFire((int)(10 * player.getCooledAttackStrength(0.0f)));
-		player.setFire(10);
-
-		return false;
+	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+		if (attackCooldown > 0.75) {
+			for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(3), PredicateUtil.IS_HOSTILE_MOB)) {
+				entity.setFire(3);
+			}
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.Ultraflame.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Ultraflame.desc.1", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

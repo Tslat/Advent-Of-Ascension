@@ -1,24 +1,27 @@
 package net.tslat.aoa3.entity.mobs.dustopia;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.TreeSet;
 
-public class EntityDusteiva extends AoAMeleeMob {
+public class EntityDusteiva extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
-	private int cooldown = 40;
 
 	public EntityDusteiva(World world) {
 		super(world, entityWidth, 2.25f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -28,17 +31,17 @@ public class EntityDusteiva extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.3;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 111;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 12d;
 	}
 
 	@Override
@@ -64,33 +67,20 @@ public class EntityDusteiva extends AoAMeleeMob {
 		return SoundsRegister.mobDusteivaHit;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(20 - lootingMod) == 0)
-			dropItem(WeaponRegister.blasterDarkDestroyer, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityDusteiva;
 	}
 
 	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
 	}
 
+	@Nonnull
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		if (!world.isRemote) {
-			cooldown--;
-
-			EntityLivingBase target = getAttackTarget();
-
-			if (cooldown <= 0 && target instanceof EntityPlayer) {
-				if (EntityUtil.isPlayerLookingAtEntity((EntityPlayer)target, this) && canEntityBeSeen(target)) {
-					target.addVelocity(0, 1.5, 0);
-					target.velocityChanged = true;
-					cooldown = 40;
-				}
-			}
-		}
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

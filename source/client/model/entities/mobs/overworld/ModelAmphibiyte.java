@@ -6,20 +6,20 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelAmphibiyte extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer body1;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg4;
-	ModelRenderer body2;
-	ModelRenderer leg3;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer body5;
-	ModelRenderer body6;
-	ModelRenderer body7;
-	ModelRenderer head2;
-	ModelRenderer head3;
+	private ModelRenderer head;
+	private ModelRenderer body1;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg4;
+	private ModelRenderer body2;
+	private ModelRenderer leg3;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
+	private ModelRenderer body7;
+	private ModelRenderer head2;
+	private ModelRenderer head3;
 
 	public ModelAmphibiyte() {
 		textureWidth = 128;

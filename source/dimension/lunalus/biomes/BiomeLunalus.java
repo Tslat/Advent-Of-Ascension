@@ -31,8 +31,8 @@ public class BiomeLunalus extends Biome {
 	public BiomeLunalus() {
 		super(properties);
 		setRegistryName("aoa3", "lunalus");
-		this.topBlock = BlockRegister.grassLunasole.getDefaultState();
-		this.fillerBlock = BlockRegister.dirtLunasole.getDefaultState();
+		this.topBlock = BlockRegister.getUnmappedBlock("lunasole_grass").getDefaultState();
+		this.fillerBlock = BlockRegister.getUnmappedBlock("lunasole_dirt").getDefaultState();
 		this.spawnableCaveCreatureList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableMonsterList.clear();

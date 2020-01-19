@@ -3,9 +3,9 @@ package net.tslat.aoa3.entity.mobs.voxponds;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +29,7 @@ public class EntityExoid extends AoAMeleeMob {
 
     @Override
     protected double getBaseKnockbackResistance() {
-        return 0.8;
+        return 0.15;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EntityExoid extends AoAMeleeMob {
 
     @Override
     protected double getBaseMeleeDamage() {
-        return 14;
+        return 11.5;
     }
 
     @Override
@@ -74,25 +74,10 @@ public class EntityExoid extends AoAMeleeMob {
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (ticksExisted >= 900) {
-            world.createExplosion(this, posX, posY, posZ, 3, false);
+        if (!world.isRemote && ticksExisted >= 900) {
+            WorldUtil.createExplosion(this, world, 3f);
             setDead();
         }
-    }
-
-    @Override
-    protected void dropSpecialItems(int lootingMod, DamageSource source) {
-        if (tier >= 5) {
-            dropItem(ItemRegister.doomStone, 1);
-
-            if (rand.nextInt(3) == 0)
-                dropItem(ItemRegister.realmstoneVoxPonds, 1);
-        }
-    }
-
-    @Override
-    protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-        dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(9 + lootingMod));
     }
 
     @Override

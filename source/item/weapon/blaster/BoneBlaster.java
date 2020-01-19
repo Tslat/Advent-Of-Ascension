@@ -3,13 +3,22 @@ package net.tslat.aoa3.item.weapon.blaster;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityBonePellet;
 
+import javax.annotation.Nullable;
+
 public class BoneBlaster extends BaseBlaster {
-	public BoneBlaster(double dmg, SoundEvent sound, int durability, int fireDelayTicks, float energyCost) {
-		super(dmg, sound, durability, fireDelayTicks, energyCost);
-		setUnlocalizedName("BoneBlaster");
+	public BoneBlaster(double dmg, int durability, int fireDelayTicks, float energyCost) {
+		super(dmg, durability, fireDelayTicks, energyCost);
+		setTranslationKey("BoneBlaster");
 		setRegistryName("aoa3:bone_blaster");
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundsRegister.gunMiniPistol;
 	}
 
 	@Override

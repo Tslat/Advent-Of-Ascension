@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,14 +17,21 @@ import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RunicBomb extends BaseThrownWeapon {
 	public RunicBomb() {
-		super(0.0f, SoundEvents.ENTITY_ARROW_SHOOT, 10);
-		setUnlocalizedName("RunicBomb");
+		super(0.0f, 10);
+		setTranslationKey("RunicBomb");
 		setRegistryName("aoa3:runic_bomb");
 		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundEvents.ENTITY_ARROW_SHOOT;
 	}
 
 	@Override

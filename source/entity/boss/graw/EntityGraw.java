@@ -1,25 +1,18 @@
 package net.tslat.aoa3.entity.boss.graw;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityGrawShot;
@@ -29,6 +22,7 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
 import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,13 +33,10 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 	public static final float entityWidth = 5f;
 	private int pullCountdown = 400;
 
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
-
 	public EntityGraw(World world) {
 		super(world, entityWidth, 4f);
 
-		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
+		this.mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
 	}
 
 	@Override
@@ -97,29 +88,23 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 		return null;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityGraw;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueGraw), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		switch (rand.nextInt(4)) {
-			case 0:
-				dropItem(WeaponRegister.gunWrecker, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.gunChilliChugger, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.staffFirefly, 1);
-				break;
-			case 3:
-				dropItem(WeaponRegister.cannonPulseCannon, 1);
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -162,12 +147,12 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2.5f, false);
+		WorldUtil.createExplosion(this, world, projectile, 2.5f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 2.5f, false);
+		WorldUtil.createExplosion(this, world, projectile, 2.5f);
 	}
 
 	@Override
@@ -176,8 +161,8 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 	}
 
 	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source) {
-		return EntityUtil.isGunDamage(source);
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isMagicDamage(source, this, damage);
 	}
 
 	@Override
@@ -207,6 +192,12 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicGraw;
+	}
+
 	@Nonnull
 	@Override
 	public TreeSet<Enums.MobProperties> getMobProperties() {
@@ -219,24 +210,5 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicGraw, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

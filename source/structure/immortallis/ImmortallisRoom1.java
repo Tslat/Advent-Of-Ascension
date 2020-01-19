@@ -7,8 +7,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityDungeonKeeper;
-import net.tslat.aoa3.entity.npcs.EntityTokenCollector;
+import net.tslat.aoa3.entity.npcs.trader.EntityDungeonKeeper;
+import net.tslat.aoa3.entity.npcs.trader.EntityTokenCollector;
 
 import java.util.Random;
 

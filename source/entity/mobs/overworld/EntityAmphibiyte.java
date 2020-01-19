@@ -3,26 +3,22 @@ package net.tslat.aoa3.entity.mobs.overworld;
 import com.google.common.base.Predicate;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.boss.corallus.EntityCorallus;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityAmphibiyte extends AoAMeleeMob implements HunterEntity {
+public class EntityAmphibiyte extends AoAMeleeMob {
 	public static final float entityWidth = 0.95f;
 
 	public EntityAmphibiyte(World world) {
@@ -52,22 +48,22 @@ public class EntityAmphibiyte extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.0;
+		return 0d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 60;
+		return 37d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 6;
+		return 3.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.3285;
+		return 0.28d;
 	}
 
 	@Override
@@ -96,28 +92,15 @@ public class EntityAmphibiyte extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.mobAmphibiyteHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityAmphibiyte;
+	}
+
 	@Override
 	protected boolean isValidLightLevel() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 5 + rand.nextInt(8 + lootingMod));
-		dropItem(ItemRegister.amphibiyteLung, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSea), 1);
-	}
-
-	@Override
-	public int getHunterReq() {
-		return 30;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 25;
 	}
 
 	@Override
@@ -150,11 +133,6 @@ public class EntityAmphibiyte extends AoAMeleeMob implements HunterEntity {
 
 			StringUtil.sendMessageWithinRadius(StringUtil.getLocale("message.mob.corallus.spawn"), cause.getTrueSource(), 50);
 		}
-	}
-
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return this.mobProperties;
 	}
 
 	@Override

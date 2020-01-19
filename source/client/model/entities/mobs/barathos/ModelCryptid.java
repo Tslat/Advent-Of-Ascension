@@ -6,27 +6,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelCryptid extends ModelBase {
-	ModelRenderer head;
-	ModelRenderer leg1;
-	ModelRenderer leg2;
-	ModelRenderer leg3;
-	ModelRenderer leg4;
-	ModelRenderer body;
-	ModelRenderer body2;
-	ModelRenderer body3;
-	ModelRenderer body4;
-	ModelRenderer head2;
-	ModelRenderer leg4p2;
-	ModelRenderer leg2p2;
-	ModelRenderer leg1p2;
-	ModelRenderer leg3p2;
-	ModelRenderer leg4p3;
-	ModelRenderer leg2p3;
-	ModelRenderer leg1p3;
-	ModelRenderer leg3p3;
-	ModelRenderer head3;
-	ModelRenderer body5;
-	ModelRenderer body6;
+	private ModelRenderer head;
+	private ModelRenderer leg1;
+	private ModelRenderer leg2;
+	private ModelRenderer leg3;
+	private ModelRenderer leg4;
+	private ModelRenderer body;
+	private ModelRenderer body2;
+	private ModelRenderer body3;
+	private ModelRenderer body4;
+	private ModelRenderer head2;
+	private ModelRenderer leg4p2;
+	private ModelRenderer leg2p2;
+	private ModelRenderer leg1p2;
+	private ModelRenderer leg3p2;
+	private ModelRenderer leg4p3;
+	private ModelRenderer leg2p3;
+	private ModelRenderer leg1p3;
+	private ModelRenderer leg3p3;
+	private ModelRenderer head3;
+	private ModelRenderer body5;
+	private ModelRenderer body6;
 
 	public ModelCryptid() {
 		textureWidth = 128;

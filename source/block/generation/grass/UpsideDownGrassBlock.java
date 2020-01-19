@@ -8,8 +8,12 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class UpsideDownGrassBlock extends GrassBlock {
+	public UpsideDownGrassBlock(String name, String registryName, Block dirtBlock, float hardness, float resistance) {
+		super(name, registryName, dirtBlock, hardness, resistance);
+	}
+
 	public UpsideDownGrassBlock(String name, String registryName, Block dirtBlock) {
-		super(name, registryName, dirtBlock);
+		this(name, registryName, dirtBlock, 0.6f, 0.0f);
 	}
 
 	@Override

@@ -1,23 +1,17 @@
 package net.tslat.aoa3.entity.mobs.candyland;
 
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.properties.HunterEntity;
-import net.tslat.aoa3.library.Enums;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
 
-public class EntityCaneBug extends AoAMeleeMob implements HunterEntity {
+public class EntityCaneBug extends AoAMeleeMob {
 	public static final float entityWidth = 1f;
 
 	public EntityCaneBug(World world) {
@@ -31,22 +25,22 @@ public class EntityCaneBug extends AoAMeleeMob implements HunterEntity {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8f;
+		return 0.2f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 90;
+		return 94d;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 7;
+		return 8.5d;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.29d;
 	}
 
 	@Nullable
@@ -61,24 +55,10 @@ public class EntityCaneBug extends AoAMeleeMob implements HunterEntity {
 		return SoundsRegister.candyThump;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(15 - lootingMod) == 0)
-			dropItem(ItemRegister.candyCane, 1);
-
-		if (rand.nextInt(3) == 0)
-			dropItem(ItemRegister.tokensCandyland, 1 + rand.nextInt(2 + lootingMod));
-
-		if (rand.nextInt(90 - lootingMod) == 0)
-			dropItem(WeaponRegister.staffCandy, 1);
-
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerCandy), 1);
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.coinCopper, 1 + rand.nextInt(3 + lootingMod));
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityCaneBug;
 	}
 
 	@Override
@@ -90,23 +70,7 @@ public class EntityCaneBug extends AoAMeleeMob implements HunterEntity {
 	}
 
 	@Override
-	public int getHunterReq() {
-		return 55;
-	}
-
-	@Override
-	public float getHunterXp() {
-		return 280;
-	}
-
-	@Override
 	public EnumCreatureAttribute getCreatureAttribute() {
 		return EnumCreatureAttribute.ARTHROPOD;
-	}
-
-	@Nonnull
-	@Override
-	public TreeSet<Enums.MobProperties> getMobProperties() {
-		return mobProperties;
 	}
 }

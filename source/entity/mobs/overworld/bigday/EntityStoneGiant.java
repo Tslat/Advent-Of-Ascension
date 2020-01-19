@@ -1,30 +1,35 @@
 package net.tslat.aoa3.entity.mobs.overworld.bigday;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import java.util.TreeSet;
 
 import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 
-public class EntityStoneGiant extends AoAMeleeMob {
+public class EntityStoneGiant extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 1.125f;
 
 	public EntityStoneGiant(World world) {
 		super(world, entityWidth, 6.5f);
+
+		mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 	}
 
 	@Override
@@ -34,22 +39,27 @@ public class EntityStoneGiant extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1.0;
+		return 1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 95;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 10;
+		return 11.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.28d;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 4d;
 	}
 
 	@Override
@@ -67,6 +77,12 @@ public class EntityStoneGiant extends AoAMeleeMob {
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityStoneGiant;
+	}
+
 	@Override
 	public boolean canBePushed() {
 		return false;
@@ -75,16 +91,6 @@ public class EntityStoneGiant extends AoAMeleeMob {
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(Blocks.STONE), 32 + rand.nextInt(1 + lootingMod * 4));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override
@@ -121,5 +127,16 @@ public class EntityStoneGiant extends AoAMeleeMob {
 			target.addVelocity(motionX * 21 * resist, motionY * 1.6 * resist, motionZ * 21 * resist);
 			target.velocityChanged = true;
 		}
+	}
+
+	@Override
+	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
+		return EntityUtil.isRangedDamage(source, this, damage);
+	}
+
+	@Nonnull
+	@Override
+	public TreeSet<Enums.MobProperties> getMobProperties() {
+		return mobProperties;
 	}
 }

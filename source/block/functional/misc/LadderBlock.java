@@ -15,7 +15,7 @@ import java.util.Random;
 public class LadderBlock extends BlockLadder {
 	public LadderBlock(String name, String registryName, float hardness, float resistance) {
 		super();
-		setUnlocalizedName(name);
+		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		setHardness(hardness);
 		setResistance(resistance);
@@ -40,7 +40,7 @@ public class LadderBlock extends BlockLadder {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing facing = EnumFacing.getFront(meta);
+		EnumFacing facing = EnumFacing.byIndex(meta);
 
 		if (facing.getAxis() == EnumFacing.Axis.Y)
 			facing = EnumFacing.NORTH;

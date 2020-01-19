@@ -7,10 +7,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGrenade;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class GrenadeRenderer extends Render<EntityGrenade> {
 	private final ResourceLocation texture;
 

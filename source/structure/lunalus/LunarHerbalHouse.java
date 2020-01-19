@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.EntityZalHerbalist;
+import net.tslat.aoa3.entity.npcs.trader.EntityZalHerbalist;
 import net.tslat.aoa3.entity.npcs.ambient.EntityZalCitizen;
 import net.tslat.aoa3.structure.AoAStructure;
 

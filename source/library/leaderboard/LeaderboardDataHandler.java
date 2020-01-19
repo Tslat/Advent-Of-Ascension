@@ -47,7 +47,7 @@ public class LeaderboardDataHandler {
 				leaderboards.put(skill, new Leaderboard(skill));
 			}
 			catch (IOException e) {
-				AdventOfAscension.getLogger().log(Level.ERROR, "No file access to leaderboard files in " + dataDir.getAbsolutePath() + ", disabling leaderboards");
+				AdventOfAscension.logMessage(Level.ERROR, "No file access to leaderboard files in " + dataDir.getAbsolutePath() + ", disabling leaderboards");
 				e.printStackTrace();
 				AoALeaderboard.kill();
 			}
@@ -72,19 +72,19 @@ public class LeaderboardDataHandler {
 			}
 		}
 		catch (FileNotFoundException e) {
-			AdventOfAscension.getLogger().log(Level.ERROR,"Unable to load leaderboard from file: I can't find the file!");
+			AdventOfAscension.logMessage(Level.ERROR,"Unable to load leaderboard from file: I can't find the file!");
 			e.printStackTrace();
 
 			return;
 		}
 		catch (IOException e) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unable to load leaderboard from file: I can't access the file!");
+			AdventOfAscension.logMessage(Level.ERROR, "Unable to load leaderboard from file: I can't access the file!");
 			e.printStackTrace();
 
 			return;
 		}
 		catch (ClassNotFoundException e) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unable to load leaderboard from file: The file appears to be tampered with. Please don't do that.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unable to load leaderboard from file: The file appears to be tampered with. Please don't do that.");
 			e.printStackTrace();
 
 			return;
@@ -118,7 +118,7 @@ public class LeaderboardDataHandler {
 				skillFile.createNewFile();
 			}
 			catch (IOException e) {
-				AdventOfAscension.getLogger().log(Level.ERROR, "No file access to leaderboard files in " + dataDir.getAbsolutePath() + ", disabling leaderboards");
+				AdventOfAscension.logMessage(Level.ERROR, "No file access to leaderboard files in " + dataDir.getAbsolutePath() + ", disabling leaderboards");
 				e.printStackTrace();
 			}
 		}
@@ -134,13 +134,13 @@ public class LeaderboardDataHandler {
 			oos.close();
 		}
 		catch (FileNotFoundException e) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unable to save leaderboard to file: I can't create the file!");
+			AdventOfAscension.logMessage(Level.ERROR, "Unable to save leaderboard to file: I can't create the file!");
 			e.printStackTrace();
 
 			return;
 		}
 		catch (IOException e) {
-			AdventOfAscension.getLogger().log(Level.ERROR,"Unable to save leaderboard to file: Failure to write to file");
+			AdventOfAscension.logMessage(Level.ERROR,"Unable to save leaderboard to file: Failure to write to file");
 			e.printStackTrace();
 
 			return;

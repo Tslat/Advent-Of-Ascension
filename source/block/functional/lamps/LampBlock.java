@@ -8,19 +8,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.tslat.aoa3.block.CustomStateMapperBlock;
 import net.tslat.aoa3.block.functional.lights.LightBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
 import java.util.Random;
 
-public class LampBlock extends LightBlock {
+public class LampBlock extends LightBlock implements CustomStateMapperBlock {
 	public static final PropertyBool FIXED_LAMP = PropertyBool.create("fixed_state");
 
 	protected boolean turnedOn = true;
@@ -34,6 +33,7 @@ public class LampBlock extends LightBlock {
 		setDefaultState(getDefaultState().withProperty(FIXED_LAMP, false));
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public StateMap getStateMapper() {
 		return (new StateMap.Builder().ignore(FIXED_LAMP).build());
@@ -53,18 +53,10 @@ public class LampBlock extends LightBlock {
 	}
 
 	public LampBlock getOffLamp() {
-		return offLamp;
-	}
-
-	public LampBlock getOnLamp() {
-		return onLamp;
-	}
-
-	public LampBlock registerOffLamp(IForgeRegistry<Block> registry) {
 		if (offLamp != null)
 			return offLamp;
 
-		LampBlock offLamp = new LampBlock(getUnlocalizedName().replace("tile.", "") + "Off", getRegistryName().getResourcePath() + "_off",getDefaultState().getMaterial(), 0.0f, blockHardness, blockResistance);
+		LampBlock offLamp = new LampBlock(getTranslationKey().replace("tile.", "") + "Off", getRegistryName().getPath() + "_off", getDefaultState().getMaterial(), 0.0f, blockHardness, blockResistance);
 		offLamp.turnedOn = false;
 		this.offLamp = offLamp;
 		this.onLamp = this;
@@ -72,14 +64,12 @@ public class LampBlock extends LightBlock {
 		offLamp.onLamp = onLamp;
 
 		onLamp.setCreativeTab(null);
-		registry.register(offLamp);
-		return this;
+
+		return offLamp;
 	}
 
-	public LampBlock registerOffLampItem(IForgeRegistry<Item> registry) {
-		registry.register(new ItemBlock(offLamp).setRegistryName(offLamp.getRegistryName()));
-
-		return this;
+	public LampBlock getOnLamp() {
+		return onLamp;
 	}
 
 	@Override

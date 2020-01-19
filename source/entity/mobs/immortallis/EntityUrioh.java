@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.mobs.immortallis;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
@@ -22,17 +23,17 @@ public class EntityUrioh extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.1;
+		return 0.0f;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 75;
+		return 35;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 5;
+		return 11;
 	}
 
 	@Override
@@ -58,24 +59,17 @@ public class EntityUrioh extends AoAMeleeMob {
 		return SoundsRegister.mobApparitionHit;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return null;
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (getHealth() < 10) {
-			setSize(0.05f, 0.09375f);
-		}
-		else if (getHealth() < 25) {
-			setSize(0.1f, 0.1875f);
-		}
-		else if (getHealth() < 40) {
-			setSize(0.2f, 0.375f);
-		}
-		else if (getHealth() < 60) {
-			setSize(0.3f, 0.5625f);
-		}
-		else {
-			setSize(0.5f, 0.9375f);
-		}
+		float scale = Math.max(0.1f, getHealth() / getMaxHealth());
+		setSize(0.5f * scale, 0.9375f * scale);
 	}
 }

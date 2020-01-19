@@ -3,14 +3,12 @@ package net.tslat.aoa3.entity.mobs.lborean;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
@@ -31,17 +29,17 @@ public class EntityNeptuno extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0.4;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 75;
+		return 132;
 	}
 
 	@Override
 	protected double getBaseMeleeDamage() {
-		return 7;
+		return 15;
 	}
 
 	@Override
@@ -67,25 +65,18 @@ public class EntityNeptuno extends AoAMeleeMob {
 		return SoundsRegister.mobNeptunoHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 10;
-	}
-
-	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.realmstoneBorean, 1);
-
-		if (rand.nextBoolean())
-			dropItem(WeaponRegister.greatbladeCoral, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityNeptuno;
 	}
 
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isInWater() && getHealth() > 0)
-			heal(0.6f);
+		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
+			heal(0.2f);
 	}
 
 	@Override
@@ -97,8 +88,7 @@ public class EntityNeptuno extends AoAMeleeMob {
 			if (attrib != null)
 				resist -= attrib.getAttributeValue();
 
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 50, 0, true, true));
-			target.addVelocity(motionX * 7 * resist, motionY * 1.5 * resist, motionZ * 7 * resist);
+			target.addVelocity(motionX * 4 * resist, motionY * 1.5 * resist, motionZ * 4 * resist);
 			target.velocityChanged = true;
 		}
 	}

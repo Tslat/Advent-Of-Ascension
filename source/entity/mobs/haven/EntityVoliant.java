@@ -4,16 +4,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityVolarShot;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -31,17 +33,17 @@ public class EntityVoliant extends AoAFlyingRangedMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 140;
+		return 120;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 20;
+		return 13;
 	}
 
 	@Override
@@ -73,29 +75,25 @@ public class EntityVoliant extends AoAFlyingRangedMob {
 		return SoundsRegister.mobVoliantHit;
 	}
 
+	@Nullable
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 15;
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityVoliant;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.realmstoneHaven, 1);
-		dropItem(ItemRegister.tokensHaven, 3 + rand.nextInt(2 + lootingMod));
-		dropItem(ItemRegister.voliantHeart, 1);
-
-		if (rand.nextBoolean())
-			dropItem(WeaponRegister.cannonRPG, 1);
+	protected double getSpawnChanceFactor() {
+		return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier / 10d;
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 4.0f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1.5f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, IBlockState blockHit, BlockPos pos, EnumFacing sideHit) {
-		world.createExplosion(this, projectile.posX, projectile.posY, projectile.posZ, 4.0f, false);
+		WorldUtil.createExplosion(this, world, projectile, 1.5f);
 	}
 
 	@Override

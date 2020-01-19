@@ -1,12 +1,11 @@
 package net.tslat.aoa3.entity.boss.skeletalarmy;
 
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
@@ -72,13 +71,12 @@ public class EntityEliteSkelePig extends AoAMeleeMob {
 	}
 
 	@Override
-	protected SoundEvent getStepSound() {
-		return null;
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		if (rand.nextInt(7) == 0)
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerSkeletal), 1);
+	protected SoundEvent getStepSound() {
+		return null;
 	}
 }

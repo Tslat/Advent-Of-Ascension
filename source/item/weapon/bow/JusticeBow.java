@@ -3,50 +3,35 @@ package net.tslat.aoa3.item.weapon.bow;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
-import net.tslat.aoa3.entity.projectiles.arrow.EntityTippedHollyArrow;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
 public class JusticeBow extends BaseBow {
 	public JusticeBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
-		setUnlocalizedName("JusticeBow");
+		setTranslationKey("JusticeBow");
 		setRegistryName("aoa3:justice_bow");
 	}
 
 	@Override
-	public void doImpactEffect(EntityHollyArrow arrow, Entity target, Entity shooter) {
-		if (target instanceof EntityLivingBase) {
-			if (arrow instanceof EntityTippedHollyArrow && shooter instanceof EntityLivingBase && ((EntityTippedHollyArrow)arrow).getBasePotionEffect() == MobEffects.SLOWNESS) {
-				if (!arrow.world.isRemote) {
-					EntityPotion pot = new EntityPotion(arrow.world, (EntityLivingBase)shooter, PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), PotionTypes.SLOWNESS));
-					pot.setPosition(target.posX, target.posY + target.getEyeHeight(), target.posZ);
-					pot.motionY -= 1.0f;
-					arrow.world.spawnEntity(pot);
-				}
-			}
+	public float getArrowDamage(EntityHollyArrow arrow, Entity target, float currentDamage) {
+		if (arrow.getShooter() instanceof EntityLivingBase && ((EntityLivingBase)arrow.getShooter()).getRevengeTarget() == target)
+			return currentDamage * 1.25f;
 
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 100));
-		}
+		return super.getArrowDamage(arrow, target, currentDamage);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.JusticeBow.desc.1", TextFormatting.DARK_GREEN));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.JusticeBow.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

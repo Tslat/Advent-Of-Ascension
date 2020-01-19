@@ -1,8 +1,6 @@
 package net.tslat.aoa3.entity.boss.dracyon;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
@@ -10,37 +8,31 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.audio.BossMusicSound;
 import net.tslat.aoa3.common.packet.PacketScreenOverlay;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntitySpectralShot;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.library.scheduling.async.DracyonCleanupTask;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
+import java.util.concurrent.TimeUnit;
 
 public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoARangedAttacker {
 	private static final ResourceLocation bossBarTexture = new ResourceLocation("aoa3", "textures/gui/bossbars/dracyon.png");
 	public static final float entityWidth = 1.4f;
-
-	@SideOnly(Side.CLIENT)
-	protected BossMusicSound bossMusic;
 
 	public EntityDracyon(World world) {
 		super(world, entityWidth, 1.3125f);
@@ -91,26 +83,23 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 		return SoundsRegister.mobDracyonLiving;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityDracyon;
+	}
+
 	@Override
 	public boolean isNonBoss() {
 		return false;
 	}
 
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(BlockRegister.statueDracyon), 1);
+	public void onUpdate() {
+		super.onUpdate();
 
-		switch (rand.nextInt(3)) {
-			case 0:
-				dropItem(WeaponRegister.gunDraco, 1);
-				break;
-			case 1:
-				dropItem(WeaponRegister.bowBoreic, 1);
-				break;
-			case 2:
-				dropItem(WeaponRegister.staffReef, 1);
-				break;
-		}
+		if (world.isRemote && ticksExisted == 1)
+			playMusic(this);
 	}
 
 	@Override
@@ -118,8 +107,10 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 		super.onLivingUpdate();
 
 		if (!world.isRemote) {
-			if (rand.nextInt(200) == 0 && !world.provider.doesWaterVaporize() && world.getBlockState(getPosition()).getMaterial().isReplaceable())
-				world.setBlockState(getPosition(), Blocks.FLOWING_WATER.getDefaultState());
+			if (rand.nextInt(200) == 0 && !world.provider.doesWaterVaporize() && world.getBlockState(getPosition()).getMaterial().isReplaceable()) {
+				world.setBlockState(getPosition(), Blocks.WATER.getDefaultState());
+				new DracyonCleanupTask(world, getPosition()).schedule(5, TimeUnit.SECONDS);
+			}
 
 			if (rand.nextInt(70) == 0 && getAttackTarget() != null) {
 				EntityLivingBase target = getAttackTarget();
@@ -131,7 +122,7 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 				double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 				world.playSound(null, posX, posY, posZ, SoundsRegister.mobDracyonLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
-				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getDifficultyId()));
+				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 				world.spawnEntity(projectile);
 			}
 		}
@@ -170,6 +161,12 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 		return bossBarTexture;
 	}
 
+	@Nullable
+	@Override
+	public SoundEvent getBossMusic() {
+		return SoundsRegister.musicDracyon;
+	}
+
 	@Override
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
 		if (EntityUtil.dealBlasterDamage(this, target, projectile, 13.5f, false))
@@ -193,24 +190,5 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 			return;
 
 		super.setAttackTarget(target);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void checkMusicStatus() {
-		SoundHandler soundHandler = Minecraft.getMinecraft().getSoundHandler();
-
-		if (!this.isDead && getHealth() > 0) {
-			if (BossMusicSound.isAvailable()) {
-				if (bossMusic == null)
-					bossMusic = new BossMusicSound(SoundsRegister.musicDracyon, this);
-
-				soundHandler.stopSounds();
-				soundHandler.playSound(bossMusic);
-			}
-		}
-		else {
-			soundHandler.stopSound(bossMusic);
-		}
 	}
 }

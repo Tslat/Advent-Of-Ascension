@@ -1,22 +1,21 @@
 package net.tslat.aoa3.entity.mobs.overworld.bigday;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 
@@ -25,6 +24,7 @@ public class EntityIceGiant extends AoAMeleeMob {
 
 	public EntityIceGiant(World world) {
 		super(world, entityWidth, 6.5f);
+		setSlipperyMovement();
 	}
 
 	@Override
@@ -34,12 +34,12 @@ public class EntityIceGiant extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 1.0;
+		return 1d;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 150;
+		return 60;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class EntityIceGiant extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.3d;
 	}
 
 	@Override
@@ -67,6 +67,12 @@ public class EntityIceGiant extends AoAMeleeMob {
 		return SoundsRegister.veryHeavyStep;
 	}
 
+	@Nullable
+	@Override
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityIceGiant;
+	}
+
 	@Override
 	public boolean canBePushed() {
 		return false;
@@ -75,16 +81,6 @@ public class EntityIceGiant extends AoAMeleeMob {
 	@Override
 	protected boolean isDaylightMob() {
 		return true;
-	}
-
-	@Override
-	protected void dropGuaranteedItems(int lootingMod, DamageSource source) {
-		dropItem(Item.getItemFromBlock(Blocks.ICE), 32 + rand.nextInt(1 + lootingMod * 4));
-	}
-
-	@Override
-	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && WorldUtil.isNaturalOverworldBlock(block);
 	}
 
 	@Override

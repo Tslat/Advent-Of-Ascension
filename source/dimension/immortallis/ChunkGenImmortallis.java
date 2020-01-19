@@ -7,7 +7,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.tslat.aoa3.common.registration.DimensionRegister;
+import net.tslat.aoa3.common.registration.BiomeRegister;
 import net.tslat.aoa3.structure.immortallis.ImmortallisDungeon;
 
 import javax.annotation.Nullable;
@@ -21,7 +21,7 @@ public class ChunkGenImmortallis implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = DimensionRegister.biomeImmortallis;
+	private final Biome biome = BiomeRegister.biomeImmortallis;
 
 	protected ChunkGenImmortallis(World world) {
 		this.world = world;

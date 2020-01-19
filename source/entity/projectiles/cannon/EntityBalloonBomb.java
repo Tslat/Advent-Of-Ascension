@@ -6,6 +6,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.WorldUtil;
 
 public class EntityBalloonBomb extends BaseBullet implements HardProjectile {
 	EntityLivingBase shooter;
@@ -30,6 +31,6 @@ public class EntityBalloonBomb extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		world.createExplosion(shooter, posX, posY, posZ, 1.5f, false);
+		WorldUtil.createExplosion(thrower, world, this, 1.5f);
 	}
 }

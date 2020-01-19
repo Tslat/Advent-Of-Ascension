@@ -1,9 +1,10 @@
 package net.tslat.aoa3.entity.mobs.overworld.lunarinvasion;
 
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -27,17 +28,22 @@ public class EntityModulo extends AoAFlyingRangedMob {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 90;
+		return 45;
 	}
 
 	@Override
 	public double getBaseProjectileDamage() {
-		return 4;
+		return 4.5;
 	}
 
 	@Override
 	protected double getBaseMovementSpeed() {
 		return 0.1;
+	}
+
+	@Override
+	protected double getBaseArmour() {
+		return 4d;
 	}
 
 	@Nullable
@@ -64,9 +70,10 @@ public class EntityModulo extends AoAFlyingRangedMob {
 		return SoundsRegister.gunIllusionSMG;
 	}
 
+	@Nullable
 	@Override
-	protected void dropSpecialItems(int lootingMod, DamageSource source) {
-		dropItem(ItemRegister.orbulon, 1);
+	protected ResourceLocation getLootTable() {
+		return LootSystemRegister.entityModulo;
 	}
 
 	@Override

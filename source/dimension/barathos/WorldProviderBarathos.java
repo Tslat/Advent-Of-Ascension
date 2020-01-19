@@ -86,9 +86,9 @@ public class WorldProviderBarathos extends WorldProvider implements AoAWorldProv
 	@SideOnly(Side.CLIENT)
 	public Vec3d getFogColor(float x, float z) {
 		float f2 = MathHelper.clamp(MathHelper.cos(x * (float)Math.PI * 2.0F) * 2.0F + 0.5F, 1.5f, 5f);
-		float f3 = 0.6F * f2;
+		float f3 = 0.5F * f2;
 		float f4 = 0.3F * f2;
-		float f5 = 0.3F * f2;
+		float f5 = 0.2F * f2;
 		return new Vec3d(f3, f4, f5);
 	}
 

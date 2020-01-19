@@ -5,11 +5,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 import org.apache.logging.log4j.Level;
 
 public final class AoAPlayerAPI {
@@ -32,16 +31,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return -1;
-
-			return cap.getLevel(skill);
+			return PlayerUtil.getAdventPlayer(player).stats().getLevel(Enums.Skills.valueOf(skillName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getLevel() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getLevel() request.");
 			ex.printStackTrace();
 		}
 
@@ -61,12 +54,7 @@ public final class AoAPlayerAPI {
 		if (player == null)
 			return "";
 
-		AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-		if (cap == null)
-			return "";
-
-		Enums.ArmourSets set = cap.getArmourSetType();
+		Enums.ArmourSets set = PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet();
 
 		if (set == null)
 			return "";
@@ -90,16 +78,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Resources res = Enums.Resources.valueOf(resource.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return -1;
-
-			return cap.getResourceValue(res);
+			return PlayerUtil.getAdventPlayer(player).stats().getResourceValue(Enums.Resources.valueOf(resource.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#getResourceValue() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#getResourceValue() request.");
 			ex.printStackTrace();
 		}
 
@@ -141,7 +123,7 @@ public final class AoAPlayerAPI {
 			}
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#getResourceValue() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#getResourceValue() request.");
 			ex.printStackTrace();
 		}
 
@@ -171,16 +153,11 @@ public final class AoAPlayerAPI {
 		if (resource == null || player == null)
 			return false;
 
-		try {Enums.Resources res = Enums.Resources.valueOf(resource.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return false;
-
-			return cap.consumeResource(res, amount, forceConsume);
+		try {
+			return PlayerUtil.getAdventPlayer(player).stats().consumeResource(Enums.Resources.valueOf(resource.toUpperCase()), amount, forceConsume);
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#regenResource() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#regenResource() request.");
 			ex.printStackTrace();
 		}
 
@@ -202,16 +179,10 @@ public final class AoAPlayerAPI {
 			return;
 
 		try {
-			Enums.Resources res = Enums.Resources.valueOf(resource.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return;
-
-			cap.resourceRegen(res, Math.max(amount, 0));
+			PlayerUtil.getAdventPlayer(player).stats().regenResource(Enums.Resources.valueOf(resource.toUpperCase()), Math.max(amount, 0));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#regenResource() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown resource name: " + resource.toUpperCase() + ", dropping AoAPlayerAPI#regenResource() request.");
 			ex.printStackTrace();
 		}
 	}
@@ -233,16 +204,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Deities deity = Enums.Deities.valueOf(deityName.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return -1;
-
-			return cap.getTribute(deity);
+			return PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.valueOf(deityName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown deity name: " + deityName.toUpperCase() + ", dropping AoAPlayerAPI#getTributeValue() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown deity name: " + deityName.toUpperCase() + ", dropping AoAPlayerAPI#getTributeValue() request.");
 			ex.printStackTrace();
 		}
 
@@ -265,16 +230,10 @@ public final class AoAPlayerAPI {
 			return;
 
 		try {
-			Enums.Deities deity = Enums.Deities.valueOf(deityName.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return;
-
-			cap.addTribute(deity, Math.max(0, amount));
+			PlayerUtil.getAdventPlayer(player).stats().addTribute(Enums.Deities.valueOf(deityName.toUpperCase()), Math.max(0, amount));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown deity name: " + deityName.toUpperCase() + ", dropping AoAPlayerAPI#increaseTribute() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown deity name: " + deityName.toUpperCase() + ", dropping AoAPlayerAPI#increaseTribute() request.");
 			ex.printStackTrace();
 		}
 	}
@@ -288,15 +247,7 @@ public final class AoAPlayerAPI {
 	 * Will return {@code null} if no target found or the method otherwise fails
 	 */
 	public static EntityLivingBase getVulcaneTarget(EntityPlayer player) {
-		if (player == null)
-			return null;
-
-		AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-		if (cap == null)
-			return null;
-
-		return cap.getRevengeTarget();
+		return player != null ? PlayerUtil.getAdventPlayer(player).getRevengeTarget() : null;
 	}
 
 	/**
@@ -305,16 +256,11 @@ public final class AoAPlayerAPI {
 	 * @param target an {@code EntityLivingBase} object to set as the player's revenge target.
 	 * @param player the {@code EntityPlayer} player for which to set the revenge target for.
 	 */
-	public static void setVulcanismTarget(EntityLivingBase target, EntityPlayer player) {
+	public static void setRevengeTarget(EntityLivingBase target, EntityPlayer player) {
 		if (target == null || player == null)
 			return;
 
-		AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-		if (cap == null)
-			return;
-
-		cap.enableRevenge(target);
+		PlayerUtil.getAdventPlayer(player).enableRevenge(target);
 	}
 
 	/**
@@ -326,12 +272,7 @@ public final class AoAPlayerAPI {
 		if (player == null)
 			return;
 
-		AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-		if (cap == null)
-			return;
-
-		cap.disableRevenge();
+		PlayerUtil.getAdventPlayer(player).disableRevenge();
 	}
 
 	/**
@@ -353,16 +294,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return -1;
-
-			return cap.getExp(skill);
+			return PlayerUtil.getAdventPlayer(player).stats().getExp(Enums.Skills.valueOf(skillName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getCurrentXp() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getCurrentXp() request.");
 			ex.printStackTrace();
 		}
 
@@ -387,16 +322,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
-			AdventPlayerCapability cap = (AdventPlayerCapability)player.getCapability(AdventPlayerProvider.ADVENT_PLAYER, null);
-
-			if (cap == null)
-				return -1;
-
-			return cap.getXpRemaining(skill);
+			return PlayerUtil.getXpRemainingUntilLevel(PlayerUtil.getAdventPlayer(player), Enums.Skills.valueOf(skillName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getCurrentXp() request.");
+			AdventOfAscension.logMessage(Level.ERROR, "Unknown skill name: " + skillName.toUpperCase() + ", dropping AoAPlayerAPI#getCurrentXp() request.");
 			ex.printStackTrace();
 		}
 
@@ -423,12 +352,10 @@ public final class AoAPlayerAPI {
 			return -1;
 		
 		try {
-			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
-
-			return AdventGuiTabPlayer.getPercentCompleteLevel(skill);
+			return AdventGuiTabPlayer.getPercentCompleteLevel(Enums.Skills.valueOf(skillName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.WARN, "Invalid skill name request getPercentLevelComplete API call: " + skillName);
+			AdventOfAscension.logMessage(Level.WARN, "Invalid skill name request getPercentLevelComplete API call: " + skillName);
 
 			return -1;
 		}
@@ -463,7 +390,7 @@ public final class AoAPlayerAPI {
 			return ConfigurationUtil.MainConfig.showVanityLevels && includeVanityLevels ? lvl : Math.min(lvl, 100);
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.WARN, "Invalid skill name request getClientSkillLevel API call: " + skillName);
+			AdventOfAscension.logMessage(Level.WARN, "Invalid skill name request getClientSkillLevel API call: " + skillName);
 
 			return -1;
 		}
@@ -488,12 +415,10 @@ public final class AoAPlayerAPI {
 			return -1;
 
 		try {
-			Enums.Skills skill = Enums.Skills.valueOf(skillName.toUpperCase());
-
-			return AdventGuiTabPlayer.getSkillXp(skill);
+			return AdventGuiTabPlayer.getSkillXp(Enums.Skills.valueOf(skillName.toUpperCase()));
 		}
 		catch (IllegalArgumentException ex) {
-			AdventOfAscension.getLogger().log(Level.WARN, "Invalid skill name request getClientSkillXp API call: " + skillName);
+			AdventOfAscension.logMessage(Level.WARN, "Invalid skill name request getClientSkillXp API call: " + skillName);
 
 			return -1;
 		}

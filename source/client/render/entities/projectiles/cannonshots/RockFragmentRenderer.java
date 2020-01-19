@@ -1,57 +1,77 @@
 package net.tslat.aoa3.client.render.entities.projectiles.cannonshots;
 
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.model.entities.projectiles.ModelCobblestoneProjectile;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityRockFragment;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 
+@SideOnly(Side.CLIENT)
 public class RockFragmentRenderer extends Render<EntityRockFragment> {
 	private final ResourceLocation texture;
+	private final ModelBase model = new ModelCobblestoneProjectile();
 
 	public RockFragmentRenderer(final RenderManager manager, final ResourceLocation textureResource) {
 		super(manager);
+
 		texture = textureResource;
 	}
 
 	@Override
 	public void doRender(EntityRockFragment entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
-		bindEntityTexture(entity);
-		GlStateManager.translate((float)x, (float)y,(float)z);
-		GlStateManager.enableRescaleNormal();
-		GlStateManager.scale(0.5f, 0.5f, 0.5f);
+		GlStateManager.disableCull();
 
-		Tessellator tess = Tessellator.getInstance();
-		BufferBuilder buffer = tess.getBuffer();
+		try {
+			GlStateManager.translate(x, y + 1, z);
 
-		GlStateManager.rotate(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+			float rotation = entity.ticksExisted + partialTicks;
 
-		if (renderOutlines) {
-			GlStateManager.enableColorMaterial();
-			GlStateManager.enableOutlineMode(getTeamColor(entity));
+			GlStateManager.enableAlpha();
+			GlStateManager.rotate(180, 0, 0, 0);
+			this.renderModel(entity, 0, rotation, entity.ticksExisted, 0, 0, 0.0625F);
+			GlStateManager.depthMask(true);
+			GlStateManager.disableRescaleNormal();
+			GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+			GlStateManager.enableTexture2D();
+			GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+		}
+		catch (Exception ex) {
+			AdventOfAscension.logMessage(Level.ERROR, "Failed Rock Fragment Render", ex);
+			ex.printStackTrace();
 		}
 
-		buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-		buffer.pos(-0.5D, -0.25D, 0.0D).tex(0.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buffer.pos(0.5D, -0.25D, 0.0D).tex(1.0D, 1.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buffer.pos(0.5D, 0.75D, 0.0D).tex(1.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buffer.pos(-0.5D, 0.75D, 0.0D).tex(0.0D, 0.0D).normal(0.0F, 1.0F, 0.0F).endVertex();
-		tess.draw();
 
-		if (renderOutlines) {
-			GlStateManager.disableOutlineMode();
-			GlStateManager.disableColorMaterial();
-		}
-
-		GlStateManager.disableRescaleNormal();
+		GlStateManager.enableCull();
 		GlStateManager.popMatrix();
+	}
+
+	private void renderModel(EntityRockFragment entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+		boolean flag = !entity.isInvisible() || renderOutlines;
+		boolean flag1 = !flag && !entity.isInvisibleToPlayer(Minecraft.getMinecraft().player);
+
+		if (flag || flag1) {
+			if (!this.bindEntityTexture(entity))
+				return;
+
+			if (flag1)
+				GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+
+			this.model.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
+
+			if (flag1)
+				GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
+		}
 	}
 
 	@Nullable
