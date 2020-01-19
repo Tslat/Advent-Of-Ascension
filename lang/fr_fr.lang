@@ -514,6 +514,7 @@ advancement.aoa.voxponds.root.desc=Visitez les Lacs Toxiques
 advancement.aoa.voxponds.root.title=Pas l'air très bon pour la santé
 advancement.aoa.voxponds.spray_and_wipe.desc=Battez Voxxulon, l'inconnu
 advancement.aoa.voxponds.spray_and_wipe.title=Asperger et nettoyer
+
 command.aoa.invalidArgument=Argument invalide: %1$s
 command.aoa.noConsole=Cet argument ne peut pas être utilisé par la console ou un bloc de commande: %1$s
 command.aoa.noPlayer=Ne trouve pas de joueur en ligne avec ce nom: %1$s
@@ -554,8 +555,10 @@ command.aoastructure.usage=/aoastructure list <pageNum> OU /aoastructure [Struct
 command.aoawiki.desc=AoAwiki - Recherchez dans le wiki Gamepedia du mod une information
 command.aoawiki.response=Voilà le résultat de la recherche AoAwiki: %s
 command.aoawiki.usage=Utilisation: /aoawiki <search_term>
+
 container.aoa3.divineStation=Station divine
 container.aoa3.infusion=Infusion
+
 death.attack.acid=%1$s a été dissous dans de l'acide
 death.attack.aoe.item=%1$s a été détruit par %2$s qui utilisait %3$s
 death.attack.aoe.player=%1$s a été détruit par %2$s
@@ -571,10 +574,7 @@ death.attack.skeletanium=%1$s a rencontré du squelettanium
 death.attack.temple_trap=%1$s a été tué par les pièges du temple
 death.attack.toxic_block=Les blocs toxiques ont mis %1$s au repos éternel
 death.attack.vox_ponds=%1$s est tombé victime de l'atmosphère des Lacs Toxiques
-deities.erebon.name=Erebon
-deities.luxon.name=Luxon
-deities.pluton.name=Pluton
-deities.selyan.name=Selyan
+
 dimension.aoa.abyss=Les Abysses
 dimension.aoa.ancientCavern=Caverne Antique
 dimension.aoa.barathos=Barathos
@@ -599,6 +599,7 @@ dimension.aoa.precasia=Précasia
 dimension.aoa.runandor=Runandor
 dimension.aoa.shyrelands=Les Shyrelands
 dimension.aoa.voxPonds=Les Lacs Toxiques
+
 enchantment.archmage=Archimage
 enchantment.brace=Support
 enchantment.control=Contrôle
@@ -609,6 +610,7 @@ enchantment.intervention=Intervention
 enchantment.recharge=Rechargement
 enchantment.sever=Aiguisage
 enchantment.shell=Bombardement
+
 entity.aoa3.abyssal_lottoman.name=Vendeur abyssal
 entity.aoa3.agility_tablet.name=Tablette d'agilité
 entity.aoa3.airhead.name=Chewing-gum
@@ -1344,6 +1346,7 @@ entity.aoa3.zal_vendor.name=Vendeur Zal
 entity.aoa3.zarg.name=Zarg
 entity.aoa3.zhinx.name=Zinx
 entity.aoa3.zorp.name=Zorp
+
 fluid.aoa3.baronyte.name=Baronite en fusion
 fluid.aoa3.blazium.name=Blazium en fusion
 fluid.aoa3.candied_water.name=Eau sucrée
@@ -1358,6 +1361,7 @@ fluid.aoa3.mystite.name=Mystite en fusion
 fluid.aoa3.rosite.name=Rosite en fusion
 fluid.aoa3.skeletal.name=Métal squelettique en fusion
 fluid.aoa3.varsium.name=Varsium en fusion
+
 gui.aoaconfig.allowUnsafeInfusion=Autoriser l'infusion dangereuse
 gui.aoaconfig.customEntityAnimationsEnabled=Activer les animations customisées des entités
 gui.aoaconfig.dimensionIds=IDs des dimensions
@@ -1630,6 +1634,7 @@ gui.realmstoneMenu.hover.shyrelands=Combinez une relique vierge et de la solutio
 gui.realmstoneMenu.hover.voxPonds=Montrez une relique vierge à un vendeur creeponien en portant une combinaison radioactive
 gui.realmstoneMenu.title=Défis des divinités
 gui.resources.showTip='%1$s' pour voir les ressources.
+
 item.Abominator.name=Abominator
 item.AbyssalUpgradeKit.name=Kit d'amélioration abyssal
 item.AbyssRealmstone.name=Relique des Abysses
@@ -3297,6 +3302,7 @@ item.ZargoniteChestplate.name=Plastron de zargonite
 item.ZargoniteHelmet.name=Casque de zargonite
 item.ZargoniteLegs.name=Jambières de zargonite
 item.ZhinxDust.name=Poussière de zinx
+
 itemGroup.AdventAmmoTab=Munitions d'Advent
 itemGroup.AdventArchergunsTab=Arbalètes d'Advent
 itemGroup.AdventArmourTab=Armures d'Advent
@@ -3322,6 +3328,7 @@ itemGroup.AdventTabletsTab=Tablettes d'Advent
 itemGroup.AdventThrownWeaponsTab=Armes de lancer d'Advent
 itemGroup.AdventToolsTab=Outils d'Advent
 itemGroup.AdventVulcanesTab=Sceptres d'Advent
+
 items.description.ammo.arrows=Munitions: flèches houleuses
 items.description.ammo.bullets=Munitions: balles en limonite
 items.description.ammo.cannonballs=Munitions: boulets de canon
@@ -3395,6 +3402,7 @@ items.description.throwable.speed=Vitesse de lancer: %1$s/sec
 items.description.thrownWeapon=Arme lancée
 items.description.tool.skeletal=Rempli de calcium
 items.description.vulcane.use=Utiliser lorsque la revanche est active
+
 key.adventGui=Ouvrir la fenêtre menu d'Advent of Ascension
 key.categories.advent=Touches d'advent
 key.cstats=Activer les icônes des monstres
@@ -3601,10 +3609,17 @@ message.mob.voxStoreKeeper.spawn=Commerçant: Est-ce que je peux sortir?
 message.mob.voxxulon.kill=%1$s a vaincu Voxxulon!
 message.mob.voxxulon.spawn=%1$s sent une terrible odeur!
 message.mob.xxeus.kill=%1$s a vaincu Xxeus!
+
+deities.erebon.name=Erebon
+deities.luxon.name=Luxon
+deities.pluton.name=Pluton
+deities.selyan.name=Selyan
+
 resources.creation.name=Création
 resources.energy.name=Energie
 resources.rage.name=Rage de combat
 resources.soul.name=Pouvoir des âmes
+
 skills.alchemy.name=Alchimie
 skills.anima.name=Anima
 skills.augury.name=Augure
@@ -3620,6 +3635,7 @@ skills.infusion.name=Infusion
 skills.innervation.name=Létalité
 skills.logging.name=Bûchage
 skills.runation.name=Runation
+
 tile.AbyssalGlass.name=Verre abyssal
 tile.AbyssalStone.name=Roche abyssale
 tile.AbyssGrass.name=Herbe des Abysses
