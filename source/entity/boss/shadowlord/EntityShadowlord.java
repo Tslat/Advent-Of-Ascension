@@ -7,7 +7,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -20,7 +19,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityShadowlordShot;
@@ -298,7 +298,7 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 	}
 
 	private void shootAtBlockPos(int head, double posX, double posY, double posZ) {
-		EntityShadowlordShot projectile = new EntityShadowlordShot(this, Enums.MobProjectileType.ENERGY);
+		EntityShadowlordShot projectile = new EntityShadowlordShot(this, Enums.MobProjectileType.MAGIC);
 
 		double distanceFactorX = posX - projectile.posX;
 		double distanceFactorY = posY - projectile.posY;
@@ -388,38 +388,6 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 	@Override
 	protected boolean canBeRidden(Entity entityIn) {
 		return false;
-	}
-
-	@Override
-	protected void dropLoot(boolean wasRecentlyHit, int lootingMod, DamageSource source) {
-		if (wasRecentlyHit) {
-			dropItem(Item.getItemFromBlock(BlockRegister.statueShadowlord), 1);
-
-			if (rand.nextInt(7) == 0)
-				dropItem(Item.getItemFromBlock(BlockRegister.bannerShadow), 1);
-
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(WeaponRegister.swordShadow, 1);
-					break;
-				case 1:
-					dropItem(WeaponRegister.cannonShadowBlaster, 1);
-					break;
-				case 2:
-					dropItem(WeaponRegister.cannonBigBlast, 1);
-					break;
-				case 3:
-					dropItem(WeaponRegister.staffShadowlord, 1);
-					break;
-			}
-		}
-
-		if (rand.nextBoolean()) {
-			dropItem(WeaponRegister.throwableGrenade, 16 + 3 * rand.nextInt(3 + lootingMod));
-		}
-		else {
-			dropItem(ItemRegister.cannonball, 16 + 3 * rand.nextInt(3 + lootingMod));
-		}
 	}
 
 	@Override

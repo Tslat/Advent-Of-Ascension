@@ -82,8 +82,9 @@ public class EntityArchvine extends AoAMeleeMob {
         if (state.getBlock() == BlockRegister.candiedWater) {
             if (!candiedWater) {
                 EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
-
                 setHealth(getHealth() * 1.5f);
+
+                candiedWater = true;
             }
         }
     }

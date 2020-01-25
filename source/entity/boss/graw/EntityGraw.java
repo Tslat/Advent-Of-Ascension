@@ -157,7 +157,7 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityGrawShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityGrawShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

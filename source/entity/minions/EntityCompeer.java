@@ -14,7 +14,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityCompeer extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.65625f;
 
 	public EntityCompeer(final World world){
 		super(world, -1, entityWidth, 1.1875f);
@@ -22,7 +22,7 @@ public class EntityCompeer extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 1.13f;
+		return 1.09375f;
 	}
 
 	@Override

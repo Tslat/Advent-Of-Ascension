@@ -20,14 +20,14 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class MilleniumGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class MillenniumGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
 	private final double baseDmg;
 	private final double maxDmg;
 
-	public MilleniumGreatblade(double dmg, double speed, int durability) {
+	public MillenniumGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
-		setTranslationKey("MilleniumGreatblade");
-		setRegistryName("aoa3:millenium_greatblade");
+		setTranslationKey("MillenniumGreatblade");
+		setRegistryName("aoa3:millennium_greatblade");
 
 		this.baseDmg = dmg - (dmg / 2d);
 		this.maxDmg = dmg + (dmg / 2d);

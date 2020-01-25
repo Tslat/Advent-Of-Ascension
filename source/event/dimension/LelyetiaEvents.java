@@ -27,7 +27,12 @@ public class LelyetiaEvents {
 				}
 			}
 		}
-		else if (pl.posY > 57 && (pl.motionY > 0 || pl.hasNoGravity())) {
+		else if (pl.posY > 57) {
+			if (pl.motionY > 0 || pl.hasNoGravity()) {
+				pl.setNoGravity(false);
+			}
+		}
+		else if (pl.motionY < 0.2 && pl.motionY > -0.2) {
 			pl.setNoGravity(false);
 		}
 	}

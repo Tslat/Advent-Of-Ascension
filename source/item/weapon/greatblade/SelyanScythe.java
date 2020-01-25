@@ -26,7 +26,7 @@ public class SelyanScythe extends BaseGreatblade implements AdventWeapon, LongRe
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = (float)dmg / dmgDealt;
+		float damagePercent = Math.min(dmgDealt / (float)dmg, 1f);
 
 		attacker.heal(0.75f * damagePercent);
 

@@ -12,15 +12,15 @@ import net.tslat.aoa3.utils.EntityUtil;
 import javax.annotation.Nullable;
 
 public class EntityConstructOfServility extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.75f;
 
 	public EntityConstructOfServility(final World world){
-		super(world, -1, entityWidth, 1.875f);
+		super(world, -1, entityWidth, 1.75f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 1.7f;
+		return 1.5f;
 	}
 
 	@Override

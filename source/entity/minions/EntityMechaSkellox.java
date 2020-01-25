@@ -20,7 +20,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityMechaSkellox extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.8f;
 
 	public EntityMechaSkellox(final World world){
 		super(world, -1, entityWidth, 2.375f);
@@ -29,7 +29,7 @@ public class EntityMechaSkellox extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 2.0125f;
+		return 2.09375f;
 	}
 
 	@Override

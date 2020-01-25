@@ -1,6 +1,5 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
-import net.minecraft.block.BlockOre;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,6 +13,7 @@ import net.tslat.aoa3.common.registration.MaterialsRegister;
 import net.tslat.aoa3.entity.misc.EntityOccultBlock;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class OccultPickaxe extends BasePickaxe {
 			for (int i = (int)(player.posX - 4.0); i < (int)(player.posX + 4.0); ++i) {
 				for (int j = (int)(player.posY - 4.0); j < (int)(player.posY + 4.0); ++j) {
 					for (int k = (int)(player.posZ - 4.0); k < (int)(player.posZ + 4.0); ++k) {
-						if (world.getBlockState(new BlockPos(i, j, k)).getBlock() instanceof BlockOre)
+						if (WorldUtil.isOreBlock(world.getBlockState(new BlockPos(i, j, k))))
 							world.spawnEntity(new EntityOccultBlock(world, new BlockPos(i, j, k)));
 					}
 				}

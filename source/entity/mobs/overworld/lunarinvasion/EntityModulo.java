@@ -78,7 +78,7 @@ public class EntityModulo extends AoAFlyingRangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityModuloShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityModuloShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

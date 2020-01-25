@@ -89,7 +89,7 @@ public class EntityGhostlyGoblin extends AoARangedMob implements SpecialProperty
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityMagicBall(this, Enums.MobProjectileType.ENERGY);
+		return new EntityMagicBall(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nonnull

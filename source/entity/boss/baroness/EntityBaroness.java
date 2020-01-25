@@ -128,7 +128,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityBaronessShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityBaronessShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

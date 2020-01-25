@@ -452,6 +452,17 @@ public class EntityUtil {
 		return bossItem;
 	}
 
+	public static void reapplyAttributeModifier(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
+		IAttributeInstance instance = entity.getEntityAttribute(attribute);
+
+		if (instance != null) {
+			if (instance.getModifier(modifier.getID()) != null)
+				instance.removeModifier(modifier.getID());
+
+			instance.applyModifier(modifier);
+		}
+	}
+
 	public static void applyAttributeModifierSafely(EntityLivingBase entity, IAttribute attribute, AttributeModifier modifier) {
 		IAttributeInstance instance = entity.getEntityAttribute(attribute);
 

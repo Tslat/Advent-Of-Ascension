@@ -321,4 +321,12 @@ public class WorldUtil {
 
 		return matches;
 	}
+
+	public static boolean isOreBlock(Block block) {
+		return block instanceof BlockOre || block instanceof BlockRedstoneOre;
+	}
+
+	public static boolean isOreBlock(IBlockState block) {
+		return isOreBlock(block.getBlock());
+	}
 }

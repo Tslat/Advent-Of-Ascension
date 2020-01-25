@@ -514,7 +514,6 @@ advancement.aoa.voxponds.root.desc=访问未知世界
 advancement.aoa.voxponds.root.title=很不卫生
 advancement.aoa.voxponds.spray_and_wipe.desc=击败未知者-不详巨物
 advancement.aoa.voxponds.spray_and_wipe.title=喷洒与清扫
-
 command.aoa.invalidArgument=无效实际参数：%1$s
 command.aoa.noConsole=该实际参数不能在控制台或命令方块使用：%1$s
 command.aoa.noPlayer=无法找到任何指定在线玩家名称：%1$s
@@ -555,10 +554,8 @@ command.aoastructure.usage=/aoastructure list <页数> 或 /aoastructure [结构
 command.aoawiki.desc=AoAwiki - 搜索本Mod的Gamepedia wiki以了解更多信息
 command.aoawiki.response=这是你AoA Wiki的搜索结果： %s
 command.aoawiki.usage=用法：/aoawiki <search_term>
-
 container.aoa3.divineStation=神圣祭坛
 container.aoa3.infusion=聚合
-
 death.attack.acid=%1$s 酸死了
 death.attack.aoe.item=%1$s被%2$s用%3$s消灭了
 death.attack.aoe.player=%1$s被%2$s消灭了
@@ -574,12 +571,10 @@ death.attack.skeletanium=%1$s不慎步入骷髅元素块
 death.attack.temple_trap=%1$s掉入神庙陷阱
 death.attack.toxic_block=%1$s躺在剧毒方块上长眠不起
 death.attack.vox_ponds=%1$s沦为未知毒气的受害者
-
 deities.erebon.name=埃瑞本
 deities.luxon.name=卢克森
 deities.pluton.name=普洛顿
 deities.selyan.name=塞里安
-
 dimension.aoa.abyss=深渊
 dimension.aoa.ancientCavern=远古神殿
 dimension.aoa.barathos=爵士
@@ -604,7 +599,6 @@ dimension.aoa.precasia=传说
 dimension.aoa.runandor=符境
 dimension.aoa.shyrelands=塞尔瑞
 dimension.aoa.voxPonds=未知
-
 enchantment.archmage=法术
 enchantment.brace=攥紧
 enchantment.control=支配
@@ -615,7 +609,6 @@ enchantment.intervention=干预
 enchantment.recharge=充能
 enchantment.sever=断绝
 enchantment.shell=炮弹
-
 entity.aoa3.abyssal_lottoman.name=深渊乐透兑换人
 entity.aoa3.agility_tablet.name=石板：敏捷
 entity.aoa3.airhead.name=空脑壳
@@ -1351,7 +1344,6 @@ entity.aoa3.zal_vendor.name=扎尔爆破手
 entity.aoa3.zarg.name=扎尔格
 entity.aoa3.zhinx.name=间线
 entity.aoa3.zorp.name=卓普
-
 fluid.aoa3.baronyte.name=熔融爵士金属
 fluid.aoa3.blazium.name=熔融烈焰金属
 fluid.aoa3.candied_water.name=糖果的水
@@ -1366,7 +1358,6 @@ fluid.aoa3.mystite.name=熔融神秘金属
 fluid.aoa3.rosite.name=熔融玫石
 fluid.aoa3.skeletal.name=熔融骷髅金属
 fluid.aoa3.varsium.name=熔融超金
-
 gui.aoaconfig.allowUnsafeInfusion=允许不安全的聚合
 gui.aoaconfig.customEntityAnimationsEnabled=启用自定义实体动画
 gui.aoaconfig.dimensionIds=维度ID
@@ -1541,6 +1532,7 @@ gui.aoamain.bestiary.downloading=下载AoA生物数据……
 gui.aoamain.bestiary.empty=这里空空如也，你或许应该击杀一些什么东西
 gui.aoamain.bestiary.health=生命值：
 gui.aoamain.bestiary.hunterReq=所需狩猎等级：
+gui.aoamain.bestiary.hunterXp=Hunter Xp:
 gui.aoamain.bestiary.immunity.blaster_immune=爆能枪
 gui.aoamain.bestiary.immunity.explosion_immune=爆炸
 gui.aoamain.bestiary.immunity.fire_immune=火焰
@@ -1639,7 +1631,6 @@ gui.realmstoneMenu.hover.shyrelands=将一个空白纯宝石与一些魔法修�
 gui.realmstoneMenu.hover.voxPonds=装备着危险套装时向蠕变商人展示你的空白纯宝石
 gui.realmstoneMenu.title=神之挑战
 gui.resources.showTip=按'%1$s'查看资源。
-
 item.Abominator.name=厌恶者
 item.AbyssalUpgradeKit.name=升级包：深渊
 item.AbyssRealmstone.name=深渊纯宝石
@@ -1760,6 +1751,7 @@ item.BayonetteSR.name=刺刀SR
 item.Beamer.desc.1=连续发射3个子弹流
 item.Beamer.name=光束
 item.BeatSoundCannon.name=节奏声波加农
+item.BigBlast.desc.1=Explodes on Impact
 item.BigBlast.name=巨炮
 item.BigTop.name=大陀螺
 item.BiogenicArmour.desc.1=被近战敌人击中时将其减速，并随着攻击的增强而增强
@@ -2595,8 +2587,8 @@ item.MetalTub.name=金属桶
 item.MeteorStaff.desc.1=从天上坠下爆炸流星
 item.MeteorStaff.name=流星法杖
 item.Miasma.name=瘴气
-item.MilleniumGreatblade.name=千年巨剑
-item.MilleniumUpgrader.name=升级装置：千年
+item.MillenniumGreatblade.name=Millennium Greatblade
+item.MillenniumUpgrader.name=Millennium Upgrader
 item.MindBlaster.name=心灵冲击者
 item.Mineral.name=矿物
 item.MiniCannon.name=MiNi加农
@@ -2917,6 +2909,7 @@ item.RuneBox.name=符文箱
 item.RuneStone.name=符石
 item.RunicArmour.desc.1=+10%%魔法伤害抗性
 item.RunicArmour.desc.2=受到魔法伤害时提供一个小护盾
+item.RunicArmour.desc.3=Effect Can Only be Used Once Every 5 Minutes
 item.RunicBomb.desc.1=眩晕周围所有敌人
 item.RunicBomb.name=符文炸弹
 item.RunicBoots.name=符文靴子
@@ -3307,7 +3300,6 @@ item.ZargoniteChestplate.name=领域胸甲
 item.ZargoniteHelmet.name=领域头盔
 item.ZargoniteLegs.name=领域护腿
 item.ZhinxDust.name=间线尘
-
 itemGroup.AdventAmmoTab=虚无世界：弹药
 itemGroup.AdventArchergunsTab=虚无世界：弩
 itemGroup.AdventArmourTab=虚无世界：盔甲
@@ -3333,7 +3325,6 @@ itemGroup.AdventTabletsTab=虚无世界：石板
 itemGroup.AdventThrownWeaponsTab=虚无世界：投掷型武器
 itemGroup.AdventToolsTab=虚无世界：工具
 itemGroup.AdventVulcanesTab=虚无世界：浊流
-
 items.description.ammo.arrows=弹药：冬青箭
 items.description.ammo.bullets=弹药：子弹
 items.description.ammo.cannonballs=弹药：加农弹
@@ -3407,7 +3398,6 @@ items.description.throwable.speed=投掷速度：%1$s/秒
 items.description.thrownWeapon=投掷型武器
 items.description.tool.skeletal=高钙
 items.description.vulcane.use=处于复仇状态即可使用
-
 key.adventGui=打开虚无世界窗口
 key.categories.advent=虚无世界：按键
 key.cstats=打开/关闭生物属性免疫类型图标
@@ -3477,6 +3467,7 @@ message.event.tribute.pluton=普洛顿对你的贡献印象深刻。
 message.event.tribute.selyan=塞里安赐予你祝福以奖赏你。
 message.feedback.crystalExtensionShrine.crystals=这个祭坛需要吸收更多水晶
 message.feedback.extraction.fail=熔岩缓缓滤过，但除了沮丧一无所获。
+message.feedback.extraction.noSpace=There isn't enough space below the device to operate
 message.feedback.extraction.nothing=该装置过滤出了一个物品到你的碗里，但它瞬间就碎成渣了。
 message.feedback.extraction=你获得了：%1$s
 message.feedback.immortallisProgression.evilSpiritsEnd=你已经收割了25个恶灵，你可以进入下一关了。
@@ -3614,12 +3605,10 @@ message.mob.voxStoreKeeper.spawn=商店老板：我终于自由了！
 message.mob.voxxulon.kill=%1$s击败了不详巨物！
 message.mob.voxxulon.spawn=霎时间，%1$s闻到了一阵恶臭。
 message.mob.xxeus.kill=%1$s击败了远古战神！
-
 resources.creation.name=召唤力
 resources.energy.name=能量
 resources.rage.name=战斗怒火
 resources.soul.name=灵魂力
-
 skills.alchemy.name=炼金
 skills.anima.name=灵气
 skills.augury.name=占卜
@@ -3635,7 +3624,6 @@ skills.infusion.name=注魔
 skills.innervation.name=支配
 skills.logging.name=砍伐
 skills.runation.name=魔力
-
 tile.AbyssalGlass.name=深渊玻璃
 tile.AbyssalStone.name=深渊石头
 tile.AbyssGrass.name=深渊草方块

@@ -80,10 +80,10 @@ public class EntityUndeadTroll extends AoARangedMob {
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		if (rand.nextBoolean()) {
-			return new EntityBloodball(this, Enums.MobProjectileType.ENERGY);
+			return new EntityBloodball(this, Enums.MobProjectileType.MAGIC);
 		}
 		else {
-			return new EntityAquaball(this, Enums.MobProjectileType.ENERGY);
+			return new EntityAquaball(this, Enums.MobProjectileType.MAGIC);
 		}
 	}
 

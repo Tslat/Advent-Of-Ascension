@@ -84,7 +84,7 @@ public class EntitySpectralWizard extends AoARangedMob implements SpecialPropert
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntitySpectralShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntitySpectralShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

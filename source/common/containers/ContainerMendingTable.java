@@ -49,14 +49,11 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 
 			@Override
 			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
-				inputs.setInventorySlotContents(0, ItemStack.EMPTY);
-
-				if (totalMaterialCost > 1) {
+				if (totalMaterialCost > 0) {
 					ItemStack repairMaterialStack = inputs.getStackInSlot(1);
 
 					if (!repairMaterialStack.isEmpty() && repairMaterialStack.getCount() >= totalMaterialCost) {
 						repairMaterialStack.shrink(totalMaterialCost);
-						inputs.setInventorySlotContents(1, repairMaterialStack);
 					}
 					else {
 						inputs.setInventorySlotContents(1, ItemStack.EMPTY);
@@ -65,6 +62,8 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 				else {
 					inputs.setInventorySlotContents(1, ItemStack.EMPTY);
 				}
+
+				inputs.setInventorySlotContents(0, ItemStack.EMPTY);
 
 				return stack;
 			}
@@ -87,7 +86,7 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 			else {
 				ItemStack repairedStack = repairStack.copy();
 
-				if (repairMaterial.getItem() == ItemRegister.magicRepairDust || repairMaterial.getItem() == ItemRegister.magicMendingCompound || repairedStack.getItem().getIsRepairable(repairStack, repairMaterial)) {
+				if (repairMaterial.getItem() == ItemRegister.magicRepairDust || repairMaterial.getItem() == ItemRegister.magicMendingCompound) {
 					int repairPortionValue = (repairMaterial.getItem() == ItemRegister.magicMendingCompound ? repairedStack.getItemDamage() : Math.min(repairedStack.getItemDamage(), repairedStack.getMaxDamage() / 5));
 
 					if (repairPortionValue <= 0) {
@@ -96,7 +95,7 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 					else {
 						int repairCount;
 
-						for (repairCount = 1; repairPortionValue > 0 && repairCount <= repairMaterial.getCount(); repairCount++) {
+						for (repairCount = 0; repairPortionValue > 0 && repairCount <= repairMaterial.getCount(); repairCount++) {
 							repairedStack.setItemDamage(repairedStack.getItemDamage() - repairPortionValue);
 
 							repairPortionValue = Math.min(repairedStack.getItemDamage(), repairedStack.getMaxDamage() / 5);

@@ -51,7 +51,7 @@ public class JeiHooks implements IModPlugin {
 
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.alienOrb));
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.fleshyBones));
-		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.milleniumUpgrader));
+		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.millenniumUpgrader));
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.moltenUpgrader));
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.moonstone));
 		blacklist.addIngredientToBlacklist(new ItemStack(ItemRegister.oldBoot));

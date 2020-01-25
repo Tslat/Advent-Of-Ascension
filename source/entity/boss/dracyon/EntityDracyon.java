@@ -114,7 +114,7 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 
 			if (rand.nextInt(70) == 0 && getAttackTarget() != null) {
 				EntityLivingBase target = getAttackTarget();
-				BaseMobProjectile projectile = new EntitySpectralShot(this, Enums.MobProjectileType.ENERGY);
+				BaseMobProjectile projectile = new EntitySpectralShot(this, Enums.MobProjectileType.MAGIC);
 
 				double distanceFactorX = target.posX - projectile.posX;
 				double distanceFactorY = target.getEntityBoundingBox().minY + (target.height / 3) - projectile.posY;

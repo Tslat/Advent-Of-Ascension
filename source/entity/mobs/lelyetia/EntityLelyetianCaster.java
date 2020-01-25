@@ -86,6 +86,6 @@ public class EntityLelyetianCaster extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityLelyetianShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityLelyetianShot(this, Enums.MobProjectileType.MAGIC);
 	}
 }

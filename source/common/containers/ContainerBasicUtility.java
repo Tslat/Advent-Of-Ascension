@@ -15,8 +15,6 @@ public abstract class ContainerBasicUtility extends Container {
 	private final BlockPos pos;
 	private final EntityPlayer player;
 
-	private int totalMaterialCost = 0;
-
 	public ContainerBasicUtility(EntityPlayer player, World world, BlockPos pos) {
 		this.world = world;
 		this.pos = pos;

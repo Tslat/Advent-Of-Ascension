@@ -61,6 +61,7 @@ public class FlamingFury extends BaseGun implements AdventWeapon {
 		cloud.setOwner(shooter);
 		cloud.setParticle(EnumParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(1f);
+		cloud.setWaitTime(0);
 		cloud.setDuration(20);
 		cloud.setRadiusPerTick((5.0F - cloud.getRadius()) / (float)cloud.getDuration());
 		cloud.addEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE, 1, 0));

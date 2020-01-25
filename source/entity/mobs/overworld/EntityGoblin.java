@@ -77,7 +77,7 @@ public class EntityGoblin extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityMagicBall(this, Enums.MobProjectileType.ENERGY);
+		return new EntityMagicBall(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

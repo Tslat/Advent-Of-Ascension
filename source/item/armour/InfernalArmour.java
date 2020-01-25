@@ -27,7 +27,7 @@ public class InfernalArmour extends AdventArmour {
 	public Enums.ArmourSets setType() {
 		return Enums.ArmourSets.INFERNAL;
 	}
-	// TODO Crafting recipe
+
 	@Override
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
 		if (event.getSource().isFireDamage() && slots != null)

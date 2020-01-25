@@ -150,7 +150,7 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 			if (killer != null)
 				StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.smash.kill", killer.getDisplayNameString()), this, 50);
 		}
-		else if (getBossMusic() != null) {
+		else if (getBossMusic() != null ) {
 			AdventOfAscension.proxy.stopMusic();
 		}
 	}

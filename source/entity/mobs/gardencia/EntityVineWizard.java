@@ -81,7 +81,7 @@ public class EntityVineWizard extends AoARangedMob implements SpecialPropertyEnt
 
     @Override
     public void attackEntityWithRangedAttack(@Nonnull EntityLivingBase target, float bowDamageFactor) {
-        world.spawnEntity(new EntityVineWizardShot(this, target, Enums.MobProjectileType.ENERGY));
+        world.spawnEntity(new EntityVineWizardShot(this, target, Enums.MobProjectileType.MAGIC));
     }
 
     @Override
@@ -99,8 +99,9 @@ public class EntityVineWizard extends AoARangedMob implements SpecialPropertyEnt
         if (state.getBlock() == BlockRegister.candiedWater) {
             if (!candiedWater) {
                 EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
-
                 setHealth(getHealth() * 1.5f);
+
+                candiedWater = true;
             }
         }
     }

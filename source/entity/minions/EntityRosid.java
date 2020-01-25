@@ -26,7 +26,7 @@ public class EntityRosid extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 0.75f;
+		return 0.71875f;
 	}
 
 	@Override

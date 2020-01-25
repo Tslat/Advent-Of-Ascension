@@ -10,15 +10,15 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityCorby extends AoAMinion {
-	public static final float entityWidth = 1.2f;
+	public static final float entityWidth = 0.8f;
 
 	public EntityCorby(final World world){
-		super(world, -1, entityWidth, 1.1f);
+		super(world, -1, entityWidth, 1.0625f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 0.95f;
+		return 0.90625f;
 	}
 
 	@Override

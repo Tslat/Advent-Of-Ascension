@@ -64,7 +64,7 @@ public class EntityEliteSkeleman extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntitySpiritualShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntitySpiritualShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nullable

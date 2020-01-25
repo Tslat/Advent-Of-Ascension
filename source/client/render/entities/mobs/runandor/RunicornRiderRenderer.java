@@ -26,7 +26,7 @@ public class RunicornRiderRenderer extends RenderLiving<EntityRunicornRider> {
 	public void doRender(EntityRunicornRider entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-		if (entity.motionX > 0 || entity.motionZ > 0 || entity.motionY > 0) {
+		if (entity.getHealth() > 0 && !entity.isDead && (entity.motionX > 0 || entity.motionZ > 0 || entity.motionY > 0)) {
 			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 5, 0.75f).create();
 			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 0.75f).create();
 			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.05, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 5, 0.75f).create();

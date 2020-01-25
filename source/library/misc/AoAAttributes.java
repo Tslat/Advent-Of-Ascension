@@ -66,8 +66,6 @@ public final class AoAAttributes {
 	}
 
 	/* Spares
-		9c59eceb-dcd0-40e0-a608-a46d3794b1c3
-		a7cd0b89-ca94-4e54-a0c4-f56e8cb70bb0
 		93bb7485-ce86-4e78-ab50-26f53d78ad9d
 		678cb085-1367-42c3-8437-d07ade6201d0
 		f2b95d53-fb23-47af-8770-2a63e55e1444

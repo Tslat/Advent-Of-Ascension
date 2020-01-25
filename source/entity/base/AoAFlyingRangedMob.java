@@ -273,9 +273,6 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
             case GUN:
                 success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage());
                 break;
-            case ENERGY:
-                success = EntityUtil.dealBlasterDamage(this, target, projectile, (float)getBaseProjectileDamage(), false);
-                break;
             case PHYSICAL:
                 success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage());
                 break;

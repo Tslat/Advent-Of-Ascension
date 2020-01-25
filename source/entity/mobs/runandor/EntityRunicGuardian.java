@@ -63,9 +63,9 @@ public class EntityRunicGuardian extends AoARangedMob {
 
 	@Override
 	public void attackEntityWithRangedAttack(@Nonnull EntityLivingBase target, float bowDamageFactor) {
-		BaseMobProjectile projectile1 = new EntityRunicGuardianShotLight(this, Enums.MobProjectileType.ENERGY);
-		BaseMobProjectile projectile2 = new EntityRunicGuardianShot(this, Enums.MobProjectileType.ENERGY);
-		BaseMobProjectile projectile3 = new EntityRunicGuardianShotHeavy(this, Enums.MobProjectileType.ENERGY);
+		BaseMobProjectile projectile1 = new EntityRunicGuardianShotLight(this, Enums.MobProjectileType.MAGIC);
+		BaseMobProjectile projectile2 = new EntityRunicGuardianShot(this, Enums.MobProjectileType.MAGIC);
+		BaseMobProjectile projectile3 = new EntityRunicGuardianShotHeavy(this, Enums.MobProjectileType.MAGIC);
 
 		double distanceFactorX = target.posX - this.posX;
 		double distanceFactorY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0f) - projectile1.posY;

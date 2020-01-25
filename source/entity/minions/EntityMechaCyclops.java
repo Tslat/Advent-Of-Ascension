@@ -10,7 +10,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityMechaCyclops extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.5f;
 
 	public EntityMechaCyclops(final World world){
 		super(world, -1, entityWidth, 2.25f);

@@ -37,6 +37,8 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
+import static net.tslat.aoa3.advent.AdventOfAscension.rand;
+
 public class BlankRealmstone extends Item {
 	public BlankRealmstone() {
 		setTranslationKey("BlankRealmstone");
@@ -76,13 +78,12 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
-		if (player.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.creeponia && target instanceof AoATrader &&
-				PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet() == Enums.ArmourSets.HAZMAT && player.getHeldItem(hand).getItem() == ItemRegister.realmstoneBlank) {
+		if (player.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.creeponia && target instanceof AoATrader) {
 
-			if (!player.world.isRemote) {
+			if (!player.world.isRemote && PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet() == Enums.ArmourSets.HAZMAT && player.getHeldItem(hand).getItem() == ItemRegister.realmstoneBlank) {
 				player.setHeldItem(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneVoxPonds));
-				PlayerUtil.notifyPlayer((EntityPlayerMP)player, ((AoATrader)target).getInteractMessage(player.getHeldItem(hand)));
+				PlayerUtil.notifyPlayer((EntityPlayerMP)player, StringUtil.getLocaleString("message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3)));
 			}
 
 			return true;
