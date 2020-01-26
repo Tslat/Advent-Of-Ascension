@@ -45,7 +45,7 @@ public class Crystaneer extends BaseSniper implements AdventWeapon {
 			if (!populated)
 				populateGemDrops();
 
-			target.entityDropItem(gemDrops.get(gemDrops.size()), 0f);
+			target.entityDropItem(gemDrops.get(gemDrops.size() - 1), 0f);
 		}
 	}
 

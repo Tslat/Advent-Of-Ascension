@@ -143,7 +143,7 @@ public class EntityPenumbra extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityPenumbraShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityPenumbraShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

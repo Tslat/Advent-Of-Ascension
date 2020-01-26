@@ -63,8 +63,10 @@ public class RPG extends BaseCannon implements AdventWeapon {
 				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 6.66) / 100;
 
 			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier) && shooter instanceof EntityPlayerMP) {
-				if (target instanceof EntityLivingBase && ((EntityLivingBase)target).getHealth() == 0 && target.isAirBorne)
-					ModUtil.completeAdvancement((EntityPlayerMP)shooter, "overworld/surface_to_air", "rpg_air_kill");
+				if (target instanceof EntityLivingBase && ((EntityLivingBase)target).getHealth() == 0 && target.isAirBorne) {
+					if (target.world.isAirBlock(target.getPosition().down()) && target.world.isAirBlock(target.getPosition().down(2)))
+						ModUtil.completeAdvancement((EntityPlayerMP)shooter, "overworld/surface_to_air", "rpg_air_kill");
+				}
 			}
 		}
 	}

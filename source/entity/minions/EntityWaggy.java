@@ -14,7 +14,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityWaggy extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.9f;
 
 	public EntityWaggy(final World world){
 		super(world, -1, entityWidth, 0.9375f);
@@ -22,7 +22,7 @@ public class EntityWaggy extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 0.8f;
+		return 0.71875f;
 	}
 
 	@Override

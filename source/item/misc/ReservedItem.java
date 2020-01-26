@@ -82,7 +82,7 @@ public class ReservedItem extends SimpleItem {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (!target.world.isRemote) {
-			if (stack.getItem() == ItemRegister.milleniumUpgrader) {
+			if (stack.getItem() == ItemRegister.millenniumUpgrader) {
 				if (target.isInLava() && attacker.isInLava()) {
 					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemRegister.moltenUpgrader.newValidStack());
 

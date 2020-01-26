@@ -83,7 +83,7 @@ public class EntityLinger extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityBloodball(this, Enums.MobProjectileType.ENERGY);
+		return new EntityBloodball(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package net.tslat.aoa3.client.gui.merchants;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -10,10 +9,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.IMerchant;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -23,73 +19,85 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.model.pipeline.LightUtil;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.containers.ContainerBankerTrade;
+import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.StringUtil;
 import org.apache.logging.log4j.Level;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
-public class CorruptedTravellerGui extends GuiContainer {
-	private static final ResourceLocation guiTexture = new ResourceLocation("aoa3", "textures/gui/traders/corrupted_traveller_trade.png");
-	private static final ArrayList<ItemStack> validFoods = new ArrayList<ItemStack>();
+public class BankerGui extends GuiContainer {
+	private final AoATrader banker;
+	private final ResourceLocation guiTexture = new ResourceLocation("aoa3", "textures/gui/traders/banker_trade.png");
 
-	private long nextFoodTick = 0;
-	private ItemStack currentGhostlyFood = new ItemStack(Items.APPLE);
-
-	private final IMerchant corruptedTraveller;
 	private String guiTitle;
 
-	public CorruptedTravellerGui(Container container, IMerchant corruptedTraveller) {
+	public BankerGui(Container container, AoATrader banker) {
 		super(container);
 
-		this.corruptedTraveller = corruptedTraveller;
-		this.guiTitle = corruptedTraveller.getDisplayName().getUnformattedComponentText();
-	}
-
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+		this.ySize = 187;
+		this.banker = banker;
+		this.guiTitle = banker.getDisplayName().getUnformattedComponentText();
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.getTextureManager().bindTexture(guiTexture);
-
 		final int centerX = (width - xSize) / 2;
 		final int centerY = (height - ySize) / 2;
 
+		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+		mc.getTextureManager().bindTexture(guiTexture);
+
 		drawTexturedModalRect(centerX, centerY, 0, 0, xSize, ySize);
-		renderGhostlyFood(centerX, centerY);
+
+		if (mc.player != null)
+			renderCoinPlaceholders(centerX, centerY);
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		int titleWidth = 4 + mc.fontRenderer.getStringWidth(guiTitle);
 
-		if (titleWidth > xSize - 28 && corruptedTraveller instanceof Entity) {
-			guiTitle = StringUtil.getLocaleString("entity." + EntityList.getEntityString((Entity)corruptedTraveller) + ".name");
+		if (titleWidth > xSize - 28 && banker != null) {
+			guiTitle = StringUtil.getLocaleString("entity." + EntityList.getEntityString(banker) + ".name");
 			titleWidth = 4 + mc.fontRenderer.getStringWidth(guiTitle);
 		}
 
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.getTextureManager().bindTexture(guiTexture);
-		drawTexturedModalRect(28, 4, 176, 0, 1, 12);
+		drawTexturedModalRect(28, 4, 176, 15, 1, 12);
 
 		for (int i = 0; i < titleWidth - 2; i++) {
-			drawTexturedModalRect(29 + i, 4, 177, 0, 1, 12);
+			drawTexturedModalRect(29 + i, 4, 177, 15, 1, 12);
 		}
 
-		drawTexturedModalRect(28 + titleWidth - 2, 4, 178, 0, 1, 12);
+		drawTexturedModalRect(28 + titleWidth - 2, 4, 178, 15, 1, 12);
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		mc.fontRenderer.drawString(guiTitle, 30, 6, Enums.RGBIntegers.WHITE);
+	}
+
+	private void renderCoinPlaceholders(int centerX, int centerY) {
+		for (int i = 0; i < 12; i++) {
+			Slot slot = inventorySlots.getSlot(i);
+			ItemStack stack = slot.getStack();
+
+			if (stack.isEmpty()) {
+				ItemStack coinStack = new ItemStack(ContainerBankerTrade.getCoinForSlot(i));
+
+				itemRender.renderItemIntoGUI(coinStack, slot.xPos + centerX, slot.yPos + centerY);
+				shadeRenderedStack(coinStack, slot.xPos + centerX, slot.yPos + centerY);
+			}
+
+			if (i >= 6 && stack.isEmpty()) {
+				mc.getTextureManager().bindTexture(guiTexture);
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+				GlStateManager.disableLighting();
+				drawTexturedModalRect(centerX + slot.xPos - 22, centerY + slot.yPos + 1, 176, 0, 15, 15);
+			}
+		}
 	}
 
 	private void shadeRenderedStack(ItemStack stack, int posX, int posY) {
@@ -106,7 +114,7 @@ public class CorruptedTravellerGui extends GuiContainer {
 			GlStateManager.alphaFunc(516, 0.1f);
 			GlStateManager.enableBlend();
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			GlStateManager.color(1.0f, 1, 1, 1);
+			GlStateManager.color(1, 1, 1, 1);
 			GlStateManager.translate((float)posX, (float)posY, 100 + itemRender.zLevel);
 			GlStateManager.translate(8, 8, 8);
 			GlStateManager.scale(1f, -1f, 1f);
@@ -139,14 +147,14 @@ public class CorruptedTravellerGui extends GuiContainer {
 					List<BakedQuad> quads = model.getQuads(null, facing, 0);
 
 					for (int i = 0; i < quads.size(); ++i) {
-						LightUtil.renderQuadColor(buff, quads.get(i), -(0x90 << 24));
+						LightUtil.renderQuadColor(buff, quads.get(i), Enums.RGBIntegers.BLACK | (0x99 << 24));
 					}
 				}
 
 				List<BakedQuad> quads = model.getQuads(null, null, 0);
 
 				for (int i = 0; i < quads.size(); ++i) {
-					LightUtil.renderQuadColor(buff, quads.get(i), -(0x2F << 24));
+					LightUtil.renderQuadColor(buff, quads.get(i), Enums.RGBIntegers.BLACK | (0x99 << 24));
 				}
 
 				tess.draw();
@@ -167,31 +175,5 @@ public class CorruptedTravellerGui extends GuiContainer {
 			AdventOfAscension.logMessage(Level.WARN, "Error while rendering itemstack");
 			e.printStackTrace();
 		}
-	}
-
-	private void renderGhostlyFood(int centerX, int centerY) {
-		Slot slot = inventorySlots.getSlot(0);
-
-		if (!slot.getHasStack()) {
-			ItemStack stack = getGhostlyStack();
-
-			itemRender.renderItemIntoGUI(stack, slot.xPos + centerX, slot.yPos + centerY);
-			shadeRenderedStack(stack, slot.xPos + centerX, slot.yPos + centerY);
-		}
-	}
-
-	@Nonnull
-	private ItemStack getGhostlyStack() {
-		if (validFoods.isEmpty())
-			validFoods.addAll(OreDictionary.getOres("listAllFood"));
-
-		long worldTick = Minecraft.getMinecraft().world.getTotalWorldTime();
-
-		if (worldTick >= nextFoodTick) {
-			currentGhostlyFood = validFoods.get(AdventOfAscension.rand.nextInt(validFoods.size()));
-			nextFoodTick = worldTick + 20;
-		}
-
-		return currentGhostlyFood;
 	}
 }

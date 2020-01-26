@@ -47,17 +47,9 @@ public class WornBook extends ItemWrittenBook {
 		if (world.isRemote) {
 			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.WORN_BOOK.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
-		else if (bookStack.getTagCompound() == null || !bookStack.getTagCompound().hasKey("DroppedBlankRealmstone")) {
+		else if (ItemUtil.findItemInInventory(player, ItemRegister.realmstoneBlank) == -1) {
 			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneBlank));
 			player.sendMessage(StringUtil.getLocale("message.feedback.wornBook.droppedRealmstone"));
-
-			NBTTagCompound flagCompound = bookStack.getTagCompound();
-
-			if (flagCompound == null)
-				flagCompound = new NBTTagCompound();
-
-			flagCompound.setBoolean("DroppedBlankRealmstone", true);
-			bookStack.setTagCompound(flagCompound);
 		}
 
 		return ActionResult.newResult(EnumActionResult.SUCCESS, bookStack);

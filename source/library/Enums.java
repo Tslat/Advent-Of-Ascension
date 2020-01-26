@@ -417,7 +417,6 @@ public final class Enums {
 
 	public enum MobProjectileType {
 		MAGIC,
-		ENERGY,
 		PHYSICAL,
 		GUN,
 		OTHER
@@ -463,7 +462,8 @@ public final class Enums {
 		REALMSTONE_MENU(103),
 		MENDING_TABLE(104),
 		WHITEWASHING_TABLE(105),
-		DIVINE_STATION(106);
+		DIVINE_STATION(106),
+		BANKER(107);
 
 		public int guiId;
 
@@ -554,6 +554,8 @@ public final class Enums {
 					return WHITEWASHING_TABLE;
 				case 106:
 					return DIVINE_STATION;
+				case 107:
+					return BANKER;
 				default:
 					return null;
 			}

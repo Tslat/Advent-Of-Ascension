@@ -84,7 +84,7 @@ public class EntityClunkhead extends AoARangedMob implements SpecialPropertyEnti
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCyanShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCyanShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nonnull

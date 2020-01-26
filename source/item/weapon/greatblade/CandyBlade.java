@@ -58,7 +58,7 @@ public class CandyBlade extends BaseGreatblade implements AdventWeapon, LongReac
 			int foodHealAmount = Math.min(20 - pl.getFoodStats().getFoodLevel(), stack.getMaxDamage() - stack.getItemDamage());
 
 			pl.getFoodStats().addStats(foodHealAmount, 20f);
-			stack.damageItem(foodHealAmount, pl);
+			stack.damageItem(foodHealAmount * 2, pl);
 		}
 
 		return stack;

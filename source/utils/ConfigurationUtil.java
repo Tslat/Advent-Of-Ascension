@@ -77,7 +77,7 @@ public class ConfigurationUtil {
 
 		@Config.Comment("Adjust this value to modify how far to look for safe/existing portal locations. The lower the value, the faster it runs")
 		@Config.LangKey("gui.aoaconfig.portalSearchRadius")
-		public static int portalSearchRadius = 64;
+		public static int portalSearchRadius = 24;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Set this to true to enable the leaderboard functionality. Doing so on an existing leaderboard may cause issues with data accuracy on re-enabling until the mod catches back up")
@@ -1597,7 +1597,7 @@ public class ConfigurationUtil {
 		@Config.Comment("Value represents a modifier to general spawn rates. Higher = more spawns. Value between 0 and 1")
 		@Config.LangKey("gui.aoaconfig.entitySpawnModifier")
 		@Config.RangeDouble(min = 0, max = 1)
-		public static double mobSpawnFrequencyModifier = 0.1d;
+		public static double mobSpawnFrequencyModifier = 0.5d;
 
 		@Config.Comment("Add or remove Hunter entity attributes from creatures")
 		@Config.LangKey("gui.aoaconfig.hunterEntities")

@@ -88,7 +88,7 @@ public class EntityOmnilight extends AoAFlyingRangedMob implements SpecialProper
 
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
-        return new EntityOmnilightShot(this, Enums.MobProjectileType.ENERGY);
+        return new EntityOmnilightShot(this, Enums.MobProjectileType.MAGIC);
     }
 
     @Nonnull

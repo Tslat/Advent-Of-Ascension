@@ -24,6 +24,9 @@ public class EmberstoneAxe extends BaseAxe implements SpecialHarvestTool {
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
 		if (e.getState().getBlock() instanceof BlockLog) {
+			if (e.getDrops().isEmpty())
+				return;
+
 			World world = e.getWorld();
 			BlockPos pos = e.getPos();
 

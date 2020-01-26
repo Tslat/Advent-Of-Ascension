@@ -2,6 +2,7 @@ package net.tslat.aoa3.utils;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -29,5 +30,6 @@ public class OreDictUtil {
 
 		OreDictionary.registerOre("foodAllMushroom", Blocks.BROWN_MUSHROOM);
 		OreDictionary.registerOre("foodAllMushroom", Blocks.RED_MUSHROOM);
+		OreDictionary.registerOre("listAllfishraw", Items.FISH);
 	}
 }

@@ -109,7 +109,7 @@ public class EntityKingBamBamBam extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityBloodball(this, Enums.MobProjectileType.ENERGY);
+		return new EntityBloodball(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

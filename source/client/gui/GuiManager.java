@@ -13,6 +13,7 @@ import net.tslat.aoa3.client.gui.blocks.GuiDivineStation;
 import net.tslat.aoa3.client.gui.blocks.GuiFrameBench;
 import net.tslat.aoa3.client.gui.blocks.GuiInfusion;
 import net.tslat.aoa3.client.gui.mainwindow.AdventMainGui;
+import net.tslat.aoa3.client.gui.merchants.BankerGui;
 import net.tslat.aoa3.client.gui.merchants.CorruptedTravellerGui;
 import net.tslat.aoa3.client.gui.merchants.TraderGui;
 import net.tslat.aoa3.client.gui.misc.WornBookGui;
@@ -110,6 +111,8 @@ public class GuiManager implements IGuiHandler {
 					return new ContainerDivineStation(player, player.world, new BlockPos(x, y, z));
 				case WHITEWASHING_TABLE:
 					return new ContainerWhitewashingTable(player, player.world, new BlockPos(x, y, z));
+				case BANKER:
+					return new ContainerBankerTrade(player, getNearbyEntityGuiTarget(player, AoATrader.class, x));
 				default:
 					return null;
 			}
@@ -208,6 +211,13 @@ public class GuiManager implements IGuiHandler {
 					return new GuiDivineStation(player, StringUtil.getLocaleString("tile.DivineStation.name"), new ContainerDivineStation(player, world, BlockPos.ORIGIN));
 				case REALMSTONE_MENU:
 					return new GuiRealmstoneChallengeMenu();
+				case BANKER:
+					AoATrader banker = getNearbyEntityGuiTarget(player, AoATrader.class, x);
+
+					if (banker == null)
+						return null;
+
+					return new BankerGui(new ContainerBankerTrade(player, banker), banker);
 				default:
 					return null;
 			}

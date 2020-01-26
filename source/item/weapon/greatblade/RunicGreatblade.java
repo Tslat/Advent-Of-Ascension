@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.weapon.greatblade;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,7 +25,8 @@ public class RunicGreatblade extends BaseGreatblade implements AdventWeapon, Lon
 
 	@Override
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		EntityUtil.dealMagicDamage(null, attacker, target, 4, false);
+		if (!EntityUtil.isTypeImmune(target, Enums.MobProperties.MAGIC_IMMUNE))
+			EntityUtil.dealMagicDamage(null, attacker, target, 4 * (((EntityPlayer)attacker).getCooledAttackStrength(0f)), false);
 
 		return super.attackEntity(stack, target, attacker, dmg - 4);
 	}

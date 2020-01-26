@@ -12,12 +12,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
 
-import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
-
 public class BaronCastle extends AoAStructure { //StructureSize: 14x37x15
 	private static final IBlockState baronGlass = BlockRegister.glassBaron.getDefaultState();
 	private static final IBlockState baronWall = BlockRegister.baronCastleWall.getDefaultState();
-	private static final IBlockState neonRedstone = BlockRegister.lampNeon.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState neonRedstone = BlockRegister.lampNeon.getOffLamp().getDefaultState();
 	private static final IBlockState mineralizationStation = BlockRegister.mineralizationStation.getDefaultState();
 	private static final IBlockState tharaflySpawner = BlockRegister.spawnerTharafly.getDefaultState();
 	private static final IBlockState hellstone = BlockRegister.stoneBarathos.getDefaultState();

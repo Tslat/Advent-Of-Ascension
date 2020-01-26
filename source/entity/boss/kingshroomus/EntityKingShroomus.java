@@ -144,7 +144,7 @@ public class EntityKingShroomus extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityWitherBall(this, Enums.MobProjectileType.ENERGY);
+		return new EntityWitherBall(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

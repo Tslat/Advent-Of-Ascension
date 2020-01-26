@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,6 +59,22 @@ public class EntityAnimaStone extends Entity {
             setDead();
 
             return;
+        }
+
+        if (motionX != 0 && motionZ != 0) {
+            float friction = 0.91F;
+            BlockPos.PooledMutableBlockPos blockPosPool = BlockPos.PooledMutableBlockPos.retain(posX, getEntityBoundingBox().minY - 1.0D, posZ);
+
+            if (onGround) {
+                IBlockState underState = world.getBlockState(blockPosPool.setPos(posX, getEntityBoundingBox().minY - 1.0D, posZ));
+                friction = underState.getBlock().getSlipperiness(underState, world, blockPosPool, this) * 0.91F;
+            }
+            blockPosPool.release();
+            move(MoverType.SELF, motionX, motionY, motionZ);
+
+            motionY *= 0.9800000190734863D;
+            motionX *= friction;
+            motionZ *= friction;
         }
 
         BlockPos pos = new BlockPos(posX, 0, posZ);

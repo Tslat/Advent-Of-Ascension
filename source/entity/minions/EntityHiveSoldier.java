@@ -10,15 +10,15 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityHiveSoldier extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.5625f;
 
 	public EntityHiveSoldier(final World world){
-		super(world, 250, entityWidth, 1.8f);
+		super(world, 250, entityWidth, 1.75f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 1.1625f;
+		return 1.59375f;
 	}
 
 	@Override

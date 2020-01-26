@@ -1,7 +1,9 @@
 package net.tslat.aoa3.entity.npcs.trader;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -40,15 +42,14 @@ public class EntityExplosivesExpert extends AoATrader {
 		return 0.329;
 	}
 
-	@Nullable
 	@Override
-	public String getInteractMessage(ItemStack heldStack) {
-		if (heldStack.getItem() == ItemRegister.realmstoneBlank) {
-			return "message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3);
-		}
-		else {
-			return null;
-		}
+	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+		ItemStack heldStack = player.getHeldItem(hand);
+
+		if (heldStack.getItem() == ItemRegister.realmstoneBlank && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
+			return true;
+
+		return super.processInteract(player, hand);
 	}
 
 	@Override

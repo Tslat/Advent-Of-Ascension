@@ -91,7 +91,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCraexxeusShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCraexxeusShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 
 				if (getAttackTarget() != null) {
 					EntityLivingBase target = getAttackTarget();
-					BaseMobProjectile projectile = new EntityCraexxeusNuke(this, Enums.MobProjectileType.ENERGY);
+					BaseMobProjectile projectile = new EntityCraexxeusNuke(this, Enums.MobProjectileType.MAGIC);
 
 					double distanceFactorX = target.posX - projectile.posX;
 					double distanceFactorY = target.getEntityBoundingBox().minY + (target.height / 3) - projectile.posY;

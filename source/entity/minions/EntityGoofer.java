@@ -12,7 +12,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityGoofer extends AoAMinion {
-	public static final float entityWidth = 1.5f;
+	public static final float entityWidth = 1.25f;
 
 	public EntityGoofer(final World world){
 		super(world, -1, entityWidth, 1.375f);
@@ -20,7 +20,7 @@ public class EntityGoofer extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 1.1875f;
+		return 1.09375f;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.armour;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,8 +29,13 @@ public class SkeletalArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		if (slots == null && plData.player().getFoodStats().getSaturationLevel() < 1)
-			plData.player().getFoodStats().setFoodSaturationLevel(1);
+		if (slots == null && plData.player().getFoodStats().getSaturationLevel() < 1) {
+			FoodStats foodStats = plData.player().getFoodStats();
+			int foodLvl = foodStats.getFoodLevel();
+
+			foodStats.addStats(1, 0.5f);
+			foodStats.setFoodLevel(foodLvl);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

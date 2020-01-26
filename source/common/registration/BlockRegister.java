@@ -46,7 +46,6 @@ import net.tslat.aoa3.block.functional.misc.*;
 import net.tslat.aoa3.block.functional.portal.AncientCavernPortalBlock;
 import net.tslat.aoa3.block.functional.portal.ImmortallisPortalBlock;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.block.functional.portal.RunandorPortalBlock;
 import net.tslat.aoa3.block.functional.spawners.SpawnerBlock;
 import net.tslat.aoa3.block.functional.utility.*;
 import net.tslat.aoa3.block.generation.dirt.DirtBlock;
@@ -2852,7 +2851,7 @@ public final class BlockRegister {
 		registerBlock(registry, new OreBlock("PurpleGemstoneOre", "purple_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "orePurpleGemstone");
 		registerBlock(registry, new OreBlock("RedGemstoneOre", "red_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreRedGemstone");
 		registerBlock(registry, new OreBlock("RositeOre", "rosite_ore", 3), "blocks/generation/ores/", "oreRosite");
-		registerBlock(registry, new OreBlock("RuniumOre", "runium_ore", 2, 1, 4), "blocks/generation/ores/", "oreRunium");
+		registerBlock(registry, new OreBlock("RuniumOre", "runium_ore", 2), "blocks/generation/ores/", "oreRunium");
 		registerBlock(registry, new OreBlock("SapphireOre", "sapphire_ore", 3, 4, 9), "blocks/generation/ores/", "oreSapphire");
 		registerBlock(registry, new OreBlock("ShyregemOre", "shyregem_ore", 3, 6, 13), "blocks/generation/ores/", "oreShyregem");
 		registerBlock(registry, new OreBlock("ShyrestoneOre", "shyrestone_ore", 3), "blocks/generation/ores/", "oreShyrestone");
@@ -3638,7 +3637,7 @@ public final class BlockRegister {
 		registerBlock(registry, new PortalBlock("MysteriumPortal", "mysterium_portal", ConfigurationUtil.MainConfig.dimensionIds.mysterium, Enums.RGBIntegers.TYRIAN_PURPLE), "blocks/functional/portal/");
 		registerBlock(registry, new PortalBlock("NetherPortal", "nether_portal", -1, Enums.RGBIntegers.PURPLE), "blocks/functional/portal/");
 		registerBlock(registry, new PortalBlock("PrecasiaPortal", "precasia_portal", ConfigurationUtil.MainConfig.dimensionIds.precasia, Enums.RGBIntegers.ELECTRIC_LIME), "blocks/functional/portal/");
-		registerBlock(registry, new RunandorPortalBlock(), "blocks/functional/portal/");
+		registerBlock(registry, new PortalBlock("RunandorPortal", "runandor_portal", ConfigurationUtil.MainConfig.dimensionIds.runandor, Enums.RGBIntegers.ELECTRIC_BLUE), "blocks/functional/portal/");
 		registerBlock(registry, new PortalBlock("ShyrelandsPortal", "shyrelands_portal", ConfigurationUtil.MainConfig.dimensionIds.shyrelands, Enums.RGBIntegers.YELLOW), "blocks/functional/portal/");
 		registerBlock(registry, new PortalBlock("VoxPondsPortal", "vox_ponds_portal", ConfigurationUtil.MainConfig.dimensionIds.voxPonds, Enums.RGBIntegers.OLIVE), "blocks/functional/portal/");
 

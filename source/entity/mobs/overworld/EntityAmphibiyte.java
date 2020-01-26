@@ -12,9 +12,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.boss.corallus.EntityCorallus;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
 
@@ -118,20 +116,6 @@ public class EntityAmphibiyte extends AoAMeleeMob {
 		}
 		else if (navigator instanceof PathNavigateSwimmer) {
 			navigator = new PathNavigateGround(this, world);
-		}
-	}
-
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-
-		if (world.provider.getDimension() == 0 && rand.nextInt(50) == 0 && cause.getTrueSource() instanceof EntityPlayer) {
-			EntityCorallus corallus = new EntityCorallus(world);
-
-			corallus.setLocationAndAngles(posX, posY + 7, posZ, rand.nextFloat() * 360f, 0);
-			world.spawnEntity(corallus);
-
-			StringUtil.sendMessageWithinRadius(StringUtil.getLocale("message.mob.corallus.spawn"), cause.getTrueSource(), 50);
 		}
 	}
 

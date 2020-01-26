@@ -1,14 +1,19 @@
 package net.tslat.aoa3.entity.mobs.nether;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -81,6 +86,22 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements SpecialPropert
     @Override
     protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
         return source.isFireDamage();
+    }
+
+    @Override
+    protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack heldStack = player.getHeldItem(hand);
+
+        if (heldStack.getItem() == ItemRegister.flammableDust) {
+            if (!world.isRemote) {
+                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.nethengeicCallstone));
+                heldStack.shrink(1);
+            }
+
+            return true;
+        }
+
+        return super.processInteract(player, hand);
     }
 
     @Nonnull

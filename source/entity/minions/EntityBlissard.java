@@ -12,7 +12,7 @@ import net.tslat.aoa3.utils.EntityUtil;
 import javax.annotation.Nullable;
 
 public class EntityBlissard extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.6f;
 
 	public EntityBlissard(final World world){
 		super(world, -1, entityWidth, 1);
@@ -20,7 +20,7 @@ public class EntityBlissard extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 0.6f;
+		return 0.6875f;
 	}
 
 	@Override

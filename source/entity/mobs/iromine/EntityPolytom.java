@@ -58,7 +58,7 @@ public class EntityPolytom extends AoAFlyingRangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityPolytomShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityPolytomShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nullable

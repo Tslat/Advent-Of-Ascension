@@ -116,6 +116,6 @@ public class WorldProviderDeeplands extends WorldProvider implements AoAWorldPro
 
 	@Override
 	public int getActualHeight() {
-		return 48;
+		return 128;
 	}
 }

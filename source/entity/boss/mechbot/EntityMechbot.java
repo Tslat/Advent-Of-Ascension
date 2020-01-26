@@ -135,13 +135,13 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 
 					if (!world.isRemote) {
 						world.playSound(null, posX, posY, posZ, SoundsRegister.mobMechbotJump, SoundCategory.HOSTILE, 1.0f, 1.0f);
-						world.spawnEntity(new EntityMechFall(this, posX, posY - 0.25, posZ, Enums.MobProjectileType.ENERGY));
+						world.spawnEntity(new EntityMechFall(this, posX, posY - 0.25, posZ, Enums.MobProjectileType.MAGIC));
 
 						if (getHealth() < 1250) {
-							world.spawnEntity(new EntityMechFall(this, posX - 2.25, posY - 0.25, posZ - 2.25, Enums.MobProjectileType.ENERGY));
-							world.spawnEntity(new EntityMechFall(this, posX - 2.25, posY - 0.25, posZ + 2.25, Enums.MobProjectileType.ENERGY));
-							world.spawnEntity(new EntityMechFall(this, posX + 2.25, posY - 0.25, posZ - 2.25, Enums.MobProjectileType.ENERGY));
-							world.spawnEntity(new EntityMechFall(this, posX + 2.25, posY - 0.25, posZ + 2.25, Enums.MobProjectileType.ENERGY));
+							world.spawnEntity(new EntityMechFall(this, posX - 2.25, posY - 0.25, posZ - 2.25, Enums.MobProjectileType.MAGIC));
+							world.spawnEntity(new EntityMechFall(this, posX - 2.25, posY - 0.25, posZ + 2.25, Enums.MobProjectileType.MAGIC));
+							world.spawnEntity(new EntityMechFall(this, posX + 2.25, posY - 0.25, posZ - 2.25, Enums.MobProjectileType.MAGIC));
+							world.spawnEntity(new EntityMechFall(this, posX + 2.25, posY - 0.25, posZ + 2.25, Enums.MobProjectileType.MAGIC));
 						}
 					}
 
@@ -157,7 +157,7 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 		}
 
 		if (getHealth() < 1000 ? rand.nextInt(10) == 0 : rand.nextInt(40) == 0) {
-			EntityMechShot projectile = new EntityMechShot(this, Enums.MobProjectileType.ENERGY);
+			EntityMechShot projectile = new EntityMechShot(this, Enums.MobProjectileType.MAGIC);
 
 			double distanceFactorX = target.posX - this.posX;
 			double distanceFactorY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0f) - projectile.posY;

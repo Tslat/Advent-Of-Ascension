@@ -163,7 +163,7 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCottonCandorShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCottonCandorShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nonnull
