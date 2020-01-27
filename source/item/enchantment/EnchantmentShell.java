@@ -11,7 +11,7 @@ import net.tslat.aoa3.item.weapon.gun.BaseGun;
 public class EnchantmentShell extends BaseEnchantment {
 	public EnchantmentShell() {
 		super(Rarity.UNCOMMON, EnchantmentsRegister.BULLET_FIRING, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});
-		setName("shell");
+		setName("aoa3.shell");
 		setRegistryName("aoa3:shell");
 	}
 

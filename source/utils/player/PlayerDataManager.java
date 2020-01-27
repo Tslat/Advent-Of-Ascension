@@ -179,7 +179,10 @@ public final class PlayerDataManager {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 
 			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-				interventionData.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
+				if (AdventOfAscension.rand.nextInt(5) == 0)
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+
+				interventionData.add(stack);
 				player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 			}
 		}
@@ -188,7 +191,10 @@ public final class PlayerDataManager {
 			ItemStack stack = player.inventory.armorInventory.get(i);
 
 			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-				interventionData.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
+				if (AdventOfAscension.rand.nextInt(5) == 0)
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+
+				interventionData.add(stack);
 				player.inventory.armorInventory.set(i, ItemStack.EMPTY);
 			}
 		}

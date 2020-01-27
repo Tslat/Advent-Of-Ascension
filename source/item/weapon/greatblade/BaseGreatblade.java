@@ -127,9 +127,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 			else {
 
 				if (dmg < 0)
-					dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg);
-
-				dmg++;
+					dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg) + 1;
 
 				PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 				PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);

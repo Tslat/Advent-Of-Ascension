@@ -71,11 +71,6 @@ public class EntityIrkling extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected float getJumpUpwardsMotion() {
 		return jumpTimer == 0 ? 0.8f : super.getJumpUpwardsMotion();
 	}

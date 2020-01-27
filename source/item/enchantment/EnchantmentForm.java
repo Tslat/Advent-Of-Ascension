@@ -9,7 +9,7 @@ import net.tslat.aoa3.item.weapon.shotgun.BaseShotgun;
 public class EnchantmentForm extends BaseEnchantment {
 	public EnchantmentForm() {
 		super(Rarity.RARE, EnchantmentsRegister.SHOTGUN, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});
-		setName("form");
+		setName("aoa3.form");
 		setRegistryName("aoa3:form");
 	}
 
