@@ -115,22 +115,8 @@ public class ClientEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	public void onGreatbladeMouse(MouseEvent ev) {
-		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode()) {
-			Minecraft mc = Minecraft.getMinecraft();
-			EntityPlayer player = mc.player;
-
-			if (player != null) {
-				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-				ItemStack offHandStack = player.getActiveItemStack();
-
-				if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
-					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
-
-					if (ray != null)
-						PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
-				}
-			}
-		}
+		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode())
+			doGreatbladeAttack();
 	}
 
 	@SubscribeEvent
@@ -142,11 +128,13 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
 		if (ConfigurationUtil.MainConfig.showWelcomeMessage) {
-			if (KeyBinder.keyAdventGui.getKeyCode() == 0) {
+			int adventGuiKeyCode = KeyBinder.keyAdventGui.getKeyCode();
+
+			if (adventGuiKeyCode == 0) {
 				ev.player.sendMessage(StringUtil.getColourLocale("message.login.welcome.alt", TextFormatting.GRAY));
 			}
-			else {
-				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(KeyBinder.keyAdventGui.getKeyCode())));
+			else if (adventGuiKeyCode > 0) {
+				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(adventGuiKeyCode)));
 			}
 		}
 
@@ -159,7 +147,7 @@ public class ClientEventHandler {
 			ScreenOverlayRenderer.overlayTicks = 0;
 	}
 
-	private RayTraceResult getExtendedReachRayTrace(float distance) {
+	private static RayTraceResult getExtendedReachRayTrace(float distance) {
 		Minecraft mc = Minecraft.getMinecraft();
 		Entity viewEntity = mc.getRenderViewEntity();
 
@@ -193,6 +181,23 @@ public class ClientEventHandler {
 		}
 
 		return null;
+	}
+
+	public static void doGreatbladeAttack() {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.player;
+
+		if (player != null) {
+			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack offHandStack = player.getActiveItemStack();
+
+			if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
+				RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
+
+				if (ray != null)
+					PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
+			}
+		}
 	}
 
 	private void doRecoil() {

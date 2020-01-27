@@ -77,6 +77,6 @@ public class EntityShyreTroll extends AoARangedMob {
 
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
-        return new EntityShyreBeam(this, Enums.MobProjectileType.ENERGY);
+        return new EntityShyreBeam(this, Enums.MobProjectileType.MAGIC);
     }
 }

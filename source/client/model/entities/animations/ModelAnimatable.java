@@ -23,7 +23,7 @@ public abstract class ModelAnimatable extends ModelBase {
 			String currentAnimation = animatableEntity.getCurrentAnimation();
 
 			if (currentAnimation != null && animations.containsKey(currentAnimation))
-				animations.get(currentAnimation).animate(entity, animatableEntity.getCurrentAnimationTicks(), ageInTicks - entity.ticksExisted);
+				animations.get(currentAnimation).animate((AnimatableEntity)entity, animatableEntity.getCurrentAnimationTicks(), ageInTicks - entity.ticksExisted);
 		}
 	}
 }

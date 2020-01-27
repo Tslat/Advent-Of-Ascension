@@ -275,7 +275,7 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
 
     @Override
     public void startAnimation(String animation) {
-        this.currentAnimation = animation;
+        currentAnimation = animation;
         animationTicks = 0;
     }
 

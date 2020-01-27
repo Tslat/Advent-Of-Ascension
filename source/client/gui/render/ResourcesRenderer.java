@@ -51,6 +51,7 @@ public class ResourcesRenderer {
 			GlStateManager.disableDepth();
 			GlStateManager.scale(0.5f, 0.5f, 0.5f);
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+			GlStateManager.enableAlpha();
 
 			final ScaledResolution res = new ScaledResolution(mc);
 
@@ -89,6 +90,7 @@ public class ResourcesRenderer {
 				}
 			}
 
+			GlStateManager.disableAlpha();
 			GlStateManager.popMatrix();
 		}
 	}

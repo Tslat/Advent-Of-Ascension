@@ -12,7 +12,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityEnderCarrier extends AoAMinion {
-	public static final float entityWidth = 1.2f;
+	public static final float entityWidth = 1.1f;
 
 	public EntityEnderCarrier(final World world){
 		super(world, -1, entityWidth, 1.375f);
@@ -20,7 +20,7 @@ public class EntityEnderCarrier extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 1.25f;
+		return 1.21875f;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class EntityEnderCarrier extends AoAMinion {
 
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if (isTamed() && getOwnerId().equals(player.getUniqueID())) {
+		if (getOwnerId() != null && getOwnerId().equals(player.getUniqueID())) {
 			player.displayGUIChest(player.getInventoryEnderChest());
 
 			return true;

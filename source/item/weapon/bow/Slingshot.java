@@ -37,7 +37,7 @@ public class Slingshot extends BaseBow {
 
 	@Override
 	protected EntityHollyArrow makeArrow(EntityLivingBase shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		EntityHollyArrow arrowEntity = new EntityPopShot(shooter.world, this, shooter, dmg, ammoStack.getItem() instanceof HollyArrow);
+		EntityPopShot arrowEntity = new EntityPopShot(shooter.world, this, shooter, dmg, ammoStack.getItem() instanceof HollyArrow);
 		arrowEntity.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
 
 		int powerEnchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bowStack);

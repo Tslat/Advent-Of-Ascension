@@ -268,9 +268,6 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
             case GUN:
                 success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage());
                 break;
-            case ENERGY:
-                success = EntityUtil.dealBlasterDamage(this, target, projectile, (float)getBaseProjectileDamage(), false);
-                break;
             case PHYSICAL:
                 success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage());
                 break;

@@ -92,7 +92,7 @@ public class EntityClown extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityClownShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityClownShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

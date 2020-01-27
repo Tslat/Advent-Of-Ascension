@@ -31,7 +31,7 @@ public class OverworldEvents {
 	private static final HashSet<Enums.CreatureEvents> events = new HashSet<Enums.CreatureEvents>(Enums.CreatureEvents.values().length);
 
 	public static void doTickCheck(TickEvent.WorldTickEvent ev) {
-		if (ev.world.getTotalWorldTime() < 12000L)
+		if (ev.world.getTotalWorldTime() <= 24000L)
 			return;
 
 		int time = (int)(ev.world.getWorldTime() % 24000L);

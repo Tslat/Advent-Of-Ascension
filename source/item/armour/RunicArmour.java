@@ -39,8 +39,10 @@ public class RunicArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
-		if (slots == null && EntityUtil.isMagicDamage(event.getSource(), plData.player(), event.getAmount()))
+		if (slots == null && plData.equipment().isCooledDown(Enums.Counters.RUNIC) && EntityUtil.isMagicDamage(event.getSource(), plData.player(), event.getAmount())) {
 			plData.player().addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 200, 0, false, false));
+			plData.equipment().setCooldown(Enums.Counters.RUNIC, 6000);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -50,5 +52,6 @@ public class RunicArmour extends AdventArmour {
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RunicArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		tooltip.add(setEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RunicArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RunicArmour.desc.3", Enums.ItemDescriptionType.NEUTRAL));
 	}
 }

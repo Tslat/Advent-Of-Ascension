@@ -201,12 +201,12 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 
 			openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.type") + TextFormatting.RESET + " " + type);
 
+			if (HunterUtil.isHunterCreature(openEntryInstance)) {
+				openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.hunterReq") + TextFormatting.RESET + " " + HunterUtil.getHunterLevel(openEntryInstance));
+				openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.hunterXp") + TextFormatting.RESET + " " + HunterUtil.getHunterXp(openEntryInstance));
+			}
+
 			if (openEntryInstance instanceof SpecialPropertyEntity) {
-				int hunterLvl = HunterUtil.getHunterLevel(openEntryInstance);
-
-				if (hunterLvl > 0)
-					openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.hunterReq") + TextFormatting.RESET + " " + hunterLvl);
-
 				openEntryStatsLines.add(TextFormatting.BOLD + StringUtil.getLocaleString("gui.aoamain.bestiary.immunity.immunities"));
 
 				for (Enums.MobProperties property : ((SpecialPropertyEntity)openEntryInstance).getMobProperties()) {

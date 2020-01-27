@@ -380,7 +380,6 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 			posZ -= motionZ / (double)f2 * 0.05000000074505806D;
 			playSound(SoundEvents.ENTITY_ARROW_HIT, 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
 			inGround = true;
-			hasHitGround = true;
 			arrowShake = 7;
 			setIsCritical(false);
 
@@ -389,6 +388,8 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 			if (!world.isRemote && bow != null && !hasHitGround)
 				bow.doBlockImpact(this, iblockstate, shooter);
+
+			hasHitGround = true;
 		}
 	}
 	

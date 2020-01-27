@@ -127,7 +127,7 @@ public class EntityGreenGuardian extends AoARangedMob implements BossEntity {
 		super.onUpdate();
 
 		if (world.isRemote && ticksExisted == 1)
-			playMusic(this);
+			playMusic(null);
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class EntityGreenGuardian extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityGreenGuardianShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityGreenGuardianShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

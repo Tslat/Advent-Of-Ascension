@@ -20,6 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class FireflyStaff extends BaseStaff {
 	public FireflyStaff(int durability) {
@@ -51,8 +52,13 @@ public class FireflyStaff extends BaseStaff {
 		if (EntityUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
 			target.setFire(5);
 
+			UUID targetUUID = target.getUniqueID();
+
+			if (targetUUID.equals(((EntityFireflyShot)shot).lastTargetUUID))
+				return true;
+
 			for (int i = 0; i < itemRand.nextInt(7) + 1; i++) {
-				shot.world.spawnEntity(new EntityFireflyShot(shooter, this, (EntityFireflyShot)shot, itemRand.nextGaussian() * 0.35, 1.4f, itemRand.nextGaussian() * 0.35));
+				shot.world.spawnEntity(new EntityFireflyShot(shooter, this, (EntityFireflyShot)shot, targetUUID, itemRand.nextGaussian() * 0.35, 1.4f, itemRand.nextGaussian() * 0.35));
 			}
 
 			return true;

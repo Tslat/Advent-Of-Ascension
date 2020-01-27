@@ -18,7 +18,7 @@ public class EntityOrbling extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 0.625f;
+		return 0.5625f;
 	}
 
 	@Override

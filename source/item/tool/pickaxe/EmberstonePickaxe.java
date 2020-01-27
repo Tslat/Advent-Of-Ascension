@@ -20,12 +20,15 @@ public class EmberstonePickaxe extends BasePickaxe implements SpecialHarvestTool
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
 		if (!e.getWorld().isRemote) {
-			ItemStack smeltedStack = FurnaceRecipes.instance().getSmeltingResult(e.getDrops().get(0)).copy();
+			if (e.getDrops().isEmpty())
+				return;
+
+			ItemStack smeltedStack = FurnaceRecipes.instance().getSmeltingResult(e.getDrops().get(0));
 
 			if (!smeltedStack.isEmpty()) {
 				int xp = (int)FurnaceRecipes.instance().getSmeltingExperience(e.getDrops().get(0));
 
-				e.getDrops().set(0, smeltedStack);
+				e.getDrops().set(0, smeltedStack.copy());
 				e.getState().getBlock().dropXpOnBlockBreak(e.getHarvester().world, e.getPos(), xp);
 			}
 		}

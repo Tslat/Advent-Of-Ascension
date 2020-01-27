@@ -113,6 +113,11 @@ public class LampBlock extends LightBlock implements CustomStateMapperBlock {
 	}
 
 	@Override
+	public int quantityDropped(Random random) {
+		return 1;
+	}
+
+	@Override
 	public int getMetaFromState(IBlockState state) {
 		if (state.getValue(FIXED_LAMP))
 			return 1;

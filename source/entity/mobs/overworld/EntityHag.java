@@ -91,7 +91,7 @@ public class EntityHag extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityHagShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityHagShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

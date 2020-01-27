@@ -92,7 +92,7 @@ public class EntityMagicke extends AoARangedMob implements SpecialPropertyEntity
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityMagickeShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityMagickeShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

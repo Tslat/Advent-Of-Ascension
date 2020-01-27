@@ -65,7 +65,7 @@ public class EntityMiskel extends AoARangedMob implements BossEntity {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityWhiteBall(this, Enums.MobProjectileType.ENERGY);
+		return new EntityWhiteBall(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Nullable

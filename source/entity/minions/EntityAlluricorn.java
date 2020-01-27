@@ -19,12 +19,12 @@ public class EntityAlluricorn extends AoAMinion {
 	public static final float entityWidth = 1.1f;
 
 	public EntityAlluricorn(final World world){
-		super(world, -1, entityWidth, 1.4f);
+		super(world, -1, entityWidth, 2.0f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 1.4f;
+		return 1.65625f;
 	}
 
 	@Nullable

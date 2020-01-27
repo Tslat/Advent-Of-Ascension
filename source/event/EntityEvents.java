@@ -92,16 +92,6 @@ public class EntityEvents {
 	}
 
 	@SubscribeEvent
-	public void onEntitySpawn(LivingSpawnEvent ev) {
-		if (!ev.getWorld().isRemote && ev.getWorld().provider.getDimension() == -1 && ev.getEntity() instanceof EntityWither) {
-			for (EntityPlayer pl : ev.getWorld().getEntitiesWithinAABB(EntityPlayer.class, ev.getEntity().getEntityBoundingBox().grow(50))) {
-				if (ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneAbyss));
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public void onSpawnerSpawn(LivingSpawnEvent.SpecialSpawn ev) {
 		if (ev.getSpawner() != null && HunterUtil.isHunterCreature(ev.getEntityLiving()))
 			ev.getEntityLiving().getEntityData().setBoolean("IsHunterSpawnerMob", true);
@@ -143,19 +133,30 @@ public class EntityEvents {
 
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent ev) {
-		if (!ev.getWorld().isRemote && ev.getEntity() instanceof EntityFishHook) {
-			EntityFishHook hook = (EntityFishHook)ev.getEntity();
-			EntityPlayerMP fisher = (EntityPlayerMP)hook.getAngler();
+		if (!ev.getWorld().isRemote) {
+			if (ev.getEntity() instanceof EntityFishHook) {
+				EntityFishHook hook = (EntityFishHook)ev.getEntity();
+				EntityPlayerMP fisher = (EntityPlayerMP)hook.getAngler();
 
-			if (fisher != null && PlayerUtil.isWearingFullSet(fisher, Enums.ArmourSets.HAULING)) {
-				ItemStack stack = fisher.getHeldItem(EnumHand.MAIN_HAND);
+				if (fisher != null && PlayerUtil.isWearingFullSet(fisher, Enums.ArmourSets.HAULING)) {
+					ItemStack stack = fisher.getHeldItem(EnumHand.MAIN_HAND);
 
-				if (!(stack.getItem() instanceof ItemFishingRod))
-					stack = fisher.getHeldItem(EnumHand.OFF_HAND);
+					if (!(stack.getItem() instanceof ItemFishingRod))
+						stack = fisher.getHeldItem(EnumHand.OFF_HAND);
 
-				if (stack.getItem() instanceof ItemFishingRod)
-					hook.setLureSpeed(Math.min(5, 2 + EnchantmentHelper.getFishingSpeedBonus(stack)));
+					if (stack.getItem() instanceof ItemFishingRod)
+						hook.setLureSpeed(Math.min(5, 2 + EnchantmentHelper.getFishingSpeedBonus(stack)));
+				}
 			}
+			else if (ev.getEntity() instanceof EntityWither) {
+				if (ev.getWorld().provider.getDimension() == -1) {
+					for (EntityPlayer pl : ev.getWorld().getEntitiesWithinAABB(EntityPlayer.class, ev.getEntity().getEntityBoundingBox().grow(50))) {
+						if (ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
+							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneAbyss));
+					}
+				}
+			}
+
 		}
 	}
 

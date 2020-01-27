@@ -7,7 +7,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -20,10 +19,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityNethengeicWitherShot;
@@ -431,29 +428,6 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 	@Override
 	protected boolean canBeRidden(Entity entityIn) {
 		return false;
-	}
-
-	@Override
-	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-		if (wasRecentlyHit) {
-			dropItem(Item.getItemFromBlock(BlockRegister.statueNethengeicWither), 1);
-			dropItem(Item.getItemFromBlock(BlockRegister.bannerNethengeic), 1);
-
-			switch (rand.nextInt(4)) {
-				case 0:
-					dropItem(WeaponRegister.cannonDischargeCannon, 1);
-					break;
-				case 1:
-					dropItem(WeaponRegister.cannonWitherCannon, 1);
-					break;
-				case 2:
-					dropItem(WeaponRegister.blasterWithersWrath, 1);
-					break;
-				case 3:
-					dropItem(WeaponRegister.gunChainWrecker, 1);
-					break;
-			}
-		}
 	}
 
 	@Override

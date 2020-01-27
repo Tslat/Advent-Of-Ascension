@@ -93,7 +93,7 @@ public class EntityAnemia extends AoAFlyingRangedMob implements SpecialPropertyE
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityAnemiaBomb(this, Enums.MobProjectileType.ENERGY);
+		return new EntityAnemiaBomb(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

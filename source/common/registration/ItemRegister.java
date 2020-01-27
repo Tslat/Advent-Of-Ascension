@@ -294,8 +294,8 @@ public class ItemRegister {
 	public static final SimpleItem megaRuneFragmentRed = null;
 	@GameRegistry.ObjectHolder("mega_rune_fragment_yellow")
 	public static final SimpleItem megaRuneFragmentYellow = null;
-	@GameRegistry.ObjectHolder("millenium_upgrader")
-	public static final ReservedItem milleniumUpgrader = null;
+	@GameRegistry.ObjectHolder("millennium_upgrader")
+	public static final ReservedItem millenniumUpgrader = null;
 	@GameRegistry.ObjectHolder("molten_upgrader")
 	public static final ReservedItem moltenUpgrader = null;
 	@GameRegistry.ObjectHolder("moonstone")
@@ -1144,7 +1144,7 @@ public class ItemRegister {
 		registerItem(registry, new SimpleItem("GreenMegaRuneFragment", "mega_rune_fragment_green"), "misc/misc/");
 		registerItem(registry, new SimpleItem("RedMegaRuneFragment", "mega_rune_fragment_red"), "misc/misc/");
 		registerItem(registry, new SimpleItem("YellowMegaRuneFragment", "mega_rune_fragment_yellow"), "misc/misc/");
-		registerItem(registry, new ReservedItem("MilleniumUpgrader", "millenium_upgrader", "alien_orb"), "misc/misc/");
+		registerItem(registry, new ReservedItem("MillenniumUpgrader", "millennium_upgrader", "alien_orb"), "misc/misc/");
 		registerItem(registry, new ReservedItem("MoltenUpgrader", "molten_upgrader", "alien_orb"), "misc/misc/");
 		registerItem(registry, new ReservedItem("Moonstone", "moonstone", "alien_orb"), "misc/misc/");
 		registerItem(registry, new SimpleItem("MudBall", "mud_ball"), "misc/misc/");
@@ -1288,7 +1288,7 @@ public class ItemRegister {
 		registerItem(registry, new SimpleItem("RockyUpgradeKit", "rocky_upgrade_kit"), "misc/upgradekit/");
 		registerItem(registry, new SimpleItem("RunicUpgradeKit", "runic_upgrade_kit"), "misc/upgradekit/");
 		registerItem(registry, new SimpleItem("SeasideUpgradeKit", "seaside_upgrade_kit"), "misc/upgradekit/");
-		registerItem(registry, new SimpleItem("SmileyUpgradeKit", "smiley_upgrade_kit"), "misc/upgradekit/"); // TODO Obtain method
+		registerItem(registry, new SimpleItem("SmileyUpgradeKit", "smiley_upgrade_kit"), "misc/upgradekit/");
 		
 		registerItem(registry, new WaterloggedItem("WaterloggedAquaCannon", "waterlogged_aqua_cannon", 0), "misc/misc/");
 		registerItem(registry, new WaterloggedItem("WaterloggedCoralArchergun", "waterlogged_coral_archergun", 1), "misc/misc/");
@@ -1378,7 +1378,7 @@ public class ItemRegister {
 		registerItem(registry, new InfusionStone("GleamingInfusionStone", "gleaming_infusion_stone", 15, 16.0f, getUnmappedItem("gleaming_power_stone")), "misc/infusionstone/", "infusionStone");
 		registerItem(registry, new InfusionStone("GlisteningInfusionStone", "glistening_infusion_stone", 5, 8.0f, getUnmappedItem("glistening_power_stone")), "misc/infusionstone/", "infusionStone");
 		registerItem(registry, new InfusionStone("GlowingInfusionStone", "glowing_infusion_stone", 45, 85.0f, getUnmappedItem("glowing_power_stone")), "misc/infusionstone/", "infusionStone");
-		registerItem(registry, new InfusionStone("RadiantInfusionStone", "radiant_infusion_stone", 70, 22.0f, getUnmappedItem("radiant_power_stone")), "misc/infusionstone/", "infusionStone");
+		registerItem(registry, new InfusionStone("RadiantInfusionStone", "radiant_infusion_stone", 70, 220.0f, getUnmappedItem("radiant_power_stone")), "misc/infusionstone/", "infusionStone");
 		registerItem(registry, new InfusionStone("ShiningInfusionStone", "shining_infusion_stone", 60, 150.0f, getUnmappedItem("shining_power_stone")), "misc/infusionstone/", "infusionStone");
 
 		registerItem(registry, new SkillCrystal("GiantSkillCrystal", "giant_skill_crystal", 4), "misc/misc/", "skillCrystal");
@@ -1437,7 +1437,7 @@ public class ItemRegister {
 		registerItem(registry, new EyeCandy(), "food/misc/", "foodCandy");
 		registerItem(registry, new FieryChops(), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new FloracleSticks(), "food/plants/");
-		registerItem(registry, new FungalTea(), "food/drinks/");
+		registerItem(registry, new FungalTea().setContainerItem(ItemRegister.cup), "food/drinks/");
 		registerItem(registry, new BasicFood("RawFurlionChop", "raw_furlion_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
 		registerItem(registry, new BasicFood("FurlionChop", "furlion_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new BasicFood("GingerbreadCookie", "gingerbread_cookie", 2, 0.25f), "food/misc/", "listAllcookie", "foodGingerbread");
@@ -1454,7 +1454,7 @@ public class ItemRegister {
 		registerItem(registry, new Lunarade(), "food/drinks/", "listAllsoda");
 		registerItem(registry, new MagicMarang(), "food/plants/");
 		registerItem(registry, new MysticShrooms(), "food/plants/", "listAllmushroom");
-		registerItem(registry, new NaturalTea(), "food/drinks/");
+		registerItem(registry, new NaturalTea().setContainerItem(ItemRegister.cup), "food/drinks/");
 		registerItem(registry, new BasicFood("NatureMelonSlice", "nature_melon_slice", 1, 0.4f), "food/plants/", "listAllfruit");
 		registerItem(registry, new BasicFood("PeppermintCandy", "peppermint_candy", 1, 0.2f), "food/misc/", "foodMints", "foodCandy");
 		registerItem(registry, new Rosidons(), "food/plants/");
@@ -1462,7 +1462,7 @@ public class ItemRegister {
 		registerItem(registry, new BasicFood("SourGummy", "sour_gummy", 1, 0.3f), "food/misc/", "foodCandy");
 		registerItem(registry, new BasicFood("SourPop", "sour_pop", 1, 0.18f), "food/misc/", "foodCandy");
 		registerItem(registry, new BasicFood("SpearmintCandy", "spearmint_candy", 1, 0.25f), "food/misc/", "foodMints", "foodCandy");
-		registerItem(registry, new Tea(), "food/drinks/");
+		registerItem(registry, new Tea().setContainerItem(ItemRegister.cup), "food/drinks/");
 		registerItem(registry, new TrilliadLeaves(), "food/plants/");
 		registerItem(registry, new BasicFood("RawUrsaMeat", "raw_ursa_meat", 3, 0.3f, true), "food/meat/raw/", "listAllmeatraw");
 		registerItem(registry, new BasicFood("UrsaMeat", "ursa_meat", 8, 0.8f, true), "food/meat/", "listAllmeatcooked");
@@ -1472,7 +1472,7 @@ public class ItemRegister {
 		registerItem(registry, new InfusionBowl("StoneBowl", "stone_bowl", 100, 1, 0), "tools/misc/");
 		registerItem(registry, new ExpFlask(), "tools/misc/");
 
-		registerItem(registry, new AlluricornSlab(), "minionslabs/"); // TODO Slab recipes
+		registerItem(registry, new AlluricornSlab(), "minionslabs/");
 		registerItem(registry, new BlissardSlab(), "minionslabs/");
 		registerItem(registry, new CompeerSlab(), "minionslabs/");
 		registerItem(registry, new ConstructOfServilitySlab(), "minionslabs/");
@@ -1514,17 +1514,24 @@ public class ItemRegister {
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
 		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
-			if (map.key.equals(new ResourceLocation("aoa3:amethyst_ingot"))) {
-				map.remap(gemAmethyst);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:jade_ingot"))) {
-				map.remap(gemJade);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:shyregem_ingot"))) {
-				map.remap(gemShyregem);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:sapphire_ingot"))) {
-				map.remap(gemSapphire);
+			switch (map.key.toString()) {
+				case "aoa3:amethyst_ingot":
+					map.remap(gemAmethyst);
+					break;
+				case "aoa3:jade_ingot":
+					map.remap(gemJade);
+					break;
+				case "aoa3:shyregem_ingot":
+					map.remap(gemShyregem);
+					break;
+				case "aoa3:sapphire_ingot":
+					map.remap(gemSapphire);
+					break;
+				case "aoa3:millenium_upgrader":
+					map.remap(millenniumUpgrader);
+					break;
+				default:
+					break;
 			}
 		}
 	}

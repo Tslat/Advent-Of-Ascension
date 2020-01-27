@@ -99,7 +99,7 @@ public class EntitySeaTroll extends AoARangedMob implements SpecialPropertyEntit
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCyanShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCyanShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

@@ -146,8 +146,8 @@ public class WeaponRegister {
 	public static final BaseGreatblade greatbladeLuxonScythe = null;
 	@GameRegistry.ObjectHolder("lyonic_greatblade")
 	public static final BaseGreatblade greatbladeLyonic = null;
-	@GameRegistry.ObjectHolder("millenium_greatblade")
-	public static final BaseGreatblade greatbladeMillenium = null;
+	@GameRegistry.ObjectHolder("millennium_greatblade")
+	public static final BaseGreatblade greatbladeMillennium = null;
 	@GameRegistry.ObjectHolder("noxious_greatblade")
 	public static final BaseGreatblade greatbladeNoxious = null;
 	@GameRegistry.ObjectHolder("pluton_scythe")
@@ -938,7 +938,7 @@ public class WeaponRegister {
 				new LunarGreatblade(		25.0f, 	0, 		1850), // Lunalus | Lunar Village Loot
 				new LuxonScythe(			17.5f, 	-2.8D, 	1750), // Ancient Cavern | Horon
 				new LyonicGreatblade(		20.0f, 	-3.1D, 	1500), // Iromine | Silverfoot
-				new MilleniumGreatblade(	26.5f, 	0, 		2050), // UPGRADE KIT
+				new MillenniumGreatblade(	26.5f, 	0, 		2050), // UPGRADE KIT
 				new NoxiousGreatblade(		23.0f, 	0, 		1580), // Vox Ponds | Voxxulon
 				new PlutonScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Goldorth
 				new PrimordialGreatblade(	25.5f, 	0, 		1900), // Dustopia | Primordial Five
@@ -1204,14 +1204,14 @@ public class WeaponRegister {
 
 		registerArcherguns(registry,
 				new CoralArchergun(		13.0f, 	600, 	12, 	3.0f), // TODO LBorean Minigame
-				new LunarArchergun(		16.0f, 	1530, 12, 	3.0f), // Lunalus | Crafting
-				new MechaArchergun(		17.5f, 	1300, 16, 	3.0f), // Iromine | Repairing Incomplete
-				new PyroArchergun(		10.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
-				new RosidianArchergun(	14.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
-				new SkeletalArchergun(	12.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
-				new SpectralArchergun(	9.5f, 	1600, 8, 		3.0f), // Runandor | Crafting
-				new TrollsArchergun(	14.0f,	800, 	16, 	3.0f), // Overworld | Smash
-				new ViralArchergun(		13.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
+				new LunarArchergun(		10.5f, 	1530, 12, 	3.0f), // Lunalus | Crafting
+				new MechaArchergun(		11.5f, 	1300, 16, 	3.0f), // Iromine | Repairing Incomplete
+				new PyroArchergun(		7.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
+				new RosidianArchergun(	9.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
+				new SkeletalArchergun(	8.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
+				new SpectralArchergun(	10.0f, 	1600, 8, 		3.0f), // Runandor | Crafting
+				new TrollsArchergun(	9.5f,		800, 	16, 	3.0f), // Overworld | Smash
+				new ViralArchergun(		9.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
 		);
 
 		registerStaves(registry,
@@ -1409,6 +1409,14 @@ public class WeaponRegister {
 	private static void registerBlasters(IForgeRegistry<Item> registry, BaseBlaster... blasters) {
 		for (BaseBlaster blaster : blasters) {
 			ItemRegister.registerItem(registry, blaster, "weapons/blasters/");
+		}
+	}
+
+	@SubscribeEvent
+	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
+		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
+			if (map.key.toString().equals("aoa3:millenium_greatblade"))
+				map.remap(greatbladeMillennium);
 		}
 	}
 

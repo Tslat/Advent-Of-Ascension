@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.EnumHelper;
 public class MaterialsRegister {
 	public static final Item.ToolMaterial SWORD_AMETHYST 		= EnumHelper.addToolMaterial("AOAAMETHYST", 			4, 1200, 	4.0f, 	7.5f, 	14).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("amethyst")));
 	public static final Item.ToolMaterial SWORD_BARON 			= EnumHelper.addToolMaterial("AOABARON", 			4, 1600, 	4.0f, 	12f, 	10).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("baronyte_ingot")));
-	public static final Item.ToolMaterial SWORD_BLOODFURY 		= EnumHelper.addToolMaterial("AOABLOODFURY", 		4, 1770, 	4.0f, 	12.5f, 10);
+	public static final Item.ToolMaterial SWORD_BLOODFURY 		= EnumHelper.addToolMaterial("AOABLOODFURY", 		4, 1770, 	4.0f, 	13.0f, 10);
 	public static final Item.ToolMaterial SWORD_BLOODSTONE 		= EnumHelper.addToolMaterial("AOABLOODSTONE", 		4, 1700, 	4.0f, 	14.5f, 16);
 	public static final Item.ToolMaterial SWORD_CANDLEFIRE 		= EnumHelper.addToolMaterial("AOACANDLEFIRE", 		4, 2670, 	4.0f, 	17.0f, 10);
 	public static final Item.ToolMaterial SWORD_CARAMEL_CARVER 	= EnumHelper.addToolMaterial("AOACARAMELCARVER", 	4, 1900, 	4.0f, 	15.5f, 10);

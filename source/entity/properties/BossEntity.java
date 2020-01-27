@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface BossEntity {
@@ -14,8 +13,8 @@ public interface BossEntity {
 	@Nullable
 	public SoundEvent getBossMusic();
 
-	default void playMusic(@Nonnull Entity entity) {
-		if (entity.world.isRemote && getBossMusic() != null)
+	default void playMusic(Entity entity) {
+		if (getBossMusic() != null)
 			AdventOfAscension.proxy.playMusic(getBossMusic(), entity);
 	}
 }

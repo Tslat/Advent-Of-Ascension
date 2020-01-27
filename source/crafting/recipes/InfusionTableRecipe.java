@@ -102,7 +102,7 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 			ArrayList<ItemStack> inputIngredients = new ArrayList<ItemStack>();
 			ItemStack inputStack = inv.getStackInSlot(0);
 
-			if (inputStack.isEmpty() || (!isEnchanting && !ItemStack.areItemStacksEqual(input, inputStack)))
+			if (inputStack.isEmpty() || (!isEnchanting && (input.getItem() != inputStack.getItem() || (input.getMetadata() != 32767 && input.getMetadata() != inputStack.getMetadata()))))
 				return false;
 
 			for (int i = 1; i < 10; i++) {

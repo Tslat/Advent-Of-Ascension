@@ -33,7 +33,7 @@ public class KnightArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		if (slots == null && EntityUtil.checkBelowHealthPercentThreshold(plData.player(), 20))
+		if (slots == null && EntityUtil.checkBelowHealthPercentThreshold(plData.player(), 0.2f))
 			plData.player().addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 1, false, true));
 	}
 

@@ -102,7 +102,7 @@ public class EntityCreeperlock extends EntityCreeponiaCreeper implements AoARang
         }
 
         if (rand.nextInt(70) == 0) {
-            EntityCreeperShot projectile = new EntityCreeperShot(this, Enums.MobProjectileType.ENERGY);
+            EntityCreeperShot projectile = new EntityCreeperShot(this, Enums.MobProjectileType.MAGIC);
 
             double distanceFactorX = target.posX - this.posX;
             double distanceFactorY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0f) - projectile.posY;

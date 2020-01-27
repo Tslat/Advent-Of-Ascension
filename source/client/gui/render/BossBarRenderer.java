@@ -44,6 +44,7 @@ public class BossBarRenderer {
 		}
 
 		GlStateManager.pushMatrix();
+		GlStateManager.enableAlpha();
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		GlStateManager.disableDepth();
 		final ScaledResolution res = new ScaledResolution(mc);
@@ -60,6 +61,7 @@ public class BossBarRenderer {
 			gui.drawTexturedModalRect(x, 5, 0, 0, percentHealth, 20);
 
 		GlStateManager.enableDepth();
+		GlStateManager.disableAlpha();
 		GlStateManager.popMatrix();
 	}
 }
