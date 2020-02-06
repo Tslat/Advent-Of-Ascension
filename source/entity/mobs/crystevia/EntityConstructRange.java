@@ -92,7 +92,7 @@ public class EntityConstructRange extends AoARangedMob implements SpecialPropert
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityConstructShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityConstructShot(this, Enums.MobProjectileType.MAGIC);
 	}
 
 	@Override

@@ -66,15 +66,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		BlockPos pos = findExistingPortal(world, entity);
 
-		if (pos != null) {
-			placeInPortal(world, entity, pos);
-		}
-		else {
+		if (pos == null) {
 			pos = findSuitablePortalLocation(world, entity);
 			pos = makePortal(world, entity, pos);
 
-			placeInPortal(world, entity, pos);
 		}
+
+		placeInPortal(world, entity, pos);
 
 		ChunkPos chunkPos = world.getChunk(pos).getPos();
 
@@ -82,6 +80,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		if (plData != null) {
 			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
+
+			if (portalLoc != null) {
+				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.world.provider.getDimension());
+
+				if (returnPortalLoc != null && returnPortalLoc.fromDim == world.provider.getDimension())
+					return;
+			}
 
 			if (portalLoc == null || entity.world.provider.getDimension() == portalLoc.fromDim || entity.getDistanceSq(portalLoc.asBlockPos()) > ConfigurationUtil.MainConfig.portalSearchRadius)
 				plData.setPortalReturnLocation(world.provider.getDimension(), new PortalCoordinatesContainer(entity.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ()));
@@ -139,12 +144,14 @@ public abstract class AoATeleporter implements ITeleporter {
 		BlockPos.MutableBlockPos planBPos = new BlockPos.MutableBlockPos(entity.getPosition());
 		double planBDistance = 10000;
 		int searchRadius = ConfigurationUtil.MainConfig.portalSearchRadius;
+		int worldHeight = world.getActualHeight();
 
-		for (int x = pos.getX() - (searchRadius / 4); x <= pos.getX() + (searchRadius / 4); x++) {
-			for (int z = pos.getZ() - (searchRadius / 4); z <= pos.getZ() + (searchRadius / 4); z++) {
+
+		for (int x = pos.getX() - searchRadius; x <= pos.getX() + searchRadius; x++) {
+			for (int z = pos.getZ() - searchRadius; z <= pos.getZ() + searchRadius; z++) {
 
 				heightCheck:
-				for (int y = world.getActualHeight() - 6; y > 0; y--) {
+				for (int y = worldHeight - 6; y > 0; y--) {
 					if (world.isAirBlock(checkPos.setPos(x, y, z))) {
 						while (y > 0 && world.isAirBlock(checkPos.move(EnumFacing.DOWN))) {
 							y--;
@@ -183,6 +190,28 @@ public abstract class AoATeleporter implements ITeleporter {
 		}
 
 		if (planBPos.compareTo(pos) == 0) {
+			if (worldHeight < 256) {
+
+				heightCheck:
+				for (int y = 0; y < worldHeight - 6; y++) {
+					if (world.isAirBlock(checkPos.setPos(pos.getX(), y, pos.getZ()))) {
+						for (int y2 = y + 7; y2 >= y + 1; y2--) {
+							for (int j = pos.getX() - 2; j <= pos.getX() + 2; j++) {
+								for (int k = pos.getZ() - 2; k <= pos.getZ() + 2; k++) {
+									if (!world.isAirBlock(checkPos.setPos(j, y2, k))) {
+										y += 7;
+
+										continue heightCheck;
+									}
+								}
+							}
+						}
+
+						return checkPos.up(2);
+					}
+				}
+			}
+
 			return world.getTopSolidOrLiquidBlock(pos).up(2);
 		}
 		else {

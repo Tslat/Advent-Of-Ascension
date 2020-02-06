@@ -10,15 +10,15 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityHorntail extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.75f;
 
 	public EntityHorntail(final World world){
-		super(world, -1, entityWidth, 1.8125f);
+		super(world, -1, entityWidth, 1.875f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 1.5f;
+		return 1.46875f;
 	}
 
 	@Override

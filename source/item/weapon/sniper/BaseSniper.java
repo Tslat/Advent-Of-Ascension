@@ -8,7 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,7 +22,6 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.entity.projectiles.gun.EntityMetalSlug;
 import net.tslat.aoa3.entity.projectiles.gun.EntitySniperSlug;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
@@ -53,11 +55,11 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
 		if (cap.getNextFireTime() < GlobalEvents.tick) {
-			BaseBullet ammo = findAndConsumeAmmo(player, this, hand);
+			BaseBullet bullet = findAndConsumeAmmo(player, this, hand);
 
-			if (ammo != null) {
+			if (bullet != null) {
 				if (!world.isRemote)
-					fireSniper(player, hand);
+					fireSniper(player, hand, bullet);
 
 				if (getFiringSound() != null)
 					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -77,12 +79,8 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
 	}
 
-	public void fireSniper(EntityLivingBase shooter, EnumHand hand) {
-		BaseBullet bullet;
-
+	public void fireSniper(EntityLivingBase shooter, EnumHand hand, BaseBullet bullet) {
 		if (shooter.isSneaking() && shooter.onGround) {
-			bullet = new EntitySniperSlug(shooter, this, 0);
-
 			if (shooter instanceof EntityPlayerMP) {
 				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.control, shooter.getHeldItem(hand));
 				float recoiling = getRecoilForShot(shooter.getHeldItem(hand), shooter) * (1 - control * 0.15f);
@@ -91,7 +89,6 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 			}
 		}
 		else {
-			bullet = new EntityMetalSlug(shooter, this, 0);
 			bullet.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0f, 20.0f, 50.0f);
 
 			if (shooter instanceof EntityPlayerMP)

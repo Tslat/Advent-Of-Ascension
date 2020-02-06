@@ -54,7 +54,7 @@ public class EntityAssassin extends AoATrader {
 
 		if (heldStack.getItem() == ItemRegister.rockBones) {
 			if (!world.isRemote)
-				player.setHeldItem(hand, ItemRegister.milleniumUpgrader.newValidStack());
+				player.setHeldItem(hand, ItemRegister.millenniumUpgrader.newValidStack());
 
 			return true;
 		}

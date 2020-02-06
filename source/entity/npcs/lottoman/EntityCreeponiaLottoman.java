@@ -1,6 +1,8 @@
 package net.tslat.aoa3.entity.npcs.lottoman;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -27,15 +29,14 @@ public class EntityCreeponiaLottoman extends EntityLottoman {
 		return world.provider.getDimension() != ConfigurationUtil.MainConfig.dimensionIds.creeponia;
 	}
 
-	@Nullable
 	@Override
-	public String getInteractMessage(ItemStack heldStack) {
-		if (heldStack.getItem() == ItemRegister.realmstoneBlank) {
-			return "message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3);
-		}
-		else {
-			return null;
-		}
+	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+		ItemStack heldStack = player.getHeldItem(hand);
+
+		if (heldStack.getItem() == ItemRegister.realmstoneBlank && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
+			return true;
+
+		return super.processInteract(player, hand);
 	}
 
 	@Override

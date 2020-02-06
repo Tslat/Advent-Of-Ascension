@@ -9,7 +9,7 @@ import net.tslat.aoa3.item.weapon.staff.BaseStaff;
 public class EnchantmentArchmage extends BaseEnchantment {
 	public EnchantmentArchmage() {
 		super(Rarity.VERY_RARE, EnchantmentsRegister.STAFF, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		setName("archmage");
+		setName("aoa3.archmage");
 		setRegistryName("aoa3:archmage");
 	}
 

@@ -178,6 +178,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		int x;
 		int y;
 		mc.getTextureManager().bindTexture(skillsTextures);
+		GlStateManager.enableAlpha();
 
 		for (Enums.Skills skill : Enums.Skills.values()) {
 			y = AdventMainGui.scaledTabRootY + 20 + (int)(Math.floor(skill.id / 5f) * 112);
@@ -283,6 +284,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 					break;
 			}
 
+			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			drawScaledCustomSizeModalRect(x, y, uvX, uvY, 50, 50, 62, 62, 450, 240);
 			drawScaledCustomSizeModalRect(x, y + 50, 0, 200, 100, 20, 62, 13, 450, 240);
 			drawScaledCustomSizeModalRect(x, y + 50, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 62, 13, 450, 240);
@@ -396,6 +398,8 @@ public class AdventGuiTabPlayer extends GuiScreen {
 
 			GlStateManager.scale(0.8, 0.8, 0.8);
 		}
+
+		GlStateManager.disableAlpha();
 	}
 
 	private void drawPlayerBox(int posX, int posY, int mouseX, int mouseY, int scale) {

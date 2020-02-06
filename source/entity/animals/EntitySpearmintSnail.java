@@ -24,12 +24,12 @@ public class EntitySpearmintSnail extends AoAAnimal {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0;
 	}
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 120;
+		return 25;
 	}
 
 	@Override

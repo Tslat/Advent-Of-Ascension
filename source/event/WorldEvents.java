@@ -27,7 +27,7 @@ public class WorldEvents {
 
 	@SubscribeEvent
 	public void onChunkPopulate(PopulateChunkEvent.Post ev) {
-		if (ev.isHasVillageGenerated() && ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance > 0 && ev.getRand().nextInt(ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance) == 0) {
+		if (ev.isHasVillageGenerated() && ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance > 0 && ev.getRand().nextInt(ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance / 2) == 0) {
 			Random rand = ev.getRand();
 			int posX = ev.getChunkX() + rand.nextInt(16);
 			int posZ = ev.getChunkZ() + rand.nextInt(15);

@@ -1,9 +1,6 @@
 package net.tslat.aoa3.entity.mobs.abyss;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,6 +15,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
@@ -26,24 +25,25 @@ import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagicBall;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.EntityUtil;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class EntityWebReaper extends AoARangedMob {
 	public static float entityWidth = 0.75f;
 	public static float entityHeight = 3.5625f;
 	private static final DataParameter<Integer> STAGE = EntityDataManager.<Integer>createKey(EntityWebReaper.class, DataSerializers.VARINT);
-	private final AttributeModifier STAGE_HEALTH_MOD = new AttributeModifier("StageHealthModifier", 1, 2) {
+	private final AttributeModifier STAGE_HEALTH_MOD = new AttributeModifier(UUID.fromString("9c59eceb-dcd0-40e0-a608-a46d3794b1c3"), "StageHealthModifier", 1, 2) {
 		@Override
 		public double getAmount() {
-			return stageMod - 1;
+			return Math.max(0, stageMod - 1);
 		}
 	};
-	private final AttributeModifier STAGE_KNOCKBACK_MOD = new AttributeModifier("StageKnockbackModifier", 1, 2) {
+	private final AttributeModifier STAGE_KNOCKBACK_MOD = new AttributeModifier(UUID.fromString("a7cd0b89-ca94-4e54-a0c4-f56e8cb70bb0"), "StageKnockbackModifier", 1, 2) {
 		@Override
 		public double getAmount() {
-			return (stageMod - 1) * 0.83d;
+			return Math.max(0, (stageMod - 1) * 0.83d);
 		}
 	};
 
@@ -53,10 +53,16 @@ public class EntityWebReaper extends AoARangedMob {
 
 	public EntityWebReaper(World world) {
 		super(world, entityWidth, entityHeight);
-
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(STAGE_HEALTH_MOD);
-		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).applyModifier(STAGE_KNOCKBACK_MOD);
 	}
+
+	@Nullable
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingData) {
+		EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, STAGE_HEALTH_MOD);
+		EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD);
+
+		return super.onInitialSpawn(difficulty, livingData);
+}
 
 	@Override
 	protected void entityInit() {
@@ -140,6 +146,7 @@ public class EntityWebReaper extends AoARangedMob {
 				heldStack.shrink(1);
 				stage++;
 				updateStage();
+				shouldHeal = true;
 			}
 
 			return true;
@@ -151,6 +158,7 @@ public class EntityWebReaper extends AoARangedMob {
 				if (stage <= 10) {
 					stage += 5;
 					updateStage();
+					shouldHeal = true;
 				}
 			}
 
@@ -168,14 +176,15 @@ public class EntityWebReaper extends AoARangedMob {
 			stage = dataManager.get(STAGE);
 		}
 
-		stageMod = 1 + ((stage - 1) / 7.5f);
+		stageMod = 1 + (stage - 1) / 7.5f;
 
-		getAttributeMap().onAttributeModified(getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH));
-		getAttributeMap().onAttributeModified(getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE));
+		if (!world.isRemote) {
+			EntityUtil.reapplyAttributeModifier(this, SharedMonsterAttributes.MAX_HEALTH, STAGE_HEALTH_MOD);
+			EntityUtil.reapplyAttributeModifier(this, SharedMonsterAttributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD);
+		}
+
 		setSize(entityWidth * stageMod, entityHeight * stageMod);
 		setXpValue((int)getMaxHealth() / 10 + (int)((getMaxHealth() - getBaseMaxHealth()) * 0.1f));
-
-		shouldHeal = true;
 	}
 
 	@Override
@@ -209,7 +218,7 @@ public class EntityWebReaper extends AoARangedMob {
 
 	@Override
 	protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-		super.dropLoot(wasRecentlyHit, lootingModifier + (int)stageMod - 1, source);
+		super.dropLoot(wasRecentlyHit, lootingModifier + (int)Math.ceil(stageMod), source);
 	}
 
 	@Override
@@ -244,7 +253,7 @@ public class EntityWebReaper extends AoARangedMob {
 			if (stagePrefix != null)
 				entityString = entityString + "." + stagePrefix;
 
-			return StringUtil.getLocaleString("entity." + entityString + ".name");
+			return I18n.translateToLocal("entity." + entityString + ".name");
 		}
 	}
 }

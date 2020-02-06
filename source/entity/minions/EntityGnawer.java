@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.EntityUtil;
 import javax.annotation.Nullable;
 
 public class EntityGnawer extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.625f;
 
 	public EntityGnawer(final World world){
 		super(world, -1, entityWidth, 2.5f);
@@ -26,7 +26,7 @@ public class EntityGnawer extends AoAMinion {
 
 	@Override
 	public float getEyeHeight() {
-		return 1.93f;
+		return 2.28125f;
 	}
 
 	@Override

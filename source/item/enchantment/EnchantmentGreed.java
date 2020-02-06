@@ -11,7 +11,7 @@ import net.tslat.aoa3.item.weapon.staff.BaseStaff;
 public class EnchantmentGreed extends BaseEnchantment {
 	public EnchantmentGreed() {
 		super(Rarity.VERY_RARE, EnchantmentsRegister.AMMO_CONSUMING, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		setName("greed");
+		setName("aoa3.greed");
 		setRegistryName("aoa3:greed");
 	}
 

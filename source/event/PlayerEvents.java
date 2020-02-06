@@ -311,7 +311,7 @@ public class PlayerEvents {
 				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
 			}
 		}
-		else if (bl instanceof BlockOre && ev.getPos().getY() <= 5 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank))) {
+		else if (WorldUtil.isOreBlock(bl) && ev.getPos().getY() <= 5 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank))) {
 			ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneDeeplands));
 		}
 	}

@@ -47,6 +47,9 @@ public class CommandAoAWiki extends CommandBase {
 			String searchQuery = builder.toString().trim();
 			String currentLang = FMLCommonHandler.instance().getCurrentLanguage();
 
+			if (searchQuery.equalsIgnoreCase("random"))
+				searchQuery = "Special:Random";
+
 			try {
 				if (currentLang.equals("zh_cn") || currentLang.equals("zh_tw")) {
 					baseUrl = "https://adventofascension-zh.gamepedia.com/index.php?search=" + URLEncoder.encode(searchQuery, "UTF-8") + "&title=Special:Search&go=Go";
@@ -59,6 +62,9 @@ public class CommandAoAWiki extends CommandBase {
 				if (ConfigurationUtil.MainConfig.doVerboseDebugging)
 					e.printStackTrace();
 			}
+
+			if (searchQuery.equals("Special:Random"))
+				searchQuery = "???";
 
 			ITextComponent responseComponent = getComponentFromKeys("command.aoawiki.response", baseUrl, StringUtil.capitaliseFirstLetter(searchQuery));
 

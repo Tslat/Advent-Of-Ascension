@@ -26,7 +26,7 @@ public class CrystalGreatblade extends BaseGreatblade implements AdventWeapon, L
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
 		for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(2.0f), PredicateUtil.IS_HOSTILE_MOB)) {
-			EntityUtil.dealAoeDamage(null, attacker, entity, itemRand.nextFloat() * 2f, false);
+			EntityUtil.dealAoeDamage(null, attacker, entity, itemRand.nextFloat() * 2f * (dmgDealt / (float)getDamage()), false);
 		}
 	}
 

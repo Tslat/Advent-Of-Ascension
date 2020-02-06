@@ -1,6 +1,8 @@
 package net.tslat.aoa3.entity.npcs.banker;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -37,24 +39,8 @@ public class EntityCreepBanker extends AoATrader {
 	}
 
 	@Override
-	protected boolean isFixedTradesList() {
-		return true;
-	}
-
-	@Override
 	protected Enums.ModGuis getTraderGui() {
-		return Enums.ModGuis.TRADER_CREEP_BANKER;
-	}
-
-	@Nullable
-	@Override
-	public String getInteractMessage(ItemStack heldStack) {
-		if (heldStack.getItem() == ItemRegister.realmstoneBlank) {
-			return "message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3);
-		}
-		else {
-			return null;
-		}
+		return Enums.ModGuis.BANKER;
 	}
 
 	@Override
@@ -63,12 +49,22 @@ public class EntityCreepBanker extends AoATrader {
 	}
 
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver, 1), new ItemStack(ItemRegister.coinGold, 20)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(ItemRegister.coinSilver, 20)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(ItemRegister.coinCopper, 20)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(ItemRegister.coinSilver, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 20), new ItemStack(ItemRegister.coinGold, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 20), new ItemStack(ItemRegister.coinLunaver, 1)));
+	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
+		ItemStack heldStack = player.getHeldItem(hand);
+
+		if (heldStack.getItem() == ItemRegister.realmstoneBlank && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
+			return true;
+
+		return super.processInteract(player, hand);
+	}
+
+	@Override
+	protected boolean isFixedTradesList() {
+		return true;
+	}
+
+	@Override
+	protected void getTradesList(NonNullList<AoATraderRecipe> newTradesList) {
+		newTradesList.add(new AoATraderRecipe(ItemStack.EMPTY, ItemStack.EMPTY));
 	}
 }

@@ -16,8 +16,8 @@ public class NightmareFlakes extends SimpleItem {
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target, EnumHand hand) {
 		if (target instanceof EntityElusive && ItemUtil.consumeItem(playerIn, new ItemStack(ItemRegister.realmstoneBlank))) {
-			stack.shrink(1);
 			ItemUtil.givePlayerItemOrDrop(playerIn, new ItemStack(ItemRegister.realmstoneGreckon));
+			stack.shrink(1);
 
 			return true;
 		}

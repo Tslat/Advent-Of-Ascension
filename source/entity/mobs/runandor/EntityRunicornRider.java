@@ -1,9 +1,13 @@
 package net.tslat.aoa3.entity.mobs.runandor;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
@@ -73,11 +77,53 @@ public class EntityRunicornRider extends AoAMeleeMob {
 	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
 		super.damageEntity(damageSrc, damageAmount);
 
-		if (!world.isRemote && getHealth() <= getMaxHealth() / 0.45f) {
+		if (!world.isRemote && getHealth() <= getMaxHealth() * 0.45f) {
 			EntityRunicorn runicorn = new EntityRunicorn(this, getHealth());
 
 			world.spawnEntity(runicorn);
+			setHealth(0);
 			onDeath(damageSrc);
+		}
+	}
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		if (ForgeHooks.onLivingDeath(this, cause))
+			return;
+
+		if (!dead) {
+			Entity sourceEntity = cause.getTrueSource();
+			EntityLivingBase attacker = getAttackingEntity();
+
+			if (scoreValue >= 0 && attacker != null)
+				attacker.awardKillScore(this, scoreValue, cause);
+
+			if (sourceEntity != null)
+				sourceEntity.onKillEntity(this);
+
+			dead = true;
+			getCombatTracker().reset();
+
+			if (!world.isRemote) {
+				int looting = ForgeHooks.getLootingLevel(this, sourceEntity, cause);
+				captureDrops = true;
+
+				capturedDrops.clear();
+
+				if (this.canDropLoot() && world.getGameRules().getBoolean("doMobLoot"))
+					dropLoot(recentlyHit > 0, looting, cause);
+
+				captureDrops = false;
+
+				if (!ForgeHooks.onLivingDrops(this, cause, capturedDrops, looting, recentlyHit > 0)) {
+					for (EntityItem item : capturedDrops) {
+						world.spawnEntity(item);
+					}
+				}
+			}
+
+			world.setEntityState(this, (byte)3);
+			setPositionAndUpdate(posX, -10, posZ);
 		}
 	}
 }

@@ -13,6 +13,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -117,9 +118,7 @@ public class ExtractionDevice extends Block {
 
 					for (ItemStack stack : loot) {
 						if (!stack.isEmpty()) {
-							String name = StringUtil.getLocaleString(stack.getTranslationKey() + ".name");
-
-							player.sendMessage(StringUtil.getLocaleWithArguments("message.feedback.extraction", name));
+							player.sendMessage(StringUtil.getLocale("message.feedback.extraction").appendSibling(new TextComponentTranslation(stack.getTranslationKey() + ".name")));
 						}
 						else {
 							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.empty"));
@@ -136,11 +135,11 @@ public class ExtractionDevice extends Block {
 						plData.stats().addTribute(Enums.Deities.PLUTON, 4);
 				}
 				else {
-					plData.sendThrottledChatMessage("message.feedback.extraction.fail");
+					player.sendMessage(StringUtil.getLocale("message.feedback.extraction.fail"));
 				}
 			}
 			else {
-				plData.sendThrottledChatMessage("message.feedback.extraction.noSpace", TextFormatting.RED);
+				player.sendMessage(StringUtil.getColourLocale("message.feedback.extraction.noSpace", TextFormatting.RED));
 			}
 		}
 

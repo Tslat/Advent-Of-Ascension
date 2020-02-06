@@ -94,6 +94,6 @@ public class EntityCherryBlaster extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCherryShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCherryShot(this, Enums.MobProjectileType.MAGIC);
 	}
 }

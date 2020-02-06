@@ -32,7 +32,7 @@ public class DistortingArtifact extends SimpleItem {
 		if (!world.isRemote && itemSlot < 9 && entity.posY < -3) {
 			entity.posY = 257;
 			entity.setPositionAndUpdate(entity.posX, 257, entity.posZ);
-			entity.fallDistance = -20;
+			entity.fallDistance = -255;
 
 			if (entity instanceof EntityLivingBase) {
 				((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 40, 0, true, false));

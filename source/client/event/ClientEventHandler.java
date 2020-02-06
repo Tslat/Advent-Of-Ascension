@@ -52,6 +52,8 @@ public class ClientEventHandler {
 	public static int recoilTicksRemaining;
 	public static float recoilAngle;
 
+	private static boolean swungGreatblade = false;
+
 	@SubscribeEvent
 	public void clientTick(final TickEvent.ClientTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
@@ -102,6 +104,8 @@ public class ClientEventHandler {
 				HelmetScreenRenderer.screen = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
 			}
+
+			swungGreatblade = false;
 		}
 	}
 
@@ -120,6 +124,9 @@ public class ClientEventHandler {
 			EntityPlayer player = mc.player;
 
 			if (player != null) {
+				if (player.isSpectator())
+					return;
+
 				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 				ItemStack offHandStack = player.getActiveItemStack();
 
@@ -142,11 +149,13 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
 		if (ConfigurationUtil.MainConfig.showWelcomeMessage) {
-			if (KeyBinder.keyAdventGui.getKeyCode() == 0) {
+			int adventGuiKeyCode = KeyBinder.keyAdventGui.getKeyCode();
+
+			if (adventGuiKeyCode == 0) {
 				ev.player.sendMessage(StringUtil.getColourLocale("message.login.welcome.alt", TextFormatting.GRAY));
 			}
-			else {
-				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(KeyBinder.keyAdventGui.getKeyCode())));
+			else if (adventGuiKeyCode > 0) {
+				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(adventGuiKeyCode)));
 			}
 		}
 
@@ -159,7 +168,7 @@ public class ClientEventHandler {
 			ScreenOverlayRenderer.overlayTicks = 0;
 	}
 
-	private RayTraceResult getExtendedReachRayTrace(float distance) {
+	private static RayTraceResult getExtendedReachRayTrace(float distance) {
 		Minecraft mc = Minecraft.getMinecraft();
 		Entity viewEntity = mc.getRenderViewEntity();
 

@@ -130,7 +130,7 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 			EntityPlayer pl = world.getClosestPlayer(posX, posY, posZ, 30, false);
 
 			if (pl != null && !pl.capabilities.isCreativeMode)
-				world.spawnEntity(new EntityVoxxulonMeteor(this, pl, Enums.MobProjectileType.ENERGY));
+				world.spawnEntity(new EntityVoxxulonMeteor(this, pl, Enums.MobProjectileType.MAGIC));
 		}
 	}
 

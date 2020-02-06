@@ -11,15 +11,15 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityHellquin extends AoAMinion {
-	public static final float entityWidth = 1.0f;
+	public static final float entityWidth = 0.5f;
 
 	public EntityHellquin(final World world){
-		super(world, -1, entityWidth, 1.1875f);
+		super(world, -1, entityWidth, 1.25f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 1f;
+		return 0.96875f;
 	}
 
 	@Override

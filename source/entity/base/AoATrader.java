@@ -4,7 +4,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +15,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.EnumSkyBlock;
@@ -34,7 +32,6 @@ import net.tslat.aoa3.entity.base.ai.npc.EntityAITradeWithPlayer;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.WorldUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -94,11 +91,6 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	protected abstract double getBaseMaxHealth();
 
 	protected abstract double getBaseMovementSpeed();
-
-	@Nullable
-	public String getInteractMessage(ItemStack heldStack) {
-		return null;
-	}
 
 	protected boolean isFixedTradesList() {
 		return false;
@@ -195,7 +187,7 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	protected int getSpawnChanceFactor() {
-		return 150;
+		return 10;
 	}
 
 	private boolean checkSpawnChance() {
@@ -203,6 +195,9 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	protected boolean isValidLightLevel() {
+		if (world.provider.getDimension() != 0)
+			return true;
+
 		BlockPos blockpos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
 
 		if (this.world.getLightFor(EnumSkyBlock.SKY, blockpos) > this.rand.nextInt(32)) {
@@ -236,13 +231,6 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 
 		if (isEntityAlive() && !player.isSneaking()) {
 			if (!world.isRemote) {
-				if (hand == EnumHand.MAIN_HAND) {
-					String msg = getInteractMessage(heldStack);
-
-					if (msg != null)
-						PlayerUtil.notifyPlayer((EntityPlayerMP)player, msg, TextFormatting.GRAY);
-				}
-
 				getRecipes(player);
 				setCustomer(player);
 				player.openGui(AdventOfAscension.instance(), getTraderGui().guiId, world, getEntityId(), 0, 0);

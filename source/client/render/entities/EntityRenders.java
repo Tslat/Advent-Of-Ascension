@@ -113,7 +113,6 @@ import net.tslat.aoa3.client.render.entities.mobs.runandor.RuneTemplarRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRiderRenderer;
 import net.tslat.aoa3.entity.animals.*;
-import net.tslat.aoa3.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.entity.boss.bane.EntityBane;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneBig;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneClone;

@@ -3,14 +3,12 @@ package net.tslat.aoa3.client.gui.merchants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -29,6 +27,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.StringUtil;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public class CorruptedTravellerGui extends GuiContainer {
 		mc.fontRenderer.drawString(guiTitle, 30, 6, Enums.RGBIntegers.WHITE);
 	}
 
-	private void renderStack(ItemStack stack, int posX, int posY) {
+	private void shadeRenderedStack(ItemStack stack, int posX, int posY) {
 		try {
 			zLevel = 100;
 			itemRender.zLevel = 150;
@@ -140,38 +139,14 @@ public class CorruptedTravellerGui extends GuiContainer {
 					List<BakedQuad> quads = model.getQuads(null, facing, 0);
 
 					for (int i = 0; i < quads.size(); ++i) {
-						BakedQuad bakedQuad = quads.get(i);
-						int colour = -1;
-
-						if (bakedQuad.hasTintIndex()) {
-							colour = mc.getItemColors().colorMultiplier(stack, bakedQuad.getTintIndex());
-
-							if (EntityRenderer.anaglyphEnable)
-								colour = TextureUtil.anaglyphColor(colour);
-
-							colour = colour | -16777216;
-						}
-
-						LightUtil.renderQuadColor(buff, bakedQuad, -(0x90 << 24));
+						LightUtil.renderQuadColor(buff, quads.get(i), -(0x90 << 24));
 					}
 				}
 
 				List<BakedQuad> quads = model.getQuads(null, null, 0);
 
 				for (int i = 0; i < quads.size(); ++i) {
-					BakedQuad bakedQuad = quads.get(i);
-					int colour = -1;
-
-					if (bakedQuad.hasTintIndex()) {
-						colour = mc.getItemColors().colorMultiplier(stack, bakedQuad.getTintIndex());
-
-						if (EntityRenderer.anaglyphEnable)
-							colour = TextureUtil.anaglyphColor(colour);
-
-						colour = colour | -16777216;
-					}
-
-					LightUtil.renderQuadColor(buff, bakedQuad, -(0x2F << 24));
+					LightUtil.renderQuadColor(buff, quads.get(i), -(0x2F << 24));
 				}
 
 				tess.draw();
@@ -188,7 +163,10 @@ public class CorruptedTravellerGui extends GuiContainer {
 			itemRender.zLevel = 0;
 			zLevel = 0;
 		}
-		catch (Exception e) {}
+		catch (Exception e) {
+			AdventOfAscension.logMessage(Level.WARN, "Error while rendering itemstack");
+			e.printStackTrace();
+		}
 	}
 
 	private void renderGhostlyFood(int centerX, int centerY) {
@@ -198,7 +176,7 @@ public class CorruptedTravellerGui extends GuiContainer {
 			ItemStack stack = getGhostlyStack();
 
 			itemRender.renderItemIntoGUI(stack, slot.xPos + centerX, slot.yPos + centerY);
-			renderStack(stack, slot.xPos + centerX, slot.yPos + centerY);
+			shadeRenderedStack(stack, slot.xPos + centerX, slot.yPos + centerY);
 		}
 	}
 

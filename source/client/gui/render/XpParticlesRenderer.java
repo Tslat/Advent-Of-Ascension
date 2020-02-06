@@ -74,6 +74,7 @@ public class XpParticlesRenderer {
 		if (ConfigurationUtil.MainConfig.showXpParticles) {
 			if (mc.currentScreen == null && !mc.gameSettings.hideGUI) {
 				GlStateManager.disableDepth();
+				GlStateManager.enableAlpha();
 
 				long currentTime = System.currentTimeMillis();
 				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
@@ -172,6 +173,7 @@ public class XpParticlesRenderer {
 					double newY = skillIconsY + (skillNum / 5 * renderSize * 0.5f);
 
 					mc.getTextureManager().bindTexture(skillsTextures);
+					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 					RenderUtil.drawScaledCustomSizeModalRect(newX, newY, skillUvX, skillUvY, 50, 50, renderSize, renderSize, 450, 240);
 					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -192,6 +194,7 @@ public class XpParticlesRenderer {
 				}
 
 				GlStateManager.enableDepth();
+				GlStateManager.disableAlpha();
 			}
 			else if (!particlesMap.isEmpty()) {
 				Iterator<Map.Entry<Enums.Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();

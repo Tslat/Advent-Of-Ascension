@@ -11,15 +11,15 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import javax.annotation.Nullable;
 
 public class EntityHealingGolem extends AoAMinion {
-	public static final float entityWidth = 2.0f;
+	public static final float entityWidth = 1.25f;
 
 	public EntityHealingGolem(final World world){
-		super(world, -1, entityWidth, 2.0f);
+		super(world, -1, entityWidth, 2.125f);
 	}
 
 	@Override
 	public float getEyeHeight() {
-		return 2.0f;
+		return 2.03125f;
 	}
 
 	@Override

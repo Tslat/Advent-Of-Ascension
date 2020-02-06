@@ -24,7 +24,7 @@ public class EntityPeppermintSnail extends AoAAnimal {
 
 	@Override
 	protected double getBaseKnockbackResistance() {
-		return 0.8;
+		return 0;
 	}
 
 	@Override

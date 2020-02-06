@@ -102,6 +102,6 @@ public class EntityMermage extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new EntityCyanShot(this, Enums.MobProjectileType.ENERGY);
+		return new EntityCyanShot(this, Enums.MobProjectileType.MAGIC);
 	}
 }

@@ -32,16 +32,16 @@ public class EnchantmentsRegister {
 	public static final EnumEnchantmentType UNSTACKABLE = EnumHelper.addEnchantmentType("UNSTACKABLE", item -> item != null && item.getItemStackLimit(new ItemStack(item)) == 0);
 	public static final EnumEnchantmentType LIGHT_GUN = EnumHelper.addEnchantmentType("DUAL_WIELDABLE_GUN", item -> item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon));
 
-	public static final BaseEnchantment brace = new EnchantmentBrace();
-	public static final BaseEnchantment intervention = new EnchantmentIntervention();
 	public static final BaseEnchantment archmage = new EnchantmentArchmage();
-	public static final BaseEnchantment sever = new EnchantmentSever();
-	public static final BaseEnchantment recharge = new EnchantmentRecharge();
+	public static final BaseEnchantment brace = new EnchantmentBrace();
 	public static final BaseEnchantment control = new EnchantmentControl();
-	public static final BaseEnchantment shell = new EnchantmentShell();
 	public static final BaseEnchantment crush = new EnchantmentCrush();
 	public static final BaseEnchantment form = new EnchantmentForm();
 	public static final BaseEnchantment greed = new EnchantmentGreed();
+	public static final BaseEnchantment intervention = new EnchantmentIntervention();
+	public static final BaseEnchantment recharge = new EnchantmentRecharge();
+	public static final BaseEnchantment sever = new EnchantmentSever();
+	public static final BaseEnchantment shell = new EnchantmentShell();
 
 	@SubscribeEvent
 	public static void registerEnchantments(final RegistryEvent.Register<Enchantment> ev) {
