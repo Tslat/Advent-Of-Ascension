@@ -66,15 +66,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		BlockPos pos = findExistingPortal(world, entity);
 
-		if (pos != null) {
-			placeInPortal(world, entity, pos);
-		}
-		else {
+		if (pos == null) {
 			pos = findSuitablePortalLocation(world, entity);
 			pos = makePortal(world, entity, pos);
 
-			placeInPortal(world, entity, pos);
 		}
+
+		placeInPortal(world, entity, pos);
 
 		ChunkPos chunkPos = world.getChunk(pos).getPos();
 
@@ -82,6 +80,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		if (plData != null) {
 			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
+
+			if (portalLoc != null) {
+				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.world.provider.getDimension());
+
+				if (returnPortalLoc != null && returnPortalLoc.fromDim == world.provider.getDimension())
+					return;
+			}
 
 			if (portalLoc == null || entity.world.provider.getDimension() == portalLoc.fromDim || entity.getDistanceSq(portalLoc.asBlockPos()) > ConfigurationUtil.MainConfig.portalSearchRadius)
 				plData.setPortalReturnLocation(world.provider.getDimension(), new PortalCoordinatesContainer(entity.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ()));

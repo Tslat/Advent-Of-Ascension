@@ -9,7 +9,7 @@ import net.tslat.aoa3.item.weapon.maul.BaseMaul;
 public class EnchantmentCrush extends BaseEnchantment {
 	public EnchantmentCrush() {
 		super(Rarity.UNCOMMON, EnchantmentsRegister.MAUL, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		setName("crush");
+		setName("aoa3.crush");
 		setRegistryName("aoa3:crush");
 	}
 

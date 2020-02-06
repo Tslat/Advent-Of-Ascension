@@ -11,7 +11,7 @@ import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
 public class EnchantmentBrace extends BaseEnchantment {
 	public EnchantmentBrace() {
 		super(Rarity.VERY_RARE, EnchantmentsRegister.LIGHT_GUN, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});
-		setName("brace");
+		setName("aoa3.brace");
 		setRegistryName("aoa3:brace");
 	}
 

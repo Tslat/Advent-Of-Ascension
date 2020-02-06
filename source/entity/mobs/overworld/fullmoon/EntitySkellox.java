@@ -70,11 +70,6 @@ public class EntitySkellox extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected boolean isOverworldMob() {
 		return true;
 	}

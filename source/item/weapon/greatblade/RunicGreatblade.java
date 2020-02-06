@@ -25,10 +25,10 @@ public class RunicGreatblade extends BaseGreatblade implements AdventWeapon, Lon
 
 	@Override
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		if (!EntityUtil.isTypeImmune(target, Enums.MobProperties.MAGIC_IMMUNE))
+		if (!target.world.isRemote && target.hurtResistantTime <= 0 && !EntityUtil.isTypeImmune(target, Enums.MobProperties.MAGIC_IMMUNE))
 			EntityUtil.dealMagicDamage(null, attacker, target, 4 * (((EntityPlayer)attacker).getCooledAttackStrength(0f)), false);
 
-		return super.attackEntity(stack, target, attacker, dmg - 4);
+		return super.attackEntity(stack, target, attacker, (float)getDamage() - 4);
 	}
 
 	@SideOnly(Side.CLIENT)

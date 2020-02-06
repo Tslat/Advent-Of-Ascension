@@ -1209,7 +1209,7 @@ public class WeaponRegister {
 				new PyroArchergun(		7.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
 				new RosidianArchergun(	9.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
 				new SkeletalArchergun(	8.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
-				new SpectralArchergun(	10.0f, 	1600, 8, 		3.0f), // Runandor | Crafting
+				new SpectralArchergun(	6.5f, 	1600, 8, 		3.0f), // Runandor | Crafting
 				new TrollsArchergun(	9.5f,		800, 	16, 	3.0f), // Overworld | Smash
 				new ViralArchergun(		9.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
 		);

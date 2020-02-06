@@ -9,7 +9,7 @@ import net.tslat.aoa3.item.weapon.gun.BaseGun;
 public class EnchantmentControl extends BaseEnchantment {
 	public EnchantmentControl() {
 		super(Rarity.RARE, EnchantmentsRegister.GUN, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND});
-		setName("control");
+		setName("aoa3.control");
 		setRegistryName("aoa3:control");
 	}
 

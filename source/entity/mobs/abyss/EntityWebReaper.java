@@ -15,6 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
@@ -25,7 +26,6 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagicBall;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -253,7 +253,7 @@ public class EntityWebReaper extends AoARangedMob {
 			if (stagePrefix != null)
 				entityString = entityString + "." + stagePrefix;
 
-			return StringUtil.getLocaleString("entity." + entityString + ".name");
+			return I18n.translateToLocal("entity." + entityString + ".name");
 		}
 	}
 }

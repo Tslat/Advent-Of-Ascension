@@ -2,7 +2,6 @@ package net.tslat.aoa3.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -33,14 +32,6 @@ public class KeyBinder {
 		if (keyResourceGui.isPressed()) {
 			statusResourceGui = !statusResourceGui;
 			statusResourceGuiMessage = false;
-		}
-
-		if (Minecraft.getMinecraft().gameSettings.keyBindAttack.isPressed()) {
-			Minecraft mc = Minecraft.getMinecraft();
-
-			ClientEventHandler.doGreatbladeAttack();
-			mc.player.resetCooldown();
-			mc.player.swingArm(EnumHand.MAIN_HAND);
 		}
 
 		if (keyAdventGui.isPressed() && Minecraft.getMinecraft().player != null) {
