@@ -714,7 +714,7 @@ public class CommandTslat extends CommandBase {
 						try {
 							LootTable table = world.getLootTableManager().getLootTableFromLocation(new ResourceLocation(args[1]));
 
-							if (table == null) {
+							if (table == LootTable.EMPTY_LOOT_TABLE) {
 								sender.sendMessage(new TextComponentString("Unable to find loot table: " + args[1]));
 
 								break;

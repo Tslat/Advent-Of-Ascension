@@ -22,10 +22,10 @@ public class NetherGen {
 	private static void doOreGen(World world, Random rand, int chunkX, int chunkZ) {
 		for (int i = 0; i < ConfigurationUtil.OreConfig.emberstone.veinsPerChunk; i++) {
 			int posX = chunkX + rand.nextInt(16);
-			int posY = rand.nextInt(39) + 4;
+			int posY = 5 + rand.nextInt(120);
 			int posZ = chunkZ + rand.nextInt(16);
 
-			new WorldGenMinable(BlockRegister.oreEmberstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.emberstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.emberstone.maxOresPerVein)), BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, rand, new BlockPos(posX, posY, posZ));
+			new WorldGenMinable(BlockRegister.oreEmberstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.emberstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.emberstone.maxOresPerVein) + 1), BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, rand, new BlockPos(posX, posY, posZ));
 		}
 	}
 

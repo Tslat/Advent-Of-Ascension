@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
 import net.tslat.aoa3.library.Enums;
 
@@ -55,8 +56,11 @@ public class PacketPlayerCrownInfo implements IMessage {
 
 	public static class Handler implements IMessageHandler<PacketPlayerCrownInfo, IMessage> {
 		public IMessage onMessage(final PacketPlayerCrownInfo msg, final MessageContext ctx) {
+			AdventOfAscension.logOptionalMessage("Received player crowns map update");
+
 			for (Map.Entry<UUID, PlayerCrownHandler.PlayerCrownContainer> entry : msg.crownsMap.entrySet()) {
 				PlayerCrownHandler.setCrownChoice(entry.getKey(), entry.getValue().getPreferredCrown());
+				AdventOfAscension.logOptionalMessage("UUID: " + entry.getKey() + "; Crown: " + entry.getValue().getPreferredCrown().toString());
 			}
 
 			return null;

@@ -140,9 +140,6 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (!world.isRemote && getAttackTarget() != null && rand.nextInt(400) == 0 && getAttackTarget().getDistance(this) < 60)
-			setPosition(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
-
 		if (formCooldown > 0) {
 			formCooldown--;
 		}

@@ -69,9 +69,9 @@ public class EntityExplosivesExpert extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 13), new ItemStack(Blocks.TNT)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(Blocks.TNT), new ItemStack(ItemRegister.coinCopper, 10)));
 		newTradesList.add(new AoATraderRecipe(FireworkUtil.getExplosiveExpertFireworks(), new ItemStack(ItemRegister.coinLunaver, 50)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 3), new ItemStack(ItemRegister.unstableGunpowder, 2), new ItemStack(ArmourRegister.omniBoots)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 4), new ItemStack(ItemRegister.unstableGunpowder, 2), new ItemStack(ArmourRegister.omniLegs)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 5), new ItemStack(ItemRegister.unstableGunpowder, 3), new ItemStack(ArmourRegister.omniBody)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 3), new ItemStack(ItemRegister.unstableGunpowder, 2), new ItemStack(ArmourRegister.omniHelmet)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 5), new ItemStack(ItemRegister.unstableGunpowder, 3), new ItemStack(ArmourRegister.omniBody)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 4), new ItemStack(ItemRegister.unstableGunpowder, 2), new ItemStack(ArmourRegister.omniLegs)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemGemenyte, 3), new ItemStack(ItemRegister.unstableGunpowder, 2), new ItemStack(ArmourRegister.omniBoots)));
 	}
 }

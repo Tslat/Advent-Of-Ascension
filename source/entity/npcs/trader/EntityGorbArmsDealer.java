@@ -54,7 +54,7 @@ public class EntityGorbArmsDealer extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver), new ItemStack(WeaponRegister.throwableGrenade, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver), new ItemStack(WeaponRegister.throwableGrenade, 5)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(WeaponRegister.throwableRunicBomb), new ItemStack(ItemRegister.coinCopper, 7)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.hollyArrow), new ItemStack(ItemRegister.coinCopper, 2)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 3), new ItemStack(WeaponRegister.blasterLaserBlaster)));

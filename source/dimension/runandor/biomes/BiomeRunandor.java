@@ -54,7 +54,7 @@ public class BiomeRunandor extends Biome {
 		@Override
 		protected void doOreGen(World world, Biome biome, Random rand, BlockPos basePos, BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.elecanium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneRunic))
+				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneRunic))
 						.generate(world, rand, basePos.add(rand.nextInt(14) + 1, rand.nextInt(35) + 1, rand.nextInt(14) + 1));
 			}
 		}

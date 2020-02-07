@@ -1,6 +1,7 @@
 package net.tslat.aoa3.common.handlers;
 
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.PacketPlayerCrownInfo;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.PacketUtil;
@@ -13,6 +14,7 @@ public class PlayerCrownHandler {
 	private static final HashSet<UUID> renderCheckedPlayers = new HashSet<UUID>();
 
 	public static void syncWithNewClient(EntityPlayerMP player) {
+		AdventOfAscension.logOptionalMessage("Syncing player crowns with new player: " + player.getUniqueID().toString());
 		PacketUtil.network.sendTo(new PacketPlayerCrownInfo(playerCrowns), player);
 	}
 

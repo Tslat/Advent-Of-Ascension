@@ -87,14 +87,6 @@ public class EntityGoldorth extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		if (getAttackTarget() != null && rand.nextInt(250) == 0)
-			getAttackTarget().setPositionAndUpdate(posX, posY, posZ);
-	}
-
-	@Override
 	public boolean startRiding(Entity entity, boolean force) {
 		return false;
 	}

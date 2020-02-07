@@ -47,6 +47,11 @@ public class EntityCorruptedTraveller extends AoATrader {
 	}
 
 	@Override
+	protected boolean isOverworldNPC() {
+		return true;
+	}
+
+	@Override
 	protected boolean canDespawn() {
 		return world.provider.getDimension() != 0;
 	}

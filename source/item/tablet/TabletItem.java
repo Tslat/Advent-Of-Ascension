@@ -67,15 +67,13 @@ public abstract class TabletItem extends Item {
 
 			if (player.isCreative() || plData.stats().getLevel(Enums.Skills.ANIMA) >= animaLevelReq) {
 				float soulCost = initialSoulCost * (1 - ((plData.stats().getLevel(Enums.Skills.ANIMA) - 1) / 200f)) * (PlayerUtil.isWearingFullSet(player, Enums.ArmourSets.ANIMA) ? 0.5f : 1f);
+				EntitySoulTablet tabletEntity = getTabletEntity(world, player);
+				AxisAlignedBB blockBoundingBox = targetBlockState.getCollisionBoundingBox(world, pos);
 
-				if (plData.stats().consumeResource(Enums.Resources.SOUL, soulCost, false)) {
+				tabletEntity.setPositionAndRotation(pos.getX() + hitX, pos.getY() + (blockBoundingBox == null ? 0 : blockBoundingBox.maxY), pos.getZ() + hitZ, player.rotationYaw, player.rotationPitch);
 
-					EntitySoulTablet tabletEntity = getTabletEntity(world, player);
-					AxisAlignedBB blockBoundingBox = targetBlockState.getCollisionBoundingBox(world, pos);
-
-					tabletEntity.setPositionAndRotation(pos.getX() + hitX, pos.getY() + (blockBoundingBox == null ? 0 : blockBoundingBox.maxY), pos.getZ() + hitZ, player.rotationYaw, player.rotationPitch);
-
-					if (world.checkNoEntityCollision(tabletEntity.getEntityBoundingBox(), tabletEntity)) {
+				if (world.checkNoEntityCollision(tabletEntity.getEntityBoundingBox(), tabletEntity)) {
+					if (plData.stats().consumeResource(Enums.Resources.SOUL, soulCost, false)) {
 						world.spawnEntity(tabletEntity);
 
 						if (!player.capabilities.isCreativeMode)
@@ -83,9 +81,9 @@ public abstract class TabletItem extends Item {
 
 						return EnumActionResult.SUCCESS;
 					}
-				}
-				else {
-					PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.SOUL, soulCost);
+					else {
+						PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.SOUL, soulCost);
+					}
 				}
 			}
 			else {

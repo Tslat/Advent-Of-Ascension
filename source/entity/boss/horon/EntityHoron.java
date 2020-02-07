@@ -125,10 +125,8 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 			if (rand.nextInt(60) == 0)
 				WorldUtil.createExplosion(this, world, 2f);
 
-			if (getAttackTarget() != null && rand.nextInt(400) == 0) {
-				setPositionAndUpdate(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
+			if (getAttackTarget() != null && rand.nextInt(400) == 0)
 				getAttackTarget().addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 120, 3, true, true));
-			}
 		}
 	}
 

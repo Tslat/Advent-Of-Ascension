@@ -163,7 +163,7 @@ public class EntityEvents {
 	@SubscribeEvent
 	public void onLootDrops(LivingDropsEvent ev) {
 		if (!ev.getEntityLiving().world.isRemote) {
-			if (ev.getEntityLiving().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
+			if (ev.getEntityLiving().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern && ev.getEntityLiving().isNonBoss()) {
 				ev.getDrops().clear();
 				ev.setCanceled(true);
 
