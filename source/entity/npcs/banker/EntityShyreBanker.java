@@ -4,7 +4,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.base.AoATraderRecipe;

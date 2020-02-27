@@ -99,9 +99,6 @@ public class EntityOkazor extends AoAMeleeMob implements BossEntity {
 			else {
 				healCounter = 0;
 			}
-
-			if (getAttackTarget() != null && rand.nextInt(125) == 0)
-				setPositionAndUpdate(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
 		}
 	}
 

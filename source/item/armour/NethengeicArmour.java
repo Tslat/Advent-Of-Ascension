@@ -29,14 +29,11 @@ public class NethengeicArmour extends AdventArmour {
 
 	@Override
 	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots == null) {
-			if (plData.player().isBurning())
-				event.setAmount(event.getAmount() * 1.5f);
-		}
-		else {
-			if (event.getEntityLiving().isBurning())
-				event.setAmount(event.getAmount() * (1 + (0.1f * slots.size())));
-		}
+		if (slots == null && plData.player().isBurning())
+			event.setAmount(event.getAmount() * 1.5f);
+
+		if (slots != null && event.getEntityLiving().isBurning())
+			event.setAmount(event.getAmount() * (1 + (0.1f * slots.size())));
 	}
 
 	@SideOnly(Side.CLIENT)

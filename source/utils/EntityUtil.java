@@ -344,7 +344,7 @@ public class EntityUtil {
 	}
 
 	public static boolean isEnvironmentalDamage(DamageSource source) {
-		if (source.getTrueSource() != null || !source.isExplosion())
+		if (source.getTrueSource() != null || source.isExplosion())
 			return false;
 
 		switch (source.getDamageType()) {

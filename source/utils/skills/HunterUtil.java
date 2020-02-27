@@ -36,7 +36,7 @@ public final class HunterUtil {
 		if (player == null)
 			return false;
 
-		boolean success = player.capabilities.isCreativeMode || PlayerUtil.doesPlayerHaveLevel(player, Enums.Skills.HUNTER, lvl);
+		boolean success = player.capabilities.isCreativeMode || (!target.world.isRemote && PlayerUtil.doesPlayerHaveLevel(player, Enums.Skills.HUNTER, lvl));
 
 		if (!success && notifyPlayer && !player.world.isRemote)
 			PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.HUNTER, lvl);

@@ -22,7 +22,7 @@ public class RosidianArchergun extends BaseArchergun {
 
 	@Override
 	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (itemRand.nextInt(1) == 0)
+		if (itemRand.nextInt(8) == 0)
 			shooter.heal(1);
 	}
 

@@ -110,7 +110,7 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 		mobList = new ArrayList<EntityList.EntityEggInfo>();
 
 		for (EntityList.EntityEggInfo entityEggInfo : EntityList.ENTITY_EGGS.values()) {
-			if (stats.readStat(entityEggInfo.killEntityStat) > 0)
+			if (entityEggInfo.killEntityStat != null && stats.readStat(entityEggInfo.killEntityStat) > 0)
 				mobList.add(entityEggInfo);
 		}
 

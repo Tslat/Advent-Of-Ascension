@@ -56,10 +56,10 @@ public class EntityGorbEngineer extends AoATrader {
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 3), new ItemStack(WeaponRegister.swordUltraflame)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 8), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBoots)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 12), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmLegs)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 15), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBody)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 10), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmHelmet)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 15), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBody)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 12), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmLegs)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 8), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBoots)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.powerCore), new ItemStack(ItemRegister.coinSilver, 1)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.scrapMetal), new ItemStack(ItemRegister.coinCopper, 8)));
 	}

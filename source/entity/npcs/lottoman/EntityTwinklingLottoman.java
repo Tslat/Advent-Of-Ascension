@@ -28,6 +28,11 @@ public class EntityTwinklingLottoman extends EntityLottoman {
 	}
 
 	@Override
+	protected boolean isOverworldNPC() {
+		return false;
+	}
+
+	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensHaven, 28), new ItemStack(ItemRegister.lottoTotem)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensHaven, 15), new ItemStack(ItemRegister.weaponsCase)));

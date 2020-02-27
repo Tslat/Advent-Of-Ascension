@@ -55,11 +55,11 @@ public class BiomeGreckon extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.ghastly.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreGhastly.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghastly.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghastly.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(25) + 3, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.oreGhastly.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghastly.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghastly.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(25) + 3, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.ghoulish.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreGhoulish.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghoulish.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghoulish.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(30) + 30, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.oreGhoulish.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghoulish.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghoulish.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(30) + 30, rand.nextInt(16)));
 			}
 		}
 

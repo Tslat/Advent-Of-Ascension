@@ -17,9 +17,6 @@ import net.tslat.aoa3.crafting.recipes.UpgradeKitRecipe;
 import net.tslat.aoa3.hooks.ThirdPartyInteractions;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.stream.Collectors;
 
 @JEIPlugin
 public class JeiHooks implements IModPlugin {
@@ -42,8 +39,6 @@ public class JeiHooks implements IModPlugin {
 		registry.addRecipes(compileWhitewashingRecipes(), "aoa3.whitewashing");
 		registry.addRecipes(compileInfusionRecipes(), "aoa3.infusion");
 		registry.addRecipes(compileUpgradeKitRecipes(), "aoa3.upgradeKits");
-		//registry.addRecipes(RecipeRegister.getAllInfusionRecipes().stream().sorted(Comparator.comparing(recipe -> recipe.getRegistryName().toString())).collect(Collectors.toList()), "aoa3.infusion");
-		//registry.addRecipes(RecipeRegister.getAllUpgradeKitRecipes().stream().sorted(Comparator.comparing(recipe -> recipe.getRegistryName().toString())).collect(Collectors.toList()), "aoa3.upgradeKits");
 	}
 
 	private void registerHiddenItems(IModRegistry registry) {
@@ -59,6 +54,55 @@ public class JeiHooks implements IModPlugin {
 		blacklist.addIngredientToBlacklist(new ItemStack(WeaponRegister.blasterColourCannon));
 		blacklist.addIngredientToBlacklist(new ItemStack(WeaponRegister.blasterExperimentW801));
 		blacklist.addIngredientToBlacklist(new ItemStack(WeaponRegister.gunShoeFlinger));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampAmethyst));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampAquatic));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampBaronyte));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampBlazium));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampBloodstone));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampCrystallite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampElecanium));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampEmberstone));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampFire));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampGhastly));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampGhoulish));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIro));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvory));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvoryAmethyst));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvoryJade));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvoryLimonite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvoryRosite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampIvorySapphire));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampJade));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeAqua));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeBlack));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeBlue));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeBrown));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeCyan));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeDarkGrey));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeGreen));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeGrey));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeLime));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeMagenta));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeOrange));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifePink));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifePurple));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeRed));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeWhite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLifeYellow));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLimonite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLunar));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampLyon));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampMystic));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeon));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonCircling));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonLapis));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonLapisCircling));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonLapisTriangles));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonRunic));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampNeonTriangles));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampRosite));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampSapphire));
+		blacklist.addIngredientToBlacklist(new ItemStack(BlockRegister.lampSkeletal));
 	}
 
 	@Override
@@ -115,9 +159,5 @@ public class JeiHooks implements IModPlugin {
 		whitewashingRecipes.add(new WhitewashingRecipeWrapper(BlockRegister.bricksDarkwash));
 
 		return whitewashingRecipes;
-	}
-
-	private Collection<?> sorted(Collection<? extends IRecipe> collection) {
-		return collection.stream().sorted(Comparator.comparing(recipe -> recipe.getRegistryName().toString())).collect(Collectors.toList());
 	}
 }

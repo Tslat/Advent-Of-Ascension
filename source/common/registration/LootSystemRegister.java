@@ -333,7 +333,7 @@ public class LootSystemRegister {
 	public static final ResourceLocation entityPodPlant = registerLootTable("entities/mobs/gardencia/pod_plant");
 	public static final ResourceLocation entityPolarUrsa = registerLootTable("entities/mobs/overworld/polar_ursa");
 	public static final ResourceLocation entityPolytom = registerLootTable("entities/mobs/iromine/polytom");
-	public static final ResourceLocation entityPortalMaster = registerLootTable("entities/npcs/traders/portal_master");
+	public static final ResourceLocation entityPortalMaster = registerLootTable("entities/npcs/ambient/portal_master");
 	public static final ResourceLocation entityPrecasianLottoman = registerLootTable("entities/npcs/lottoman/precasian_lottoman");
 	public static final ResourceLocation entityPrimordialBanker = registerLootTable("entities/npcs/bankers/primordial_banker");
 	public static final ResourceLocation entityPrimordialGuide = registerLootTable("entities/npcs/ambient/primordial_guide");

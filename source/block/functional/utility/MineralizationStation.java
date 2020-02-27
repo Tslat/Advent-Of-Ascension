@@ -31,54 +31,84 @@ public class MineralizationStation extends Block {
 		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
 			ItemStack stack = player.getHeldItem(hand);
 			Item tokensItem = null;
+			int baseAmount = 5;
 
 			switch (stack.getItem().getTranslationKey().substring(5)) {
-				case "Amethyst":
 				case "Sapphire":
+					baseAmount = 10;
+					tokensItem = ItemRegister.coinCopper;
+					break;
+				case "Amethyst":
+					baseAmount = 8;
+					tokensItem = ItemRegister.coinCopper;
+					break;
 				case "LimoniteIngot":
+					baseAmount = 5;
+					tokensItem = ItemRegister.coinCopper;
+					break;
+				case "RositeIngot":
+					baseAmount = 6;
+					tokensItem = ItemRegister.coinCopper;
+					break;
 				case "Jade":
+					baseAmount = 7;
 					tokensItem = ItemRegister.coinCopper;
 					break;
 				case "BaronyteIngot":
+					baseAmount = 7;
+					tokensItem = ItemRegister.tokensBaron;
+					break;
 				case "BlaziumIngot":
 				case "VarsiumIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensBaron;
 					break;
 				case "EmberstoneIngot":
+					baseAmount = 9;
 					tokensItem = ItemRegister.tokensNether;
 					break;
 				case "GhastlyIngot":
 				case "GhoulishIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensGreckon;
 					break;
 				case "LunarIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensLunar;
 					break;
 				case "LyonIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensIromine;
 					break;
 				case "MystiteIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensMysterium;
 					break;
 				case "Shyregem":
 				case "ShyrestoneIngot":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensShyrelands;
 					break;
 				case "SkeletalIngot":
+					baseAmount = 7;
 					tokensItem = ItemRegister.tokensPrecasian;
 					break;
 				case "ElecaniumIngot":
+					baseAmount = 9;
 					tokensItem = ItemRegister.tokensRunandor;
 					break;
 				case "Bloodstone":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensAbyss;
 					break;
 				case "Crystallite":
+					baseAmount = 8;
 					tokensItem = ItemRegister.tokensHaven;
 					break;
 				case "Gemenyte":
 				case "Jewelyte":
 				case "Ornamyte":
+					baseAmount = 7;
 					tokensItem = ItemRegister.tokensCreeponia;
 					break;
 				case "BlueCrystal":
@@ -87,6 +117,7 @@ public class MineralizationStation extends Block {
 				case "RedCrystal":
 				case "WhiteCrystal":
 				case "YellowCrystal":
+					baseAmount = 4;
 					tokensItem = ItemRegister.tokensCrystevia;
 					break;
 				case "BlankRealmstone":
@@ -101,7 +132,7 @@ public class MineralizationStation extends Block {
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(tokensItem, 13 + player.getRNG().nextInt(12)));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(tokensItem, baseAmount + player.getRNG().nextInt(baseAmount)));
 			}
 		}
 

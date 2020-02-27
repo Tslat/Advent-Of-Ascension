@@ -80,14 +80,6 @@ public class EntityKajaros extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		if (!world.isRemote && getAttackTarget() != null && rand.nextInt(75) == 0)
-			setPositionAndUpdate(getAttackTarget().posX, getAttackTarget().posY, getAttackTarget().posZ);
-	}
-
-	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 150, 2, true, true));

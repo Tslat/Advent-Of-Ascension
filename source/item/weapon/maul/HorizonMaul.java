@@ -25,7 +25,7 @@ public class HorizonMaul extends BaseMaul implements AdventWeapon {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {
 		if (target instanceof EntityLivingBase && attackCooldown == 1f && !EntityUtil.isSpecExempt(target, attacker))
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 60, 0, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 35, 0, true, true));
 	}
 
 	@Override

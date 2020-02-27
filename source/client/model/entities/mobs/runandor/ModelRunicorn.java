@@ -6,16 +6,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
-public class ModelRunicornRider extends ModelBase {
+public class ModelRunicorn extends ModelBase {
 	private final ModelRenderer root;
-	private final ModelRenderer guy;
-	private final ModelRenderer Shape1;
-	private final ModelRenderer Shape3;
-	private final ModelRenderer Shape2;
-	private final ModelRenderer Shape5;
-	private final ModelRenderer bone;
-	private final ModelRenderer Shape4;
-	private final ModelRenderer bone2;
 	private final ModelRenderer horse;
 	private final ModelRenderer part6;
 	private final ModelRenderer part8;
@@ -27,58 +19,12 @@ public class ModelRunicornRider extends ModelBase {
 	private final ModelRenderer part10;
 	private final ModelRenderer part2;
 
-	public ModelRunicornRider() {
+	public ModelRunicorn() {
 		textureWidth = 128;
 		textureHeight = 64;
 
 		root = new ModelRenderer(this);
 		root.setRotationPoint(0.0F, 24.0F, 0.0F);
-
-		guy = new ModelRenderer(this);
-		guy.setRotationPoint(3.0F, -33.0F, -3.0F);
-		root.addChild(guy);
-		guy.cubeList.add(new ModelBox(guy, 55, 0, -7.5F, 0.0F, 0.0F, 8, 12, 4, 0.0F, true));
-
-		Shape1 = new ModelRenderer(this);
-		Shape1.setRotationPoint(-7.5F, 2.0F, 2.0F);
-		setRotation(Shape1, -0.9599F, -0.5236F, 0.0F);
-		guy.addChild(Shape1);
-		Shape1.cubeList.add(new ModelBox(Shape1, 111, 2, -4.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, false));
-
-		Shape3 = new ModelRenderer(this);
-		Shape3.setRotationPoint(-3.0F, 0.0F, 2.0F);
-		guy.addChild(Shape3);
-		Shape3.cubeList.add(new ModelBox(Shape3, 89, 47, -4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, true));
-
-		Shape2 = new ModelRenderer(this);
-		Shape2.setRotationPoint(0.5F, 2.0F, 2.0F);
-		setRotation(Shape2, -0.9599F, 0.5236F, 0.0F);
-		guy.addChild(Shape2);
-		Shape2.cubeList.add(new ModelBox(Shape2, 111, 2, 0.0F, -2.0F, -2.0F, 4, 12, 4, 0.0F, true));
-
-		Shape5 = new ModelRenderer(this);
-		Shape5.setRotationPoint(-1.5F, 12.0F, 2.5F);
-		setRotation(Shape5, -1.309F, -0.7854F, 0.0F);
-		guy.addChild(Shape5);
-		Shape5.cubeList.add(new ModelBox(Shape5, 111, 20, -2.0F, 0.0F, -2.0F, 4, 6, 4, 0.0F, true));
-
-		bone = new ModelRenderer(this);
-		bone.setRotationPoint(0.0F, 5.0F, -2.0F);
-		setRotation(bone, 1.9199F, 0.0F, 0.0F);
-		Shape5.addChild(bone);
-		bone.cubeList.add(new ModelBox(bone, 111, 30, -1.999F, -0.342F, -4.9397F, 4, 8, 4, 0.0F, true));
-
-		Shape4 = new ModelRenderer(this);
-		Shape4.setRotationPoint(-5.5F, 12.0F, 2.5F);
-		setRotation(Shape4, -1.309F, 0.7854F, 0.0F);
-		guy.addChild(Shape4);
-		Shape4.cubeList.add(new ModelBox(Shape4, 111, 20, -2.0F, 0.0F, -2.0F, 4, 6, 4, 0.0F, false));
-
-		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(0.0F, 5.0F, -2.0F);
-		setRotation(bone2, 1.9199F, 0.0F, 0.0F);
-		Shape4.addChild(bone2);
-		bone2.cubeList.add(new ModelBox(bone2, 111, 30, -2.001F, -0.342F, -4.9397F, 4, 8, 4, 0.0F, false));
 
 		horse = new ModelRenderer(this);
 		horse.setRotationPoint(4.0F, -21.0F, -12.0F);
@@ -153,7 +99,6 @@ public class ModelRunicornRider extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		part3.rotateAngleY = par4 / (float)(180f / Math.PI);
 		leg1.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
 		leg2.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
 		leg3.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;

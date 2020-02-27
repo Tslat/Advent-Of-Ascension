@@ -133,7 +133,7 @@ public class ClientEventHandler {
 				if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
 					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
 
-					if (ray != null)
+					if (ray != null && !player.isRidingOrBeingRiddenBy(ray.entityHit) && !ray.entityHit.isRidingOrBeingRiddenBy(player))
 						PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
 				}
 			}

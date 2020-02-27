@@ -55,16 +55,16 @@ public class BiomeBarathos extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.varsium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreVarsium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.varsium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.varsium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron))
+				new WorldGenMinable(BlockRegister.oreVarsium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.varsium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.varsium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneBaron))
 						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(38) + 25, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.baronyte.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreBaronyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.baronyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.baronyte.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBaron)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(10) + 25, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.oreBaronyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.baronyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.baronyte.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneBaron)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(10) + 25, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.blazium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreBlazium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blazium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blazium.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneBarathos)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20), rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.oreBlazium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blazium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blazium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneBarathos)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20), rand.nextInt(16)));
 			}
 		}
 

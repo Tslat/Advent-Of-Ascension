@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.block.functional.lamps.LampBlock;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.structure.AoAStructure;
 
@@ -12,6 +13,7 @@ import java.util.Random;
 public class NethengeicPit extends AoAStructure { //StructureSize: 16x10x16
 	private static final IBlockState netherBricks = Blocks.NETHER_BRICK.getDefaultState();
 	private static final IBlockState nethengeicSpawner = BlockRegister.spawnerNethengeicBeast.getDefaultState();
+	private static final IBlockState fireLamp = BlockRegister.lampFire.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public NethengeicPit() {
@@ -1169,15 +1171,23 @@ public class NethengeicPit extends AoAStructure { //StructureSize: 16x10x16
 		addBlock(world, basePos, 12, 5, 11, netherBricks);
 		addBlock(world, basePos, 12, 5, 12, netherBricks);
 		addBlock(world, basePos, 3, 6, 3, netherBricks);
+		addBlock(world, basePos, 3, 6, 4, fireLamp);
 		addBlock(world, basePos, 3, 6, 5, netherBricks);
+		addBlock(world, basePos, 3, 6, 6, fireLamp);
 		addBlock(world, basePos, 3, 6, 7, netherBricks);
 		addBlock(world, basePos, 3, 6, 8, netherBricks);
+		addBlock(world, basePos, 3, 6, 9, fireLamp);
 		addBlock(world, basePos, 3, 6, 10, netherBricks);
+		addBlock(world, basePos, 3, 6, 11, fireLamp);
 		addBlock(world, basePos, 3, 6, 12, netherBricks);
+		addBlock(world, basePos, 4, 6, 3, fireLamp);
 		addBlock(world, basePos, 4, 6, 5, air);
+		addBlock(world, basePos, 4, 6, 12, fireLamp);
 		addBlock(world, basePos, 5, 6, 3, netherBricks);
 		addBlock(world, basePos, 5, 6, 12, netherBricks);
+		addBlock(world, basePos, 6, 6, 3, fireLamp);
 		addBlock(world, basePos, 6, 6, 9, air);
+		addBlock(world, basePos, 6, 6, 12, fireLamp);
 		addBlock(world, basePos, 7, 6, 3, netherBricks);
 		addBlock(world, basePos, 7, 6, 4, air);
 		addBlock(world, basePos, 7, 6, 5, air);
@@ -1189,18 +1199,26 @@ public class NethengeicPit extends AoAStructure { //StructureSize: 16x10x16
 		addBlock(world, basePos, 8, 6, 9, air);
 		addBlock(world, basePos, 8, 6, 10, air);
 		addBlock(world, basePos, 8, 6, 12, netherBricks);
+		addBlock(world, basePos, 9, 6, 3, fireLamp);
 		addBlock(world, basePos, 9, 6, 10, air);
+		addBlock(world, basePos, 9, 6, 12, fireLamp);
 		addBlock(world, basePos, 10, 6, 3, netherBricks);
 		addBlock(world, basePos, 10, 6, 10, air);
 		addBlock(world, basePos, 10, 6, 12, netherBricks);
+		addBlock(world, basePos, 11, 6, 3, fireLamp);
 		addBlock(world, basePos, 11, 6, 4, air);
 		addBlock(world, basePos, 11, 6, 6, air);
 		addBlock(world, basePos, 11, 6, 11, air);
+		addBlock(world, basePos, 11, 6, 12, fireLamp);
 		addBlock(world, basePos, 12, 6, 3, netherBricks);
+		addBlock(world, basePos, 12, 6, 4, fireLamp);
 		addBlock(world, basePos, 12, 6, 5, netherBricks);
+		addBlock(world, basePos, 12, 6, 6, fireLamp);
 		addBlock(world, basePos, 12, 6, 7, netherBricks);
 		addBlock(world, basePos, 12, 6, 8, netherBricks);
+		addBlock(world, basePos, 12, 6, 9, fireLamp);
 		addBlock(world, basePos, 12, 6, 10, netherBricks);
+		addBlock(world, basePos, 12, 6, 11, fireLamp);
 		addBlock(world, basePos, 12, 6, 12, netherBricks);
 		addBlock(world, basePos, 3, 7, 3, netherBricks);
 		addBlock(world, basePos, 3, 7, 4, netherBricks);

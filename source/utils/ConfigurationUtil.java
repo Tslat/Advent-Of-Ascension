@@ -517,7 +517,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Number of Emberstone veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.veinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int veinsPerChunk = 4;
+			public int veinsPerChunk = 6;
 		}
 
 		public static class SubCategoryFootboneFragments {

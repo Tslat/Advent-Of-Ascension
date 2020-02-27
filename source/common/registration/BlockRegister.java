@@ -37,7 +37,6 @@ import net.tslat.aoa3.block.decoration.statue.StatueBlock;
 import net.tslat.aoa3.block.functional.altar.*;
 import net.tslat.aoa3.block.functional.crops.CropBlock;
 import net.tslat.aoa3.block.functional.lamps.LampBlock;
-import net.tslat.aoa3.block.functional.lamps.LifeLampBlock;
 import net.tslat.aoa3.block.functional.lights.LightBlock;
 import net.tslat.aoa3.block.functional.lights.UnbreakableLightBlock;
 import net.tslat.aoa3.block.functional.lights.VoxLight;
@@ -60,7 +59,6 @@ import net.tslat.aoa3.block.generation.sand.SandBlock;
 import net.tslat.aoa3.block.generation.special.DimensionalFabric;
 import net.tslat.aoa3.block.generation.special.DustopianLamp;
 import net.tslat.aoa3.block.generation.special.DustopianLampOff;
-import net.tslat.aoa3.block.functional.altar.HydroTable;
 import net.tslat.aoa3.block.generation.stone.StoneBlock;
 import net.tslat.aoa3.block.generation.wood.LogBlock;
 import net.tslat.aoa3.block.generation.wood.TentaclesEyeRed;
@@ -1114,7 +1112,7 @@ public final class BlockRegister {
 	@GameRegistry.ObjectHolder("purple_life_lamp")
 	public static final LampBlock lampLifePurple = null;
 	@GameRegistry.ObjectHolder("red_life_lamp")
-	public static final LampBlock lampLifeRed  = null;
+	public static final LampBlock lampLifeRed = null;
 	@GameRegistry.ObjectHolder("white_life_lamp")
 	public static final LampBlock lampLifeWhite = null;
 	@GameRegistry.ObjectHolder("yellow_life_lamp")
@@ -3273,22 +3271,22 @@ public final class BlockRegister {
 		registerBlock(registry, new LampBlock("IvoryRositeLamp", "ivory_rosite_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("IvorySapphireLamp", "ivory_sapphire_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("JadeLamp", "jade_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("AquaLifeLamp", "aqua_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("BlackLifeLamp", "black_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("BlueLifeLamp", "blue_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("BrownLifeLamp", "brown_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("CyanLifeLamp", "cyan_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("DarkGreyLifeLamp", "dark_grey_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("GreenLifeLamp", "green_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("GreyLifeLamp", "grey_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("LimeLifeLamp", "lime_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("MagentaLifeLamp", "magenta_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("OrangeLifeLamp", "orange_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("PinkLifeLamp", "pink_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("PurpleLifeLamp", "purple_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("RedLifeLamp", "red_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("WhiteLifeLamp", "white_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
-		registerBlock(registry, new LifeLampBlock("YellowLifeLamp", "yellow_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("AquaLifeLamp", "aqua_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("BlackLifeLamp", "black_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("BlueLifeLamp", "blue_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("BrownLifeLamp", "brown_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("CyanLifeLamp", "cyan_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("DarkGreyLifeLamp", "dark_grey_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("GreenLifeLamp", "green_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("GreyLifeLamp", "grey_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("LimeLifeLamp", "lime_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("MagentaLifeLamp", "magenta_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("OrangeLifeLamp", "orange_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("PinkLifeLamp", "pink_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("PurpleLifeLamp", "purple_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("RedLifeLamp", "red_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("WhiteLifeLamp", "white_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
+		registerBlock(registry, new LampBlock("YellowLifeLamp", "yellow_life_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("LimoniteLamp", "limonite_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("LunarLamp", "lunar_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("LyonLamp", "lyon_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");

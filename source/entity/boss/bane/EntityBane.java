@@ -99,13 +99,7 @@ public class EntityBane extends AoAMeleeMob implements BossEntity {
 		if (world.isRemote)
 			return;
 
-		if (rand.nextInt(400) == 0) {
-			EntityPlayer closestPlayer = world.getClosestPlayer(posX, posY, posZ, 60, player -> !((EntityPlayer)player).capabilities.isCreativeMode);
-
-			if (closestPlayer != null)
-				setPositionAndUpdate(closestPlayer.posX, closestPlayer.posY, closestPlayer.posZ);
-		}
-		else if (rand.nextInt(200) == 0) {
+		if (rand.nextInt(200) == 0) {
 			for (int i = 0; i < 6; i++) {
 				EntityBaneClone clone = new EntityBaneClone(this);
 

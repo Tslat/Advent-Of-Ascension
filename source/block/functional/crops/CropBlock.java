@@ -90,6 +90,11 @@ public class CropBlock extends BlockCrops {
 	}
 
 	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+		super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune + 1);
+	}
+
+	@Override
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
@@ -104,8 +109,8 @@ public class CropBlock extends BlockCrops {
 
 		int age = getAge(state);
 
-		if (dropsSeeds && age >= getMaxAge()) {
-			for (int i = 0; i < fortune + 3; i++) {
+		if (age >= getMaxAge()) {
+			for (int i = 0; i < fortune + (dropsSeeds ? 3 : 1); i++) {
 				if (rand.nextInt(2 * getMaxAge()) <= age)
 					drops.add(new ItemStack(getSeed(), 1, 0));
 			}

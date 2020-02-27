@@ -55,7 +55,7 @@ public class BiomeAbyss extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.bloodstone.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreBloodstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.bloodstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.bloodstone.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneAbyss))
+				new WorldGenMinable(BlockRegister.oreBloodstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.bloodstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.bloodstone.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneAbyss))
 						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(5) + 45, rand.nextInt(16)));
 			}
 		}
