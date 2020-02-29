@@ -556,8 +556,9 @@ command.aoawiki.desc=AoAwiki - Search the mod's gamepedia wiki for information
 command.aoawiki.response=Here's your AoAWiki search result: %s
 command.aoawiki.usage=Usage: /aoawiki <search_term>
 
-container.aoa3.infusion=Infusion
 container.aoa3.divineStation=Divine Station
+container.aoa3.imbuing=Imbuing
+container.aoa3.infusion=Infusion
 
 death.attack.acid=%1$s was dissolved in acid
 death.attack.aoe.item=%1$s was destroyed by %2$s using %3$s
@@ -1642,7 +1643,7 @@ gui.realmstoneMenu.hover.overworld=Carry This Realmstone With You, And Complete 
 gui.realmstoneMenu.hover.precasia=Combine a Blank Realmstone With One of Each Overworld Sapling
 gui.realmstoneMenu.hover.runandor=Take a Vox Light to Mysterium And Place a Blank Realmstone And Runic Energy on Top of it, Then Activate it With an Active Rune Stone
 gui.realmstoneMenu.hover.shyrelands=Combine a Blank Realmstone And Some Magic Mending Solution With a Haunted Flower, Glowstone, Darkly Powder, And a Bloodstone
-gui.realmstoneMenu.hover.voxPonds=Show a Creeponian Trader Your Blank Realmstone While Wearing a Hazmat Suit
+gui.realmstoneMenu.hover.voxPonds=Show Any Trader in Creeponia Your Blank Realmstone While Wearing a Hazmat Suit
 gui.realmstoneMenu.title=Deity Challenges
 gui.resources.showTip=Press '%1$s' for resources.
 
