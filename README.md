@@ -3,6 +3,8 @@ This is the official Github for Advent of Ascension.
 
 This branch is for the latest 1.12.2 version of the mod.
 
+CurseForge page - https://www.curseforge.com/minecraft/mc-mods/advent-of-ascension-nevermine
+
 ## DISCLAIMER
 The source provided in this github is for viewing purposes only. Under license, you are permitted to modify the code for PRIVATE USE ONLY.
 Redistribution of the code is a BREACH of the license terms.
@@ -37,6 +39,8 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 # Advent of Ascension
 Это официальная страница Advent of Ascension на Github.
 Эта ветка для последней версии мода для 1.12.2.
+
+https://www.curseforge.com/minecraft/mc-mods/advent-of-ascension-nevermine
 
 ## ДИСКЛЕЙМЕР
 Сурс, представленный здесь, предназначен только для просмотра.
@@ -74,6 +78,8 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 这是虚无世界的官方Github页面。
 
 这个分支是为Mod的1.12.2版本而用。
+
+https://www.curseforge.com/minecraft/mc-mods/advent-of-ascension-nevermine
 
 ## 免责声明
 本GitHub代码仓库所提供代码仅供查看用途。在协议允许下，您仅能够将对代码的更改应用于个人用途。
