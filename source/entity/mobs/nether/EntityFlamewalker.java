@@ -94,9 +94,8 @@ public class EntityFlamewalker extends AoAMeleeMob implements SpecialPropertyEnt
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!world.isRemote && getHealth() > 7 && world.getGameRules().getBoolean("mobGriefing")) {
-            if (world.getBlockState(getPosition().down()).getBlock() == Blocks.NETHERRACK && world.getBlockState(getPosition()).getMaterial().isReplaceable())
-                world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
+        if (!world.isRemote && world.getGameRules().getBoolean("mobGriefing") && world.getBlockState(getPosition()).getMaterial().isReplaceable()) {
+            world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
         }
     }
 }

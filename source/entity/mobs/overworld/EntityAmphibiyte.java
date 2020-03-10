@@ -26,11 +26,6 @@ public class EntityAmphibiyte extends AoAMeleeMob {
 			((PathNavigateGround)navigator).setCanSwim(true);
 	}
 
-	public EntityAmphibiyte(World world, double posX, double posY, double posZ) {
-		this(world);
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 1.0f);
-	}
-
 	@Override
 	protected void initEntityAI() {
 		this.tasks.addTask(1, new EntityAISwimming(this));

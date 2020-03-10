@@ -18,6 +18,11 @@ public class CandyLottoPlatform extends AoAStructure { //StructureSize: 13x12x13
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 6, 0, 6, whiteCandy);
 		addBlock(world, basePos, 6, 1, 6, redCandy);

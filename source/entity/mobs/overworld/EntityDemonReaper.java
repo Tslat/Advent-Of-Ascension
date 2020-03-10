@@ -72,7 +72,7 @@ public class EntityDemonReaper extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 7, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, true));
 	}
 
 	@Override

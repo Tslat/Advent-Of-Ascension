@@ -21,6 +21,11 @@ public class MysticLottoShroom extends AoAStructure { //StructureSize: 10x16x10
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 4, blueMushroomStem);
 		addBlock(world, basePos, 4, 0, 5, blueMushroomStem);

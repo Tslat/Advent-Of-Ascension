@@ -36,7 +36,7 @@ public class EntityBoneCreature extends AoAMeleeMob implements SpecialPropertyEn
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 50;
+		return 40;
 	}
 
 	@Override

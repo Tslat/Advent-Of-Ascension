@@ -21,6 +21,11 @@ public class AmphibiyteCove extends AoAStructure { //StructureSize: 17x7x18
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 6, coralBricks);
 		addBlock(world, basePos, 0, 0, 7, coralBricks);

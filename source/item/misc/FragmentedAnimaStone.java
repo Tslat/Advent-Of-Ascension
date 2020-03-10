@@ -58,7 +58,7 @@ public class FragmentedAnimaStone extends SimpleItem {
 					}
 				}
 
-				plStats.addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(plStats.getLevel(Enums.Skills.ANIMA)) / AnimaUtil.getExpDenominator(plStats.getLevel(Enums.Skills.ANIMA)), false);
+				plStats.addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(plStats.getLevel(Enums.Skills.ANIMA)) / AnimaUtil.getExpDenominator(plStats.getLevel(Enums.Skills.ANIMA)), false, false);
 				world.playEvent(2005, pos, 0);
 
 				if (!player.capabilities.isCreativeMode)

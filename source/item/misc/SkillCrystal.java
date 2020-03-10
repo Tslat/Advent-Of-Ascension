@@ -38,7 +38,7 @@ public class SkillCrystal extends SimpleItem {
 			Enums.Skills skill = PlayerUtil.getLowestSkillWithLimit(plData, lowerLimit);
 
 			if (skill != null) {
-				plData.stats().addXp(skill, PlayerUtil.getXpRequiredForNextLevel(plData.stats().getLevel(skill)) / denominator, false);
+				plData.stats().addXp(skill, PlayerUtil.getXpRequiredForNextLevel(plData.stats().getLevel(skill)) / denominator, false, true);
 
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);

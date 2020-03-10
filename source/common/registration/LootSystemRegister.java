@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tslat.aoa3.library.loot.conditions.*;
 import net.tslat.aoa3.library.loot.functions.GrantTribute;
 import net.tslat.aoa3.library.loot.functions.GrantXp;
+import net.tslat.aoa3.library.loot.functions.SetRandomMetadata;
 import net.tslat.aoa3.utils.ModUtil;
 
 public class LootSystemRegister {
@@ -536,6 +537,7 @@ public class LootSystemRegister {
 	public static void registerCustomObjects() {
 		LootFunctionManager.registerFunction(new GrantTribute.Serializer());
 		LootFunctionManager.registerFunction(new GrantXp.Serializer());
+		LootFunctionManager.registerFunction(new SetRandomMetadata.Serializer());
 
 		LootConditionManager.registerCondition(new PlayerHasLevel.Serializer());
 		LootConditionManager.registerCondition(new PlayerHasResource.Serializer());
@@ -543,6 +545,7 @@ public class LootSystemRegister {
 		LootConditionManager.registerCondition(new PlayerHoldingItem.Serializer());
 		LootConditionManager.registerCondition(new CheckWorldCondition.Serializer());
 		LootConditionManager.registerCondition(new CheckHunterRequirement.Serializer());
+		LootConditionManager.registerCondition(new MatchEntityId.Serializer());
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

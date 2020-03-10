@@ -46,7 +46,7 @@ public class PlayerUtil {
     }
 
     public static void giveXpToPlayer(EntityPlayer player, Enums.Skills skill, float xp) {
-        getAdventPlayer(player).stats().addXp(skill, xp, false);
+        getAdventPlayer(player).stats().addXp(skill, xp, false, false);
     }
 
     public static void addResourceToPlayer(EntityPlayer player, Enums.Resources resource, float amount) {

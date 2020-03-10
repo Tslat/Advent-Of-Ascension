@@ -21,6 +21,11 @@ public class SpaceArena extends AoAStructure { //StructureSize: 21x8x22
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, lunarBricks);
 		addBlock(world, basePos, 0, 0, 1, lunarBricks);

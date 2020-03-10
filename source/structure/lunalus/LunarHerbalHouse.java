@@ -25,6 +25,11 @@ public class LunarHerbalHouse extends AoAStructure { //StructureSize: 12x13x12
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 1, lunarBricks);
 		addBlock(world, basePos, 0, 0, 10, lunarBricks);

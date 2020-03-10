@@ -20,6 +20,11 @@ public class BaronessHouse extends AoAStructure { //StructureSize: 20x19x19
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 6, baronBricks);
 		addBlock(world, basePos, 0, 0, 7, baronBricks);

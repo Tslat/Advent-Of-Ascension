@@ -24,6 +24,11 @@ public class ShadowlordPlatform extends AoAStructure { //StructureSize: 5x7x5
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		int y = basePos.getY() - 1;
 		BlockPos blockPos;

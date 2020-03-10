@@ -3,6 +3,7 @@ package net.tslat.aoa3.event;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -10,6 +11,7 @@ import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -19,6 +21,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
@@ -133,9 +136,12 @@ public class PlayerEvents {
 				EntityPlayer pl = (EntityPlayer)ev.getEntityLiving();
 
 				PlayerUtil.getAdventPlayer(pl).handleIncomingDamage(ev);
+				Entity creeper = ev.getSource().getImmediateSource();
 
-				if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getImmediateSource() instanceof EntityCreeper && !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, ev.getSource().getImmediateSource().getEntityBoundingBox().grow(3)).isEmpty() && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCreeponia));
+				if (pl.getHealth() > 0 && ev.getSource().isExplosion() && creeper instanceof EntityCreeper) {
+					if ((!pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, creeper.getEntityBoundingBox().grow(3)).isEmpty() || !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, pl.getEntityBoundingBox().grow(3)).isEmpty()) && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
+						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCreeponia));
+				}
 			}
 			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
@@ -221,7 +227,7 @@ public class PlayerEvents {
 		if (!ev.player.world.isRemote)
 			PlayerUtil.getAdventPlayer(ev.player).stats().resetAllTribute();
 
-		if (ev.fromDim == ConfigurationUtil.MainConfig.dimensionIds.lelyetia && ev.player.hasNoGravity())
+		if (ev.fromDim == ConfigurationUtil.MainConfig.dimensionIds.lelyetia)
 			ev.player.setNoGravity(false);
 	}
 
@@ -295,7 +301,7 @@ public class PlayerEvents {
 							duplicateStack = stack.copy();
 
 							duplicateStack.setCount(lvl > 50 ? 2 : 1);
-							plData.stats().addXp(Enums.Skills.LOGGING, (float)Math.pow(lvl, 1.65D) * 3, false);
+							plData.stats().addXp(Enums.Skills.LOGGING, (float)Math.pow(lvl, 1.65D) * 3, false, false);
 
 							break;
 						}
@@ -403,23 +409,21 @@ public class PlayerEvents {
 			PacketUtil.network.sendTo(new PacketResourceData(stats.getResourceValue(Enums.Resources.CREATION), stats.getResourceValue(Enums.Resources.ENERGY), stats.getResourceValue(Enums.Resources.RAGE), stats.getResourceValue(Enums.Resources.SOUL), plData.isRevengeActive()), (EntityPlayerMP)ev.player);
 			PlayerCrownHandler.syncWithNewClient((EntityPlayerMP)ev.player);
 
+			PlayerAdvancements plAdvancements = ((EntityPlayerMP)ev.player).getAdvancements();
 			Advancement rootAdv = ModUtil.getAdvancement("overworld/root");
 
-			if (rootAdv != null) {
-				PlayerAdvancements plAdvancements = ((EntityPlayerMP)ev.player).getAdvancements();
-
-				if (!plAdvancements.getProgress(rootAdv).isDone()) {
-					plAdvancements.grantCriterion(ModUtil.getAdvancement("overworld/by_the_books"), "legitimate");
-					plAdvancements.grantCriterion(rootAdv, "playerjoin");
-				}
-			}
-			else {
-				AdventOfAscension.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things. This may cause issues");
+			if (rootAdv == null) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
 
 				if (ConfigurationUtil.MainConfig.doVerboseDebugging) {
 					AdventOfAscension.logOptionalMessage("Printing out current advancements list...");
 					FMLCommonHandler.instance().getMinecraftServerInstance().getAdvancementManager().getAdvancements().forEach(advancement -> AdventOfAscension.logOptionalMessage(advancement.getId().toString()));
 				}
+			}
+
+			if (!plAdvancements.getProgress(rootAdv).isDone()) {
+				plAdvancements.grantCriterion(ModUtil.getAdvancement("overworld/by_the_books"), "legitimate");
+				plAdvancements.grantCriterion(rootAdv, "playerjoin");
 			}
 		}
 	}
@@ -474,7 +478,20 @@ public class PlayerEvents {
 
 	@SubscribeEvent
 	public void onPlayerFishing(final ItemFishedEvent ev) {
-		if (ev.getEntityPlayer().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lborean && ev.getEntityPlayer().getRNG().nextInt(10) == 0)
-			ev.getDrops().add(new ItemStack(ItemRegister.callOfTheDrake));
+		if (ev.getEntityPlayer().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lborean && ev.getEntityPlayer().getRNG().nextInt(10) == 0) {
+			EntityFishHook hook = ev.getHookEntity();
+			EntityPlayer pl = ev.getEntityPlayer();
+
+			EntityItem drop = new EntityItem(pl.world, hook.posX, hook.posY, hook.posZ, new ItemStack(ItemRegister.callOfTheDrake));
+			double velocityX = pl.posX - hook.posX;
+			double velocityY = pl.posY - hook.posY;
+			double velocityZ = pl.posZ - hook.posZ;
+			double velocity = MathHelper.sqrt(velocityX * velocityX + velocityY * velocityY + velocityZ * velocityZ);
+			drop.motionX = velocityX * 0.1D;
+			drop.motionY = velocityY * 0.1D + (double)MathHelper.sqrt(velocity) * 0.08D;
+			drop.motionZ = velocityZ * 0.1D;
+
+			pl.world.spawnEntity(drop);
+		}
 	}
 }

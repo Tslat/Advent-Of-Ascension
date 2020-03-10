@@ -18,6 +18,11 @@ public class GingerbirdAviary extends AoAStructure { //StructureSize: 10x12x10
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 4, gingerbread);
 		addBlock(world, basePos, 4, 0, 5, gingerbread);

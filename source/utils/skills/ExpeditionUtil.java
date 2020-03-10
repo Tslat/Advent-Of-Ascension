@@ -52,7 +52,7 @@ public class ExpeditionUtil {
 		int lvl = plData.stats().getLevel(Enums.Skills.EXPEDITION);
 
 		if (ev.player.isSprinting() && ev.player.ticksExisted % 140 == 0)
-			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false);
+			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false, false);
 
 		switch (plData.stats().getSkillData(Enums.Skills.EXPEDITION)) {
 			case 1:

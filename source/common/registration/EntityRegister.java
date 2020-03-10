@@ -187,7 +187,6 @@ public class EntityRegister {
 				newEntry("chimera", EntityChimera.class, 14736043, 4206102),
 				newEntry("chocko", EntityChocko.class, 8004884, 3346956),
 				newEntry("chomper", EntityChomper.class, 4479279, 2043409),
-				//newEntry("cindaxas", EntityCindaxas.class),
 				newEntry("clown", EntityClown.class, 5376265, 14597565),
 				newEntry("clunkhead", EntityClunkhead.class, 1393533, 6322068),
 				newEntry("coniferon", EntityConiferon.class, 2694151, 1452309),

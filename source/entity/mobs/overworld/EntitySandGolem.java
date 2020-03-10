@@ -19,6 +19,7 @@ public class EntitySandGolem extends AoAMeleeMob implements SpecialPropertyEntit
 
 	public EntitySandGolem(World world) {
 		super(world, entityWidth, 1.8125f);
+
 		this.mobProperties.add(Enums.MobProperties.RANGED_IMMUNE);
 		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
 	}

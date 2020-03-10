@@ -19,6 +19,11 @@ public class CrusiliskCave extends AoAStructure { //StructureSize: 10x10x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 4, darkwashBricks);
 		addBlock(world, basePos, 4, 0, 5, darkwashBricks);

@@ -17,6 +17,11 @@ public class DegradedLampPost extends AoAStructure { //StructureSize: 5x5x5
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 2, degradedSteel);
 		addBlock(world, basePos, 2, 0, 0, degradedSteel);

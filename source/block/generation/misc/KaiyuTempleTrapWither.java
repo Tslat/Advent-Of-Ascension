@@ -6,13 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.UnbreakableBlock;
-import net.tslat.aoa3.common.registration.SoundsRegister;
 
 import javax.annotation.Nullable;
 

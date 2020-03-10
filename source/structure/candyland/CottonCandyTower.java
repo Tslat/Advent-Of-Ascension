@@ -18,6 +18,11 @@ public class CottonCandyTower extends AoAStructure { //StructureSize: 9x20x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 4, plasticPole);
 		addBlock(world, basePos, 4, 1, 4, plasticPole);

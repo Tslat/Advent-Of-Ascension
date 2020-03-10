@@ -789,11 +789,8 @@ public final class PlayerDataManager {
 			return optionals.get(skill);
 		}
 
-		public void addXp(Enums.Skills skill, float xp, boolean isUnnatural) {
+		public void addXp(Enums.Skills skill, float xp, boolean isUnnatural, boolean ignoreXpBuffs) {
 			int lvl = levels.get(skill);
-			float remaining = Math.min(544132359, xp);
-			int newLevels = 0;
-			boolean noXpDrop = !ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100;
 
 			if (lvl >= 1000)
 				return;
@@ -801,6 +798,9 @@ public final class PlayerDataManager {
 			if (!isUnnatural)
 				xp = buffs.applyXpBuffs(skill, xp);
 
+			float remaining = Math.min(544132359, xp);
+			int newLevels = 0;
+			boolean noXpDrop = !ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100;
 			float xpRemaining = PlayerUtil.getXpRemainingUntilLevel(playerDataManager, skill);
 
 			if (remaining > xpRemaining) {

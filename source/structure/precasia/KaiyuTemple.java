@@ -18,6 +18,11 @@ public class KaiyuTemple extends AoAStructure { //StructureSize: 44x36x50
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, plainTempleBlock);
 		addBlock(world, basePos, 0, 0, 1, plainTempleBlock);

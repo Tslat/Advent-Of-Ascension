@@ -18,6 +18,11 @@ public class HiveNest extends AoAStructure { //StructureSize: 19x12x19
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 7, hiveWall);
 		addBlock(world, basePos, 0, 0, 8, hiveWall);

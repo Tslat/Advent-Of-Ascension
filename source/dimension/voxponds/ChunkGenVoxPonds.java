@@ -143,7 +143,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			z = baseZ + rand.nextInt(16);
 			y = 18;
 
-			if (world.getBlockState(pos.setPos(x + 6, y - 1, z + 6)).getBlock() == Blocks.AIR)
+			if (world.getBlockState(pos.setPos(x + 6, y, z + 6)).getBlock() == Blocks.AIR)
 				StructuresHandler.generateStructure("EnigmaStation", world, rand, pos.setPos(x, y, z));
 		}
 		else if (ConfigurationUtil.StructureConfig.voxPonds.controlTowerSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.voxPonds.controlTowerSpawnChance) == 0) {
@@ -183,7 +183,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 						structure = StructuresHandler.getStructure("DestroyedStore1");
 						break;
 					case 1:
-						structure = StructuresHandler.getStructure("DestroyedStore1");
+						structure = StructuresHandler.getStructure("DestroyedStore2");
 						break;
 					case 2:
 						structure = StructuresHandler.getStructure("ExoidPlatform");

@@ -19,6 +19,11 @@ public class SpinoledonDen extends AoAStructure { //StructureSize: 28x18x30
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 11, skeletalBricks);
 		addBlock(world, basePos, 0, 0, 12, skeletalBricks);

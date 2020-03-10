@@ -19,6 +19,11 @@ public class IroMaze extends AoAStructure { //StructureSize: 40x26x47
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 11, 0, 22, iropole);
 		addBlock(world, basePos, 11, 0, 23, iropole);

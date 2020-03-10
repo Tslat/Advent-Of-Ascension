@@ -311,10 +311,10 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 			if (bow != null)
 				damage = bow.getArrowDamage(this, target, damage);
 
-			if (target.attackEntityFrom(damageSource, damage)) {
-				if (isBurning() && !(target instanceof EntityEnderman))
-					target.setFire(5);
+			if (isBurning() && !(target instanceof EntityEnderman))
+				target.setFire(5);
 
+			if (target.attackEntityFrom(damageSource, damage)) {
 				if (target instanceof EntityLivingBase)	{
 					EntityLivingBase entitylivingbase = (EntityLivingBase)target;
 

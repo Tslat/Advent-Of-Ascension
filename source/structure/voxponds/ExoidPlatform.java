@@ -20,6 +20,11 @@ public class ExoidPlatform extends AoAStructure { //StructureSize: 16x3x16
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, degradedSteel);
 		addBlock(world, basePos, 0, 0, 1, degradedSteel);

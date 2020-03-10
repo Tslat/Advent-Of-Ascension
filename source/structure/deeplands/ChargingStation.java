@@ -20,6 +20,11 @@ public class ChargingStation extends AoAStructure { //StructureSize: 15x8x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, stone);
 		addBlock(world, basePos, 0, 0, 1, stone);

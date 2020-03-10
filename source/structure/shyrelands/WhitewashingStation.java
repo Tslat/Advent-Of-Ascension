@@ -31,6 +31,11 @@ public class WhitewashingStation extends AoAStructure { //StructureSize: 14x8x14
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, 0, 1, yellowBricksSlabBottom); 
 		addBlock(world, basePos, 1, 0, 2, whiteBricks);

@@ -22,6 +22,11 @@ public class MechyonTemple extends AoAStructure { //StructureSize: 11x11x12
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, dottedBrick);
 		addBlock(world, basePos, 0, 0, 1, dottedBrick);

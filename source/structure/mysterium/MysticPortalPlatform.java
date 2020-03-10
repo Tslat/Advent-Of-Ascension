@@ -25,6 +25,11 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 5, 0, 3, runicStone);
 		addBlock(world, basePos, 5, 0, 4, neonLapisLamp);
