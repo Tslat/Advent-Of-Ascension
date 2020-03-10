@@ -22,6 +22,11 @@ public class AbyssalLottoHut extends AoAStructure { //StructureSize: 8x6x8
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 2, eyeBlock);
 		addBlock(world, basePos, 2, 0, 5, eyeBlock);

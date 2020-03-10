@@ -26,6 +26,10 @@ public abstract class AoAStructure extends WorldGenerator {
 	    return name;
     }
 
+    protected boolean replacesBlocks() {
+		return false;
+	}
+
     public boolean doPreChecks(World world, Random rand, BlockPos basePos, IBlockState... groundBlocks) {
 	    return true;
     }
@@ -46,7 +50,8 @@ public abstract class AoAStructure extends WorldGenerator {
     protected void spawnEntities(World world, Random rand, BlockPos basePos) {}
 
     public final void addBlock(World world, BlockPos pos, int xCoordOffset, int yCoordOffset, int zCoordOffset, IBlockState block) {
-        world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block);
+    	if (replacesBlocks() || world.isAirBlock(pos.add(xCoordOffset, yCoordOffset, zCoordOffset)))
+    		world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block);
     }
 
     protected void assignLootChests(World world, Random rand, ResourceLocation lootTable, BlockPos... positions) {

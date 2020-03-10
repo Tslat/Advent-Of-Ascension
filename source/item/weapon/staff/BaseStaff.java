@@ -77,7 +77,7 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 				if (getCastingSound() != null)
 					world.playSound(null, player.posX, player.posY, player.posZ, getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-				cap.setNextFireTime(10);
+				cap.setNextFireTime(GlobalEvents.tick + 12);
 				player.addStat(StatList.getObjectUseStats(this));
 				stack.damageItem(1, player);
 				cast(world, stack, player, preconditionResult);

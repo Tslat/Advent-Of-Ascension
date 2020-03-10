@@ -10,7 +10,7 @@ import net.tslat.aoa3.item.weapon.greatblade.BaseGreatblade;
 public class EnchantmentSever extends BaseEnchantment {
 	public EnchantmentSever() {
 		super(Rarity.UNCOMMON, EnchantmentsRegister.GREATBLADE, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		setName("sever");
+		setName("aoa3.sever");
 		setRegistryName("aoa3:sever");
 	}
 

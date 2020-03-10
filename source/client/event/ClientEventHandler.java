@@ -52,6 +52,8 @@ public class ClientEventHandler {
 	public static int recoilTicksRemaining;
 	public static float recoilAngle;
 
+	private static boolean swungGreatblade = false;
+
 	@SubscribeEvent
 	public void clientTick(final TickEvent.ClientTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
@@ -102,6 +104,8 @@ public class ClientEventHandler {
 				HelmetScreenRenderer.screen = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
 			}
+
+			swungGreatblade = false;
 		}
 	}
 
@@ -115,8 +119,25 @@ public class ClientEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	public void onGreatbladeMouse(MouseEvent ev) {
-		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode())
-			doGreatbladeAttack();
+		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode()) {
+			Minecraft mc = Minecraft.getMinecraft();
+			EntityPlayer player = mc.player;
+
+			if (player != null) {
+				if (player.isSpectator())
+					return;
+
+				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+				ItemStack offHandStack = player.getActiveItemStack();
+
+				if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
+					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
+
+					if (ray != null && !player.isRidingOrBeingRiddenBy(ray.entityHit) && !ray.entityHit.isRidingOrBeingRiddenBy(player))
+						PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -181,23 +202,6 @@ public class ClientEventHandler {
 		}
 
 		return null;
-	}
-
-	public static void doGreatbladeAttack() {
-		Minecraft mc = Minecraft.getMinecraft();
-		EntityPlayer player = mc.player;
-
-		if (player != null) {
-			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-			ItemStack offHandStack = player.getActiveItemStack();
-
-			if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
-				RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
-
-				if (ray != null)
-					PacketUtil.network.sendToServer(new PacketGreatbladeHit(ray.entityHit.getEntityId()));
-			}
-		}
 	}
 
 	private void doRecoil() {

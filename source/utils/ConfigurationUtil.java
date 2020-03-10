@@ -517,7 +517,7 @@ public class ConfigurationUtil {
 			@Config.Comment("Number of Emberstone veins per chunk")
 			@Config.LangKey("gui.aoaconfig.ores.veinsPerChunk")
 			@Config.RangeInt(min = 0, max = 20)
-			public int veinsPerChunk = 4;
+			public int veinsPerChunk = 6;
 		}
 
 		public static class SubCategoryFootboneFragments {
@@ -1597,7 +1597,7 @@ public class ConfigurationUtil {
 		@Config.Comment("Value represents a modifier to general spawn rates. Higher = more spawns. Value between 0 and 1")
 		@Config.LangKey("gui.aoaconfig.entitySpawnModifier")
 		@Config.RangeDouble(min = 0, max = 1)
-		public static double mobSpawnFrequencyModifier = 0.5d;
+		public static double mobSpawnFrequencyModifier = 0.3d;
 
 		@Config.Comment("Add or remove Hunter entity attributes from creatures")
 		@Config.LangKey("gui.aoaconfig.hunterEntities")
@@ -1640,6 +1640,7 @@ public class ConfigurationUtil {
 	}
 
 	public static void doDebuggingPrintout(Logger logger) {
+		logger.log(Level.INFO, "Printing out current configuration settings...");
 		logger.log(Level.INFO, "AllowUnsafeInfusion: " + MainConfig.allowUnsafeInfusion);
 		logger.log(Level.INFO, "DisableOverworldMobs: " + MainConfig.disableOverworldMobs);
 		logger.log(Level.INFO, "DoVerboseDebugging: " + MainConfig.doVerboseDebugging);
@@ -1652,7 +1653,6 @@ public class ConfigurationUtil {
 		logger.log(Level.INFO, "MainWindowTheme: " + MainConfig.mainWindowTheme.toString());
 		logger.log(Level.INFO, "PersonalCrownPreference: " + MainConfig.personalCrownPreference.toString());
 		logger.log(Level.INFO, "PortalSearchRadius: " + MainConfig.portalSearchRadius);
-		logger.log(Level.INFO, "Printing out current configuration settings...");
 		logger.log(Level.INFO, "ShowDailyMessages: " + MainConfig.showDailyMessages);
 		logger.log(Level.INFO, "ShowPlayerCrowns: " + MainConfig.showPlayerCrowns);
 		logger.log(Level.INFO, "ShowVanityLevels: " + MainConfig.showVanityLevels);

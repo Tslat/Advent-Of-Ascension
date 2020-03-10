@@ -33,6 +33,9 @@ public class ToyGyrocopter extends Item {
 			if (!world.isRemote) {
 				world.spawnEntity(new EntityGyrocopter(player));
 				StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.gyro.spawn", player.getDisplayNameString()), player, 50);
+
+				if (!player.capabilities.isCreativeMode)
+					player.getHeldItem(hand).shrink(1);
 			}
 
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));

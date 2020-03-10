@@ -21,8 +21,8 @@ public class SkeletalShovel extends BaseShovel implements SpecialHarvestTool {
 	}
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
-		if (!e.getWorld().isRemote) {
-			int dropChoice = itemRand.nextInt(200);
+		if (!e.getWorld().isRemote && itemRand.nextInt(3) == 0) {
+			int dropChoice = itemRand.nextInt(50);
 			ItemStack drop;
 
 			if (dropChoice == 0) {
@@ -46,7 +46,7 @@ public class SkeletalShovel extends BaseShovel implements SpecialHarvestTool {
 				drop = new ItemStack(bone);
 			}
 			else if (dropChoice < 10) {
-				drop = new ItemStack(Items.DYE, 0);
+				drop = new ItemStack(Items.DYE, 1, 15);
 			}
 			else {
 				drop = new ItemStack(Items.BONE);

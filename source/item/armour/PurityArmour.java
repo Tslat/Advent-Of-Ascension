@@ -31,7 +31,7 @@ public class PurityArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		if (!plData.player().getActivePotionMap().isEmpty())
+		if (slots == null && !plData.player().getActivePotionMap().isEmpty())
 			checkAndRemoveEffects(plData.player(), MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.MINING_FATIGUE, MobEffects.BLINDNESS, MobEffects.NAUSEA);
 	}
 

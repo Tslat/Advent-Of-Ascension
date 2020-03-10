@@ -1180,7 +1180,7 @@ public class ItemRegister {
 		registerItem(registry, new SimpleItem("SmallPurplePetal", "small_purple_petal"), "misc/misc/");
 		registerItem(registry, new SimpleItem("SmallRedPetal", "small_red_petal"), "misc/misc/");
 		registerItem(registry, new ReservedItem("Soulbone", "soulbone", "alien_orb"), "misc/misc/");
-		registerItem(registry, new SimpleItem("StickySlime", "sticky_slime"), "misc/misc/");
+		registerItem(registry, new SimpleItem("StickySlime", "sticky_slime"), "misc/misc/", "slimeball");
 		registerItem(registry, new SimpleItem("BlueStrangeStone", "blue_strange_stone"), "misc/misc/");
 		registerItem(registry, new SimpleItem("WhiteStrangeStone", "white_strange_stone"), "misc/misc/");
 		registerItem(registry, new SimpleItem("YellowStrangeStone", "yellow_strange_stone"), "misc/misc/");

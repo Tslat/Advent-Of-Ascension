@@ -29,7 +29,7 @@ public class GrantXp extends LootFunction {
 	@Override
 	public ItemStack apply(ItemStack stack, Random rand, LootContext context) {
 		if (context.getKillerPlayer() instanceof EntityPlayer)
-			PlayerUtil.getAdventPlayer((EntityPlayer)context.getKillerPlayer()).stats().addXp(skill, xp, false);
+			PlayerUtil.getAdventPlayer((EntityPlayer)context.getKillerPlayer()).stats().addXp(skill, xp, false, false);
 
 		return stack;
 	}

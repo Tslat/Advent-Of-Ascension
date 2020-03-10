@@ -23,6 +23,11 @@ public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 9, unbreakableStem);
 		addBlock(world, basePos, 0, 0, 10, unbreakableStem);

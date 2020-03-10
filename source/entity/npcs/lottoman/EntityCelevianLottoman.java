@@ -28,6 +28,11 @@ public class EntityCelevianLottoman extends EntityLottoman {
 	}
 
 	@Override
+	protected boolean isOverworldNPC() {
+		return false;
+	}
+
+	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 28), new ItemStack(ItemRegister.lottoTotem)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 15), new ItemStack(ItemRegister.weaponsCase)));

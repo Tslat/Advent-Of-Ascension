@@ -66,15 +66,12 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		BlockPos pos = findExistingPortal(world, entity);
 
-		if (pos != null) {
-			placeInPortal(world, entity, pos);
-		}
-		else {
+		if (pos == null) {
 			pos = findSuitablePortalLocation(world, entity);
 			pos = makePortal(world, entity, pos);
-
-			placeInPortal(world, entity, pos);
 		}
+
+		placeInPortal(world, entity, pos);
 
 		ChunkPos chunkPos = world.getChunk(pos).getPos();
 
@@ -82,6 +79,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		if (plData != null) {
 			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
+
+			if (portalLoc != null) {
+				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.world.provider.getDimension());
+
+				if (returnPortalLoc != null && returnPortalLoc.fromDim == world.provider.getDimension())
+					return;
+			}
 
 			if (portalLoc == null || entity.world.provider.getDimension() == portalLoc.fromDim || entity.getDistanceSq(portalLoc.asBlockPos()) > ConfigurationUtil.MainConfig.portalSearchRadius)
 				plData.setPortalReturnLocation(world.provider.getDimension(), new PortalCoordinatesContainer(entity.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ()));
@@ -109,24 +113,166 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 		int searchRadius = ConfigurationUtil.MainConfig.portalSearchRadius;
+		int worldHeight = world.getActualHeight();
 
-		for (int x = posX - searchRadius; x <= posX + searchRadius; ++x) {
-			for (int z = posZ - searchRadius; z <= posZ + searchRadius; ++z) {
-				for (int y = posY - searchRadius; y <= posY + searchRadius; ++y) {
-					checkPos.setPos(x, y, z);
+		if (posY >= worldHeight)
+			posY = 65;
 
-					if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
-						while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
-							;
+		if (world.getBlockState(checkPos.setPos(posX, posY, posZ)).getBlock() == getPortalBlock()) {
+			while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
+				;
+			}
+
+			Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
+
+			cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
+
+			return checkPos;
+		}
+
+		for (int i = 1; i <= searchRadius; i++) {
+			for (int y = -i; y <= i; y += i * 2) {
+				int y2 = posY + y;
+
+				if (y2 < 0 || y2 >= worldHeight)
+					continue;
+
+				int xNeg = -1;
+
+				for (int x = 0; x <= i; x++) {
+					int x2 = posX + x * xNeg;
+
+					if (xNeg == 1 && x != 0)
+						x--;
+
+					xNeg *= -1;
+					int zNeg = -1;
+
+					for (int z = 0; z <= i; z++) {
+						int z2 = posZ + z * zNeg;
+
+						if (zNeg == 1 && z != 0)
+							z--;
+
+						zNeg *= -1;
+
+						checkPos.setPos(x2, y2, z2);
+
+						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
+							while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
+								;
+							}
+
+							Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
+
+							cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
+
+							return checkPos;
 						}
-
-						Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
-
-						cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
-
-						return checkPos;
 					}
 				}
+			}
+
+			int yNeg = -1;
+
+			for (int y = 0; y <= i - 1; y++) {
+				int y2 = posY + y * yNeg;
+
+				if (y2 < 0 || y2 >= worldHeight)
+					continue;
+
+				if (yNeg == 1 && y != 0)
+					y--;
+
+				yNeg *= -1;
+				int zNeg = -1;
+
+				for (int z = 0; z <= i; z++) {
+					int z2 = posZ + z * zNeg;
+
+					if (zNeg == 1 && z != 0)
+						z--;
+
+					zNeg *= -1;
+
+					for (int x = -i; x <= i; x += i * 2) {
+						int x2 = posX + x;
+
+						checkPos.setPos(x2, y2, z2);
+
+						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
+							while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
+								;
+							}
+
+							Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
+
+							cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
+
+							return checkPos;
+						}
+					}
+				}
+
+				int xNeg = 1;
+
+				for (int x = 1; x <= i - 1; x++) {
+					int x2 = posX + x * xNeg;
+
+					if (xNeg == 1 && x != 0)
+						x--;
+
+					xNeg *= -1;
+
+					for (int z = -i; z <= i; z += i * 2) {
+						int z2 = posZ + z;
+
+						checkPos.setPos(x2, y2, z2);
+
+						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
+							while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
+								;
+							}
+
+							Chunk chunk = world.getChunk(checkPos.move(EnumFacing.UP));
+
+							cachedPortalMap.put(ChunkPos.asLong(chunk.x, chunk.z), checkPos);
+
+							return checkPos;
+						}
+					}
+				}
+			}
+		}
+
+		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
+			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
+				checkPos.setPos(x, worldHeight, z);
+
+				while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() != getPortalBlock() && checkPos.getY() >= 0) {
+					;
+				}
+
+				if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
+					while (world.getBlockState(checkPos.move(EnumFacing.DOWN)).getBlock() == getPortalBlock()) {
+						;
+					}
+
+					return checkPos.up(2).toImmutable();
+				}
+			}
+		}
+
+		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
+			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
+				checkPos.setPos(x, posY, z);
+
+				while (world.getBlockState(checkPos.move(EnumFacing.UP)).getBlock() != getPortalBlock() && checkPos.getY() < worldHeight) {
+					;
+				}
+
+				if (world.getBlockState(checkPos).getBlock() == getPortalBlock())
+					return checkPos.up(1).toImmutable();
 			}
 		}
 
@@ -135,83 +281,231 @@ public abstract class AoATeleporter implements ITeleporter {
 
 	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
-		BlockPos pos = entity.getPosition();
-		BlockPos.MutableBlockPos planBPos = new BlockPos.MutableBlockPos(entity.getPosition());
-		double planBDistance = 10000;
+		int posX = (int)Math.floor(entity.posX);
+		int posY = (int)Math.floor(entity.posY);
+		int posZ = (int)Math.floor(entity.posZ);
+		BlockPos planBPos = null;
 		int searchRadius = ConfigurationUtil.MainConfig.portalSearchRadius;
 		int worldHeight = world.getActualHeight();
 
+		if (posY >= worldHeight)
+			posY = 65;
 
-		for (int x = pos.getX() - searchRadius; x <= pos.getX() + searchRadius; x++) {
-			for (int z = pos.getZ() - searchRadius; z <= pos.getZ() + searchRadius; z++) {
+		boolean cleanSpawn = true;
 
-				heightCheck:
-				for (int y = worldHeight - 6; y > 0; y--) {
-					if (world.isAirBlock(checkPos.setPos(x, y, z))) {
-						while (y > 0 && world.isAirBlock(checkPos.move(EnumFacing.DOWN))) {
-							y--;
-						}
-
-						int y2 = y;
-
-						for (y2 += 7; y2 >= y + 1; y2--) {
-							for (int j = x - 2; j <= x + 2; j++) {
-								for (int k = z - 2; k <= z + 2; k++) {
-									if (!world.isAirBlock(checkPos.setPos(j, y2, k)))
-										continue heightCheck;
-								}
-							}
-						}
-
-						double distance = checkPos.setPos(x, y, z).distanceSq(pos);
-
-						if (distance < planBDistance) {
-							planBPos.setPos(checkPos);
-
-							planBDistance = distance;
-						}
-
-						for (int j = x - 2; j <= x + 2; j++) {
-							for (int k = z - 2; k <= z + 2; k++) {
-								if (!world.getBlockState(checkPos.setPos(j, y2 - 1, k)).getMaterial().isSolid())
-									continue heightCheck;
-							}
-						}
-
-						return checkPos.up(2).toImmutable();
-					}
+		for (int x = posX - 2; x <= posX + 2 && cleanSpawn; x++) {
+			for (int z = posZ - 2; z <= posZ + 2 && cleanSpawn; z++) {
+				for (int y = posY + 1; y <= posY + 6 && cleanSpawn; y++) {
+					if (!world.isAirBlock(checkPos.setPos(x, y, z)))
+						cleanSpawn = false;
 				}
 			}
 		}
 
-		if (planBPos.compareTo(pos) == 0) {
-			if (worldHeight < 256) {
+		if (cleanSpawn) {
+			if (!world.isAirBlock(checkPos.setPos(posX, posY, posZ))) {
+				return checkPos.setPos(posX, posY + 2, posZ).toImmutable();
+			}
+			else {
+				planBPos = checkPos.setPos(posX, posY + 2, posZ).toImmutable();
+			}
+		}
 
-				heightCheck:
-				for (int y = 0; y < worldHeight - 6; y++) {
-					if (world.isAirBlock(checkPos.setPos(pos.getX(), y, pos.getZ()))) {
-						for (int y2 = y + 7; y2 >= y + 1; y2--) {
-							for (int j = pos.getX() - 2; j <= pos.getX() + 2; j++) {
-								for (int k = pos.getZ() - 2; k <= pos.getZ() + 2; k++) {
-									if (!world.isAirBlock(checkPos.setPos(j, y2, k))) {
-										y += 7;
+		for (int i = 1; i <= searchRadius; i++) {
+			for (int y = -i; y <= i; y += i * 2) {
+				int y2 = posY + y;
 
-										continue heightCheck;
+				if (y2 < 0 || y2 >= worldHeight)
+					continue;
+
+				int xNeg = -1;
+
+				for (int x = 0; x <= i; x++) {
+					int x2 = posX + x * xNeg;
+
+					if (xNeg == 1 && x != 0)
+						x--;
+
+					xNeg *= -1;
+					int zNeg = -1;
+
+					for (int z = 0; z <= i; z++) {
+						int z2 = posZ + z * zNeg;
+
+						if (zNeg == 1 && z != 0)
+							z--;
+
+						zNeg *= -1;
+
+						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
 									}
 								}
 							}
-						}
 
-						return checkPos.up(2);
+							if (cleanSpawn)
+								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
+						else if (planBPos == null) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
+									}
+								}
+							}
+
+							if (cleanSpawn)
+								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
 					}
 				}
 			}
 
-			return world.getTopSolidOrLiquidBlock(pos).up(2);
+			int yNeg = -1;
+
+			for (int y = 0; y <= i - 1; y++) {
+				int y2 = posY + y * yNeg;
+
+				if (y2 < 0 || y2 >= worldHeight)
+					continue;
+
+				if (yNeg == 1 && y != 0)
+					y--;
+
+				yNeg *= -1;
+				int zNeg = -1;
+
+				for (int z = 0; z <= i; z++) {
+					int z2 = posZ + z * zNeg;
+
+					if (zNeg == 1 && z != 0)
+						z--;
+
+					zNeg *= -1;
+
+					for (int x = -i; x <= i; x += i * 2) {
+						int x2 = posX + x;
+
+						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
+									}
+								}
+							}
+
+							if (cleanSpawn)
+								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
+						else if (planBPos == null) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
+									}
+								}
+							}
+
+							if (cleanSpawn)
+								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
+					}
+				}
+
+				int xNeg = 1;
+
+				for (int x = 1; x <= i - 1; x++) {
+					int x2 = posX + x * xNeg;
+
+					if (xNeg == 1 && x != 0)
+						x--;
+
+					xNeg *= -1;
+
+					for (int z = -i; z <= i; z += i * 2) {
+						int z2 = posZ + z;
+
+						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
+									}
+								}
+							}
+
+							if (cleanSpawn)
+								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
+						else if (planBPos == null) {
+							cleanSpawn = true;
+
+							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
+								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
+									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
+										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+											cleanSpawn = false;
+									}
+								}
+							}
+
+							if (cleanSpawn)
+								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+						}
+					}
+				}
+			}
 		}
-		else {
-			return planBPos.up(2).toImmutable();
+
+		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
+			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
+				checkPos.setPos(x, posY - 1, z);
+
+				while (world.isAirBlock(checkPos.move(EnumFacing.DOWN))) {
+					;
+				}
+
+				int y = checkPos.getY();
+				cleanSpawn = true;
+
+				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
+					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
+						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
+							if (!world.isAirBlock(checkPos.setPos(x2, y2, z2)))
+								cleanSpawn = false;
+						}
+					}
+				}
+
+				if (cleanSpawn)
+					return checkPos.setPos(x, y + 2, z).toImmutable();
+			}
 		}
+
+		if (planBPos != null)
+			return planBPos;
+
+		return entity.getPosition().up(2).toImmutable();
 	}
 
 	public BlockPos makePortal(World world, Entity entity, BlockPos pos) {
@@ -256,6 +550,8 @@ public abstract class AoATeleporter implements ITeleporter {
 				world.setBlockState(new BlockPos(pos.getX() + 2, y, pos.getZ()), border);
 			}
 		}
+
+
 
 		if (!world.getBlockState(pos = pos.down()).isOpaqueCube())
 			makePortalPlatformAndDecorate(world, pos, direction);

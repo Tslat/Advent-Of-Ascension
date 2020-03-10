@@ -60,7 +60,7 @@ public class InfusionBowl extends Item {
 		int harvestCount = 0;
 		List<ItemStack> harvestStacks = new ArrayList<ItemStack>();
 		LootContext lootContext = (new LootContext.Builder((WorldServer)player.world).withPlayer(player).withLootedEntity(pixon)).build();
-		PlayerDataManager.PlayerEquipment plEquipment = PlayerUtil.getAdventPlayer(player).equipment();
+		PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 		while (harvestCount < getHarvestAmount() && pixon.getHealth() > 0) {
 			if (!player.capabilities.isCreativeMode)
@@ -68,7 +68,7 @@ public class InfusionBowl extends Item {
 
 			harvestStacks.addAll(harvestTable.generateLootForPools(player.getRNG(), lootContext));
 
-			if (plEquipment.getCurrentFullArmourSet() == Enums.ArmourSets.INFUSION)
+			if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.INFUSION)
 				harvestStacks.addAll(harvestTable.generateLootForPools(player.getRNG(), lootContext));
 
 			pixon.setHealth(pixon.getHealth() - 7 + itemRand.nextInt(6));
@@ -78,6 +78,9 @@ public class InfusionBowl extends Item {
 
 		if (!harvestStacks.isEmpty())
 			ItemUtil.givePlayerMultipleItems(player, harvestStacks);
+
+		if (pixon.world.provider.getDimension() == 0)
+			plData.stats().addTribute(Enums.Deities.LUXON, 4 * harvestCount);
 
 		if (pixon.isEntityAlive()) {
 			pixon.setRevengeTarget(player);

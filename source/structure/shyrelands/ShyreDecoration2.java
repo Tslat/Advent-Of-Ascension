@@ -13,10 +13,14 @@ public class ShyreDecoration2 extends AoAStructure { //StructureSize: 14x4x14
 	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
 	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
 	private static final IBlockState shyreLeaves = BlockRegister.leavesShyre.getDefaultState();
-	private static final IBlockState shyreCloud = BlockRegister.shyreCloud.getDefaultState();
 
 	public ShyreDecoration2() {
 		super("ShyreDecoration2");
+	}
+
+	@Override
+	protected boolean replacesBlocks() {
+		return true;
 	}
 
 	@Override

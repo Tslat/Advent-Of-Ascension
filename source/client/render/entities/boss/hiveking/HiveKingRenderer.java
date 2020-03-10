@@ -31,9 +31,11 @@ public class HiveKingRenderer extends RenderLiving<EntityHiveKing> {
 
 	@Override
 	protected void preRenderCallback(EntityHiveKing hiveKing, float partialTickTime) {
-		float scaleFactor = hiveKing.getGrowthPercent() / 100f;
+		if (hiveKing.ticksExisted < 1000) {
+			float scaleFactor = hiveKing.getGrowthPercent() / 100f;
 
-		GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
+			GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
+		}
 	}
 
 	@Nullable

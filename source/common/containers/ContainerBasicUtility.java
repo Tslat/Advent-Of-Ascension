@@ -24,6 +24,7 @@ public abstract class ContainerBasicUtility extends Container {
 			@Override
 			public void markDirty() {
 				super.markDirty();
+
 				onCraftMatrixChanged(this);
 			}
 		};
@@ -47,10 +48,10 @@ public abstract class ContainerBasicUtility extends Container {
 
 	@Override
 	public void onCraftMatrixChanged(IInventory inventory) {
-		super.onCraftMatrixChanged(inventory);
-
 		if (inventory == inputs)
 			updateOutput();
+
+		super.onCraftMatrixChanged(inventory);
 	}
 
 	@Override

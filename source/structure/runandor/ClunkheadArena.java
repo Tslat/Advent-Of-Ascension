@@ -20,6 +20,11 @@ public class ClunkheadArena extends AoAStructure { //StructureSize: 24x14x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 3, runicConstructBricks);
 		addBlock(world, basePos, 0, 0, 8, runicConstructBricks);

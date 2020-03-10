@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -38,8 +39,8 @@ public class PredatiousArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
-		if (event.getEntityLiving() != null && EntityUtil.isMeleeDamage(event.getSource()))
-			event.getEntityLiving().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), 1);
+		if (slots == null && event.getEntityLiving() != null && EntityUtil.isMeleeDamage(event.getSource()) && event.getSource().getImmediateSource() instanceof EntityLivingBase)
+			event.getSource().getImmediateSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), 1);
 	}
 
 	@SideOnly(Side.CLIENT)

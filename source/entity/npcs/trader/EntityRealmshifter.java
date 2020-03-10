@@ -48,12 +48,12 @@ public class EntityRealmshifter extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.carvedRuneTravel, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.carvedRuneSpace, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.carvedRuneReality, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.carvedRuneDirection, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.ancientRock, 64)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.ancientRock, 30)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(BlockRegister.ancientRock, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(BlockRegister.carvedRuneTravel, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(BlockRegister.carvedRuneSpace, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(BlockRegister.carvedRuneReality, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(BlockRegister.carvedRuneDirection, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(BlockRegister.ancientRock, 64)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 10), new ItemStack(BlockRegister.ancientRock, 30)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(BlockRegister.ancientRock, 3)));
 	}
 }

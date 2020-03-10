@@ -24,6 +24,26 @@ public class EntityLivingFungi extends AoAMeleeMob {
 		return 1.3125f;
 	}
 
+	@Override
+	protected double getBaseKnockbackResistance() {
+		return 0.1d;
+	}
+
+	@Override
+	protected double getBaseMaxHealth() {
+		return 30;
+	}
+
+	@Override
+	protected double getBaseMeleeDamage() {
+		return 2.5;
+	}
+
+	@Override
+	protected double getBaseMovementSpeed() {
+		return 0.2875;
+	}
+
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -49,26 +69,6 @@ public class EntityLivingFungi extends AoAMeleeMob {
 	@Override
 	protected ResourceLocation getLootTable() {
 		return LootSystemRegister.entityLivingFungi;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Override

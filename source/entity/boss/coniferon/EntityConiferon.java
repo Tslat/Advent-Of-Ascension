@@ -112,15 +112,12 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 		if (target == null)
 			return;
 
-		if (rand.nextInt(150) == 0) {
+		if (rand.nextInt(300) == 0) {
 			if (!world.isRemote)
 				target.addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 0, true, true));
 
 			if (target instanceof EntityPlayerMP)
 				PacketUtil.network.sendTo(new PacketScreenOverlay(70, Enums.ScreenOverlays.CONIFERON_VINES), (EntityPlayerMP)target);
-		}
-		else if (rand.nextInt(250) == 0) {
-			target.setPositionAndUpdate(posX, posY, posZ);
 		}
 
 		if (!target.isSneaking())

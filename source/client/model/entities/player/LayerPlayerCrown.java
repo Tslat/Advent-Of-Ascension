@@ -60,8 +60,8 @@ public class LayerPlayerCrown implements LayerRenderer<AbstractClientPlayer> {
 			GlStateManager.depthMask(true);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680, 0);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
-			ModelRenderer playerheadModelRenderer = playerRenderer.getMainModel().bipedHead;
-			ModelBase.copyModelAngles(playerheadModelRenderer, crownModel.crown);
+			ModelRenderer playerHeadModelRenderer = playerRenderer.getMainModel().bipedHead;
+			ModelBase.copyModelAngles(playerHeadModelRenderer, crownModel.crown);
 			crownModel.crown.renderWithRotation(scale);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, player.getBrightnessForRender() % 65536, player.getBrightnessForRender() / 65536f);

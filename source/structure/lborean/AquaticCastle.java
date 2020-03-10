@@ -27,6 +27,11 @@ public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 6, coralBricks);
 		addBlock(world, basePos, 3, 0, 16, coralBricks);

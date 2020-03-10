@@ -81,7 +81,10 @@ public class EntityGhost extends AoAMeleeMob implements SpecialPropertyEntity {
 	}
 
 	@Override
-	public void addPotionEffect(PotionEffect effect) {}
+	public void addPotionEffect(PotionEffect effect) {
+		if (effect.getPotion() == MobEffects.INVISIBILITY)
+			super.addPotionEffect(effect);
+	}
 
 	@Override
 	public boolean canBeHitWithPotion() {
@@ -94,7 +97,7 @@ public class EntityGhost extends AoAMeleeMob implements SpecialPropertyEntity {
 
 		if (!world.isRemote && getAttackTarget() instanceof EntityPlayer) {
 			if (EntityUtil.isPlayerLookingAtEntity(((EntityPlayer)getAttackTarget()), this) && canEntityBeSeen(getAttackTarget()))
-				addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 200, 1, true, true));
+				addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 200, 0, true, true));
 		}
 	}
 

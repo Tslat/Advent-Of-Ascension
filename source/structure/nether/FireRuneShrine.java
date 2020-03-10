@@ -19,6 +19,11 @@ public class FireRuneShrine extends AoAStructure { //StructureSize: 7x4x7
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, darkBricks);
 		addBlock(world, basePos, 0, 0, 1, darkBricks);

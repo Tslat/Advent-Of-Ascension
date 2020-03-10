@@ -3,8 +3,6 @@ package net.tslat.aoa3.entity.mobs.creeponia;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,8 +23,6 @@ public class EntityMagicalCreeper extends EntityCreeponiaCreeper implements AoAR
 
     public EntityMagicalCreeper(World world) {
         super(world, entityWidth, 2.37f);
-
-        addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 1000000, 0, false, true));
     }
 
     @Override
@@ -46,7 +42,7 @@ public class EntityMagicalCreeper extends EntityCreeponiaCreeper implements AoAR
 
     @Override
     protected double getBaseMovementSpeed() {
-        return 0.3d;
+        return 0.25d;
     }
 
     @Override

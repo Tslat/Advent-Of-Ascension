@@ -17,6 +17,11 @@ public class ControlTower extends AoAStructure { //StructureSize: 11x55x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 4, degradedSteel);
 		addBlock(world, basePos, 2, 0, 6, degradedSteel);

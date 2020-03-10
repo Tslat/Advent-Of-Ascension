@@ -7,7 +7,7 @@ import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 public class EnchantmentIntervention extends BaseEnchantment {
 	public EnchantmentIntervention() {
 		super(Rarity.VERY_RARE, EnchantmentsRegister.UNSTACKABLE, new EntityEquipmentSlot[] {});
-		setName("intervention");
+		setName("aoa3.intervention");
 		setRegistryName("aoa3:intervention");
 	}
 

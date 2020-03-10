@@ -13,7 +13,9 @@ public class RecipeRegister {
 		GameRegistry.addSmelting(BlockRegister.oreAmethyst, new ItemStack(ItemRegister.gemAmethyst), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreBaronyte, new ItemStack(ItemRegister.ingotBaronyte), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreBlazium, new ItemStack(ItemRegister.ingotBlazium), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreBloodstone, new ItemStack(ItemRegister.gemBloodstone), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreChargedRunium, new ItemStack(ItemRegister.chargedRuniumChunk), 2.0f);
+		GameRegistry.addSmelting(BlockRegister.oreCrystallite, new ItemStack(ItemRegister.gemCrystallite), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreElecanium, new ItemStack(ItemRegister.ingotElecanium), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreEmberstone, new ItemStack(ItemRegister.ingotEmberstone), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreGemenyte, new ItemStack(ItemRegister.gemGemenyte), 2.0f);
@@ -28,6 +30,12 @@ public class RecipeRegister {
 		GameRegistry.addSmelting(BlockRegister.oreRosite, new ItemStack(ItemRegister.ingotRosite), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreRunium, new ItemStack(ItemRegister.runiumChunk), 2.0f);
 		GameRegistry.addSmelting(BlockRegister.oreSapphire, new ItemStack(ItemRegister.gemSapphire), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreBlueGemstone, new ItemStack(ItemRegister.gemstonesBlue), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreGreenGemstone, new ItemStack(ItemRegister.gemstonesGreen), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.orePurpleGemstone, new ItemStack(ItemRegister.gemstonesPurple), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreRedGemstone, new ItemStack(ItemRegister.gemstonesRed), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreWhiteGemstone, new ItemStack(ItemRegister.gemstonesWhite), 3.0f);
+		GameRegistry.addSmelting(BlockRegister.oreYellowGemstone, new ItemStack(ItemRegister.gemstonesYellow), 3.0f);
 		GameRegistry.addSmelting(BlockRegister.oreShyregem, new ItemStack(ItemRegister.gemShyregem), 5.0f);
 		GameRegistry.addSmelting(BlockRegister.oreShyrestone, new ItemStack(ItemRegister.ingotShyrestone), 2.0f);
 		GameRegistry.addSmelting(BlockRegister.oreVarsium, new ItemStack(ItemRegister.ingotVarsium), 3.0f);

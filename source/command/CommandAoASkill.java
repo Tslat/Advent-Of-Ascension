@@ -290,7 +290,7 @@ public class CommandAoASkill extends CommandBase {
 						}
 
 						messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaskill.addxp.success", pl.getDisplayNameString(), StringUtil.capitaliseFirstLetter(skill.toString()), String.valueOf(xp));
-						PlayerUtil.getAdventPlayer(pl).stats().addXp(skill, xp, true);
+						PlayerUtil.getAdventPlayer(pl).stats().addXp(skill, xp, true, false);
 						break;
 					case 4:
 						try {
@@ -314,7 +314,7 @@ public class CommandAoASkill extends CommandBase {
 							return;
 						}
 
-						PlayerUtil.getAdventPlayer(pl).stats().addXp(skill, xp, true);
+						PlayerUtil.getAdventPlayer(pl).stats().addXp(skill, xp, true, false);
 						messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoaskill.addxp.success", pl.getDisplayNameString(), StringUtil.capitaliseFirstLetter(skill.toString()), String.valueOf(xp));
 						break;
 				}

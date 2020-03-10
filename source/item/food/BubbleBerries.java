@@ -29,7 +29,7 @@ public class BubbleBerries extends BasicFood {
 
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
-		return 24;
+		return 18;
 	}
 
 	@SideOnly(Side.CLIENT)

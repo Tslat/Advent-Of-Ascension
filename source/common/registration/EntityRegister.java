@@ -100,10 +100,7 @@ import net.tslat.aoa3.entity.mobs.runandor.*;
 import net.tslat.aoa3.entity.mobs.runandor.templars.*;
 import net.tslat.aoa3.entity.mobs.shyrelands.*;
 import net.tslat.aoa3.entity.mobs.voxponds.*;
-import net.tslat.aoa3.entity.npcs.ambient.EntityGorbCitizen;
-import net.tslat.aoa3.entity.npcs.ambient.EntityPrimordialGuide;
-import net.tslat.aoa3.entity.npcs.ambient.EntityZalChild;
-import net.tslat.aoa3.entity.npcs.ambient.EntityZalCitizen;
+import net.tslat.aoa3.entity.npcs.ambient.*;
 import net.tslat.aoa3.entity.npcs.banker.*;
 import net.tslat.aoa3.entity.npcs.lottoman.*;
 import net.tslat.aoa3.entity.npcs.skillmaster.*;
@@ -190,7 +187,6 @@ public class EntityRegister {
 				newEntry("chimera", EntityChimera.class, 14736043, 4206102),
 				newEntry("chocko", EntityChocko.class, 8004884, 3346956),
 				newEntry("chomper", EntityChomper.class, 4479279, 2043409),
-				//newEntry("cindaxas", EntityCindaxas.class),
 				newEntry("clown", EntityClown.class, 5376265, 14597565),
 				newEntry("clunkhead", EntityClunkhead.class, 1393533, 6322068),
 				newEntry("coniferon", EntityConiferon.class, 2694151, 1452309),

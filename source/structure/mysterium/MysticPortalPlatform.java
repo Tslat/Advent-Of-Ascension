@@ -7,7 +7,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.entity.npcs.trader.EntityPortalMaster;
+import net.tslat.aoa3.entity.npcs.ambient.EntityPortalMaster;
 import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
@@ -22,6 +22,11 @@ public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x
 
 	public MysticPortalPlatform() {
 		super("MysticPortalPlatform");
+	}
+
+	@Override
+	protected boolean replacesBlocks() {
+		return true;
 	}
 
 	@Override

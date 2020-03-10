@@ -66,6 +66,12 @@ public class EntityFungback extends AoAMeleeMob {
 		return SoundsRegister.mobFungiHit;
 	}
 
+	@Override
+	public void addPotionEffect(PotionEffect effect) {
+		if (effect.getPotion() != MobEffects.POISON)
+			super.addPotionEffect(effect);
+	}
+
 	@Nullable
 	@Override
 	protected ResourceLocation getLootTable() {

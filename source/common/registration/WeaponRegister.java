@@ -116,6 +116,8 @@ public class WeaponRegister {
 
 	@GameRegistry.ObjectHolder("baron_greatblade")
 	public static final BaseGreatblade greatbladeBaron = null;
+	@GameRegistry.ObjectHolder("bloodlurker")
+	public static final BaseGreatblade greatbladeBloodlurker = null;
 	@GameRegistry.ObjectHolder("candy_blade")
 	public static final BaseGreatblade greatbladeCandyBlade = null;
 	@GameRegistry.ObjectHolder("coral_greatblade")
@@ -132,8 +134,6 @@ public class WeaponRegister {
 	public static final BaseGreatblade greatbladeGodsGreatblade = null;
 	@GameRegistry.ObjectHolder("goofy_greatblade")
 	public static final BaseGreatblade greatbladeGoofy = null;
-	@GameRegistry.ObjectHolder("grandsword")
-	public static final BaseGreatblade greatbladeGrandsword = null;
 	@GameRegistry.ObjectHolder("haunted_greatblade")
 	public static final BaseGreatblade greatbladeHaunted = null;
 	@GameRegistry.ObjectHolder("knights_guard")
@@ -923,6 +923,7 @@ public class WeaponRegister {
 
 		registerGreatblades(registry,
 				new BaronGreatblade(		19.5f, 	0, 		1200), // Barathos | Baroness
+				new Bloodlurker(			21.0f, 	0, 		1350), // Abyss | Crafting
 				new CandyBlade(				23.0f, 	0, 		1450), // Candyland | Gingerbread House Loot
 				new CoralGreatblade(		24.5f, 	0, 		1800), // LBorean | Crafting
 				new CottonCrusher(			24.0f,	0, 		1600), // Candyland | Cotton Candor
@@ -931,7 +932,6 @@ public class WeaponRegister {
 				new ErebonScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Penumbra
 				new GodsGreatblade(			29.5f, 	0, 		2000), // Shyrelands | Xxeus
 				new GoofyGreatblade(		22.0f, 	0, 		1300), // Celeve | Crafting
-				new Grandsword(				21.0f, 	0, 		1350), // Abyss | Crafting
 				new HauntedGreatblade(		22.0f, 	0, 		1370), // Mysterium | Haunted Castle
 				new KnightsGuard(			26.5, 	0, 		2050), // Shyrelands | Crafting
 				new LelyetianGreatblade(	18.5f, 	0, 		1100), // Lelyetia | Crafting
@@ -999,7 +999,7 @@ public class WeaponRegister {
 				new GoldenFury(				26.0f, 	1520, 28, 	4.0f), // UPGRADE KIT
 				new HappyHaunter(			11.5f, 	1510, 12, 	3.0f), // UPGRADE KIT
 				new HaunterRifle(			11.0f, 	1420, 12, 	3.0f), // Greckon | Bane
-				new HeatWave(				11.0f, 	450, 	12, 	10.0f), // UPGRADE KIT
+				new HeatWave(				23.5f, 	1470, 24, 	5.0f), // UPGRADE KIT
 				new Hiver(					11.5f, 	1490, 12, 	4.0f), // UPGRADE KIT
 				new HotShot(				14.5f, 	580, 	24, 	5.0f), // Nether | Crafting
 				new HuntersRifle(			21.5f, 	900, 	28, 	4.0f), // Vox Ponds | Crafting
@@ -1037,7 +1037,7 @@ public class WeaponRegister {
 				new Sublimus(				11.0f, 	1530,	12, 	5.0f), // Shyrelands | Crafting
 				new TigerTommy(				11.5f, 	1490, 12, 	7.0f), // UPGRADE KIT
 				new Tommy(					6.0f, 	330, 	12, 	7.0f), // Overworld | Crafting
-				new VileVanquisher(			14.5f, 	930, 	16, 	3.0f), // Vox Ponds | Crafting
+				new VileVanquisher(			11.0f, 	930, 	16, 	3.0f), // Vox Ponds | Crafting
 				new WartGun(				16.5f, 	580, 	28, 	1.0f), // Nether | Crafting
 				new Wrecker(				9.5f, 	920, 	12, 	7.0f) // Candyland | Crafting
 		);
@@ -1113,7 +1113,7 @@ public class WeaponRegister {
 				new DischargeCannon(	0.0f, 		400, 	20, 	6.0f), // TODO Creeponia Minigame
 				new EnergyCannon(		18.5f, 		610, 	25, 	3.0f), // Runandor | Crafting
 				new ErebonStickler(		35.0f, 		750, 	48, 	11.0f), // Ancient Cavern | Penumbra
-				new FloroRPG(			14.0f, 		300, 	14, 	7.0f), // UPGRADE KIT
+				new FloroRPG(			14.0f, 		830, 	14, 	7.0f), // UPGRADE KIT
 				new FlowerCannon(		14.5f, 		510, 	23, 	17.0f), // Gardencia | Crafting
 				new FungalCannon(		19.5f, 		850, 	23, 	17.0f), // UPGRADE KIT
 				new GhastBlaster(		20.0f, 		600, 	28, 	16.0f), // Greckon | Crafting
@@ -1140,7 +1140,7 @@ public class WeaponRegister {
 				new SmileBlaster(		20.5f, 		840, 	24, 	13.0f), // UPGRADE KIT
 				new SuperCannon(		18.5f, 		510, 	30, 	4.0f), // Iromine | Professor
 				new UltraCannon(		22.5f, 		605, 	30, 	5.0f), // Lunalus | Zal Spellbinder
-				new VoxCannon(			6.0f, 		440, 	26, 	13.0f), // Vox Ponds | Nightwing
+				new VoxCannon(			15.0f, 		440, 	26, 	13.0f), // Vox Ponds | Nightwing
 				new WaterBalloonBomber(	20.5f, 		855, 	24, 	7.0f), // UPGRADE KIT
 				new WitherCannon(		17.0f, 		460, 	30, 	8.0f) // Nether | Wither
 		);
@@ -1209,7 +1209,7 @@ public class WeaponRegister {
 				new PyroArchergun(		7.5f, 	950, 	12, 	3.0f), // Nether | Skeletal Cowman
 				new RosidianArchergun(	9.0f, 	1280, 12, 	3.0f), // Gardencia | Garden Castle
 				new SkeletalArchergun(	8.5f, 	1100, 12, 	3.0f), // Precasia | Skeletron
-				new SpectralArchergun(	10.0f, 	1600, 8, 		3.0f), // Runandor | Crafting
+				new SpectralArchergun(	6.5f, 	1600, 8, 		3.0f), // Runandor | Crafting
 				new TrollsArchergun(	9.5f,		800, 	16, 	3.0f), // Overworld | Smash
 				new ViralArchergun(		9.0f, 	1250, 12, 	3.0f)  // Vox Ponds | Crafting
 		);
@@ -1415,8 +1415,12 @@ public class WeaponRegister {
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
 		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
-			if (map.key.toString().equals("aoa3:millenium_greatblade"))
+			if (map.key.toString().equals("aoa3:millenium_greatblade")) {
 				map.remap(greatbladeMillennium);
+			}
+			else if (map.key.toString().equals("aoa3:grandsword")) {
+				map.remap(greatbladeBloodlurker);
+			}
 		}
 	}
 

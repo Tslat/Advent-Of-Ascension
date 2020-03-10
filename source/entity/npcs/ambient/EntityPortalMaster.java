@@ -1,4 +1,4 @@
-package net.tslat.aoa3.entity.npcs.trader;
+package net.tslat.aoa3.entity.npcs.ambient;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

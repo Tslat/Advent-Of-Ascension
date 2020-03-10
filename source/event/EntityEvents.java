@@ -163,7 +163,7 @@ public class EntityEvents {
 	@SubscribeEvent
 	public void onLootDrops(LivingDropsEvent ev) {
 		if (!ev.getEntityLiving().world.isRemote) {
-			if (ev.getEntityLiving().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern) {
+			if (ev.getEntityLiving().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern && ev.getEntityLiving().isNonBoss()) {
 				ev.getDrops().clear();
 				ev.setCanceled(true);
 
@@ -184,7 +184,7 @@ public class EntityEvents {
 			}
 
 			if (HunterUtil.isHunterCreature(ev.getEntityLiving())) {
-				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof EntityPlayer) || !HunterUtil.doesPlayerMeetHunterReq(ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource())) {
+				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof EntityPlayer) || (!((EntityPlayer)ev.getSource().getTrueSource()).capabilities.isCreativeMode && !HunterUtil.doesPlayerMeetHunterReq(ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource()))) {
 					ev.getDrops().clear();
 					ev.setCanceled(true);
 				}

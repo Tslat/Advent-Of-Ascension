@@ -80,6 +80,9 @@ public class EntityTrickster extends AoAMeleeMob {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (!isEntityAlive())
+			return;
+
 		if (invisCooldown > 0)
 			--invisCooldown;
 

@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFluffyTrail;
-import net.tslat.aoa3.client.model.entities.mobs.haven.ModelRainicorn;
 import net.tslat.aoa3.client.model.entities.mobs.overworld.ModelCharger;
+import net.tslat.aoa3.client.model.entities.mobs.runandor.ModelRunicorn;
 import net.tslat.aoa3.entity.mobs.runandor.EntityRunicorn;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -25,7 +25,7 @@ public class RunicornRenderer extends RenderLiving<EntityRunicorn> {
 	private final ResourceLocation texture;
 
 	public RunicornRenderer(RenderManager renderManager, ResourceLocation textureResource) {
-		super(renderManager, new ModelRainicorn(), EntityRunicorn.entityWidth / 3);
+		super(renderManager, new ModelRunicorn(), EntityRunicorn.entityWidth / 3);
 
 		this.texture = textureResource;
 	}

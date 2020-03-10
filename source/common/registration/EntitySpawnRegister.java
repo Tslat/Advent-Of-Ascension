@@ -164,7 +164,7 @@ public class EntitySpawnRegister {
             EntityRegistry.addSpawn(EntityHag.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
 
             EntityRegistry.addSpawn(EntityBlackUrsa.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-            EntityRegistry.addSpawn(EntityLivingFungi.class, 40, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
+            EntityRegistry.addSpawn(EntityHidingFungi.class, 40, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
             bigDaySpawns.add(new SpawnEntry(EntityLeafyGiant.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
             EntityRegistry.addSpawn(EntityNatura.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
             EntityRegistry.addSpawn(EntitySkolle.class, 15, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);

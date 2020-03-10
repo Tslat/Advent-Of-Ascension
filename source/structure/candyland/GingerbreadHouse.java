@@ -24,6 +24,11 @@ public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 2, whiteCandy);
 		addBlock(world, basePos, 0, 0, 4, redCandy);

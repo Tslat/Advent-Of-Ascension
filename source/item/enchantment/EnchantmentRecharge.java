@@ -9,7 +9,7 @@ import net.tslat.aoa3.item.weapon.blaster.BaseBlaster;
 public class EnchantmentRecharge extends BaseEnchantment {
 	public EnchantmentRecharge() {
 		super(Rarity.RARE, EnchantmentsRegister.BLASTER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
-		setName("recharge");
+		setName("aoa3.recharge");
 		setRegistryName("aoa3:recharge");
 	}
 

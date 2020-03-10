@@ -20,6 +20,11 @@ public class RuneTemplarBunker extends AoAStructure { //StructureSize: 15x9x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, unbreakableRunicBricks);
 		addBlock(world, basePos, 0, 0, 1, unbreakableRunicBricks);

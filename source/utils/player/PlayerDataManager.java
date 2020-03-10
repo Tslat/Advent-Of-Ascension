@@ -173,13 +173,17 @@ public final class PlayerDataManager {
 	}
 
 	private void storeInterventionItems() {
-		interventionData = new HashSet<ItemStack>();
+		if (interventionData == null)
+			interventionData = new HashSet<ItemStack>();
 
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 
 			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-				interventionData.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
+				if (AdventOfAscension.rand.nextInt(5) == 0)
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+
+				interventionData.add(stack);
 				player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 			}
 		}
@@ -188,7 +192,10 @@ public final class PlayerDataManager {
 			ItemStack stack = player.inventory.armorInventory.get(i);
 
 			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
-				interventionData.add(ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention));
+				if (AdventOfAscension.rand.nextInt(5) == 0)
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+
+				interventionData.add(stack);
 				player.inventory.armorInventory.set(i, ItemStack.EMPTY);
 			}
 		}
@@ -202,6 +209,16 @@ public final class PlayerDataManager {
 
 			interventionData = null;
 		}
+	}
+
+	public void storeInterventionItem(@Nonnull ItemStack stack) {
+		if (stack.isEmpty())
+			return;
+
+		if (interventionData == null)
+			interventionData = new HashSet<ItemStack>();
+
+		interventionData.add(stack);
 	}
 
 	public void setPortalReturnLocation(Integer toDimId, PortalCoordinatesContainer coords) {
@@ -322,7 +339,7 @@ public final class PlayerDataManager {
 		interventionData = sourcePlayerData.interventionData;
 
 		for (Enums.Skills skill : Enums.Skills.values()) {
-			stats.levels.put(skill, sourcePlayerData.stats.getLevel(skill));
+			stats.levels.put(skill, sourcePlayerData.stats.levels.get(skill));
 			stats.xp.put(skill, sourcePlayerData.stats.getExp(skill));
 		}
 
@@ -636,11 +653,13 @@ public final class PlayerDataManager {
 
 			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
 
-			if (armourEffectWrapper == null) {
-				armourMap.put(item.setType(), new ArmourEffectWrapper(item, slot));
-			}
-			else {
-				armourEffectWrapper.currentSlots.add(slot);
+			if (slot != null) {
+				if (armourEffectWrapper == null) {
+					armourMap.put(item.setType(), new ArmourEffectWrapper(item, slot));
+				}
+				else {
+					armourEffectWrapper.currentSlots.add(slot);
+				}
 			}
 		}
 
@@ -650,7 +669,7 @@ public final class PlayerDataManager {
 
 			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
 
-			if (armourEffectWrapper != null) {
+			if (armourEffectWrapper != null && slot != null) {
 				if (armourEffectWrapper.currentSlots.size() <= 1) {
 					armourMap.remove(item.setType());
 				}
@@ -770,11 +789,8 @@ public final class PlayerDataManager {
 			return optionals.get(skill);
 		}
 
-		public void addXp(Enums.Skills skill, float xp, boolean isUnnatural) {
+		public void addXp(Enums.Skills skill, float xp, boolean isUnnatural, boolean ignoreXpBuffs) {
 			int lvl = levels.get(skill);
-			float remaining = Math.min(544132359, xp);
-			int newLevels = 0;
-			boolean noXpDrop = !ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100;
 
 			if (lvl >= 1000)
 				return;
@@ -782,6 +798,9 @@ public final class PlayerDataManager {
 			if (!isUnnatural)
 				xp = buffs.applyXpBuffs(skill, xp);
 
+			float remaining = Math.min(544132359, xp);
+			int newLevels = 0;
+			boolean noXpDrop = !ConfigurationUtil.MainConfig.showVanityLevels && lvl >= 100;
 			float xpRemaining = PlayerUtil.getXpRemainingUntilLevel(playerDataManager, skill);
 
 			if (remaining > xpRemaining) {
@@ -992,6 +1011,18 @@ public final class PlayerDataManager {
 			for (Enums.Deities deity : Enums.Deities.values()) {
 				baseTag.setInteger(deity.toString(), tribute.get(deity));
 			}
+
+			if (interventionData != null) {
+				NBTTagCompound interventionTag = new NBTTagCompound();
+				int i = 0;
+
+				for (ItemStack stack : interventionData) {
+					interventionTag.setTag(String.valueOf(i), stack.serializeNBT());
+					i++;
+				}
+
+				baseTag.setTag("InterventionData", interventionTag);
+			}
 		}
 
 		private void loadFromNBT(NBTTagCompound baseTag) {
@@ -1007,6 +1038,18 @@ public final class PlayerDataManager {
 
 			for (Enums.Deities deity : Enums.Deities.values()) {
 				tribute.put(deity, MathHelper.clamp(baseTag.getInteger(deity.toString()), 0, 200));
+			}
+
+			if (baseTag.hasKey("InterventionData")) {
+				interventionData = new HashSet<ItemStack>();
+				NBTTagCompound interventionTag = baseTag.getCompoundTag("InterventionData");
+				int i = 0;
+
+				while (interventionTag.hasKey(String.valueOf(i))) {
+					interventionData.add(new ItemStack(interventionTag.getCompoundTag(String.valueOf(i))));
+
+					i++;
+				}
 			}
 		}
 	}

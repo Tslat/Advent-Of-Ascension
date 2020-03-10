@@ -285,14 +285,6 @@ public class ChunkGenHaven implements IChunkGenerator {
 			if (world.getBlockState(pos.setPos(x + 14, y - 1, x + 14)) == biome.topBlock)
 				StructuresHandler.generateStructure("GuardianTower", world, rand, pos.setPos(x, y - 1, z));
 		}
-		else if (ConfigurationUtil.StructureConfig.haven.rockriderBoulderSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.rockriderBoulderSpawnChance) == 0) {
-			x = baseX + rand.nextInt(16);
-			z = baseZ + rand.nextInt(16);
-			y = rand.nextInt(45) + 30;
-
-			if (world.getBlockState(pos.setPos(x + 5, y - 1, z + 5)) == biome.topBlock)
-				StructuresHandler.generateStructure("RockriderBoulder", world, rand, pos.setPos(x, y - 1, z));
-		}
 
 		if (ConfigurationUtil.StructureConfig.haven.strikeRuneShrineSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.haven.strikeRuneShrineSpawnChance) == 0) {
 			x = baseX + rand.nextInt(16);

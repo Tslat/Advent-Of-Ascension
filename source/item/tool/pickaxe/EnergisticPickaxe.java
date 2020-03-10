@@ -10,6 +10,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -58,9 +59,10 @@ public class EnergisticPickaxe extends BasePickaxe {
 
 			if (cap != null) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+				float storeAmount = MathHelper.clamp(2000f - cap.getValue(), 0, Math.min(20, plData.stats().getResourceValue(Enums.Resources.ENERGY)));
 
-				cap.setValue(cap.getValue() + Math.min(plData.stats().getResourceValue(Enums.Resources.ENERGY), 20));
-				plData.stats().consumeResource(Enums.Resources.ENERGY, 20, true);
+				cap.setValue(cap.getValue() + storeAmount);
+				plData.stats().consumeResource(Enums.Resources.ENERGY, storeAmount, true);
 
 				return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 			}
@@ -100,7 +102,7 @@ public class EnergisticPickaxe extends BasePickaxe {
 	@Override
 	public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt) {
 		if (nbt != null && nbt.hasKey("AdventMiscStackCapability"))
-			getCapability(stack).setValue(nbt.getFloat("AdventMiscStackCapability"));
+			getCapability(stack).setValue(Math.min(2000, nbt.getFloat("AdventMiscStackCapability")));
 
 		super.readNBTShareTag(stack, nbt);
 	}

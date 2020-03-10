@@ -57,27 +57,27 @@ public class BiomeCrystevia extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 				for (int i = 0; i < ConfigurationUtil.OreConfig.blueCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreBlueGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blueCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blueCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.oreBlueGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blueCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blueCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.greenCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreGreenGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.greenCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.greenCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.oreGreenGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.greenCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.greenCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.redCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreRedGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.redCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.redCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.oreRedGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.redCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.redCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.purpleCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.orePurpleGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.purpleCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.purpleCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.orePurpleGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.purpleCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.purpleCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.whiteCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreWhiteGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.whiteCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.whiteCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.oreWhiteGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.whiteCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.whiteCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.yellowCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreYellowGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.yellowCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.yellowCrystal.maxOresPerVein)), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.oreYellowGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.yellowCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.yellowCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 		}
 

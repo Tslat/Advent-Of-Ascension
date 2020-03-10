@@ -139,6 +139,11 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	@Override
+	protected boolean canDespawn() {
+		return isOverworldNPC() ? world.provider.getDimension() != 0 : super.canDespawn();
+	}
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 
@@ -187,7 +192,7 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	protected int getSpawnChanceFactor() {
-		return 50;
+		return 10;
 	}
 
 	private boolean checkSpawnChance() {
@@ -195,6 +200,9 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	protected boolean isValidLightLevel() {
+		if (world.provider.getDimension() != 0)
+			return true;
+
 		BlockPos blockpos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
 
 		if (this.world.getLightFor(EnumSkyBlock.SKY, blockpos) > this.rand.nextInt(32)) {

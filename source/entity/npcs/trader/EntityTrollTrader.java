@@ -65,6 +65,6 @@ public class EntityTrollTrader extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 10), new ItemStack(Blocks.SAND, 64)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(Items.PRISMARINE_SHARD, 4)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 15), new ItemStack(Items.DYE, 1, 15)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(Items.DYE, 1, 15)));
 	}
 }

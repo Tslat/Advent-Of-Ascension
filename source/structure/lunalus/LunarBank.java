@@ -26,6 +26,11 @@ public class LunarBank extends AoAStructure { //StructureSize: 22x8x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, 0, 9, lunarBricks);
 		addBlock(world, basePos, 1, 0, 10, lunarBricks);

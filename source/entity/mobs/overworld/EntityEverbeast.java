@@ -76,7 +76,7 @@ public class EntityEverbeast extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 140, 14, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 140, 0, true, true));
 	}
 
 	@Override

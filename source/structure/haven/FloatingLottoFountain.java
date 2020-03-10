@@ -20,6 +20,11 @@ public class FloatingLottoFountain extends AoAStructure { //StructureSize: 7x17x
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, crystalliteBricks);
 		addBlock(world, basePos, 0, 0, 1, crystalliteBricks);

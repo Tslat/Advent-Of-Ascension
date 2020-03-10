@@ -26,7 +26,7 @@ public class MaterialsRegister {
 	public static final Item.ToolMaterial SWORD_ILLUSION 		= EnumHelper.addToolMaterial("AOAILLUSION", 			4, 1900, 	4.0f, 	14.5f, 10);
 	public static final Item.ToolMaterial SWORD_JADE 			= EnumHelper.addToolMaterial("AOAJADE", 				3, 800, 	4.0f, 	7.0f, 	11).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("jade")));
 	public static final Item.ToolMaterial SWORD_LEGBONE 		= EnumHelper.addToolMaterial("AOALEGBONE", 			4, 2000, 	4.0f, 	12.5f, 10);
-	public static final Item.ToolMaterial SWORD_LIGHTS_WAY 		= EnumHelper.addToolMaterial("AOALIGHTSWAY", 		4, 2700, 	4.0f, 	8.5f, 10);
+	public static final Item.ToolMaterial SWORD_LIGHTS_WAY 		= EnumHelper.addToolMaterial("AOALIGHTSWAY", 		4, 2700, 	4.0f, 	7.5f, 10);
 	public static final Item.ToolMaterial SWORD_LIMONITE 		= EnumHelper.addToolMaterial("AOALIMONITE", 			2, 400, 	4.0f, 	5.0f, 	3).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("limonite_ingot")));
 	public static final Item.ToolMaterial SWORD_NETHENGEIC 		= EnumHelper.addToolMaterial("AOANETHENGEIC", 		4, 2040, 	4.0f, 	14.0f, 10);
 	public static final Item.ToolMaterial SWORD_PRIMAL	 		= EnumHelper.addToolMaterial("AOAPRIMAL", 			4, 1960, 	4.0f, 	13.0f, 10);

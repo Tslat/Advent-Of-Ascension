@@ -70,6 +70,6 @@ public class LadderBlock extends BlockLadder {
 
 	@Override
 	public int quantityDropped(Random random) {
-		return 0;
+		return 1;
 	}
 }
