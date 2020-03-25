@@ -27,7 +27,7 @@ public class LuxonScythe extends BaseGreatblade implements AdventWeapon, LongRea
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = (float)dmg / dmgDealt;
+		float damagePercent = dmgDealt / (float)dmg;
 		PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
 		float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
 

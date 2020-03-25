@@ -481,7 +481,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
 				checkPos.setPos(x, posY - 1, z);
 
-				while (world.isAirBlock(checkPos.move(EnumFacing.DOWN))) {
+				while (world.isAirBlock(checkPos.move(EnumFacing.DOWN)) && checkPos.getY() >= 0) {
 					;
 				}
 
