@@ -22,13 +22,9 @@ public class EntitySkeleElder extends AoAMeleeMob {
 	public EntitySkeleElder(World world, BlockPos armyBlockPos, int wave) {
 		super(world, entityWidth, 2.5625f);
 
-		int posX = armyBlockPos.getX() - 3 + rand.nextInt(6);
-		int posZ = armyBlockPos.getZ() - 3 + rand.nextInt(6);
-		int posY = world.getHeight(posX, posZ) + 1;
 		this.armyBlockPos = armyBlockPos;
 		this.wave = wave;
 
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 0);
 		setHomePosAndDistance(armyBlockPos, 18);
 	}
 

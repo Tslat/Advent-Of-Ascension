@@ -51,7 +51,6 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-
 		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
 
 		if (cap == null)
@@ -77,7 +76,7 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 				if (getCastingSound() != null)
 					world.playSound(null, player.posX, player.posY, player.posZ, getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-				cap.setNextFireTime(GlobalEvents.tick + 12);
+				cap.setNextShotDelay(12);
 				player.addStat(StatList.getObjectUseStats(this));
 				stack.damageItem(1, player);
 				cast(world, stack, player, preconditionResult);
@@ -86,10 +85,10 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 		}
 		else if (cap.getNextFireTime() > GlobalEvents.tick + 20) {
-			cap.setNextFireTime(0);
+			cap.setNextShotDelay(0);
 		}
 
-		return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
 
 	public boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runes, EntityPlayer player, boolean allowBuffs, ItemStack staff) {

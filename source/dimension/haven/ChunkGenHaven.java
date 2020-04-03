@@ -79,14 +79,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 		}
 
 		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
-
-		if (populatedChunk) {
-			chunk.generateSkylightMap();
-		}
-		else {
-			chunk.setHeightMap(new int[256]);
-			chunk.setLightPopulated(true);
-		}
+		chunk.generateSkylightMap();
 
 		return chunk;
 	}
