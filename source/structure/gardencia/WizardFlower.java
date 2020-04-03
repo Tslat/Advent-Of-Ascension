@@ -19,6 +19,11 @@ public class WizardFlower extends AoAStructure { //StructureSize: 11x10x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 4, gardencianBricks);
 		addBlock(world, basePos, 0, 0, 5, gardencianBricks);

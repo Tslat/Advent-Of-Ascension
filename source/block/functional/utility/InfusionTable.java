@@ -44,7 +44,7 @@ public class InfusionTable extends Block {
 				int count = stack.getCount();
 
 				if (player.capabilities.isCreativeMode || plData.stats().getLevel(Enums.Skills.INFUSION) >= stone.getLvl()) {
-					plData.stats().addXp(Enums.Skills.INFUSION, stone.getXp() * count, false);
+					plData.stats().addXp(Enums.Skills.INFUSION, stone.getXp() * count, false, false);
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.infusionSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					int chanceMod = plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.INFUSION ? 33 : 100;

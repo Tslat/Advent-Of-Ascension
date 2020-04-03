@@ -15,7 +15,6 @@ import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -130,11 +129,6 @@ public class EntityPincher extends AoAMeleeMob {
 	protected void doMeleeEffect(Entity target) {
 		if (!world.isRemote && isInWater() && target.isInWater())
 			WorldUtil.createExplosion(this, world, 1.5f);
-	}
-
-	@Override
-	protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
-		return EntityUtil.isRangedDamage(source, this, 1f);
 	}
 
 	@Override

@@ -23,6 +23,11 @@ public class IroPassage1 extends AoAStructure { //StructureSize: 14x6x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, 0, 7, dottedBrick);
 		addBlock(world, basePos, 1, 0, 8, dottedBrick);

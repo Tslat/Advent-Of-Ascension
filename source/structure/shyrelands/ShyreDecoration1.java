@@ -20,6 +20,11 @@ public class ShyreDecoration1 extends AoAStructure { //StructureSize: 14x8x14
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, yellowShyreBricks);
 		addBlock(world, basePos, 0, 0, 1, whiteShyreBricks);

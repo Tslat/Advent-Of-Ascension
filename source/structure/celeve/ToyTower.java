@@ -18,6 +18,11 @@ public class ToyTower extends AoAStructure { //StructureSize: 11x46x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 5, 0, 5, whitewashBricks);
 		addBlock(world, basePos, 6, 0, 4, bloodstoneBricks);

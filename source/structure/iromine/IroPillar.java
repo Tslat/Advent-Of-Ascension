@@ -19,6 +19,11 @@ public class IroPillar extends AoAStructure { //StructureSize: 7x19x7
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 3, stripedBrick);
 		addBlock(world, basePos, 3, 1, 3, iropole);

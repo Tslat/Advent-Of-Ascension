@@ -22,6 +22,11 @@ public class EyeBulbGrotto extends AoAStructure { //StructureSize: 4x12x5
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, -11, 3, toxicBlock);
 		addBlock(world, basePos, 1, -11, 4, toxicBlock);

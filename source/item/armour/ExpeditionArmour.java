@@ -1,11 +1,13 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.SkillItem;
@@ -53,12 +55,33 @@ public class ExpeditionArmour extends AdventArmour implements SkillItem {
 	}
 
 	@Override
+	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+		if (slot == null) {
+			PotionEffect nightVision = plData.player().getActivePotionEffect(MobEffects.NIGHT_VISION);
+
+			if (nightVision != null && nightVision.getDuration() <= 300)
+				plData.player().removePotionEffect(MobEffects.NIGHT_VISION);
+		}
+	}
+
+	@Override
+	public void onPlayerLandingFall(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingFallEvent event) {
+		if (slots == null)
+			event.setDamageMultiplier(event.getDamageMultiplier() * 0.5f);
+	}
+
+	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
 		if (slots == null) {
-			plData.player().addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 1, true, false));
+			EntityPlayer pl = plData.player();
 
-			if (plData.player().isSprinting() && plData.player().getFoodStats().getSaturationLevel() == 0)
-				plData.player().getFoodStats().setFoodSaturationLevel(0.1f);
+			pl.addPotionEffect(new PotionEffect(MobEffects.SPEED, -1, 1, true, false));
+			pl.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, -1, 0, true, false));
+
+			PotionEffect nightVision = pl.getActivePotionEffect(MobEffects.NIGHT_VISION);
+
+			if (nightVision == null || nightVision.getDuration() < 250)
+				pl.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, true, false));
 		}
 	}
 
@@ -67,7 +90,6 @@ public class ExpeditionArmour extends AdventArmour implements SkillItem {
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ExpeditionArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ExpeditionArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.skillXpBonus", Enums.ItemDescriptionType.POSITIVE, Integer.toString(30), StringUtil.getLocaleString("skills.expedition.name")));
 		tooltip.add(ItemUtil.getFormattedLevelRestrictedDescriptionText(Enums.Skills.EXPEDITION, 100));
 	}

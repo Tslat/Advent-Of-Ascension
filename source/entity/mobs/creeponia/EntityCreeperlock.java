@@ -91,6 +91,9 @@ public class EntityCreeperlock extends EntityCreeponiaCreeper implements AoARang
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
+        if (!isEntityAlive())
+            return;
+
         EntityPlayer target = world.getClosestPlayer(posX, posY, posZ, 20, false);
 
         if (target == null || target.capabilities.isCreativeMode)

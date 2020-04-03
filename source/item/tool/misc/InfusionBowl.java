@@ -79,7 +79,8 @@ public class InfusionBowl extends Item {
 		if (!harvestStacks.isEmpty())
 			ItemUtil.givePlayerMultipleItems(player, harvestStacks);
 
-		plData.stats().addTribute(Enums.Deities.LUXON, 4 * harvestCount);
+		if (pixon.world.provider.getDimension() == 0)
+			plData.stats().addTribute(Enums.Deities.LUXON, 4 * harvestCount);
 
 		if (pixon.isEntityAlive()) {
 			pixon.setRevengeTarget(player);

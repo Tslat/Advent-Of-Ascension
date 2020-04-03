@@ -19,31 +19,31 @@ public class ExpeditionUtil {
 
         if (lvl >= 10) {
             if (lvl < 20) {
-                ev.setDamageMultiplier(0.95f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.95f);
             }
             else if (lvl < 30) {
-                ev.setDamageMultiplier(0.90f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.90f);
             }
             else if (lvl < 40) {
-                ev.setDamageMultiplier(0.85f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.85f);
             }
             else if (lvl < 50) {
-                ev.setDamageMultiplier(0.80f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.80f);
             }
             else if (lvl < 60) {
-                ev.setDamageMultiplier(0.70f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.70f);
             }
             else if (lvl < 70) {
-                ev.setDamageMultiplier(0.60f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.60f);
             }
             else if (lvl < 80) {
-                ev.setDamageMultiplier(0.50f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.50f);
             }
             else if (lvl < 90) {
-                ev.setDamageMultiplier(0.40f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.40f);
             }
             else {
-                ev.setDamageMultiplier(0.30f);
+                ev.setDamageMultiplier(ev.getDamageMultiplier() * 0.30f);
             }
         }
     }
@@ -52,7 +52,7 @@ public class ExpeditionUtil {
 		int lvl = plData.stats().getLevel(Enums.Skills.EXPEDITION);
 
 		if (ev.player.isSprinting() && ev.player.ticksExisted % 140 == 0)
-			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false);
+			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false, false);
 
 		switch (plData.stats().getSkillData(Enums.Skills.EXPEDITION)) {
 			case 1:

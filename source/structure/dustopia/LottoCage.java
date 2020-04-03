@@ -19,6 +19,11 @@ public class LottoCage extends AoAStructure { //StructureSize: 5x9x5
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 2, stone);
 		addBlock(world, basePos, 2, 1, 2, stone);

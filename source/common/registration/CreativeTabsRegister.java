@@ -43,7 +43,7 @@ public class CreativeTabsRegister {
 	public static final CreativeTabs greatbladesTab = new CreativeTabs("AdventGreatbladesTab") {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(WeaponRegister.greatbladeGrandsword, 1, 0);
+			return new ItemStack(WeaponRegister.greatbladeBloodlurker, 1, 0);
 		}
 	};
 

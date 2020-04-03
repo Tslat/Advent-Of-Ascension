@@ -19,11 +19,6 @@ public class EntitySpinux extends AoAMeleeMob {
 		super(world, entityWidth, 2f);
 	}
 
-	public EntitySpinux(World world, double posX, double posY, double posZ) {
-		this(world);
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 1.0f);
-	}
-
 	@Override
 	public float getEyeHeight() {
 		return 1.875f;
@@ -83,7 +78,7 @@ public class EntitySpinux extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

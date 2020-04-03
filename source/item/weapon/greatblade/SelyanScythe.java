@@ -13,6 +13,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.player.PlayerDataManager;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
@@ -28,13 +29,18 @@ public class SelyanScythe extends BaseGreatblade implements AdventWeapon, LongRe
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
 		float damagePercent = Math.min(dmgDealt / (float)dmg, 1f);
 
-		attacker.heal(0.75f * damagePercent);
+		attacker.heal(1 * damagePercent);
 
-		if (attacker instanceof EntityPlayerMP)
-			PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, 1 * damagePercent);
+		PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
+		float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
 
-		if (target instanceof EntityPlayerMP)
-			PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 1 * damagePercent, true);
+		if (soulAmount > 0) {
+			if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
+				return;
+
+			if (attacker instanceof EntityPlayerMP)
+				PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -22,6 +22,11 @@ public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 3, hauntedBricks);
 		addBlock(world, basePos, 2, 0, 4, hauntedBricks);

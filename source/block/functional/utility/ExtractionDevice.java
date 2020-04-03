@@ -127,7 +127,7 @@ public class ExtractionDevice extends Block {
 						ItemHandlerHelper.giveItemToPlayer(player, stack);
 					}
 
-					plData.stats().addXp(Enums.Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false);
+					plData.stats().addXp(Enums.Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false, false);
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.extractionDeviceSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
 					world.setBlockState(pos, BlockRegister.extractionDevice.getDefaultState());
 

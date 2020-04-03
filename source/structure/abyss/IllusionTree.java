@@ -22,6 +22,11 @@ public class IllusionTree extends AoAStructure { //StructureSize: 19x80x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 5, 0, 8, shadowLog);
 		addBlock(world, basePos, 5, 0, 9, bloodLog);

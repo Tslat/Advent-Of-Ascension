@@ -139,6 +139,11 @@ public abstract class AoATrader extends EntityCreature implements INpc, IMerchan
 	}
 
 	@Override
+	protected boolean canDespawn() {
+		return isOverworldNPC() ? world.provider.getDimension() != 0 : super.canDespawn();
+	}
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 

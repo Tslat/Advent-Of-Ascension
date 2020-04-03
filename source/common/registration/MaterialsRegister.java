@@ -26,7 +26,7 @@ public class MaterialsRegister {
 	public static final Item.ToolMaterial SWORD_ILLUSION 		= EnumHelper.addToolMaterial("AOAILLUSION", 			4, 1900, 	4.0f, 	14.5f, 10);
 	public static final Item.ToolMaterial SWORD_JADE 			= EnumHelper.addToolMaterial("AOAJADE", 				3, 800, 	4.0f, 	7.0f, 	11).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("jade")));
 	public static final Item.ToolMaterial SWORD_LEGBONE 		= EnumHelper.addToolMaterial("AOALEGBONE", 			4, 2000, 	4.0f, 	12.5f, 10);
-	public static final Item.ToolMaterial SWORD_LIGHTS_WAY 		= EnumHelper.addToolMaterial("AOALIGHTSWAY", 		4, 2700, 	4.0f, 	8.5f, 10);
+	public static final Item.ToolMaterial SWORD_LIGHTS_WAY 		= EnumHelper.addToolMaterial("AOALIGHTSWAY", 		4, 2700, 	4.0f, 	7.5f, 10);
 	public static final Item.ToolMaterial SWORD_LIMONITE 		= EnumHelper.addToolMaterial("AOALIMONITE", 			2, 400, 	4.0f, 	5.0f, 	3).setRepairItem(new ItemStack(ItemRegister.getUnmappedItem("limonite_ingot")));
 	public static final Item.ToolMaterial SWORD_NETHENGEIC 		= EnumHelper.addToolMaterial("AOANETHENGEIC", 		4, 2040, 	4.0f, 	14.0f, 10);
 	public static final Item.ToolMaterial SWORD_PRIMAL	 		= EnumHelper.addToolMaterial("AOAPRIMAL", 			4, 1960, 	4.0f, 	13.0f, 10);
@@ -109,7 +109,7 @@ public class MaterialsRegister {
 	public static final ItemArmor.ArmorMaterial ARMOUR_NIGHTMARE 				= EnumHelper.addArmorMaterial("AOAARMOURNIGHTMARE", 			"aoa3:nightmare", 				63, new int[] {4, 9, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7); // Greckon | Crafting
 	public static final ItemArmor.ArmorMaterial ARMOUR_NIGHT_VISION_GOGGLES 	= EnumHelper.addArmorMaterial("AOAARMOURNIGHTVISIONGOGGLES",	"aoa3:night_vision_goggles", 	27, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1); // Overworld | Crafting Recipe
 	public static final ItemArmor.ArmorMaterial ARMOUR_OCEANUS_HELMET 			= EnumHelper.addArmorMaterial("AOAARMOUROCEANUS", 			"aoa3:oceanus_helmet", 			40, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2); // Overworld | Corallus
-	public static final ItemArmor.ArmorMaterial ARMOUR_OMNI 					= EnumHelper.addArmorMaterial("AOAARMOUROMNI", 				"aoa3:omni", 					50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1); // Creeponia | Explosives Expert
+	public static final ItemArmor.ArmorMaterial ARMOUR_OMNI 					= EnumHelper.addArmorMaterial("AOAARMOUROMNI", 				"aoa3:omni", 					50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3); // Creeponia | Explosives Expert
 	public static final ItemArmor.ArmorMaterial ARMOUR_PHANTASM 				= EnumHelper.addArmorMaterial("AOAARMOURPHANTASM", 			"aoa3:phantasm", 				51, new int[] {3, 8, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5); // Mysterium | Gorb Engineer
 	public static final ItemArmor.ArmorMaterial ARMOUR_POISON 					= EnumHelper.addArmorMaterial("AOAARMOURPOISON", 			"aoa3:poison", 					56, new int[] {5, 6, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5); // Vox Ponds | Crafting
 	public static final ItemArmor.ArmorMaterial ARMOUR_PREDATIOUS 				= EnumHelper.addArmorMaterial("AOAARMOURPREDATIOUS", 		"aoa3:predatious", 				51, new int[] {3, 7, 9, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3); // Precasia | Tyrosaur

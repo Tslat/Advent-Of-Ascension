@@ -21,6 +21,11 @@ public class LunarGarden extends AoAStructure { //StructureSize: 17x15x17
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		IBlockState crop;
 

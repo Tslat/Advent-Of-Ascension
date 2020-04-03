@@ -9,17 +9,20 @@ import net.tslat.aoa3.structure.AoAStructure;
 
 import java.util.Random;
 
-import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
-
 public class SpectralCage extends AoAStructure { //StructureSize: 17x5x11
 	private static final IBlockState stone = BlockRegister.stoneRunic.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
 	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
 	private static final IBlockState spectralWizardSpawner = BlockRegister.spawnerSpectralWizard.getDefaultState();
-	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getOffLamp().getDefaultState();
 
 	public SpectralCage() {
 		super("SpectralCage");
+	}
+
+	@Override
+	protected boolean replacesBlocks() {
+		return true;
 	}
 
 	@Override

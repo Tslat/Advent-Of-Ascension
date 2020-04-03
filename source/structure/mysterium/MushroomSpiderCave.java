@@ -17,6 +17,11 @@ public class MushroomSpiderCave extends AoAStructure { //StructureSize: 15x9x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 5, mysteriumStone);
 		addBlock(world, basePos, 0, 0, 9, mysteriumStone);

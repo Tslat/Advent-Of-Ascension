@@ -126,7 +126,7 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, true))
 			return false;
 
 		target.hurtResistantTime = 0;
@@ -152,7 +152,7 @@ public class EntityUtil {
 			damageSource.setDamageIsAbsolute();
 		}
 
-		if (target instanceof EntityLivingBase && !HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+		if (target instanceof EntityLivingBase && !HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, true))
 			return false;
 
 		target.hurtResistantTime = 0;
@@ -190,7 +190,7 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, true))
 			return false;
 
 		target.hurtResistantTime = 0;
@@ -222,7 +222,7 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, true))
 			return false;
 
 		target.hurtResistantTime = 0;
@@ -271,7 +271,7 @@ public class EntityUtil {
 		if (!(target instanceof EntityLivingBase))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, false))
+		if (!HunterUtil.canAttackTarget((EntityLivingBase)target, attacker, true))
 			return false;
 
 		target.hurtResistantTime = 0;

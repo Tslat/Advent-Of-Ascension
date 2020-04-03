@@ -62,7 +62,7 @@ public class RuneRandomizer extends Block {
 		if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.RUNATION)
 			LootUtil.generateAndProvideLootDirectly((EntityPlayerMP)player, LootSystemRegister.blockRuneRandomizer);
 
-		plData.stats().addXp(Enums.Skills.RUNATION, 5, false);
+		plData.stats().addXp(Enums.Skills.RUNATION, 5, false, false);
 		player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.runeRandomizer, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		return true;
 	}

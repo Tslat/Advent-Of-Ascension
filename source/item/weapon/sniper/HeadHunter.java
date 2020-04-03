@@ -69,7 +69,7 @@ public class HeadHunter extends BaseSniper implements AdventWeapon {
 					AdventGunCapability cap = (AdventGunCapability)gunStack.getCapability(AdventGunProvider.ADVENT_GUN, null);
 
 					if (cap != null) {
-						cap.setNextFireTime(((cap.getNextFireTime() - GlobalEvents.tick) / 2));
+						cap.setNextShotDelay(((cap.getNextFireTime() - GlobalEvents.tick) / 2));
 						PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.foragingLoot, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
 					}
 				}

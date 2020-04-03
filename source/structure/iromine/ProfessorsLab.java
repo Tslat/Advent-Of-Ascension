@@ -24,6 +24,11 @@ public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 7, iropole);
 		addBlock(world, basePos, 2, 0, 0, iropole);

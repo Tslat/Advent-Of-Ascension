@@ -70,13 +70,6 @@ public class EntityHorndron extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		motionX *= 0.800000011920929;
-		motionZ *= 0.800000011920929;
-	}
-
-	@Override
 	protected boolean isOverworldMob() {
 		return true;
 	}

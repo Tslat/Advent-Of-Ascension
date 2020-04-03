@@ -11,7 +11,6 @@ import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
@@ -77,24 +76,18 @@ public class EntityNatura extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity target) {
-		if (super.attackEntityAsMob(target)) {
-			if (target instanceof EntityLivingBase) {
-				heal(15);
+	protected void doMeleeEffect(Entity target) {
+		if (target instanceof EntityLivingBase) {
+			heal(15);
 
 
-				if (target instanceof EntityPlayer) {
-					PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)target);
+			if (target instanceof EntityPlayer) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)target);
 
-					plData.stats().consumeResource(Enums.Resources.ENERGY, 50, true);
-					plData.sendThrottledChatMessage("message.mob.natura.attack");
-				}
+				plData.stats().consumeResource(Enums.Resources.ENERGY, 50, true);
+				plData.sendThrottledChatMessage("message.mob.natura.attack");
 			}
-
-			return true;
 		}
-
-		return false;
 	}
 
 	@Override

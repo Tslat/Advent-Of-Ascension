@@ -20,6 +20,11 @@ public class MerkyreTower extends AoAStructure { //StructureSize: 15x48x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 6, darkwashBricks);
 		addBlock(world, basePos, 5, 0, 5, darkwashBricks);

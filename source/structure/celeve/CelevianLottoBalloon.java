@@ -20,6 +20,11 @@ public class CelevianLottoBalloon extends AoAStructure { //StructureSize: 9x18x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 3, blueCelevus);
 		addBlock(world, basePos, 3, 0, 4, blueCelevus);

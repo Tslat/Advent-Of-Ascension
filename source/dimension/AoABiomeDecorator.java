@@ -1,6 +1,7 @@
 package net.tslat.aoa3.dimension;
 
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
@@ -14,6 +15,7 @@ public abstract class AoABiomeDecorator extends BiomeDecorator {
 		doPlantGen(world, biome, rand, pos, new BlockPos.MutableBlockPos(), 0, 0, 0);
 		doTreeGen(world, biome, rand, pos, new BlockPos.MutableBlockPos(), 0, 0, 0);
 		doMiscGen(world, biome, rand, pos, new BlockPos.MutableBlockPos(), 0, 0, 0);
+		ChunkPos cPos = new ChunkPos(pos);
 	}
 
 	protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {}

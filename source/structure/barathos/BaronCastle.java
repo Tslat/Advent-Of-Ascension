@@ -27,6 +27,11 @@ public class BaronCastle extends AoAStructure { //StructureSize: 14x37x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		boolean chestToggle1 = rand.nextBoolean();
 		boolean chestToggle2 = rand.nextBoolean();

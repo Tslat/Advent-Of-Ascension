@@ -61,9 +61,9 @@ public class EntityPrimordialMerchant extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 8), new ItemStack(Items.BEEF)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(Blocks.TORCH, 2)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 14), new ItemStack(ItemRegister.bulletLimonite, 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 2), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.primordialBoots)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 2), new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ArmourRegister.primordialLegs)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 3), new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ArmourRegister.primordialBody)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 2), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.primordialHelmet)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 3), new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ArmourRegister.primordialBody)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 2), new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ArmourRegister.primordialLegs)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.darklyPowder, 2), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.primordialBoots)));
 	}
 }

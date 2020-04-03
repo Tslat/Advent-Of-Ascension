@@ -21,6 +21,11 @@ public class SkeletalArmyArena extends AoAStructure { //StructureSize: 30x11x23
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 8, skeletalBricks);
 		addBlock(world, basePos, 0, 0, 14, skeletalBricks);

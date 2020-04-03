@@ -36,6 +36,11 @@ public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 13, 0, 3, gardencianBricks);
 		addBlock(world, basePos, 16, 0, 3, gardencianBricks);

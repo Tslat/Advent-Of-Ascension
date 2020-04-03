@@ -19,6 +19,11 @@ public class CreeperHQ extends AoAStructure { //StructureSize: 24x56x24
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 9, 0, 9, creeponiaBricks);
 		addBlock(world, basePos, 9, 0, 10, creeponiaBricks);

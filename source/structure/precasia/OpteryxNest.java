@@ -19,6 +19,11 @@ public class OpteryxNest extends AoAStructure { //StructureSize: 9x2x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, 0, 1, cycadeLog);
 		addBlock(world, basePos, 1, 0, 2, cycadeLog);

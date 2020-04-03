@@ -19,6 +19,11 @@ public class ArkzyneOutpost extends AoAStructure { //StructureSize: 15x13x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 6, 0, 6, darkwashBricks);
 		addBlock(world, basePos, 6, 0, 7, darkwashBricks);

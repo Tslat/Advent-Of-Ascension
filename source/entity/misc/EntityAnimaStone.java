@@ -99,7 +99,7 @@ public class EntityAnimaStone extends Entity {
             PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
             int lvl = plData.stats().getLevel(Enums.Skills.ANIMA);
 
-            plData.stats().addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(lvl / AnimaUtil.getExpDenominator(lvl)), false);
+            plData.stats().addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(lvl / AnimaUtil.getExpDenominator(lvl)), false, false);
             world.playSound(null, posX, posY, posZ, SoundsRegister.heartStonePickup, SoundCategory.PLAYERS, 1.0f, 1.0f);
             setDead();
 

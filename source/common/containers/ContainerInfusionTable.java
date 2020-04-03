@@ -12,6 +12,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.crafting.recipes.InfusionTableRecipe;
 import net.tslat.aoa3.library.Enums;
@@ -31,7 +33,7 @@ public class ContainerInfusionTable extends Container {
 		this.pos = pos;
 		this.player = player;
 
-		addSlotToContainer(new SlotCrafting(player, craftInputs, output, 0, 139, 35) {
+		addSlotToContainer(new SlotCraftingMod(player, craftInputs, output, 0, 139, 35) {
 			@Override
 			protected void onCrafting(ItemStack stack) {
 				if (!world.isRemote) {
@@ -250,6 +252,88 @@ public class ContainerInfusionTable extends Container {
 			for (ItemStack stack : stackList) {
 				recipeItemHelper.accountStack(stack);
 			}
+		}
+	}
+
+	public class SlotCraftingMod extends Slot {
+		private final InventoryCrafting craftInv;
+		private final EntityPlayer player;
+		private int amountCrafted;
+
+		public SlotCraftingMod(EntityPlayer pl, InventoryCrafting craftInv, IInventory inv, int slotIndex, int xPos, int yPos) {
+			super(inv, slotIndex, xPos, yPos);
+
+			this.player = pl;
+			this.craftInv = craftInv;
+		}
+
+		@Override
+		public boolean isItemValid(ItemStack stack) {
+			return false;
+		}
+
+		@Override
+		public ItemStack decrStackSize(int amount) {
+			if (getHasStack())
+				amountCrafted += Math.min(amount, getStack().getCount());
+
+			return super.decrStackSize(amount);
+		}
+
+		@Override
+		protected void onCrafting(ItemStack stack, int amount) {
+			amountCrafted += amount;
+
+			onCrafting(stack);
+		}
+
+		@Override
+		protected void onSwapCraft(int amount) {
+			amountCrafted += amount;
+		}
+
+		@Override
+		protected void onCrafting(ItemStack stack) {
+			if (amountCrafted > 0) {
+				stack.onCrafting(player.world, player, amountCrafted);
+				FMLCommonHandler.instance().firePlayerCraftingEvent(player, stack, craftInv);
+			}
+
+			amountCrafted = 0;
+			((InventoryCraftResult)inventory).setRecipeUsed(null);
+		}
+
+		@Override
+		public ItemStack onTake(EntityPlayer player, ItemStack stack) {
+			onCrafting(stack);
+			ForgeHooks.setCraftingPlayer(player);
+			NonNullList<ItemStack> remainingItems = CraftingManager.getRemainingItems(craftInv, player.world);
+			ForgeHooks.setCraftingPlayer(null);
+
+			for (int i = 0; i < remainingItems.size(); ++i) {
+				ItemStack slotStack = this.craftInv.getStackInSlot(i);
+				ItemStack remainingItem = remainingItems.get(i);
+
+				if (!slotStack.isEmpty()) {
+					craftInv.decrStackSize(i, 1);
+					slotStack = craftInv.getStackInSlot(i);
+				}
+
+				if (!remainingItem.isEmpty()) {
+					if (slotStack.isEmpty()) {
+						craftInv.setInventorySlotContents(i, remainingItem);
+					}
+					else if (ItemStack.areItemsEqual(slotStack, remainingItem) && ItemStack.areItemStackTagsEqual(slotStack, remainingItem)) {
+						remainingItem.grow(slotStack.getCount());
+						craftInv.setInventorySlotContents(i, remainingItem);
+					}
+					else if (!player.inventory.addItemStackToInventory(remainingItem)) {
+						player.dropItem(remainingItem, false);
+					}
+				}
+			}
+
+			return stack;
 		}
 	}
 }

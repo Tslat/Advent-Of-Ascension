@@ -23,6 +23,11 @@ public class LunarFountain extends AoAStructure { //StructureSize: 19x13x19
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 5, lunarBricks);
 		addBlock(world, basePos, 3, 0, 6, lunarBricks);
