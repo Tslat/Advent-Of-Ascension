@@ -64,7 +64,7 @@ public class RuneShrine extends Block {
 					if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.RUNATION)
 						runeCount *= 2;
 
-					plData.stats().addXp(Enums.Skills.RUNATION, ((RunePostBlock)post1).getXpGain() * heldStack.getCount(), false);
+					plData.stats().addXp(Enums.Skills.RUNATION, ((RunePostBlock)post1).getXpGain() * heldStack.getCount(), false, false);
 					player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					if (!player.capabilities.isCreativeMode) {
@@ -102,7 +102,7 @@ public class RuneShrine extends Block {
 				player.setHeldItem(hand, ItemStack.EMPTY);
 
 			plData.sendThrottledChatMessage("message.feedback.runeShrine.practice");
-			plData.stats().addXp(Enums.Skills.RUNATION, 2 * count, false);
+			plData.stats().addXp(Enums.Skills.RUNATION, 2 * count, false, false);
 			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			player.inventoryContainer.detectAndSendChanges();
 		}

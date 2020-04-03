@@ -10,6 +10,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.entity.boss.kror.EntityKror;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ModUtil;
+import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.Random;
@@ -29,11 +30,14 @@ public class KrorSpawnTask implements Runnable {
 
 	@Override
 	public void run() {
-		if (player.world != world || player.getDistance(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 10)
+		if (player.world != world || player.getDistance(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 10) {
+			player.sendMessage(StringUtil.getLocale("message.mob.kror.tooFar"));
+
 			return;
+		}
 
 		if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-			PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
+			player.sendMessage(StringUtil.getLocale("message.feedback.spawnBoss.difficultyFail"));
 
 			return;
 		}
@@ -67,12 +71,13 @@ public class KrorSpawnTask implements Runnable {
 				kror.setPosition( kror.posX + rand.nextInt(20) - 10, kror.posY, kror.posZ + rand.nextInt(20) - 10);
 
 				if (i > 64) {
-					PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.noSpace");
+					player.sendMessage(StringUtil.getLocale("message.feedback.spawnBoss.noSpace"));
 
 					return;
 				}
 			}
 
+			StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.kror.spawn", player.getDisplayNameString()), player, 50);
 			world.spawnEntity(kror);
 			kror.setAttackTarget(player);
 		}

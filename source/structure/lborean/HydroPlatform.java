@@ -20,6 +20,11 @@ public class HydroPlatform extends AoAStructure { //StructureSize: 7x13x7
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 1, 0, 1, coralBricks);
 		addBlock(world, basePos, 1, 0, 2, coralBricks);

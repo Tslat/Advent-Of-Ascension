@@ -17,6 +17,11 @@ public class ObservationTower extends AoAStructure { //StructureSize: 16x30x20
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 4, 0, 8, degradedSteel);
 		addBlock(world, basePos, 4, 0, 11, degradedSteel);

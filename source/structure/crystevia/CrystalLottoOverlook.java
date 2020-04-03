@@ -19,11 +19,16 @@ public class CrystalLottoOverlook extends AoAStructure { //StructureSize: 9x7x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		int y = -1;
 
-		while (world.getBlockState(basePos.add(5, y, 5)).getBlock() == Blocks.AIR) {
-			addBlock(world, basePos, 5, y, 5, greenCrystal);
+		while (world.getBlockState(basePos.add(4, y, 4)).getBlock() == Blocks.AIR) {
+			addBlock(world, basePos, 4, y, 4, greenCrystal);
 			y--;
 		}
 

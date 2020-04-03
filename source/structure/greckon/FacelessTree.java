@@ -18,6 +18,11 @@ public class FacelessTree extends AoAStructure { //StructureSize: 9x13x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 3, hauntedLog);
 		addBlock(world, basePos, 3, 0, 4, hauntedLog);

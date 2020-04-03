@@ -54,7 +54,7 @@ public class AdventMainGui extends GuiScreen implements IProgressMeter {
 
 		this.buttonList.add(new AdventMainGuiTabButton(0, 11, 129, StringUtil.getLocaleString("gui.aoamain.tab.player"), ADVENT_WINDOW_TAB.PLAYER));
 		this.buttonList.add(new AdventMainGuiTabButton(1, 11, 199, StringUtil.getLocaleString("gui.aoamain.tab.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
-		this.buttonList.add(new AdventMainGuiTabButton(2, 11, 269, StringUtil.getLocaleString("gui.aoamain.tab.leaderboards"), ADVENT_WINDOW_TAB.LEADERBOARDS));
+		this.buttonList.add(new AdventMainGuiTabButton(2, 11, 269, "", ADVENT_WINDOW_TAB.LEADERBOARDS));
 		this.buttonList.add(new AdventMainGuiTabButton(3, 11, 339, StringUtil.getLocaleString("gui.aoamain.tab.guides"), ADVENT_WINDOW_TAB.GUIDES));
 		this.buttonList.add(new AdventMainGuiTabButton(4, 11, 409, StringUtil.getLocaleString("gui.aoamain.tab.help"), ADVENT_WINDOW_TAB.HELP));
 

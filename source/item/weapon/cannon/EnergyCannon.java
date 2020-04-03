@@ -55,7 +55,7 @@ public class EnergyCannon extends BaseCannon implements AdventWeapon {
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target != null) {
 			if (target instanceof EntityLivingBase)
-				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 6.66) / 100;
+				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 1.50) / 100;
 
 			EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * 0.75f);
 			EntityUtil.dealMagicDamage(bullet, shooter, target, (float)getDamage() * bulletDmgMultiplier * 0.25f, false);

@@ -20,6 +20,21 @@ public class FireborneSword extends BaseSword implements AdventWeapon {
 	}
 
 	@Override
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		boolean flaming = target.isBurning();
+
+		if (!flaming && !target.isImmuneToFire())
+			target.setFire(1);
+
+		boolean success = super.hitEntity(stack, target, attacker);
+
+		if (!flaming && !success)
+			target.setFire(0);
+
+		return success;
+	}
+
+	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
 		target.setFire((int)(3 * attackCooldown));
 	}

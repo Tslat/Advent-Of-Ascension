@@ -80,15 +80,9 @@ public class EntityMuckopede extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity target) {
-		if (super.attackEntityAsMob(target)) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 2, true, true));
-
-			return true;
-		}
-
-		return false;
+	protected void doMeleeEffect(Entity target) {
+		if (target instanceof EntityLivingBase)
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 2, true, true));
 	}
 
 	@Override

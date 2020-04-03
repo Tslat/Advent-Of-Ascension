@@ -20,6 +20,11 @@ public class PowerStation extends AoAStructure { //StructureSize: 7x5x7
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		int y = -1;
 

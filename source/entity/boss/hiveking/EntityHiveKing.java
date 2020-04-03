@@ -36,9 +36,8 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 		super(world, entityWidth, entityHeight);
 
 		if (!world.isRemote) {
-			growthPercent = 100;
-
 			dataManager.set(GROWTH_PERCENT, 100);
+			growthPercent = 100;
 		}
 
 		setSize(entityWidth / (100 / (float)growthPercent), entityHeight / (100 / (float)growthPercent));

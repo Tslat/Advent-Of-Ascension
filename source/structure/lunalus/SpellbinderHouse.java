@@ -30,6 +30,11 @@ public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 8, 0, 6, lunarBricks);
 		addBlock(world, basePos, 8, 0, 7, lunarBricks);

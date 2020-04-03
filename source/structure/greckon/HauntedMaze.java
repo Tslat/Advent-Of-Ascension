@@ -20,6 +20,11 @@ public class HauntedMaze extends AoAStructure { //StructureSize: 25x12x16
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 1, darkBricks);
 		addBlock(world, basePos, 0, 0, 2, darkBricks);

@@ -21,6 +21,11 @@ public class NethengeicPit extends AoAStructure { //StructureSize: 16x10x16
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 1, netherBricks);
 		addBlock(world, basePos, 0, 0, 2, netherBricks);

@@ -25,6 +25,11 @@ public class LunarLottoPlatform extends AoAStructure { //StructureSize: 11x11x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, lunarPillar);
 		addBlock(world, basePos, 0, 0, 10, lunarPillar);

@@ -88,6 +88,9 @@ public class EntityEeo extends AoAMeleeMob {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (super.attackEntityFrom(source, amount)) {
 			if (!world.isRemote && source != DamageSource.OUT_OF_WORLD) {
+				if (!world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox().grow(20), entity -> entity instanceof EntitySpiritGuardian || entity instanceof EntitySpiritProtector).isEmpty())
+					return true;
+
 				if (rand.nextBoolean()) {
 					EntitySpiritGuardian guardian = new EntitySpiritGuardian(this);
 

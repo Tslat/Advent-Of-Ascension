@@ -3394,8 +3394,8 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicBlock("PinkCoral", "pink_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("WhiteCoral", "white_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("YellowCoral", "yellow_coral", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("AquaCottonCandy", "aqua_cotton_candy", Material.WEB), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("PinkCottonCandy", "pink_cotton_candy", Material.WEB), "blocks/generation/misc/");
+		registerBlock(registry, new CottonCandy("AquaCottonCandy", "aqua_cotton_candy"), "blocks/generation/misc/");
+		registerBlock(registry, new CottonCandy("PinkCottonCandy", "pink_cotton_candy"), "blocks/generation/misc/");
 		registerBlock(registry, new BasicDecorationBlock("Crate", "crate", Material.WOOD), "blocks/decoration/misc/");
 		registerBlock(registry, new TranslucentBlock("BlueCrystal", "blue_crystal_block", Material.GLASS, 1.0f, 0f, 0), "blocks/generation/misc/");
 		registerBlock(registry, new TranslucentBlock("GreenCrystal", "green_crystal_block", Material.GLASS, 1.0f, 0f, 0), "blocks/generation/misc/");

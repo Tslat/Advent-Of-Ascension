@@ -19,6 +19,11 @@ public class BaronessArena extends AoAStructure { //StructureSize: 31x29x31
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 12, 0, 13, hellstone);
 		addBlock(world, basePos, 12, 0, 14, hellstone);

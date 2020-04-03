@@ -20,6 +20,11 @@ public class GyroPlatform extends AoAStructure { //StructureSize: 19x9x19
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 0, 0, 0, whitewashBricks);
 		addBlock(world, basePos, 0, 0, 1, whitewashBricks);

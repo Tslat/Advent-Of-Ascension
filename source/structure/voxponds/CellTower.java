@@ -17,6 +17,11 @@ public class CellTower extends AoAStructure { //StructureSize: 11x97x11
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 3, degradedSteel);
 		addBlock(world, basePos, 3, 0, 5, degradedSteel);

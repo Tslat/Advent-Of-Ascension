@@ -19,6 +19,11 @@ public class CreeponianLottoStand extends AoAStructure { //StructureSize: 8x10x8
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 3, 0, 3, creeponiaBricks);
 		addBlock(world, basePos, 3, 0, 4, creeponiaBricks);

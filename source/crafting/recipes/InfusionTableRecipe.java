@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -26,7 +27,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.tslat.aoa3.common.containers.ContainerInfusionTable;
 import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -279,7 +279,7 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 					level = JsonUtils.getInt(enchantmentJson, "level");
 
 				if (!ConfigurationUtil.MainConfig.allowUnsafeInfusion && enchantment.getMaxLevel() < level)
-					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + StringUtil.getLocaleString(enchantment.getName()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
+					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + I18n.translateToLocal(enchantment.getName()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
 
 				for (JsonElement element : JsonUtils.getJsonArray(json, "ingredients")) {
 					ingredients.add(CraftingHelper.getIngredient(element, context));

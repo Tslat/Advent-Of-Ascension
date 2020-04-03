@@ -75,7 +75,7 @@ public class EntityDeadTree extends AoAMeleeMob {
 			return true;
 		}
 
-		if (!world.isRemote && source.getImmediateSource() instanceof EntityPlayer) {
+		if (!world.isRemote && !isDead && source.getImmediateSource() instanceof EntityPlayer) {
 			EntityTreeSpirit treeSpirit = new EntityTreeSpirit(world);
 
 			treeSpirit.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);

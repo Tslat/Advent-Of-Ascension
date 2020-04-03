@@ -184,7 +184,7 @@ public class EntityEvents {
 			}
 
 			if (HunterUtil.isHunterCreature(ev.getEntityLiving())) {
-				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof EntityPlayer) || !HunterUtil.doesPlayerMeetHunterReq(ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource())) {
+				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof EntityPlayer) || (!((EntityPlayer)ev.getSource().getTrueSource()).capabilities.isCreativeMode && !HunterUtil.doesPlayerMeetHunterReq(ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource()))) {
 					ev.getDrops().clear();
 					ev.setCanceled(true);
 				}

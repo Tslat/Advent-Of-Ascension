@@ -39,7 +39,7 @@ public class CreationForge extends Block {
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);
 
-				plData.stats().addXp(Enums.Skills.CREATION, slab.sacrificeXp, false);
+				plData.stats().addXp(Enums.Skills.CREATION, slab.sacrificeXp, false, false);
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.creationForgeUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
 				player.inventoryContainer.detectAndSendChanges();
 			}

@@ -95,14 +95,13 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 					else {
 						int repairCount;
 
-						for (repairCount = 0; repairPortionValue > 0 && repairCount <= repairMaterial.getCount(); repairCount++) {
+						for (repairCount = 0; repairPortionValue > 0 && repairCount < repairMaterial.getCount(); repairCount++) {
 							repairedStack.setItemDamage(repairedStack.getItemDamage() - repairPortionValue);
 
 							repairPortionValue = Math.min(repairedStack.getItemDamage(), repairedStack.getMaxDamage() / 5);
 						}
 
 						totalMaterialCost = repairCount;
-
 						output.setInventorySlotContents(0, repairedStack);
 					}
 				}

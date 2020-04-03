@@ -59,7 +59,7 @@ public class EntityHidingFungi extends AoAMeleeMob {
 		if (isEntityInvulnerable(source))
 			return false;
 
-		if (!world.isRemote && HunterUtil.canAttackTarget(this, source.getTrueSource(), true)) {
+		if (!world.isRemote && !isDead && HunterUtil.canAttackTarget(this, source.getTrueSource(), true)) {
 			EntityLivingFungi livingFungi = new EntityLivingFungi(world);
 
 			livingFungi.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);

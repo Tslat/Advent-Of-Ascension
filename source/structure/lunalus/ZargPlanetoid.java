@@ -22,6 +22,11 @@ public class ZargPlanetoid extends AoAStructure { //StructureSize: 23x20x25
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 6, 0, 9, lunasoleDirt);
 		addBlock(world, basePos, 6, 0, 10, lunasoleDirt);

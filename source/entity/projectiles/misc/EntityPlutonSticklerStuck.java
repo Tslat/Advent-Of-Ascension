@@ -74,8 +74,9 @@ public class EntityPlutonSticklerStuck extends EntityThrowable {
 				for (float z = -0.5f; z <= 0.5f; z += 0.5f) {
 					EntityItem coin = new EntityItem(world, posX, posY, posZ, new ItemStack(ItemRegister.coinCopper));
 
-					coin.setPickupDelay(10);
+					coin.setPickupDelay(120);
 					coin.addVelocity(x, y, z);
+					coin.lifespan = 140;
 					world.spawnEntity(coin);
 				}
 			}

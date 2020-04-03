@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.PacketToastPopup;
 import net.tslat.aoa3.common.packet.leaderboard.PacketLeaderboardStats;
@@ -31,8 +30,8 @@ public class ServerProxy {
 	}
 
 	public void serverStarted() {
-		if (FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer())
-			leaderboardThread = AoALeaderboard.init();
+		/*if (FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer())
+			leaderboardThread = AoALeaderboard.init();*/
 	}
 
 	public void handleLeaderboardData(PacketLeaderboardStats packet) {}

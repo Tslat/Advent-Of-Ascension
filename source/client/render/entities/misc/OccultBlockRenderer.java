@@ -28,12 +28,14 @@ public class OccultBlockRenderer extends RenderEntity {
 
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		GlStateManager.pushMatrix();
-		renderOffsetAABB(entity.getEntityBoundingBox(), x - entity.lastTickPosX, y - entity.lastTickPosY, z - entity.lastTickPosZ, getTeamColor(entity));
-		GlStateManager.popMatrix();
+		if (!entity.isDead) {
+			GlStateManager.pushMatrix();
+			renderOffsetAABB(entity.getEntityBoundingBox(), x - entity.lastTickPosX, y - entity.lastTickPosY, z - entity.lastTickPosZ, getTeamColor(entity));
+			GlStateManager.popMatrix();
 
-		if (!this.renderOutlines)
-			this.renderName(entity, x, y, z);
+			if (!this.renderOutlines)
+				this.renderName(entity, x, y, z);
+		}
 	}
 
 	public void renderOffsetAABB(AxisAlignedBB boundingBox, double x, double y, double z, int colour) {

@@ -19,6 +19,11 @@ public class ChargingPads extends AoAStructure { //StructureSize: 17x10x17
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 5, 0, 8, stripedBrick);
 		addBlock(world, basePos, 6, 0, 8, stripedBrick);

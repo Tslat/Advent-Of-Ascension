@@ -62,8 +62,8 @@ public class EntityPrimordialSpellbinder extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runeWither)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runeCompass)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantments.SILK_TOUCH, 1))));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 10), new ItemStack(ToolRegister.axeEnergistic)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 8), new ItemStack(ToolRegister.pickaxeEnergistic)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 8), new ItemStack(ToolRegister.axeEnergistic)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 10), new ItemStack(ToolRegister.pickaxeEnergistic)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 9), new ItemStack(ToolRegister.shovelEnergistic)));
 	}
 }

@@ -80,6 +80,9 @@ public class EntityTrickster extends AoAMeleeMob {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (!isEntityAlive())
+			return;
+
 		if (invisCooldown > 0)
 			--invisCooldown;
 
@@ -91,7 +94,7 @@ public class EntityTrickster extends AoAMeleeMob {
 				cloneCooldown = 60;
 				invisCooldown = 240;
 
-				addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 60, 2, true, true));
+				addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 60, 0, true, true));
 				world.playSound(null, posX, posY, posZ, SoundsRegister.mobTricksterHide, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 

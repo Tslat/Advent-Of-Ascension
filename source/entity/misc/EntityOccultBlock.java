@@ -20,7 +20,6 @@ public class EntityOccultBlock extends Entity {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-
 		ticksExisted++;
 
 		if (ticksExisted > 150) {

@@ -1640,6 +1640,7 @@ public class ConfigurationUtil {
 	}
 
 	public static void doDebuggingPrintout(Logger logger) {
+		logger.log(Level.INFO, "Printing out current configuration settings...");
 		logger.log(Level.INFO, "AllowUnsafeInfusion: " + MainConfig.allowUnsafeInfusion);
 		logger.log(Level.INFO, "DisableOverworldMobs: " + MainConfig.disableOverworldMobs);
 		logger.log(Level.INFO, "DoVerboseDebugging: " + MainConfig.doVerboseDebugging);
@@ -1652,7 +1653,6 @@ public class ConfigurationUtil {
 		logger.log(Level.INFO, "MainWindowTheme: " + MainConfig.mainWindowTheme.toString());
 		logger.log(Level.INFO, "PersonalCrownPreference: " + MainConfig.personalCrownPreference.toString());
 		logger.log(Level.INFO, "PortalSearchRadius: " + MainConfig.portalSearchRadius);
-		logger.log(Level.INFO, "Printing out current configuration settings...");
 		logger.log(Level.INFO, "ShowDailyMessages: " + MainConfig.showDailyMessages);
 		logger.log(Level.INFO, "ShowPlayerCrowns: " + MainConfig.showPlayerCrowns);
 		logger.log(Level.INFO, "ShowVanityLevels: " + MainConfig.showVanityLevels);

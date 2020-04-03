@@ -5,7 +5,7 @@ import java.util.UUID;
 public interface CapabilityBaseGun {
 	int getNextFireTime();
 
-	int setNextFireTime(int firingDelay);
+	int setNextShotDelay(int firingDelay);
 
 	UUID getLastTarget();
 

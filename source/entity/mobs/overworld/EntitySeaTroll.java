@@ -32,11 +32,6 @@ public class EntitySeaTroll extends AoARangedMob implements SpecialPropertyEntit
 		mobProperties.add(Enums.MobProperties.MAGIC_IMMUNE);
 	}
 
-	public EntitySeaTroll(World world, double posX, double posY, double posZ) {
-		this(world);
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 1.0f);
-	}
-
 	@Override
 	public float getEyeHeight() {
 		return 1.625f;

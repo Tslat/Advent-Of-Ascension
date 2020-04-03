@@ -18,6 +18,11 @@ public class LottoSkyFlower extends AoAStructure { //StructureSize: 8x150x8
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 2, stem);
 		addBlock(world, basePos, 2, 0, 3, stem);

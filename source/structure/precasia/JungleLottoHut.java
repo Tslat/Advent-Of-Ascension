@@ -18,6 +18,11 @@ public class JungleLottoHut extends AoAStructure { //StructureSize: 9x11x9
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 2, cycadeLog);
 		addBlock(world, basePos, 2, 0, 6, cycadeLog);

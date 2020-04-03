@@ -152,20 +152,10 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 
 		if (!world.isRemote) {
 			if (shielded) {
-				if (rand.nextInt(80) == 0) {
-					EntityHydrolon hydrolon = new EntityHydrolon(this);
-
-					world.spawnEntity(hydrolon);
-				}
+				if (rand.nextInt(80) == 0)
+					world.spawnEntity(new EntityHydrolon(this));
 			}
 			else {
-				if (rand.nextInt(130) == 0) {
-					EntityPlayer pl = world.getClosestPlayer(posX, posY, posZ, 20, false);
-
-					if (pl != null && !pl.capabilities.isCreativeMode)
-						setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
-				}
-
 				if (rand.nextInt(120) == 0 && !world.provider.doesWaterVaporize() && world.getBlockState(getPosition()).getMaterial().isReplaceable())
 					world.setBlockState(getPosition(), Blocks.FLOWING_WATER.getDefaultState());
 			}

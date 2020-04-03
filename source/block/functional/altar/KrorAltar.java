@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.scheduling.async.KrorSpawnTask;
-import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -35,7 +34,7 @@ public class KrorAltar extends BossAltarBlock {
 		if (player instanceof EntityPlayerMP)
 			new KrorSpawnTask((EntityPlayerMP)player, blockPos.up()).schedule(1, TimeUnit.SECONDS);
 
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.kror.spawn", player.getDisplayNameString()), blockPos);
+		PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.mob.kror.spawn.start");
 	}
 
 	@Override

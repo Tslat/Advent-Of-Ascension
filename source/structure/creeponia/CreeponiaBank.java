@@ -18,6 +18,11 @@ public class CreeponiaBank extends AoAStructure { //StructureSize: 12x16x12
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 2, 0, 5, whitewashBricks);
 		addBlock(world, basePos, 2, 0, 6, whitewashBricks);

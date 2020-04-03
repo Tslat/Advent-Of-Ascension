@@ -20,6 +20,11 @@ public class CraexxeusTower extends AoAStructure { //StructureSize: 39x45x39
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		for (int x = 0; x < 39; x++) {
 			for (int z = 0; z < 39; z++) {

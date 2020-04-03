@@ -35,6 +35,11 @@ public class GuardianTower extends AoAStructure { //StructureSize: 29x83x29
 	}
 
 	@Override
+	protected boolean replacesBlocks() {
+		return true;
+	}
+
+	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
 		addBlock(world, basePos, 5, 0, 5, whitewashBricks);
 		addBlock(world, basePos, 5, 0, 23, whitewashBricks);

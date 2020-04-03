@@ -4,7 +4,6 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 
@@ -12,16 +11,6 @@ import javax.annotation.Nullable;
 
 public class EntityEliteSkelePig extends AoAMeleeMob {
 	public static final float entityWidth = 0.7f;
-
-	public EntityEliteSkelePig(World world, BlockPos armyBlockPos) {
-		this(world);
-
-		int posX = armyBlockPos.getX() - 3 + rand.nextInt(6);
-		int posZ = armyBlockPos.getZ() - 3 + rand.nextInt(6);
-		int posY = world.getHeight(posX, posZ);
-
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 0);
-	}
 
 	public EntityEliteSkelePig(World world) {
 		super(world, entityWidth, 1.1875f);

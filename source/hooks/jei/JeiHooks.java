@@ -30,15 +30,18 @@ public class JeiHooks implements IModPlugin {
 		AdventOfAscension.logOptionalMessage("Beginning JEI Integration");
 		registerHiddenItems(registry);
 		registry.handleRecipes(InfusionTableRecipe.class, new InfusionRecipeWrapper.Factory(), "aoa3.infusion");
+		registry.handleRecipes(InfusionTableRecipe.class, new InfusionRecipeWrapper.Factory(), "aoa3.imbuing");
 		registry.handleRecipes(UpgradeKitRecipe.class, new UpgradeRecipeWrapper.Factory(), "aoa3.upgradeKits");
 		registry.addRecipeCatalyst(new ItemStack(BlockRegister.infusionTable), "aoa3.infusion");
+		registry.addRecipeCatalyst(new ItemStack(BlockRegister.infusionTable), "aoa3.imbuing");
 		registry.addRecipeCatalyst(new ItemStack(BlockRegister.frameBench), "aoa3.frameBench");
 		registry.addRecipeCatalyst(new ItemStack(BlockRegister.whitewashingTable), "aoa3.whitewashing");
 		registry.addRecipeCatalyst(new ItemStack(BlockRegister.divineStation), "aoa3.upgradeKits");
 		registry.addRecipes(compileFrameBenchRecipes(), "aoa3.frameBench");
 		registry.addRecipes(compileWhitewashingRecipes(), "aoa3.whitewashing");
-		registry.addRecipes(compileInfusionRecipes(), "aoa3.infusion");
 		registry.addRecipes(compileUpgradeKitRecipes(), "aoa3.upgradeKits");
+
+		compileInfusionRecipes(registry);
 	}
 
 	private void registerHiddenItems(IModRegistry registry) {
@@ -108,6 +111,7 @@ public class JeiHooks implements IModPlugin {
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
 		registry.addRecipeCategories(new InfusionRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+		registry.addRecipeCategories(new ImbuingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
 		registry.addRecipeCategories(new FrameRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
 		registry.addRecipeCategories(new WhitewashingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
 		registry.addRecipeCategories(new UpgradeRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
@@ -124,15 +128,23 @@ public class JeiHooks implements IModPlugin {
 		return upgradeKitRecipes;
 	}
 
-	private ArrayList<InfusionTableRecipe> compileInfusionRecipes() {
-		ArrayList<InfusionTableRecipe> upgradeKitRecipes = new ArrayList<InfusionTableRecipe>();
+	private void compileInfusionRecipes(IModRegistry registry) {
+		ArrayList<InfusionTableRecipe> infusionRecipes = new ArrayList<InfusionTableRecipe>();
+		ArrayList<InfusionTableRecipe> imbuingRecipes = new ArrayList<InfusionTableRecipe>();
 
 		for (IRecipe recipe : ForgeRegistries.RECIPES.getValuesCollection()) {
-			if (recipe instanceof InfusionTableRecipe)
-				upgradeKitRecipes.add((InfusionTableRecipe)recipe);
+			if (recipe instanceof InfusionTableRecipe) {
+				if (((InfusionTableRecipe)recipe).isEnchanting()) {
+					imbuingRecipes.add((InfusionTableRecipe)recipe);
+				}
+				else {
+					infusionRecipes.add((InfusionTableRecipe)recipe);
+				}
+			}
 		}
 
-		return upgradeKitRecipes;
+		registry.addRecipes(infusionRecipes, "aoa3.infusion");
+		registry.addRecipes(imbuingRecipes, "aoa3.imbuing");
 	}
 
 	private ArrayList<FrameRecipeWrapper> compileFrameBenchRecipes() {

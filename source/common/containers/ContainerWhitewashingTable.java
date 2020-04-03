@@ -45,15 +45,16 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 			}
 
 			@Override
-			public boolean canTakeStack(EntityPlayer playerIn) {
+			public boolean canTakeStack(EntityPlayer player) {
 				return getHasStack();
 			}
 
 			@Override
-			public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+			public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 				inputs.getStackInSlot(0).shrink(1);
 				inputs.getStackInSlot(1).shrink(1);
 
+				onCraftMatrixChanged(inputs);
 				return stack;
 			}
 		};
@@ -72,7 +73,7 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 		ItemStack brickStack = inputs.getStackInSlot(0);
 		ItemStack powderStack = inputs.getStackInSlot(1);
 
-		if (!brickStack.isEmpty() && !powderStack.isEmpty() && brickStack.getItem() == ItemBlock.getItemFromBlock(Blocks.OBSIDIAN)) {
+		if (!powderStack.isEmpty() && brickStack.getItem() == ItemBlock.getItemFromBlock(Blocks.OBSIDIAN)) {
 			if (powderStack.getItem() == ItemRegister.darklyPowder) {
 				output.setInventorySlotContents(0, new ItemStack(BlockRegister.bricksDarkwash, 2));
 			}
@@ -82,6 +83,9 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 			else {
 				output.setInventorySlotContents(0, ItemStack.EMPTY);
 			}
+		}
+		else {
+			output.setInventorySlotContents(0, ItemStack.EMPTY);
 		}
 	}
 

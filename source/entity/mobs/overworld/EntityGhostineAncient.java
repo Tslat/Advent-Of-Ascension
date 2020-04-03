@@ -11,7 +11,6 @@ import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
