@@ -18,7 +18,7 @@ public class AdventGunCapability implements CapabilityBaseGun {
 	}
 
 	@Override
-	public int setNextFireTime(int firingDelay) {
+	public int setNextShotDelay(int firingDelay) {
 		return nextFireTime = GlobalEvents.tick + firingDelay;
 	}
 

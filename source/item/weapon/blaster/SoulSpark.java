@@ -48,7 +48,7 @@ public class SoulSpark extends BaseBlaster {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (!EntityUtil.isSpecExempt(target, shooter)) {
+		if (!EntityUtil.isSpecExempt(target, shooter) && !EntityUtil.isTypeImmune(target, Enums.MobProperties.BLASTER_IMMUNE)) {
 			if (shooter instanceof EntityPlayerMP && !((EntityPlayerMP)shooter).capabilities.isCreativeMode) {
 				EntityPlayer player = (EntityPlayer)shooter;
 				PlayerDataManager.PlayerStats stats = PlayerUtil.getAdventPlayer(player).stats();
