@@ -101,6 +101,9 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 		if (hand != getGunHand(stack))
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
+		if (player.isHandActive() && player.isActiveItemStackBlocking())
+			return ActionResult.newResult(EnumActionResult.PASS, stack);
+
 		if (hand == EnumHand.OFF_HAND && player.isSneaking()) {
 			Item mainItem = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
 
@@ -117,7 +120,6 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
 		if (cap.getNextFireTime() <= GlobalEvents.tick) {
-			player.setActiveHand(hand);
 			BaseBullet ammo = null;
 
 			if (!world.isRemote)
@@ -127,7 +129,7 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 				world.spawnEntity(ammo);
 				player.addStat(StatList.getObjectUseStats(this));
 				stack.damageItem(1, player);
-				cap.setNextFireTime(getFiringDelay());
+				cap.setNextShotDelay(getFiringDelay());
 
 				if (getFiringSound() != null)
 					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
@@ -139,17 +141,17 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 					PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
 				}
 
-				return ActionResult.newResult(EnumActionResult.PASS, stack);
+				return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 			}
 
 			if (player instanceof EntityPlayerMP)
 				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 		}
 		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextFireTime(0);
+			cap.setNextShotDelay(0);
 		}
 
-		return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
 
 	public EnumHand getGunHand(ItemStack stack) {

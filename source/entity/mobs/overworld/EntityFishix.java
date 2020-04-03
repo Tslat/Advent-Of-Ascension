@@ -78,7 +78,7 @@ public class EntityFishix extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

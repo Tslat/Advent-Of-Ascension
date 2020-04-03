@@ -86,7 +86,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 				stack.damageItem(1, player);
-				cap.setNextFireTime(getFiringDelay());
+				cap.setNextShotDelay(getFiringDelay());
 
 				if (player instanceof EntityPlayerMP) {
 					int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.control, stack);
@@ -102,7 +102,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 		}
 		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextFireTime(0);
+			cap.setNextShotDelay(0);
 		}
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);

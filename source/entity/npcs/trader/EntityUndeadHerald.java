@@ -38,6 +38,11 @@ public class EntityUndeadHerald extends AoATrader {
 	}
 
 	@Override
+	protected int getSpawnChanceFactor() {
+		return 100;
+	}
+
+	@Override
 	protected Enums.ModGuis getTraderGui() {
 		return Enums.ModGuis.TRADER_UNDEAD_HERALD;
 	}
@@ -49,7 +54,7 @@ public class EntityUndeadHerald extends AoATrader {
 
 	@Override
 	protected boolean canDespawn() {
-		return false;
+		return ticksExisted > 72000;
 	}
 
 	@Override

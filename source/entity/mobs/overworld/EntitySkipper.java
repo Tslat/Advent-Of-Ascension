@@ -67,7 +67,7 @@ public class EntitySkipper extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.32857;
+		return 0.329;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class EntitySkipper extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

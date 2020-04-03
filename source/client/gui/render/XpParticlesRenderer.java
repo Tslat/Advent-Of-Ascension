@@ -40,7 +40,9 @@ public class XpParticlesRenderer {
 				if (lastParticleReceived.levelUp) {
 					CopyOnWriteArrayList<XPParticle> array = particlesMap.get(skill);
 
-					array.remove(array.size() - 1);
+					if (array.size() > 0)
+						array.remove(array.size() - 1);
+
 					array.add(0, lastParticleReceived);
 				}
 

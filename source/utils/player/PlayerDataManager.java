@@ -120,10 +120,9 @@ public final class PlayerDataManager {
 			PacketUtil.network.sendTo(new PacketResourceData(stats.resources.get(Enums.Resources.CREATION), stats.resources.get(Enums.Resources.ENERGY), stats.resources.get(Enums.Resources.RAGE), stats.resources.get(Enums.Resources.SOUL), isRevengeActive()), (EntityPlayerMP)player);
 	}
 
-	public void sendThrottledChatMessage(String langKey, Object... args) {
+	public void sendThrottledChatMessage(String langKey, @Nonnull Object... args) {
 		Style style = null;
-		Object[] arguments = new Object[args.length];
-		int i = 0;
+		int styleArgs = 0;
 
 		for (Object arg : args) {
 			if (arg.getClass() == TextFormatting.class) {
@@ -152,8 +151,16 @@ public final class PlayerDataManager {
 						style.setColor((TextFormatting)arg);
 						break;
 				}
+
+				styleArgs++;
 			}
-			else {
+		}
+
+		Object[] arguments = new Object[args.length - styleArgs];
+		int i = 0;
+
+		for (Object arg : args) {
+			if (arg.getClass() != TextFormatting.class) {
 				arguments[i] = arg;
 				i++;
 			}

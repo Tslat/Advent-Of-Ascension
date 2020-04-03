@@ -29,21 +29,23 @@ public class ErebonScythe extends BaseGreatblade implements AdventWeapon, LongRe
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = (float)dmg / dmgDealt;
+		if (!attacker.world.isRemote) {
+			float damagePercent = dmgDealt / (float)dmg;
 
-		for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(target.posX, target.getEntityBoundingBox().minY, target.posZ, target.posX - 2, target.getEntityBoundingBox().minY + 1, target.posZ + 2), PredicateUtil.IS_HOSTILE_MOB)) {
-			entity.setFire((int)(5 * damagePercent));
-		}
+			for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(target.posX, target.getEntityBoundingBox().minY, target.posZ, target.posX - 2, target.getEntityBoundingBox().minY + 1, target.posZ + 2), PredicateUtil.IS_HOSTILE_MOB)) {
+				entity.setFire((int)(5 * damagePercent));
+			}
 
-		PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
-		float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
+			PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
+			float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
 
-		if (soulAmount > 0) {
-			if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
-				return;
+			if (soulAmount > 0) {
+				if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
+					return;
 
-			if (attacker instanceof EntityPlayerMP)
-				PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+				if (attacker instanceof EntityPlayerMP)
+					PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+			}
 		}
 	}
 
