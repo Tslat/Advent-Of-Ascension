@@ -13,8 +13,9 @@ import net.tslat.aoa3.block.BasicFluidBlock;
 import net.tslat.aoa3.common.registration.FluidsRegister;
 
 public class CandiedWaterBlock extends BasicFluidBlock {
+	
 	public CandiedWaterBlock() {
-		super("CandiedWater", FluidsRegister.candiedWater, Material.WATER, MapColor.PINK);
+		super("CandiedWater", this, Material.WATER, MapColor.PINK);
 	}
 
 	@Override
