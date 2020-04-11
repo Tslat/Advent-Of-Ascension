@@ -1512,9 +1512,7 @@ public final class BlockRegister {
 	@GameRegistry.ObjectHolder("yellow_shroom")
 	public static final BasicNonCubeBlock shroomYellow = null;
 	@GameRegistry.ObjectHolder("vox_log")
-	public static final BasicNonCubeBlock voxLog1 = null;
-	@GameRegistry.ObjectHolder("vox_log2")
-	public static final BasicNonCubeBlock voxLog2 = null;
+	public static final BasicNonCubeBlock voxLog = null;
 	@GameRegistry.ObjectHolder("boney_block")
 	public static final BoneyBlock boneyBlock = null;
 	@GameRegistry.ObjectHolder("ancient_cactus")
@@ -3489,7 +3487,6 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicNonCubeBlock("VoxShroom", "vox_shroom", Material.GOURD, 2.0f, 0.5f), "blocks/generation/misc/");
 		registerBlock(registry, new BasicNonCubeBlock("YellowShroom", "yellow_shroom", Material.GOURD, 2.0f, 0.5f), "blocks/generation/misc/");
 		registerBlock(registry, new DirectionalBlock("VoxLog", "vox_log", Material.WOOD, 1.2f, 0.5f), "blocks/generation/misc/");
-		registerBlock(registry, new DirectionalBlock("VoxLog2", "vox_log2", Material.WOOD, 1.2f, 0.5f), "blocks/generation/misc/");
 		registerBlock(registry, new BoneyBlock(), "blocks/generation/misc/");
 		registerBlock(registry, new CactusBlock("AncientCactus", "ancient_cactus"), "blocks/generation/plants/");
 		registerBlock(registry, new CarvedRunicPortalBlock("CarvedRuneOfDirection", "carved_rune_direction"), "blocks/generation/misc/");
@@ -4123,26 +4120,33 @@ public final class BlockRegister {
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Block> ev) {
 		for (RegistryEvent.MissingMappings.Mapping<Block> map : ev.getAllMappings()) {
-			if (map.key.equals(new ResourceLocation("aoa3:blue_crystal_ore"))) {
-				map.remap(oreBlueGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:green_crystal_ore"))) {
-				map.remap(oreGreenGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:red_crystal_ore"))) {
-				map.remap(oreRedGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:purple_crystal_ore"))) {
-				map.remap(orePurpleGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:white_crystal_ore"))) {
-				map.remap(oreWhiteGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:yellow_crystal_ore"))) {
-				map.remap(oreWhiteGemstone);
-			}
-			else if (map.key.equals(new ResourceLocation("aoa3:magical_enhancer"))) {
-				map.remap(enhancerMagic);
+			switch (map.key.toString()) {
+				case "aoa3:blue_crystal_ore":
+					map.remap(oreBlueGemstone);
+					break;
+				case "aoa3:green_crystal_ore":
+					map.remap(oreGreenGemstone);
+					break;
+				case "aoa3:red_crystal_ore":
+					map.remap(oreRedGemstone);
+					break;
+				case "aoa3:purple_crystal_ore":
+					map.remap(orePurpleGemstone);
+					break;
+				case "aoa3:white_crystal_ore":
+					map.remap(oreWhiteGemstone);
+					break;
+				case "aoa3:yellow_crystal_ore":
+					map.remap(oreYellowGemstone);
+					break;
+				case "aoa3:magical_enhancer":
+					map.remap(enhancerMagic);
+					break;
+				case "aoa3:vox_log2":
+					map.remap(voxLog);
+					break;
+				default:
+					break;
 			}
 		}
 	}

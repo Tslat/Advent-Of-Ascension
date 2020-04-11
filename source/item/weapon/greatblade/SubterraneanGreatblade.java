@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class SubterraneanGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class SubterraneanGreatblade extends BaseGreatblade {
 	public SubterraneanGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("SubterraneanGreatblade");

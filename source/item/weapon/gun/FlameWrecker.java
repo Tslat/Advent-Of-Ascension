@@ -12,7 +12,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class FlameWrecker extends BaseGun implements AdventWeapon {
+public class FlameWrecker extends BaseGun {
 	public FlameWrecker(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("FlameWrecker");

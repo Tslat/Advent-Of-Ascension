@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class NethengeicSword extends BaseSword implements AdventWeapon {
+public class NethengeicSword extends BaseSword {
 	public NethengeicSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("NethengeicSword");

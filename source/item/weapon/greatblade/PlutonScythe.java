@@ -23,7 +23,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class PlutonScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class PlutonScythe extends BaseGreatblade {
 	public PlutonScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("PlutonScythe");

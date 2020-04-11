@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class NoxiousGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class NoxiousGreatblade extends BaseGreatblade {
 	public NoxiousGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("NoxiousGreatblade");

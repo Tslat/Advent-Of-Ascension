@@ -20,7 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VileVanquisher extends BaseGun implements AdventWeapon {
+public class VileVanquisher extends BaseGun {
 	public VileVanquisher(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("VileVanquisher");

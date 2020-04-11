@@ -85,7 +85,7 @@ public class EntityReaperTwins extends AoAMeleeMob {
 	public boolean attackEntityAsMob(Entity target) {
 		if (super.attackEntityAsMob(target)) {
 			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 7, true, true));
+				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 0, true, true));
 
 			return true;
 		}

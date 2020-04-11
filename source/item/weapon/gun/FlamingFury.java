@@ -24,7 +24,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class FlamingFury extends BaseGun implements AdventWeapon {
+public class FlamingFury extends BaseGun {
 	public FlamingFury(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("FlamingFury");

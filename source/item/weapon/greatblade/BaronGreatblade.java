@@ -17,7 +17,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class BaronGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class BaronGreatblade extends BaseGreatblade {
 	public BaronGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("BaronGreatblade");

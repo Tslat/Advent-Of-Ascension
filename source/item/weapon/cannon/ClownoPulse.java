@@ -24,7 +24,7 @@ import net.tslat.aoa3.utils.PredicateUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ClownoPulse extends BaseCannon implements AdventWeapon {
+public class ClownoPulse extends BaseCannon {
 	double dmg;
 	int firingDelay;
 

@@ -94,16 +94,6 @@ public class EntityLeafyGiant extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		Entity target = getAttackTarget();
-
-		if (target != null && target.getDistance(this) < 20)
-			this.addVelocity(Math.signum(target.posX - posX) * 0.029, 0.0, Math.signum(target.posZ - posZ) * 0.029);
-	}
-
-	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
 			double resist = 1;

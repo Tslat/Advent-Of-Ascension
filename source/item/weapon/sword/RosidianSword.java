@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class RosidianSword extends BaseSword implements AdventWeapon {
+public class RosidianSword extends BaseSword {
 	public RosidianSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("RosidianSword");

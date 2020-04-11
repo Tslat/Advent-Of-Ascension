@@ -16,7 +16,7 @@ import java.util.List;
 
 import static net.tslat.aoa3.library.Enums.ItemDescriptionType.POSITIVE;
 
-public class ShroomicGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class ShroomicGreatblade extends BaseGreatblade {
 	public ShroomicGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("ShroomicGreatblade");

@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class VoxBranch1 extends AoAStructure { //StructureSize: 1x1x4
-	private static final IBlockState voxLog = BlockRegister.voxLog2.getDefaultState();
+	private static final IBlockState voxLog = BlockRegister.voxLog.getDefaultState();
 
 	public VoxBranch1() {
 		super("VoxBranch1");

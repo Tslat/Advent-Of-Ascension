@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -63,13 +62,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 2:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) >= 100) {
-						if (world.getEntitiesWithinAABB(EntityKlobber.class, new AxisAlignedBB(52, 16, -13, 82, 26, 17)).size() == 0) {
-							EntityKlobber klobber = new EntityKlobber(world);
+						EntityKlobber klobber = new EntityKlobber(world);
 
-							klobber.setPositionAndUpdate(69, 21, 4);
-							world.spawnEntity(klobber);
-						}
-
+						klobber.setPositionAndUpdate(69, 21, 4);
+						world.spawnEntity(klobber);
 						player.setPositionAndUpdate(67, 21, 2);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.klobberStart", TextFormatting.DARK_AQUA));
 
@@ -86,13 +82,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 4:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) >= 100) {
-						if (world.getEntitiesWithinAABB(EntityProshield.class, new AxisAlignedBB(107, 16, -13, 137, 26, 17)).size() == 0) {
-							EntityProshield proshield = new EntityProshield(world);
+						EntityProshield proshield = new EntityProshield(world);
 
-							proshield.setPositionAndUpdate(123, 21, 6);
-							world.spawnEntity(proshield);
-						}
-
+						proshield.setPositionAndUpdate(123, 21, 6);
+						world.spawnEntity(proshield);
 						player.setPositionAndUpdate(122, 21, 2);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.proshieldStart", TextFormatting.DARK_AQUA));
 
@@ -110,13 +103,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 6:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) == 200) {
-						if (world.getEntitiesWithinAABB(EntityMirage.class, new AxisAlignedBB(153, 19, -8, 183, 29, 22)).size() == 0) {
-							EntityMirage mirage = new EntityMirage(world);
+						EntityMirage mirage = new EntityMirage(world);
 
-							mirage.setPositionAndUpdate(177, 24, -2);
-							world.spawnEntity(mirage);
-						}
-
+						mirage.setPositionAndUpdate(177, 24, -2);
+						world.spawnEntity(mirage);
 						player.setPositionAndUpdate(168, 24, 7);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.mirageStart", TextFormatting.DARK_AQUA));
 
@@ -133,13 +123,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 8:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) == 200) {
-						if (world.getEntitiesWithinAABB(EntityFlash.class, new AxisAlignedBB(218, 16, -12, 248, 26, 18)).size() == 0) {
-							EntityFlash flash = new EntityFlash(world);
+						EntityFlash flash = new EntityFlash(world);
 
-							flash.setPositionAndUpdate(235, 22, 10);
-							world.spawnEntity(flash);
-						}
-
+						flash.setPositionAndUpdate(235, 22, 10);
+						world.spawnEntity(flash);
 						player.setPositionAndUpdate(233, 21, 3);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.flashStart", TextFormatting.DARK_AQUA));
 

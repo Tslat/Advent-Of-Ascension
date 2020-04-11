@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
-public class VulcammerMaul extends BaseMaul implements AdventWeapon {
+public class VulcammerMaul extends BaseMaul {
 	public VulcammerMaul(Float dmg, Double speed, double knockback, int durability) {
 		super(dmg, speed, knockback, durability);
 		setTranslationKey("VulcammerMaul");

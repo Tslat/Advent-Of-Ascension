@@ -23,7 +23,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ChilliChugger extends BaseGun implements AdventWeapon {
+public class ChilliChugger extends BaseGun {
 	double dmg;
 	int firingDelay;
 

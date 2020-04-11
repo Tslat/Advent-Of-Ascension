@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class BigTop extends BaseGun implements AdventWeapon {
+public class BigTop extends BaseGun {
 	public BigTop(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BigTop");

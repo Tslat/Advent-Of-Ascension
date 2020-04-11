@@ -1,12 +1,8 @@
 package net.tslat.aoa3.entity.mobs.overworld.soulscurry;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -22,8 +18,6 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
-
-import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
 
 public class EntityGhostlyCyclops extends AoAMeleeMob implements SpecialPropertyEntity {
 	public static final float entityWidth = 0.6f;
@@ -85,20 +79,8 @@ public class EntityGhostlyCyclops extends AoAMeleeMob implements SpecialProperty
 
 	@Override
 	protected void doMeleeEffect(Entity target) {
-		if (target instanceof EntityLivingBase) {
-			double resist = 1;
-			IAttributeInstance attrib = ((EntityLivingBase)target).getEntityAttribute(KNOCKBACK_RESISTANCE);
-
-			if (attrib != null)
-				resist -= attrib.getAttributeValue();
-
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 1, true, true));
-			target.addVelocity(motionX * 10.5 * resist, 0.5 * resist, motionZ * 10.5 * resist);
-			target.velocityChanged = true;
-
-			if (target instanceof EntityPlayer)
-				PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 15f, true);
-		}
+		if (target instanceof EntityPlayer)
+			PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 10f, true);
 	}
 
 	@Override

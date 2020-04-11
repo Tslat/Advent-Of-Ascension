@@ -83,7 +83,7 @@ public class EntityGhostlyNightReaper extends AoAMeleeMob implements SpecialProp
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 7, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 0, true, true));
 
 			if (target instanceof EntityPlayer)
 				PlayerUtil.consumeResource((EntityPlayer)target, Enums.Resources.SOUL, 20f, true);

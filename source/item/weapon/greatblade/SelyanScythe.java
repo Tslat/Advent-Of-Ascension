@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class SelyanScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class SelyanScythe extends BaseGreatblade {
 	public SelyanScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("SelyanScythe");

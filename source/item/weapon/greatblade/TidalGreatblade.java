@@ -9,14 +9,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.projectiles.misc.EntityTidalWave;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class TidalGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class TidalGreatblade extends BaseGreatblade {
 	public TidalGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("TidalGreatblade");

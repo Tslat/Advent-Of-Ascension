@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
+public class DischargeShotgun extends BaseShotgun {
 	private int firingDelay;
 
 	public DischargeShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {

@@ -7,7 +7,7 @@ import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
-public class Monster extends BaseSniper implements AdventWeapon {
+public class Monster extends BaseSniper {
 	public Monster(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Monster");

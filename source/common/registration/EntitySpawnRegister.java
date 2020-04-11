@@ -74,6 +74,8 @@ public class EntitySpawnRegister {
     public static void registerEntitySpawns() {
         AdventOfAscension.logOptionalMessage("Registering entity spawns");
 
+        Biome[] netherBiomes = biomes(BiomeDictionary.Type.NETHER);
+
         if (!ConfigurationUtil.MainConfig.disableOverworldMobs) {
             final BiomeDictionary.Type[] emptyTypeList = new BiomeDictionary.Type[0];
 
@@ -207,17 +209,17 @@ public class EntitySpawnRegister {
             EntityRegistry.addSpawn(EntityDeadTree.class, 10, 0, 1, EnumCreatureType.MONSTER, Biomes.FOREST, Biomes.FOREST_HILLS);
         }
 
-        EntityRegistry.addSpawn(EntityWitheringLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityEmbrake.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityFakePigman.class, 80, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityFlamewalker.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityHellspot.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityInfernal.class, 10, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityWitherWizard.class, 55, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntitySkeletalCowman.class, 45, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityHellcat.class, 50, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityLittleBam.class, 35, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
+        EntityRegistry.addSpawn(EntityWitheringLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, netherBiomes);
+        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, netherBiomes);
+        EntityRegistry.addSpawn(EntityEmbrake.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityFakePigman.class, 80, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityFlamewalker.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityHellspot.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityInfernal.class, 10, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityWitherWizard.class, 55, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntitySkeletalCowman.class, 45, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityHellcat.class, 50, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
+        EntityRegistry.addSpawn(EntityLittleBam.class, 35, 0, 1, EnumCreatureType.MONSTER, netherBiomes);
 
         EntityRegistry.addSpawn(EntityBloomingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeMysterium);
         EntityRegistry.addSpawn(EntityRunationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeMysterium);
@@ -426,6 +428,16 @@ public class EntitySpawnRegister {
         EntityRegistry.addSpawn(EntityStimulosus.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
         EntityRegistry.addSpawn(EntitySoulvyre.class, 5, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
         EntityRegistry.addSpawn(EntityOmnilight.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
+    }
+
+    private static Biome[] biomes(BiomeDictionary.Type... biomeTypes) {
+        List<Biome> matchedBiomes = new ArrayList<Biome>();
+
+        for (BiomeDictionary.Type type : biomeTypes) {
+            matchedBiomes.addAll(BiomeDictionary.getBiomes(type));
+        }
+
+        return matchedBiomes.toArray(new Biome[0]);
     }
 
     private static Biome[] extractAllBiomesMatching(Biome[] preFilledList, BiomeDictionary.Type[] matchingTypes, BiomeDictionary.Type[] blacklistTypes) {

@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class LuxonScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class LuxonScythe extends BaseGreatblade {
 	public LuxonScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("LuxonScythe");

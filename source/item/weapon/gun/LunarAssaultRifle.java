@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LunarAssaultRifle extends BaseGun implements AdventWeapon {
+public class LunarAssaultRifle extends BaseGun {
 	private final double baseDmg;
 	private final double maxDmg;
 	private final int firingDelay;

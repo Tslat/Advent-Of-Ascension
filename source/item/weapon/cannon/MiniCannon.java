@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class MiniCannon extends BaseCannon implements AdventWeapon {
+public class MiniCannon extends BaseCannon {
 	public MiniCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("MiniCannon");

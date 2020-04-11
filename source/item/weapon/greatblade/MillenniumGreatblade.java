@@ -20,7 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class MillenniumGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class MillenniumGreatblade extends BaseGreatblade {
 	private final double baseDmg;
 	private final double maxDmg;
 

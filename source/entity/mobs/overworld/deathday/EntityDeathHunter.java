@@ -1,16 +1,13 @@
 package net.tslat.aoa3.entity.mobs.overworld.deathday;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.PredicateUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

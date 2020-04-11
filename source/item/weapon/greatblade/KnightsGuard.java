@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class KnightsGuard extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class KnightsGuard extends BaseGreatblade {
 	public KnightsGuard(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("KnightsGuard");

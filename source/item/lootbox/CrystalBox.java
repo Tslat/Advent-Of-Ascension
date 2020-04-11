@@ -35,6 +35,8 @@ public class CrystalBox extends Item {
 
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
+
+			player.inventoryContainer.detectAndSendChanges();
 		}
 
 		return EnumActionResult.PASS;

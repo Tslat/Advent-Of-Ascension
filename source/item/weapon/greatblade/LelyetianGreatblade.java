@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LelyetianGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class LelyetianGreatblade extends BaseGreatblade {
 	public LelyetianGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("LelyetianGreatblade");

@@ -22,7 +22,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BoulderBomber extends BaseCannon implements AdventWeapon {
+public class BoulderBomber extends BaseCannon {
 	public BoulderBomber(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BoulderBomber");

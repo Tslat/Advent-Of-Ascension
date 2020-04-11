@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Decimator extends BaseSniper implements AdventWeapon {
+public class Decimator extends BaseSniper {
 	public Decimator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Decimator");

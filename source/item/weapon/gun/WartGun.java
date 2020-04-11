@@ -24,7 +24,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class WartGun extends BaseGun implements AdventWeapon {
+public class WartGun extends BaseGun {
 	double dmg;
 	int firingDelay;
 

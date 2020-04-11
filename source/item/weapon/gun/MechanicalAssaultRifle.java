@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class MechanicalAssaultRifle extends BaseGun implements AdventWeapon {
+public class MechanicalAssaultRifle extends BaseGun {
 	public MechanicalAssaultRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("MechanicalAssaultRifle");

@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class VoxCannon extends BaseCannon implements AdventWeapon {
+public class VoxCannon extends BaseCannon {
 	double dmg;
 	int firingDelay;
 

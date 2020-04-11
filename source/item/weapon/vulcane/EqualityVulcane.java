@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class EqualityVulcane extends BaseVulcane implements AdventWeapon {
+public class EqualityVulcane extends BaseVulcane {
 	private final double dmg;
 
 	public EqualityVulcane(double dmg, int durability) {

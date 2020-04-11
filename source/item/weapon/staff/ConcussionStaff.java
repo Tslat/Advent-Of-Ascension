@@ -2,7 +2,6 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -16,6 +15,7 @@ import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.PredicateUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -37,7 +37,7 @@ public class ConcussionStaff extends BaseStaff {
 
 	@Override
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityMob> list = caster.world.getEntitiesWithinAABB(EntityMob.class, caster.getEntityBoundingBox().grow(8));
+		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(8), PredicateUtil.IS_HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -53,7 +53,7 @@ public class ConcussionStaff extends BaseStaff {
 
 	@Override
 	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (EntityMob e : (List<EntityMob>)args) {
+		for (EntityLivingBase e : (List<EntityLivingBase>)args) {
 			EntityUtil.pushEntityAway(caster, e, 3f);
 			WorldUtil.createExplosion(caster, e.world, e.posX, e.posY + e.height + 0.5, e.posZ, 2.3f);
 			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 25, 10, true, true));

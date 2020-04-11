@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class WitherVulcane extends BaseVulcane implements AdventWeapon {
+public class WitherVulcane extends BaseVulcane {
 	public WitherVulcane(double dmg, int durability) {
 		super(dmg, durability);
 		setTranslationKey("WitherVulcane");

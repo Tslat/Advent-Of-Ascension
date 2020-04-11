@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class RockPickSword extends BaseSword implements AdventWeapon {
+public class RockPickSword extends BaseSword {
 	final ToolMaterial material;
 
 	public RockPickSword(final ToolMaterial material, final double speed) {

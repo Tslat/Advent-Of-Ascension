@@ -22,7 +22,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class NethenetteRifle extends BaseGun implements AdventWeapon {
+public class NethenetteRifle extends BaseGun {
 	public NethenetteRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("NethenetteRifle");

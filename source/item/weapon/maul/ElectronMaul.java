@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class ElectronMaul extends BaseMaul implements AdventWeapon {
+public class ElectronMaul extends BaseMaul {
 	public ElectronMaul(Float dmg, Double speed, double knockback, int durability) {
 		super(dmg, speed, knockback, durability);
 		setTranslationKey("ElectronMaul");

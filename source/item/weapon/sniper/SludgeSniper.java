@@ -19,7 +19,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SludgeSniper extends BaseSniper implements AdventWeapon {
+public class SludgeSniper extends BaseSniper {
 	public SludgeSniper(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("SludgeSniper");

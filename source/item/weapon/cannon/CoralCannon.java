@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CoralCannon extends BaseCannon implements AdventWeapon {
+public class CoralCannon extends BaseCannon {
 	public CoralCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("CoralCannon");

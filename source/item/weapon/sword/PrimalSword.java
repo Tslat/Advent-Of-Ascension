@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PrimalSword extends BaseSword implements AdventWeapon {
+public class PrimalSword extends BaseSword {
 	public PrimalSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("PrimalSword");

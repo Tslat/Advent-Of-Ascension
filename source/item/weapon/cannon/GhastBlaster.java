@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GhastBlaster extends BaseCannon implements AdventWeapon {
+public class GhastBlaster extends BaseCannon {
 	public GhastBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("GhastBlaster");

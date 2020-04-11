@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class FloroRifle extends BaseGun implements AdventWeapon {
+public class FloroRifle extends BaseGun {
 	private final double baseDmg;
 	private double maxDmg = 50;
 	private int firingDelay;

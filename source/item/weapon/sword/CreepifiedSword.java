@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class CreepifiedSword extends BaseSword implements AdventWeapon {
+public class CreepifiedSword extends BaseSword {
 	public CreepifiedSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("CreepifiedSword");

@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Crystaneer extends BaseSniper implements AdventWeapon {
+public class Crystaneer extends BaseSniper {
 	private static final ArrayList<ItemStack> gemDrops = new ArrayList<ItemStack>(5);
 	private static boolean populated = false;
 

@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class MoonMaker extends BaseSniper implements AdventWeapon {
+public class MoonMaker extends BaseSniper {
 	public MoonMaker(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("MoonMaker");

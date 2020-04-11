@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EchoGull extends BaseGun implements AdventWeapon {
+public class EchoGull extends BaseGun {
 	public EchoGull(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("EchoGull");

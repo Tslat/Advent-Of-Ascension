@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
-public class ExplochronSword extends BaseSword implements AdventWeapon {
+public class ExplochronSword extends BaseSword {
 	public ExplochronSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("ExplochronSword");

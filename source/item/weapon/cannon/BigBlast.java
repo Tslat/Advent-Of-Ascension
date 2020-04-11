@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BigBlast extends BaseCannon implements AdventWeapon {
+public class BigBlast extends BaseCannon {
 	public BigBlast(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BigBlast");

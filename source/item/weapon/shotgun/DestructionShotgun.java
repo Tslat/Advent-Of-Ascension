@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class DestructionShotgun extends BaseShotgun implements AdventWeapon {
+public class DestructionShotgun extends BaseShotgun {
 	public DestructionShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
 		setTranslationKey("DestructionShotgun");

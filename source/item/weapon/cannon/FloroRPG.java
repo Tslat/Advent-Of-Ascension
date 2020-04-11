@@ -28,7 +28,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class FloroRPG extends BaseCannon implements AdventWeapon {
+public class FloroRPG extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
