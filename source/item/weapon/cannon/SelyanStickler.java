@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class SelyanStickler extends BaseCannon implements AdventWeapon {
+public class SelyanStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 

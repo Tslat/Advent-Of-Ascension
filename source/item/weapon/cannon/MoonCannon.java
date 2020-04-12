@@ -23,7 +23,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MoonCannon extends BaseCannon implements AdventWeapon {
+public class MoonCannon extends BaseCannon {
 	double dmg;
 	int firingDelay;
 

@@ -54,7 +54,7 @@ public class GhoulStaff extends BaseStaff {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.random", Enums.ItemDescriptionType.ITEM_DAMAGE, "8", "22"));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.random", Enums.ItemDescriptionType.ITEM_DAMAGE, "8", "30"));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}

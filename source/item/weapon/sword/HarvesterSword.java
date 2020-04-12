@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class HarvesterSword extends BaseSword implements AdventWeapon {
+public class HarvesterSword extends BaseSword {
 	public HarvesterSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("HarvesterSword");

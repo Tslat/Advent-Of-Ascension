@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Predator extends BaseGun implements AdventWeapon {
+public class Predator extends BaseGun {
 	public Predator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Predator");

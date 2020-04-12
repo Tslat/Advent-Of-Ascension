@@ -7,7 +7,7 @@ import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
-public class DualSight extends BaseSniper implements AdventWeapon {
+public class DualSight extends BaseSniper {
 	public DualSight(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("DualSight");

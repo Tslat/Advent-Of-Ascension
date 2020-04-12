@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class ShadowBlaster extends BaseCannon implements AdventWeapon {
+public class ShadowBlaster extends BaseCannon {
 	public ShadowBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("ShadowBlaster");

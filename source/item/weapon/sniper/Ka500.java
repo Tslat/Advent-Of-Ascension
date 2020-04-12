@@ -7,7 +7,7 @@ import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
-public class Ka500 extends BaseSniper implements AdventWeapon {
+public class Ka500 extends BaseSniper {
 	public Ka500(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Ka500");

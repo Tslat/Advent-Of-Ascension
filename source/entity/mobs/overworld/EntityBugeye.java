@@ -20,7 +20,7 @@ public class EntityBugeye extends AoAMeleeMob {
 	public static final float entityWidth = 0.95f;
 
 	public EntityBugeye(World world) {
-		super(world, entityWidth, 1.1f);
+		super(world, entityWidth, 1.125f);
 	}
 
 	@Override

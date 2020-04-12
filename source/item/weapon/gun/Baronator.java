@@ -20,7 +20,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Baronator extends BaseGun implements AdventWeapon {
+public class Baronator extends BaseGun {
 	public Baronator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Baronator");

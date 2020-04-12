@@ -26,7 +26,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HeadHunter extends BaseSniper implements AdventWeapon {
+public class HeadHunter extends BaseSniper {
 	public HeadHunter(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("HeadHunter");

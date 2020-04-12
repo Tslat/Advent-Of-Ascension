@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Artifact extends BaseGun implements AdventWeapon {
+public class Artifact extends BaseGun {
 	public Artifact(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Artifact");

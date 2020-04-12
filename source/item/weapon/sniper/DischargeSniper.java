@@ -22,7 +22,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DischargeSniper extends BaseSniper implements AdventWeapon {
+public class DischargeSniper extends BaseSniper {
 	private final double dmg;
 	private final int firingDelay;
 

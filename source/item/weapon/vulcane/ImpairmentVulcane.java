@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class ImpairmentVulcane extends BaseVulcane implements AdventWeapon {
+public class ImpairmentVulcane extends BaseVulcane {
 	public ImpairmentVulcane(double dmg, int durability) {
 		super(dmg, durability);
 		setTranslationKey("ImpairmentVulcane");

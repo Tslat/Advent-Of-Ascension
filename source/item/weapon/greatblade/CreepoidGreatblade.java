@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
-public class CreepoidGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class CreepoidGreatblade extends BaseGreatblade {
 	public CreepoidGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("CreepoidGreatblade");

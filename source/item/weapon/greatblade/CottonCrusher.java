@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class CottonCrusher extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class CottonCrusher extends BaseGreatblade {
 	private double dmg;
 
 	public CottonCrusher(double dmg, double speed, int durability) {

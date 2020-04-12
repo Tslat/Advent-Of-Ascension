@@ -26,7 +26,7 @@ public class PacketUtil {
 		network.registerMessage(PacketRecoil.Handler.class, PacketRecoil.class, 4, Side.CLIENT);
 		network.registerMessage(PacketSkillData.Handler.class, PacketSkillData.class, 5, Side.CLIENT);
 		network.registerMessage(PacketTributeData.Handler.class, PacketTributeData.class, 6, Side.CLIENT);
-		network.registerMessage(PacketGreatbladeHit.Handler.class, PacketGreatbladeHit.class, 7, Side.SERVER);
+		network.registerMessage(PacketLongReachWeaponHit.Handler.class, PacketLongReachWeaponHit.class, 7, Side.SERVER);
 		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 8, Side.CLIENT);
 		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 9, Side.CLIENT);
 		network.registerMessage(PacketChangedCrown.Handler.class, PacketChangedCrown.class, 10, Side.SERVER);

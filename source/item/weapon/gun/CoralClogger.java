@@ -26,7 +26,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CoralClogger extends BaseGun implements AdventWeapon {
+public class CoralClogger extends BaseGun {
 	private final double dmg;
 	private final int firingDelay;
 

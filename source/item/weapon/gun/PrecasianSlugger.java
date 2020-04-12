@@ -23,7 +23,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PrecasianSlugger extends BaseGun implements AdventWeapon {
+public class PrecasianSlugger extends BaseGun {
 	private final double dmg;
 	private final int firingDelay;
 

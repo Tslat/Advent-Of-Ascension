@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RockbasherSword extends BaseSword implements AdventWeapon {
+public class RockbasherSword extends BaseSword {
 	public RockbasherSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("RockbasherSword");

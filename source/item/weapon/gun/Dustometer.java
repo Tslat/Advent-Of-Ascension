@@ -20,7 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Dustometer extends BaseGun implements AdventWeapon {
+public class Dustometer extends BaseGun {
 	public Dustometer(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Dustometer");

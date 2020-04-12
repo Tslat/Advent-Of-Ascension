@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class HolySword extends BaseSword implements AdventWeapon {
+public class HolySword extends BaseSword {
 	public HolySword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("HolySword");

@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DischargeRifle extends BaseGun implements AdventWeapon {
+public class DischargeRifle extends BaseGun {
 	private final int firingDelay;
 
 	public DischargeRifle(double dmg, int durability, int firingDelayTicks, float recoil) {

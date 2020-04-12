@@ -7,7 +7,7 @@ import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
-public class Terminator extends BaseSniper implements AdventWeapon {
+public class Terminator extends BaseSniper {
 	public Terminator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Terminator");

@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ApocoRifle extends BaseGun implements AdventWeapon {
+public class ApocoRifle extends BaseGun {
 	private final int firingDelay;
 
 	public ApocoRifle(double dmg, int durability, int firingDelayTicks, float recoil) {

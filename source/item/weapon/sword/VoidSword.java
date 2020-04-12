@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class VoidSword extends BaseSword implements AdventWeapon {
+public class VoidSword extends BaseSword {
 	public VoidSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("VoidSword");

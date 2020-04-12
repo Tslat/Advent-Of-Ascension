@@ -12,6 +12,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -35,6 +36,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.EntityUtil;
@@ -42,11 +44,13 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
-public abstract class BaseMaul extends Item implements AdventWeapon {
+public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWeapon {
 	protected final float dmg;
 	protected final double speed;
 	protected final double knockback;
+	protected final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("678cb085-1367-42c3-8437-d07ade6201d0"), "AoAMaulReach", getReach() - 3.5f, 0);
 
 	public BaseMaul(Float dmg, Double speed, double knockback, final int durability) {
 		this.dmg = dmg;
@@ -69,6 +73,11 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 
 	public double getBaseKnockback() {
 		return knockback;
+	}
+
+	@Override
+	public float getReach() {
+		return 4F;
 	}
 
 	@Override
@@ -101,12 +110,65 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-		if (entity instanceof EntityLivingBase)
+		return true;
+
+		/*if (entity instanceof EntityLivingBase)
 			attackEntity(stack, entity, player);
 
-		stack.getCapability(AdventMiscStackProvider.MISC_STACK, EnumFacing.NORTH).setValue(player.getCooledAttackStrength(0.0f));
 
-		return true;
+
+		return true;*/
+	}
+
+	@Override
+	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
+		if (dmg < 0)
+			dmg = getDamage() + 1;
+
+		if (attacker instanceof EntityPlayer) {
+			if (target instanceof EntityFireball) {
+				target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), dmg);
+			}
+			else {
+				PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
+				PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
+				float targetHealth = 0;
+
+				if (target instanceof EntityLivingBase)
+					targetHealth = ((EntityLivingBase)target).getHealth();
+
+				if (str != null)
+					dmg += (str.getAmplifier() + 1) * 3;
+
+				if (weak != null)
+					dmg -= (weak.getAmplifier() + 1) * 4;
+
+				float cooldownMultiplier = ((EntityPlayer)attacker).getCooledAttackStrength(0f);
+				final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.crush, stack);
+				final float finalDmg = dmg * cooldownMultiplier + 0.1f;
+
+				if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)target.getParts()[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
+					if (target instanceof EntityLivingBase)
+						EntityUtil.doScaledKnockback((EntityLivingBase)target, attacker, (float)knockback * crushMod * cooldownMultiplier, attacker.posX - target.posX, attacker.posZ - target.posZ);
+
+					if (attacker.world instanceof WorldServer && target instanceof EntityLivingBase) {
+						int hearts = (int)((targetHealth - ((EntityLivingBase)target).getHealth()) / 2);
+
+						if (hearts > 0) {
+							((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, target.posX, target.posY + (double)(target.height * 0.5F), target.posZ, hearts, 0.1D, 0.0D, 0.1D, 0.2D);
+						}
+					}
+
+					stack.damageItem(1, attacker);
+					doMeleeEffect(stack, (EntityPlayer)attacker, target, finalDmg, cooldownMultiplier);
+				}
+			}
+		}
+		else if (target instanceof EntityLivingBase) {
+			((EntityLivingBase)target).knockBack(attacker, (float)knockback, attacker.posX - target.posX, attacker.posZ - target.posZ);
+		}
+
+		return false;
 	}
 
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker) {
@@ -180,8 +242,9 @@ public abstract class BaseMaul extends Item implements AdventWeapon {
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(dmg));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
+			multimap.put(EntityPlayer.REACH_DISTANCE.getName(), REACH_MODIFIER);
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(getDamage()));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(getAttackSpeed()));
 		}
 
 		return multimap;

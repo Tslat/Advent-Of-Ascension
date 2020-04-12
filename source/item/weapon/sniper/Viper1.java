@@ -19,7 +19,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Viper1 extends BaseSniper implements AdventWeapon {
+public class Viper1 extends BaseSniper {
 	public Viper1(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Viper1");

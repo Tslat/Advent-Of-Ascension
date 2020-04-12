@@ -57,7 +57,7 @@ public class ExtractionDevice extends Block {
 		if (!world.isRemote) {
 			IBlockState topBlock = world.getBlockState(pos.up());
 
-			if (!full && (topBlock.getBlock() == Blocks.LAVA || (topBlock.getBlock() == Blocks.FLOWING_LAVA && topBlock.getBlock().getMetaFromState(topBlock) == 0))) {
+			if (!full && ((topBlock.getBlock() == Blocks.LAVA || topBlock.getBlock() == Blocks.FLOWING_LAVA) && topBlock.getBlock().getMetaFromState(topBlock) == 0)) {
 				world.setBlockState(pos, BlockRegister.extractionDeviceOn.getDefaultState());
 				world.setBlockToAir(pos.up());
 			}
@@ -89,7 +89,7 @@ public class ExtractionDevice extends Block {
 		if (!world.isRemote) {
 			IBlockState topBlock = world.getBlockState(pos.up());
 
-			if (!full && (topBlock.getBlock() == Blocks.LAVA || (topBlock.getBlock() == Blocks.FLOWING_LAVA && topBlock.getBlock().getMetaFromState(topBlock) == 0))) {
+			if (!full && ((topBlock.getBlock() == Blocks.LAVA || topBlock.getBlock() == Blocks.FLOWING_LAVA) && topBlock.getBlock().getMetaFromState(topBlock) == 0)) {
 				world.setBlockState(pos, BlockRegister.extractionDeviceOn.getDefaultState());
 				world.setBlockToAir(pos.up());
 			}
@@ -103,9 +103,10 @@ public class ExtractionDevice extends Block {
 
 		if (!world.isRemote && player.getHeldItem(hand).getItem() instanceof InfusionBowl) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
-
-			if (world.getBlockState(pos.down()).getMaterial().isReplaceable()) {
+			if (world.getBlockState(pos.down()).getMaterial().isReplaceable() || world.isOutsideBuildHeight(pos.down())) {
 				int lvl = plData.stats().getLevel(Enums.Skills.EXTRACTION);
+
+				world.setBlockState(pos, BlockRegister.extractionDevice.getDefaultState());
 
 				if (plData.equipment().getCurrentFullArmourSet() != Enums.ArmourSets.EXTRACTION)
 					world.setBlockState(pos.down(), Blocks.OBSIDIAN.getDefaultState());
@@ -129,7 +130,6 @@ public class ExtractionDevice extends Block {
 
 					plData.stats().addXp(Enums.Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false, false);
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.extractionDeviceSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
-					world.setBlockState(pos, BlockRegister.extractionDevice.getDefaultState());
 
 					if (player.dimension == 0)
 						plData.stats().addTribute(Enums.Deities.PLUTON, 4);

@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DestructionRifle extends BaseGun implements AdventWeapon {
+public class DestructionRifle extends BaseGun {
 	public DestructionRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("DestructionRifle");

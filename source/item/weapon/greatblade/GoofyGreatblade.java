@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class GoofyGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class GoofyGreatblade extends BaseGreatblade {
 	public GoofyGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("GoofyGreatblade");

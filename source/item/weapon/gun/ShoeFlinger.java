@@ -29,7 +29,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ShoeFlinger extends BaseGun implements AdventWeapon {
+public class ShoeFlinger extends BaseGun {
 	double dmg;
 	int firingDelay;
 

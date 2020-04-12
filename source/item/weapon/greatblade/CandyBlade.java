@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class CandyBlade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class CandyBlade extends BaseGreatblade {
 	private double dmg;
 
 	public CandyBlade(double dmg, double speed, int durability) {

@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.PredicateUtil;
 
 import java.util.List;
 
-public class CrystalGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class CrystalGreatblade extends BaseGreatblade {
 	public CrystalGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("CrystalGreatblade");

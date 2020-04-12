@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class SuperCannon extends BaseCannon implements AdventWeapon {
+public class SuperCannon extends BaseCannon {
 	public SuperCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("SuperCannon");

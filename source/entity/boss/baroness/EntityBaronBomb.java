@@ -5,6 +5,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
@@ -92,6 +93,26 @@ public class EntityBaronBomb extends Entity {
 	}
 
 	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (!world.isRemote) {
+			setDead();
+
+			if (source.isExplosion() && source.getTrueSource() != baroness && source.getTrueSource() != ownerPlayer) {
+				if (ownerPlayer != null) {
+					WorldUtil.createExplosion(ownerPlayer, world, posX, posY + 1, posZ, 2f);
+				}
+				else {
+					WorldUtil.createExplosion(baroness, world, posX, posY + 1, posZ, 3.5f, WorldUtil.checkGameRule(world, "doStrongerMobGriefing"), false);
+				}
+			}
+
+			return false;
+		}
+
+		return super.attackEntityFrom(source, amount);
+	}
+
+	@Override
 	public boolean hitByEntity(Entity attacker) {
 		if (!world.isRemote && checkEntityCollision(attacker))
 			setDead();
@@ -141,6 +162,9 @@ public class EntityBaronBomb extends Entity {
 		else {
 			motionY = 0.0D;
 		}
+
+		motionX = 0;
+		motionZ = 0;
 
 		move(MoverType.SELF, motionX, motionY, motionZ);
 

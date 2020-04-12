@@ -22,7 +22,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BalloonBomber extends BaseCannon implements AdventWeapon {
+public class BalloonBomber extends BaseCannon {
 	double dmg;
 	int firingDelay;
 

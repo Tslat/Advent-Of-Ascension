@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GuardiansSword extends BaseSword implements AdventWeapon {
+public class GuardiansSword extends BaseSword {
 	public GuardiansSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("GuardiansSword");

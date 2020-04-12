@@ -18,7 +18,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Draco extends BaseGun implements AdventWeapon {
+public class Draco extends BaseGun {
 	public Draco(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Draco");

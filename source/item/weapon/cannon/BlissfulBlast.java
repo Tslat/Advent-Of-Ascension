@@ -22,7 +22,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlissfulBlast extends BaseCannon implements AdventWeapon {
+public class BlissfulBlast extends BaseCannon {
 	public BlissfulBlast(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BlissfulBlast");

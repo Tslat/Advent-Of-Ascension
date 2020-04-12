@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class ShyreBlaster extends BaseCannon implements AdventWeapon {
+public class ShyreBlaster extends BaseCannon {
 	public ShyreBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("ShyreBlaster");

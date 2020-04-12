@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GaugeRifle extends BaseGun implements AdventWeapon {
+public class GaugeRifle extends BaseGun {
 	private final double dmg;
 	private final int firingDelay;
 

@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class SupremacySword extends BaseSword implements AdventWeapon {
+public class SupremacySword extends BaseSword {
 	public SupremacySword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("SupremacySword");

@@ -6,7 +6,7 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class IroRifle extends BaseGun implements AdventWeapon {
+public class IroRifle extends BaseGun {
 	private final double baseDmg;
 	private double maxDamage = 40;
 	private int firingDelay;

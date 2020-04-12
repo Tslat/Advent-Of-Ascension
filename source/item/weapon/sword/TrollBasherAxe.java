@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class TrollBasherAxe extends BaseSword implements AdventWeapon {
+public class TrollBasherAxe extends BaseSword {
 	final ToolMaterial material;
 
 	public TrollBasherAxe(final ToolMaterial material, final double speed) {

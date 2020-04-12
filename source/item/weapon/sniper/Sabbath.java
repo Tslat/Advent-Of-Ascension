@@ -19,7 +19,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Sabbath extends BaseSniper implements AdventWeapon {
+public class Sabbath extends BaseSniper {
 	public Sabbath(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Sabbath");

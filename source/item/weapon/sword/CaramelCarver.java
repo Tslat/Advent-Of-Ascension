@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.PredicateUtil;
 
 import java.util.List;
 
-public class CaramelCarver extends BaseSword implements AdventWeapon {
+public class CaramelCarver extends BaseSword {
 	public CaramelCarver(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("CaramelCarver");

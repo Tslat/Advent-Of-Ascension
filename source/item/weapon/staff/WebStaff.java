@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,7 +50,10 @@ public class WebStaff extends BaseStaff {
 
 	@Override
 	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		caster.getActivePotionEffects().removeIf(effect -> effect.getPotion().isBadEffect());
+		for (PotionEffect effect : caster.getActivePotionEffects()) {
+			if (effect.getPotion().isBadEffect())
+				caster.removePotionEffect(effect.getPotion());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

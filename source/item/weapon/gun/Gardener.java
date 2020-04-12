@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Gardener extends BaseGun implements AdventWeapon {
+public class Gardener extends BaseGun {
 	double dmg;
 	int firingDelay;
 

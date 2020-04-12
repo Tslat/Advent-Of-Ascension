@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Electinator extends BaseGun implements AdventWeapon {
+public class Electinator extends BaseGun {
 	public Electinator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Electinator");

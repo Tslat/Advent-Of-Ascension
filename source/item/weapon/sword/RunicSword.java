@@ -20,7 +20,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class RunicSword extends BaseSword implements AdventWeapon {
+public class RunicSword extends BaseSword {
 	public RunicSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("RunicSword");

@@ -37,9 +37,12 @@ import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 
+import java.util.UUID;
+
 public abstract class BaseGreatblade extends Item implements AdventWeapon, LongReachWeapon {
 	protected double dmg;
 	protected double speed;
+	protected final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", getReach() - 3.5f, 0);
 
 	public BaseGreatblade(final double dmg, final double speed, final int durability) {
 		setCreativeTab(CreativeTabsRegister.greatbladesTab);
@@ -73,7 +76,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 	@Override
 	public float getReach() {
-		return 5.5F;
+		return 5f;
 	}
 
 	public double getDamage() {
@@ -116,8 +119,12 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		return this.dmg;
 	}
 
+	@Override
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
 		float damageDealt = 0;
+
+		if (dmg < 0)
+			dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg) + 1;
 
 		if (attacker instanceof EntityPlayer) {
 			if (target instanceof EntityFireball) {
@@ -125,10 +132,6 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 					damageDealt = dmg;
 			}
 			else {
-
-				if (dmg < 0)
-					dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg) + 1;
-
 				PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 				PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
 				float targetHealth = 0;
@@ -222,8 +225,9 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(dmg));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
+			multimap.put(EntityPlayer.REACH_DISTANCE.getName(), REACH_MODIFIER);
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(getDamage()));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(getAttackSpeed()));
 		}
 
 		return multimap;

@@ -12,7 +12,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class MKFung extends BaseGun implements AdventWeapon {
+public class MKFung extends BaseGun {
 	public MKFung(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("MKFung");

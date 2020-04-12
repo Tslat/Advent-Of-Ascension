@@ -16,7 +16,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BayonetteSR extends BaseSniper implements AdventWeapon {
+public class BayonetteSR extends BaseSniper {
 	public BayonetteSR(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BayonetteSR");

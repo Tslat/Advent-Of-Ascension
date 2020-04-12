@@ -12,7 +12,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class Iominator extends BaseGun implements AdventWeapon {
+public class Iominator extends BaseGun {
 	public Iominator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Iominator");

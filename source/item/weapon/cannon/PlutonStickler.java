@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PlutonStickler extends BaseCannon implements AdventWeapon {
+public class PlutonStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
