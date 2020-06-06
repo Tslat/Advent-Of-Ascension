@@ -45,19 +45,19 @@ public class EntityDiocus extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDiocusLiving;
+		return SoundsRegister.MOB_DIOCUS_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDiocusDeath;
+		return SoundsRegister.MOB_DIOCUS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDiocusHit;
+		return SoundsRegister.MOB_DIOCUS_HIT;
 	}
 
 	@Nullable

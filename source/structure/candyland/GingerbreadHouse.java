@@ -13,10 +13,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GingerbreadHouse extends AoAStructure { //StructureSize: 10x11x10
-	private static final IBlockState whiteCandy = BlockRegister.candyWhite.getDefaultState();
-	private static final IBlockState redCandy = BlockRegister.candyRed.getDefaultState();
-	private static final IBlockState gingerbread = BlockRegister.gingerbread.getDefaultState();
-	private static final IBlockState gingerbreadManSpawner = BlockRegister.spawnerGingerbreadMan.getDefaultState();
+	private static final IBlockState whiteCandy = BlockRegister.WHITE_CANDY.getDefaultState();
+	private static final IBlockState redCandy = BlockRegister.RED_CANDY.getDefaultState();
+	private static final IBlockState gingerbread = BlockRegister.GINGERBREAD.getDefaultState();
+	private static final IBlockState gingerbreadManSpawner = BlockRegister.GINGERBREAD_MAN_SPAWNER.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	public GingerbreadHouse() {

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class NethengeicCallstone extends BossSpawningItem {
 	public NethengeicCallstone() {
-		super("NethengeicCallstone", "nethengeic_callstone", SoundsRegister.mobNethengeicWitherLiving, EnumParticleTypes.SPELL_MOB, EnumParticleTypes.SPELL_INSTANT);
+		super("NethengeicCallstone", "nethengeic_callstone", SoundsRegister.MOB_NETHENGEIC_WITHER_LIVING, EnumParticleTypes.SPELL_MOB, EnumParticleTypes.SPELL_INSTANT);
 	}
 
 	@Override

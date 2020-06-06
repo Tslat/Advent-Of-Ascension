@@ -48,10 +48,9 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		this.firingDelay = fireDelayTicks;
 		this.energyCost = energyCost;
 		setMaxDamage(durability);
-		setCreativeTab(CreativeTabsRegister.blastersTab);
+		setCreativeTab(CreativeTabsRegister.BLASTERS);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
 	}
 
 	public double getDamage() {
@@ -103,8 +102,8 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 
 		if (!world.isRemote) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
-			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.recharge, stack);
-			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, stack);
+			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack);
+			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack);
 			float energyConsumption = (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
 
 			if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.GHOULISH)
@@ -123,8 +122,8 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
 		if (!player.world.isRemote) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)player);
-			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.recharge, stack);
-			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, stack);
+			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack);
+			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack);
 			float energyConsumption = ((EntityPlayer)player).capabilities.isCreativeMode ? 0 : (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
 
 			if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.GHOULISH)
@@ -203,7 +202,10 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.slowing", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.effect", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / 100d)));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, StringUtil.roundToNthDecimalPlace(energyCost, 1), StringUtil.getLocaleString("resources.energy.name")));
+
+		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack)) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack))));
+
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, StringUtil.roundToNthDecimalPlace(energyConsumption, 1), StringUtil.getLocaleString("resources.energy.name")));
 	}
 
 	@Override

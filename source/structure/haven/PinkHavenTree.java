@@ -10,7 +10,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PinkHavenTree extends AoAStructure { //StructureSize: 7x10x7
-	private static final IBlockState pinkLeaves = BlockRegister.leavesHavenPink.getDefaultState();
+	private static final IBlockState pinkLeaves = BlockRegister.PINK_HAVEN_LEAVES.getDefaultState();
 	private static final IBlockState log = Blocks.LOG.getDefaultState();
 
 	public PinkHavenTree() {

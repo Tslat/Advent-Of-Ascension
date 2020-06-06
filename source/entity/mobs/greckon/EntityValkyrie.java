@@ -49,19 +49,19 @@ public class EntityValkyrie extends AoAFlyingRangedMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobValkyrieLiving;
+        return SoundsRegister.MOB_VALKYRIE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobValkyrieDeath;
+        return SoundsRegister.MOB_VALKYRIE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobValkyrieHit;
+        return SoundsRegister.MOB_VALKYRIE_HIT;
     }
 
     @Nullable

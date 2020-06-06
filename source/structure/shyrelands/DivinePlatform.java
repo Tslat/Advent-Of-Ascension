@@ -12,12 +12,12 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DivinePlatform extends AoAStructure {
-	private static final IBlockState whiteBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState yellowBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState shyreGlass = BlockRegister.glassShyre.getDefaultState();
-	private static final IBlockState divineStation = BlockRegister.divineStation.getDefaultState();
+	private static final IBlockState whiteBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState shyreGlass = BlockRegister.SHYRE_GLASS.getDefaultState();
+	private static final IBlockState divineStation = BlockRegister.DIVINE_STATION.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState stairsNorth = BlockRegister.stairsShyreYellowBricks.getDefaultState();
+	private static final IBlockState stairsNorth = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState();
 	private static final IBlockState stairsWest = stairsNorth.withProperty(BlockStairs.FACING, EnumFacing.WEST);
 	private static final IBlockState stairsEast = stairsNorth.withProperty(BlockStairs.FACING, EnumFacing.EAST);
 	private static final IBlockState stairsSouth = stairsNorth.withProperty(BlockStairs.FACING, EnumFacing.SOUTH);

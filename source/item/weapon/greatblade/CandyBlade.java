@@ -11,8 +11,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
@@ -58,7 +56,7 @@ public class CandyBlade extends BaseGreatblade {
 			int foodHealAmount = Math.min(20 - pl.getFoodStats().getFoodLevel(), stack.getMaxDamage() - stack.getItemDamage());
 
 			pl.getFoodStats().addStats(foodHealAmount, 20f);
-			stack.damageItem(foodHealAmount * 2, pl);
+			stack.damageItem(foodHealAmount * 4, pl);
 		}
 
 		return stack;

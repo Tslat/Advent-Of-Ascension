@@ -13,12 +13,12 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BaronCastle extends AoAStructure { //StructureSize: 14x37x15
-	private static final IBlockState baronGlass = BlockRegister.glassBaron.getDefaultState();
-	private static final IBlockState baronWall = BlockRegister.baronCastleWall.getDefaultState();
-	private static final IBlockState neonRedstone = BlockRegister.lampNeon.getOffLamp().getDefaultState();
-	private static final IBlockState mineralizationStation = BlockRegister.mineralizationStation.getDefaultState();
-	private static final IBlockState tharaflySpawner = BlockRegister.spawnerTharafly.getDefaultState();
-	private static final IBlockState hellstone = BlockRegister.stoneBarathos.getDefaultState();
+	private static final IBlockState baronGlass = BlockRegister.BARON_GLASS.getDefaultState();
+	private static final IBlockState baronWall = BlockRegister.BARON_CASTLE_WALL.getDefaultState();
+	private static final IBlockState neonRedstone = BlockRegister.NEON_LAMP.getOffLamp().getDefaultState();
+	private static final IBlockState mineralizationStation = BlockRegister.MINERALIZATION_STATION.getDefaultState();
+	private static final IBlockState tharaflySpawner = BlockRegister.THARAFLY_SPAWNER.getDefaultState();
+	private static final IBlockState hellstone = BlockRegister.BARATHOS_HELLSTONE.getDefaultState();
 	private static final IBlockState chestEast = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 	private static final IBlockState chestWest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST);
 

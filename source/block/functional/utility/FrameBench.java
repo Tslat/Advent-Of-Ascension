@@ -20,7 +20,7 @@ public class FrameBench extends Block {
 		setRegistryName("aoa3:frame_bench");
 		setHardness(2.5f);
 		setSoundType(SoundType.WOOD);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

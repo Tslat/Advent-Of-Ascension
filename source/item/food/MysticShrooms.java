@@ -7,11 +7,11 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
 public class MysticShrooms extends ItemSeedFood {
 	public MysticShrooms() {
-		super(2, 0.4f, BlockRegister.cropMysticShrooms, Blocks.FARMLAND);
+		super(2, 0.4f, BlockRegister.MYSTIC_SHROOM_CROP, Blocks.FARMLAND);
 		setTranslationKey("MysticShrooms");
 		setRegistryName("aoa3:mystic_shrooms");
-		setCreativeTab(CreativeTabsRegister.foodTab);
-		BlockRegister.cropMysticShrooms.setCrop(this);
-		BlockRegister.cropMysticShrooms.setSeeds(this);
+		setCreativeTab(CreativeTabsRegister.FOOD);
+		BlockRegister.MYSTIC_SHROOM_CROP.setCrop(this);
+		BlockRegister.MYSTIC_SHROOM_CROP.setSeeds(this);
 	}
 }

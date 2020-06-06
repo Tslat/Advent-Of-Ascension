@@ -11,13 +11,13 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ShadowlordPlatform extends AoAStructure { //StructureSize: 5x7x5
-	private static final IBlockState planks = BlockRegister.planksShadow.getDefaultState();
-	private static final IBlockState altar = BlockRegister.shadowAltar.getDefaultState();
-	private static final IBlockState logShadowX = BlockRegister.logShadow.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.X);
-	private static final IBlockState logShadow = BlockRegister.logShadow.getDefaultState();
-	private static final IBlockState shadowFence = BlockRegister.fenceShadow.getDefaultState();
-	private static final IBlockState logShadowZ = BlockRegister.logShadow.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Z);
-	private static final IBlockState bloodstoneLamp = BlockRegister.lampBloodstone.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
+	private static final IBlockState planks = BlockRegister.SHADOW_PLANKS.getDefaultState();
+	private static final IBlockState altar = BlockRegister.SHADOW_ALTAR.getDefaultState();
+	private static final IBlockState logShadowX = BlockRegister.SHADOW_LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.X);
+	private static final IBlockState logShadow = BlockRegister.SHADOW_LOG.getDefaultState();
+	private static final IBlockState shadowFence = BlockRegister.SHADOW_FENCE.getDefaultState();
+	private static final IBlockState logShadowZ = BlockRegister.SHADOW_LOG.getDefaultState().withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Z);
+	private static final IBlockState bloodstoneLamp = BlockRegister.BLOODSTONE_LAMP.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 
 	public ShadowlordPlatform() {
 		super("ShadowlordPlatform");

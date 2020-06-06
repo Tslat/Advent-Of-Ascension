@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PrimordialShrine extends AoAStructure { //StructureSize: 5x7x11
-	private static final IBlockState dustopianLamp = BlockRegister.dustopianLampOff.getDefaultState();
-	private static final IBlockState dawnwoodPlanks = BlockRegister.planksDawnwood.getDefaultState();
-	private static final IBlockState dawnwoodBars = BlockRegister.plantDawnwoodBars.getDefaultState();
-	private static final IBlockState stone = BlockRegister.stoneDustopia.getDefaultState();
-	private static final IBlockState primordialShrine = BlockRegister.primordialShrine.getDefaultState();
+	private static final IBlockState dustopianLamp = BlockRegister.DUSTOPIAN_LAMP_OFF.getDefaultState();
+	private static final IBlockState dawnwoodPlanks = BlockRegister.DAWNWOOD_PLANKS.getDefaultState();
+	private static final IBlockState dawnwoodBars = BlockRegister.DAWNWOOD_BARS.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DUSTOPIA_STONE.getDefaultState();
+	private static final IBlockState primordialShrine = BlockRegister.PRIMORDIAL_SHRINE.getDefaultState();
 
 	public PrimordialShrine() {
 		super("PrimordialShrine");

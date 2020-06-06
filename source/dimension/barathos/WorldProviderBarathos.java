@@ -21,13 +21,13 @@ import javax.annotation.Nullable;
 public class WorldProviderBarathos extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionBarathos;
+		return DimensionRegister.DIM_BARATHOS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypeBarathos.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_BARATHOS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class WorldProviderBarathos extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeBarathos.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_BARATHOS.getChunkGenerator(world, null);
 	}
 
 	@Override

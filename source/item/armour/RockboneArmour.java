@@ -31,7 +31,7 @@ public class RockboneArmour extends AdventArmour {
 
 	@Override
 	public void onPreAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && itemRand.nextInt(10) == 0)
+		if (slots == null && itemRand.nextInt(10) == 0 && EntityUtil.isRangedDamage(event.getSource(), plData.player(), event.getAmount()))
 			event.setCanceled(true);
 	}
 

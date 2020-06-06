@@ -60,19 +60,19 @@ public class EntityBanshee extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBansheeLiving;
+		return SoundsRegister.MOB_BANSHEE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBansheeDeath;
+		return SoundsRegister.MOB_BANSHEE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBansheeHit;
+		return SoundsRegister.MOB_BANSHEE_HIT;
 	}
 
 	@Nullable
@@ -94,7 +94,7 @@ public class EntityBanshee extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase) {
-			if (!(target instanceof EntityPlayer) || !((EntityPlayer)target).inventory.hasItemStack(new ItemStack(ItemRegister.screamShield))) {
+			if (!(target instanceof EntityPlayer) || !((EntityPlayer)target).inventory.hasItemStack(new ItemStack(ItemRegister.SCREAM_SHIELD))) {
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 150, 5, true, true));
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 150, 5, true, true));
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 150, 5, true, true));

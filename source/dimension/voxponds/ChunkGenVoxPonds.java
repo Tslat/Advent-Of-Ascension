@@ -26,7 +26,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeVoxPonds;
+	private final Biome biome = BiomeRegister.VOX_PONDS;
 
 	private int x;
 	private int y;
@@ -57,8 +57,8 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 	}
 
 	private void setBlocksInChunk() {
-		IBlockState toxicStone = BlockRegister.stoneToxic.getDefaultState();
-		IBlockState toxicWaste = BlockRegister.toxicWaste.getDefaultState();
+		IBlockState toxicStone = BlockRegister.TOXIC_STONE.getDefaultState();
+		IBlockState toxicWaste = BlockRegister.TOXIC_WASTE.getDefaultState();
 
 		setAllBlocksBetweenYCoords(0, 15, toxicStone);
 		setAllBlocksBetweenYCoords(16, 17, Blocks.WATER.getDefaultState());
@@ -76,8 +76,8 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 			}
 		}
 		else {
-			setAllBlocksBetweenYCoords(36, 37, BlockRegister.dirtToxic.getDefaultState());
-			setAllBlocksBetweenYCoords(38, 38, BlockRegister.grassToxic.getDefaultState());
+			setAllBlocksBetweenYCoords(36, 37, BlockRegister.TOXIC_DIRT.getDefaultState());
+			setAllBlocksBetweenYCoords(38, 38, BlockRegister.TOXIC_GRASS.getDefaultState());
 
 			for (x = 0; x <= 15; x++) {
 				for (z = 0; z <= 15; z++) {
@@ -90,7 +90,7 @@ public class ChunkGenVoxPonds implements IChunkGenerator {
 		for (x = 0; x <= 15; x++) {
 			for (y = 0; y <= 2; y++) {
 				for (z = 0; z <= 15; z++) {
-					primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+					primer.setBlockState(x, y, z, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 				}
 			}
 		}

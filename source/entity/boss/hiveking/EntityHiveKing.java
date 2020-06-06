@@ -83,19 +83,19 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHiveKingLiving;
+		return SoundsRegister.MOB_HIVE_KING_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHiveKingDeath;
+		return SoundsRegister.MOB_HIVE_KING_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHiveKingLiving;
+		return SoundsRegister.MOB_HIVE_KING_LIVING;
 	}
 
 	@Nullable
@@ -202,7 +202,7 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicHiveKing;
+		return SoundsRegister.HIVE_KING_MUSIC;
 	}
 
 	@Override

@@ -23,11 +23,11 @@ public class GardenciaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalGardencia;
+		return BlockRegister.GARDENCIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.plantStem;
+		return BlockRegister.PLANT_STEM;
 	}
 }

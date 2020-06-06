@@ -19,6 +19,6 @@ public class EntityProficiencyTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletProficiency;
+		return ItemRegister.PROFICIENCY_TABLET;
 	}
 }

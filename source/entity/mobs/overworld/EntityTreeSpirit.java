@@ -52,17 +52,17 @@ public class EntityTreeSpirit extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTreeSpiritLiving;
+		return SoundsRegister.MOB_TREE_SPIRIT_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTreeSpiritDeath;
+		return SoundsRegister.MOB_TREE_SPIRIT_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTreeSpiritHit;
+		return SoundsRegister.MOB_TREE_SPIRIT_HIT;
 	}
 
 	@Nullable

@@ -37,7 +37,7 @@ public class PacketLongReachWeaponHit implements IMessage {
 				Entity target = player.world.getEntityByID(msg.entityId);
 				ItemStack weapon = player.getHeldItem(EnumHand.MAIN_HAND);
 
-				if (target != null && weapon.getItem() instanceof LongReachWeapon) {
+				if (target != null && weapon.getItem() instanceof LongReachWeapon && !player.isHandActive()) {
 					double reach = ((LongReachWeapon)weapon.getItem()).getReach();
 
 					if (player.getDistanceSq(target) < reach * reach) {

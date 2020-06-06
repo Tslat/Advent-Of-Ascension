@@ -45,19 +45,19 @@ public class EntityEyeCreature extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEyeCreatureLiving;
+		return SoundsRegister.MOB_EYE_CREATURE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEyeCreatureDeath;
+		return SoundsRegister.MOB_EYE_CREATURE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEyeCreatureHit;
+		return SoundsRegister.MOB_EYE_CREATURE_HIT;
 	}
 
 	@Nullable

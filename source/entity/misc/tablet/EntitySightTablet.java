@@ -28,6 +28,6 @@ public class EntitySightTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletSight;
+		return ItemRegister.SIGHT_TABLET;
 	}
 }

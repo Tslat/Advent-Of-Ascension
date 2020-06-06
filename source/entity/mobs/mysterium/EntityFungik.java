@@ -52,19 +52,19 @@ public class EntityFungik extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFungiLiving;
+		return SoundsRegister.MOB_FUNGI_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFungiDeath;
+		return SoundsRegister.MOB_FUNGI_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFungiHit;
+		return SoundsRegister.MOB_FUNGI_HIT;
 	}
 
 	@Nullable
@@ -82,7 +82,7 @@ public class EntityFungik extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotFungikFire;
+		return SoundsRegister.FUNGIK_SHOOT;
 	}
 
 	@Override

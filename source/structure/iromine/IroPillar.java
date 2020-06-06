@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IroPillar extends AoAStructure { //StructureSize: 7x19x7
-	private static final IBlockState glass = BlockRegister.glassIro.getDefaultState();
-	private static final IBlockState stripedBrick = BlockRegister.bricksIroStriped.getDefaultState();
-	private static final IBlockState iropole = BlockRegister.iropole.getDefaultState();
+	private static final IBlockState glass = BlockRegister.IRO_GLASS.getDefaultState();
+	private static final IBlockState stripedBrick = BlockRegister.IRO_STRIPED_BRICKS.getDefaultState();
+	private static final IBlockState iropole = BlockRegister.IROPOLE.getDefaultState();
 
 	public IroPillar() {
 		super("IroPillar");

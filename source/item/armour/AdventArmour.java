@@ -16,7 +16,7 @@ import java.util.HashSet;
 public abstract class AdventArmour extends ItemArmor {
 	public AdventArmour(ArmorMaterial material, String name, String registryName, EntityEquipmentSlot slot) {
 		super(material, 0, slot);
-		setCreativeTab(CreativeTabsRegister.armourTab);
+		setCreativeTab(CreativeTabsRegister.ARMOUR);
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 	}

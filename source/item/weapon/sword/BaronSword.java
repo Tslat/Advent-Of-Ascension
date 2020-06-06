@@ -6,7 +6,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -22,7 +21,7 @@ public class BaronSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
-		if (itemRand.nextFloat() < 0.2f)
+		if (itemRand.nextFloat() < 0.2f * attackCooldown)
 			EntityUtil.dealMeleeDamage(attacker, target, getDamage() * 0.5f, false);
 	}
 

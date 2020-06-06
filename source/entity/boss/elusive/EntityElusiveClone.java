@@ -58,19 +58,19 @@ public class EntityElusiveClone extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobElusiveLiving;
+		return SoundsRegister.MOB_ELUSIVE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobElusiveDeath;
+		return SoundsRegister.MOB_ELUSIVE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobElusiveHit;
+		return SoundsRegister.MOB_ELUSIVE_HIT;
 	}
 
 	@Override

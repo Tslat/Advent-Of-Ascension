@@ -14,7 +14,7 @@ public class RedWaterweeds extends PlantStackable {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ItemRegister.seedsFloracle;
+		return ItemRegister.FLORACLE_SEEDS;
 	}
 
 	@Override

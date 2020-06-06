@@ -30,7 +30,7 @@ public class RuneShrine extends Block {
 		setHardness(5.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 	// TODO Fix level distribution across dimensions
 	@Override
@@ -40,7 +40,7 @@ public class RuneShrine extends Block {
 
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() != ItemRegister.runeUnpowered && heldStack.getItem() != ItemRegister.runeCharged)
+		if (heldStack.getItem() != ItemRegister.UNPOWERED_RUNE && heldStack.getItem() != ItemRegister.CHARGED_RUNE)
 			return true;
 
 		BlockPos basePos = pos.up(2);
@@ -51,7 +51,7 @@ public class RuneShrine extends Block {
 			if (((RunePostBlock)post1).getLevelReq() <= plData.stats().getLevel(Enums.Skills.RUNATION)) {
 				RuneItem rune = ((RunePostBlock)post1).getRune();
 
-				if (rune.isChargedRune() && heldStack.getItem() != ItemRegister.runeCharged)
+				if (rune.isChargedRune() && heldStack.getItem() != ItemRegister.CHARGED_RUNE)
 					return false;
 
 				Block post2 = world.getBlockState(basePos.north(3).west(3)).getBlock();
@@ -65,7 +65,7 @@ public class RuneShrine extends Block {
 						runeCount *= 2;
 
 					plData.stats().addXp(Enums.Skills.RUNATION, ((RunePostBlock)post1).getXpGain() * heldStack.getCount(), false, false);
-					player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
+					player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.RUNES_CRAFT, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					if (!player.capabilities.isCreativeMode) {
 						int handCount = Math.min(64, runeCount);
@@ -103,7 +103,7 @@ public class RuneShrine extends Block {
 
 			plData.sendThrottledChatMessage("message.feedback.runeShrine.practice");
 			plData.stats().addXp(Enums.Skills.RUNATION, 2 * count, false, false);
-			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.makeRunes, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.RUNES_CRAFT, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			player.inventoryContainer.detectAndSendChanges();
 		}
 

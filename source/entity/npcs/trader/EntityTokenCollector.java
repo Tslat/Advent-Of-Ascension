@@ -47,16 +47,16 @@ public class EntityTokenCollector extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.bannerImmortal, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(WeaponRegister.vulcane, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 13), new ItemStack(ItemRegister.vulcaneAugmentFire)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 9), new ItemStack(ItemRegister.vulcaneAugmentImpairment)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 10), new ItemStack(ItemRegister.vulcaneAugmentPoison)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 5), new ItemStack(ItemRegister.vulcaneAugmentPower)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 15), new ItemStack(ItemRegister.vulcaneAugmentWither)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 25), new ItemStack(ItemRegister.vulcaneAugmentEquality)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 20), new ItemStack(ItemRegister.vulcaneAugmentBattle)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 28), new ItemStack(WeaponRegister.maulVulcammer)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 26), new ItemStack(WeaponRegister.staffMeteor)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.IMMORTAL_BANNER, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(WeaponRegister.VULCANE, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 13), new ItemStack(ItemRegister.VULCANE_AUGMENT_FIRE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 9), new ItemStack(ItemRegister.VULCANE_AUGMENT_IMPAIRMENT)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 10), new ItemStack(ItemRegister.VULCANE_AUGMENT_POISON)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 5), new ItemStack(ItemRegister.VULCANE_AUGMENT_POWER)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 15), new ItemStack(ItemRegister.VULCANE_AUGMENT_WITHER)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 25), new ItemStack(ItemRegister.VULCANE_AUGMENT_EQUALITY)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 20), new ItemStack(ItemRegister.VULCANE_AUGMENT_BATTLE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 28), new ItemStack(WeaponRegister.VULCAMMER_MAUL)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 26), new ItemStack(WeaponRegister.METEOR_STAFF)));
 	}
 }

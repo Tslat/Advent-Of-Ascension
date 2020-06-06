@@ -11,9 +11,9 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class HauntedCastlePt2 {
-	private static final IBlockState hauntedBricks = BlockRegister.bricksHaunted.getDefaultState();
+	private static final IBlockState hauntedBricks = BlockRegister.HAUNTED_BRICKS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState phantomSpawner = BlockRegister.spawnerPhantom.getDefaultState();
+	private static final IBlockState phantomSpawner = BlockRegister.PHANTOM_SPAWNER.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 
 	protected static void addBlocks(HauntedCastle instance, World world, Random rand, BlockPos basePos) {

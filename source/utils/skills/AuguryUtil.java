@@ -2,6 +2,8 @@ package net.tslat.aoa3.utils.skills;
 
 public class AuguryUtil {
 	public static float getMaxCreation(int lvl) {
+		return 200;
+		/*
 		if (lvl < 30)
 			return 200;
 
@@ -11,10 +13,12 @@ public class AuguryUtil {
 		if (lvl < 85)
 			return 280f;
 
-		return 320f;
+		return 320f;*/
 	}
 
 	public static float getMaxSoul(int lvl) {
+		return 200f;
+		/*
 		if (lvl < 35)
 			return 200f;
 
@@ -24,6 +28,6 @@ public class AuguryUtil {
 		if (lvl < 90)
 			return 320f;
 
-		return 400f;
+		return 400f;*/
 	}
 }

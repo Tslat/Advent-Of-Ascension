@@ -28,7 +28,7 @@ public class BoneHorn extends Item {
 	public BoneHorn() {
 		setTranslationKey("BoneHorn");
 		setRegistryName("aoa3:bone_horn");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 
 		setMaxDamage(3);
 		setMaxStackSize(1);
@@ -48,7 +48,7 @@ public class BoneHorn extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (world.getDifficulty() != EnumDifficulty.PEACEFUL) {
 			if (!world.isRemote)
-				world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.boneHornCall, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.BONE_HORN_CALL, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 			player.setActiveHand(hand);
 			player.getCooldownTracker().setCooldown(this, 150);
@@ -65,22 +65,28 @@ public class BoneHorn extends Item {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase user) {
 		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia) {
-			stack.damageItem(1, user);
 
 			EntityTyrosaur tyrosaur = new EntityTyrosaur(world);
 			int posX = (int)(user.posX + itemRand.nextFloat() * 40 - 20);
 			int posZ = (int)(user.posZ + itemRand.nextFloat() * 40 - 20);
 			int posY = world.getHeight(posX, posZ);
+			int tries = 10;
 
-			while (posY > user.posY + 10) {
+			while (posY > user.posY + 10 && tries > 0) {
 				posX = (int)(user.posX + itemRand.nextFloat() * 40 - 20);
 				posZ = (int)(user.posZ + itemRand.nextFloat() * 40 - 20);
 				posY = world.getHeight(posX, posZ);
+
+				tries--;
 			}
+
+			if (tries == 0)
+				return stack;
 
 			tyrosaur.setPosition(posX, posY, posZ);
 			tyrosaur.setAttackTarget(user);
 			world.spawnEntity(tyrosaur);
+			stack.damageItem(1, user);
 			StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.tyrosaur.spawn", user.getDisplayName().getUnformattedText()), user, 50);
 		}
 

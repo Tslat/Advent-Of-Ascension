@@ -18,7 +18,7 @@ public class Proton extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunIllusionSMG;
+		return SoundsRegister.ILLUSION_SMG_FIRE;
 	}
 
 	@Override

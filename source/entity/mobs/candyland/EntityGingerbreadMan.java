@@ -51,13 +51,13 @@ public class EntityGingerbreadMan extends AoAMeleeMob implements SpecialProperty
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable

@@ -27,7 +27,7 @@ public class GravityBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunGravityBlaster;
+		return SoundsRegister.GRAVITY_BLASTER_FIRE;
 	}
 
 	@Override

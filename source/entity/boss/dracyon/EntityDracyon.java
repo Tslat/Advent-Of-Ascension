@@ -68,19 +68,19 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDracyonLiving;
+		return SoundsRegister.MOB_DRACYON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDracyonDeath;
+		return SoundsRegister.MOB_DRACYON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDracyonLiving;
+		return SoundsRegister.MOB_DRACYON_LIVING;
 	}
 
 	@Nullable
@@ -121,7 +121,7 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 				double distanceFactorZ = target.posZ - projectile.posZ;
 				double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobDracyonLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_DRACYON_LIVING, SoundCategory.HOSTILE, 1.0f, 1.0f);
 				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 				world.spawnEntity(projectile);
 			}
@@ -164,7 +164,7 @@ public class EntityDracyon extends AoAFlyingMeleeMob implements BossEntity, AoAR
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicDracyon;
+		return SoundsRegister.DRACYON_MUSIC;
 	}
 
 	@Override

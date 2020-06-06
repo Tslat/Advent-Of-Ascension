@@ -15,7 +15,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -29,10 +28,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.render.HelmetScreenRenderer;
 import net.tslat.aoa3.client.gui.render.ScreenOverlayRenderer;
 import net.tslat.aoa3.client.gui.render.SniperGuiRenderer;
-import net.tslat.aoa3.client.model.entities.player.LayerPlayerCrown;
 import net.tslat.aoa3.client.sound.MusicSound;
-import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
-import net.tslat.aoa3.common.packet.PacketChangedCrown;
+import net.tslat.aoa3.common.packet.PacketChangedHalo;
 import net.tslat.aoa3.common.packet.PacketLongReachWeaponHit;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
@@ -108,7 +105,7 @@ public class ClientEventHandler {
 	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent ev) {
 		if (ev.getModID().equals("aoa3")) {
 			ConfigManager.sync("aoa3", Config.Type.INSTANCE);
-			PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
+			PacketUtil.network.sendToServer(new PacketChangedHalo(ConfigurationUtil.MainConfig.personalHaloPreference));
 		}
 	}
 
@@ -123,9 +120,8 @@ public class ClientEventHandler {
 					return;
 
 				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-				ItemStack offHandStack = player.getActiveItemStack();
 
-				if (stack.getItem() instanceof LongReachWeapon && !offHandStack.getItem().isShield(offHandStack, player)) {
+				if (stack.getItem() instanceof LongReachWeapon && !player.isHandActive()) {
 					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
 
 					if (ray != null)
@@ -133,12 +129,6 @@ public class ClientEventHandler {
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerRenderPre(RenderPlayerEvent.Pre ev) {
-		if (ConfigurationUtil.MainConfig.showPlayerCrowns && PlayerCrownHandler.testForNewRenderer(ev.getEntityPlayer().getGameProfile().getId()))
-			ev.getRenderer().addLayer(new LayerPlayerCrown(ev.getRenderer()));
 	}
 
 	@SubscribeEvent
@@ -154,7 +144,7 @@ public class ClientEventHandler {
 			}
 		}
 
-		PacketUtil.network.sendToServer(new PacketChangedCrown(ConfigurationUtil.MainConfig.personalCrownPreference));
+		PacketUtil.network.sendToServer(new PacketChangedHalo(ConfigurationUtil.MainConfig.personalHaloPreference));
 	}
 
 	@SubscribeEvent

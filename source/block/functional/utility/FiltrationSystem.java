@@ -23,7 +23,7 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 	public FiltrationSystem() {
 		super("FiltrationSystem", "filtration_system", Material.IRON, 9.0f, 10.0f);
 		setSoundType(SoundType.METAL);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 		boilingState = new FiltrationSystem(true);
 	}
 
@@ -41,7 +41,7 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(Item.getItemFromBlock(BlockRegister.filtrationSystem));
+		return new ItemStack(Item.getItemFromBlock(BlockRegister.FILTRATION_SYSTEM));
 	}
 
 	@Override

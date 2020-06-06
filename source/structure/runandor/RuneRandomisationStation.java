@@ -11,10 +11,10 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class RuneRandomisationStation extends AoAStructure { //StructureSize: 14x6x14
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState stone = BlockRegister.stoneRunic.getDefaultState();
-	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState runeRandomizer = BlockRegister.runeRandomizer.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState stone = BlockRegister.RUNIC_STONE.getDefaultState();
+	private static final IBlockState neonLapisLamp = BlockRegister.NEON_LAPIS_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState runeRandomizer = BlockRegister.RUNE_RANDOMIZER.getDefaultState();
 
 	public RuneRandomisationStation() {
 		super("RuneRandomisationStation");

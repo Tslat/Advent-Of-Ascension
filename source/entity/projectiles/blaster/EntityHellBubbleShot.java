@@ -34,7 +34,7 @@ public class EntityHellBubbleShot extends BaseEnergyShot {
 			setDead();
 
 		if (isDead) {
-			world.playSound(null, posX, posY, posZ, SoundsRegister.bubbleShotPop, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.BUBBLE_SHOT_POP, SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 		else if (!world.isRemote && weapon != null) {
 			List<EntityLivingBase> collidingEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox(), PredicateUtil.IS_HOSTILE_MOB);

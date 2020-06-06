@@ -1,12 +1,12 @@
 package net.tslat.aoa3.client.model.entities.mobs.precasia;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.client.model.entities.animations.ModelAnimatable;
 
-public class ModelPrimitiveCarrotop extends ModelAnimatable {
+public class ModelPrimitiveCarrotop extends ModelBase {
 	private final ModelRenderer root;
 	private final ModelRenderer rightleg;
 	private final ModelRenderer leftleg;
@@ -136,7 +136,5 @@ public class ModelPrimitiveCarrotop extends ModelAnimatable {
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
 		rightleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
 		leftleg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
-
-		super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
 	}
 }

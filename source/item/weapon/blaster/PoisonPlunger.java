@@ -28,7 +28,7 @@ public class PoisonPlunger extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunGasGun;
+		return SoundsRegister.GAS_GUN_FIRE;
 	}
 
 	@Override

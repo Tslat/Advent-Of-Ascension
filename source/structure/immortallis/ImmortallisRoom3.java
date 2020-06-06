@@ -12,17 +12,17 @@ import java.util.Random;
 public class ImmortallisRoom3 extends WorldGenerator {
 	private World world;
 	
-	private static final IBlockState archaicGlass = BlockRegister.glassArchaic.getDefaultState();
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicStreamVertical = BlockRegister.archaicVerticalStream.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
+	private static final IBlockState archaicGlass = BlockRegister.ARCHAIC_GLASS.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicStreamVertical = BlockRegister.ARCHAIC_STREAM_VERTICAL.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState progressor2 = BlockRegister.immortallisProgressor2.getDefaultState();
-	private static final IBlockState progressor3 = BlockRegister.immortallisProgressor3.getDefaultState();
-	private static final IBlockState spawnerReaver = BlockRegister.spawnerReaver.getDefaultState();
-	private static final IBlockState spawnerUrioh = BlockRegister.spawnerUrioh.getDefaultState();
+	private static final IBlockState progressor2 = BlockRegister.IMMORTALLIS_PROGRESSOR_2.getDefaultState();
+	private static final IBlockState progressor3 = BlockRegister.IMMORTALLIS_PROGRESSOR_3.getDefaultState();
+	private static final IBlockState spawnerReaver = BlockRegister.REAVER_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerUrioh = BlockRegister.URIOH_SPAWNER.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

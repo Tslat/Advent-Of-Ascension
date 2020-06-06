@@ -32,7 +32,7 @@ public class LunarArchergun extends BaseArchergun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand, boolean consume) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.hollyArrow, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.HOLLY_ARROW, player.getHeldItem(hand));
 
 		if (ammo != null) {
 			EntityLunarHollyArrowShot arrow = new EntityLunarHollyArrowShot(player, gun, hand,120, 0);

@@ -97,7 +97,7 @@ public class EntityBaronBomb extends Entity {
 		if (!world.isRemote) {
 			setDead();
 
-			if (source.isExplosion() && source.getTrueSource() != baroness && source.getTrueSource() != ownerPlayer) {
+			if (!source.isExplosion() && source.getTrueSource() != baroness && source.getTrueSource() != ownerPlayer) {
 				if (ownerPlayer != null) {
 					WorldUtil.createExplosion(ownerPlayer, world, posX, posY + 1, posZ, 2f);
 				}
@@ -178,7 +178,7 @@ public class EntityBaronBomb extends Entity {
 			timer--;
 
 			if (timer == 16) {
-				world.playSound(null, posX, posY, posZ, SoundsRegister.baronBombPriming, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.BARON_BOMB_PRIMING, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 			else if (timer <= 0) {
 				updateOwner();

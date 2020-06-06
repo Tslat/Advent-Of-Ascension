@@ -45,19 +45,19 @@ public class EntitySysker extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSyskerLiving;
+        return SoundsRegister.MOB_SYSKER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSyskerDeath;
+        return SoundsRegister.MOB_SYSKER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSyskerHit;
+        return SoundsRegister.MOB_SYSKER_HIT;
     }
 
     @Nullable

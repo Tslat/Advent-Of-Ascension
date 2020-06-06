@@ -43,7 +43,7 @@ public class NightmareBow extends BaseBow {
 	}
 
 	private EntityHollyArrow copyArrow(EntityLivingBase shooter, ItemStack bowStack, EntityHollyArrow arrow, float velocity, ItemStack ammoStack) {
-		EntityHollyArrow newArrow = ((HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.hollyArrow)).createArrow(arrow.world, this, ammoStack, shooter, dmg);
+		EntityHollyArrow newArrow = ((HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.HOLLY_ARROW)).createArrow(arrow.world, this, ammoStack, shooter, dmg);
 		newArrow.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
 
 		newArrow.setIsCritical(arrow.getIsCritical());

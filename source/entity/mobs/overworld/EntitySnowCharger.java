@@ -46,17 +46,17 @@ public class EntitySnowCharger extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobChargerLiving;
+		return SoundsRegister.MOB_CHARGER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobChargerDeath;
+		return SoundsRegister.MOB_CHARGER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobChargerHit;
+		return SoundsRegister.MOB_CHARGER_HIT;
 	}
 
 	@Nullable

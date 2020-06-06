@@ -22,13 +22,12 @@ public class OrnamytePickaxe extends BasePickaxe {
 	public float getDestroySpeed(ItemStack stack, IBlockState state) {
 		float efficiency = super.getDestroySpeed(stack, state);
 
-		return state.getBlock() instanceof BlockObsidian ? efficiency * 10f : efficiency * 0.25f;
+		return state.getBlock() instanceof BlockObsidian ? efficiency * 10f : efficiency;
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OrnamytePickaxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OrnamytePickaxe.desc.2", Enums.ItemDescriptionType.NEGATIVE));
 	}
 }

@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderCreeponia extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionCreeponia;
+		return DimensionRegister.DIM_CREEPONIA;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypeCreeponia.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_CREEPONIA.getBiomeProvider(world);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class WorldProviderCreeponia extends WorldProvider implements AoAWorldPro
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeCreeponia.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_CREEPONIA.getChunkGenerator(world, null);
 	}
 
 	@Override

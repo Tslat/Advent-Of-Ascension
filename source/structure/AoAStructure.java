@@ -12,6 +12,8 @@ import java.util.Random;
 
 public abstract class AoAStructure extends WorldGenerator {
 	private final String name;
+	private boolean isWorldGen = true;
+
 	public AoAStructure(String name) {
 	    this.name = name;
 
@@ -36,6 +38,11 @@ public abstract class AoAStructure extends WorldGenerator {
 
     @Override
     public final boolean generate(World world, Random rand, BlockPos position) {
+		isWorldGen = rand != null;
+
+		if (rand == null)
+			rand = new Random();
+
         build(world, rand, new BlockPos.MutableBlockPos(position));
         doPostBuildOps(world, rand, position);
         spawnEntities(world, rand, position);
@@ -51,7 +58,7 @@ public abstract class AoAStructure extends WorldGenerator {
 
     public final void addBlock(World world, BlockPos pos, int xCoordOffset, int yCoordOffset, int zCoordOffset, IBlockState block) {
     	if (replacesBlocks() || world.isAirBlock(pos.add(xCoordOffset, yCoordOffset, zCoordOffset)))
-    		world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block);
+    		world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block, isWorldGen ? 2 : 3);
     }
 
     protected void assignLootChests(World world, Random rand, ResourceLocation lootTable, BlockPos... positions) {

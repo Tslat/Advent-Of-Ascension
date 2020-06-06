@@ -24,7 +24,7 @@ public class ItemLottoTotem extends Item {
 	public ItemLottoTotem() {
 		setTranslationKey("LottoTotem");
 		setRegistryName("aoa3:lotto_totem");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override

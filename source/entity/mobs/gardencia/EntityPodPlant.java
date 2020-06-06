@@ -60,19 +60,19 @@ public class EntityPodPlant extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPodPlantLiving;
+		return SoundsRegister.MOB_POD_PLANT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPodPlantDeath;
+		return SoundsRegister.MOB_POD_PLANT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPodPlantHit;
+		return SoundsRegister.MOB_POD_PLANT_HIT;
 	}
 
 	@Nullable
@@ -89,7 +89,7 @@ public class EntityPodPlant extends AoAMeleeMob {
 
 	@Override
 	protected void onInsideBlock(IBlockState state) {
-		if (state.getBlock() == BlockRegister.candiedWater) {
+		if (state.getBlock() == BlockRegister.CANDIED_WATER) {
 			if (!candiedWater) {
 				EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
 				setHealth(getHealth() * 1.5f);
@@ -133,7 +133,7 @@ public class EntityPodPlant extends AoAMeleeMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBlank)))
-			ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBorean));
+		if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BOREAN_REALMSTONE));
 	}
 }

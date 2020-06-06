@@ -20,7 +20,7 @@ import java.util.List;
 
 public class HauntedIdol extends BossSpawningItem {
 	public HauntedIdol() {
-		super("HauntedIdol", "haunted_idol", SoundsRegister.mobBaneLiving, EnumParticleTypes.PORTAL, EnumParticleTypes.SPELL_MOB);
+		super("HauntedIdol", "haunted_idol", SoundsRegister.MOB_BANE_LIVING, EnumParticleTypes.PORTAL, EnumParticleTypes.SPELL_MOB);
 	}
 
 	@Override

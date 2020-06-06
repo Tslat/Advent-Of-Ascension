@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CraexxeusTower extends AoAStructure { //StructureSize: 39x45x39
-	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState shyreCloud = BlockRegister.shyreCloud.getDefaultState();
-	private static final IBlockState shyreGlass = BlockRegister.glassShyre.getDefaultState();
+	private static final IBlockState whiteShyreBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowShyreBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState shyreCloud = BlockRegister.SHYRE_CLOUD.getDefaultState();
+	private static final IBlockState shyreGlass = BlockRegister.SHYRE_GLASS.getDefaultState();
 
 	public CraexxeusTower() {
 		super("CraexxeusTower");

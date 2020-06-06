@@ -49,19 +49,19 @@ public class EntityLurker extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobLurkerLiving;
+        return SoundsRegister.MOB_LURKER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobLurkerDeath;
+        return SoundsRegister.MOB_LURKER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobLurkerHit;
+        return SoundsRegister.MOB_LURKER_HIT;
     }
 
     @Nullable

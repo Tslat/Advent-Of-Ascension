@@ -81,13 +81,13 @@ public class EntityGnawer extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobChomperLiving;
+		return SoundsRegister.MOB_CHOMPER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobChomperHit;
+		return SoundsRegister.MOB_CHOMPER_HIT;
 	}
 
 	@Nullable

@@ -23,7 +23,7 @@ public class DeepCase extends Block {
 		setHardness(5.0f);
 		setResistance(3f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class WorldTypeAbyss extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeAbyss);
+		return new BiomeProviderSingle(BiomeRegister.ABYSS);
 	}
 
 	@Override

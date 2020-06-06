@@ -45,19 +45,19 @@ public class EntityInmateX extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGoblinLiving;
+		return SoundsRegister.MOB_GOBLIN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGoblinDeath;
+		return SoundsRegister.MOB_GOBLIN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGoblinHit;
+		return SoundsRegister.MOB_GOBLIN_HIT;
 	}
 
 	@Nullable

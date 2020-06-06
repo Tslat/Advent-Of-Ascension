@@ -29,7 +29,7 @@ public class DarklyGuster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDarkGun;
+		return SoundsRegister.DARK_GUN_FIRE;
 	}
 
 	@Override

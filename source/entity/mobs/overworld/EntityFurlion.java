@@ -45,17 +45,17 @@ public class EntityFurlion extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFurlionLiving;
+		return SoundsRegister.MOB_FURLION_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFurlionDeath;
+		return SoundsRegister.MOB_FURLION_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFurlionHit;
+		return SoundsRegister.MOB_FURLION_HIT;
 	}
 
 	@Nullable

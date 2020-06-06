@@ -50,19 +50,19 @@ public class EntityAxiolight extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobAxiolightLiving;
+        return SoundsRegister.MOB_AXIOLIGHT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobAxiolightDeath;
+        return SoundsRegister.MOB_AXIOLIGHT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobAxiolightHit;
+        return SoundsRegister.MOB_AXIOLIGHT_HIT;
     }
 
     @Nullable

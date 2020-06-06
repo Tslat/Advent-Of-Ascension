@@ -26,7 +26,7 @@ public class OreBlock extends BlockOre {
 		setRegistryName("aoa3:" + registryName);
 		setHardness(5.0f);
 		setHarvestLevel("pickaxe", harvestLevel);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 
 		this.xpMin = xpDropMin;
 		this.xpMax = Math.max(xpMin, xpDropMax);

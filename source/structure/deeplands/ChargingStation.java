@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ChargingStation extends AoAStructure { //StructureSize: 15x8x15
-	private static final IBlockState stone = BlockRegister.stoneDeeplands.getDefaultState();
-	private static final IBlockState decayedGlass = BlockRegister.glassDecayed.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DEEPLANDS_STONE.getDefaultState();
+	private static final IBlockState decayedGlass = BlockRegister.DECAYED_GLASS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
-	private static final IBlockState chargingTable = BlockRegister.chargingTable.getDefaultState();
+	private static final IBlockState chargingTable = BlockRegister.CHARGING_TABLE.getDefaultState();
 
 	public ChargingStation() {
 		super("ChargingStation");

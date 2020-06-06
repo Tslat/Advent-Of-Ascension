@@ -54,19 +54,19 @@ public class EntityCrystalTrader extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalBlue, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalGreen, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalPurple, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalRed, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalWhite, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalYellow, 1), new ItemStack(ItemRegister.tokensCrystevia, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalBlue, 16), new ItemStack(ItemRegister.druseBlue)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalGreen, 16), new ItemStack(ItemRegister.druseGreen)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalPurple, 16), new ItemStack(ItemRegister.drusePurple)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalRed, 16), new ItemStack(ItemRegister.druseRed)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalWhite, 16), new ItemStack(ItemRegister.druseWhite)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.crystalYellow, 16), new ItemStack(ItemRegister.druseYellow)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.druseRainbow, 12), new ItemStack(WeaponRegister.maulCrystal)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.druseRainbow, 12), new ItemStack(WeaponRegister.greatbladeCrystal)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BLUE_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GREEN_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PURPLE_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.RED_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.WHITE_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.YELLOW_CRYSTAL, 1), new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BLUE_CRYSTAL, 16), new ItemStack(ItemRegister.BLUE_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GREEN_CRYSTAL, 16), new ItemStack(ItemRegister.GREEN_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PURPLE_CRYSTAL, 16), new ItemStack(ItemRegister.PURPLE_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.RED_CRYSTAL, 16), new ItemStack(ItemRegister.RED_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.WHITE_CRYSTAL, 16), new ItemStack(ItemRegister.WHITE_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.YELLOW_CRYSTAL, 16), new ItemStack(ItemRegister.YELLOW_DRUSE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.RAINBOW_DRUSE, 12), new ItemStack(WeaponRegister.CRYSTAL_MAUL)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.RAINBOW_DRUSE, 12), new ItemStack(WeaponRegister.CRYSTAL_GREATBLADE)));
 	}
 }

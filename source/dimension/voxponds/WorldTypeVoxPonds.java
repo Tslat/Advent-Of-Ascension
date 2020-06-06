@@ -14,7 +14,7 @@ public class WorldTypeVoxPonds extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeVoxPonds);
+		return new BiomeProviderSingle(BiomeRegister.VOX_PONDS);
 	}
 
 	@Override

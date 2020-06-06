@@ -58,17 +58,17 @@ public class EntityShade extends AoAMeleeMob implements SpecialPropertyEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobShadeLiving;
+		return SoundsRegister.MOB_SHADE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobShadeDeath;
+		return SoundsRegister.MOB_SHADE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobShadeHit;
+		return SoundsRegister.MOB_SHADE_HIT;
 	}
 
 	@Nullable

@@ -61,19 +61,19 @@ public class EntityVisage extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPenumbraLiving;
+		return SoundsRegister.MOB_PENUMBRA_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPenumbraDeath;
+		return SoundsRegister.MOB_PENUMBRA_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPenumbraHit;
+		return SoundsRegister.MOB_PENUMBRA_HIT;
 	}
 
 	@Nullable

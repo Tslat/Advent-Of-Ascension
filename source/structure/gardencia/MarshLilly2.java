@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class MarshLilly2 extends AoAStructure { //StructureSize: 3x17x3
-	private static final IBlockState magentaPetals = BlockRegister.petalsMagenta.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
+	private static final IBlockState magentaPetals = BlockRegister.MAGENTA_PETALS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
 
 	public MarshLilly2() {
 		super("MarshLilly2");

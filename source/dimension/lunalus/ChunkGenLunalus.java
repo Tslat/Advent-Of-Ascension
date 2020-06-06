@@ -23,7 +23,7 @@ public class ChunkGenLunalus implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeLunalus;
+	private final Biome biome = BiomeRegister.LUNALUS;
 
 	private int x;
 	private int y;

@@ -25,6 +25,6 @@ public class EntityEnergyTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletEnergy;
+		return ItemRegister.ENERGY_TABLET;
 	}
 }

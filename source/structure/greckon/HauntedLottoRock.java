@@ -11,7 +11,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HauntedLottoRock extends AoAStructure { //StructureSize: 9x7x9
-	private static final IBlockState stone = BlockRegister.stoneGreckon.getDefaultState();
+	private static final IBlockState stone = BlockRegister.GRECKON_STONE.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 
 	public HauntedLottoRock() {

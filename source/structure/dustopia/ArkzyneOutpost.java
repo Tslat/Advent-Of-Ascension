@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ArkzyneOutpost extends AoAStructure { //StructureSize: 15x13x15
-	private static final IBlockState darkwashBricks = BlockRegister.bricksDarkwash.getDefaultState();
+	private static final IBlockState darkwashBricks = BlockRegister.DARKWASH_BRICKS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState arkzyneSpawner = BlockRegister.spawnerArkzyne.getDefaultState();
+	private static final IBlockState arkzyneSpawner = BlockRegister.ARKZYNE_SPAWNER.getDefaultState();
 
 	public ArkzyneOutpost() {
 		super("ArkzyneOutpost");

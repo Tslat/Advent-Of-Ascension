@@ -21,7 +21,7 @@ public class ToxicWaste extends BasicBlock {
 
 	public ToxicWaste() {
 		super("ToxicWaste", "toxic_waste", Material.SPONGE, 0.25f, 0.1f);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setHarvestLevel("shovel", 1);
 	}
 

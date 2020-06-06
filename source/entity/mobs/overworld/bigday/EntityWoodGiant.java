@@ -58,17 +58,17 @@ public class EntityWoodGiant extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGiantDeath;
+		return SoundsRegister.MOB_GIANT_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGiantHit;
+		return SoundsRegister.MOB_GIANT_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

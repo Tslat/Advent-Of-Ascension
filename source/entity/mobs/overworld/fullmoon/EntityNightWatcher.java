@@ -2,7 +2,6 @@ package net.tslat.aoa3.entity.mobs.overworld.fullmoon;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -53,17 +52,17 @@ public class EntityNightWatcher extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNightWatcherLiving;
+		return SoundsRegister.MOB_NIGHT_WATCHER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNightWatcherHit;
+		return SoundsRegister.MOB_NIGHT_WATCHER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNightWatcherHit;
+		return SoundsRegister.MOB_NIGHT_WATCHER_HIT;
 	}
 
 	@Nullable
@@ -81,8 +80,8 @@ public class EntityNightWatcher extends AoAMeleeMob {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		boolean success = super.attackEntityFrom(source, amount);
 
-		if (success && source.getTrueSource() instanceof EntityLivingBase && EntityUtil.isMeleeDamage(source) && (!(source.getTrueSource() instanceof EntityPlayer) || !((EntityPlayer)source.getTrueSource()).capabilities.isCreativeMode))
-			((EntityLivingBase)source.getTrueSource()).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 65, 0, true, true));
+		if (success && EntityUtil.isMeleeDamage(source))
+			EntityUtil.safelyAddPotionEffect(source.getTrueSource(), MobEffects.BLINDNESS, 65, 0, true, true);
 
 		return success;
 	}

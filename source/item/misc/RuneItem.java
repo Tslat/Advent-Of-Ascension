@@ -13,7 +13,7 @@ public class RuneItem extends SimpleItem {
 	public RuneItem(String name, String registryName, boolean isCharged, RunePostBlock runePost) {
 		super(name, registryName);
 		this.charged = isCharged;
-		setCreativeTab(CreativeTabsRegister.ammoTab);
+		setCreativeTab(CreativeTabsRegister.AMMUNITION);
 
 		if (runePost != null)
 			applyToRunePost(runePost);

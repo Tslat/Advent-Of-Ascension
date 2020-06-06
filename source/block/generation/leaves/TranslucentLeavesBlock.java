@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.generation.leaves;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -12,7 +13,12 @@ import javax.annotation.Nonnull;
 
 public class TranslucentLeavesBlock extends LeavesBlock {
 	public TranslucentLeavesBlock(String name, String registryName) {
-		super(name, registryName);
+		this(name, registryName, null, 20);
+	}
+
+	public TranslucentLeavesBlock(String name, String registryName, Block sapling, int saplingDropChance) {
+		super(name, registryName, sapling, saplingDropChance);
+
 		translucent = true;
 	}
 

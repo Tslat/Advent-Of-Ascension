@@ -19,7 +19,7 @@ public class GardenGrass extends AoAStructure {
 
 		while (y <= 4) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantGardenGrass.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.GARDEN_GRASS.getDefaultState());
 				y++;
 			}
 			else {

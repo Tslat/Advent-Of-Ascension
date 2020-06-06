@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.mobs.nether;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -13,6 +14,7 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -58,24 +60,24 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobInfernalLiving;
+        return SoundsRegister.MOB_INFERNAL_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobInfernalHit;
+        return SoundsRegister.MOB_INFERNAL_HIT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobInfernalHit;
+        return SoundsRegister.MOB_INFERNAL_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.veryHeavyStep;
+        return SoundsRegister.VERY_HEAVY_STEP;
     }
 
     @Nullable
@@ -108,7 +110,7 @@ public class EntityInfernal extends AoAMeleeMob implements SpecialPropertyEntity
     public boolean attackEntityFrom(DamageSource source, float amount) {
         boolean success = super.attackEntityFrom(source, amount);
 
-        if (success && EntityUtil.isMeleeDamage(source))
+        if (success && EntityUtil.isMeleeDamage(source) && (!(source.getTrueSource() instanceof EntityPlayer) || PlayerUtil.shouldPlayerBeAffected((EntityPlayer)source.getTrueSource())))
             source.getTrueSource().setFire(5);
 
         return success;

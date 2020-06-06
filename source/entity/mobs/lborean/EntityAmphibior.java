@@ -64,19 +64,19 @@ public class EntityAmphibior extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAmphibiorLiving;
+		return SoundsRegister.MOB_AMPHIBIOR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAmphibiorDeath;
+		return SoundsRegister.MOB_AMPHIBIOR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAmphibiorHit;
+		return SoundsRegister.MOB_AMPHIBIOR_HIT;
 	}
 
 	@Nullable

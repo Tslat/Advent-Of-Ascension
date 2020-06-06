@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BoneCircle extends AoAStructure { //StructureSize: 7x4x7
-	private static final IBlockState skeletalBlock = BlockRegister.skeletalBlock.getDefaultState();
+	private static final IBlockState skeletalBlock = BlockRegister.SKELETAL_BLOCK.getDefaultState();
 
 	public BoneCircle() {
 		super("BoneCircle");

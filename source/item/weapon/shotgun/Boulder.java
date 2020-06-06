@@ -15,6 +15,6 @@ public class Boulder extends BaseShotgun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSlugger;
+		return SoundsRegister.SLUGGER_FIRE;
 	}
 }

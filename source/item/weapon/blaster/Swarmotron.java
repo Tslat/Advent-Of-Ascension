@@ -25,7 +25,7 @@ public class Swarmotron extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSwarmotron;
+		return SoundsRegister.SWARMOTRON_FIRE;
 	}
 
 	@Override

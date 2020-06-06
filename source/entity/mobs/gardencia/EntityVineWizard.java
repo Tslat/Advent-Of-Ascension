@@ -70,7 +70,7 @@ public class EntityVineWizard extends AoARangedMob implements SpecialPropertyEnt
     @Nullable
     @Override
     protected SoundEvent getShootSound() {
-        return SoundsRegister.shotVineWizardFire;
+        return SoundsRegister.VINE_WIZARD_SHOOT;
     }
 
     @Nullable
@@ -96,7 +96,7 @@ public class EntityVineWizard extends AoARangedMob implements SpecialPropertyEnt
 
     @Override
     protected void onInsideBlock(IBlockState state) {
-        if (state.getBlock() == BlockRegister.candiedWater) {
+        if (state.getBlock() == BlockRegister.CANDIED_WATER) {
             if (!candiedWater) {
                 EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
@@ -140,8 +140,8 @@ public class EntityVineWizard extends AoARangedMob implements SpecialPropertyEnt
     public void onDeath(DamageSource cause) {
         super.onDeath(cause);
 
-        if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBlank)))
-            ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBorean));
+        if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+            ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BOREAN_REALMSTONE));
     }
 
     @Nonnull

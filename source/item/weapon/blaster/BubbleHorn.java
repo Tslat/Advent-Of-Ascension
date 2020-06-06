@@ -29,7 +29,7 @@ public class BubbleHorn extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunBubbleGun;
+		return SoundsRegister.BUBBLE_GUN_FIRE;
 	}
 
 	@Override

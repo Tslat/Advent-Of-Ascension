@@ -31,7 +31,7 @@ public class SpiritShower extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSpiritShower;
+		return SoundsRegister.SPIRIT_SHOWER_FIRE;
 	}
 
 	@Override

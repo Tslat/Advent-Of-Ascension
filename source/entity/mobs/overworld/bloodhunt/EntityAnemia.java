@@ -70,19 +70,19 @@ public class EntityAnemia extends AoAFlyingRangedMob implements SpecialPropertyE
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAnemiaLiving;
+		return SoundsRegister.MOB_ANEMIA_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAnemiaDeath;
+		return SoundsRegister.MOB_ANEMIA_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAnemiaHit;
+		return SoundsRegister.MOB_ANEMIA_HIT;
 	}
 
 	@Nullable

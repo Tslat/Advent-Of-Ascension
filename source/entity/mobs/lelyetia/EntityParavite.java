@@ -46,19 +46,19 @@ public class EntityParavite extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobParaviteLiving;
+		return SoundsRegister.MOB_PARAVITE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobParaviteDeath;
+		return SoundsRegister.MOB_PARAVITE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobParaviteHit;
+		return SoundsRegister.MOB_PARAVITE_HIT;
 	}
 
 	@Nullable

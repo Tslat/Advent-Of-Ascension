@@ -49,19 +49,19 @@ public class EntityOpteryx extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobChargerLiving;
+		return SoundsRegister.MOB_CHARGER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobChargerHit;
+		return SoundsRegister.MOB_CHARGER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobChargerHit;
+		return SoundsRegister.MOB_CHARGER_HIT;
 	}
 
 	@Nullable

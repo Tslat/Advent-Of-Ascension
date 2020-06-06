@@ -3,23 +3,26 @@ package net.tslat.aoa3.client.gui.mainwindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ModUtil;
+import net.tslat.aoa3.utils.FileUtil;
 import net.tslat.aoa3.utils.RenderUtil;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class AdventGuiTabGuides extends GuiScreen {
-	public static ArrayList<InfoBundle> infoBundles;
-	public static String currentLanguage = FMLCommonHandler.instance().getCurrentLanguage();
+	private static HashSet<String> guideModIds = new HashSet<String>(2);
+	public static ArrayList<InfoBundle> infoBundles = null;
+	public static String currentLanguage = "";
 	private BundlesMenu scrollMenu;
 
 	private int openBundleIndex = -1;
@@ -30,13 +33,17 @@ public class AdventGuiTabGuides extends GuiScreen {
 	private int adjustedMouseX;
 	private int adjustedMouseY;
 
+	static {
+		guideModIds.add("aoa3");
+	}
+
 	@Override
 	public void initGui() {
 		if (scrollMenu == null)
 			scrollMenu = new BundlesMenu(mc, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.scale);
 
-		if (languageChanged()) {
-			currentLanguage = FMLCommonHandler.instance().getCurrentLanguage();
+		if (infoBundles == null || !AdventMainGui.currentLanguage.equalsIgnoreCase(currentLanguage)) {
+			currentLanguage = AdventMainGui.currentLanguage;
 
 			prepAvailableBundles();
 		}
@@ -65,48 +72,21 @@ public class AdventGuiTabGuides extends GuiScreen {
 			scrollMenu.handleMouseInput(adjustedMouseX, adjustedMouseY);
 	}
 
-	private enum AvailableBundles {
-		Getting_Started,
-		Creature_Icons,
-		What_To_Do_First,
-		Screen_Elements,
-		Blood_Hunt,
-		Big_Day,
-		Creep_Day,
-		Death_Day,
-		Full_Moon,
-		Lunar_Invasion,
-		Soul_Scurry,
-		Alchemy,
-		Anima,
-		Augury,
-		Butchery,
-		Creation,
-		Engineering,
-		Expedition,
-		Extraction,
-		Foraging,
-		Hauling,
-		Hunter,
-		Infusion,
-		Innervation,
-		Logging,
-		Runation
-	}
-
-	protected static boolean languageChanged() {
-		return !FMLCommonHandler.instance().getCurrentLanguage().equalsIgnoreCase(currentLanguage);
-	}
-
 	public static void prepAvailableBundles() {
-		infoBundles = new ArrayList<InfoBundle>(AvailableBundles.values().length);
+		infoBundles = new ArrayList<InfoBundle>();
 
-		for (AvailableBundles bundleEnum : AvailableBundles.values()) {
-			String line = ModUtil.getTextFromResourceFile(new ResourceLocation("aoa3", "lang/other/" + currentLanguage + "/guides/" + bundleEnum.toString().toLowerCase()), "txt", new ResourceLocation("aoa3", "lang/other/en_us/guides/" + bundleEnum.toString().toLowerCase()));
-
-			if (line != null)
-				infoBundles.add(new InfoBundle(line));
+		for (String modId : guideModIds) {
+			FileUtil.walkAllAvailableResourceFiles("txt", modId, "lang/aoa/guides/" + currentLanguage, "lang/aoa/guides/en_us", reader -> infoBundles.add(new InfoBundle(FileUtil.bufferedReaderToString(reader))));
 		}
+
+		File guidesConfigFolder = new File(Loader.instance().getConfigDir(), FilenameUtils.separatorsToSystem("aoa3/data/guides"));
+
+		if (guidesConfigFolder.exists())
+			FileUtil.walkAllAvailableFiles("txt", new File(guidesConfigFolder, currentLanguage).getAbsolutePath(), new File(guidesConfigFolder, "en_us").getAbsolutePath(), reader -> infoBundles.add(new InfoBundle(FileUtil.bufferedReaderToString(reader))));
+	}
+
+	public static void registerGuidesMod(String modid) {
+		guideModIds.add(modid);
 	}
 
 	public static class InfoBundle {
@@ -115,6 +95,7 @@ public class AdventGuiTabGuides extends GuiScreen {
 
 		public InfoBundle(String lines) {
 			String[] data = lines.split("\n", 2);
+
 			this.title = data[0];
 			this.info = data[1];
 		}

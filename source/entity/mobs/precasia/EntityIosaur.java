@@ -49,24 +49,24 @@ public class EntityIosaur extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobIosaurLiving;
+		return SoundsRegister.MOB_IOSAUR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobIosaurDeath;
+		return SoundsRegister.MOB_IOSAUR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobIosaurHit;
+		return SoundsRegister.MOB_IOSAUR_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.dinoStep;
+		return SoundsRegister.ENTITY_GENERIC_DINO_STEP;
 	}
 
 	@Nullable

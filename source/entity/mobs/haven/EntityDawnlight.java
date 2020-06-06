@@ -45,19 +45,19 @@ public class EntityDawnlight extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDawnlightLiving;
+		return SoundsRegister.MOB_DAWNLIGHT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDawnlightDeath;
+		return SoundsRegister.MOB_DAWNLIGHT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDawnlightHit;
+		return SoundsRegister.MOB_DAWNLIGHT_HIT;
 	}
 
 	@Nullable

@@ -65,19 +65,19 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCreepoidLiving;
+		return SoundsRegister.MOB_CREEPOID_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCreepoidDeath;
+		return SoundsRegister.MOB_CREEPOID_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCreepoidHit;
+		return SoundsRegister.MOB_CREEPOID_HIT;
 	}
 
 	@Nullable
@@ -124,6 +124,9 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+
+		if (isAIDisabled())
+			return;
 
 		if (rand.nextInt(10) == 0) {
 			EntityCreepBomb creepBomb = new EntityCreepBomb(this, Enums.MobProjectileType.OTHER);
@@ -190,7 +193,7 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicCreep;
+		return SoundsRegister.CREEP_MUSIC;
 	}
 
 	@Override

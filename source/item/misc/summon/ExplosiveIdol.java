@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ExplosiveIdol extends BossSpawningItem {
 	public ExplosiveIdol() {
-		super("ExplosiveIdol", "explosive_idol", SoundsRegister.mobKingBamBamBamLiving, EnumParticleTypes.SMOKE_NORMAL, EnumParticleTypes.SMOKE_LARGE, EnumParticleTypes.EXPLOSION_NORMAL);
+		super("ExplosiveIdol", "explosive_idol", SoundsRegister.MOB_KING_BAMBAMBAM_LIVING, EnumParticleTypes.SMOKE_NORMAL, EnumParticleTypes.SMOKE_LARGE, EnumParticleTypes.EXPLOSION_NORMAL);
 	}
 
 	@Override

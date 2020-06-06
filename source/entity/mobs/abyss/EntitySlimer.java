@@ -56,22 +56,22 @@ public class EntitySlimer extends AoAMeleeMob implements SpecialPropertyEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSlimerLiving;
+		return SoundsRegister.MOB_SLIMER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSlimerDeath;
+		return SoundsRegister.MOB_SLIMER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSlimerHit;
+		return SoundsRegister.MOB_SLIMER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable

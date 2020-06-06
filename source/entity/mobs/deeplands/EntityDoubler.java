@@ -49,19 +49,19 @@ public class EntityDoubler extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobDoublerLiving;
+        return SoundsRegister.MOB_DOUBLER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobDoublerDeath;
+        return SoundsRegister.MOB_DOUBLER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobDoublerHit;
+        return SoundsRegister.MOB_DOUBLER_HIT;
     }
 
     @Nullable

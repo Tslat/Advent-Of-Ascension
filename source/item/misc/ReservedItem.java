@@ -59,17 +59,17 @@ public class ReservedItem extends SimpleItem {
 
 			return EnumActionResult.SUCCESS;
 		}
-		else */if (block == BlockRegister.chargingTable) {
-			if (this == ItemRegister.fleshyBones) {
-				player.setHeldItem(hand, ItemRegister.darkBones.newValidStack());
+		else */if (block == BlockRegister.CHARGING_TABLE) {
+			if (this == ItemRegister.FLESHY_BONES) {
+				player.setHeldItem(hand, ItemRegister.DARK_BONES.newValidStack());
 
 
 				return EnumActionResult.SUCCESS;
 			}
 		}
-		else if (block == BlockRegister.mineralizationStation) {
-			if (this == ItemRegister.darkBones) {
-				player.setHeldItem(hand, ItemRegister.rockBones.newValidStack());
+		else if (block == BlockRegister.MINERALIZATION_STATION) {
+			if (this == ItemRegister.DARK_BONES) {
+				player.setHeldItem(hand, ItemRegister.ROCK_BONES.newValidStack());
 
 
 				return EnumActionResult.SUCCESS;
@@ -82,22 +82,22 @@ public class ReservedItem extends SimpleItem {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (!target.world.isRemote) {
-			if (stack.getItem() == ItemRegister.millenniumUpgrader) {
+			if (stack.getItem() == ItemRegister.MILLENNIUM_UPGRADER) {
 				if (target.isInLava() && attacker.isInLava()) {
-					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemRegister.moltenUpgrader.newValidStack());
+					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemRegister.MOLTEN_UPGRADER.newValidStack());
 
 					return true;
 				}
 			}
-			else if (stack.getItem() == ItemRegister.moltenUpgrader) {
+			else if (stack.getItem() == ItemRegister.MOLTEN_UPGRADER) {
 				if (target.world.getCurrentMoonPhaseFactor() == 1 && target.getHealth() <= 0 && (target instanceof EntityDarkBeast || target instanceof EntityIrkling || target instanceof EntityNightWatcher || target instanceof EntityScrubby || target instanceof EntitySkellox)) {
 					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-					target.entityDropItem(ItemRegister.moonstone.newValidStack(), 0);
+					target.entityDropItem(ItemRegister.MOONSTONE.newValidStack(), 0);
 
 					return true;
 				}
 			}
-			else if (stack.getItem() == ItemRegister.moonstone) {
+			else if (stack.getItem() == ItemRegister.MOONSTONE) {
 				if (target instanceof EntityArcworm)
 					target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 10, true, false));
 
@@ -145,8 +145,8 @@ public class ReservedItem extends SimpleItem {
 
 	public static void handleArcworm(EntityArcworm arcworm) {
 		if (arcworm.posY > 275 && arcworm.getAttackingEntity() instanceof EntityPlayer) {
-			if (arcworm.getAttackingEntity().getHeldItemMainhand().getItem() == ItemRegister.moonstone) {
-				arcworm.entityDropItem(((ExperimentW801)WeaponRegister.blasterExperimentW801).newValidStack(), 0);
+			if (arcworm.getAttackingEntity().getHeldItemMainhand().getItem() == ItemRegister.MOONSTONE) {
+				arcworm.entityDropItem(((ExperimentW801)WeaponRegister.EXPERIMENT_W801).newValidStack(), 0);
 				arcworm.getAttackingEntity().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 				arcworm.setDead();
 			}
@@ -154,7 +154,7 @@ public class ReservedItem extends SimpleItem {
 	}
 
 	public static void handlePlayerDeath(EntityPlayer pl) {
-		if (pl.getHealth() > 0)
+		if (pl.getHealth() > 0 && !pl.world.getWorldInfo().isHardcoreModeEnabled())
 			return;
 
 		if (!pl.getHeldItemMainhand().getItem().getRegistryName().getPath().toLowerCase().startsWith("a"))
@@ -174,9 +174,9 @@ public class ReservedItem extends SimpleItem {
 		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase().startsWith("n"))
 			return;
 
-		if (ItemUtil.findItemInInventory(pl, ItemRegister.alienOrb) != -1)
+		if (ItemUtil.findItemInInventory(pl, ItemRegister.ALIEN_ORB) != -1)
 			return;
 
-		pl.entityDropItem(ItemRegister.alienOrb.newValidStack(), 0);
+		pl.entityDropItem(ItemRegister.ALIEN_ORB.newValidStack(), 0);
 	}
 }

@@ -43,19 +43,19 @@ public class EntityCoratee extends AoAAnimal {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCorateeLiving;
+		return SoundsRegister.ENTITY_CORATEE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCorateeDeath;
+		return SoundsRegister.ENTITY_CORATEE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCorateeHit;
+		return SoundsRegister.ENTITY_CORATEE_HIT;
 	}
 
 	@Override

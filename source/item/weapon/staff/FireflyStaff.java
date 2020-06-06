@@ -32,14 +32,14 @@ public class FireflyStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffFirefly;
+		return SoundsRegister.FIREFLY_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runeStrike, 2);
-		runes.put(ItemRegister.runeFire, 1);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.STRIKE_RUNE, 2);
+		runes.put(ItemRegister.FIRE_RUNE, 1);
 	}
 
 	@Override

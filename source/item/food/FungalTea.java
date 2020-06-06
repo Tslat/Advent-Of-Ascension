@@ -34,7 +34,7 @@ public class FungalTea extends BasicFood {
 		if (!world.isRemote) {
 			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 75, 3, true, false));
 			player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 60, 0, true, false));
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.cup));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CUP));
 		}
 	}
 

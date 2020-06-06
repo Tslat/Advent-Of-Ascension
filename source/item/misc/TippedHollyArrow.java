@@ -50,7 +50,7 @@ public class TippedHollyArrow extends HollyArrow {
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		String translated = I18n.translateToLocal(("item.TippedHollyArrow.") + ".name");
+		String translated = I18n.translateToLocal("item.TippedHollyArrow.name");
 
 		if (translated.startsWith("item."))
 			translated = StringUtil.toTitleCase(PotionUtils.getPotionFromItem(stack).getNamePrefixed(I18n.translateToLocal("item.TippedHollyArrow.generic.name")));

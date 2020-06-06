@@ -13,10 +13,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class EnforcerTower extends AoAStructure { //StructureSize: 12x17x12
-	private static final IBlockState dottedBrick = BlockRegister.bricksIroDotted.getDefaultState();
-	private static final IBlockState stripedBrick = BlockRegister.bricksIroStriped.getDefaultState();
-	private static final IBlockState confusionTrap = BlockRegister.iroBrickTrap.getDefaultState();
-	private static final IBlockState enforcerSpawner = BlockRegister.spawnerEnforcer.getDefaultState();
+	private static final IBlockState dottedBrick = BlockRegister.IRO_DOTTED_BRICKS.getDefaultState();
+	private static final IBlockState stripedBrick = BlockRegister.IRO_STRIPED_BRICKS.getDefaultState();
+	private static final IBlockState confusionTrap = BlockRegister.IRO_BRICK_TRAP.getDefaultState();
+	private static final IBlockState enforcerSpawner = BlockRegister.ENFORCER_SPAWNER.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST);
 
 	public EnforcerTower() {

@@ -18,7 +18,7 @@ public class OverworldOre extends BlockOre {
 	public OverworldOre() {
 		setTranslationKey("OverworldOre");
 		setRegistryName("aoa3:overworld_ore");
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setDefaultState(blockState.getBaseState().withProperty(variant, OreType.LIMONITE));
 	}
 

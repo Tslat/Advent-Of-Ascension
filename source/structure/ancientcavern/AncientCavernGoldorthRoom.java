@@ -11,11 +11,11 @@ import java.util.Random;
 public class AncientCavernGoldorthRoom extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState ancientLamp = BlockRegister.lightAncient.getDefaultState();
-	private static final IBlockState blackAncientTile = BlockRegister.ancientTileBlack.getDefaultState();
-	private static final IBlockState greenAncientTile = BlockRegister.ancientTileGreen.getDefaultState();
-	private static final IBlockState limoniteIvory = BlockRegister.ivoryLimoniteNatural.getDefaultState();
-	private static final IBlockState plutonShrine = BlockRegister.shrinePluton.getDefaultState();
+	private static final IBlockState ancientLamp = BlockRegister.ANCIENT_LIGHT.getDefaultState();
+	private static final IBlockState blackAncientTile = BlockRegister.BLACK_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState greenAncientTile = BlockRegister.GREEN_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState limoniteIvory = BlockRegister.NATURAL_LIMONITE_IVORY.getDefaultState();
+	private static final IBlockState plutonShrine = BlockRegister.PLUTON_SHRINE.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

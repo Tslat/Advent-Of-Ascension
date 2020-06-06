@@ -53,7 +53,7 @@ public class EntityBoneCreeper extends EntityCreeponiaCreeper implements Special
     @Override
     protected SoundEvent getAmbientSound() {
         if (rand.nextBoolean()) {
-            return SoundsRegister.mobCreepoidLiving;
+            return SoundsRegister.MOB_CREEPOID_LIVING;
         }
         else {
             return SoundEvents.ENTITY_SKELETON_AMBIENT;
@@ -62,7 +62,7 @@ public class EntityBoneCreeper extends EntityCreeponiaCreeper implements Special
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCreepoidDeath;
+        return SoundsRegister.MOB_CREEPOID_DEATH;
     }
 
     @Override

@@ -44,7 +44,7 @@ public class BlankRealmstone extends Item {
 		setTranslationKey("BlankRealmstone");
 		setRegistryName("aoa3:blank_realmstone");
 		setMaxStackSize(1);
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -79,10 +79,9 @@ public class BlankRealmstone extends Item {
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
 		if (player.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.creeponia && target instanceof AoATrader) {
-
-			if (!player.world.isRemote && PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet() == Enums.ArmourSets.HAZMAT && player.getHeldItem(hand).getItem() == ItemRegister.realmstoneBlank) {
+			if (!player.world.isRemote && ItemUtil.isPlayerEnvironmentallyProtected(player) && player.getHeldItem(hand).getItem() == ItemRegister.BLANK_REALMSTONE) {
 				player.setHeldItem(hand, ItemStack.EMPTY);
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneVoxPonds));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.VOX_PONDS_REALMSTONE));
 				PlayerUtil.notifyPlayer((EntityPlayerMP)player, StringUtil.getLocaleString("message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3)));
 			}
 
@@ -95,7 +94,7 @@ public class BlankRealmstone extends Item {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (!attacker.world.isRemote && target.getHealth() <= 0 && target instanceof EntityHusk && attacker instanceof EntityPlayer)
-			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.realmstoneBarathos));
+			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.BARATHOS_REALMSTONE));
 
 		return super.hitEntity(stack, target, attacker);
 	}
@@ -125,7 +124,7 @@ public class BlankRealmstone extends Item {
 
 			if (constructKillMap.size() >= 5) {
 				stack.shrink(1);
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneAncientCavern));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.ANCIENT_CAVERN_REALMSTONE));
 			}
 			else {
 				cap.setObject(constructKillMap);

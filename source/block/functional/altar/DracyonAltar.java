@@ -25,6 +25,6 @@ public class DracyonAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.callOfTheDrake;
+		return ItemRegister.CALL_OF_THE_DRAKE;
 	}
 }

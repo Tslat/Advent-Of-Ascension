@@ -21,7 +21,7 @@ public class RecreationStation extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

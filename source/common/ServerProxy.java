@@ -26,7 +26,7 @@ public class ServerProxy {
 
 	public void serverStart(MinecraftServer server) {
 		OverworldEvents.doWorldStartCheck(server.getWorld(0));
-		WebUtil.extractPlayerCrownsFromWeb();
+		WebUtil.extraPlayerHalosFromWeb();
 	}
 
 	public void serverStarted() {

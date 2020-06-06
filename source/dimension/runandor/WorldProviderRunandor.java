@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderRunandor extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionRunandor;
+		return DimensionRegister.DIM_RUNANDOR;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypeRunandor.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_RUNANDOR.getBiomeProvider(world);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class WorldProviderRunandor extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeRunandor.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_RUNANDOR.getChunkGenerator(world, null);
 	}
 
 	@Override

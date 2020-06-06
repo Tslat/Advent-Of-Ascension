@@ -23,16 +23,16 @@ public class RunicBlock extends Block {
 		setHardness(10.0f);
 		setResistance(15.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.activeRuneStone) {
+		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.ACTIVE_RUNE_STONE) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.throwableRunicBomb));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.RUNIC_BOMB));
 
 			return true;
 		}

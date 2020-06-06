@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ParaviteHive extends AoAStructure { //StructureSize: 13x19x13
-	private static final IBlockState hiveWall = BlockRegister.paraviteHive.getDefaultState();
-	private static final IBlockState churryWood = BlockRegister.logChurry.getDefaultState();
-	private static final IBlockState paraviteSpawner = BlockRegister.spawnerParavite.getDefaultState();
+	private static final IBlockState hiveWall = BlockRegister.PARAVITE_HIVE.getDefaultState();
+	private static final IBlockState churryWood = BlockRegister.CHURRY_LOG.getDefaultState();
+	private static final IBlockState paraviteSpawner = BlockRegister.PARAVITE_SPAWNER.getDefaultState();
 
 	public ParaviteHive() {
 		super("ParaviteHive");

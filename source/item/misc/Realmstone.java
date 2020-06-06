@@ -1,16 +1,16 @@
 package net.tslat.aoa3.item.misc;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
+
+import java.util.function.Supplier;
 
 public class Realmstone extends SimpleItem {
 	private final PortalBlock portalBlock;
-	private final ResourceLocation portalSound;
+	private final Supplier<SoundEvent> portalSound;
 	private final String msgSuffix;
 
-	public Realmstone(String name, String registryName, PortalBlock portalBlock, ResourceLocation activationSound, String dimensionSuffix) {
+	public Realmstone(String name, String registryName, PortalBlock portalBlock, Supplier<SoundEvent> activationSound, String dimensionSuffix) {
 		super(name, registryName);
 		this.portalBlock = portalBlock;
 		this.portalSound = activationSound;
@@ -24,7 +24,7 @@ public class Realmstone extends SimpleItem {
 	}
 
 	public SoundEvent getPortalSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(portalSound);
+		return portalSound.get();
 	}
 
 	public String getMsgSuffix() {

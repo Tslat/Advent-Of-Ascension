@@ -24,7 +24,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingFindNearestAttackableTargetHunter;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAILookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingMeleeAttack;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
@@ -48,13 +48,13 @@ public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
         moveHelper = new RoamingFlightMoveHelper(this);
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
     }
 
     @Override
     protected void initEntityAI() {
         tasks.addTask(1, new EntityAIRandomFly(this, true));
-        tasks.addTask(2, new EntityAIFlyingLookAround(this));
+        tasks.addTask(2, new EntityAILookAround(this));
         tasks.addTask(3, new EntityAILookIdle(this));
         tasks.addTask(4, new EntityAIFlyingMeleeAttack(this, 0.6f, false));
         targetTasks.addTask(1, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, AoAMinion.class, EntityTameable::isTamed));
@@ -72,6 +72,11 @@ public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
         getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
         getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+    }
+
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        return new PathNavigateFlying(this, world);
     }
 
     protected abstract double getBaseKnockbackResistance();

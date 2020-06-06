@@ -45,19 +45,19 @@ public class EntityArcbeast extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobArcbeastLiving;
+        return SoundsRegister.MOB_ARCBEAST_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobArcbeastDeath;
+        return SoundsRegister.MOB_ARCBEAST_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobArcbeastHit;
+        return SoundsRegister.MOB_ARCBEAST_HIT;
     }
 
     @Nullable

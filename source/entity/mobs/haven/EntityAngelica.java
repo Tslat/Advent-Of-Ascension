@@ -61,25 +61,25 @@ public class EntityAngelica extends AoAFlyingMeleeMob implements SpecialProperty
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAngelicaLiving;
+		return SoundsRegister.MOB_ANGELICA_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAngelicaDeath;
+		return SoundsRegister.MOB_ANGELICA_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAngelicaHit;
+		return SoundsRegister.MOB_ANGELICA_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected ResourceLocation getLootTable() {
-		return world.provider.getDimensionType() == DimensionRegister.dimensionAncientCavern ? null : LootSystemRegister.entityAngelica;
+		return world.provider.getDimensionType() == DimensionRegister.DIM_ANCIENT_CAVERN ? null : LootSystemRegister.entityAngelica;
 	}
 
 	@Override

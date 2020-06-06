@@ -19,7 +19,7 @@ public class EyeShrub extends AoAStructure {
 
 		while (y <= 8) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantEyeShrubStem.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.EYE_SHRUB_STEM.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class EyeShrub extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, y, 0, BlockRegister.plantEyeShrub.getDefaultState());
+		addBlock(world, basePos, 0, y, 0, BlockRegister.EYE_SHRUB.getDefaultState());
 	}
 }

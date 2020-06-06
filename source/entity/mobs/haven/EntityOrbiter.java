@@ -50,19 +50,19 @@ public class EntityOrbiter extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobOrbiterLiving;
+		return SoundsRegister.MOB_ORBITER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobOrbiterDeath;
+		return SoundsRegister.MOB_ORBITER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobOrbiterHit;
+		return SoundsRegister.MOB_ORBITER_HIT;
 	}
 
 	@Nullable

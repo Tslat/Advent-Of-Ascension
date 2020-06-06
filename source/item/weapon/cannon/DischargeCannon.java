@@ -34,12 +34,12 @@ public class DischargeCannon extends BaseCannon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDischargeGun;
+		return SoundsRegister.DISCHARGE_GUN_FIRE;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.dischargeCapsule, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.DISCHARGE_CAPSULE, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityDischargeShot(player, gun, hand,40, 0);

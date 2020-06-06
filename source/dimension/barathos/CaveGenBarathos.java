@@ -37,6 +37,6 @@ public class CaveGenBarathos extends MapGenCaves {
 
 	@Override
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
-		return targetBlock.getBlock() == BlockRegister.stoneBaron;
+		return targetBlock.getBlock() == BlockRegister.BARON_STONE;
 	}
 }

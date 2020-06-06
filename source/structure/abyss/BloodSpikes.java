@@ -19,7 +19,7 @@ public class BloodSpikes extends AoAStructure {
 
 		while (y <= 6) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantBloodSpikes.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.BLOOD_SPIKES.getDefaultState());
 				y++;
 			}
 			else {

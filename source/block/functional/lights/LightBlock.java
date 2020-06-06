@@ -15,7 +15,7 @@ public class LightBlock extends BasicBlock {
 		super(name, registryName, material, hardness, resistance);
 		setLightLevel(luminosity);
 		setLightOpacity(0);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	@Override

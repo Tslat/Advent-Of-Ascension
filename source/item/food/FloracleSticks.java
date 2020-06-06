@@ -16,7 +16,7 @@ public class FloracleSticks extends BasicFood {
 	public FloracleSticks() {
 		super("FloracleSticks", "floracle_sticks", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropFloracles.setCrop(this);
+		BlockRegister.FLORACLES_CROP.setCrop(this);
 	}
 
 	@Override

@@ -31,6 +31,6 @@ public class HiveSpawner extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.hiveEgg;
+		return ItemRegister.HIVE_EGG;
 	}
 }

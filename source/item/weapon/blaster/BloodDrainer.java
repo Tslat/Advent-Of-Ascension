@@ -28,7 +28,7 @@ public class BloodDrainer extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDrainGun;
+		return SoundsRegister.DRAIN_GUN_FIRE;
 	}
 
 	@Override

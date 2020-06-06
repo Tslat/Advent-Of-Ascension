@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DracyonFountain extends AoAStructure { //StructureSize: 8x8x8
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
-	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
-	private static final IBlockState dracyonAltar = BlockRegister.dracyonAltar.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
+	private static final IBlockState glass = BlockRegister.AQUATIC_GLASS.getDefaultState();
+	private static final IBlockState dracyonAltar = BlockRegister.DRACYON_ALTAR.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 
 	public DracyonFountain() {

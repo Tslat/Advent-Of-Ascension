@@ -42,7 +42,7 @@ public class KrorSpawnTask implements Runnable {
 			return;
 		}
 
-		if (world.getBlockState(chargingTablePos).getBlock() != BlockRegister.chargingTable)
+		if (world.getBlockState(chargingTablePos).getBlock() != BlockRegister.CHARGING_TABLE)
 			return;
 
 		if (chargedAmount < 200) {

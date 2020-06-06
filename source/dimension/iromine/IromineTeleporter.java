@@ -23,11 +23,11 @@ public class IromineTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalIromine;
+		return BlockRegister.IROMINE_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.bricksIroStriped;
+		return BlockRegister.IRO_STRIPED_BRICKS;
 	}
 }

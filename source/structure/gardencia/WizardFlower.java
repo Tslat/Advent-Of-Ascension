@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class WizardFlower extends AoAStructure { //StructureSize: 11x10x11
-	private static final IBlockState gardencianBricks = BlockRegister.bricksGardencia.getDefaultState();
-	private static final IBlockState rosidianBricks = BlockRegister.bricksRosidian.getDefaultState();
-	private static final IBlockState bluePetals = BlockRegister.petalsBlue.getDefaultState();
-	private static final IBlockState vineWizardSpawner = BlockRegister.spawnerVineWizard.getDefaultState();
+	private static final IBlockState gardencianBricks = BlockRegister.GARDENCIA_BRICKS.getDefaultState();
+	private static final IBlockState rosidianBricks = BlockRegister.ROSIDIAN_BRICKS.getDefaultState();
+	private static final IBlockState bluePetals = BlockRegister.BLUE_PETALS.getDefaultState();
+	private static final IBlockState vineWizardSpawner = BlockRegister.VINE_WIZARD_SPAWNER.getDefaultState();
 
 	public WizardFlower() {
 		super("WizardFlower");

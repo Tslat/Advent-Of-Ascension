@@ -13,7 +13,7 @@ public class LogBlock extends BlockLog {
 		super();
 		setTranslationKey(name);
 		setRegistryName("aoa3", registryName);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setResistance(0.5f);
 		Blocks.FIRE.setFireInfo(this, 5, 5);
 		setDefaultState(getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
@@ -24,7 +24,7 @@ public class LogBlock extends BlockLog {
 		super();
 		setTranslationKey(name);
 		setRegistryName("aoa3", registryName);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setHardness(hardness);
 		setResistance(resistance);
 		setDefaultState(getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));

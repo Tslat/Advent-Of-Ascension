@@ -7,7 +7,6 @@ import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityBoneBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
@@ -22,7 +21,7 @@ public class Predigun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMinigun;
+		return SoundsRegister.MINIGUN_FIRE;
 	}
 
 	@Override

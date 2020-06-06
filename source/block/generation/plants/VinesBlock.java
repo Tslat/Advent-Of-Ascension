@@ -11,6 +11,6 @@ public class VinesBlock extends BlockVine {
 		setRegistryName("aoa3:" + registryName);
 		setHardness(0.2f);
 		setSoundType(SoundType.PLANT);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 }

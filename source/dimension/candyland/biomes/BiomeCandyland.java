@@ -72,7 +72,7 @@ public class BiomeCandyland extends Biome {
 							StructuresHandler.generateStructure("RedPeppermintStack", world, rand, pos.setPos(posX, posY, posZ));
 							break;
 						case 4:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCandycane.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CANDYCANE.getDefaultState());
 							break;
 					}
 				}
@@ -85,10 +85,10 @@ public class BiomeCandyland extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock && world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
 					if (rand.nextBoolean()) {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCandyGrass.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CANDY_GRASS.getDefaultState());
 					}
 					else {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCandyGrassBlue.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.BLUE_CANDY_GRASS.getDefaultState());
 					}
 				}
 			}

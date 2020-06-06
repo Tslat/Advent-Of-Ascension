@@ -52,13 +52,14 @@ public class EntityZalChild extends AoAAmbientNPC {
 		return "message.dialogue.zal_child." + rand.nextInt(5);
 	}
 
+
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.alienOrb) {
+		if (heldStack.getItem() == ItemRegister.ALIEN_ORB) {
 			if (!world.isRemote) {
-				player.setHeldItem(hand, ItemRegister.fleshyBones.newValidStack());
+				player.setHeldItem(hand, ItemRegister.FLESHY_BONES.newValidStack());
 				EntityUtil.killEntityCleanly(this);
 			}
 

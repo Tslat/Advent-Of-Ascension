@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.model.entities.mobs.abyss.ModelWebReaper;
-import net.tslat.aoa3.client.render.AoARangedMobRenderer;
+import net.tslat.aoa3.client.render.entities.AoARangedMobRenderer;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.mobs.abyss.EntityWebReaper;
 

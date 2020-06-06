@@ -44,17 +44,17 @@ public class EntityUrka extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobUrkaLiving;
+		return SoundsRegister.MOB_URKA_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobUrkaDeath;
+		return SoundsRegister.MOB_URKA_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobUrkaHit;
+		return SoundsRegister.MOB_URKA_HIT;
 	}
 
 	@Nullable

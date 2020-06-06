@@ -16,7 +16,6 @@ import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityLuxonSticklerShot;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.misc.EntityLuxonSticklerStuck;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -40,7 +39,7 @@ public class LuxonStickler extends BaseCannon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunCarrotCannon;
+		return SoundsRegister.CARROT_CANNON_FIRE;
 	}
 
 	@Override
@@ -55,7 +54,7 @@ public class LuxonStickler extends BaseCannon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, WeaponRegister.throwableGrenade, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, WeaponRegister.GRENADE, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityLuxonSticklerShot(player, gun, hand, 120, 0);

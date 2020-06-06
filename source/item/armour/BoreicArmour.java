@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
 import net.tslat.aoa3.utils.WorldUtil;
@@ -37,7 +38,7 @@ public class BoreicArmour extends AdventArmour {
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
 		EntityPlayer pl = plData.player();
 
-		if (pl.isInWater()) {
+		if (pl.isInWater() && !EntityUtil.isEnvironmentalDamage(event.getSource())) {
 			if (slots != null) {
 				WorldUtil.createExplosion(pl, pl.world, pl.getPosition() , 0.7f + 0.3f * slots.size());
 			}

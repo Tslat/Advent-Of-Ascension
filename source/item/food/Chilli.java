@@ -19,7 +19,7 @@ public class Chilli extends BasicFood {
 	public Chilli() {
 		super("Chilli", "chilli", 0, 0, false);
 		setAlwaysEdible();
-		BlockRegister.cropChilli.setCrop(this);
+		BlockRegister.CHILLI_CROP.setCrop(this);
 	}
 
 	@Override

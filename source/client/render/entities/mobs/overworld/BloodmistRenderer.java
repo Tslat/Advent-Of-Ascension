@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
 import net.tslat.aoa3.client.model.entities.mobs.overworld.ModelBloodmist;
-import net.tslat.aoa3.client.render.AoAMeleeMobRenderer;
+import net.tslat.aoa3.client.render.entities.AoAMeleeMobRenderer;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.mobs.overworld.bloodhunt.EntityBloodmist;
 import net.tslat.aoa3.library.Enums;

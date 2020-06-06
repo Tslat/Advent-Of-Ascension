@@ -68,24 +68,24 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMechyonLiving;
+		return SoundsRegister.MOB_MECHYON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMechyonDeath;
+		return SoundsRegister.MOB_MECHYON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMechyonHit;
+		return SoundsRegister.MOB_MECHYON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -134,7 +134,7 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 					motionZ = (target.posZ - posZ) * 0.045;
 
 					if (!world.isRemote) {
-						world.playSound(null, posX, posY, posZ, SoundsRegister.mobMechbotJump, SoundCategory.HOSTILE, 1.0f, 1.0f);
+						world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_MECHBOT_JUMP, SoundCategory.HOSTILE, 1.0f, 1.0f);
 						world.spawnEntity(new EntityMechFall(this, posX, posY - 0.25, posZ, Enums.MobProjectileType.MAGIC));
 
 						if (getHealth() < 1250) {
@@ -164,7 +164,7 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 			double distanceFactorZ = target.posZ - this.posZ;
 			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-			world.playSound(null, posX, posY, posZ, SoundsRegister.shotMechbotFire, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MECHBOT_SHOOT, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 			world.spawnEntity(projectile);
 		}
@@ -200,7 +200,7 @@ public class EntityMechbot extends AoAMeleeMob implements BossEntity, SpecialPro
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicMechbot;
+		return SoundsRegister.MECHBOT_MUSIC;
 	}
 
 	@Nonnull

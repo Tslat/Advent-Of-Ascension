@@ -12,15 +12,15 @@ import java.util.Random;
 public class ImmortallisRoom6 extends WorldGenerator {
 	private World world;
 	
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState pureGoldAccumulator = BlockRegister.pureGoldAccumulator.getDefaultState();
-	private static final IBlockState spawnerFenix = BlockRegister.spawnerFenix.getDefaultState();
-	private static final IBlockState spawnerGoldus = BlockRegister.spawnerGoldus.getDefaultState();
-	private static final IBlockState spawnerShavo = BlockRegister.spawnerShavo.getDefaultState();
+	private static final IBlockState pureGoldAccumulator = BlockRegister.PURE_GOLD_ACCUMULATOR.getDefaultState();
+	private static final IBlockState spawnerFenix = BlockRegister.FENIX_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerGoldus = BlockRegister.GOLDUS_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerShavo = BlockRegister.SHAVO_SPAWNER.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

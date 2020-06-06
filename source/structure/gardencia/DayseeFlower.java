@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DayseeFlower extends AoAStructure { //StructureSize: 14x13x14
-	private static final IBlockState yellowPetals = BlockRegister.petalsYellow.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
-	private static final IBlockState dayseeSpawner = BlockRegister.spawnerDaysee.getDefaultState();
+	private static final IBlockState yellowPetals = BlockRegister.YELLOW_PETALS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
+	private static final IBlockState dayseeSpawner = BlockRegister.DAYSEE_SPAWNER.getDefaultState();
 
 	public DayseeFlower() {
 		super("DayseeFlower");

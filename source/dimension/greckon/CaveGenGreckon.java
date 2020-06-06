@@ -10,7 +10,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 public class CaveGenGreckon extends MapGenCaves {
 	@Override
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
-		return targetBlock.getBlock() == BlockRegister.stoneGreckon;
+		return targetBlock.getBlock() == BlockRegister.GRECKON_STONE;
 	}
 
 	@Override

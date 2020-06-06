@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RunicArena extends AoAStructure { //StructureSize: 15x3x15
-	private static final IBlockState orangeMushroomOutside = BlockRegister.mushroomOrangeOutside.getDefaultState();
-	private static final IBlockState orangeMushroomInside = BlockRegister.mushroomOrangeInside.getDefaultState();
-	private static final IBlockState runicSpawner = BlockRegister.spawnerRunicGolem.getDefaultState();
-	private static final IBlockState runicBlock = BlockRegister.runicBlock.getDefaultState();
+	private static final IBlockState orangeMushroomOutside = BlockRegister.ORANGE_MUSHROOM_OUTSIDE.getDefaultState();
+	private static final IBlockState orangeMushroomInside = BlockRegister.ORANGE_MUSHROOM_INSIDE.getDefaultState();
+	private static final IBlockState runicSpawner = BlockRegister.RUNIC_GOLEM_SPAWNER.getDefaultState();
+	private static final IBlockState runicBlock = BlockRegister.RUNIC_BLOCK.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
 
 	public RunicArena() {

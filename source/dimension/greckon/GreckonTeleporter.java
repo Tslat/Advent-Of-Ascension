@@ -23,11 +23,11 @@ public class GreckonTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalGreckon;
+		return BlockRegister.GRECKON_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.leavesHaunted;
+		return BlockRegister.HAUNTED_LEAVES;
 	}
 }

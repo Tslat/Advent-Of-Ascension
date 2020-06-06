@@ -42,6 +42,6 @@ public class CreepAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.explosiveGems;
+		return ItemRegister.EXPLOSIVE_GEMS;
 	}
 }

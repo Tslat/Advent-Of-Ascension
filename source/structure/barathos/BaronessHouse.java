@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BaronessHouse extends AoAStructure { //StructureSize: 20x19x19
-	private static final IBlockState baronBricks = BlockRegister.bricksBaron.getDefaultState();
-	private static final IBlockState baronCube = BlockRegister.baronCube.getDefaultState();
-	private static final IBlockState baronCarpet = BlockRegister.carpetBaron.getDefaultState();
-	private static final IBlockState baronGlass = BlockRegister.glassBaron.getDefaultState();
+	private static final IBlockState baronBricks = BlockRegister.BARON_BRICKS.getDefaultState();
+	private static final IBlockState baronCube = BlockRegister.BARON_CUBE.getDefaultState();
+	private static final IBlockState baronCarpet = BlockRegister.BARON_CARPET.getDefaultState();
+	private static final IBlockState baronGlass = BlockRegister.BARON_GLASS.getDefaultState();
 
 	public BaronessHouse() {
 		super("BaronessHouse");

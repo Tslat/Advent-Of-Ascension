@@ -54,14 +54,14 @@ public class Gravitator extends SimpleItem {
 					BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(holder.getPosition());
 
 					for (ItemStack invStack : pl.inventory.mainInventory) {
-						if (invStack.getItem() == ItemRegister.realmstoneBlank) {
+						if (invStack.getItem() == ItemRegister.BLANK_REALMSTONE) {
 							for (int i = 0; i < holder.posY; i++) {
 								if (!world.isAirBlock(pos.setPos(pos.getX(), pos.getY() - i, pos.getZ())))
 									return;
 							}
 
 							invStack.shrink(1);
-							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneLunalus));
+							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.LUNALUS_REALMSTONE));
 
 							break;
 						}

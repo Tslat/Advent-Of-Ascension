@@ -15,8 +15,8 @@ import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
-import static net.tslat.aoa3.client.render.AoAMeleeMobRenderer.chargerModel;
-import static net.tslat.aoa3.client.render.AoAMeleeMobRenderer.chargerTexture;
+import static net.tslat.aoa3.client.render.entities.AoAMeleeMobRenderer.chargerModel;
+import static net.tslat.aoa3.client.render.entities.AoAMeleeMobRenderer.chargerTexture;
 
 @SideOnly(Side.CLIENT)
 public class CreeponiaCreeperRenderer extends RenderLiving<EntityCreeponiaCreeper> {

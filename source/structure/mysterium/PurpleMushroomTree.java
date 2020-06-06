@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PurpleMushroomTree extends AoAStructure { //StructureSize: 8x9x8
-	private static final IBlockState purpleMushroomOutside = BlockRegister.mushroomPurpleOutside.getDefaultState();
-	private static final IBlockState purpleMushroomInside = BlockRegister.mushroomPurpleInside.getDefaultState();
-	private static final IBlockState purpleMushroomStem = BlockRegister.mushroomStemPurple.getDefaultState();
-	private static final IBlockState mysteriumGrass = BlockRegister.grassMysterium.getDefaultState();
+	private static final IBlockState purpleMushroomOutside = BlockRegister.PURPLE_MUSHROOM_OUTSIDE.getDefaultState();
+	private static final IBlockState purpleMushroomInside = BlockRegister.PURPLE_MUSHROOM_INSIDE.getDefaultState();
+	private static final IBlockState purpleMushroomStem = BlockRegister.PURPLE_MUSHROOM_STEM.getDefaultState();
+	private static final IBlockState mysteriumGrass = BlockRegister.MYSTERIUM_GRASS.getDefaultState();
 
 	public PurpleMushroomTree() {
 		super("PurpleMushroomTree");

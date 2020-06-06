@@ -56,19 +56,19 @@ public class EntityPhantom extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPhantomLiving;
+		return SoundsRegister.MOB_PHANTOM_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPhantomHit;
+		return SoundsRegister.MOB_PHANTOM_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPhantomHit;
+		return SoundsRegister.MOB_PHANTOM_HIT;
 	}
 
 	@Nullable

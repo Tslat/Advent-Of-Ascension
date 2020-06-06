@@ -43,17 +43,17 @@ public class EntityElkanyne extends AoAAnimal {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobElkanyneLiving;
+		return SoundsRegister.ENTITY_ELKANYNE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobElkanyneDeath;
+		return SoundsRegister.ENTITY_ELKANYNE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobElkanyneHit;
+		return SoundsRegister.ENTITY_ELKANYNE_HIT;
 	}
 
 	@Override

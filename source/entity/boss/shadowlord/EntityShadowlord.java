@@ -96,17 +96,17 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobShadowlordLiving;
+		return SoundsRegister.MOB_SHADOWLORD_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobShadowlordDeath;
+		return SoundsRegister.MOB_SHADOWLORD_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundsRegister.mobShadowlordHit;
+		return SoundsRegister.MOB_SHADOWLORD_HIT;
 	}
 
 	@Nullable
@@ -335,7 +335,7 @@ public class EntityShadowlord extends EntityMob implements BossEntity, IRangedAt
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicShadowlord;
+		return SoundsRegister.SHADOWLORD_MUSIC;
 	}
 
 	@Override

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IroFloater extends AoAStructure { //StructureSize: 7x7x7
-	private static final IBlockState leaves = BlockRegister.leavesIrodust.getDefaultState();
-	private static final IBlockState log = BlockRegister.logIro.getDefaultState();
+	private static final IBlockState leaves = BlockRegister.IRODUST_LEAVES.getDefaultState();
+	private static final IBlockState log = BlockRegister.IRO_LOG.getDefaultState();
 
 	public IroFloater() {
 		super("IroFloater");

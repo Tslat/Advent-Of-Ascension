@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ChocolateTree2 extends AoAStructure { //StructureSize: 7x25x7
-	private static final IBlockState chocolate = BlockRegister.chocolateBlock.getDefaultState();
-	private static final IBlockState darkChocolate = BlockRegister.chocolateBlockDark.getDefaultState();
+	private static final IBlockState chocolate = BlockRegister.CHOCOLATE_BLOCK.getDefaultState();
+	private static final IBlockState darkChocolate = BlockRegister.DARK_CHOCOLATE_BLOCK.getDefaultState();
 
 	public ChocolateTree2() {
 		super("ChocolateTree2");

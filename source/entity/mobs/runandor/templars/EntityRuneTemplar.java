@@ -130,7 +130,7 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 		ItemStack heldStack = player.getHeldItem(hand);
 
 		if (isDisabled() && heldStack.getItem() == getActivationRune()) {
-			if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.runicEnergy)))
+			if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.RUNIC_ENERGY)))
 				changeState(false);
 
 			return true;
@@ -157,14 +157,16 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 				}
 			}
 			else if (rand.nextInt(125) == 0) {
-				EntityRunicLifeform lifeform = getLifeForm();
+				if (world.getEntitiesWithinAABB(EntityRunicLifeform.class, getEntityBoundingBox().grow(6, 3, 6)).size() <= 4) {
+					EntityRunicLifeform lifeform = getLifeForm();
 
-				int coordX = (int)posX - 3 + rand.nextInt(6);
-				int coordZ = (int)posZ - 3 + rand.nextInt(6);
+					int coordX = (int)posX - 3 + rand.nextInt(6);
+					int coordZ = (int)posZ - 3 + rand.nextInt(6);
 
-				lifeform.setLocationAndAngles(coordX, posY, coordZ, rand.nextFloat() * 360, 0);
-				world.spawnEntity(lifeform);
-				lifeforms.add(lifeform);
+					lifeform.setLocationAndAngles(coordX, posY, coordZ, rand.nextFloat() * 360, 0);
+					world.spawnEntity(lifeform);
+					lifeforms.add(lifeform);
+				}
 			}
 		}
 	}

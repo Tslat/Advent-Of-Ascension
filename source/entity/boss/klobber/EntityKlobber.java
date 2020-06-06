@@ -51,13 +51,13 @@ public class EntityKlobber extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobImmortalLiving;
+		return SoundsRegister.MOB_IMMORTAL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobImmortalDeath;
+		return SoundsRegister.MOB_IMMORTAL_DEATH;
 	}
 
 	@Nullable

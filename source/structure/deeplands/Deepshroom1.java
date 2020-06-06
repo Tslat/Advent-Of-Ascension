@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class Deepshroom1 extends AoAStructure { //StructureSize: 7x10x7
-	private static final IBlockState mushroom = BlockRegister.mushroomBlack.getDefaultState();
-	private static final IBlockState mushroomStem = BlockRegister.mushroomStemBlack.getDefaultState();
+	private static final IBlockState mushroom = BlockRegister.BLACK_MUSHROOM.getDefaultState();
+	private static final IBlockState mushroomStem = BlockRegister.BLACK_MUSHROOM_STEM.getDefaultState();
 
 	public Deepshroom1() {
 		super("Deepshroom1");

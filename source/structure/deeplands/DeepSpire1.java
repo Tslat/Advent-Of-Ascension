@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DeepSpire1 extends AoAStructure { //StructureSize: 8x49x8
-	private static final IBlockState stone = BlockRegister.stoneDeeplands.getDefaultState();
-	private static final IBlockState decayedGlass = BlockRegister.glassDecayed.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DEEPLANDS_STONE.getDefaultState();
+	private static final IBlockState decayedGlass = BlockRegister.DECAYED_GLASS.getDefaultState();
 
 	public DeepSpire1() {
 		super("DeepSpire1");

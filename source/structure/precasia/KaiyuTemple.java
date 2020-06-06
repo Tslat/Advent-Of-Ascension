@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class KaiyuTemple extends AoAStructure { //StructureSize: 44x36x50
-	private static final IBlockState plainTempleBlock = BlockRegister.kaiyuTempleBlockPlain.getDefaultState();
-	private static final IBlockState mazeTempleBlock = BlockRegister.kaiyuTempleBlockMaze.getDefaultState();
-	private static final IBlockState trackTempleBlock = BlockRegister.kaiyuTempleBlockTrack.getDefaultState();
+	private static final IBlockState plainTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_PLAIN.getDefaultState();
+	private static final IBlockState mazeTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_MAZE.getDefaultState();
+	private static final IBlockState trackTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_TRACK.getDefaultState();
 
 	public KaiyuTemple() {
 		super("KaiyuTemple");

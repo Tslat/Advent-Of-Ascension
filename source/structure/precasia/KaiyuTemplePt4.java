@@ -9,10 +9,10 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class KaiyuTemplePt4 {
-	private static final IBlockState plainTempleBlock = BlockRegister.kaiyuTempleBlockPlain.getDefaultState();
-	private static final IBlockState trackTempleBlock = BlockRegister.kaiyuTempleBlockTrack.getDefaultState();
-	private static final IBlockState faceTempleBlock = BlockRegister.kaiyuTempleBlockFace.getDefaultState();
-	private static final IBlockState kaiyuSpawner = BlockRegister.spawnerKaiyu.getDefaultState();
+	private static final IBlockState plainTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_PLAIN.getDefaultState();
+	private static final IBlockState trackTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_TRACK.getDefaultState();
+	private static final IBlockState faceTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_FACE.getDefaultState();
+	private static final IBlockState kaiyuSpawner = BlockRegister.KAIYU_SPAWNER.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	protected static void addBlocks(KaiyuTemple instance, World world, Random rand, BlockPos basePos) {

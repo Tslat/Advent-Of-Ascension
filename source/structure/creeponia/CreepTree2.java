@@ -10,12 +10,12 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CreepTree2 extends AoAStructure { //StructureSize: 7x7x7
-	private static final IBlockState creepLeaves = BlockRegister.leavesCreep.getDefaultState();
-	private static final IBlockState creepLog = BlockRegister.logCreep.getDefaultState();
-	private static final IBlockState creepVineNorth = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.NORTH, true);
-	private static final IBlockState creepVineSouth = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.SOUTH, true);
-	private static final IBlockState creepVineWest = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.WEST, true);
-	private static final IBlockState creepVineEast = BlockRegister.plantCreepVines.getDefaultState().withProperty(BlockVine.EAST, true);
+	private static final IBlockState creepLeaves = BlockRegister.CREEP_LEAVES.getDefaultState();
+	private static final IBlockState creepLog = BlockRegister.CREEP_LOG.getDefaultState();
+	private static final IBlockState creepVineNorth = BlockRegister.CREEP_VINES.getDefaultState().withProperty(BlockVine.NORTH, true);
+	private static final IBlockState creepVineSouth = BlockRegister.CREEP_VINES.getDefaultState().withProperty(BlockVine.SOUTH, true);
+	private static final IBlockState creepVineWest = BlockRegister.CREEP_VINES.getDefaultState().withProperty(BlockVine.WEST, true);
+	private static final IBlockState creepVineEast = BlockRegister.CREEP_VINES.getDefaultState().withProperty(BlockVine.EAST, true);
 
 	public CreepTree2() {
 		super("CreepTree2");

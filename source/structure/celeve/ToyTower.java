@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ToyTower extends AoAStructure { //StructureSize: 11x46x11
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState bloodstoneBricks = BlockRegister.BLOODSTONE_BRICKS.getDefaultState();
 
 	public ToyTower() {
 		super("ToyTower");

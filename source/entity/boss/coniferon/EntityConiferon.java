@@ -64,19 +64,19 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobConiferonLiving;
+		return SoundsRegister.MOB_CONIFERON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobConiferonDeath;
+		return SoundsRegister.MOB_CONIFERON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobConiferonHit;
+		return SoundsRegister.MOB_CONIFERON_HIT;
 	}
 
 	@Nullable
@@ -147,7 +147,7 @@ public class EntityConiferon extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicConiferon;
+		return SoundsRegister.CONIFERON_MUSIC;
 	}
 
 	@Override

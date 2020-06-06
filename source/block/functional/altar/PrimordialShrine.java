@@ -44,16 +44,16 @@ public class PrimordialShrine extends BossAltarBlock {
 		BlockPos lamp7 = pos.up(5).north(1).east(1);
 		BlockPos lamp8 = lamp7.south(2);
 
-		return world.getBlockState(lamp1).getBlock() == BlockRegister.dustopianLamp && world.getBlockState(lamp2).getBlock() == BlockRegister.dustopianLamp
-				&& world.getBlockState(lamp3).getBlock() == BlockRegister.dustopianLamp && world.getBlockState(lamp4).getBlock() == BlockRegister.dustopianLamp
-				&& world.getBlockState(lamp5).getBlock() == BlockRegister.dustopianLamp && world.getBlockState(lamp6).getBlock() == BlockRegister.dustopianLamp
-				&& world.getBlockState(lamp7).getBlock() == BlockRegister.dustopianLamp && world.getBlockState(lamp8).getBlock() == BlockRegister.dustopianLamp;
+		return world.getBlockState(lamp1).getBlock() == BlockRegister.DUSTOPIAN_LAMP && world.getBlockState(lamp2).getBlock() == BlockRegister.DUSTOPIAN_LAMP
+				&& world.getBlockState(lamp3).getBlock() == BlockRegister.DUSTOPIAN_LAMP && world.getBlockState(lamp4).getBlock() == BlockRegister.DUSTOPIAN_LAMP
+				&& world.getBlockState(lamp5).getBlock() == BlockRegister.DUSTOPIAN_LAMP && world.getBlockState(lamp6).getBlock() == BlockRegister.DUSTOPIAN_LAMP
+				&& world.getBlockState(lamp7).getBlock() == BlockRegister.DUSTOPIAN_LAMP && world.getBlockState(lamp8).getBlock() == BlockRegister.DUSTOPIAN_LAMP;
 	}
 
 	@Override
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		World world = player.world;
-		IBlockState lampOff = BlockRegister.dustopianLampOff.getDefaultState();
+		IBlockState lampOff = BlockRegister.DUSTOPIAN_LAMP_OFF.getDefaultState();
 
 		switch (player.getRNG().nextInt(8)) {
 			case 0:

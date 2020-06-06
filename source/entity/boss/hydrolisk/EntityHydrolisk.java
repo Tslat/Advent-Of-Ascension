@@ -87,24 +87,24 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHydroliskLiving;
+		return SoundsRegister.MOB_HYDROLISK_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHydroliskDeath;
+		return SoundsRegister.MOB_HYDROLISK_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHydroliskHit;
+		return SoundsRegister.MOB_HYDROLISK_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobEmperorBeastStep;
+		return SoundsRegister.MOB_EMPEROR_BEAST_STEP;
 	}
 
 	@Nullable
@@ -147,6 +147,9 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (isAIDisabled())
+			return;
+
 		if (isInWater())
 			heal(1);
 
@@ -167,7 +170,7 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 		if (shielded) {
 			ItemStack heldItem = player.getHeldItem(hand);
 
-			if (heldItem.getItem() == ItemRegister.hydroStone) {
+			if (heldItem.getItem() == ItemRegister.HYDRO_STONE) {
 				if (!player.capabilities.isCreativeMode)
 					heldItem.shrink(1);
 
@@ -193,7 +196,7 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicHydrolisk;
+		return SoundsRegister.HYDROLISK_MUSIC;
 	}
 
 	@Nonnull

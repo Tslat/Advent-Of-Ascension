@@ -14,17 +14,17 @@ import java.util.Random;
 public class AncientCavernRoom6 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState ancientGlass = BlockRegister.glassAncient.getDefaultState();
-	private static final IBlockState ancientLamp = BlockRegister.lightAncient.getDefaultState();
-	private static final IBlockState blackAncientTile = BlockRegister.ancientTileBlack.getDefaultState();
-	private static final IBlockState coreAncientTile = BlockRegister.ancientTileCore.getDefaultState();
-	private static final IBlockState greenAncientTile = BlockRegister.ancientTileGreen.getDefaultState();
+	private static final IBlockState ancientGlass = BlockRegister.ANCIENT_GLASS.getDefaultState();
+	private static final IBlockState ancientLamp = BlockRegister.ANCIENT_LIGHT.getDefaultState();
+	private static final IBlockState blackAncientTile = BlockRegister.BLACK_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState coreAncientTile = BlockRegister.ANCIENT_TILE_CORE.getDefaultState();
+	private static final IBlockState greenAncientTile = BlockRegister.GREEN_ANCIENT_TILE.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState whiteAncientTile = BlockRegister.ancientTileWhite.getDefaultState();
-	private static final IBlockState shrineAncientTile = BlockRegister.ancientTileShrine.getDefaultState();
-	private static final IBlockState erebonShrine = BlockRegister.shrineErebon.getDefaultState();
-	private static final IBlockState luxonShrine = BlockRegister.shrineLuxon.getDefaultState();
-	private static final IBlockState portalBlock = BlockRegister.portalAncientCavern.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH);
+	private static final IBlockState whiteAncientTile = BlockRegister.WHITE_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState shrineAncientTile = BlockRegister.ANCIENT_TILE_SHRINE.getDefaultState();
+	private static final IBlockState erebonShrine = BlockRegister.EREBON_SHRINE.getDefaultState();
+	private static final IBlockState luxonShrine = BlockRegister.LUXON_SHRINE.getDefaultState();
+	private static final IBlockState portalBlock = BlockRegister.ANCIENT_CAVERN_PORTAL.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH);
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

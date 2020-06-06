@@ -7,7 +7,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class BasicDecorationBlock extends BasicBlock {
 	public BasicDecorationBlock(String name, String registryName, Material material, float hardness, float resistance) {
 		super(name, registryName, material, hardness, resistance);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	public BasicDecorationBlock(String name, String registryName, Material material) {

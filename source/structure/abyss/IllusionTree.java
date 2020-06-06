@@ -10,11 +10,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IllusionTree extends AoAStructure { //StructureSize: 19x80x20
-	private static final IBlockState bloodLeaves = BlockRegister.leavesBlood.getDefaultState();
-	private static final IBlockState bloodLog = BlockRegister.logBlood.getDefaultState();
-	private static final IBlockState shadowLog = BlockRegister.logShadow.getDefaultState();
-	private static final IBlockState toxicBlock = BlockRegister.toxicBlock.getDefaultState();
-	private static final IBlockState illusionAltar = BlockRegister.illusionAltar.getDefaultState();
+	private static final IBlockState bloodLeaves = BlockRegister.BLOOD_LEAVES.getDefaultState();
+	private static final IBlockState bloodLog = BlockRegister.BLOOD_LOG.getDefaultState();
+	private static final IBlockState shadowLog = BlockRegister.SHADOW_LOG.getDefaultState();
+	private static final IBlockState toxicBlock = BlockRegister.TOXIC_BLOCK.getDefaultState();
+	private static final IBlockState illusionAltar = BlockRegister.ILLUSION_ALTAR.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public IllusionTree() {

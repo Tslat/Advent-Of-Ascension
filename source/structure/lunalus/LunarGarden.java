@@ -10,11 +10,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunarGarden extends AoAStructure { //StructureSize: 17x15x17
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 	private static final IBlockState tilledDirt = Blocks.FARMLAND.getDefaultState();
-	private static final IBlockState twinklestone = BlockRegister.lightTwinklestone.getDefaultState();
+	private static final IBlockState twinklestone = BlockRegister.TWINKLESTONE.getDefaultState();
 
 	public LunarGarden() {
 		super("LunarGarden");
@@ -31,14 +31,14 @@ public class LunarGarden extends AoAStructure { //StructureSize: 17x15x17
 
 		switch (rand.nextInt(3)) {
 			case 0:
-				crop = BlockRegister.cropLunalons.getDefaultState();
+				crop = BlockRegister.LUNALON_CROP.getDefaultState();
 				break;
 			case 1:
-				crop = BlockRegister.cropLunacrike.getDefaultState();
+				crop = BlockRegister.LUNACRIKE_CROP.getDefaultState();
 				break;
 			case 2:
 			default:
-				crop = BlockRegister.cropLunaGlobes.getDefaultState();
+				crop = BlockRegister.LUNA_GLOBE_CROP.getDefaultState();
 				break;
 		}
 

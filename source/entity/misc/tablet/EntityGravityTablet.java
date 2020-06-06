@@ -25,6 +25,6 @@ public class EntityGravityTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletGravity;
+		return ItemRegister.GRAVITY_TABLET;
 	}
 }

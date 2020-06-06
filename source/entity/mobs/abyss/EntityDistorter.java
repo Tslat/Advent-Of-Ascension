@@ -15,7 +15,6 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -68,17 +67,17 @@ public class EntityDistorter extends AoAMeleeMob implements SpecialPropertyEntit
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDistorterLiving;
+		return SoundsRegister.MOB_DISTORTER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDistorterDeath;
+		return SoundsRegister.MOB_DISTORTER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDistorterHit;
+		return SoundsRegister.MOB_DISTORTER_HIT;
 	}
 
 	@Nullable

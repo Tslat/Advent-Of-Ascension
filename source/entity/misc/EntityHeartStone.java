@@ -99,7 +99,7 @@ public class EntityHeartStone extends Entity {
 
             EntityUtil.healEntity(player, InnervationUtil.getHeartstoneHealAmount(lvl));
             plData.stats().addXp(Enums.Skills.INNERVATION, PlayerUtil.getXpRequiredForNextLevel(lvl) / InnervationUtil.getExpDenominator(lvl), false, false);
-            world.playSound(null, posX, posY, posZ, SoundsRegister.heartStonePickup, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.HEART_STONE_USE, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             setDead();
         }
     }

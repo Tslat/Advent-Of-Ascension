@@ -27,7 +27,7 @@ public class LunaBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSpaceRevolver;
+		return SoundsRegister.SPACE_REVOLVER_FIRE;
 	}
 
 	@Override

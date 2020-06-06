@@ -25,7 +25,7 @@ public class ConfettiCannon extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunConfettiCannon;
+		return SoundsRegister.CONFETTI_CANNON_FIRE;
 	}
 
 	@Override

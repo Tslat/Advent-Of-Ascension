@@ -64,19 +64,19 @@ public class EntityCaseConstruct extends AoAMeleeMob implements SpecialPropertyE
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCrystalConstructLiving;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCrystalConstructDeath;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCrystalConstructHit;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_HIT;
     }
 
     @Nullable
@@ -92,9 +92,9 @@ public class EntityCaseConstruct extends AoAMeleeMob implements SpecialPropertyE
 
     @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {
-        if (!world.isRemote && player.getHeldItem(hand).getItem() == Item.getItemFromBlock(BlockRegister.lightDeepCrystal)) {
-            if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.realmstoneBlank)))
-                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneCrystevia));
+        if (!world.isRemote && player.getHeldItem(hand).getItem() == Item.getItemFromBlock(BlockRegister.DEEP_CRYSTAL)) {
+            if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CRYSTEVIA_REALMSTONE));
 
             return true;
         }

@@ -27,7 +27,7 @@ public class WithersWrath extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunWithersWrath;
+		return SoundsRegister.WITHERS_WRATH_FIRE;
 	}
 
 	@Override

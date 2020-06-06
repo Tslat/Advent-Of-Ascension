@@ -62,19 +62,19 @@ public class EntityCoralon extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCoralonLiving;
+		return SoundsRegister.MOB_CORALON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCoralonDeath;
+		return SoundsRegister.MOB_CORALON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCoralonHit;
+		return SoundsRegister.MOB_CORALON_HIT;
 	}
 
 	@Nullable

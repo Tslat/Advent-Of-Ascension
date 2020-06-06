@@ -12,10 +12,10 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class RunicTower extends AoAStructure { //StructureSize: 10x37x10
-	private static final IBlockState stone = BlockRegister.stoneRunic.getDefaultState();
-	private static final IBlockState runicGlass = BlockRegister.glassRunic.getDefaultState();
-	private static final IBlockState runicNeonLamp = BlockRegister.lampNeonRunic.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState runicConstructBricks = BlockRegister.bricksRunicConstruct.getDefaultState();
+	private static final IBlockState stone = BlockRegister.RUNIC_STONE.getDefaultState();
+	private static final IBlockState runicGlass = BlockRegister.RUNIC_GLASS.getDefaultState();
+	private static final IBlockState runicNeonLamp = BlockRegister.NEON_RUNIC_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState runicConstructBricks = BlockRegister.RUNIC_CONSTRUCT_BRICKS.getDefaultState();
 
 	public RunicTower() {
 		super("RunicTower");

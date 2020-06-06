@@ -24,7 +24,7 @@ public class NetherTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalNether;
+		return BlockRegister.NETHER_PORTAL;
 	}
 
 	@Override

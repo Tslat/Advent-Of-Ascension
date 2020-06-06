@@ -29,13 +29,13 @@ public class HiveStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffShadow;
+		return SoundsRegister.SHADOW_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeEnergy, 10);
-		runes.put(ItemRegister.runeLife, 2);
+		runes.put(ItemRegister.ENERGY_RUNE, 10);
+		runes.put(ItemRegister.LIFE_RUNE, 2);
 	}
 
 	@Override

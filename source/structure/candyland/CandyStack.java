@@ -21,13 +21,13 @@ public class CandyStack extends AoAStructure {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
 				switch (rand.nextInt(3)) {
 					case 0:
-						addBlock(world, basePos, 0, y, 0, BlockRegister.plantLollypopYellow.getDefaultState());
+						addBlock(world, basePos, 0, y, 0, BlockRegister.YELLOW_LOLLYPOP.getDefaultState());
 						break;
 					case 1:
-						addBlock(world, basePos, 0, y, 0, BlockRegister.plantLollypopRed.getDefaultState());
+						addBlock(world, basePos, 0, y, 0, BlockRegister.RED_LOLLYPOP.getDefaultState());
 						break;
 					case 2:
-						addBlock(world, basePos, 0, y, 0, BlockRegister.plantLollypopBlue.getDefaultState());
+						addBlock(world, basePos, 0, y, 0, BlockRegister.BLUE_LOLLYPOP.getDefaultState());
 						break;
 				}
 

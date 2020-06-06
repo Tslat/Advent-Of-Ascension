@@ -103,17 +103,17 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNethengeicWitherLiving;
+		return SoundsRegister.MOB_NETHENGEIC_WITHER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNethengeicWitherDeath;
+		return SoundsRegister.MOB_NETHENGEIC_WITHER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundsRegister.mobNethengeicWitherHit;
+		return SoundsRegister.MOB_NETHENGEIC_WITHER_HIT;
 	}
 
 	@Nullable
@@ -375,7 +375,7 @@ public class EntityNethengeicWither extends EntityMob implements BossEntity, IRa
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicNethengeicWither;
+		return SoundsRegister.NETHENGEIC_WITHER_MUSIC;
 	}
 
 	@Override

@@ -36,7 +36,7 @@ import java.util.List;
 public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 	public BaseSniper(double dmg, int durability, int fireDelayTicks, float recoil) {
 		super(dmg, durability, fireDelayTicks, recoil);
-		setCreativeTab(CreativeTabsRegister.snipersTab);
+		setCreativeTab(CreativeTabsRegister.SNIPERS);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 	public void fireSniper(EntityLivingBase shooter, EnumHand hand, BaseBullet bullet) {
 		if (shooter.isSneaking() && shooter.onGround) {
 			if (shooter instanceof EntityPlayerMP) {
-				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.control, shooter.getHeldItem(hand));
+				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, shooter.getHeldItem(hand));
 				float recoiling = getRecoilForShot(shooter.getHeldItem(hand), shooter) * (1 - control * 0.15f);
 
 				PacketUtil.network.sendTo(new PacketRecoil(recoiling, getFiringDelay()), (EntityPlayerMP)shooter);
@@ -105,7 +105,7 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.metalSlug, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.METAL_SLUG, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntitySniperSlug(player, gun, 0);

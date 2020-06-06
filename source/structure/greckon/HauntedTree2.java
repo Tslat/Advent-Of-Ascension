@@ -12,12 +12,12 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class HauntedTree2 extends AoAStructure { //StructureSize: 9x13x9
-	private static final IBlockState hauntedLeaves = BlockRegister.leavesHaunted.getDefaultState();
-	private static final IBlockState hauntedLog = BlockRegister.logHaunted.getDefaultState();
-	private static final IBlockState hauntedLogBark = BlockRegister.logHaunted.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-	private static final IBlockState hauntedEyesLeaves = BlockRegister.leavesHauntedEyes.getDefaultState();
-	private static final IBlockState hauntedEyesLog = BlockRegister.logHauntedEyes.getDefaultState();
-	private static final IBlockState hauntedLargeEyeLog = BlockRegister.logHauntedEye.getDefaultState();
+	private static final IBlockState hauntedLeaves = BlockRegister.HAUNTED_LEAVES.getDefaultState();
+	private static final IBlockState hauntedLog = BlockRegister.HAUNTED_LOG.getDefaultState();
+	private static final IBlockState hauntedLogBark = BlockRegister.HAUNTED_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState hauntedEyesLeaves = BlockRegister.HAUNTED_EYES_LEAVES.getDefaultState();
+	private static final IBlockState hauntedEyesLog = BlockRegister.HAUNTED_EYES_LOG.getDefaultState();
+	private static final IBlockState hauntedLargeEyeLog = BlockRegister.HAUNTED_EYE_LOG.getDefaultState();
 
 	public HauntedTree2() {
 		super("HauntedTree2");

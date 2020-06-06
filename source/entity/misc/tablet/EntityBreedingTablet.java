@@ -31,6 +31,6 @@ public class EntityBreedingTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletBreeding;
+		return ItemRegister.BREEDING_TABLET;
 	}
 }

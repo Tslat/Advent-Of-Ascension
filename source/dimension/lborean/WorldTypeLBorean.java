@@ -14,7 +14,7 @@ public class WorldTypeLBorean extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeLBorean);
+		return new BiomeProviderSingle(BiomeRegister.LBOREAN);
 	}
 
 	@Override

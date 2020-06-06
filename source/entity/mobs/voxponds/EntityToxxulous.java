@@ -52,19 +52,19 @@ public class EntityToxxulous extends AoAMeleeMob implements SpecialPropertyEntit
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobToxxulousLiving;
+        return SoundsRegister.MOB_TOXXULOUS_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobToxxulousDeath;
+        return SoundsRegister.MOB_TOXXULOUS_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobToxxulousHit;
+        return SoundsRegister.MOB_TOXXULOUS_HIT;
     }
 
     @Nullable

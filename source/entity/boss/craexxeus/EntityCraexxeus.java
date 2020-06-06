@@ -57,25 +57,25 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCraexxeusLiving;
+		return SoundsRegister.MOB_CRAEXXEUS_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCraexxeusDeath;
+		return SoundsRegister.MOB_CRAEXXEUS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCraexxeusHit;
+		return SoundsRegister.MOB_CRAEXXEUS_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotCraexxeusFire;
+		return SoundsRegister.CRAEXXEUS_SHOOT;
 	}
 
 	@Nullable
@@ -102,7 +102,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicCraexxeus;
+		return SoundsRegister.CRAEXXEUS_MUSIC;
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 				chargeCooldown--;
 
 				if (chargeCooldown == 40)
-					world.playSound(null, posX, posY, posZ, SoundsRegister.mobCraexxeusCharge, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_CRAEXXEUS_CHARGE, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 			else {
 				chargeCooldown = 300;
@@ -138,7 +138,7 @@ public class EntityCraexxeus extends AoAFlyingRangedMob implements BossEntity {
 					double distanceFactorZ = target.posZ - projectile.posZ;
 					double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-					world.playSound(null, posX, posY, posZ, SoundsRegister.shotCraexxeusNukeFire, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.CRAEXXEUS_NUKE_SHOOT, SoundCategory.HOSTILE, 1.0f, 1.0f);
 					projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
 					world.spawnEntity(projectile);
 				}

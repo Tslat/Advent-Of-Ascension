@@ -25,6 +25,6 @@ public class ToyBox extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.toyGyrocopter;
+		return ItemRegister.TOY_GYROCOPTER;
 	}
 }

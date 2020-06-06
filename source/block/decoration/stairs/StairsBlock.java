@@ -11,7 +11,7 @@ public class StairsBlock extends BlockStairs {
 		super(baseBlock.getDefaultState());
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 		useNeighborBrightness = true;
 
 		if (baseBlock.getMaterial(getDefaultState()) == Material.WOOD)

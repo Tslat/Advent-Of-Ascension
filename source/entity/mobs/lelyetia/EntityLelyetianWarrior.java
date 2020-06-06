@@ -45,19 +45,19 @@ public class EntityLelyetianWarrior extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobLelyetianLiving;
+		return SoundsRegister.MOB_LELYETIAN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobLelyetianDeath;
+		return SoundsRegister.MOB_LELYETIAN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobLelyetianHit;
+		return SoundsRegister.MOB_LELYETIAN_HIT;
 	}
 
 	@Nullable

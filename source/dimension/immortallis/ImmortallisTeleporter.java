@@ -52,11 +52,11 @@ public class ImmortallisTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalImmortallis;
+		return BlockRegister.IMMORTALLIS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.archaicTiles;
+		return BlockRegister.ARCHAIC_TILES;
 	}
 }

@@ -50,19 +50,19 @@ public class EntitySoulvyre extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSoulvyreLiving;
+        return SoundsRegister.MOB_SOULVYRE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSoulvyreDeath;
+        return SoundsRegister.MOB_SOULVYRE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSoulvyreHit;
+        return SoundsRegister.MOB_SOULVYRE_HIT;
     }
 
     @Nullable

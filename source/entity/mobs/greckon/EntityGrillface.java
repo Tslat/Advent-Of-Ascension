@@ -53,19 +53,19 @@ public class EntityGrillface extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobGrillfaceLiving;
+        return SoundsRegister.MOB_GRILLFACE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobGrillfaceDeath;
+        return SoundsRegister.MOB_GRILLFACE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobGrillfaceHit;
+        return SoundsRegister.MOB_GRILLFACE_HIT;
     }
 
     @Nullable
@@ -77,7 +77,7 @@ public class EntityGrillface extends AoAMeleeMob {
     @Override
     protected void doMeleeEffect(Entity target) {
         if (target instanceof EntityPlayerMP && getRevengeTarget() == null && scareCooldown <= 0) {
-            world.playSound(null, posX, posY, posZ, SoundsRegister.mobGrillfaceScare, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_GRILLFACE_SCARE, SoundCategory.HOSTILE, 1.0f, 1.0f);
             PacketUtil.network.sendTo(new PacketScreenOverlay(20, Enums.ScreenOverlays.GRILLFACE), (EntityPlayerMP)target);
 
             scareCooldown = 100;

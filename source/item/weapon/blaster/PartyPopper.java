@@ -18,7 +18,7 @@ public class PartyPopper extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunPartyPopper;
+		return SoundsRegister.PARTY_POPPER_FIRE;
 	}
 
 	@Override

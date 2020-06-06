@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BlueTulip extends AoAStructure { //StructureSize: 6x13x6
-	private static final IBlockState bluePetals = BlockRegister.petalsBlue.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
+	private static final IBlockState bluePetals = BlockRegister.BLUE_PETALS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
 
 	public BlueTulip() {
 		super("BlueTulip");

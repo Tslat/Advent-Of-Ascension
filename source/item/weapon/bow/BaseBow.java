@@ -41,8 +41,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
-		setCreativeTab(CreativeTabsRegister.bowsTab);
+		setCreativeTab(CreativeTabsRegister.BOWS);
 
 		addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -83,7 +82,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 
 		if (!ammoStack.isEmpty() || infiniteAmmo) {
 			if (ammoStack.isEmpty())
-				ammoStack = new ItemStack(ItemRegister.hollyArrow);
+				ammoStack = new ItemStack(ItemRegister.HOLLY_ARROW);
 
 			float velocity = getArrowVelocity(charge);
 
@@ -101,7 +100,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 	}
 
 	protected EntityHollyArrow makeArrow(EntityLivingBase shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		HollyArrow arrowItem = (HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.hollyArrow);
+		HollyArrow arrowItem = (HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.HOLLY_ARROW);
 		EntityHollyArrow arrowEntity = arrowItem.createArrow(shooter.world, this, ammoStack, shooter, dmg);
 		arrowEntity.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
 
@@ -175,7 +174,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
+		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false) || super.getIsRepairable(stack, repairMaterial);
 	}
 
 	public void doArrowMods(EntityHollyArrow arrow, EntityLivingBase shooter, int useTicksRemaining) {}

@@ -53,19 +53,19 @@ public class EntityVinocorne extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTreeSpiritLiving;
+		return SoundsRegister.MOB_TREE_SPIRIT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTreeSpiritDeath;
+		return SoundsRegister.MOB_TREE_SPIRIT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTreeSpiritHit;
+		return SoundsRegister.MOB_TREE_SPIRIT_HIT;
 	}
 
 	@Nullable
@@ -157,7 +157,7 @@ public class EntityVinocorne extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicVinocorne;
+		return SoundsRegister.VINOCORNE_MUSIC;
 	}
 
 	@Override

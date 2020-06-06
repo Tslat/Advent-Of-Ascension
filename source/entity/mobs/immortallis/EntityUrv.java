@@ -52,18 +52,18 @@ public class EntityUrv extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAutomatonDeath;
+		return SoundsRegister.MOB_AUTOMATON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAutomatonHit;
+		return SoundsRegister.MOB_AUTOMATON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobGolemStep;
+		return SoundsRegister.MOB_GOLEM_STEP;
 	}
 
 	@Nullable

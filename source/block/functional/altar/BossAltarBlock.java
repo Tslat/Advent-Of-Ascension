@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 public abstract class BossAltarBlock extends BasicBlock {
 	public BossAltarBlock(String name, String registryName) {
 		super(name, registryName, Material.ROCK, -1f, 999999999f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

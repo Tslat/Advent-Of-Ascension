@@ -30,14 +30,14 @@ public class AtlanticStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffAtlantic;
+		return SoundsRegister.ATLANTIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 1);
-		runes.put(ItemRegister.runeEnergy, 2);
-		runes.put(ItemRegister.runeStorm, 2);
+		runes.put(ItemRegister.DISTORTION_RUNE, 1);
+		runes.put(ItemRegister.ENERGY_RUNE, 2);
+		runes.put(ItemRegister.STORM_RUNE, 2);
 	}
 
 	@Override

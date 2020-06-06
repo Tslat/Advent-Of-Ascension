@@ -23,11 +23,11 @@ public class MysteriumTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalMysterium;
+		return BlockRegister.MYSTERIUM_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.mushroomBlueOutside;
+		return BlockRegister.BLUE_MUSHROOM_OUTSIDE;
 	}
 }

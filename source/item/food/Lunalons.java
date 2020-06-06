@@ -18,7 +18,7 @@ public class Lunalons extends BasicFood {
 	public Lunalons() {
 		super("Lunalons", "lunalons", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropLunalons.setCrop(this);
+		BlockRegister.LUNALON_CROP.setCrop(this);
 	}
 
 	@Override

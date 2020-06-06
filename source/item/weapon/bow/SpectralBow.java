@@ -25,7 +25,7 @@ public class SpectralBow extends BaseBow {
 
 	@Override
 	protected ItemStack findAmmo(EntityPlayer player) {
-		return new ItemStack(ItemRegister.hollyArrow);
+		return new ItemStack(ItemRegister.HOLLY_ARROW);
 	}
 
 	@Override

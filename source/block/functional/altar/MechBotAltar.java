@@ -25,6 +25,6 @@ public class MechBotAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.goldSpring;
+		return ItemRegister.GOLD_SPRING;
 	}
 }

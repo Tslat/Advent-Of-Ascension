@@ -12,15 +12,19 @@ import net.tslat.aoa3.client.gui.mainwindow.AdventMainGui;
 public class KeyBinder {
 	public static KeyBinding keyCreatureStats;
 	public static KeyBinding keyResourceGui;
+	public static KeyBinding keySkillGui;
 	public static KeyBinding keyAdventGui;
 
 	public static boolean statusCreatureStats = true;
 	public static boolean statusResourceGui = false;
+	public static boolean statusSkillGui = false;
 	public static boolean statusResourceGuiMessage = true;
+	public static boolean statusSkillGuiMessage = true;
 
 	public static void init() {
-		ClientRegistry.registerKeyBinding(keyCreatureStats = new KeyBinding("key.cstats", 49, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keyCreatureStats = new KeyBinding("key.cstats", 0, "key.categories.advent"));
 		ClientRegistry.registerKeyBinding(keyResourceGui = new KeyBinding("key.resources", 24, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keySkillGui = new KeyBinding("key.skills", 0, "key.categories.advent"));
 		ClientRegistry.registerKeyBinding(keyAdventGui = new KeyBinding("key.adventGui", 211, "key.categories.advent"));
 	}
 
@@ -32,6 +36,11 @@ public class KeyBinder {
 		if (keyResourceGui.isPressed()) {
 			statusResourceGui = !statusResourceGui;
 			statusResourceGuiMessage = false;
+		}
+
+		if (keySkillGui.isPressed()) {
+			statusSkillGui = !statusSkillGui;
+			statusSkillGuiMessage = false;
 		}
 
 		if (keyAdventGui.isPressed() && Minecraft.getMinecraft().player != null) {

@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunarPrison extends AoAStructure { //StructureSize: 37x10x21
-	private static final IBlockState inmateXSpawner = BlockRegister.spawnerInmateX.getDefaultState();
-	private static final IBlockState inmateYSpawner = BlockRegister.spawnerInmateY.getDefaultState();
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
+	private static final IBlockState inmateXSpawner = BlockRegister.INMATE_X_SPAWNER.getDefaultState();
+	private static final IBlockState inmateYSpawner = BlockRegister.INMATE_Y_SPAWNER.getDefaultState();
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
 

@@ -45,22 +45,22 @@ public class EntityBrute extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCyclopsLiving;
+		return SoundsRegister.MOB_CYCLOPS_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCyclopsDeath;
+		return SoundsRegister.MOB_CYCLOPS_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCyclopsHit;
+		return SoundsRegister.MOB_CYCLOPS_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

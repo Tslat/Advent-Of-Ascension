@@ -61,13 +61,13 @@ public class EntityFlowerface extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.plantThump;
+        return SoundsRegister.PLANT_THUMP;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.plantThump;
+        return SoundsRegister.PLANT_THUMP;
     }
 
     @Nullable
@@ -78,7 +78,7 @@ public class EntityFlowerface extends AoAMeleeMob {
 
     @Override
     protected void onInsideBlock(IBlockState state) {
-        if (state.getBlock() == BlockRegister.candiedWater) {
+        if (state.getBlock() == BlockRegister.CANDIED_WATER) {
             if (!candiedWater) {
                 EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.GARDENCIA_CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
@@ -140,8 +140,8 @@ public class EntityFlowerface extends AoAMeleeMob {
                     PlayerUtil.addTributeToPlayer(killer, Enums.Deities.SELYAN, 8);
             }
 
-            if (candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBlank)))
-                ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.realmstoneBorean));
+            if (candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+                ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BOREAN_REALMSTONE));
         }
     }
 }

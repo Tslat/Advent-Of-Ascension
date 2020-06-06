@@ -28,7 +28,7 @@ public class TreasureBox extends Item {
 	public TreasureBox() {
 		setTranslationKey("TreasureBox");
 		setRegistryName("aoa3:treasure_box");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -42,6 +42,8 @@ public class TreasureBox extends Item {
 				player.getHeldItem(hand).shrink(1);
 
 			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

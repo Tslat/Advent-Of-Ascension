@@ -34,7 +34,7 @@ public class Tea extends BasicFood {
 		if (!world.isRemote) {
 			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 1, true, false));
 			player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 130, 0, true, false));
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.cup));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CUP));
 		}
 	}
 

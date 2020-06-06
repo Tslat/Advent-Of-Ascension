@@ -68,17 +68,17 @@ public class EntityScrubby extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobScrubbyLiving;
+		return SoundsRegister.MOB_SCRUBBY_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobScrubbyHit;
+		return SoundsRegister.MOB_SCRUBBY_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobScrubbyHit;
+		return SoundsRegister.MOB_SCRUBBY_HIT;
 	}
 
 	@Nullable

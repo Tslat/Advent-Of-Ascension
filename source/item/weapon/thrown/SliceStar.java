@@ -18,7 +18,7 @@ public class SliceStar extends BaseThrownWeapon {
 		super(dmg, 7);
 		setTranslationKey("SliceStar");
 		setRegistryName("aoa3:slice_star");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

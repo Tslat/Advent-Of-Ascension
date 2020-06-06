@@ -33,7 +33,7 @@ public class GooBall extends BaseThrownWeapon {
 		super(dmg, 7);
 		setTranslationKey("GooBall");
 		setRegistryName("aoa3:goo_ball");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable
@@ -57,7 +57,7 @@ public class GooBall extends BaseThrownWeapon {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 1));
 
-		shooter.world.playSound(null, gooBall.posX, gooBall.posY, gooBall.posZ, SoundsRegister.gooBallImpact, SoundCategory.PLAYERS, 1.0f, 1.0f);
+		shooter.world.playSound(null, gooBall.posX, gooBall.posY, gooBall.posZ, SoundsRegister.GOO_BALL_IMPACT, SoundCategory.PLAYERS, 1.0f, 1.0f);
 	}
 
 	@SideOnly(Side.CLIENT)

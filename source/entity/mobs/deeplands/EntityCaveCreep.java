@@ -41,19 +41,19 @@ public class EntityCaveCreep extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCaveCreepLiving;
+        return SoundsRegister.MOB_CAVE_CREEP_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCaveCreepDeath;
+        return SoundsRegister.MOB_CAVE_CREEP_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCaveCreepHit;
+        return SoundsRegister.MOB_CAVE_CREEP_HIT;
     }
 
     @Nullable

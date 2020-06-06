@@ -6,22 +6,22 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
 
 public class EntityAIFullPanic extends EntityAIBase {
-	private final EntityCreature taskOwner;
+	protected final EntityCreature taskOwner;
 
-	private final int timeToPanic;
-	private int panicTimer;
+	protected final int timeToPanic;
+	protected int panicTimer;
 
-	private final double speed;
-	private double randomTargetX;
-	private double randomTargetY;
-	private double randomTargetZ;
+	protected final double speed;
+	protected double randomTargetX;
+	protected double randomTargetY;
+	protected double randomTargetZ;
 
 	public EntityAIFullPanic(EntityCreature creature, int timeToPanic, double speed) {
 		this.taskOwner = creature;
 		this.timeToPanic = timeToPanic;
 		this.speed = speed;
 
-		this.setMutexBits(3);
+		this.setMutexBits(1 | 2);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class EntityAIFullPanic extends EntityAIBase {
 		return false;
 	}
 
-	private boolean getRandomPosition() {
+	protected boolean getRandomPosition() {
 		Vec3d targetPos = RandomPositionGenerator.findRandomTarget(this.taskOwner, 20, 4);
 
 		if (targetPos != null) {
@@ -61,15 +61,14 @@ public class EntityAIFullPanic extends EntityAIBase {
 
 	@Override
 	public boolean shouldContinueExecuting() {
+		return panicTimer < timeToPanic;
+	}
+
+	@Override
+	public void updateTask() {
 		panicTimer++;
 
-		if (panicTimer < timeToPanic) {
-			if (taskOwner.getNavigator().noPath() && getRandomPosition())
-				taskOwner.getNavigator().tryMoveToXYZ(randomTargetX, randomTargetY, randomTargetZ, speed);
-
-			return true;
-		}
-
-		return false;
+		if (taskOwner.getNavigator().noPath() && getRandomPosition())
+			taskOwner.getNavigator().tryMoveToXYZ(randomTargetX, randomTargetY, randomTargetZ, speed);
 	}
 }

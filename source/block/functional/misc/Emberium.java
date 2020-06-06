@@ -19,7 +19,7 @@ public class Emberium extends BasicBlock {
 
 	public Emberium() {
 		super("Emberium", "emberium", Material.ROCK, 5.0f, 10.0f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Nullable

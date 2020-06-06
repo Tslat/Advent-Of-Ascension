@@ -58,19 +58,19 @@ public class EntityGoofer extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCeleveClownLiving;
+		return SoundsRegister.MOB_CELEVE_CLOWN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCeleveClownHit;
+		return SoundsRegister.MOB_CELEVE_CLOWN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCeleveClownDeath;
+		return SoundsRegister.MOB_CELEVE_CLOWN_DEATH;
 	}
 
 	@Nullable

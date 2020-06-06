@@ -169,7 +169,7 @@ public class CaveGenCreeponia extends MapGenCaves {
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
 		Block block = targetBlock.getBlock();
 
-		return block == BlockRegister.stonePrimed || block == BlockRegister.stoneUnstable || block == BlockRegister.stoneCreep || block == BlockRegister.lightCreepCrystal;
+		return block == BlockRegister.PRIMED_STONE || block == BlockRegister.UNSTABLE_STONE || block == BlockRegister.CREEP_STONE || block == BlockRegister.CREEP_CRYSTAL;
 	}
 
 	private boolean isTopBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ) {
@@ -187,7 +187,7 @@ public class CaveGenCreeponia extends MapGenCaves {
 
 		if (canReplaceBlock(state, up) || state.getBlock() == top.getBlock() || state.getBlock() == filler.getBlock()) {
 			if (y <= 5) {
-				data.setBlockState(x, y, z, BlockRegister.stonePrimed.getDefaultState());
+				data.setBlockState(x, y, z, BlockRegister.PRIMED_STONE.getDefaultState());
 			}
 			else {
 				data.setBlockState(x, y, z, BLK_AIR);

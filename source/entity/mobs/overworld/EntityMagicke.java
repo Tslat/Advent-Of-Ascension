@@ -58,25 +58,25 @@ public class EntityMagicke extends AoARangedMob implements SpecialPropertyEntity
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMagickeLiving;
+		return SoundsRegister.MOB_MAGICKE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMagickeDeath;
+		return SoundsRegister.MOB_MAGICKE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMagickeHit;
+		return SoundsRegister.MOB_MAGICKE_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotMagickeFire;
+		return SoundsRegister.MAGICKE_SHOOT;
 	}
 
 	@Nullable

@@ -3,6 +3,7 @@ package net.tslat.aoa3.common;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
@@ -14,12 +15,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.event.ClientEventHandler;
 import net.tslat.aoa3.client.event.KeyBinder;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabGuides;
 import net.tslat.aoa3.client.gui.render.*;
 import net.tslat.aoa3.client.gui.toasts.LevelRequirementToast;
 import net.tslat.aoa3.client.gui.toasts.ResourceRequirementToast;
 import net.tslat.aoa3.client.gui.toasts.TributeRequirementToast;
-import net.tslat.aoa3.client.model.entities.animations.AnimationManager;
+import net.tslat.aoa3.client.model.entities.player.LayerPlayerHalo;
 import net.tslat.aoa3.client.render.FXRenders;
 import net.tslat.aoa3.client.render.entities.projectiles.ProjectileRenders;
 import net.tslat.aoa3.client.sound.MusicSound;
@@ -45,9 +45,11 @@ public class ClientProxy extends ServerProxy {
 	@Override
 	public void postInit() {
 		ProjectileRenders.postInit();
-		AdventGuiTabGuides.prepAvailableBundles();
-		AnimationManager.registerAnimations();
 		ClientCommandHandler.instance.registerCommand(new CommandAoAWiki());
+
+		for (RenderPlayer playerRenderer : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
+			playerRenderer.addLayer(new LayerPlayerHalo(playerRenderer));
+		}
 	}
 
 	@Override
@@ -87,6 +89,7 @@ public class ClientProxy extends ServerProxy {
 		forgeBus.register(new HelmetScreenRenderer());
 		forgeBus.register(new ScreenOverlayRenderer());
 		forgeBus.register(new ResourcesRenderer());
+		forgeBus.register(new SkillsRenderer());
 		forgeBus.register(new XpParticlesRenderer());
 		forgeBus.register(new BossBarRenderer());
 		forgeBus.register(new ClientEventHandler());

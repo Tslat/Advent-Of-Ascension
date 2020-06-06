@@ -63,19 +63,19 @@ public class EntityPigotron extends AoAMeleeMob implements SpecialPropertyEntity
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobPigotronLiving;
+        return SoundsRegister.MOB_PIGOTRON_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobPigotronDeath;
+        return SoundsRegister.MOB_PIGOTRON_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobPigotronHit;
+        return SoundsRegister.MOB_PIGOTRON_HIT;
     }
 
     @Nullable

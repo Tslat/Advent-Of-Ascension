@@ -25,11 +25,11 @@ public class DustopianLampOff extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && !player.isSneaking() && player.getHeldItem(hand).getItem() == ItemRegister.darklyPowder) {
+		if (!world.isRemote && !player.isSneaking() && player.getHeldItem(hand).getItem() == ItemRegister.DARKLY_POWDER) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
-			world.setBlockState(pos, BlockRegister.dustopianLamp.getDefaultState());
+			world.setBlockState(pos, BlockRegister.DUSTOPIAN_LAMP.getDefaultState());
 		}
 
 		return true;

@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 public class CaveGenPrecasia extends MapGenCaves {
 	@Override
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
-		return targetBlock.getBlock() == BlockRegister.stonePrecasiaLow;
+		return targetBlock.getBlock() == BlockRegister.LOW_PRECASIA_STONE;
 	}
 
 	@Override

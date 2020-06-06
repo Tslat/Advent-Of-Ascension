@@ -82,7 +82,7 @@ public class ContainerInfusionTable extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		if (world.getBlockState(pos).getBlock() != BlockRegister.infusionTable)
+		if (world.getBlockState(pos).getBlock() != BlockRegister.INFUSION_TABLE)
 			return false;
 
 		return player.getDistanceSq(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d) <= 64;
@@ -117,11 +117,11 @@ public class ContainerInfusionTable extends Container {
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 11 && index < 38) {
-				if (!mergeItemStack(slotStack, 38, 47, false))
+				if (!mergeItemStack(slotStack, 1, 11, false) && !mergeItemStack(slotStack, 38, 47, false))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 38 && index < 47) {
-				if (!mergeItemStack(slotStack, 11, 38, false))
+				if (!mergeItemStack(slotStack, 1, 11, false) && !mergeItemStack(slotStack, 11, 38, false))
 					return ItemStack.EMPTY;
 			}
 			else if (!mergeItemStack(slotStack, 11, 47, false)) {

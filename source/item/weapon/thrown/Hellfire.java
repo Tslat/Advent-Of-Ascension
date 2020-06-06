@@ -25,7 +25,7 @@ public class Hellfire extends BaseThrownWeapon {
 		super(3.5f, 7);
 		setTranslationKey("Hellfire");
 		setRegistryName("aoa3:hellfire");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

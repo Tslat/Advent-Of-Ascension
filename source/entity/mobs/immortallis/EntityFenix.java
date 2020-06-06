@@ -45,19 +45,19 @@ public class EntityFenix extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFenixLiving;
+		return SoundsRegister.MOB_FENIX_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFenixDeath;
+		return SoundsRegister.MOB_FENIX_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFenixHit;
+		return SoundsRegister.MOB_FENIX_HIT;
 	}
 
 	@Nullable

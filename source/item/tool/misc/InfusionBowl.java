@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -33,7 +34,7 @@ public class InfusionBowl extends Item {
 	public InfusionBowl(String name, String registryName, int durability, int harvestAmount, int harvestLevelModifier) {
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+		setCreativeTab(CreativeTabsRegister.TOOLS);
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 
@@ -89,7 +90,8 @@ public class InfusionBowl extends Item {
 			player.onKillEntity(pixon);
 		}
 
-		player.world.playSound(null, pixon.getPosition().getX(), pixon.getPosition().getY(), pixon.getPosition().getZ(), SoundsRegister.entityPixonHarvest, SoundCategory.MASTER, 1.0f, 1.0f);
+		player.addStat(StatList.getObjectUseStats(bowlItemStack.getItem()));
+		player.world.playSound(null, pixon.getPosition().getX(), pixon.getPosition().getY(), pixon.getPosition().getZ(), SoundsRegister.ENTITY_PIXON_HARVEST, SoundCategory.MASTER, 1.0f, 1.0f);
 	}
 
 	@Override

@@ -16,19 +16,19 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GardenCastle extends AoAStructure { //StructureSize: 35x23x21
-	private static final IBlockState gardencianBricks = BlockRegister.bricksGardencia.getDefaultState();
-	private static final IBlockState rosidianBricks = BlockRegister.bricksRosidian.getDefaultState();
-	private static final IBlockState gardencianGlass = BlockRegister.glassGardencian.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
-	private static final IBlockState yellowPetals = BlockRegister.petalsYellow.getDefaultState();
+	private static final IBlockState gardencianBricks = BlockRegister.GARDENCIA_BRICKS.getDefaultState();
+	private static final IBlockState rosidianBricks = BlockRegister.ROSIDIAN_BRICKS.getDefaultState();
+	private static final IBlockState gardencianGlass = BlockRegister.GARDENCIAN_GLASS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
+	private static final IBlockState yellowPetals = BlockRegister.YELLOW_PETALS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
-	private static final IBlockState carpet = BlockRegister.carpetGardencian.getDefaultState();
-	private static final IBlockState podPlantSpawner = BlockRegister.spawnerPodPlant.getDefaultState();
-	private static final IBlockState petalCraftingStation = BlockRegister.petalCraftingStation.getDefaultState();
+	private static final IBlockState carpet = BlockRegister.GARDENCIAN_CARPET.getDefaultState();
+	private static final IBlockState podPlantSpawner = BlockRegister.POD_PLANT_SPAWNER.getDefaultState();
+	private static final IBlockState petalCraftingStation = BlockRegister.PETAL_CRAFTING_STATION.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 	private static final IBlockState chestSouth = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.SOUTH);
-	private static final IBlockState goldicaps = BlockRegister.cropGoldicaps.getDefaultState().withProperty(BlockCrops.AGE, 7);
-	private static final IBlockState ivoryJadeLamp = BlockRegister.lampIvoryJade.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
+	private static final IBlockState goldicaps = BlockRegister.GOLDICAPS_CROP.getDefaultState().withProperty(BlockCrops.AGE, 7);
+	private static final IBlockState ivoryJadeLamp = BlockRegister.IVORY_JADE_LAMP.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 	private static final IBlockState farmland = Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7);
 
 	public GardenCastle() {

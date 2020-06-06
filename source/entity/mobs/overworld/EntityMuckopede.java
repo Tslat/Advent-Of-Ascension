@@ -50,17 +50,17 @@ public class EntityMuckopede extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMuckopedeLiving;
+		return SoundsRegister.MOB_MUCKOPEDE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMuckopedeHit;
+		return SoundsRegister.MOB_MUCKOPEDE_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMuckopedeHit;
+		return SoundsRegister.MOB_MUCKOPEDE_HIT;
 	}
 
 	@Nullable

@@ -10,91 +10,54 @@ import net.tslat.aoa3.item.tool.axe.*;
 import net.tslat.aoa3.item.tool.pickaxe.*;
 import net.tslat.aoa3.item.tool.shovel.*;
 
+import javax.annotation.Nonnull;
+
 @SuppressWarnings({"unused"})
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder("aoa3")
 public class ToolRegister {
-	@GameRegistry.ObjectHolder("amethyst_pickaxe")
-	public static final Item pickaxeAmethyst = null;
-	@GameRegistry.ObjectHolder("emberstone_pickaxe")
-	public static final Item pickaxeEmberstone = null;
-	@GameRegistry.ObjectHolder("energistic_pickaxe")
-	public static final Item pickaxeEnergistic = null;
-	@GameRegistry.ObjectHolder("gemcracker")
-	public static final Item pickaxeGemcracker = null;
-	@GameRegistry.ObjectHolder("goofy_pickaxe")
-	public static final Item pickaxeGoofy = null;
-	@GameRegistry.ObjectHolder("jade_pickaxe")
-	public static final Item pickaxeJade = null;
-	@GameRegistry.ObjectHolder("limonite_pickaxe")
-	public static final Item pickaxeLimonite = null;
-	@GameRegistry.ObjectHolder("occult_pickaxe")
-	public static final Item pickaxeOccult = null;
-	@GameRegistry.ObjectHolder("ornamyte_pickaxe")
-	public static final Item pickaxeOrnamyte = null;
-	@GameRegistry.ObjectHolder("pickmax")
-	public static final Item pickaxePickmax = null;
-	@GameRegistry.ObjectHolder("rosite_pickaxe")
-	public static final Item pickaxeRosite = null;
-	@GameRegistry.ObjectHolder("sapphire_pickaxe")
-	public static final Item pickaxeSapphire = null;
-	@GameRegistry.ObjectHolder("skeletal_pickaxe")
-	public static final Item pickaxeSkeletal = null;
-	@GameRegistry.ObjectHolder("soulstone_pickaxe")
-	public static final Item pickaxeSoulstone = null;
+	public static final Item AMETHYST_PICKAXE = ObjectHolder();
+	public static final Item EMBERSTONE_PICKAXE = ObjectHolder();
+	public static final Item ENERGISTIC_PICKAXE = ObjectHolder();
+	public static final Item GEMCRACKER = ObjectHolder();
+	public static final Item GOOFY_PICKAXE = ObjectHolder();
+	public static final Item JADE_PICKAXE = ObjectHolder();
+	public static final Item LIMONITE_PICKAXE = ObjectHolder();
+	public static final Item OCCULT_PICKAXE = ObjectHolder();
+	public static final Item ORNAMYTE_PICKAXE = ObjectHolder();
+	public static final Item PICKMAX = ObjectHolder();
+	public static final Item ROSITE_PICKAXE = ObjectHolder();
+	public static final Item SAPPHIRE_PICKAXE = ObjectHolder();
+	public static final Item SKELETAL_PICKAXE = ObjectHolder();
+	public static final Item SOULSTONE_PICKAXE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst_shovel")
-	public static final Item shovelAmethyst = null;
-	@GameRegistry.ObjectHolder("emberstone_shovel")
-	public static final Item shovelEmberstone = null;
-	@GameRegistry.ObjectHolder("energistic_shovel")
-	public static final Item shovelEnergistic = null;
-	@GameRegistry.ObjectHolder("goofy_shovel")
-	public static final Item shovelGoofy = null;
-	@GameRegistry.ObjectHolder("jade_shovel")
-	public static final Item shovelJade = null;
-	@GameRegistry.ObjectHolder("limonite_shovel")
-	public static final Item shovelLimonite = null;
-	@GameRegistry.ObjectHolder("occult_shovel")
-	public static final Item shovelOccult = null;
-	@GameRegistry.ObjectHolder("ornamyte_shovel")
-	public static final Item shovelOrnamyte = null;
-	@GameRegistry.ObjectHolder("rosite_shovel")
-	public static final Item shovelRosite = null;
-	@GameRegistry.ObjectHolder("sapphire_shovel")
-	public static final Item shovelSapphire = null;
-	@GameRegistry.ObjectHolder("skeletal_shovel")
-	public static final Item shovelSkeletal = null;
-	@GameRegistry.ObjectHolder("soulstone_shovel")
-	public static final Item shovelSoulstone = null;
+	public static final Item AMETHYST_SHOVEL = ObjectHolder();
+	public static final Item EMBERSTONE_SHOVEL = ObjectHolder();
+	public static final Item ENERGISTIC_SHOVEL = ObjectHolder();
+	public static final Item GOOFY_SHOVEL = ObjectHolder();
+	public static final Item JADE_SHOVEL = ObjectHolder();
+	public static final Item LIMONITE_SHOVEL = ObjectHolder();
+	public static final Item OCCULT_SHOVEL = ObjectHolder();
+	public static final Item ORNAMYTE_SHOVEL = ObjectHolder();
+	public static final Item ROSITE_SHOVEL = ObjectHolder();
+	public static final Item SAPPHIRE_SHOVEL = ObjectHolder();
+	public static final Item SKELETAL_SHOVEL = ObjectHolder();
+	public static final Item SOULSTONE_SHOVEL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst_axe")
-	public static final Item axeAmethyst = null;
-	@GameRegistry.ObjectHolder("emberstone_axe")
-	public static final Item axeEmberstone = null;
-	@GameRegistry.ObjectHolder("energistic_axe")
-	public static final Item axeEnergistic = null;
-	@GameRegistry.ObjectHolder("goofy_axe")
-	public static final Item axeGoofy = null;
-	@GameRegistry.ObjectHolder("jade_axe")
-	public static final Item axeJade = null;
-	@GameRegistry.ObjectHolder("limonite_axe")
-	public static final Item axeLimonite = null;
-	@GameRegistry.ObjectHolder("occult_axe")
-	public static final Item axeOccult = null;
-	@GameRegistry.ObjectHolder("ornamyte_axe")
-	public static final Item axeOrnamyte = null;
-	@GameRegistry.ObjectHolder("rosite_axe")
-	public static final Item axeRosite = null;
-	@GameRegistry.ObjectHolder("sapphire_axe")
-	public static final Item axeSapphire = null;
-	@GameRegistry.ObjectHolder("skeletal_axe")
-	public static final Item axeSkeletal = null;
-	@GameRegistry.ObjectHolder("soulstone_axe")
-	public static final Item axeSoulstone = null;
+	public static final Item AMETHYST_AXE = ObjectHolder();
+	public static final Item EMBERSTONE_AXE = ObjectHolder();
+	public static final Item ENERGISTIC_AXE = ObjectHolder();
+	public static final Item GOOFY_AXE = ObjectHolder();
+	public static final Item JADE_AXE = ObjectHolder();
+	public static final Item LIMONITE_AXE = ObjectHolder();
+	public static final Item OCCULT_AXE = ObjectHolder();
+	public static final Item ORNAMYTE_AXE = ObjectHolder();
+	public static final Item ROSITE_AXE = ObjectHolder();
+	public static final Item SAPPHIRE_AXE = ObjectHolder();
+	public static final Item SKELETAL_AXE = ObjectHolder();
+	public static final Item SOULSTONE_AXE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("chainsaw")
-	public static final Item chainsaw = null;
+	public static final Item CHAINSAW = ObjectHolder();
 	
 	@SubscribeEvent
 	public static void registerTools(final RegistryEvent.Register<Item> ev) {
@@ -164,5 +127,11 @@ public class ToolRegister {
 		for (BaseShovel shovel : shovels) {
 			ItemRegister.registerItem(registry, shovel, "tools/shovels/");
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

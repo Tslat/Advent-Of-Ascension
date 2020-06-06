@@ -19,7 +19,7 @@ public class PinkHavendales extends AoAStructure {
 
 		while (y <= 2) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantHavendalesPinkStem.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.HAVENDALES_PINK_STEM.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class PinkHavendales extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, y, 0, BlockRegister.plantHavendalesPink.getDefaultState());
+		addBlock(world, basePos, 0, y, 0, BlockRegister.HAVENDALES_PINK.getDefaultState());
 	}
 }

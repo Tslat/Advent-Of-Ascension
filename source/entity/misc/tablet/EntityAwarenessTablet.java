@@ -27,6 +27,6 @@ public class EntityAwarenessTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletAwareness;
+		return ItemRegister.AWARENESS_TABLET;
 	}
 }

@@ -21,7 +21,7 @@ public class SandBlock extends BlockSand implements CustomStateMapperBlock {
 		setHardness(0.5f);
 		setDefaultState(blockState.getBaseState());
 		setSoundType(SoundType.SAND);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Override

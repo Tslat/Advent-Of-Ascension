@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.minions.EntityOrbling;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 
@@ -31,7 +32,7 @@ public class SpacekingArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
-		if (slots == null) {
+		if (slots == null && !EntityUtil.isEnvironmentalDamage(event.getSource()) && !EntityUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			EntityPlayer pl = plData.player();
 
 			if (!pl.world.isRemote && pl.getHealth() > 0 && itemRand.nextInt(3) == 0) {

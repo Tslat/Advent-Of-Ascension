@@ -46,19 +46,19 @@ public class EntityVisulon extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVisulonLiving;
+		return SoundsRegister.MOB_VISULON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVisularDeath;
+		return SoundsRegister.MOB_VISULAR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVisularHit;
+		return SoundsRegister.MOB_VISULAR_HIT;
 	}
 
 	@Nullable

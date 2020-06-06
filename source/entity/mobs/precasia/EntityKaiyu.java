@@ -65,19 +65,19 @@ public class EntityKaiyu extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobKaiyuLiving;
+		return SoundsRegister.MOB_KAIYU_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKaiyuDeath;
+		return SoundsRegister.MOB_KAIYU_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobKaiyuHit;
+		return SoundsRegister.MOB_KAIYU_HIT;
 	}
 
 	@Nullable
@@ -94,7 +94,7 @@ public class EntityKaiyu extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotKaiyuFire;
+		return SoundsRegister.KAIYU_SHOOT;
 	}
 
 	@Override

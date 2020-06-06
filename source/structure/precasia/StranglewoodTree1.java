@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class StranglewoodTree1 extends AoAStructure { //StructureSize: 16x32x16
-	private static final IBlockState stranglewoodLeaves = BlockRegister.leavesStranglewood.getDefaultState();
-	private static final IBlockState stranglewoodLog = BlockRegister.logStranglewood.getDefaultState();
+	private static final IBlockState stranglewoodLeaves = BlockRegister.STRANGLEWOOD_LEAVES.getDefaultState();
+	private static final IBlockState stranglewoodLog = BlockRegister.STRANGLEWOOD_LOG.getDefaultState();
 
 	public StranglewoodTree1() {
 		super("StranglewoodTree1");

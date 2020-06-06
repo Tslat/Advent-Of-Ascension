@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LuxocronDungeon extends AoAStructure { //StructureSize: 15x6x15
-	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
+	private static final IBlockState yellowShyreBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState whiteShyreBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
-	private static final IBlockState luxocronSpawner = BlockRegister.spawnerLuxocron.getDefaultState();
+	private static final IBlockState luxocronSpawner = BlockRegister.LUXOCRON_SPAWNER.getDefaultState();
 
 	public LuxocronDungeon() {
 		super("LuxocronDungeon");

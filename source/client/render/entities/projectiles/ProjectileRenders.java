@@ -249,6 +249,6 @@ public class ProjectileRenders {
 	}
 
 	public static void postInit() {
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> tintIndex == 0 ? PotionUtils.getColor(stack) : -1, ItemRegister.hollyArrowTipped);
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> tintIndex == 0 ? PotionUtils.getColor(stack) : -1, ItemRegister.TIPPED_HOLLY_ARROW);
 	}
 }

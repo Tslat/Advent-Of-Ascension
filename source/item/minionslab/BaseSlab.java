@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 import net.tslat.aoa3.utils.player.PlayerUtil;
@@ -40,7 +41,7 @@ public abstract class BaseSlab extends Item {
 		this.cost = creationCost;
 		this.sacrificeLvl = sacrificeLvl;
 		this.sacrificeXp = sacrificeXp;
-		setCreativeTab(CreativeTabsRegister.minionSlabsTab);
+		setCreativeTab(CreativeTabsRegister.MINION_SLABS);
 	}
 
 	@Override
@@ -57,6 +58,13 @@ public abstract class BaseSlab extends Item {
 				return ActionResult.newResult(EnumActionResult.FAIL, stack);
 			}
 
+			if (world.getEntitiesWithinAABB(AoAMinion.class, player.getEntityBoundingBox().grow(30), minion -> minion != null && player.getUniqueID().equals(minion.getOwnerId())).size() >= ConfigurationUtil.MainConfig.maxMinions) {
+				if (player instanceof EntityPlayerMP)
+					player.sendMessage(StringUtil.getLocaleWithArguments("message.feedback.minionSlab.maxMinions", String.valueOf(ConfigurationUtil.MainConfig.maxMinions)));
+
+				return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			}
+
 			if (player.capabilities.isCreativeMode || plData.stats().consumeResource(Enums.Resources.CREATION, cost, false)) {
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
@@ -66,7 +74,7 @@ public abstract class BaseSlab extends Item {
 				if (minion != null && plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.CREATION)
 					applyBuffs(minion);
 
-				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.useCreationSlab, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.CREATION_SLAB_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 				return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 			}
 		}

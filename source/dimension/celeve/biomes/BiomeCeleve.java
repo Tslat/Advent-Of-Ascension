@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
+import net.tslat.aoa3.worldgen.trees.WorldGenCelevusTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -58,16 +59,16 @@ public class BiomeCeleve extends Biome {
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
 					switch (rand.nextInt(5)) {
 						case 0:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCeleviansBlue.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CELEVIANS_BLUE.getDefaultState());
 							break;
 						case 1:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCeleviansRed.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CELEVIANS_RED.getDefaultState());
 							break;
 						case 2:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCeleviansWhite.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CELEVIANS_WHITE.getDefaultState());
 							break;
 						case 3:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCeleviansPurple.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CELEVIANS_PURPLE.getDefaultState());
 							break;
 						case 4:
 							StructuresHandler.generateStructure("Celebulb", world, rand, pos.setPos(posX, posY, posZ));
@@ -84,33 +85,9 @@ public class BiomeCeleve extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX + 2, posZ + 2);
 
-				if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock) {
-					switch (rand.nextInt(4)) {
-						case 0:
-							StructuresHandler.generateStructure("BlueCelevusTree", world, rand, pos.setPos(posX, posY, posZ));
-							break;
-						case 1:
-							StructuresHandler.generateStructure("GreenCelevusTree", world, rand, pos.setPos(posX, posY, posZ));
-							break;
-						case 2:
-							StructuresHandler.generateStructure("PurpleCelevusTree", world, rand, pos.setPos(posX, posY, posZ));
-							break;
-						case 3:
-							StructuresHandler.generateStructure("YellowCelevusTree", world, rand, pos.setPos(posX, posY, posZ));
-							break;
-					}
-				}
+				if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
+					new WorldGenCelevusTree(null, null, rand).generate(world, rand, pos.up());
 			}
-		}
-
-		@Override
-		protected void doMiscGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			posX = basePos.getX() + rand.nextInt(16);
-			posZ = basePos.getZ() + rand.nextInt(16);
-			posY = world.getHeight(posX + 2, posZ + 2);
-
-			if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
-				StructuresHandler.generateStructure("CelevePole", world, rand, pos.setPos(posX, posY, posZ));
 		}
 	}
 }

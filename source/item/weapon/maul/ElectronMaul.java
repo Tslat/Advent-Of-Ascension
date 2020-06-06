@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -27,7 +26,7 @@ public class ElectronMaul extends BaseMaul {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {
-		final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.crush, stack);
+		final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CRUSH, stack);
 		PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer(attacker).stats();
 		final float energyMultiplier = 1 + (plStats.getResourceValue(Enums.Resources.ENERGY) / 100f);
 

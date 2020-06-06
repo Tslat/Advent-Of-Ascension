@@ -38,7 +38,7 @@ public class SharpshotArmour extends AdventArmour {
 		if (EntityUtil.isGunDamage(event.getSource()) && ((gun = plData.player().getHeldItemMainhand().getItem()) instanceof BaseGun || (gun = plData.player().getHeldItemOffhand().getItem()) instanceof BaseGun)) {
 			if (slots == null) {
 				if (gun instanceof BaseSniper)
-					event.setAmount(event.getAmount() * 1.38f);
+					event.setAmount(event.getAmount() * 1.1f);
 			}
 			else {
 				event.setAmount(event.getAmount() * (1 + (0.07f * slots.size())));

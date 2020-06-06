@@ -25,6 +25,7 @@ public class ModelBlissard extends ModelBase {
 		root = new ModelRenderer(this);
 		root.setRotationPoint(0.0F, 24.0F, 0.0F);
 
+
 		WolfHead = new ModelRenderer(this);
 		WolfHead.setRotationPoint(0.0F, -10.5F, -8.5F);
 		root.addChild(WolfHead);
@@ -35,8 +36,8 @@ public class ModelBlissard extends ModelBase {
 
 		Body = new ModelRenderer(this);
 		Body.setRotationPoint(-2.0F, -16.0F, 0.5F);
-		setRotation(Body, 1.5708F, 0.0F, 0.0F);
 		root.addChild(Body);
+		setRotation(Body, 1.5708F, 0.0F, 0.0F);
 		Body.cubeList.add(new ModelBox(Body, 21, 31, 0.0F, -2.0F, -3.0F, 4, 8, 3, 0.0F, true));
 		Body.cubeList.add(new ModelBox(Body, 21, 0, -2.0F, -8.0F, -9.0F, 8, 6, 7, 0.0F, true));
 		Body.cubeList.add(new ModelBox(Body, 18, 14, -1.0F, -2.0F, -9.0F, 6, 9, 6, 0.0F, true));
@@ -63,22 +64,22 @@ public class ModelBlissard extends ModelBase {
 
 		Tail = new ModelRenderer(this);
 		Tail.setRotationPoint(0.0F, -13.1F, 5.5F);
-		setRotation(Tail, 1.9199F, 0.0F, 0.0F);
 		root.addChild(Tail);
+		setRotation(Tail, 1.9199F, 0.0F, 0.0F);
 		Tail.cubeList.add(new ModelBox(Tail, 9, 18, -1.0F, 7.0F, -1.0F, 2, 3, 2, 0.0F, true));
 		Tail.cubeList.add(new ModelBox(Tail, 9, 31, -1.0F, 0.0F, -1.0F, 2, 7, 3, 0.0F, true));
 
 		Tail3 = new ModelRenderer(this);
 		Tail3.setRotationPoint(0.0F, -8.0F, 5.5F);
-		setRotation(Tail3, 1.1301F, 0.0F, 0.0F);
 		root.addChild(Tail3);
+		setRotation(Tail3, 1.1301F, 0.0F, 0.0F);
 		Tail3.cubeList.add(new ModelBox(Tail3, 9, 31, -1.0F, 0.0F, -1.0F, 2, 7, 3, 0.0F, true));
 		Tail3.cubeList.add(new ModelBox(Tail3, 9, 18, -1.0F, 7.0F, -1.0F, 2, 3, 2, 0.0F, true));
 
 		Tail5 = new ModelRenderer(this);
 		Tail5.setRotationPoint(0.0F, -10.7F, 5.5F);
-		setRotation(Tail5, 1.4835F, 0.0F, 0.0F);
 		root.addChild(Tail5);
+		setRotation(Tail5, 1.4835F, 0.0F, 0.0F);
 		Tail5.cubeList.add(new ModelBox(Tail5, 9, 31, -1.0F, 0.0F, -1.0F, 2, 7, 3, 0.0F, true));
 		Tail5.cubeList.add(new ModelBox(Tail5, 9, 18, -1.0F, 7.0F, -1.0F, 2, 3, 2, 0.0F, true));
 	}

@@ -31,14 +31,14 @@ public class EmberStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffEmber;
+		return SoundsRegister.EMBER_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeKinetic, 1);
-		runes.put(ItemRegister.runeWind, 1);
-		runes.put(ItemRegister.runeFire, 1);
+		runes.put(ItemRegister.KINETIC_RUNE, 1);
+		runes.put(ItemRegister.WIND_RUNE, 1);
+		runes.put(ItemRegister.FIRE_RUNE, 1);
 	}
 
 	@Override

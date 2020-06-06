@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class HauntedCastlePt3 {
-	private static final IBlockState hauntedBricks = BlockRegister.bricksHaunted.getDefaultState();
+	private static final IBlockState hauntedBricks = BlockRegister.HAUNTED_BRICKS.getDefaultState();
 
 	protected static void addBlocks(HauntedCastle instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 21, 28, 8, hauntedBricks);

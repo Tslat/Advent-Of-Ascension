@@ -23,7 +23,7 @@ public class CarpetBlock extends BlockCarpet implements CustomStateMapperBlock {
 		setSoundType(SoundType.CLOTH);
 		setDefaultState(blockState.getBaseState());
 		setTickRandomly(true);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	@Override

@@ -25,31 +25,31 @@ public class PetalCraftingStation extends Block {
 		setHardness(5.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem(hand).getItem() == ItemRegister.petals) {
+		if (player.getHeldItem(hand).getItem() == ItemRegister.PETALS) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
 			switch (player.getRNG().nextInt(4)) {
 				case 0:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicBoots));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_BOOTS));
 					break;
 				case 1:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicLegs));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_LEGS));
 					break;
 				case 2:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicBody));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_CHESTPLATE));
 					break;
 				case 3:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.hydrangicHelmet));
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_HELMET));
 					break;
 			}
 
-			world.playSound(null, pos, SoundsRegister.petalCraftingStationSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			world.playSound(null, pos, SoundsRegister.PETAL_CRAFTING_STATION_SUCCESS, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 			return true;
 		}

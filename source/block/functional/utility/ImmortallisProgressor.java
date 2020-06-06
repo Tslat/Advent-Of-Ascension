@@ -43,13 +43,13 @@ public class ImmortallisProgressor extends Block {
 
 			switch (place) {
 				case 1:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin0))) {
-						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.returnCrystal))) {
+					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN0))) {
+						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.RETURN_CRYSTAL))) {
 							plData = PlayerUtil.getAdventPlayer(player);
 
 							plData.sendThrottledChatMessage("message.feedback.item.returnCrystal.noSpace");
 							plData.stats().resetAllTribute();
-							player.entityDropItem(new ItemStack(ItemRegister.progressCoin0), 0.5f);
+							player.entityDropItem(new ItemStack(ItemRegister.PROGRESS_COIN0), 0.5f);
 						}
 						else {
 							player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.goldStart.0", TextFormatting.GOLD));
@@ -73,7 +73,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 3:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin1))) {
+					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN1))) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.skeletalSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(81, 21, 2);
 
@@ -93,7 +93,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 5:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin2))) {
+					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN2))) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.0", TextFormatting.GOLD));
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.1", TextFormatting.GOLD));
 						player.setPositionAndUpdate(141, 24, 2);
@@ -114,7 +114,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 7:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin3))) {
+					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN3))) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.evilSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(189, 20, 2);
 
@@ -134,9 +134,9 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 9:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin4))) {
+					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN4))) {
 						player.setPositionAndUpdate(0, 20, 0);
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.returnCrystal));
+						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.RETURN_CRYSTAL));
 						PlayerUtil.getAdventPlayer(player).stats().resetAllTribute();
 
 						return true;

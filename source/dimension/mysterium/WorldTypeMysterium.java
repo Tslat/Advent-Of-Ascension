@@ -14,7 +14,7 @@ public class WorldTypeMysterium extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeMysterium);
+		return new BiomeProviderSingle(BiomeRegister.MYSTERIUM);
 	}
 
 	@Override

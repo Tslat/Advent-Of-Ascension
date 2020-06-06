@@ -45,19 +45,19 @@ public class EntityAriel extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobArielLiving;
+		return SoundsRegister.MOB_ARIEL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobArielDeath;
+		return SoundsRegister.MOB_ARIEL_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobArielHit;
+		return SoundsRegister.MOB_ARIEL_HIT;
 	}
 
 	@Nullable

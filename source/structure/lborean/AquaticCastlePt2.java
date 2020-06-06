@@ -9,11 +9,11 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class AquaticCastlePt2 {
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
-	private static final IBlockState coralCage = BlockRegister.plantCoralCage.getDefaultState();
-	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getDefaultState();
-	private static final IBlockState amphibiorSpawner = BlockRegister.spawnerAmphibior.getDefaultState();
-	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
+	private static final IBlockState coralCage = BlockRegister.CORAL_CAGE.getDefaultState();
+	private static final IBlockState aquaticLamp = BlockRegister.AQUATIC_LAMP.getDefaultState();
+	private static final IBlockState amphibiorSpawner = BlockRegister.AMPHIBIOR_SPAWNER.getDefaultState();
+	private static final IBlockState glass = BlockRegister.AQUATIC_GLASS.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 
 	protected static void addBlocks(AquaticCastle instance, World world, Random rand, BlockPos basePos) {

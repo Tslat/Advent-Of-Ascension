@@ -65,22 +65,22 @@ public class EntityEmperorBeast extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEmperorBeastLiving;
+		return SoundsRegister.MOB_EMPEROR_BEAST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEmperorBeastDeath;
+		return SoundsRegister.MOB_EMPEROR_BEAST_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEmperorBeastHit;
+		return SoundsRegister.MOB_EMPEROR_BEAST_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobEmperorBeastStep;
+		return SoundsRegister.MOB_EMPEROR_BEAST_STEP;
 	}
 
 	@Nullable

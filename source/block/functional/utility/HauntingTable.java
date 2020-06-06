@@ -24,17 +24,17 @@ public class HauntingTable extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.ghoulasm) {
+		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.GHOULASM) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.primedGhoulasm));
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.hauntingTableUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.PRIMED_GHOULASM));
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.HAUNTING_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			return true;
 		}
 

@@ -49,19 +49,19 @@ public class EntityBouncer extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBouncerLiving;
+		return SoundsRegister.MOB_BOUNCER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBouncerDeath;
+		return SoundsRegister.MOB_BOUNCER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBouncerHit;
+		return SoundsRegister.MOB_BOUNCER_HIT;
 	}
 
 	@Nullable

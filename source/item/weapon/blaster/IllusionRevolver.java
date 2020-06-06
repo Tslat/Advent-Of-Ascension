@@ -18,7 +18,7 @@ public class IllusionRevolver extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunIllusionRevolver;
+		return SoundsRegister.ILLUSION_REVOLVER_FIRE;
 	}
 
 	@Override

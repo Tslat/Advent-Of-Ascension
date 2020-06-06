@@ -15,6 +15,6 @@ public class TentaclesEyeRed extends BasicBlock {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return rand.nextFloat() < 0.05f ? ItemRegister.staringEye : super.getItemDropped(state, rand, fortune);
+		return rand.nextFloat() < 0.05f ? ItemRegister.STARING_EYE : super.getItemDropped(state, rand, fortune);
 	}
 }

@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class MerkyreTower extends AoAStructure { //StructureSize: 15x48x15
-	private static final IBlockState darkwashBricks = BlockRegister.bricksDarkwash.getDefaultState();
+	private static final IBlockState darkwashBricks = BlockRegister.DARKWASH_BRICKS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
-	private static final IBlockState merkyreSpawner = BlockRegister.spawnerMerkyre.getDefaultState();
+	private static final IBlockState merkyreSpawner = BlockRegister.MERKYRE_SPAWNER.getDefaultState();
 
 	public MerkyreTower() {
 		super("MerkyreTower");

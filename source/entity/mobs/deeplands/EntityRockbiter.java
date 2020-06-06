@@ -50,19 +50,19 @@ public class EntityRockbiter extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobRockbiterLiving;
+        return SoundsRegister.MOB_ROCKBITER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobRockbiterDeath;
+        return SoundsRegister.MOB_ROCKBITER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobRockbiterHit;
+        return SoundsRegister.MOB_ROCKBITER_HIT;
     }
 
     @Nullable

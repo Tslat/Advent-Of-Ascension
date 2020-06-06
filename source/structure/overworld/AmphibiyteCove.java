@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AmphibiyteCove extends AoAStructure { //StructureSize: 17x7x18
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
 	private static final IBlockState sandstone = Blocks.SANDSTONE.getDefaultState();
 	private static final IBlockState glowstone = Blocks.GLOWSTONE.getDefaultState();
-	private static final IBlockState amphibiyteSpawner = BlockRegister.spawnerAmphibiyte.getDefaultState();
+	private static final IBlockState amphibiyteSpawner = BlockRegister.AMPHIBIYTE_SPAWNER.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public AmphibiyteCove() {

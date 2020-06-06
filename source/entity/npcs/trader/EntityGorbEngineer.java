@@ -55,12 +55,12 @@ public class EntityGorbEngineer extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 3), new ItemStack(WeaponRegister.swordUltraflame)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 10), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmHelmet)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 15), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBody)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 12), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmLegs)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.phantasm, 8), new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(ArmourRegister.phantasmBoots)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.powerCore), new ItemStack(ItemRegister.coinSilver, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.scrapMetal), new ItemStack(ItemRegister.coinCopper, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 3), new ItemStack(WeaponRegister.ULTRAFLAME)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PHANTASM, 10), new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(ArmourRegister.PHANTASM_HELMET)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PHANTASM, 15), new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(ArmourRegister.PHANTASM_CHESTPLATE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PHANTASM, 12), new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(ArmourRegister.PHANTASM_LEGS)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PHANTASM, 8), new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(ArmourRegister.PHANTASM_BOOTS)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.POWER_CORE), new ItemStack(ItemRegister.SILVER_COIN, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SCRAP_METAL), new ItemStack(ItemRegister.COPPER_COIN, 8)));
 	}
 }

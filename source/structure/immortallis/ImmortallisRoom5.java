@@ -12,13 +12,13 @@ import java.util.Random;
 public class ImmortallisRoom5 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState archaicGlass = BlockRegister.glassArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
+	private static final IBlockState archaicGlass = BlockRegister.ARCHAIC_GLASS.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState progressor5 = BlockRegister.immortallisProgressor5.getDefaultState();
+	private static final IBlockState progressor5 = BlockRegister.IMMORTALLIS_PROGRESSOR_5.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

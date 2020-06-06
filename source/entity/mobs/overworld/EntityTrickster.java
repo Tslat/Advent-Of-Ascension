@@ -57,17 +57,17 @@ public class EntityTrickster extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTricksterLiving;
+		return SoundsRegister.MOB_TRICKSTER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTricksterHit;
+		return SoundsRegister.MOB_TRICKSTER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTricksterHit;
+		return SoundsRegister.MOB_TRICKSTER_HIT;
 	}
 
 	@Nullable
@@ -95,7 +95,7 @@ public class EntityTrickster extends AoAMeleeMob {
 				invisCooldown = 240;
 
 				addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 60, 0, true, true));
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobTricksterHide, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_TRICKSTER_HIDE, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 
 			if (cloneCooldown == 1 && world.getEntitiesWithinAABB(EntityTricksterClone.class, getEntityBoundingBox().grow(10)).size() < 5) {

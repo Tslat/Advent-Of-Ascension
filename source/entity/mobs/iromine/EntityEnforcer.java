@@ -58,19 +58,19 @@ public class EntityEnforcer extends AoAMeleeMob implements SpecialPropertyEntity
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobEnforcerLiving;
+        return SoundsRegister.MOB_ENFORCER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobEnforcerDeath;
+        return SoundsRegister.MOB_ENFORCER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobEnforcerHit;
+        return SoundsRegister.MOB_ENFORCER_HIT;
     }
 
     @Nullable

@@ -23,6 +23,6 @@ public class EntitySatiationTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletSatiation;
+		return ItemRegister.SATIATION_TABLET;
 	}
 }

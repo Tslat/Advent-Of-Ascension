@@ -11,8 +11,8 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class FloroCastlePt2 {
-	private static final IBlockState unbreakableStem = BlockRegister.unbreakablePlantStem.getDefaultState();
-	private static final IBlockState blackPetals = BlockRegister.petalsBlack.getDefaultState();
+	private static final IBlockState unbreakableStem = BlockRegister.UNBREAKABLE_PLANT_STEM.getDefaultState();
+	private static final IBlockState blackPetals = BlockRegister.BLACK_PETALS.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 	private static final IBlockState chestEast = chest.withProperty(BlockChest.FACING, EnumFacing.EAST);
 	private static final IBlockState chestSouth = chest.withProperty(BlockChest.FACING, EnumFacing.SOUTH);

@@ -45,19 +45,19 @@ public class EntityGrobbler extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGrobblerLiving;
+		return SoundsRegister.MOB_GROBBLER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGrobblerDeath;
+		return SoundsRegister.MOB_GROBBLER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGrobblerHit;
+		return SoundsRegister.MOB_GROBBLER_HIT;
 	}
 
 	@Nullable

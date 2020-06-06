@@ -19,7 +19,7 @@ public class SimpleItem extends Item {
 	public SimpleItem(String name, String registryName) {
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	public SimpleItem unstackable() {
@@ -51,6 +51,7 @@ public class SimpleItem extends Item {
 
 	public SimpleItem damageable(int maxDamage) {
 		setMaxDamage(maxDamage);
+		unstackable();
 
 		return this;
 	}

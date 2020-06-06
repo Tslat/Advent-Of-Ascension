@@ -18,7 +18,7 @@ public class GateBlock extends BlockFenceGate implements CustomStateMapperBlock 
 		setHardness(2.0f);
 		setResistance(5.0f);
 		Blocks.FIRE.setFireInfo(this, 5, 20);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 		setSoundType(SoundType.WOOD);
 	}
 

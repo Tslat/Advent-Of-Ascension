@@ -22,7 +22,7 @@ public class GrassBlock extends BlockGrass {
 		setHardness(hardness);
 		setResistance(resistance);
 		setSoundType(SoundType.PLANT);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setHarvestLevel("shovel", 0);
 		this.dirtBlock = dirtBlock;
 	}

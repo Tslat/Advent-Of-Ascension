@@ -44,19 +44,19 @@ public class EntityShavo extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFiendLiving;
+		return SoundsRegister.MOB_FIEND_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFiendDeath;
+		return SoundsRegister.MOB_FIEND_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFiendHit;
+		return SoundsRegister.MOB_FIEND_HIT;
 	}
 
 	@Nullable

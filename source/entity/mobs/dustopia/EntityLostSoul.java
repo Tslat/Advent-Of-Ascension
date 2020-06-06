@@ -51,19 +51,19 @@ public class EntityLostSoul extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobLostSoulLiving;
+        return SoundsRegister.MOB_LOST_SOUL_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobLostSoulDeath;
+        return SoundsRegister.MOB_LOST_SOUL_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobLostSoulHit;
+        return SoundsRegister.MOB_LOST_SOUL_HIT;
     }
 
     @Nullable

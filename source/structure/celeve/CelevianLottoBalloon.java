@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CelevianLottoBalloon extends AoAStructure { //StructureSize: 9x18x9
-	private static final IBlockState blueCelevus = BlockRegister.leavesCelevusBlue.getDefaultState();
-	private static final IBlockState celevusStem = BlockRegister.celeveStem.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
+	private static final IBlockState blueCelevus = BlockRegister.BLUE_CELEVUS_LEAVES.getDefaultState();
+	private static final IBlockState celevusStem = BlockRegister.CELEVE_STEM.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState bloodstoneBricks = BlockRegister.BLOODSTONE_BRICKS.getDefaultState();
 
 	public CelevianLottoBalloon() {
 		super("CelevianLottoBalloon");

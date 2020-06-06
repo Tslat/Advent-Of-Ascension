@@ -36,24 +36,24 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSmashLiving;
+		return SoundsRegister.MOB_SMASH_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSmashDeath;
+		return SoundsRegister.MOB_SMASH_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSmashHit;
+		return SoundsRegister.MOB_SMASH_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -169,7 +169,7 @@ public class EntitySmash extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicSmash;
+		return SoundsRegister.SMASH_MUSIC;
 	}
 
 	@Override

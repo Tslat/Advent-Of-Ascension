@@ -10,8 +10,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
-import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenRunicTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -54,7 +54,7 @@ public class BiomeRunandor extends Biome {
 		@Override
 		protected void doOreGen(World world, Biome biome, Random rand, BlockPos basePos, BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.elecanium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreElecanium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneRunic))
+				new WorldGenMinable(BlockRegister.ELECANIUM_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.elecanium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.elecanium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.RUNIC_STONE))
 						.generate(world, rand, basePos.add(rand.nextInt(14) + 1, rand.nextInt(35) + 1, rand.nextInt(14) + 1));
 			}
 		}
@@ -69,13 +69,13 @@ public class BiomeRunandor extends Biome {
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
 					switch (rand.nextInt(3)) {
 						case 0:
-							world.setBlockState(pos.up(), BlockRegister.plantRunicBush.getDefaultState());
+							world.setBlockState(pos.up(), BlockRegister.RUNIC_BUSH.getDefaultState());
 							break;
 						case 1:
-							world.setBlockState(pos.up(), BlockRegister.plantRuneBulbs.getDefaultState());
+							world.setBlockState(pos.up(), BlockRegister.RUNE_BULBS.getDefaultState());
 							break;
 						case 2:
-							world.setBlockState(pos.up(), BlockRegister.plantMagias.getDefaultState());
+							world.setBlockState(pos.up(), BlockRegister.MAGIAS.getDefaultState());
 							break;
 					}
 				}
@@ -85,56 +85,12 @@ public class BiomeRunandor extends Biome {
 		@Override
 		protected void doTreeGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < 2; i++) {
-				switch (rand.nextInt(6)) {
-					case 0:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 1, posZ + 1);
+				posX = basePos.getX() + rand.nextInt(16);
+				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = world.getHeight(posX + 4, posZ + 4);
 
-						if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree1", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 1:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 2, posZ + 2);
-
-						if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree2", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 2:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 1, posZ + 1);
-
-						if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree3", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 3:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 2, posZ + 2);
-
-						if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree4", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 4:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree5", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 5:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 4, posZ + 4);
-
-						if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock)
-							StructuresHandler.generateStructure("RunicTree6", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-				}
+				if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock)
+					new WorldGenRunicTree(null).generate(world, rand, pos.up());
 			}
 		}
 	}

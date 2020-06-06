@@ -19,7 +19,7 @@ public class VoxFungi extends AoAStructure {
 
 		while (y <= 1) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantVoxFungiStem.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.VOX_FUNGI_STEM.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class VoxFungi extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, y, 0, BlockRegister.plantVoxFungi.getDefaultState());
+		addBlock(world, basePos, 0, y, 0, BlockRegister.VOX_FUNGI.getDefaultState());
 	}
 }

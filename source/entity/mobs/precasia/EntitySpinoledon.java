@@ -45,24 +45,24 @@ public class EntitySpinoledon extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSpinoledonLiving;
+		return SoundsRegister.MOB_SPINOLEDON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSpinoledonDeath;
+		return SoundsRegister.MOB_SPINOLEDON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSpinoledonHit;
+		return SoundsRegister.MOB_SPINOLEDON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.dinoStep;
+		return SoundsRegister.ENTITY_GENERIC_DINO_STEP;
 	}
 
 	@Nullable

@@ -13,6 +13,6 @@ public class CarvedRunicBlock extends Block {
 		setHardness(3.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 }

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RockriderBoulder extends AoAStructure { //StructureSize: 11x5x11
-	private static final IBlockState stone = BlockRegister.stoneHaven.getDefaultState();
-	private static final IBlockState rockriderShrine = BlockRegister.rockriderShrine.getDefaultState();
+	private static final IBlockState stone = BlockRegister.HAVEN_STONE.getDefaultState();
+	private static final IBlockState rockriderShrine = BlockRegister.ROCKRIDER_SHRINE.getDefaultState();
 
 	public RockriderBoulder() {
 		super("RockriderBoulder");

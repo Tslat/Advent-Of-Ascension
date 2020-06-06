@@ -60,11 +60,11 @@ public class EntityTrollTrader extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.amphibiyteLung, 1), new ItemStack(ItemRegister.coinCopper, 6)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.amphibiyteLung, 30), new ItemStack(WeaponRegister.swordCoralstorm)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 10), new ItemStack(Blocks.SAND, 64)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(Items.PRISMARINE_SHARD, 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(Items.DYE, 1, 15)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.AMPHIBIYTE_LUNG, 1), new ItemStack(ItemRegister.COPPER_COIN, 6)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.AMPHIBIYTE_LUNG, 30), new ItemStack(WeaponRegister.CORALSTORM_SWORD)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 10), new ItemStack(Blocks.SAND, 64)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 1), new ItemStack(Items.PRISMARINE_SHARD, 4)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 1), new ItemStack(Items.PRISMARINE_CRYSTALS, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 3), new ItemStack(Items.DYE, 1, 15)));
 	}
 }

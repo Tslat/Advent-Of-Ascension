@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class TentacleTree2 extends AoAStructure { //StructureSize: 4x9x3
-	private static final IBlockState tentacleBlock = BlockRegister.tentacles.getDefaultState();
-	private static final IBlockState tentacleEye = BlockRegister.tentaclesEyeRed.getDefaultState();
+	private static final IBlockState tentacleBlock = BlockRegister.TENTACLES.getDefaultState();
+	private static final IBlockState tentacleEye = BlockRegister.TENTACLES_EYE_RED.getDefaultState();
 
 	public TentacleTree2() {
 		super("TentacleTree2");

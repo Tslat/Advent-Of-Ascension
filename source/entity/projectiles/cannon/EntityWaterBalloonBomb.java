@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.projectiles.cannon;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.projectiles.HardProjectile;
@@ -32,5 +33,18 @@ public class EntityWaterBalloonBomb extends BaseBullet implements HardProjectile
 	@Override
 	public void doImpactEffect() {
 		WorldUtil.createExplosion(thrower, world, this, 1.5f);
+
+		if (!world.isRemote && WorldUtil.checkGameRule(world, "destructiveWeaponPhysics") && world.isAirBlock(getPosition())) {
+			int i = 1;
+
+			while (world.getBlockState(getPosition().down(i)).getMaterial().isReplaceable() && getPosition().getY() - i >= 0) {
+				i++;
+			}
+
+			if (getPosition().getY() - i <= 0)
+				return;
+
+			world.setBlockState(getPosition().down(i - 1), Blocks.FLOWING_WATER.getDefaultState());
+		}
 	}
 }

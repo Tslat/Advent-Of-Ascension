@@ -1,5 +1,6 @@
 package net.tslat.aoa3.item.armour;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +35,7 @@ public class SealordHelmet extends AdventArmour {
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
 		EntityPlayer player = plData.player();
 
-		if (player.isInWater()) {
+		if (player.isInsideOfMaterial(Material.WATER)) {
 			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SEALORD_ATTACK_BUFF);
 		}
 		else {

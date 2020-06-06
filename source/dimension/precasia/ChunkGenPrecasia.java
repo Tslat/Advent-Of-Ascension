@@ -38,7 +38,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomePrecasia;
+	private final Biome biome = BiomeRegister.PRECASIA;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -247,10 +247,10 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 
 							for (int l2 = 0; l2 < 4; ++l2) {
 								if ((lvt_45_1_ += d16) > 0.0D) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.stonePrecasiaLow.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.LOW_PRECASIA_STONE.getDefaultState());
 								}
 								else if (i2 * 8 + j2 < this.world.getSeaLevel()) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.grassPrecasia.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.PRECASIA_GRASS.getDefaultState());
 								}
 							}
 
@@ -292,8 +292,8 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 		int i1 = z & 15;
 
 		for (int j1 = 255; j1 >= 0; --j1) {
-			if (j1 <= 2) {
-				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.dimensionalFabric.getDefaultState());
+			if (j1 <= 0) {
+				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 			}
 			else {
 				IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
@@ -301,7 +301,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 				if (iblockstate2.getMaterial() == Material.AIR) {
 					j = -1;
 				}
-				else if (iblockstate2.getBlock() == BlockRegister.stonePrecasiaLow) {
+				else if (iblockstate2.getBlock() == BlockRegister.LOW_PRECASIA_STONE) {
 					if (j == -1) {
 						if (k <= 0) {
 							topBlock = Blocks.AIR.getDefaultState();
@@ -317,7 +317,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 								topBlock = Blocks.LAVA.getDefaultState();
 							}
 							else {
-								topBlock = BlockRegister.stonePrecasiaLow.getDefaultState();
+								topBlock = BlockRegister.LOW_PRECASIA_STONE.getDefaultState();
 							}
 						}
 
@@ -375,7 +375,7 @@ public class ChunkGenPrecasia implements IChunkGenerator {
 			Block block1 = world.getBlockState(pos.setPos(x + 1, y - 1, z + 8)).getBlock();
 			Block block2 = world.getBlockState(pos.setPos(x + 28, y - 1, z + 11)).getBlock();
 
-			if ((block1 == biome.topBlock.getBlock() || block1 == BlockRegister.stonePrecasiaHigh) && (block2 == biome.topBlock.getBlock() || block2 == BlockRegister.stonePrecasiaHigh))
+			if ((block1 == biome.topBlock.getBlock() || block1 == BlockRegister.HIGH_PRECASIA_STONE) && (block2 == biome.topBlock.getBlock() || block2 == BlockRegister.HIGH_PRECASIA_STONE))
 				StructuresHandler.generateStructure("SkeletalArmyArena", world, rand, pos.setPos(x, y, z));
 		}
 		else if (ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance > 0 && rand.nextInt(ConfigurationUtil.StructureConfig.precasia.jungleLottoHutSpawnChance) == 0) {

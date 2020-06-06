@@ -59,19 +59,19 @@ public class EntityConstructResistance extends AoAMeleeMob implements SpecialPro
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCrystalConstructLiving;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCrystalConstructDeath;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCrystalConstructHit;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_HIT;
     }
 
     @Nullable

@@ -42,7 +42,7 @@ public class EntityTippedHollyArrow extends EntityHollyArrow implements HardProj
 	}
 
 	public void setPotionEffect(ItemStack ammo) {
-		if (ammo.getItem() == ItemRegister.hollyArrowTipped) {
+		if (ammo.getItem() == ItemRegister.TIPPED_HOLLY_ARROW) {
 			potion = PotionUtils.getPotionFromItem(ammo);
 			Collection<PotionEffect> collection = PotionUtils.getFullEffectsFromItem(ammo);
 
@@ -146,10 +146,10 @@ public class EntityTippedHollyArrow extends EntityHollyArrow implements HardProj
 	@Override
 	protected ItemStack getArrowStack() {
 		if (customPotionEffects.isEmpty() && potion == PotionTypes.EMPTY) {
-			return new ItemStack(ItemRegister.hollyArrow);
+			return new ItemStack(ItemRegister.HOLLY_ARROW);
 		}
 		else {
-			ItemStack arrowStack = new ItemStack(ItemRegister.hollyArrowTipped);
+			ItemStack arrowStack = new ItemStack(ItemRegister.TIPPED_HOLLY_ARROW);
 
 			PotionUtils.addPotionToItemStack(arrowStack, potion);
 			PotionUtils.appendEffects(arrowStack, customPotionEffects);

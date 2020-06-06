@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ToxicTree3 extends AoAStructure { //StructureSize: 7x8x7
-	private static final IBlockState toxicLog = BlockRegister.logToxic.getDefaultState();
+	private static final IBlockState toxicLog = BlockRegister.TOXIC_LOG.getDefaultState();
 
 	public ToxicTree3() {
 		super("ToxicTree3");

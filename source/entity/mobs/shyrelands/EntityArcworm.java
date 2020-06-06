@@ -47,19 +47,19 @@ public class EntityArcworm extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobArcwormLiving;
+		return SoundsRegister.MOB_ARCWORM_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobArcwormDeath;
+		return SoundsRegister.MOB_ARCWORM_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobArcwormHit;
+		return SoundsRegister.MOB_ARCWORM_HIT;
 	}
 
 	@Nullable

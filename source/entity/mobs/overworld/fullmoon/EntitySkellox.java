@@ -50,17 +50,17 @@ public class EntitySkellox extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSkelloxLiving;
+		return SoundsRegister.MOB_SKELLOX_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSkelloxDeath;
+		return SoundsRegister.MOB_SKELLOX_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSkelloxHit;
+		return SoundsRegister.MOB_SKELLOX_HIT;
 	}
 
 	@Nullable

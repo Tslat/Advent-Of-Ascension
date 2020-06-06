@@ -62,19 +62,19 @@ public class EntityAngler extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAnglerLiving;
+		return SoundsRegister.MOB_ANGLER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAnglerDeath;
+		return SoundsRegister.MOB_ANGLER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAnglerHit;
+		return SoundsRegister.MOB_ANGLER_HIT;
 	}
 
 	@Nullable

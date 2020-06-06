@@ -33,13 +33,13 @@ public class PrimordialStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runeWither, 2);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.WITHER_RUNE, 2);
 	}
 
 	@Override

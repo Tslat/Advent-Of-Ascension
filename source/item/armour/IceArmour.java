@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class IceArmour extends AdventArmour {
 
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack stack) {
-		if (!world.isRemote && stack.getItemDamage() > 0 && player.getRNG().nextFloat() < 0.02f && world.getBiome(player.getPosition()).getTemperature(player.getPosition()) < 0.15f)
+		if (!world.isRemote && stack.getItemDamage() > 0 && player.getRNG().nextFloat() < 0.02f && WorldUtil.getAmbientTemperature(world, player.getPosition()) < 0.15f)
 			stack.setItemDamage(stack.getItemDamage() - 1);
 	}
 

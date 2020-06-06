@@ -11,13 +11,13 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ProfessorsLab extends AoAStructure { //StructureSize: 17x10x11
-	private static final IBlockState glass = BlockRegister.glassIro.getDefaultState();
-	private static final IBlockState stripedBrick = BlockRegister.bricksIroStriped.getDefaultState();
-	private static final IBlockState dottedBrick = BlockRegister.bricksIroDotted.getDefaultState();
-	private static final IBlockState iropole = BlockRegister.iropole.getDefaultState();
-	private static final IBlockState cogBlock = BlockRegister.cogBlock.getDefaultState();
-	private static final IBlockState carpet = BlockRegister.carpetIro.getDefaultState();
-	private static final IBlockState iroLamp = BlockRegister.lampIro.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
+	private static final IBlockState glass = BlockRegister.IRO_GLASS.getDefaultState();
+	private static final IBlockState stripedBrick = BlockRegister.IRO_STRIPED_BRICKS.getDefaultState();
+	private static final IBlockState dottedBrick = BlockRegister.IRO_DOTTED_BRICKS.getDefaultState();
+	private static final IBlockState iropole = BlockRegister.IROPOLE.getDefaultState();
+	private static final IBlockState cogBlock = BlockRegister.COG_BLOCK.getDefaultState();
+	private static final IBlockState carpet = BlockRegister.IRO_CARPET.getDefaultState();
+	private static final IBlockState iroLamp = BlockRegister.IRO_LAMP.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 
 	public ProfessorsLab() {
 		super("ProfessorsLab");

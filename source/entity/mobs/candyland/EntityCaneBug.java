@@ -46,13 +46,13 @@ public class EntityCaneBug extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.candyThump;
+		return SoundsRegister.CANDY_THUMP;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.candyThump;
+		return SoundsRegister.CANDY_THUMP;
 	}
 
 	@Nullable

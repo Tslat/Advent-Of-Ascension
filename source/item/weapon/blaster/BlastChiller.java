@@ -29,7 +29,7 @@ public class BlastChiller extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMagicGun;
+		return SoundsRegister.MAGIC_GUN_FIRE;
 	}
 
 	@Override

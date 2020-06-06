@@ -47,19 +47,19 @@ public class EntityDyrehorn extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDyrehornLiving;
+		return SoundsRegister.MOB_DYREHORN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDyrehornDeath;
+		return SoundsRegister.MOB_DYREHORN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDyrehornHit;
+		return SoundsRegister.MOB_DYREHORN_HIT;
 	}
 
 	@Nullable

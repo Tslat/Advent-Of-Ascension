@@ -57,27 +57,27 @@ public class BiomeCrystevia extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 				for (int i = 0; i < ConfigurationUtil.OreConfig.blueCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreBlueGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blueCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blueCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.BLUE_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.blueCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.blueCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.greenCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreGreenGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.greenCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.greenCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.GREEN_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.greenCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.greenCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.redCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreRedGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.redCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.redCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.RED_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.redCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.redCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.purpleCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.orePurpleGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.purpleCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.purpleCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.PURPLE_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.purpleCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.purpleCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.whiteCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreWhiteGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.whiteCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.whiteCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.WHITE_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.whiteCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.whiteCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 
 				for (int i = 0; i < ConfigurationUtil.OreConfig.yellowCrystal.veinsPerChunk; i++) {
-					new WorldGenMinable(BlockRegister.oreYellowGemstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.yellowCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.yellowCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneCrystevia)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
+					new WorldGenMinable(BlockRegister.YELLOW_CRYSTAL_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.yellowCrystal.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.yellowCrystal.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.CRYSTEVIA_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(100) + 10, rand.nextInt(16)));
 				}
 		}
 
@@ -92,22 +92,22 @@ public class BiomeCrystevia extends Biome {
 					if (posY > 0) {
 						switch (rand.nextInt(6)) {
 							case 0:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalBlue.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.BLUE_CRYSTAL_PLANT.getDefaultState());
 								break;
 							case 1:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalGreen.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.GREEN_CRYSTAL_PLANT.getDefaultState());
 								break;
 							case 2:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalPurple.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.PURPLE_CRYSTAL_PLANT.getDefaultState());
 								break;
 							case 3:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalRed.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.RED_CRYSTAL_PLANT.getDefaultState());
 								break;
 							case 4:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalWhite.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.WHITE_CRYSTAL_PLANT.getDefaultState());
 								break;
 							case 5:
-								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCrystalYellow.getDefaultState());
+								world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.YELLOW_CRYSTAL_PLANT.getDefaultState());
 								break;
 						}
 					}
@@ -222,7 +222,7 @@ public class BiomeCrystevia extends Biome {
 					;
 				}
 
-				if (world.getBlockState(testPos).getBlock() == BlockRegister.stoneCrystevia)
+				if (world.getBlockState(testPos).getBlock() == BlockRegister.CRYSTEVIA_STONE)
 					return testPos.getY() + 1;
 
 				return 0;

@@ -55,24 +55,24 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobHellcatLiving;
+        return SoundsRegister.MOB_HELLCAT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobHellcatDeath;
+        return SoundsRegister.MOB_HELLCAT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobHellcatHit;
+        return SoundsRegister.MOB_HELLCAT_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.dinoStep;
+        return SoundsRegister.ENTITY_GENERIC_DINO_STEP;
     }
 
     @Nullable

@@ -25,7 +25,7 @@ public class RunicBomb extends BaseThrownWeapon {
 		super(0.0f, 10);
 		setTranslationKey("RunicBomb");
 		setRegistryName("aoa3:runic_bomb");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

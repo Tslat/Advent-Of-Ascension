@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -66,7 +67,7 @@ public class NecroArmour extends AdventArmour {
 			while (count > 0 && inventoryIndex < inv.getSizeInventory()) {
 				ItemStack stack = inv.getStackInSlot(inventoryIndex);
 
-				if (!stack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) == 0) {
+				if (!stack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.INTERVENTION, stack) == 0 && EnchantmentHelper.getEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) == 0) {
 					plData.storeInterventionItem(stack);
 					inv.setInventorySlotContents(inventoryIndex, ItemStack.EMPTY);
 					count--;

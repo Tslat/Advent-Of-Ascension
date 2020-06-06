@@ -25,7 +25,7 @@ public class NetherGen {
 			int posY = 5 + rand.nextInt(120);
 			int posZ = chunkZ + rand.nextInt(16);
 
-			new WorldGenMinable(BlockRegister.oreEmberstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.emberstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.emberstone.maxOresPerVein) + 1), BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, rand, new BlockPos(posX, posY, posZ));
+			new WorldGenMinable(BlockRegister.EMBERSTONE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.emberstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.emberstone.maxOresPerVein) + 1), BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, rand, new BlockPos(posX, posY, posZ));
 		}
 	}
 

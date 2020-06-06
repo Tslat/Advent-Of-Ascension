@@ -30,13 +30,13 @@ public class EvermightStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffEmber;
+		return SoundsRegister.EMBER_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 2);
-		runes.put(ItemRegister.runePower, 4);
+		runes.put(ItemRegister.DISTORTION_RUNE, 2);
+		runes.put(ItemRegister.POWER_RUNE, 4);
 	}
 
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {

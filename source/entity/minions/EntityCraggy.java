@@ -57,19 +57,19 @@ public class EntityCraggy extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDraggyLiving;
+		return SoundsRegister.MOB_DRAGGY_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDraggyHit;
+		return SoundsRegister.MOB_DRAGGY_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDraggyDeath;
+		return SoundsRegister.MOB_DRAGGY_DEATH;
 	}
 
 	@Nullable

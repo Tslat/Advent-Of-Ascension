@@ -14,7 +14,7 @@ public class WorldTypeCrystevia extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeCrystevia);
+		return new BiomeProviderSingle(BiomeRegister.CRYSTEVIA);
 	}
 
 	@Override

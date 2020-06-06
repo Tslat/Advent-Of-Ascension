@@ -52,9 +52,9 @@ public class EntityAssassin extends AoATrader {
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.rockBones) {
+		if (heldStack.getItem() == ItemRegister.ROCK_BONES) {
 			if (!world.isRemote)
-				player.setHeldItem(hand, ItemRegister.millenniumUpgrader.newValidStack());
+				player.setHeldItem(hand, ItemRegister.MILLENNIUM_UPGRADER.newValidStack());
 
 			return true;
 		}
@@ -64,12 +64,12 @@ public class EntityAssassin extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(WeaponRegister.throwableSliceStar, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(WeaponRegister.throwableGooBall, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(WeaponRegister.throwableChakram, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(WeaponRegister.throwableHellfire, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(WeaponRegister.throwableVulkram, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(ItemRegister.metalSlug, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(ItemRegister.bulletLimonite, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(WeaponRegister.SLICE_STAR, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(WeaponRegister.GOO_BALL, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 3), new ItemStack(WeaponRegister.CHAKRAM, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(WeaponRegister.HELLFIRE, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 3), new ItemStack(WeaponRegister.VULKRAM, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(ItemRegister.METAL_SLUG, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(ItemRegister.LIMONITE_BULLET, 3)));
 	}
 }

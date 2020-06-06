@@ -23,14 +23,14 @@ public class EnigmaTable extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			for (int i = 0; i < 4; i++) {
-				EntityItem unchargedStone = new EntityItem(world, pos.getX(), pos.getY() + 0.2, pos.getZ(), new ItemStack(ItemRegister.unchargedStone));
+				EntityItem unchargedStone = new EntityItem(world, pos.getX(), pos.getY() + 0.2, pos.getZ(), new ItemStack(ItemRegister.UNCHARGED_STONE));
 
 				unchargedStone.setPickupDelay(10);
 				unchargedStone.addVelocity(AdventOfAscension.rand.nextGaussian(), 1 + AdventOfAscension.rand.nextDouble(), AdventOfAscension.rand.nextGaussian());

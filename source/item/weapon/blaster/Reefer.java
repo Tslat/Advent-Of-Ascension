@@ -18,7 +18,7 @@ public class Reefer extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunReefer;
+		return SoundsRegister.REEFER_FIRE;
 	}
 
 	@Override

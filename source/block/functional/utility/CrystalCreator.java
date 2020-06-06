@@ -27,7 +27,7 @@ public class CrystalCreator extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.GLASS);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class CrystalCreator extends Block {
 				player.setHeldItem(hand, ItemStack.EMPTY);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal, stack.getCount()));
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.crystalCreatorUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.CRYSTAL_CREATOR_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
 		}
 
