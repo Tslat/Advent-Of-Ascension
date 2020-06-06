@@ -4031,15 +4031,14 @@ tile.AbyssGrass.name=深渊草方块
 tile.AbyssPortal.name=深渊传送门
 tile.AbyssalGlass.name=深渊玻璃
 tile.AbyssalStone.name=深渊石头
-tile.AchonyFence.name=桉格尼栅栏
-tile.AchonyGate.name=桉格尼栅栏门
-tile.AchonyLeaves.name=桉格尼树叶
+tile.AchonyFence.name=桉格尼木栅栏
+tile.AchonyGate.name=桉格木栅栏门
+tile.AchonyLeaves.name=桉格尼木树叶
 tile.AchonyLog.name=桉格尼木
 tile.AchonyPlanks.name=桉格尼木板
-tile.AchonySapling.name=桉格尼树苗
-<<<<<<< Updated upstream
-tile.AchonySlab.name=桉格尼台阶
-tile.AchonyStairs.name=桉格尼楼梯
+tile.AchonySapling.name=桉格尼木树苗
+tile.AchonySlab.name=桉格尼木台阶
+tile.AchonyStairs.name=桉格尼木楼梯
 tile.AmethystBlock.name=紫晶块
 tile.AmethystLamp.name=紫晶灯
 tile.AmethystLampOff.name=紫晶灯
@@ -4179,10 +4178,7 @@ tile.BloodstoneLamp.name=血石灯
 tile.BloodstoneLampOff.name=血石灯
 tile.BloodstoneOre.name=血石矿石
 tile.BloodsuckerSpawner.name=血之吮吸者刷怪箱
-<<<<<<< Updated upstream
 tile.BloodtwisterSapling.name=旋血树苗
-tile.BloodtwisterSapling.name=血木树苗
->>>>>>> Stashed changes
 tile.BloodwoodFence.name=血木栅栏
 tile.BloodwoodGate.name=血木栅栏门
 tile.BloodwoodPlanks.name=血木木板
