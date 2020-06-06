@@ -28,14 +28,14 @@ public class SkyStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffSky;
+		return SoundsRegister.SKY_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runeKinetic, 2);
-		runes.put(ItemRegister.runeEnergy, 1);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.KINETIC_RUNE, 2);
+		runes.put(ItemRegister.ENERGY_RUNE, 1);
 	}
 
 	@Override

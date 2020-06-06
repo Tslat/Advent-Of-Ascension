@@ -45,17 +45,17 @@ public class EntityHorndron extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHorndronLiving;
+		return SoundsRegister.MOB_HORNDRON_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHorndronDeath;
+		return SoundsRegister.MOB_HORNDRON_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHorndronHit;
+		return SoundsRegister.MOB_HORNDRON_HIT;
 	}
 
 	@Nullable

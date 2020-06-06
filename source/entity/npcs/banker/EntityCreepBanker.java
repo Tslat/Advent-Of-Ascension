@@ -52,7 +52,7 @@ public class EntityCreepBanker extends AoATrader {
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.realmstoneBlank && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
+		if (heldStack.getItem() == ItemRegister.BLANK_REALMSTONE && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
 			return true;
 
 		return super.processInteract(player, hand);

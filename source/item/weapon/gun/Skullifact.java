@@ -23,7 +23,7 @@ public class Skullifact extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunArtifact;
+		return SoundsRegister.ARTIFACT_FIRE;
 	}
 
 	@Override

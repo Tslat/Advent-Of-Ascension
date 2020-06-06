@@ -14,19 +14,19 @@ import static net.minecraft.block.BlockStairs.FACING;
 import static net.minecraft.block.BlockStairs.HALF;
 
 public class GuardianTowerPt3 {
-	private static final IBlockState havenStone = BlockRegister.stoneHaven.getDefaultState();
-	private static final IBlockState havenGlass = BlockRegister.glassHaven.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState crystalliteBricks = BlockRegister.bricksCrystallite.getDefaultState();
-	private static final IBlockState guardianAltar = BlockRegister.guardianAltar.getDefaultState();
+	private static final IBlockState havenStone = BlockRegister.HAVEN_STONE.getDefaultState();
+	private static final IBlockState havenGlass = BlockRegister.HAVEN_GLASS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState crystalliteBricks = BlockRegister.CRYSTALLITE_BRICKS.getDefaultState();
+	private static final IBlockState guardianAltar = BlockRegister.GUARDIAN_ALTAR.getDefaultState();
 	private static final IBlockState trapdoor = Blocks.TRAPDOOR.getDefaultState().withProperty(BlockTrapDoor.FACING, EnumFacing.SOUTH).withProperty(BlockTrapDoor.HALF, BlockTrapDoor.DoorHalf.TOP);
 	private static final IBlockState ladder = Blocks.LADDER.getDefaultState().withProperty(BlockLadder.FACING, EnumFacing.SOUTH);
-	private static final IBlockState twinklestoneFence = BlockRegister.fenceTwinklestone.getDefaultState();
+	private static final IBlockState twinklestoneFence = BlockRegister.TWINKLESTONE_FENCE.getDefaultState();
 	private static final IBlockState northChest = Blocks.CHEST.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH);
 	private static final IBlockState westChest = Blocks.CHEST.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.WEST);
 	private static final IBlockState eastChest = Blocks.CHEST.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
-	private static final IBlockState crystalliteStairsTopNorth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
-	private static final IBlockState crystalliteStairsTopSouth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsTopNorth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsTopSouth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
 	private static final IBlockState leverNorth = Blocks.LEVER.getDefaultState();
 	private static final IBlockState leverSouth = Blocks.LEVER.getDefaultState().withProperty(BlockLever.FACING, BlockLever.EnumOrientation.SOUTH);
 	private static final IBlockState leverWest = Blocks.LEVER.getDefaultState().withProperty(BlockLever.FACING, BlockLever.EnumOrientation.WEST);

@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PowerStation extends AoAStructure { //StructureSize: 7x5x7
-	private static final IBlockState crystevianBricks = BlockRegister.bricksCrystevia.getDefaultState();
-	private static final IBlockState purpleCrystal = BlockRegister.crystalPurple.getDefaultState();
-	private static final IBlockState powerStation = BlockRegister.powerStation.getDefaultState();
-	private static final IBlockState redCrystal = BlockRegister.crystalRed.getDefaultState();
+	private static final IBlockState crystevianBricks = BlockRegister.CRYSTEVIA_BRICKS.getDefaultState();
+	private static final IBlockState purpleCrystal = BlockRegister.PURPLE_CRYSTAL_BLOCK.getDefaultState();
+	private static final IBlockState powerStation = BlockRegister.POWER_STATION.getDefaultState();
+	private static final IBlockState redCrystal = BlockRegister.RED_CRYSTAL_BLOCK.getDefaultState();
 
 	public PowerStation() {
 		super("PowerStation");

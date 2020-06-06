@@ -50,11 +50,11 @@ public class EntityShyreArcher extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemShyregem, 7), new ItemStack(ItemRegister.ingotShyrestone, 12), new ItemStack(WeaponRegister.bowSunshine)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(ItemRegister.hollyArrow)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 6), new ItemStack(ItemRegister.hollyArrowSpectral)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 1), new ItemStack(Items.ARROW)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 9), new ItemStack(WeaponRegister.cannonUltraCannon, 1), new ItemStack(WeaponRegister.cannonGigaCannon)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemShyregem, 2), new ItemStack(ItemRegister.ingotShyrestone, 2), new ItemStack(ItemRegister.ancientRing)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SHYREGEM, 7), new ItemStack(ItemRegister.SHYRESTONE_INGOT, 12), new ItemStack(WeaponRegister.SUNSHINE_BOW)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 3), new ItemStack(ItemRegister.HOLLY_ARROW)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 6), new ItemStack(ItemRegister.SPECTRAL_HOLLY_ARROW)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 1), new ItemStack(Items.ARROW)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 9), new ItemStack(WeaponRegister.ULTRA_CANNON, 1), new ItemStack(WeaponRegister.GIGA_CANNON)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SHYREGEM, 2), new ItemStack(ItemRegister.SHYRESTONE_INGOT, 2), new ItemStack(ItemRegister.ANCIENT_RING)));
 	}
 }

@@ -50,19 +50,19 @@ public class EntityExohead extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobExoheadLiving;
+		return SoundsRegister.MOB_EXOHEAD_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobExoheadDeath;
+		return SoundsRegister.MOB_EXOHEAD_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobExoheadHit;
+		return SoundsRegister.MOB_EXOHEAD_HIT;
 	}
 
 	@Nullable

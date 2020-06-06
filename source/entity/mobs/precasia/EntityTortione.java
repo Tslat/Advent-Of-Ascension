@@ -59,24 +59,24 @@ public class EntityTortione extends AoAMeleeMob implements SpecialPropertyEntity
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTortioneLiving;
+		return SoundsRegister.MOB_TORTIONE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTortioneDeath;
+		return SoundsRegister.MOB_TORTIONE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTortioneHit;
+		return SoundsRegister.MOB_TORTIONE_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable

@@ -14,7 +14,7 @@ public class WorldTypeLelyetia extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeLelyetia);
+		return new BiomeProviderSingle(BiomeRegister.LELYETIA);
 	}
 
 	@Override

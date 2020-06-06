@@ -56,13 +56,13 @@ public class EntityGoldus extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAutomatonDeath;
+		return SoundsRegister.MOB_AUTOMATON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAutomatonHit;
+		return SoundsRegister.MOB_AUTOMATON_HIT;
 	}
 
 	@Nullable
@@ -89,8 +89,8 @@ public class EntityGoldus extends AoAMeleeMob {
 					pl = (EntityPlayer)attacker;
 				}
 
-				if (pl != null && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.pureGold))) {
-					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.pureGold));
+				if (pl != null && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.PURE_GOLD))) {
+					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.PURE_GOLD));
 					pl.inventoryContainer.detectAndSendChanges();
 				}
 			}

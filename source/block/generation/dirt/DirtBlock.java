@@ -25,7 +25,7 @@ public class DirtBlock extends BlockDirt implements CustomStateMapperBlock {
 		setHardness(0.5f);
 		setSoundType(SoundType.GROUND);
 		setDefaultState(blockState.getBaseState());
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setHarvestLevel("shovel", 0);
 	}
 

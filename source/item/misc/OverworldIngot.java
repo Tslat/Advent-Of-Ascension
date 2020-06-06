@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class OverworldIngot extends SimpleItem {
 	public OverworldIngot(String name, String registryName) {
 		super(name, registryName);
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 		setHasSubtypes(true);
 	}
 

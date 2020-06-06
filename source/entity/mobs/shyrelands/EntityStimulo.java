@@ -54,19 +54,19 @@ public class EntityStimulo extends AoAMeleeMob implements SpecialPropertyEntity 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobStimuloLiving;
+        return SoundsRegister.MOB_STIMULO_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobStimuloDeath;
+        return SoundsRegister.MOB_STIMULO_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobStimuloHit;
+        return SoundsRegister.MOB_STIMULO_HIT;
     }
 
     @Nullable

@@ -12,9 +12,9 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class EyeHanger2 extends AoAStructure { //StructureSize: 3x9x3
-	private static final IBlockState eyeBlock = BlockRegister.eyeBlock.getDefaultState();
-	private static final IBlockState bloodLog = BlockRegister.logBlood.getDefaultState();
-	private static final IBlockState bloodLogBark = BlockRegister.logBlood.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState eyeBlock = BlockRegister.EYE_BLOCK.getDefaultState();
+	private static final IBlockState bloodLog = BlockRegister.BLOOD_LOG.getDefaultState();
+	private static final IBlockState bloodLogBark = BlockRegister.BLOOD_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
 
 	public EyeHanger2() {
 		super("EyeHanger2");

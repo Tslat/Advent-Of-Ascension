@@ -44,7 +44,7 @@ public class BannerBlock extends Block {
 		setSoundType(SoundType.CLOTH);
 		setLightOpacity(0);
 		setDefaultState(blockState.getBaseState().withProperty(TYPE, BannerType.MOUNTED).withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
-		setCreativeTab(CreativeTabsRegister.bannersTab);
+		setCreativeTab(CreativeTabsRegister.BANNERS);
 	}
 
 	@Override

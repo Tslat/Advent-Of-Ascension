@@ -43,6 +43,6 @@ public class EntityGooBall extends BaseBullet implements HardProjectile {
 		if (target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 1));
 
-		world.playSound(null, posX, posY, posZ, SoundsRegister.gooBallImpact, SoundCategory.PLAYERS, 1.0f, 1.0f);
+		world.playSound(null, posX, posY, posZ, SoundsRegister.GOO_BALL_IMPACT, SoundCategory.PLAYERS, 1.0f, 1.0f);
 	}
 }

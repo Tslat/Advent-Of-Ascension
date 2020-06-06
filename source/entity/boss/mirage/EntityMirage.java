@@ -54,13 +54,13 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobImmortalLiving;
+		return SoundsRegister.MOB_IMMORTAL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobImmortalDeath;
+		return SoundsRegister.MOB_IMMORTAL_DEATH;
 	}
 
 	@Nullable
@@ -72,7 +72,7 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotMirageFire;
+		return SoundsRegister.MIRAGE_SHOOT;
 	}
 
 	@Nullable
@@ -96,7 +96,7 @@ public class EntityMirage extends AoARangedMob implements BossEntity {
 		super.onLivingUpdate();
 		
 		if (!world.isRemote && rand.nextInt(80) == 0) {
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobMirageTeleport, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_MIRAGE_TELEPORT, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			
 			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.immortallis) {
 				switch (rand.nextInt(4)) {

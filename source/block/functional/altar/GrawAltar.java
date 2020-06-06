@@ -22,7 +22,7 @@ public class GrawAltar extends BossAltarBlock {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem.getItem() == ItemRegister.orangeSpores || heldItem.getItem() == ItemRegister.yellowSpores) {
+		if (heldItem.getItem() == ItemRegister.ORANGE_SPORES || heldItem.getItem() == ItemRegister.YELLOW_SPORES) {
 			if (!world.isRemote) {
 				world.spawnEntity(new EntityFlye(world, pos));
 
@@ -48,6 +48,6 @@ public class GrawAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.guardiansEye;
+		return ItemRegister.GUARDIANS_EYE;
 	}
 }

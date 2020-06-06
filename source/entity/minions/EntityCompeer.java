@@ -60,19 +60,19 @@ public class EntityCompeer extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCompeerLiving;
+		return SoundsRegister.MOB_COMPEER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCompeerHit;
+		return SoundsRegister.MOB_COMPEER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCompeerDeath;
+		return SoundsRegister.MOB_COMPEER_DEATH;
 	}
 
 	@Nullable

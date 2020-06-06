@@ -68,13 +68,13 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 
 	@Override
 	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
-		if (HunterUtil.isHunterCreature(event.getEntityLiving()))
+		if (slots == null && HunterUtil.isHunterCreature(event.getEntityLiving()))
 			event.setAmount(event.getAmount() * 1.15f);
 	}
 
 	@Override
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
-		if (event.getSource().getTrueSource() instanceof EntityLivingBase && HunterUtil.isHunterCreature((EntityLivingBase)event.getSource().getTrueSource()))
+		if (slots == null && event.getSource().getTrueSource() instanceof EntityLivingBase && HunterUtil.isHunterCreature((EntityLivingBase)event.getSource().getTrueSource()))
 			event.setAmount(event.getAmount() * 0.85f);
 	}
 

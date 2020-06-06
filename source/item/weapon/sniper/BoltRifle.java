@@ -2,7 +2,6 @@ package net.tslat.aoa3.item.weapon.sniper;
 
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
@@ -16,6 +15,6 @@ public class BoltRifle extends BaseSniper {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 }

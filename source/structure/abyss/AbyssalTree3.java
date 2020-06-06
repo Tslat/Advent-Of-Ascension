@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AbyssalTree3 extends AoAStructure { //StructureSize: 7x6x7
-	private static final IBlockState veinLeaves = BlockRegister.leavesVein.getDefaultState();
-	private static final IBlockState eyeballLog = BlockRegister.logEyeball.getDefaultState();
+	private static final IBlockState veinLeaves = BlockRegister.VEIN_LEAVES.getDefaultState();
+	private static final IBlockState eyeballLog = BlockRegister.EYEBALL_LOG.getDefaultState();
 
 	public AbyssalTree3() {
 		super("AbyssalTree3");

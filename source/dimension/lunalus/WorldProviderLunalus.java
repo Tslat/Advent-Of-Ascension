@@ -21,13 +21,13 @@ import javax.annotation.Nullable;
 public class WorldProviderLunalus extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionLunalus;
+		return DimensionRegister.DIM_LUNALUS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeLunalus.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_LUNALUS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class WorldProviderLunalus extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeLunalus.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_LUNALUS.getChunkGenerator(world, null);
 	}
 
 	@Override

@@ -55,25 +55,25 @@ public class EntitySpectralWizard extends AoARangedMob implements SpecialPropert
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSpectralWizardLiving;
+		return SoundsRegister.MOB_SPECTRAL_WIZARD_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSpectralWizardDeath;
+		return SoundsRegister.MOB_SPECTRAL_WIZARD_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSpectralWizardHit;
+		return SoundsRegister.MOB_SPECTRAL_WIZARD_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotWizardBlast;
+		return SoundsRegister.WIZARD_BLAST_SHOOT;
 	}
 
 	@Nullable

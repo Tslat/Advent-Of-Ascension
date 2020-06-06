@@ -15,13 +15,13 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class GorbVillage extends AoAStructure { //StructureSize: 45x10x20
-	private static final IBlockState blueMushroomOutside = BlockRegister.mushroomBlueOutside.getDefaultState();
-	private static final IBlockState greenMushroomOutside = BlockRegister.mushroomGreenOutside.getDefaultState();
-	private static final IBlockState blackMysteriumBricks = BlockRegister.bricksMysteriumBlack.getDefaultState();
-	private static final IBlockState greenMysteriumBricks = BlockRegister.bricksMysteriumGreen.getDefaultState();
-	private static final IBlockState mysticLamp = BlockRegister.lampMystic.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState runicGlass = BlockRegister.glassRunic.getDefaultState();
-	private static final IBlockState mysteriumStone = BlockRegister.stoneMysterium.getDefaultState();
+	private static final IBlockState blueMushroomOutside = BlockRegister.BLUE_MUSHROOM_OUTSIDE.getDefaultState();
+	private static final IBlockState greenMushroomOutside = BlockRegister.GREEN_MUSHROOM_OUTSIDE.getDefaultState();
+	private static final IBlockState blackMysteriumBricks = BlockRegister.BLACK_MYSTERIUM_BRICKS.getDefaultState();
+	private static final IBlockState greenMysteriumBricks = BlockRegister.GREEN_MYSTERIUM_BRICKS.getDefaultState();
+	private static final IBlockState mysticLamp = BlockRegister.MYSTIC_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState runicGlass = BlockRegister.RUNIC_GLASS.getDefaultState();
+	private static final IBlockState mysteriumStone = BlockRegister.MYSTERIUM_STONE.getDefaultState();
 	private static final IBlockState glass = Blocks.GLASS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 

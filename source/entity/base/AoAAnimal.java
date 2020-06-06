@@ -1,6 +1,9 @@
 package net.tslat.aoa3.entity.base;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockGrass;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
@@ -13,6 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.block.generation.stone.StoneBlock;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
 
@@ -55,13 +59,20 @@ public abstract class AoAAnimal extends EntityAnimal {
 		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
 		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
+		getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmor());
 	}
 
 	protected abstract double getBaseMaxHealth();
 
 	protected abstract double getBaseMovementSpeed();
 
-	protected abstract double getBaseKnockbackResistance();
+	protected double getBaseKnockbackResistance() {
+		return 0;
+	}
+
+	protected double getBaseArmor() {
+		return 0;
+	}
 
 	@Nullable
 	@Override
@@ -81,7 +92,10 @@ public abstract class AoAAnimal extends EntityAnimal {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return checkSpawnChance() && super.getCanSpawnHere();
+		BlockPos checkPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+		IBlockState spawnBlock = world.getBlockState(checkPos.down());
+
+		return checkSpawnChance() && (spawnBlock.getBlock() instanceof BlockGrass || spawnBlock.getBlock() instanceof BlockStone || spawnBlock instanceof StoneBlock) && spawnBlock.canEntitySpawn(this) && checkSpawningLightConditions() && getBlockPathWeight(checkPos) >= 0.0F;
 	}
 
 	protected int getSpawnChanceFactor() {
@@ -90,6 +104,10 @@ public abstract class AoAAnimal extends EntityAnimal {
 
 	private boolean checkSpawnChance() {
 		return getSpawnChanceFactor() <= 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
+	}
+
+	protected boolean checkSpawningLightConditions() {
+		return world.getLight(getPosition()) > 8;
 	}
 
 	@Override

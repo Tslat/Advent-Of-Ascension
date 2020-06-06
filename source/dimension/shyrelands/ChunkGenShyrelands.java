@@ -28,16 +28,16 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeShyrelands;
+	private final Biome biome = BiomeRegister.SHYRELANDS;
 
 	private int x;
 	private int y;
 	private int z;
 	
-	private final IBlockState whiteBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private final IBlockState yellowBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private final IBlockState glass = BlockRegister.glassShyre.getDefaultState();
-	private final IBlockState cloud = BlockRegister.shyreCloud.getDefaultState();
+	private final IBlockState whiteBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private final IBlockState yellowBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private final IBlockState glass = BlockRegister.SHYRE_GLASS.getDefaultState();
+	private final IBlockState cloud = BlockRegister.SHYRE_CLOUD.getDefaultState();
 
 	protected ChunkGenShyrelands(World world) {
 		this.world = world;
@@ -74,8 +74,8 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 			}
 		}
 
-		setAllBlocksInRegion(0, 0, 0, 15, 29, 15, BlockRegister.stoneShyrelands.getDefaultState());
-		setAllBlocksInRegion(1, 30, 1, 14, 30, 14, BlockRegister.grassShyrelands.getDefaultState());
+		setAllBlocksInRegion(0, 0, 0, 15, 29, 15, BlockRegister.SHYRELANDS_STONE.getDefaultState());
+		setAllBlocksInRegion(1, 30, 1, 14, 30, 14, BlockRegister.SHYRELANDS_GRASS.getDefaultState());
 
 		setAllBlocksInRegion(0, 30, 0, 15, 30, 0, whiteBricks);
 		setAllBlocksInRegion(0, 30, 15, 15, 30, 15, whiteBricks);
@@ -131,20 +131,20 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 
 		for (x = 0; x <= 15; x++) {
 			for (y = 31; y <= 45; y++) {
-				if (rand.nextInt(12) == 0 && primer.getBlockState(x, y, 0).getBlock() == BlockRegister.bricksShyreYellow)
+				if (rand.nextInt(12) == 0 && primer.getBlockState(x, y, 0).getBlock() == BlockRegister.YELLOW_SHYRE_BRICKS)
 					primer.setBlockState(x, y, 0, glass);
 
-				if (rand.nextInt(12) == 0 && primer.getBlockState(x, y, 0).getBlock() == BlockRegister.bricksShyreYellow)
+				if (rand.nextInt(12) == 0 && primer.getBlockState(x, y, 0).getBlock() == BlockRegister.YELLOW_SHYRE_BRICKS)
 					primer.setBlockState(x, y, 15, glass);
 			}
 		}
 
 		for (z = 0; z <= 15; z++) {
 			for (y = 31; y <= 45; y++) {
-				if (rand.nextInt(12) == 0 && primer.getBlockState(0, y, z).getBlock() == BlockRegister.bricksShyreYellow)
+				if (rand.nextInt(12) == 0 && primer.getBlockState(0, y, z).getBlock() == BlockRegister.YELLOW_SHYRE_BRICKS)
 					primer.setBlockState(0, y, z, glass);
 
-				if (rand.nextInt(12) == 0 && primer.getBlockState(15, y, z).getBlock() == BlockRegister.bricksShyreYellow)
+				if (rand.nextInt(12) == 0 && primer.getBlockState(15, y, z).getBlock() == BlockRegister.YELLOW_SHYRE_BRICKS)
 					primer.setBlockState(15, y, z, glass);
 			}
 		}
@@ -152,7 +152,7 @@ public class ChunkGenShyrelands implements IChunkGenerator {
 		for (x = 0; x <= 15; x++) {
 			for (y = 0; y <= 2; y++) {
 				for (z = 0; z <= 15; z++) {
-					primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+					primer.setBlockState(x, y, z, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 				}
 			}
 		}

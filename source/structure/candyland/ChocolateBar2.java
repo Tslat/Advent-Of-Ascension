@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ChocolateBar2 extends AoAStructure { //StructureSize: 3x7x1
-	private static final IBlockState chocolate = BlockRegister.chocolateBlock.getDefaultState();
+	private static final IBlockState chocolate = BlockRegister.CHOCOLATE_BLOCK.getDefaultState();
 
 	public ChocolateBar2() {
 		super("ChocolateBar2");

@@ -13,7 +13,6 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeSlug;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -37,7 +36,7 @@ public class DischargeSniper extends BaseSniper {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDischargeGun;
+		return SoundsRegister.DISCHARGE_GUN_FIRE;
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class DischargeSniper extends BaseSniper {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.dischargeCapsule, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.DISCHARGE_CAPSULE, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityDischargeSlug(player, gun, 0);

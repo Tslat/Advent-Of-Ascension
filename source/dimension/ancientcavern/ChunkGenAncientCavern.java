@@ -21,7 +21,7 @@ public class ChunkGenAncientCavern implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeAncientCavern;
+	private final Biome biome = BiomeRegister.ANCIENT_CAVERN;
 
 	protected ChunkGenAncientCavern(World world) {
 		this.world = world;

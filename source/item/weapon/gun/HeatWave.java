@@ -16,7 +16,6 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityHotShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
@@ -40,12 +39,12 @@ public class HeatWave extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunHeatWave;
+		return SoundsRegister.HEAT_WAVE_FIRE;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		if (ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.metalSlug, player.getHeldItem(hand)) != null)
+		if (ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.METAL_SLUG, player.getHeldItem(hand)) != null)
 			return new EntityHotShot(player, gun, hand,120, 0);
 
 		return null;

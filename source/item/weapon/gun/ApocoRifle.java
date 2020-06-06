@@ -13,7 +13,6 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -34,12 +33,12 @@ public class ApocoRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDischargeGun;
+		return SoundsRegister.DISCHARGE_GUN_FIRE;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.dischargeCapsule, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.DISCHARGE_CAPSULE, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityDischargeShot(player, gun, hand, 120, 0);

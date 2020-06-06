@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.utils.WorldUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
@@ -34,7 +35,7 @@ public class EmbrodiumArmour extends AdventArmour {
 		}
 		else {
 			EntityPlayer pl = plData.player();
-			float temp = pl.world.getBiome(pl.getPosition()).getTemperature(pl.getPosition());
+			float temp = WorldUtil.getAmbientTemperature(pl.world, pl.getPosition());
 
 			if (temp > 0.8f)
 				plData.stats().regenResource(Enums.Resources.ENERGY, 0.08f * slots.size() * Math.min(1f, (temp / 2f)));

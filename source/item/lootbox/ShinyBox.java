@@ -25,7 +25,7 @@ public class ShinyBox extends Item {
 	public ShinyBox() {
 		setTranslationKey("ShinyBox");
 		setRegistryName("aoa3:shiny_box");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class ShinyBox extends Item {
 				player.getHeldItem(hand).shrink(1);
 
 			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

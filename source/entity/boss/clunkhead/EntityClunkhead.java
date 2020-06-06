@@ -62,13 +62,13 @@ public class EntityClunkhead extends AoARangedMob implements SpecialPropertyEnti
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobClunkheadDeath;
+		return SoundsRegister.MOB_CLUNKHEAD_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotClunkheadFire;
+		return SoundsRegister.CLUNKHEAD_SHOOT;
 	}
 
 	@Nullable
@@ -161,7 +161,7 @@ public class EntityClunkhead extends AoARangedMob implements SpecialPropertyEnti
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicClunkhead;
+		return SoundsRegister.CLUNKHEAD_MUSIC;
 	}
 
 	@Override

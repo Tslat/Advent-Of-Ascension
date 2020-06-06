@@ -20,7 +20,7 @@ import java.util.Random;
 public class VoxCrate extends BasicBlock {
 	public VoxCrate() {
 		super("VoxCrate", "vox_crate", Material.WOOD, 5f, 3f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

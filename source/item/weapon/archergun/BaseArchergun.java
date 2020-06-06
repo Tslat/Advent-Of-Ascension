@@ -33,13 +33,13 @@ public abstract class BaseArchergun extends BaseGun {
 		super(dmg, durability, fireDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = fireDelayTicks;
-		setCreativeTab(CreativeTabsRegister.archergunsTab);
+		setCreativeTab(CreativeTabsRegister.ARCHERGUNS);
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunArchergun;
+		return SoundsRegister.ARCHERGUN_FIRE;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public abstract class BaseArchergun extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand, boolean consume) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.hollyArrow, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.HOLLY_ARROW, player.getHeldItem(hand));
 
 		if (ammo != null) {
 			EntityHollyArrowShot arrow = new EntityHollyArrowShot(player, gun, hand,120, 0);

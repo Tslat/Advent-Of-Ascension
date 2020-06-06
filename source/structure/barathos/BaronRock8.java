@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BaronRock8 extends AoAStructure { //StructureSize: 8x8x11
-	private static final IBlockState baronStone = BlockRegister.stoneBaron.getDefaultState();
-	private static final IBlockState baronGround = BlockRegister.baronGround.getDefaultState();
+	private static final IBlockState baronStone = BlockRegister.BARON_STONE.getDefaultState();
+	private static final IBlockState baronGround = BlockRegister.BARON_GROUND.getDefaultState();
 
 	public BaronRock8() {
 		super("BaronRock8");

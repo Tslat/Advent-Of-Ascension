@@ -9,9 +9,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
-import net.tslat.aoa3.structure.AoAStructure;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenShyreTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -60,10 +60,10 @@ public class BiomeShyrelands extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY, posZ)) == biome.fillerBlock) {
 					if (rand.nextInt(8) == 0) {
-						world.setBlockState(pos, BlockRegister.oreShyregem.getDefaultState());
+						world.setBlockState(pos, BlockRegister.SHYREGEM_ORE.getDefaultState());
 					}
 					else {
-						world.setBlockState(pos, BlockRegister.oreShyrestone.getDefaultState());
+						world.setBlockState(pos, BlockRegister.SHYRESTONE_ORE.getDefaultState());
 					}
 				}
 			}
@@ -77,7 +77,7 @@ public class BiomeShyrelands extends Biome {
 				posY = 54;
 
 				if (world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
-					world.setBlockState(pos.up(), BlockRegister.glassShyre.getDefaultState());
+					world.setBlockState(pos.up(), BlockRegister.SHYRE_GLASS.getDefaultState());
 					StructuresHandler.generateStructure("InvertedShyreStock", world, rand, pos);
 				}
 			}
@@ -94,16 +94,16 @@ public class BiomeShyrelands extends Biome {
 								StructuresHandler.generateStructure("ShyreStock", world, rand, pos);
 							break;
 						case 1:
-							world.setBlockState(pos, BlockRegister.plantShyreWeed.getDefaultState());
+							world.setBlockState(pos, BlockRegister.SHYRE_WEED.getDefaultState());
 							break;
 						case 2:
-							world.setBlockState(pos, BlockRegister.plantArcbulb.getDefaultState());
+							world.setBlockState(pos, BlockRegister.ARCBULB.getDefaultState());
 							break;
 						case 3:
-							world.setBlockState(pos, BlockRegister.plantArcflower.getDefaultState());
+							world.setBlockState(pos, BlockRegister.ARCFLOWER.getDefaultState());
 							break;
 						case 4:
-							world.setBlockState(pos, BlockRegister.plantHorizonDaisies.getDefaultState());
+							world.setBlockState(pos, BlockRegister.HORIZON_DAISIES.getDefaultState());
 							break;
 					}
 				}
@@ -114,7 +114,7 @@ public class BiomeShyrelands extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(14);
 
 				if (world.isAirBlock(pos.setPos(posX, 31, posZ)) && world.getBlockState(pos.down()) == biome.topBlock)
-					world.setBlockState(pos, BlockRegister.plantTrilliadBloom.getDefaultState());
+					world.setBlockState(pos, BlockRegister.TRILLIAD_BLOOM.getDefaultState());
 			}
 		}
 
@@ -124,26 +124,9 @@ public class BiomeShyrelands extends Biome {
 				posX = basePos.getX() + rand.nextInt(12);
 				posZ = basePos.getZ() + rand.nextInt(12);
 				posY = 31;
-				AoAStructure structure = StructuresHandler.EMPTY_STRUCTURE;
 
-				if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock && world.getBlockState(pos.setPos(posX + 1, posY, posZ + 1)).getMaterial().isReplaceable()) {
-					switch (rand.nextInt(4)) {
-						case 0:
-							structure = StructuresHandler.getStructure("ShyreTree1");
-							break;
-						case 1:
-							structure = StructuresHandler.getStructure("ShyreTree2");
-							break;
-						case 2:
-							structure = StructuresHandler.getStructure("BrightShyreTree1");
-							break;
-						case 3:
-							structure = StructuresHandler.getStructure("BrightShyreTree2");
-							break;
-					}
-
-					StructuresHandler.generateStructure(structure, world, rand, pos.setPos(posX, posY, posZ));
-				}
+				if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock && world.getBlockState(pos.setPos(posX + 1, posY, posZ + 1)).getMaterial().isReplaceable())
+					new WorldGenShyreTree(null, null, rand).generate(world, rand, pos);
 			}
 		}
 	}

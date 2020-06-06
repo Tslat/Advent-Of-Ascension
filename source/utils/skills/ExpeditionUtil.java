@@ -1,5 +1,6 @@
 package net.tslat.aoa3.utils.skills;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.text.TextFormatting;
@@ -48,13 +49,14 @@ public class ExpeditionUtil {
         }
     }
 
-    public static void handleRunningTick(TickEvent.PlayerTickEvent ev, PlayerDataManager plData) {
+    public static void handleRunningTick(TickEvent.PlayerTickEvent ev, EntityPlayer pl) {
+    	PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 		int lvl = plData.stats().getLevel(Enums.Skills.EXPEDITION);
 
 		if (ev.player.isSprinting() && ev.player.ticksExisted % 140 == 0)
 			plData.stats().addXp(Enums.Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false, false);
 
-		switch (plData.stats().getSkillData(Enums.Skills.EXPEDITION)) {
+		switch (plData.stats().getSkillData(Enums.Skills.EXPEDITION) % 4) {
 			case 1:
 				if (ev.player.isSprinting() && ev.player.ticksExisted % 600 == 0) {
 					if (AdventOfAscension.rand.nextInt(110) < lvl && !ev.player.isPotionActive(MobEffects.SPEED)) {

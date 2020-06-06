@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class KrorPillars extends AoAStructure { //StructureSize: 15x41x6
-	private static final IBlockState stone = BlockRegister.stoneDeeplands.getDefaultState();
-	private static final IBlockState decayedGlass = BlockRegister.glassDecayed.getDefaultState();
-	private static final IBlockState krorAltar = BlockRegister.krorAltar.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DEEPLANDS_STONE.getDefaultState();
+	private static final IBlockState decayedGlass = BlockRegister.DECAYED_GLASS.getDefaultState();
+	private static final IBlockState krorAltar = BlockRegister.KROR_ALTAR.getDefaultState();
 
 	public KrorPillars() {
 		super("KrorPillars");

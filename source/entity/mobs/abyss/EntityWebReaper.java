@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.mobs.abyss;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,7 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityMagicBall;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
+import net.tslat.aoa3.utils.ModUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -99,25 +101,25 @@ public class EntityWebReaper extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobWebReaperLiving;
+		return SoundsRegister.MOB_WEB_REAPER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobWebReaperDeath;
+		return SoundsRegister.MOB_WEB_REAPER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobWebReaperHit;
+		return SoundsRegister.MOB_WEB_REAPER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotWebReaperFire;
+		return SoundsRegister.WEB_REAPER_SHOOT;
 	}
 
 	@Nullable
@@ -138,7 +140,7 @@ public class EntityWebReaper extends AoARangedMob {
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.nightmareFlakes) {
+		if (heldStack.getItem() == ItemRegister.NIGHTMARE_FLAKES) {
 			if (stage >= 10)
 				return false;
 
@@ -153,7 +155,7 @@ public class EntityWebReaper extends AoARangedMob {
 		}
 		else if (heldStack.getItem() == Items.ENCHANTED_BOOK && stage > 1) {
 			if (!world.isRemote) {
-				player.setHeldItem(hand, new ItemStack(ItemRegister.bookOfShadows));
+				player.setHeldItem(hand, new ItemStack(ItemRegister.BOOK_OF_SHADOWS));
 
 				if (stage <= 10) {
 					stage += 5;
@@ -225,6 +227,14 @@ public class EntityWebReaper extends AoARangedMob {
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (stage >= 15 && target instanceof EntityLivingBase)
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 1, false, true));
+	}
+
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+
+		if (cause.getTrueSource() instanceof EntityPlayerMP)
+			ModUtil.completeAdvancement((EntityPlayerMP)cause.getTrueSource(), "abyss/reaper_reaper", "nightmare_web_reaper_kill");
 	}
 
 	@Override

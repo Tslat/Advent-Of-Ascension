@@ -59,13 +59,13 @@ public class EntityGoldum extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAutomatonDeath;
+		return SoundsRegister.MOB_AUTOMATON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAutomatonHit;
+		return SoundsRegister.MOB_AUTOMATON_HIT;
 	}
 
 	@Nullable
@@ -95,8 +95,8 @@ public class EntityGoldum extends AoAMeleeMob {
 				if (pl != null) {
 					PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-					if (plData.stats().getTribute(Enums.Deities.PLUTON) < 100 && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.impureGold))) {
-						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.impureGold));
+					if (plData.stats().getTribute(Enums.Deities.PLUTON) < 100 && !pl.inventory.hasItemStack(new ItemStack(ItemRegister.IMPURE_GOLD))) {
+						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.IMPURE_GOLD));
 						pl.inventoryContainer.detectAndSendChanges();
 					}
 				}

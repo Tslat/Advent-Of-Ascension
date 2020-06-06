@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class InvertedChurryTree1 extends AoAStructure { //StructureSize: 9x40x9
-	private static final IBlockState churryLeaves = BlockRegister.leavesChurry.getDefaultState();
-	private static final IBlockState churryLog = BlockRegister.logChurry.getDefaultState();
-	private static final IBlockState lelyetianLeaves = BlockRegister.leavesLelyetian.getDefaultState();
+	private static final IBlockState churryLeaves = BlockRegister.CHURRY_LEAVES.getDefaultState();
+	private static final IBlockState churryLog = BlockRegister.CHURRY_LOG.getDefaultState();
+	private static final IBlockState lelyetianLeaves = BlockRegister.LELYETIAN_LEAVES.getDefaultState();
 
 	public InvertedChurryTree1() {
 		super("InvertedChurryTree1");

@@ -55,10 +55,10 @@ public class EntityPrimordialWizard extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.primordialSkull, 1), new ItemStack(ItemRegister.coinCopper, 15)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 2), new ItemStack(WeaponRegister.throwableHellfire, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 3), new ItemStack(WeaponRegister.throwableVulkram, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 2), new ItemStack(WeaponRegister.staffPrimordial, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver, 1), new ItemStack(Items.DRAGON_BREATH, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PRIMORDIAL_SKULL, 1), new ItemStack(ItemRegister.COPPER_COIN, 15)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 2), new ItemStack(WeaponRegister.HELLFIRE, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 3), new ItemStack(WeaponRegister.VULKRAM, 3)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 2), new ItemStack(WeaponRegister.PRIMORDIAL_STAFF, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LUNAVER_COIN, 1), new ItemStack(Items.DRAGON_BREATH, 1)));
 	}
 }

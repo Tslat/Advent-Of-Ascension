@@ -47,19 +47,19 @@ public class EntityExplodot extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobExplodotLiving;
+		return SoundsRegister.MOB_EXPLODOT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobExplodotDeath;
+		return SoundsRegister.MOB_EXPLODOT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobExplodotHit;
+		return SoundsRegister.MOB_EXPLODOT_HIT;
 	}
 
 	@Nullable

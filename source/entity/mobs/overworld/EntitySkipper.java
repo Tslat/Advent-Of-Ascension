@@ -83,17 +83,17 @@ public class EntitySkipper extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSkipperLiving;
+		return SoundsRegister.MOB_SKIPPER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSkipperDeath;
+		return SoundsRegister.MOB_SKIPPER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSkipperHit;
+		return SoundsRegister.MOB_SKIPPER_HIT;
 	}
 
 	@Nullable

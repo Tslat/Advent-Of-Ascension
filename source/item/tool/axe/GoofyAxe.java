@@ -36,7 +36,7 @@ public class GoofyAxe extends BaseAxe {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (attacker instanceof EntityPlayerMP)
-			PlayerUtil.playSoundForPlayer((EntityPlayerMP)attacker, SoundsRegister.goofyToolFail, SoundCategory.PLAYERS, attacker.posX, attacker.posY, attacker.posZ, 1.0f, 1.0f);
+			PlayerUtil.playSoundForPlayer((EntityPlayerMP)attacker, SoundsRegister.GOOFY_TOOL_FAIL, SoundCategory.PLAYERS, attacker.posX, attacker.posY, attacker.posZ, 1.0f, 1.0f);
 
 		return false;
 	}

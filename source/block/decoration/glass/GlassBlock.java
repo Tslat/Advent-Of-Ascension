@@ -22,7 +22,7 @@ public class GlassBlock extends BlockGlass {
 		setHardness(hardness);
 		setResistance(resistance);
 		setSoundType(SoundType.GLASS);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	public GlassBlock(String name, String registryName) {

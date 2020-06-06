@@ -10,7 +10,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PurpleHavenTree extends AoAStructure { //StructureSize: 10x12x10
-	private static final IBlockState purpleLeaves = BlockRegister.leavesHavenPurple.getDefaultState();
+	private static final IBlockState purpleLeaves = BlockRegister.PURPLE_HAVEN_LEAVES.getDefaultState();
 	private static final IBlockState log = Blocks.LOG.getDefaultState();
 
 	public PurpleHavenTree() {

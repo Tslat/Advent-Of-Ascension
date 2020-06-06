@@ -58,19 +58,19 @@ public class EntityDustStrider extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobDustStriderLiving;
+        return SoundsRegister.MOB_DUST_STRIDER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobDustStriderDeath;
+        return SoundsRegister.MOB_DUST_STRIDER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobDustStriderHit;
+        return SoundsRegister.MOB_DUST_STRIDER_HIT;
     }
 
     @Nullable

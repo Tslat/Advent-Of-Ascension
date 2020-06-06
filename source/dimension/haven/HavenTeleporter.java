@@ -23,11 +23,11 @@ public class HavenTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalHaven;
+		return BlockRegister.HAVEN_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.lightTwinklestone;
+		return BlockRegister.TWINKLESTONE;
 	}
 }

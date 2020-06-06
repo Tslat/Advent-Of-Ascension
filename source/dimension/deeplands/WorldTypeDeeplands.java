@@ -14,7 +14,7 @@ public class WorldTypeDeeplands extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeDeeplands);
+		return new BiomeProviderSingle(BiomeRegister.DEEPLANDS);
 	}
 
 	@Override

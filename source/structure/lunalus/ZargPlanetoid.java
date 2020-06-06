@@ -9,13 +9,13 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ZargPlanetoid extends AoAStructure { //StructureSize: 23x20x25
-	private static final IBlockState lunasoleDirt = BlockRegister.dirtLunasole.getDefaultState();
-	private static final IBlockState twinkleFence = BlockRegister.fenceTwinklestone.getDefaultState();
-	private static final IBlockState lunasoleGrass = BlockRegister.grassLunasole.getDefaultState();
-	private static final IBlockState lunossoLeaves = BlockRegister.leavesLunosso.getDefaultState();
-	private static final IBlockState zorpSpawner = BlockRegister.spawnerZorp.getDefaultState();
-	private static final IBlockState lunideLog = BlockRegister.logLunide.getDefaultState();
-	private static final IBlockState zargSpawner = BlockRegister.spawnerZarg.getDefaultState();
+	private static final IBlockState lunasoleDirt = BlockRegister.LUNASOLE_DIRT.getDefaultState();
+	private static final IBlockState twinkleFence = BlockRegister.TWINKLESTONE_FENCE.getDefaultState();
+	private static final IBlockState lunasoleGrass = BlockRegister.LUNASOLE_GRASS.getDefaultState();
+	private static final IBlockState lunossoLeaves = BlockRegister.LUNOSSO_LEAVES.getDefaultState();
+	private static final IBlockState zorpSpawner = BlockRegister.ZORP_SPAWNER.getDefaultState();
+	private static final IBlockState lunideLog = BlockRegister.LUNIDE_LOG.getDefaultState();
+	private static final IBlockState zargSpawner = BlockRegister.ZARG_SPAWNER.getDefaultState();
 
 	public ZargPlanetoid() {
 		super("ZargPlanetoid");

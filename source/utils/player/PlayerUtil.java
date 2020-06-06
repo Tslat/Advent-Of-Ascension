@@ -13,6 +13,7 @@ import net.tslat.aoa3.capabilities.handlers.AdventPlayerCapability;
 import net.tslat.aoa3.capabilities.providers.AdventPlayerProvider;
 import net.tslat.aoa3.common.packet.PacketToastPopup;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.PacketUtil;
 import org.apache.logging.log4j.Level;
 
@@ -38,7 +39,7 @@ public class PlayerUtil {
     }
 
     public static boolean doesPlayerHaveLevel(EntityPlayer player, Enums.Skills skill, int level) {
-        return getAdventPlayer(player).stats().getLevel(skill) >= level;
+        return !ConfigurationUtil.MainConfig.skillsEnabled || getAdventPlayer(player).stats().getLevel(skill) >= level;
     }
 
     public static void addTributeToPlayer(EntityPlayer player, Enums.Deities deity, int amount) {

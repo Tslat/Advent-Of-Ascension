@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -19,6 +20,7 @@ import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectiles.mob.EntityBlueGuardianShot;
 import net.tslat.aoa3.entity.properties.BossEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ModUtil;
 
 import javax.annotation.Nullable;
 
@@ -75,19 +77,19 @@ public class EntityBlueGuardian extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGuardianDeath;
+		return SoundsRegister.MOB_GUARDIAN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGuardianHit;
+		return SoundsRegister.MOB_GUARDIAN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotGuardianFire;
+		return SoundsRegister.GUARDIAN_SHOOT;
 	}
 
 	@Nullable
@@ -132,8 +134,15 @@ public class EntityBlueGuardian extends AoARangedMob implements BossEntity {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 		
-		if (!world.isRemote)
+		if (!world.isRemote) {
 			setDead();
+
+			if (checkGuardian(yellowGuardian) && checkGuardian(greenGuardian) && checkGuardian(redGuardian)) {
+				for (EntityPlayerMP pl : world.getEntitiesWithinAABB(EntityPlayerMP.class, getEntityBoundingBox().grow(20))) {
+					ModUtil.completeAdvancement(pl, "haven/guard_that", "kill_four_guardians");
+				}
+			}
+		}
 	}
 
 	@Override
@@ -163,7 +172,7 @@ public class EntityBlueGuardian extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicFourGuardians;
+		return SoundsRegister.FOUR_GUARDIANS_MUSIC;
 	}
 
 	@Override

@@ -56,11 +56,10 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 		this.dmg = dmg;
 		this.speed = speed;
 		this.knockback = knockback;
-		setCreativeTab(CreativeTabsRegister.maulsTab);
+		setCreativeTab(CreativeTabsRegister.MAULS);
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
 	}
 
 	public float getDamage() {
@@ -111,13 +110,6 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
 		return true;
-
-		/*if (entity instanceof EntityLivingBase)
-			attackEntity(stack, entity, player);
-
-
-
-		return true;*/
 	}
 
 	@Override
@@ -144,7 +136,7 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 					dmg -= (weak.getAmplifier() + 1) * 4;
 
 				float cooldownMultiplier = ((EntityPlayer)attacker).getCooledAttackStrength(0f);
-				final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.crush, stack);
+				final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CRUSH, stack);
 				final float finalDmg = dmg * cooldownMultiplier + 0.1f;
 
 				if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)target.getParts()[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
@@ -188,7 +180,7 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 				dmg -= (weak.getAmplifier() + 1) * 4;
 
 			float cooldownMultiplier = ((EntityPlayer)attacker).getCooledAttackStrength(0f);
-			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.crush, stack);
+			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CRUSH, stack);
 			final float finalDmg = dmg * cooldownMultiplier + 0.1f;
 
 			if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)target.getParts()[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
@@ -224,7 +216,7 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
 	}
 
 	@SideOnly(Side.CLIENT)

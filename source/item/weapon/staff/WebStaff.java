@@ -16,6 +16,7 @@ import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,31 +30,30 @@ public class WebStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffWeb;
+		return SoundsRegister.WEB_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 4);
-		runes.put(ItemRegister.runeEnergy, 4);
+		runes.put(ItemRegister.DISTORTION_RUNE, 4);
+		runes.put(ItemRegister.ENERGY_RUNE, 4);
 	}
 
 	@Override
 	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		for (Potion potion : caster.getActivePotionMap().keySet()) {
-			if (potion.isBadEffect())
-				return new Object();
+		ArrayList<Potion> effects = new ArrayList<Potion>(caster.getActivePotionEffects().size());
+
+		for (PotionEffect effect : caster.getActivePotionEffects()) {
+			if (effect.getPotion().isBadEffect())
+				effects.add(effect.getPotion());
 		}
 
-		return null;
+		return effects.size() > 0 ? effects : null;
 	}
 
 	@Override
 	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (PotionEffect effect : caster.getActivePotionEffects()) {
-			if (effect.getPotion().isBadEffect())
-				caster.removePotionEffect(effect.getPotion());
-		}
+		((ArrayList<Potion>)args).forEach(caster::removePotionEffect);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -64,19 +64,19 @@ public class EntityConstructStrength extends AoAMeleeMob implements SpecialPrope
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCrystalConstructLiving;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCrystalConstructDeath;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCrystalConstructHit;
+        return SoundsRegister.MOB_CRYSTAL_CONSTRUCT_HIT;
     }
 
     @Nullable
@@ -110,8 +110,8 @@ public class EntityConstructStrength extends AoAMeleeMob implements SpecialPrope
     public boolean attackEntityAsMob(Entity target) {
         if (super.attackEntityAsMob(target)) {
 
-            if (!world.isRemote && target instanceof EntityPlayer && ((EntityPlayer)target).getHealth() > 0 && isPotionActive(MobEffects.STRENGTH) && ItemUtil.consumeItem((EntityPlayer)target, new ItemStack(ItemRegister.realmstoneBlank)))
-                ItemUtil.givePlayerItemOrDrop((EntityPlayer)target, new ItemStack(ItemRegister.realmstoneImmortallis));
+            if (!world.isRemote && target instanceof EntityPlayer && ((EntityPlayer)target).getHealth() > 0 && isPotionActive(MobEffects.STRENGTH) && ItemUtil.consumeItem((EntityPlayer)target, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+                ItemUtil.givePlayerItemOrDrop((EntityPlayer)target, new ItemStack(ItemRegister.IMMORTALLIS_REALMSTONE));
 
             return true;
         }

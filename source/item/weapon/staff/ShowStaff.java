@@ -34,13 +34,13 @@ public class ShowStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffShow;
+		return SoundsRegister.SHOW_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeCompass, 3);
-		runes.put(ItemRegister.runePower, 3);
+		runes.put(ItemRegister.COMPASS_RUNE, 3);
+		runes.put(ItemRegister.POWER_RUNE, 3);
 	}
 
 	@Override

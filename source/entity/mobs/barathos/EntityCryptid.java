@@ -54,17 +54,17 @@ public class EntityCryptid extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCryptidLiving;
+		return SoundsRegister.MOB_CRYPTID_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCryptidDeath;
+		return SoundsRegister.MOB_CRYPTID_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCryptidHit;
+		return SoundsRegister.MOB_CRYPTID_HIT;
 	}
 
 	@Nullable
@@ -82,7 +82,7 @@ public class EntityCryptid extends AoAMeleeMob implements SpecialPropertyEntity 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (world.getBlockState(getPosition().down()).getBlock() == BlockRegister.stoneBarathos && world.getBlockState(getPosition()).getMaterial().isReplaceable())
+		if (world.getBlockState(getPosition().down()).getBlock() == BlockRegister.BARATHOS_HELLSTONE && world.getBlockState(getPosition()).getMaterial().isReplaceable())
 			world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
 	}
 

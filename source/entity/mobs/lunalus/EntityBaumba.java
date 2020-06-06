@@ -50,13 +50,13 @@ public class EntityBaumba extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable
@@ -80,7 +80,7 @@ public class EntityBaumba extends AoARangedMob {
 		super.onLivingUpdate();
 
 		if (!isDead && ticksExisted % 50 == 0) {
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobBaumbaJump, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_BAUMBA_JUMP, SoundCategory.HOSTILE, 1.0f, 1.0f);
 
 			motionY = 0.5;
 
@@ -94,7 +94,7 @@ public class EntityBaumba extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotBaumbaFire;
+		return SoundsRegister.BAUMBA_SHOOT;
 	}
 
 	@Override

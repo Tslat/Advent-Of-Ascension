@@ -14,10 +14,10 @@ import java.util.Random;
 
 public class DawnlightDungeon extends AoAStructure { //StructureSize: 20x15x10
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState crystalliteBricks = BlockRegister.bricksCrystallite.getDefaultState();
-	private static final IBlockState havenGlass = BlockRegister.glassHaven.getDefaultState();
-	private static final IBlockState dawnlightSpawner = BlockRegister.spawnerDawnlight.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState crystalliteBricks = BlockRegister.CRYSTALLITE_BRICKS.getDefaultState();
+	private static final IBlockState havenGlass = BlockRegister.HAVEN_GLASS.getDefaultState();
+	private static final IBlockState dawnlightSpawner = BlockRegister.DAWNLIGHT_SPAWNER.getDefaultState();
 	private static final IBlockState chestWest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST);
 	private static final IBlockState chestEast = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 

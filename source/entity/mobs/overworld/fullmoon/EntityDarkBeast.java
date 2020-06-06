@@ -47,17 +47,17 @@ public class EntityDarkBeast extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDarkBeastLiving;
+		return SoundsRegister.MOB_DARK_BEAST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDarkBeastDeath;
+		return SoundsRegister.MOB_DARK_BEAST_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDarkBeastHit;
+		return SoundsRegister.MOB_DARK_BEAST_HIT;
 	}
 
 	@Nullable

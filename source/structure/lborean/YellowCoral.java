@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class YellowCoral extends AoAStructure { //StructureSize: 11x11x11
-	private static final IBlockState yellowCoral = BlockRegister.coralYellow.getDefaultState();
+	private static final IBlockState yellowCoral = BlockRegister.YELLOW_CORAL.getDefaultState();
 
 	public YellowCoral() {
 		super("YellowCoral");

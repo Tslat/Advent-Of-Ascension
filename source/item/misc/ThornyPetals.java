@@ -5,6 +5,6 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 public class ThornyPetals extends SimpleItem {
 	public ThornyPetals() {
 		super("ThornyPetals", "thorny_petals");
-		BlockRegister.cropThornyPlant.setCrop(this);
+		BlockRegister.THORNY_PLANT_CROP.setCrop(this);
 	}
 }

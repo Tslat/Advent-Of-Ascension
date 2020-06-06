@@ -31,13 +31,13 @@ public class UnderworldStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeCompass, 1);
-		runes.put(ItemRegister.runeKinetic, 3);
+		runes.put(ItemRegister.COMPASS_RUNE, 1);
+		runes.put(ItemRegister.KINETIC_RUNE, 3);
 	}
 
 	@Override

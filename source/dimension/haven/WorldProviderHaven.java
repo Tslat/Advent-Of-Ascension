@@ -16,24 +16,19 @@ import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
 public class WorldProviderHaven extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionHaven;
+		return DimensionRegister.DIM_HAVEN;
 	}
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = !ConfigurationUtil.MainConfig.fasterFloatingDimensions;
-		this.biomeProvider = DimensionRegister.worldTypeHaven.getBiomeProvider(world);
-	}
-
-	public void setHasSkylight(boolean hasSkyLight) {
-		this.hasSkyLight = hasSkyLight;
+		this.hasSkyLight = true;
+		this.biomeProvider = DimensionRegister.WORLD_HAVEN.getBiomeProvider(world);
 	}
 
 	@Override
@@ -48,7 +43,7 @@ public class WorldProviderHaven extends WorldProvider implements AoAWorldProvide
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeHaven.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_HAVEN.getChunkGenerator(world, null);
 	}
 
 	@Override

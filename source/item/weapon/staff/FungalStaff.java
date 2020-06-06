@@ -33,13 +33,13 @@ public class FungalStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffFungal;
+		return SoundsRegister.FUNGAL_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 5);
-		runes.put(ItemRegister.runeLife, 2);
+		runes.put(ItemRegister.DISTORTION_RUNE, 5);
+		runes.put(ItemRegister.LIFE_RUNE, 2);
 	}
 
 	@Nullable

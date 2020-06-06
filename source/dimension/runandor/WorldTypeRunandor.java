@@ -14,7 +14,7 @@ public class WorldTypeRunandor extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeRunandor);
+		return new BiomeProviderSingle(BiomeRegister.RUNANDOR);
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public class LivingGrowth extends Block {
 
 	@Override
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-		if (world.getBlockState(pos.down()).getBlock() != BlockRegister.vinocorneShrine)
+		if (world.getBlockState(pos.down()).getBlock() != BlockRegister.VINOCORNE_SHRINE)
 			((World)world).setBlockToAir(pos);
 	}
 

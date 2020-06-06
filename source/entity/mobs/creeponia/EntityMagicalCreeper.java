@@ -53,17 +53,17 @@ public class EntityMagicalCreeper extends EntityCreeponiaCreeper implements AoAR
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCreepoidLiving;
+        return SoundsRegister.MOB_CREEPOID_LIVING;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCreepoidDeath;
+        return SoundsRegister.MOB_CREEPOID_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundsRegister.mobCreepoidHit;
+        return SoundsRegister.MOB_CREEPOID_HIT;
     }
 
     @Nullable
@@ -94,7 +94,7 @@ public class EntityMagicalCreeper extends EntityCreeponiaCreeper implements AoAR
             double distanceFactorZ = target.posZ - this.posZ;
             double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-            world.playSound(null, posX, posY, posZ, SoundsRegister.shotMagicCreeperFire, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.MAGIC_CREEPER_SHOOT, SoundCategory.HOSTILE, 1.0f, 1.0f);
             projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
             world.spawnEntity(projectile);
         }

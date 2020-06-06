@@ -50,8 +50,8 @@ public class ArmyBlock extends BossAltarBlock {
 
 	private static void spawnWaveEntities(World world, BlockPos armyBlockPos, Entity... entities) {
 		for (Entity entity : entities) {
-			int posX = armyBlockPos.getX() - 18 + AdventOfAscension.rand.nextInt(24);
-			int posZ = armyBlockPos.getZ() - 12 + AdventOfAscension.rand.nextInt(20);
+			int posX = armyBlockPos.getX() - 17 + AdventOfAscension.rand.nextInt(23);
+			int posZ = armyBlockPos.getZ() - 11 + AdventOfAscension.rand.nextInt(19);
 			BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(posX, armyBlockPos.getY(), posZ);
 
 			while (checkPos.getY() < world.getHeight() && !world.isAirBlock(checkPos.move(EnumFacing.UP))) {

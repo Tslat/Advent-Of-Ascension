@@ -10,7 +10,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BlueHavenTree extends AoAStructure { //StructureSize: 5x14x5
-	private static final IBlockState blueLeaves = BlockRegister.leavesHavenBlue.getDefaultState();
+	private static final IBlockState blueLeaves = BlockRegister.BLUE_HAVEN_LEAVES.getDefaultState();
 	private static final IBlockState log = Blocks.LOG.getDefaultState();
 
 	public BlueHavenTree() {

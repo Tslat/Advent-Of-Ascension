@@ -44,8 +44,7 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setCreativeTab(CreativeTabsRegister.stavesTab);
-		setNoRepair();
+		setCreativeTab(CreativeTabsRegister.STAVES);
 	}
 
 	@Override
@@ -118,7 +117,7 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
 	}
 
 	@Override

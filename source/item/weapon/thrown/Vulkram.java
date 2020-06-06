@@ -30,7 +30,7 @@ public class Vulkram extends BaseThrownWeapon {
 		super(dmg, 7);
 		setTranslationKey("Vulkram");
 		setRegistryName("aoa3:vulkram");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

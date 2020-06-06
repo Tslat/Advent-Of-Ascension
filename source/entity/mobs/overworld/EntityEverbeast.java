@@ -49,17 +49,17 @@ public class EntityEverbeast extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEverbeastLiving;
+		return SoundsRegister.MOB_EVERBEAST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEverbeastHit;
+		return SoundsRegister.MOB_EVERBEAST_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEverbeastHit;
+		return SoundsRegister.MOB_EVERBEAST_HIT;
 	}
 
 	@Nullable

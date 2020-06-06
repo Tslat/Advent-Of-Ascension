@@ -46,17 +46,17 @@ public class EntityWingedCreeper extends EntityCreeponiaCreeper {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCreepoidLiving;
+        return SoundsRegister.MOB_CREEPOID_LIVING;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCreepoidDeath;
+        return SoundsRegister.MOB_CREEPOID_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundsRegister.mobCreepoidHit;
+        return SoundsRegister.MOB_CREEPOID_HIT;
     }
 
     @Override

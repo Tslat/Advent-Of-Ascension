@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CreeponiaBank extends AoAStructure { //StructureSize: 12x16x12
-	private static final IBlockState creeponiaBricks = BlockRegister.bricksCreeponia.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
+	private static final IBlockState creeponiaBricks = BlockRegister.CREEPONIA_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
 
 	public CreeponiaBank() {
 		super("CreeponiaBank");

@@ -31,14 +31,14 @@ public class AquaticStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runeWater, 4);
-		runes.put(ItemRegister.runeKinetic, 1);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.WATER_RUNE, 4);
+		runes.put(ItemRegister.KINETIC_RUNE, 1);
 	}
 
 	@Override

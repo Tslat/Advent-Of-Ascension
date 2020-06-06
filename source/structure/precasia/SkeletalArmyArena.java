@@ -12,9 +12,9 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class SkeletalArmyArena extends AoAStructure { //StructureSize: 30x11x23
-	private static final IBlockState skeletalBricks = BlockRegister.bricksSkeletal.getDefaultState();
-	private static final IBlockState skeletalLamp = BlockRegister.lampSkeletal.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState armyBlock = BlockRegister.armyBlock.getDefaultState();
+	private static final IBlockState skeletalBricks = BlockRegister.SKELETAL_BRICKS.getDefaultState();
+	private static final IBlockState skeletalLamp = BlockRegister.SKELETAL_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState armyBlock = BlockRegister.ARMY_BLOCK.getDefaultState();
 
 	public SkeletalArmyArena() {
 		super("SkeletalArmyArena");

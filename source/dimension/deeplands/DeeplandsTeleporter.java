@@ -23,11 +23,11 @@ public class DeeplandsTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalDeeplands;
+		return BlockRegister.DEEPLANDS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.stoneDeeplands;
+		return BlockRegister.DEEPLANDS_STONE;
 	}
 }

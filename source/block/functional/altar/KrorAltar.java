@@ -23,7 +23,7 @@ public class KrorAltar extends BossAltarBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem(hand).getItem() == ItemBlock.getItemFromBlock(BlockRegister.chargingTable))
+		if (player.getHeldItem(hand).getItem() == ItemBlock.getItemFromBlock(BlockRegister.CHARGING_TABLE))
 			return false;
 
 		return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
@@ -39,7 +39,7 @@ public class KrorAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
-		if (player.world.getBlockState(pos.up()).getBlock() != BlockRegister.chargingTable) {
+		if (player.world.getBlockState(pos.up()).getBlock() != BlockRegister.CHARGING_TABLE) {
 			PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.krorAltar.chargingTable");
 
 			return false;
@@ -50,6 +50,6 @@ public class KrorAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.boulderDash;
+		return ItemRegister.BOULDER_DASH;
 	}
 }

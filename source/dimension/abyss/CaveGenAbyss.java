@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 public class CaveGenAbyss extends MapGenCaves {
 	@Override
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
-		return targetBlock.getBlock() == BlockRegister.stoneAbyss;
+		return targetBlock.getBlock() == BlockRegister.ABYSS_STONE;
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class CaveGenAbyss extends MapGenCaves {
 
 		if (canReplaceBlock(state, up) || state.getBlock() == top.getBlock() || state.getBlock() == filler.getBlock()) {
 			if (y < 10) {
-				data.setBlockState(x, y, z, BlockRegister.toxicBlock.getDefaultState());
+				data.setBlockState(x, y, z, BlockRegister.TOXIC_BLOCK.getDefaultState());
 			}
 			else {
 				data.setBlockState(x, y, z, BLK_AIR);

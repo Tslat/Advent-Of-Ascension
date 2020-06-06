@@ -16,20 +16,19 @@ import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
 public class WorldProviderLelyetia extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionLelyetia;
+		return DimensionRegister.DIM_LELYETIA;
 	}
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = !ConfigurationUtil.MainConfig.fasterFloatingDimensions;
-		this.biomeProvider = DimensionRegister.worldTypeLelyetia.getBiomeProvider(world);
+		this.hasSkyLight = true;
+		this.biomeProvider = DimensionRegister.WORLD_LELYETIA.getBiomeProvider(world);
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class WorldProviderLelyetia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeLelyetia.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_LELYETIA.getChunkGenerator(world, null);
 	}
 
 	@Override

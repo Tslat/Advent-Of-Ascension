@@ -35,6 +35,6 @@ public class IllusionAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.staringEye;
+		return ItemRegister.STARING_EYE;
 	}
 }

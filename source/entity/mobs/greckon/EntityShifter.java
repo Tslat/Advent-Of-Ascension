@@ -51,19 +51,19 @@ public class EntityShifter extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobShifterLiving;
+        return SoundsRegister.MOB_SHIFTER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobShifterDeath;
+        return SoundsRegister.MOB_SHIFTER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobShifterHit;
+        return SoundsRegister.MOB_SHIFTER_HIT;
     }
 
     @Nullable
@@ -91,7 +91,7 @@ public class EntityShifter extends AoAMeleeMob {
             cloakCooldown = 160;
 
             addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 40, 2, true, true));
-            world.playSound(null, posX, posY, posZ, SoundsRegister.mobShifterLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_SHIFTER_LIVING, SoundCategory.HOSTILE, 1.0f, 1.0f);
         }
     }
 }

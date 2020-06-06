@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CrusiliskCave extends AoAStructure { //StructureSize: 10x10x20
-	private static final IBlockState darkwashBricks = BlockRegister.bricksDarkwash.getDefaultState();
+	private static final IBlockState darkwashBricks = BlockRegister.DARKWASH_BRICKS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState crusiliskSpawner = BlockRegister.spawnerCrusilisk.getDefaultState();
+	private static final IBlockState crusiliskSpawner = BlockRegister.CRUSILISK_SPAWNER.getDefaultState();
 
 	public CrusiliskCave() {
 		super("CrusiliskCave");

@@ -25,7 +25,7 @@ public class GemBag extends Item {
 	public GemBag() {
 		setTranslationKey("GemBag");
 		setRegistryName("aoa3:gem_bag");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override

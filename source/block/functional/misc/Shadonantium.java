@@ -19,7 +19,7 @@ public class Shadonantium extends BasicBlock {
 
 	public Shadonantium() {
 		super("Shadonantium", "shadonantium", Material.GLASS, 5.0f, 10.0f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Nullable

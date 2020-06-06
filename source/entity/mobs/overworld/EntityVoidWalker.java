@@ -49,17 +49,17 @@ public class EntityVoidWalker extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVoidWalkerLiving;
+		return SoundsRegister.MOB_VOID_WALKER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVoidWalkerDeath;
+		return SoundsRegister.MOB_VOID_WALKER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVoidWalkerHit;
+		return SoundsRegister.MOB_VOID_WALKER_HIT;
 	}
 
 	@Nullable

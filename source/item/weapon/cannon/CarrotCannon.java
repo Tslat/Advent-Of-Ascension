@@ -13,7 +13,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityCarrotBall;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -37,7 +36,7 @@ public class CarrotCannon extends BaseCannon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunCarrotCannon;
+		return SoundsRegister.CARROT_CANNON_FIRE;
 	}
 
 	@Override

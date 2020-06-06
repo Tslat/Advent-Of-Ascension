@@ -30,13 +30,13 @@ public class RejuvenationStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffRejuvenation;
+		return SoundsRegister.REJUVENATION_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeLife, 4);
-		runes.put(ItemRegister.runeEnergy, 2);
+		runes.put(ItemRegister.LIFE_RUNE, 4);
+		runes.put(ItemRegister.ENERGY_RUNE, 2);
 	}
 
 	@Override

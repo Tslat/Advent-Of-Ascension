@@ -46,22 +46,22 @@ public class EntityKeeler extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobKeelerLiving;
+		return SoundsRegister.MOB_KEELER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKeelerDeath;
+		return SoundsRegister.MOB_KEELER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobKeelerHit;
+		return SoundsRegister.MOB_KEELER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -81,7 +81,7 @@ public class EntityKeeler extends AoAMeleeMob {
 
 		if (getHealth() < 8 && getHealth() > 0) {
 			setHealth(getMaxHealth());
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobKeelerRevive, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_KEELER_REVIVE, SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
 	}
 }

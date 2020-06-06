@@ -49,30 +49,25 @@ public class EntityLuxocron extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobLuxocronLiving;
+        return SoundsRegister.MOB_LUXOCRON_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobLuxocronDeath;
+        return SoundsRegister.MOB_LUXOCRON_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobLuxocronHit;
+        return SoundsRegister.MOB_LUXOCRON_HIT;
     }
 
     @Nullable
     @Override
     protected ResourceLocation getLootTable() {
         return LootSystemRegister.entityLuxocron;
-    }
-
-    @Override
-    public boolean getCanSpawnHere() {
-        return posY < 35 && super.getCanSpawnHere();
     }
 
     @Override

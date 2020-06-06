@@ -5,13 +5,15 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.EnumHelperClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 
 public final class Enums {
 	@SideOnly(Side.CLIENT)
-	public static final MusicTicker.MusicType NULL_MUSIC = EnumHelperClient.addMusicType("null", SoundsRegister.nullMusic, 0, 1);
+	public static final MusicTicker.MusicType NULL_MUSIC = EnumHelperClient.addMusicType("null", SoundsRegister.MUSIC_NULL, 0, 1);
 
 	public enum Skills {
 		ALCHEMY(0),
@@ -71,6 +73,22 @@ public final class Enums {
 				default:
 					return null;
 			}
+		};
+
+		@Nullable
+		public static Skills fromString(String skillName) {
+			Skills skill;
+
+			try {
+				skill = valueOf(skillName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find skill with name: \"" + skillName + "\"", ex);
+
+				return null;
+			}
+
+			return skill;
 		}
 	}
 
@@ -79,6 +97,22 @@ public final class Enums {
 		LUXON,
 		PLUTON,
 		SELYAN;
+
+		@Nullable
+		public static Deities fromString(String deityName) {
+			Deities deity;
+
+			try {
+				deity = valueOf(deityName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find deity with name: \"" + deityName + "\"", ex);
+
+				return null;
+			}
+
+			return deity;
+		}
 	}
 
 	public enum ArmourSets {
@@ -182,7 +216,23 @@ public final class Enums {
 		CREATION,
 		ENERGY,
 		RAGE,
-		SOUL
+		SOUL;
+
+		@Nullable
+		public static Resources fromString(String resourceName) {
+			Resources resource;
+
+			try {
+				resource = valueOf(resourceName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find resource with name: \"" + resourceName + "\"", ex);
+
+				return null;
+			}
+
+			return resource;
+		}
 	}
 
 	public enum Counters {
@@ -587,27 +637,27 @@ public final class Enums {
 		Crystals
 	}
 
-	public enum PlayerCrownTypes {
+	public enum PlayerHaloTypes {
 		Donator,
 		Super_Donator,
 		Crazy_Donator,
 		Wiki_Editor,
 		Tslat,
-		Ursun;
+		Staff;
 
-		public enum ChooseableCrownTypes {
+		public enum ChoosableHaloTypes {
 			Donator,
 			Super_Donator,
 			Wiki_Editor;
 
-			public PlayerCrownTypes toBaseType() {
+			public PlayerHaloTypes toBaseType() {
 				switch (this) {
 					case Donator:
-						return PlayerCrownTypes.Donator;
+						return PlayerHaloTypes.Donator;
 					case Super_Donator:
-						return PlayerCrownTypes.Super_Donator;
+						return PlayerHaloTypes.Super_Donator;
 					case Wiki_Editor:
-						return PlayerCrownTypes.Wiki_Editor;
+						return PlayerHaloTypes.Wiki_Editor;
 					default:
 						return null;
 				}

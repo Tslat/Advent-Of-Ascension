@@ -1,6 +1,5 @@
 package net.tslat.aoa3.item.tablet;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -37,7 +36,7 @@ public abstract class TabletItem extends Item {
 	public TabletItem(String name, String registryName, float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.tabletsTab);
+		setCreativeTab(CreativeTabsRegister.TABLETS);
 		setMaxStackSize(1);
 
 		this.initialSoulCost = placementCost;
@@ -57,7 +56,6 @@ public abstract class TabletItem extends Item {
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		IBlockState targetBlockState = world.getBlockState(pos).getActualState(world, pos);
-		Block targetBlock = targetBlockState.getBlock();
 
 		if (facing != EnumFacing.UP || targetBlockState.getBlockFaceShape(world, pos, EnumFacing.UP) != BlockFaceShape.SOLID)
 			return EnumActionResult.FAIL;
@@ -100,7 +98,7 @@ public abstract class TabletItem extends Item {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", AdventGuiTabPlayer.getSkillLevel(Enums.Skills.ANIMA) < animaLevelReq ? TextFormatting.RED : TextFormatting.GREEN, String.valueOf(animaLevelReq), StringUtil.getLocaleString("skills.anima.name")));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.placementCost", TextFormatting.AQUA, String.valueOf(initialSoulCost * (1 - ((AdventGuiTabPlayer.getSkillLevel(Enums.Skills.ANIMA) - 1) / 200f)))));
+		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.placementCost", TextFormatting.AQUA, String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Enums.Skills.ANIMA)) - 1) / 200f)))));
 		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.usageCost", TextFormatting.AQUA, String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f)));
 		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.radius", TextFormatting.AQUA, String.valueOf(effectRadius)));
 	}

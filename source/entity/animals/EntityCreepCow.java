@@ -2,6 +2,7 @@ package net.tslat.aoa3.entity.animals;
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.entity.base.AoAAnimal;
+import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -50,6 +52,9 @@ public class EntityCreepCow extends AoAAnimal {
 				heldStack.shrink(1);
 
 			WorldUtil.createExplosion(this, world, posX, posY, posZ, 1.5f, false);
+
+			if (player instanceof EntityPlayerMP)
+				ModUtil.completeAdvancement((EntityPlayerMP)player, "creeponia/worst_farmer_ever", "creep_cow_milk");
 
 			return true;
 		}

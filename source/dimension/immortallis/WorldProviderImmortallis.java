@@ -26,13 +26,13 @@ import javax.annotation.Nullable;
 public class WorldProviderImmortallis extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionImmortallis;
+		return DimensionRegister.DIM_IMMORTALLIS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeImmortallis.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_IMMORTALLIS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class WorldProviderImmortallis extends WorldProvider implements AoAWorldP
 	}
 
 	@Override
-	public boolean canPlaceBlock(EntityPlayer player, BlockPos pos, IBlockState block) {
-		return player.isCreative() || block.getBlock() instanceof BlockTorch;
+	public boolean canPlaceBlock(@Nullable EntityPlayer player, BlockPos pos, IBlockState block) {
+		return (player != null && player.isCreative()) || block.getBlock() instanceof BlockTorch;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class WorldProviderImmortallis extends WorldProvider implements AoAWorldP
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeImmortallis.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_IMMORTALLIS.getChunkGenerator(world, null);
 	}
 
 	@Override

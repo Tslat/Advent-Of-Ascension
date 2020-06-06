@@ -20,7 +20,6 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityShoeShot;
 import net.tslat.aoa3.entity.properties.BossEntity;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.ModUtil;
@@ -45,7 +44,7 @@ public class ShoeFlinger extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunFlinger;
+		return SoundsRegister.FLINGER_FIRE;
 	}
 
 	@Override
@@ -54,7 +53,7 @@ public class ShoeFlinger extends BaseGun {
 			float shellMod = 1;
 
 			if (bullet.getHand() != null)
-				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.shell, shooter.getHeldItem(bullet.getHand()));
+				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, shooter.getHeldItem(bullet.getHand()));
 
 			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier * shellMod) && target instanceof EntityLivingBase) {
 				EntityUtil.doScaledKnockback((EntityLivingBase)target, shooter, 1.35f, shooter.posX - target.posX, shooter.posZ - target.posZ);
@@ -82,7 +81,7 @@ public class ShoeFlinger extends BaseGun {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.gun", TextFormatting.DARK_RED, Double.toString(dmg)));
+		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.gun", TextFormatting.DARK_RED, StringUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, stack))), 2)));
 		tooltip.add(StringUtil.getColourLocaleString("item.ShoeFlinger.desc.1", TextFormatting.DARK_AQUA));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
 		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.ammo.other", TextFormatting.LIGHT_PURPLE, StringUtil.getLocaleString("item.bootsCloth.name")));

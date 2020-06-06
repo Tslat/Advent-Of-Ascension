@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FacelessTree extends AoAStructure { //StructureSize: 9x13x9
-	private static final IBlockState hauntedLeaves = BlockRegister.leavesHaunted.getDefaultState();
-	private static final IBlockState hauntedLog = BlockRegister.logHaunted.getDefaultState();
-	private static final IBlockState facelessFloaterSpawner = BlockRegister.spawnerFacelessFloater.getDefaultState();
+	private static final IBlockState hauntedLeaves = BlockRegister.HAUNTED_LEAVES.getDefaultState();
+	private static final IBlockState hauntedLog = BlockRegister.HAUNTED_LOG.getDefaultState();
+	private static final IBlockState facelessFloaterSpawner = BlockRegister.FACELESS_FLOATER_SPAWNER.getDefaultState();
 
 	public FacelessTree() {
 		super("FacelessTree");

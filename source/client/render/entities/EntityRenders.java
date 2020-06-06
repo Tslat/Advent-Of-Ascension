@@ -14,7 +14,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.model.entities.animals.*;
+import net.tslat.aoa3.client.model.entities.animals.ModelCoratee;
+import net.tslat.aoa3.client.model.entities.animals.ModelElkanyne;
+import net.tslat.aoa3.client.model.entities.animals.ModelHalycon;
 import net.tslat.aoa3.client.model.entities.boss.bane.ModelBane;
 import net.tslat.aoa3.client.model.entities.boss.elusive.ModelElusive;
 import net.tslat.aoa3.client.model.entities.boss.flash.ModelFlash;
@@ -49,9 +51,12 @@ import net.tslat.aoa3.client.model.entities.mobs.runandor.*;
 import net.tslat.aoa3.client.model.entities.mobs.shyrelands.*;
 import net.tslat.aoa3.client.model.entities.mobs.voxponds.*;
 import net.tslat.aoa3.client.model.entities.npcs.*;
+import net.tslat.aoa3.client.model.entities.passive.ModelGummySnail;
+import net.tslat.aoa3.client.model.entities.passive.ModelShik;
+import net.tslat.aoa3.client.model.entities.passive.ModelTrotter;
 import net.tslat.aoa3.client.model.entities.tablets.*;
-import net.tslat.aoa3.client.render.*;
 import net.tslat.aoa3.client.render.entities.animals.AoAAnimalRenderer;
+import net.tslat.aoa3.client.render.entities.animals.MeganeuropsisRenderer;
 import net.tslat.aoa3.client.render.entities.boss.bane.BaneRenderer;
 import net.tslat.aoa3.client.render.entities.boss.baroness.BaronBombRenderer;
 import net.tslat.aoa3.client.render.entities.boss.baroness.BaronessRenderer;
@@ -96,6 +101,7 @@ import net.tslat.aoa3.client.render.entities.minions.FriendlyCreeperRenderer;
 import net.tslat.aoa3.client.render.entities.misc.*;
 import net.tslat.aoa3.client.render.entities.mobs.abyss.WebReaperRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.creeponia.CreeponiaCreeperRenderer;
+import net.tslat.aoa3.client.render.entities.mobs.haven.AutomatonRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.haven.RainicornRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.immortallis.UriohRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.lelyetia.FlyeRenderer;
@@ -105,13 +111,17 @@ import net.tslat.aoa3.client.render.entities.mobs.mysterium.RunicGolemRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.nether.FakePigmanRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.nether.SkeletalCowmanRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.overworld.BloodmistRenderer;
+import net.tslat.aoa3.client.render.entities.mobs.overworld.ChargerRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.overworld.ClownRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.overworld.ShadowRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.precasia.TerradonRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RuneTemplarRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRenderer;
 import net.tslat.aoa3.client.render.entities.mobs.runandor.RunicornRiderRenderer;
-import net.tslat.aoa3.entity.animals.*;
+import net.tslat.aoa3.entity.animals.EntityCoratee;
+import net.tslat.aoa3.entity.animals.EntityCreepCow;
+import net.tslat.aoa3.entity.animals.EntityElkanyne;
+import net.tslat.aoa3.entity.animals.EntityHalycon;
 import net.tslat.aoa3.entity.boss.bane.EntityBane;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneBig;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneClone;
@@ -209,6 +219,7 @@ import net.tslat.aoa3.entity.npcs.banker.*;
 import net.tslat.aoa3.entity.npcs.lottoman.*;
 import net.tslat.aoa3.entity.npcs.skillmaster.*;
 import net.tslat.aoa3.entity.npcs.trader.*;
+import net.tslat.aoa3.entity.passive.*;
 import net.tslat.aoa3.library.Enums;
 
 @SideOnly(Side.CLIENT)
@@ -217,7 +228,8 @@ public class EntityRenders {
 
 	@SubscribeEvent
 	public static void registerEntityRenders(final ModelRegistryEvent ev) {
-		RenderingRegistry.registerEntityRenderingHandler(EntityAbyssalLottoman.class, renderManager -> new AoATraderRenderer(renderManager, new ModelLottoman(), EntityAbyssalLottoman.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/abyssal_lottoman.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMeganeuropsis.class, MeganeuropsisRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityShik.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelShik(), EntityShik.entityWidth, new ResourceLocation("aoa3", "textures/entities/passive/shik.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAgilityTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelAgilityTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/agility_tablet.png"), EnumParticleTypes.SPELL.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAirhead.class, renderManager -> new AoAFlyingRangedMobRenderer(renderManager, new ModelAirhead(), EntityAirhead.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/candyland/airhead.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlarmo.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAlarmo(), EntityAlarmo.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/alarmo.png")));
@@ -243,6 +255,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityArocknid.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelArocknid(), EntityArocknid.entityWidth, 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/deeplands/arocknid.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAssassin.class, renderManager -> new AoATraderRenderer(renderManager, new ModelBiped(), EntityAssassin.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/assassin.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAuguryMaster.class, renderManager -> new AoATraderRenderer(renderManager, new ModelBiped(), EntityAuguryMaster.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/augury_master.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityAutomaton.class, AutomatonRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityAwarenessTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelAwarenessTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/awareness_tablet.png"), EnumParticleTypes.CRIT.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAxiolight.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAxiolight(), EntityAxiolight.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/axiolight.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBane.class, renderManager -> new BaneRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/bane/bane.png")));
@@ -260,7 +273,6 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBloodmist.class, renderManager -> new BloodmistRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/bloodmist.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBloodsucker.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelBloodsucker(), EntityBloodsucker.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/abyss/bloodsucker.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBloomingPixon.class, renderManager -> new AoAPixonRenderer(renderManager, Enums.RGBIntegers.PURPLE));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBlueAutomaton.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAutomaton(), EntityBlueAutomaton.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/blue_automaton.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlueFlower.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelFlowerface(), EntityBlueFlower.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/blue_vine_minion.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlueGuardian.class, renderManager -> new BlueGuardianRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/blue_guardian.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBobo.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelBobo(), EntityBobo.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/celeve/bobo.png")));
@@ -286,7 +298,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCaveCreepoid.class, renderManager -> new CreeponiaCreeperRenderer(renderManager, new ModelCaveCreepoid(), EntityCaveCreepoid.entityWidth, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/cave_creepoid.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCelevianLottoman.class, renderManager -> new AoATraderRenderer(renderManager, new ModelLottoman(), EntityCelevianLottoman.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/celevian_lottoman.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCentinel.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelCentinel(), EntityCentinel.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/centinel.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntityCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCherryBarrager.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelCherryBarrager(), EntityCherryBarrager.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/candyland/cherry_barrager.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCherryBlaster.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelCherryBlaster(), EntityCherryBlaster.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/candyland/cherry_blaster.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChimera.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelChimera(), EntityChimera.entityWidth, 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/chimera.png")));
@@ -335,7 +347,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeathHunter.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelDeathHunter(), EntityDeathHunter.entityWidth, 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/death_hunter.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDeinotherium.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelDeinotherium(), EntityDeinotherium.entityWidth, 2f, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/deinotherium.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemonReaper.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNightReaper(), EntityDemonReaper.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/demon_reaper.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityDesertCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntityDesertCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/desert_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDesertCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/desert_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDestructor.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelDestructor(), EntityDestructor.entityWidth, 3.5f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/destructor.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevourer.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelDevourer(), EntityDevourer.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/devourer.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDicer.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelDicer(), EntityDicer.entityWidth, 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/dicer.png")));
@@ -402,7 +414,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhost.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhost(), EntityGhost.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghost.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostineAncient.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhostineAncient(), EntityGhostineAncient.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostine_ancient.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyBugeye.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhostlyBugeye(), EntityGhostlyBugeye.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_bugeye.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhostlyCharger(), EntityGhostlyCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyCyclops.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhostlyCyclops(), EntityGhostlyCyclops.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_cyclops.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyGoblin.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelGhostlyGoblin(), EntityGhostlyGoblin.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_goblin.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGhostlyNightReaper.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGhostlyNightReaper(), EntityGhostlyNightReaper.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_night_reaper.png")));
@@ -427,7 +439,6 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityGorbEngineer.class, renderManager -> new AoATraderRenderer(renderManager, new ModelGorb(), EntityGorbEngineer.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/gorb_engineer.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGravityTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelGravityTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/gravity_tablet.png"), EnumParticleTypes.SPELL_INSTANT.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGraw.class, renderManager -> new GrawRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/graw/graw.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityGreenAutomaton.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAutomaton(), EntityGreenAutomaton.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/green_automaton.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGreenFlower.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelFlowerface(), EntityGreenFlower.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/green_vine_minion.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGreenGuardian.class, renderManager -> new GreenGuardianRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/green_guardian.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGrillface.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGrillface(), EntityGrillface.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/greckon/grillface.png")));
@@ -449,7 +460,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellquin.class, renderManager -> new AoAMinionRenderer(renderManager, new ModelPenguin(), EntityHellquin.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/minions/hellquin.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHellspot.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelHellspot(), EntityHellspot.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/nether/hellspot.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHidingFungi.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelHidingFungi(), EntityHidingFungi.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hiding_fungi.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHillCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntityCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hill_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHillCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hill_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHiveKing.class, renderManager -> new HiveKingRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/hiveking/hive_king.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHiveSoldier.class, renderManager -> new AoAMinionRenderer(renderManager, new ModelHiveSoldier(), EntityHiveSoldier.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/minions/hive_soldier.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHiveWorker.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelHiveSoldier(), EntityHiveWorker.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/minions/hive_soldier.png")));
@@ -519,7 +530,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityMotherVoidWalker.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelMotherVoidWalker(), EntityMotherVoidWalker.entityWidth, 1, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_walker.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMuckopede.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelMuckopede(), EntityMuckopede.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/muckopede.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMuncher.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelMuncher(), EntityMuncher.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lborean/muncher.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityMushroomSpider.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelMushroomSpider(), EntityMushroomSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/mushroom_spider.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMushroomSpider.class, renderManager -> new AoASpiderRenderer(renderManager, new ModelMushroomSpider(), EntityMushroomSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/mushroom_spider.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMysticLottoman.class, renderManager -> new AoATraderRenderer(renderManager, new ModelLottoman(), EntityMysticLottoman.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/mystic_lottoman.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNatura.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNatura(), EntityNatura.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/natura.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNaturalist.class, renderManager -> new AoATraderRenderer(renderManager, new ModelBiped(), EntityNaturalist.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/naturalist.png")));
@@ -527,7 +538,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityNethengeicBeast.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNethengeicBeast(), EntityNethengeicBeast.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/nether/nethengeic_beast.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNethengeicWither.class, renderManager -> new NethengeicWitherRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither.png"), new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither_enraged.png"), new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither_cataclysmic.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNightfly.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelNightfly(), EntityNightfly.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/nightfly.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityNightmareSpider.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNightmareSpider(), EntityNightmareSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/nightmare_spider.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityNightmareSpider.class, renderManager -> new AoASpiderRenderer(renderManager, new ModelNightmareSpider(), EntityNightmareSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/nightmare_spider.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNightReaper.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNightReaper(), EntityNightReaper.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/night_reaper.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNightWatcher.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelNightWatcher(), EntityNightWatcher.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/night_watcher.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityNightwing.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelNightwing(), EntityNightwing.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/nightwing.png")));
@@ -547,7 +558,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityParavite.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelParavite(), EntityParavite.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/paravite.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPenguin.class, renderManager -> new AoAMinionRenderer(renderManager, new ModelPenguin(), EntityPenguin.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/minions/penguin.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPenumbra.class, renderManager -> new PenumbraRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/penumbra/penumbra.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPeppermintSnail.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelGummySnail(), EntityPeppermintSnail.entityWidth, new ResourceLocation("aoa3", "textures/entities/animals/peppermint_snail.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPeppermintSnail.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelGummySnail(), EntityPeppermintSnail.entityWidth, new ResourceLocation("aoa3", "textures/entities/passive/peppermint_snail.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPhantom.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelZombie(), EntityPhantom.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/phantom.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPigotron.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelPigotron(), EntityPigotron.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/nether/pigotron.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPincher.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelPincher(), EntityPincher.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/pincher.png")));
@@ -567,7 +578,6 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityProfessor.class, renderManager -> new AoATraderRenderer(renderManager, new ModelProfessor(), EntityProfessor.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/professor.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityProficiencyTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelProficiencyTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/proficiency_tablet.png"), EnumParticleTypes.VILLAGER_HAPPY.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityProshield.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelProshield(), EntityProshield.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/boss/proshield/proshield.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPurpleAutomaton.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAutomaton(), EntityPurpleAutomaton.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/purple_automaton.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPurpleFlower.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelFlowerface(), EntityPurpleFlower.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/purple_vine_minion.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityQuickpocket.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelQuickpocket(), EntityQuickpocket.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/iromine/quickpocket.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityRadiantPixon.class, renderManager -> new AoAPixonRenderer(renderManager, Enums.RGBIntegers.BLACK));
@@ -580,7 +590,6 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityRealmshifter.class, renderManager -> new AoATraderRenderer(renderManager, new ModelBiped(), EntityRealmshifter.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/realmshifter.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityReaperTwins.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelReaperTwins(), EntityReaperTwins.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/reaper_twins.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityReaver.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelReaver(), EntityReaver.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/reaver.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityRedAutomaton.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAutomaton(), EntityRedAutomaton.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/red_automaton.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityRedGuardian.class, renderManager -> new RedGuardianRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/red_guardian.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityRefluct.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelRefluct(), EntityRefluct.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/refluct.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityResistanceTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelResistanceTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/resistance_tablet.png"), EnumParticleTypes.CRIT_MAGIC.getParticleID()));
@@ -612,9 +621,9 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySasquatch.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelYeti(), EntitySasquatch.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sasquatch.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySatiationTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelSatiationTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/satiation_tablet.png"), EnumParticleTypes.SPELL_MOB_AMBIENT.getParticleID()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityScrubby.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelScrubby(), EntityScrubby.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/scrubby.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySeaCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntitySeaCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sea_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySeaCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sea_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeaSkeleton.class, renderManager -> new SeaSkeletonRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/misc/sea_skeleton.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySeaSpider.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSpider(), EntitySeaSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/misc/sea_spider.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySeaSpider.class, renderManager -> new AoASpiderRenderer(renderManager, new ModelSpider(), EntitySeaSpider.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/misc/sea_spider.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeaTroll.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelSeaTroll(), EntitySeaTroll.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sea_troll.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeaViper.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSeaViper(), EntitySeaViper.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lborean/sea_viper.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeeker.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelSeeker(), EntitySeeker.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/seeker.png")));
@@ -649,10 +658,10 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySlimer.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSlimer(), EntitySlimer.entityWidth, 2f, new ResourceLocation("aoa3", "textures/entities/mobs/abyss/slimer.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySmash.class, renderManager -> new SmashRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/smash/smash.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySnappy.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSnappy(), EntitySnappy.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/celeve/snappy.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySnowCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntitySnowCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/snow_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySnowCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/snow_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySoulscorne.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSoulscorne(), EntitySoulscorne.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/soulscorne.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySoulvyre.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSoulvyre(), EntitySoulvyre.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/soulvyre.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpearmintSnail.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelGummySnail(), EntitySpearmintSnail.entityWidth, new ResourceLocation("aoa3", "textures/entities/animals/spearmint_snail.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpearmintSnail.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelGummySnail(), EntitySpearmintSnail.entityWidth, new ResourceLocation("aoa3", "textures/entities/passive/spearmint_snail.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpectralWizard.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelSpectralWizard(), EntitySpectralWizard.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/runandor/spectral_wizard.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySphinx.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSphinx(), EntitySphinx.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sphinx.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpikeback.class, renderManager -> new AoAMinionRenderer(renderManager, new ModelSpikeback(), EntitySpikeback.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/minions/spikeback.png")));
@@ -679,7 +688,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySugarface.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSugarface(), EntitySugarface.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/greckon/sugarface.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySunny.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSunny(), EntitySunny.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/sunny.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySurveyor.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelSurveyor(), EntitySurveyor.entityWidth, 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/surveyor.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySwampCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntitySwampCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/swamp_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySwampCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/swamp_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySysker.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelSysker(), EntitySysker.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/sysker.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTerradon.class, renderManager -> new TerradonRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/terradon.png"), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/terradon_invincible.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTerrestrial.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelTerrestrial(), EntityTerrestrial.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/terrestrial.png")));
@@ -696,7 +705,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTricksterClone.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelTrickster(), EntityTricksterClone.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/trickster.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTriclops.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelTriclops(), EntityTriclops.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/triclops.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTrollTrader.class, renderManager -> new AoATraderRenderer(renderManager, new ModelSeaTroll(), EntityTrollTrader.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/troll_trader.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTrotter.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelTrotter(), EntityTrotter.entityWidth, new ResourceLocation("aoa3", "textures/entities/animals/trotter.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTrotter.class, renderManager -> new AoAAnimalRenderer(renderManager, new ModelTrotter(), EntityTrotter.entityWidth, new ResourceLocation("aoa3", "textures/entities/passive/trotter.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTwinklingLottoman.class, renderManager -> new AoATraderRenderer(renderManager, new ModelLottoman(), EntityTwinklingLottoman.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/twinkling_lottoman.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTyrosaur.class, renderManager -> new TyrosaurRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/tyrosaur/tyrosaur.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityUndeadHerald.class, renderManager -> new AoATraderRenderer(renderManager, new ModelBiped(), EntityUndeadHerald.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/npcs/trader/undead_herald.png")));
@@ -714,7 +723,7 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityVisular.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelVisular(), EntityVisular.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/visular.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVisulon.class, renderManager -> new AoAFlyingMeleeMobRenderer(renderManager, new ModelVisulon(), EntityVisulon.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/visulon.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVitalityTablet.class, renderManager -> new SoulTabletRenderer(renderManager, new ModelVitalityTablet(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/vitality_tablet.png"), EnumParticleTypes.SPELL_WITCH.getParticleID()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCharger.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelCharger(), EntityVoidCharger.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_charger.png")));
+		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCharger.class, renderManager -> new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_charger.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidWalker.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelVoidWalker(), EntityVoidWalker.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_walker.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVolar.class, renderManager -> new AoAFlyingRangedMobRenderer(renderManager, new ModelVolar(), EntityVolar.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/volar.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoliant.class, renderManager -> new AoAFlyingRangedMobRenderer(renderManager, new ModelVoliant(), EntityVoliant.entityWidth, 4f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/voliant.png")));
@@ -730,7 +739,6 @@ public class EntityRenders {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWitherWizard.class, renderManager -> new AoARangedMobRenderer(renderManager, new ModelWitherWizard(), EntityWitherWizard.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/nether/wither_wizard.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityWoodGiant.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelGiant(), EntityWoodGiant.entityWidth, 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/wood_giant.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityXxeus.class, renderManager -> new XxeusRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/craexxeus/craexxeus.png")));
-		RenderingRegistry.registerEntityRenderingHandler(EntityYellowAutomaton.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelAutomaton(), EntityYellowAutomaton.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/yellow_automaton.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityYellowFlower.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelFlowerface(), EntityYellowFlower.entityWidth, 1f, new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/yellow_vine_minion.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityYellowGuardian.class, renderManager -> new YellowGuardianRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/yellow_guardian.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityYeti.class, renderManager -> new AoAMeleeMobRenderer(renderManager, new ModelYeti(), EntityYeti.entityWidth, 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/yeti.png")));

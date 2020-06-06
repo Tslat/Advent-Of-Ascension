@@ -51,17 +51,17 @@ public class EntityGhostineAncient extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGhostineLiving;
+		return SoundsRegister.MOB_GHOSTINE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGhostineDeath;
+		return SoundsRegister.MOB_GHOSTINE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGhostineHit;
+		return SoundsRegister.MOB_GHOSTINE_HIT;
 	}
 
 	@Nullable

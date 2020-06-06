@@ -31,7 +31,7 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 	protected double baseDmg;
 
 	public BaseVulcane(double dmg, int durability) {
-		setCreativeTab(CreativeTabsRegister.vulcanesTab);
+		setCreativeTab(CreativeTabsRegister.VULCANES);
 		this.baseDmg = dmg;
 		setMaxDamage(durability);
 		setFull3D();
@@ -50,7 +50,7 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 
 		if (EntityUtil.dealVulcaneDamage(plData.getRevengeTarget(), pl, (float)baseDmg)) {
 			doAdditionalEffect(plData.getRevengeTarget(), pl);
-			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.vulcaneUse, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.VULCANE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			vulcane.damageItem(1, pl);
 			plData.disableRevenge();
 			return ActionResult.newResult(EnumActionResult.SUCCESS, vulcane);

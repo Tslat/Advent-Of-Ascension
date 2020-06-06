@@ -25,6 +25,6 @@ public class EntityUntiringTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletUntiring;
+		return ItemRegister.UNTIRING_TABLET;
 	}
 }

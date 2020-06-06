@@ -35,7 +35,7 @@ public class EntityHollyArrowShot extends BaseBullet implements HardProjectile {
 		super.onImpact(result);
 
 		if (!world.isRemote && isDead && result.typeOfHit == RayTraceResult.Type.BLOCK) {
-			EntityHollyArrow hollyArrow = ItemRegister.hollyArrow.createArrow(world, this);
+			EntityHollyArrow hollyArrow = ItemRegister.HOLLY_ARROW.createArrow(world, this);
 
 			hollyArrow.inGround = true;
 			hollyArrow.motionX = motionX;
@@ -43,7 +43,7 @@ public class EntityHollyArrowShot extends BaseBullet implements HardProjectile {
 			hollyArrow.motionZ = motionZ;
 			hollyArrow.velocityChanged = true;
 
-			if ((getThrower() instanceof EntityPlayer && ((EntityPlayer)getThrower()).capabilities.isCreativeMode) || getWeapon() == WeaponRegister.archergunSpectral)
+			if ((getThrower() instanceof EntityPlayer && ((EntityPlayer)getThrower()).capabilities.isCreativeMode) || getWeapon() == WeaponRegister.SPECTRAL_ARCHERGUN)
 				hollyArrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
 
 			world.spawnEntity(hollyArrow);

@@ -44,19 +44,19 @@ public class EntityPlateosaur extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobIosaurLiving;
+		return SoundsRegister.MOB_IOSAUR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobIosaurHit;
+		return SoundsRegister.MOB_IOSAUR_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobIosaurDeath;
+		return SoundsRegister.MOB_IOSAUR_DEATH;
 	}
 
 	@Nullable

@@ -13,6 +13,7 @@ import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.AoAStructure;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenHavenTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -55,7 +56,7 @@ public class BiomeHaven extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.crystallite.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreCrystallite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.crystallite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.crystallite.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneHaven)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40) + 30, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.CRYSTALLITE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.crystallite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.crystallite.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.HAVEN_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(40) + 30, rand.nextInt(16)));
 			}
 		}
 
@@ -72,16 +73,16 @@ public class BiomeHaven extends Biome {
 						case 1:
 						case 2:
 						case 3:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantHavenGrass.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.HAVEN_GRASS_PLANT.getDefaultState());
 							break;
 						case 4:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDayloomsBlue.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAYLOOMS_BLUE.getDefaultState());
 							break;
 						case 5:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDayloomsYellow.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAYLOOMS_YELLOW.getDefaultState());
 							break;
 						case 6:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDayloomsPink.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAYLOOMS_PINK.getDefaultState());
 					}
 				}
 			}
@@ -117,44 +118,10 @@ public class BiomeHaven extends Biome {
 				posX = basePos.getX() + rand.nextInt(16);
 				posZ = basePos.getZ() + rand.nextInt(16);
 
-				switch (rand.nextInt(6)) {
-					case 0:
-						posY = world.getHeight(posX + 3, posZ + 3);
+				posY = world.getHeight(posX + 7, posZ + 7);
 
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("PinkHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 1:
-						posY = world.getHeight(posX + 2, posZ + 2);
-
-						if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
-							StructuresHandler.generateStructure("BlueHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 2:
-						posY = world.getHeight(posX + 5, posZ + 5);
-
-						if (world.getBlockState(pos.setPos(posX + 5, posY - 1, posZ + 5)) == biome.topBlock)
-							StructuresHandler.generateStructure("YellowHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 3:
-						posY = world.getHeight(posX + 5, posZ + 5);
-
-						if (world.getBlockState(pos.setPos(posX + 5, posY - 1, posZ + 5)) == biome.topBlock)
-							StructuresHandler.generateStructure("RedHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 4:
-						posY = world.getHeight(posX + 5, posZ + 5);
-
-						if (world.getBlockState(pos.setPos(posX + 5, posY - 1, posZ + 5)) == biome.topBlock)
-							StructuresHandler.generateStructure("PurpleHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 5:
-						posY = world.getHeight(posX + 7, posZ + 7);
-
-						if (world.getBlockState(pos.setPos(posX + 7, posY - 1, posZ + 7)) == biome.topBlock)
-							StructuresHandler.generateStructure("TurquoiseHavenTree", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-				}
+				if (world.getBlockState(pos.setPos(posX + 7, posY - 1, posZ + 7)) == biome.topBlock)
+					new WorldGenHavenTree(null, null, rand).generate(world, rand, pos);
 			}
 		}
 	}

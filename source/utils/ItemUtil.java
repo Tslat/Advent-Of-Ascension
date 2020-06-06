@@ -17,8 +17,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
+import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.hooks.ThirdPartyInteractions;
+import net.tslat.aoa3.hooks.ic2.IC2Compat;
 import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.item.misc.ItemTieredBullet;
 import net.tslat.aoa3.item.misc.RuneItem;
@@ -81,12 +84,12 @@ public class ItemUtil {
 
 	public static Item findAndConsumeBullet(final EntityLivingBase shooter, final BaseGun gun, boolean consume, ItemStack weaponStack) {
 		if (!(shooter instanceof EntityPlayer)) {
-			return ItemRegister.bulletLimonite;
+			return ItemRegister.LIMONITE_BULLET;
 		}
 		else {
 			EntityPlayer pl = (EntityPlayer)shooter;
 
-			int greed = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, weaponStack);
+			int greed = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack);
 
 			if (pl.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemTieredBullet) {
 				return consumeBullet(pl.getHeldItem(EnumHand.OFF_HAND), pl, gun, consume, greed);
@@ -106,7 +109,7 @@ public class ItemUtil {
 			}
 
 			if (pl.capabilities.isCreativeMode)
-				return ItemRegister.bulletLimonite;
+				return ItemRegister.LIMONITE_BULLET;
 		}
 		return null;
 	}
@@ -122,7 +125,7 @@ public class ItemUtil {
 		if (shooter instanceof EntityPlayer && !((EntityPlayer)shooter).capabilities.isCreativeMode) {
 			EntityPlayer pl = (EntityPlayer)shooter;
 			ItemStack stack = ItemStack.EMPTY;
-			int amount = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, weaponStack);
+			int amount = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack);
 
 			if (pl.getHeldItem(EnumHand.OFF_HAND).getItem() == ammo) {
 				stack = pl.getHeldItem(EnumHand.OFF_HAND);
@@ -163,9 +166,9 @@ public class ItemUtil {
 			return true;
 
 		Enums.ArmourSets armour = PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet();
-		int archmage = allowBuffs ? EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.archmage, heldItem) : 0;
+		int archmage = allowBuffs ? EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.ARCHMAGE, heldItem) : 0;
 		boolean nightmareArmour = allowBuffs && armour == Enums.ArmourSets.NIGHTMARE;
-		boolean greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, heldItem) > 0;
+		boolean greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, heldItem) > 0;
 		HashMap<RuneItem, Integer> requiredRunes = new HashMap<RuneItem, Integer>();
 
 		for (Map.Entry<RuneItem, Integer> runeEntry : runeMap.entrySet()) {
@@ -533,5 +536,15 @@ public class ItemUtil {
 
 	public static boolean isHoldingItem(EntityLivingBase entity, Item item) {
 		return entity.getHeldItemMainhand().getItem() == item || entity.getHeldItemOffhand().getItem() == item;
+	}
+
+	public static boolean isPlayerEnvironmentallyProtected(EntityPlayer player) {
+		if (PlayerUtil.isWearingFullSet(player, Enums.ArmourSets.HAZMAT) || player.inventory.armorInventory.get(EntityEquipmentSlot.HEAD.getIndex()).getItem() == ArmourRegister.FACE_MASK)
+			return true;
+
+		if (ThirdPartyInteractions.isIc2Active())
+			return IC2Compat.getCompatTool().isPlayerEnvironmentallyProtected(player);
+
+		return false;
 	}
 }

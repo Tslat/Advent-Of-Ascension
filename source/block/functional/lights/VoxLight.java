@@ -23,7 +23,7 @@ public class VoxLight extends LightBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem(hand).getItem() == ItemRegister.activeRuneStone && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.mysterium) {
+		if (player.getHeldItem(hand).getItem() == ItemRegister.ACTIVE_RUNE_STONE && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.mysterium) {
 			if (!world.isRemote) {
 				List<EntityItem> itemsList = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
 
@@ -34,16 +34,16 @@ public class VoxLight extends LightBlock {
 					for (EntityItem entity : itemsList) {
 						Item item = entity.getItem().getItem();
 
-						if (item == ItemRegister.realmstoneBlank) {
+						if (item == ItemRegister.BLANK_REALMSTONE) {
 							realmstone = entity;
 						}
-						else if (item == ItemRegister.runicEnergy) {
+						else if (item == ItemRegister.RUNIC_ENERGY) {
 							runicEnergy = entity;
 						}
 
 						if (realmstone != null && runicEnergy != null) {
 							player.getHeldItem(hand).shrink(1);
-							realmstone.setItem(new ItemStack(ItemRegister.realmstoneRunandor));
+							realmstone.setItem(new ItemStack(ItemRegister.RUNANDOR_REALMSTONE));
 							runicEnergy.setDead();
 						}
 					}

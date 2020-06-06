@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ClunkheadArena extends AoAStructure { //StructureSize: 24x14x20
-	private static final IBlockState runicConstructBricks = BlockRegister.bricksRunicConstruct.getDefaultState();
-	private static final IBlockState runicGlass = BlockRegister.glassRunic.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState runicGuardianSpawner = BlockRegister.spawnerRunicGuardian.getDefaultState();
-	private static final IBlockState clunkheadAltar = BlockRegister.clunkheadAltar.getDefaultState();
+	private static final IBlockState runicConstructBricks = BlockRegister.RUNIC_CONSTRUCT_BRICKS.getDefaultState();
+	private static final IBlockState runicGlass = BlockRegister.RUNIC_GLASS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState runicGuardianSpawner = BlockRegister.RUNIC_GUARDIAN_SPAWNER.getDefaultState();
+	private static final IBlockState clunkheadAltar = BlockRegister.CLUNKHEAD_ALTAR.getDefaultState();
 
 	public ClunkheadArena() {
 		super("ClunkheadArena");

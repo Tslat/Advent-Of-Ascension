@@ -10,6 +10,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.BasicBlock;
+import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -18,15 +19,16 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 public class RockriderShrine extends BasicBlock {
 	public RockriderShrine() {
 		super("RockriderShrine", "rockrider_shrine", Material.ROCK, -1f, 999999999f);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (playerIn.getHeldItem(hand).getItem() == ItemRegister.floatingStone) {
+		if (playerIn.getHeldItem(hand).getItem() == ItemRegister.FLOATING_STONE) {
 			if (!worldIn.isRemote) {
 				if (PlayerUtil.consumeResource(playerIn, Enums.Resources.ENERGY, 200, false)) {
 					playerIn.getHeldItem(hand).shrink(1);
-					ItemUtil.givePlayerItemOrDrop(playerIn, new ItemStack(ItemRegister.heavyBoulder));
+					ItemUtil.givePlayerItemOrDrop(playerIn, new ItemStack(ItemRegister.HEAVY_BOULDER));
 				}
 				else {
 					PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)playerIn, Enums.Resources.ENERGY, 200);

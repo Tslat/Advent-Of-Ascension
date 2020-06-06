@@ -61,13 +61,13 @@ public class EntityRaxxan extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPrimordialLiving;
+		return SoundsRegister.MOB_PRIMORDIAL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPrimordialDeath;
+		return SoundsRegister.MOB_PRIMORDIAL_DEATH;
 	}
 
 	@Nullable
@@ -99,7 +99,7 @@ public class EntityRaxxan extends AoAMeleeMob implements BossEntity {
 
 				if (nearestTarget != null && !nearestTarget.capabilities.isCreativeMode) {
 					addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 100, 4, true, true));
-					world.playSound(null, posX, posY, posZ, SoundsRegister.mobVoxxulonLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_VOXXULON_LIVING, SoundCategory.HOSTILE, 1.0f, 1.0f);
 				}
 			}
 			else if (rand.nextInt(100) == 0) {
@@ -131,7 +131,7 @@ public class EntityRaxxan extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicPrimordialFive;
+		return SoundsRegister.PRIMORDIAL_FIVE_MUSIC;
 	}
 
 	@Override

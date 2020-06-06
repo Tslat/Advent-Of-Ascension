@@ -36,7 +36,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity {
+public abstract class AoAMeleeMob extends EntityMob {
     protected final TreeSet<Enums.MobProperties> mobProperties;
     private boolean isSlipperyMob = false;
     private int animationTicks = 0;
@@ -48,7 +48,7 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
         mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
     }
 
     @Override
@@ -216,8 +216,6 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
 
     @Override
     public boolean attackEntityAsMob(Entity target) {
-        startAnimation(Enums.EntityAnimations.ATTACK_1);
-
         if (super.attackEntityAsMob(target)) {
             doMeleeEffect(target);
 
@@ -254,34 +252,6 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
 
         if (animationTicks >= 0)
             animationTicks++;
-    }
-
-    @Override
-    public int getCurrentAnimationTicks() {
-        return animationTicks;
-    }
-
-    @Nullable
-    @Override
-    public String getCurrentAnimation() {
-        return currentAnimation;
-    }
-
-    @Override
-    public void finishAnimation() {
-        currentAnimation = null;
-        animationTicks = -1;
-    }
-
-    @Override
-    public void startAnimation(String animation) {
-        currentAnimation = animation;
-        animationTicks = 0;
-    }
-
-    @Override
-    public void resetAnimation() {
-        animationTicks = 0;
     }
 
     protected void doMeleeEffect(Entity target) {}

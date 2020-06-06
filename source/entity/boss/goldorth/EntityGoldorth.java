@@ -52,19 +52,19 @@ public class EntityGoldorth extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGoldorthLiving;
+		return SoundsRegister.MOB_GOLDORTH_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGoldorthDeath;
+		return SoundsRegister.MOB_GOLDORTH_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGoldorthHit;
+		return SoundsRegister.MOB_GOLDORTH_HIT;
 	}
 
 	@Nullable
@@ -99,7 +99,7 @@ public class EntityGoldorth extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicGoldorth;
+		return SoundsRegister.GOLDORTH_MUSIC;
 	}
 
 	@Override

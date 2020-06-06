@@ -23,6 +23,6 @@ public class EntityOxygenTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletOxygen;
+		return ItemRegister.OXYGEN_TABLET;
 	}
 }

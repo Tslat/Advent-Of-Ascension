@@ -28,9 +28,9 @@ public class EntityWitheringLottoman extends EntityLottoman {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 28), new ItemStack(ItemRegister.lottoTotem)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 15), new ItemStack(ItemRegister.weaponsCase)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 10), new ItemStack(ItemRegister.runeBox)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 21), new ItemStack(ItemRegister.treasureBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.NETHER_TOKENS, 28), new ItemStack(ItemRegister.LOTTO_TOTEM)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.NETHER_TOKENS, 15), new ItemStack(ItemRegister.WEAPONS_CASE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.NETHER_TOKENS, 10), new ItemStack(ItemRegister.RUNE_BOX)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.NETHER_TOKENS, 21), new ItemStack(ItemRegister.TREASURE_BOX)));
 	}
 }

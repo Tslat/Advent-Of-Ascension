@@ -13,7 +13,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FloroCastle extends AoAStructure { //StructureSize: 25x48x25
-	private static final IBlockState unbreakableStem = BlockRegister.unbreakablePlantStem.getDefaultState();
+	private static final IBlockState unbreakableStem = BlockRegister.UNBREAKABLE_PLANT_STEM.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);
 	private static final IBlockState chestEast = chest.withProperty(BlockChest.FACING, EnumFacing.EAST);

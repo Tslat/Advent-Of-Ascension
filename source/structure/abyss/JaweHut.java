@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class JaweHut extends AoAStructure { //StructureSize: 11x10x11
-	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
-	private static final IBlockState bloodStrands = BlockRegister.plantBloodStrands.getDefaultState();
-	private static final IBlockState jaweSpawner = BlockRegister.spawnerJawe.getDefaultState();
+	private static final IBlockState bloodstoneBricks = BlockRegister.BLOODSTONE_BRICKS.getDefaultState();
+	private static final IBlockState bloodStrands = BlockRegister.BLOOD_STRANDS.getDefaultState();
+	private static final IBlockState jaweSpawner = BlockRegister.JAWE_SPAWNER.getDefaultState();
 
 	public JaweHut() {
 		super("JaweHut");

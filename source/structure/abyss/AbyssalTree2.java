@@ -12,8 +12,8 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class AbyssalTree2 extends AoAStructure { //StructureSize: 11x11x11
-	private volatile IBlockState shadowLeaves = BlockRegister.leavesShadow.getDefaultState();
-	private final IBlockState shadowLog = BlockRegister.logShadow.getDefaultState();
+	private volatile IBlockState shadowLeaves = BlockRegister.SHADOW_LEAVES.getDefaultState();
+	private final IBlockState shadowLog = BlockRegister.SHADOW_LOG.getDefaultState();
 	private final IBlockState shadowLogBark = shadowLog.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
 
 	public AbyssalTree2() {

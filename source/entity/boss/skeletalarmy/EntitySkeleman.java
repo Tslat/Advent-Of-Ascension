@@ -48,7 +48,7 @@ public class EntitySkeleman extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotSkelemanFire;
+		return SoundsRegister.SKELEMAN_SHOOT;
 	}
 
 	@Override

@@ -18,13 +18,16 @@ public class EntityVitalityTablet extends EntitySoulTablet {
 
 	@Override
 	protected void doTickEffect() {
-		for (EntityPlayer pl : getTargetsWithinRadius(EntityPlayer.class, player -> player != null && player.isEntityAlive())) {
-			pl.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 10, 2, true, true));
+		if (world.getTotalWorldTime() % 10 == 0) {
+			for (EntityPlayer pl : getTargetsWithinRadius(EntityPlayer.class, player -> player != null && player.isEntityAlive())) {
+				if (!pl.isPotionActive(MobEffects.REGENERATION))
+					pl.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 1, true, true));
+			}
 		}
 	}
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletVitality;
+		return ItemRegister.VITALITY_TABLET;
 	}
 }

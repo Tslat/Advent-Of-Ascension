@@ -11,6 +11,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.item.armour.*;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -18,592 +19,331 @@ import java.lang.reflect.InvocationTargetException;
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder("aoa3")
 public class ArmourRegister {
-	@GameRegistry.ObjectHolder("achelos_helmet")
-	public static final Item achelosHelmet = null;
-	@GameRegistry.ObjectHolder("face_mask")
-	public static final Item faceMask = null;
-	@GameRegistry.ObjectHolder("night_vision_goggles")
-	public static final Item nightVisionGoggles = null;
-	@GameRegistry.ObjectHolder("oceanus_helmet")
-	public static final Item oceanusHelmet = null;
-	@GameRegistry.ObjectHolder("sealord_helmet")
-	public static final Item sealordHelmet = null;
-
-	@GameRegistry.ObjectHolder("alacrity_boots")
-	public static final Item alacrityBoots = null;
-	@GameRegistry.ObjectHolder("alacrity_legs")
-	public static final Item alacrityLegs = null;
-	@GameRegistry.ObjectHolder("alacrity_chestplate")
-	public static final Item alacrityBody = null;
-	@GameRegistry.ObjectHolder("alacrity_helmet")
-	public static final Item alacrityHelmet = null;
-
-	@GameRegistry.ObjectHolder("alchemy_boots")
-	public static final Item alchemyBoots = null;
-	@GameRegistry.ObjectHolder("alchemy_legs")
-	public static final Item alchemyLegs = null;
-	@GameRegistry.ObjectHolder("alchemy_chestplate")
-	public static final Item alchemyBody = null;
-	@GameRegistry.ObjectHolder("alchemy_helmet")
-	public static final Item alchemyHelmet = null;
-
-	@GameRegistry.ObjectHolder("amethind_boots")
-	public static final Item amethindBoots = null;
-	@GameRegistry.ObjectHolder("amethind_legs")
-	public static final Item amethindLegs = null;
-	@GameRegistry.ObjectHolder("amethind_chestplate")
-	public static final Item amethindBody = null;
-	@GameRegistry.ObjectHolder("amethind_helmet")
-	public static final Item amethindHelmet = null;
-
-	@GameRegistry.ObjectHolder("anima_boots")
-	public static final Item animaBoots = null;
-	@GameRegistry.ObjectHolder("anima_legs")
-	public static final Item animaLegs = null;
-	@GameRegistry.ObjectHolder("anima_chestplate")
-	public static final Item animaBody = null;
-	@GameRegistry.ObjectHolder("anima_helmet")
-	public static final Item animaHelmet = null;
-
-	@GameRegistry.ObjectHolder("archaic_boots")
-	public static final Item archaicBoots = null;
-	@GameRegistry.ObjectHolder("archaic_legs")
-	public static final Item archaicLegs = null;
-	@GameRegistry.ObjectHolder("archaic_chestplate")
-	public static final Item archaicBody = null;
-	@GameRegistry.ObjectHolder("archaic_helmet")
-	public static final Item archaicHelmet = null;
-
-	@GameRegistry.ObjectHolder("augury_boots")
-	public static final Item auguryBoots = null;
-	@GameRegistry.ObjectHolder("augury_legs")
-	public static final Item auguryLegs = null;
-	@GameRegistry.ObjectHolder("augury_chestplate")
-	public static final Item auguryBody = null;
-	@GameRegistry.ObjectHolder("augury_helmet")
-	public static final Item auguryHelmet = null;
-
-	@GameRegistry.ObjectHolder("baron_boots")
-	public static final Item baronBoots = null;
-	@GameRegistry.ObjectHolder("baron_legs")
-	public static final Item baronLegs = null;
-	@GameRegistry.ObjectHolder("baron_chestplate")
-	public static final Item baronBody = null;
-	@GameRegistry.ObjectHolder("baron_helmet")
-	public static final Item baronHelmet = null;
-
-	@GameRegistry.ObjectHolder("battleborn_boots")
-	public static final Item battlebornBoots = null;
-	@GameRegistry.ObjectHolder("battleborn_legs")
-	public static final Item battlebornLegs = null;
-	@GameRegistry.ObjectHolder("battleborn_chestplate")
-	public static final Item battlebornBody = null;
-	@GameRegistry.ObjectHolder("battleborn_helmet")
-	public static final Item battlebornHelmet = null;
-
-	@GameRegistry.ObjectHolder("biogenic_boots")
-	public static final Item biogenicBoots = null;
-	@GameRegistry.ObjectHolder("biogenic_legs")
-	public static final Item biogenicLegs = null;
-	@GameRegistry.ObjectHolder("biogenic_chestplate")
-	public static final Item biogenicBody = null;
-	@GameRegistry.ObjectHolder("biogenic_helmet")
-	public static final Item biogenicHelmet = null;
-
-	@GameRegistry.ObjectHolder("boreic_boots")
-	public static final Item boreicBoots = null;
-	@GameRegistry.ObjectHolder("boreic_legs")
-	public static final Item boreicLegs = null;
-	@GameRegistry.ObjectHolder("boreic_chestplate")
-	public static final Item boreicBody = null;
-	@GameRegistry.ObjectHolder("boreic_helmet")
-	public static final Item boreicHelmet = null;
-
-	@GameRegistry.ObjectHolder("butchery_boots")
-	public static final Item butcheryBoots = null;
-	@GameRegistry.ObjectHolder("butchery_legs")
-	public static final Item butcheryLegs = null;
-	@GameRegistry.ObjectHolder("butchery_chestplate")
-	public static final Item butcheryBody = null;
-	@GameRegistry.ObjectHolder("butchery_helmet")
-	public static final Item butcheryHelmet = null;
-
-	@GameRegistry.ObjectHolder("candy_boots")
-	public static final Item candyBoots = null;
-	@GameRegistry.ObjectHolder("candy_legs")
-	public static final Item candyLegs = null;
-	@GameRegistry.ObjectHolder("candy_chestplate")
-	public static final Item candyBody = null;
-	@GameRegistry.ObjectHolder("candy_helmet")
-	public static final Item candyHelmet = null;
-
-	@GameRegistry.ObjectHolder("commander_boots")
-	public static final Item commanderBoots = null;
-	@GameRegistry.ObjectHolder("commander_legs")
-	public static final Item commanderLegs = null;
-	@GameRegistry.ObjectHolder("commander_chestplate")
-	public static final Item commanderBody = null;
-	@GameRegistry.ObjectHolder("commander_helmet")
-	public static final Item commanderHelmet = null;
-
-	@GameRegistry.ObjectHolder("creation_boots")
-	public static final Item creationBoots = null;
-	@GameRegistry.ObjectHolder("creation_legs")
-	public static final Item creationLegs = null;
-	@GameRegistry.ObjectHolder("creation_chestplate")
-	public static final Item creationBody = null;
-	@GameRegistry.ObjectHolder("creation_helmet")
-	public static final Item creationHelmet = null;
-
-	@GameRegistry.ObjectHolder("crystallis_boots")
-	public static final Item crystallisBoots = null;
-	@GameRegistry.ObjectHolder("crystallis_legs")
-	public static final Item crystallisLegs = null;
-	@GameRegistry.ObjectHolder("crystallis_legs")
-	public static final Item crystallisBody = null;
-	@GameRegistry.ObjectHolder("crystallis_helmet")
-	public static final Item crystallisHelmet = null;
-
-	@GameRegistry.ObjectHolder("elecanyte_boots")
-	public static final Item elecanyteBoots = null;
-	@GameRegistry.ObjectHolder("elecanyte_legs")
-	public static final Item elecanyteLegs = null;
-	@GameRegistry.ObjectHolder("elecanyte_chestplate")
-	public static final Item elecanyteBody = null;
-	@GameRegistry.ObjectHolder("elecanyte_helmet")
-	public static final Item elecanyteHelmet = null;
-
-	@GameRegistry.ObjectHolder("embrodium_boots")
-	public static final Item embrodiumBoots = null;
-	@GameRegistry.ObjectHolder("embrodium_legs")
-	public static final Item embrodiumLegs = null;
-	@GameRegistry.ObjectHolder("embrodium_chestplate")
-	public static final Item embrodiumBody = null;
-	@GameRegistry.ObjectHolder("embrodium_helmet")
-	public static final Item embrodiumHelmet = null;
-
-	@GameRegistry.ObjectHolder("engineering_boots")
-	public static final Item engineeringBoots = null;
-	@GameRegistry.ObjectHolder("engineering_legs")
-	public static final Item engineeringLegs = null;
-	@GameRegistry.ObjectHolder("engineering_chestplate")
-	public static final Item engineeringBody = null;
-	@GameRegistry.ObjectHolder("engineering_helmet")
-	public static final Item engineeringHelmet = null;
-
-	@GameRegistry.ObjectHolder("exoplate_boots")
-	public static final Item exoplateBoots = null;
-	@GameRegistry.ObjectHolder("exoplate_legs")
-	public static final Item exoplateLegs = null;
-	@GameRegistry.ObjectHolder("exoplate_chestplate")
-	public static final Item exoplateBody = null;
-	@GameRegistry.ObjectHolder("exoplate_helmet")
-	public static final Item exoplateHelmet = null;
-
-	@GameRegistry.ObjectHolder("expedition_boots")
-	public static final Item expeditionBoots = null;
-	@GameRegistry.ObjectHolder("expedition_legs")
-	public static final Item expeditionLegs = null;
-	@GameRegistry.ObjectHolder("expedition_chestplate")
-	public static final Item expeditionBody = null;
-	@GameRegistry.ObjectHolder("expedition_helmet")
-	public static final Item expeditionHelmet = null;
-
-	@GameRegistry.ObjectHolder("explosive_boots")
-	public static final Item explosiveBoots = null;
-	@GameRegistry.ObjectHolder("explosive_legs")
-	public static final Item explosiveLegs = null;
-	@GameRegistry.ObjectHolder("explosive_chestplate")
-	public static final Item explosiveBody = null;
-	@GameRegistry.ObjectHolder("explosive_helmet")
-	public static final Item explosiveHelmet = null;
-
-	@GameRegistry.ObjectHolder("extraction_boots")
-	public static final Item extractionBoots = null;
-	@GameRegistry.ObjectHolder("extraction_legs")
-	public static final Item extractionLegs = null;
-	@GameRegistry.ObjectHolder("extraction_chestplate")
-	public static final Item extractionBody = null;
-	@GameRegistry.ObjectHolder("extraction_helmet")
-	public static final Item extractionHelmet = null;
-
-	@GameRegistry.ObjectHolder("foraging_boots")
-	public static final Item foragingBoots = null;
-	@GameRegistry.ObjectHolder("foraging_legs")
-	public static final Item foragingLegs = null;
-	@GameRegistry.ObjectHolder("foraging_chestplate")
-	public static final Item foragingBody = null;
-	@GameRegistry.ObjectHolder("foraging_helmet")
-	public static final Item foragingHelmet = null;
-
-	@GameRegistry.ObjectHolder("fungal_boots")
-	public static final Item fungalBoots = null;
-	@GameRegistry.ObjectHolder("fungal_legs")
-	public static final Item fungalLegs = null;
-	@GameRegistry.ObjectHolder("fungal_chestplate")
-	public static final Item fungalBody = null;
-	@GameRegistry.ObjectHolder("fungal_helmet")
-	public static final Item fungalHelmet = null;
-
-	@GameRegistry.ObjectHolder("ghastly_boots")
-	public static final Item ghastlyBoots = null;
-	@GameRegistry.ObjectHolder("ghastly_legs")
-	public static final Item ghastlyLegs = null;
-	@GameRegistry.ObjectHolder("ghastly_chestplate")
-	public static final Item ghastlyBody = null;
-	@GameRegistry.ObjectHolder("ghastly_helmet")
-	public static final Item ghastlyHelmet = null;
-
-	@GameRegistry.ObjectHolder("ghoulish_boots")
-	public static final Item ghoulishBoots = null;
-	@GameRegistry.ObjectHolder("ghoulish_legs")
-	public static final Item ghoulishLegs = null;
-	@GameRegistry.ObjectHolder("ghoulish_chestplate")
-	public static final Item ghoulishBody = null;
-	@GameRegistry.ObjectHolder("ghoulish_helmet")
-	public static final Item ghoulishHelmet = null;
-
-	@GameRegistry.ObjectHolder("hauling_boots")
-	public static final Item haulingBoots = null;
-	@GameRegistry.ObjectHolder("hauling_legs")
-	public static final Item haulingLegs = null;
-	@GameRegistry.ObjectHolder("hauling_chestplate")
-	public static final Item haulingBody = null;
-	@GameRegistry.ObjectHolder("hauling_helmet")
-	public static final Item haulingHelmet = null;
-
-	@GameRegistry.ObjectHolder("hazmat_boots")
-	public static final Item hazmatBoots = null;
-	@GameRegistry.ObjectHolder("hazmat_legs")
-	public static final Item hazmatLegs = null;
-	@GameRegistry.ObjectHolder("hazmat_chestplate")
-	public static final Item hazmatBody = null;
-	@GameRegistry.ObjectHolder("hazmat_helmet")
-	public static final Item hazmatHelmet = null;
-
-	@GameRegistry.ObjectHolder("hunter_boots")
-	public static final Item hunterBoots = null;
-	@GameRegistry.ObjectHolder("hunter_legs")
-	public static final Item hunterLegs = null;
-	@GameRegistry.ObjectHolder("hunter_chestplate")
-	public static final Item hunterBody = null;
-	@GameRegistry.ObjectHolder("hunter_helmet")
-	public static final Item hunterHelmet = null;
-
-	@GameRegistry.ObjectHolder("hydrangic_boots")
-	public static final Item hydrangicBoots = null;
-	@GameRegistry.ObjectHolder("hydrangic_legs")
-	public static final Item hydrangicLegs = null;
-	@GameRegistry.ObjectHolder("hydrangic_chestplate")
-	public static final Item hydrangicBody = null;
-	@GameRegistry.ObjectHolder("hydrangic_helmet")
-	public static final Item hydrangicHelmet = null;
-
-	@GameRegistry.ObjectHolder("hydroplate_boots")
-	public static final Item hydroplateBoots = null;
-	@GameRegistry.ObjectHolder("hydroplate_legs")
-	public static final Item hydroplateLegs = null;
-	@GameRegistry.ObjectHolder("hydroplate_chestplate")
-	public static final Item hydroplateBody = null;
-	@GameRegistry.ObjectHolder("hydroplate_helmet")
-	public static final Item hydroplateHelmet = null;
-
-	@GameRegistry.ObjectHolder("ice_boots")
-	public static final Item iceBoots = null;
-	@GameRegistry.ObjectHolder("ice_legs")
-	public static final Item iceLegs = null;
-	@GameRegistry.ObjectHolder("ice_chestplate")
-	public static final Item iceBody = null;
-	@GameRegistry.ObjectHolder("ice_helmet")
-	public static final Item iceHelmet = null;
-
-	@GameRegistry.ObjectHolder("infernal_boots")
-	public static final Item infernalBoots = null;
-	@GameRegistry.ObjectHolder("infernal_legs")
-	public static final Item infernalLegs = null;
-	@GameRegistry.ObjectHolder("infernal_chestplate")
-	public static final Item infernalBody = null;
-	@GameRegistry.ObjectHolder("infernal_helmet")
-	public static final Item infernalHelmet = null;
-
-	@GameRegistry.ObjectHolder("infusion_boots")
-	public static final Item infusionBoots = null;
-	@GameRegistry.ObjectHolder("infusion_legs")
-	public static final Item infusionLegs = null;
-	@GameRegistry.ObjectHolder("infusion_chestplate")
-	public static final Item infusionBody = null;
-	@GameRegistry.ObjectHolder("infusion_helmet")
-	public static final Item infusionHelmet = null;
-
-	@GameRegistry.ObjectHolder("innervation_boots")
-	public static final Item innervationBoots = null;
-	@GameRegistry.ObjectHolder("innervation_legs")
-	public static final Item innervationLegs = null;
-	@GameRegistry.ObjectHolder("innervation_chestplate")
-	public static final Item innervationBody = null;
-	@GameRegistry.ObjectHolder("innervation_helmet")
-	public static final Item innervationHelmet = null;
-
-	@GameRegistry.ObjectHolder("knight_boots")
-	public static final Item knightBoots = null;
-	@GameRegistry.ObjectHolder("knight_legs")
-	public static final Item knightLegs = null;
-	@GameRegistry.ObjectHolder("knight_chestplate")
-	public static final Item knightBody = null;
-	@GameRegistry.ObjectHolder("knight_helmet")
-	public static final Item knightHelmet = null;
-
-	@GameRegistry.ObjectHolder("logging_boots")
-	public static final Item loggingBoots = null;
-	@GameRegistry.ObjectHolder("logging_legs")
-	public static final Item loggingLegs = null;
-	@GameRegistry.ObjectHolder("logging_chestplate")
-	public static final Item loggingBody = null;
-	@GameRegistry.ObjectHolder("logging_helmet")
-	public static final Item loggingHelmet = null;
-
-	@GameRegistry.ObjectHolder("lunar_boots")
-	public static final Item lunarBoots = null;
-	@GameRegistry.ObjectHolder("lunar_legs")
-	public static final Item lunarLegs = null;
-	@GameRegistry.ObjectHolder("lunar_chestplate")
-	public static final Item lunarBody = null;
-	@GameRegistry.ObjectHolder("lunar_helmet")
-	public static final Item lunarHelmet = null;
-
-	@GameRegistry.ObjectHolder("lyndamyte_boots")
-	public static final Item lyndamyteBoots = null;
-	@GameRegistry.ObjectHolder("lyndamyte_legs")
-	public static final Item lyndamyteLegs = null;
-	@GameRegistry.ObjectHolder("lyndamyte_chestplate")
-	public static final Item lyndamyteBody = null;
-	@GameRegistry.ObjectHolder("lyndamyte_helmet")
-	public static final Item lyndamyteHelmet = null;
-
-	@GameRegistry.ObjectHolder("lyonic_boots")
-	public static final Item lyonicBoots = null;
-	@GameRegistry.ObjectHolder("lyonic_legs")
-	public static final Item lyonicLegs = null;
-	@GameRegistry.ObjectHolder("lyonic_chestplate")
-	public static final Item lyonicBody = null;
-	@GameRegistry.ObjectHolder("lyonic_helmet")
-	public static final Item lyonicHelmet = null;
-
-	@GameRegistry.ObjectHolder("mercurial_boots")
-	public static final Item mercurialBoots = null;
-	@GameRegistry.ObjectHolder("mercurial_legs")
-	public static final Item mercurialLegs = null;
-	@GameRegistry.ObjectHolder("mercurial_chestplate")
-	public static final Item mercurialBody = null;
-	@GameRegistry.ObjectHolder("mercurial_helmet")
-	public static final Item mercurialHelmet = null;
-
-	@GameRegistry.ObjectHolder("necro_boots")
-	public static final Item necroBoots = null;
-	@GameRegistry.ObjectHolder("necro_legs")
-	public static final Item necroLegs = null;
-	@GameRegistry.ObjectHolder("necro_chestplate")
-	public static final Item necroBody = null;
-	@GameRegistry.ObjectHolder("necro_helmet")
-	public static final Item necroHelmet = null;
-
-	@GameRegistry.ObjectHolder("nethengeic_boots")
-	public static final Item nethengeicBoots = null;
-	@GameRegistry.ObjectHolder("nethengeic_legs")
-	public static final Item nethengeicLegs = null;
-	@GameRegistry.ObjectHolder("nethengeic_chestplate")
-	public static final Item nethengeicBody = null;
-	@GameRegistry.ObjectHolder("nethengeic_helmet")
-	public static final Item nethengeicHelmet = null;
-
-	@GameRegistry.ObjectHolder("nightmare_boots")
-	public static final Item nightmareBoots = null;
-	@GameRegistry.ObjectHolder("nightmare_legs")
-	public static final Item nightmareLegs = null;
-	@GameRegistry.ObjectHolder("nightmare_chestplate")
-	public static final Item nightmareBody = null;
-	@GameRegistry.ObjectHolder("nightmare_helmet")
-	public static final Item nightmareHelmet = null;
-
-	@GameRegistry.ObjectHolder("omni_boots")
-	public static final Item omniBoots = null;
-	@GameRegistry.ObjectHolder("omni_legs")
-	public static final Item omniLegs = null;
-	@GameRegistry.ObjectHolder("omni_chestplate")
-	public static final Item omniBody = null;
-	@GameRegistry.ObjectHolder("omni_helmet")
-	public static final Item omniHelmet = null;
-
-	@GameRegistry.ObjectHolder("phantasm_boots")
-	public static final Item phantasmBoots = null;
-	@GameRegistry.ObjectHolder("phantasm_legs")
-	public static final Item phantasmLegs = null;
-	@GameRegistry.ObjectHolder("phantasm_chestplate")
-	public static final Item phantasmBody = null;
-	@GameRegistry.ObjectHolder("phantasm_helmet")
-	public static final Item phantasmHelmet = null;
-
-	@GameRegistry.ObjectHolder("poison_boots")
-	public static final Item poisonBoots = null;
-	@GameRegistry.ObjectHolder("poison_legs")
-	public static final Item poisonLegs = null;
-	@GameRegistry.ObjectHolder("poison_chestplate")
-	public static final Item poisonBody = null;
-	@GameRegistry.ObjectHolder("poison_helmet")
-	public static final Item poisonHelmet = null;
-
-	@GameRegistry.ObjectHolder("predatious_boots")
-	public static final Item predatiousBoots = null;
-	@GameRegistry.ObjectHolder("predatious_legs")
-	public static final Item predatiousLegs = null;
-	@GameRegistry.ObjectHolder("predatious_chestplate")
-	public static final Item predatiousBody = null;
-	@GameRegistry.ObjectHolder("predatious_helmet")
-	public static final Item predatiousHelmet = null;
-
-	@GameRegistry.ObjectHolder("primordial_boots")
-	public static final Item primordialBoots = null;
-	@GameRegistry.ObjectHolder("primordial_legs")
-	public static final Item primordialLegs = null;
-	@GameRegistry.ObjectHolder("primordial_chestplate")
-	public static final Item primordialBody = null;
-	@GameRegistry.ObjectHolder("primordial_helmet")
-	public static final Item primordialHelmet = null;
-
-	@GameRegistry.ObjectHolder("purity_boots")
-	public static final Item purityBoots = null;
-	@GameRegistry.ObjectHolder("purity_legs")
-	public static final Item purityLegs = null;
-	@GameRegistry.ObjectHolder("purity_chestplate")
-	public static final Item purityBody = null;
-	@GameRegistry.ObjectHolder("purity_helmet")
-	public static final Item purityHelmet = null;
-
-	@GameRegistry.ObjectHolder("rockbone_boots")
-	public static final Item rockboneBoots = null;
-	@GameRegistry.ObjectHolder("rockbone_legs")
-	public static final Item rockboneLegs = null;
-	@GameRegistry.ObjectHolder("rockbone_chestplate")
-	public static final Item rockboneBody = null;
-	@GameRegistry.ObjectHolder("rockbone_helmet")
-	public static final Item rockboneHelmet = null;
-
-	@GameRegistry.ObjectHolder("rosidian_boots")
-	public static final Item rosidianBoots = null;
-	@GameRegistry.ObjectHolder("rosidian_legs")
-	public static final Item rosidianLegs = null;
-	@GameRegistry.ObjectHolder("rosidian_chestplate")
-	public static final Item rosidianBody = null;
-	@GameRegistry.ObjectHolder("rosidian_helmet")
-	public static final Item rosidianHelmet = null;
-
-	@GameRegistry.ObjectHolder("runation_boots")
-	public static final Item runationBoots = null;
-	@GameRegistry.ObjectHolder("runation_legs")
-	public static final Item runationLegs = null;
-	@GameRegistry.ObjectHolder("runation_chestplate")
-	public static final Item runationBody = null;
-	@GameRegistry.ObjectHolder("runation_helmet")
-	public static final Item runationHelmet = null;
-
-	@GameRegistry.ObjectHolder("runic_boots")
-	public static final Item runicBoots = null;
-	@GameRegistry.ObjectHolder("runic_legs")
-	public static final Item runicLegs = null;
-	@GameRegistry.ObjectHolder("runic_chestplate")
-	public static final Item runicBody = null;
-	@GameRegistry.ObjectHolder("runic_helmet")
-	public static final Item runicHelmet = null;
-
-	@GameRegistry.ObjectHolder("sharpshot_boots")
-	public static final Item sharpshotBoots = null;
-	@GameRegistry.ObjectHolder("sharpshot_legs")
-	public static final Item sharpshotLegs = null;
-	@GameRegistry.ObjectHolder("sharpshot_chestplate")
-	public static final Item sharpshotBody = null;
-	@GameRegistry.ObjectHolder("sharpshot_helmet")
-	public static final Item sharpshotHelmet = null;
-
-	@GameRegistry.ObjectHolder("skeletal_boots")
-	public static final Item skeletalBoots = null;
-	@GameRegistry.ObjectHolder("skeletal_legs")
-	public static final Item skeletalLegs = null;
-	@GameRegistry.ObjectHolder("skeletal_chestplate")
-	public static final Item skeletalBody = null;
-	@GameRegistry.ObjectHolder("skeletal_helmet")
-	public static final Item skeletalHelmet = null;
-
-	@GameRegistry.ObjectHolder("spaceking_boots")
-	public static final Item spacekingBoots = null;
-	@GameRegistry.ObjectHolder("spaceking_legs")
-	public static final Item spacekingLegs = null;
-	@GameRegistry.ObjectHolder("spaceking_chestplate")
-	public static final Item spacekingBody = null;
-	@GameRegistry.ObjectHolder("spaceking_helmet")
-	public static final Item spacekingHelmet = null;
-
-	@GameRegistry.ObjectHolder("speed_boots")
-	public static final Item speedBoots = null;
-	@GameRegistry.ObjectHolder("speed_legs")
-	public static final Item speedLegs = null;
-	@GameRegistry.ObjectHolder("speed_chestplate")
-	public static final Item speedBody = null;
-	@GameRegistry.ObjectHolder("speed_helmet")
-	public static final Item speedHelmet = null;
-
-	@GameRegistry.ObjectHolder("subterranean_boots")
-	public static final Item subterraneanBoots = null;
-	@GameRegistry.ObjectHolder("subterranean_legs")
-	public static final Item subterraneanLegs = null;
-	@GameRegistry.ObjectHolder("subterranean_chestplate")
-	public static final Item subterraneanBody = null;
-	@GameRegistry.ObjectHolder("subterranean_helmet")
-	public static final Item subterraneanHelmet = null;
-
-	@GameRegistry.ObjectHolder("utopian_boots")
-	public static final Item utopianBoots = null;
-	@GameRegistry.ObjectHolder("utopian_legs")
-	public static final Item utopianLegs = null;
-	@GameRegistry.ObjectHolder("utopian_chestplate")
-	public static final Item utopianBody = null;
-	@GameRegistry.ObjectHolder("utopian_helmet")
-	public static final Item UtopianHelmet = null;
-
-	@GameRegistry.ObjectHolder("void_boots")
-	public static final Item voidBoots = null;
-	@GameRegistry.ObjectHolder("void_legs")
-	public static final Item voidLegs = null;
-	@GameRegistry.ObjectHolder("void_chestplate")
-	public static final Item voidBody = null;
-	@GameRegistry.ObjectHolder("void_helmet")
-	public static final Item VoidHelmet = null;
-
-	@GameRegistry.ObjectHolder("weaken_boots")
-	public static final Item weakenBoots = null;
-	@GameRegistry.ObjectHolder("weaken_legs")
-	public static final Item weakenLegs = null;
-	@GameRegistry.ObjectHolder("weaken_chestplate")
-	public static final Item weakenBody = null;
-	@GameRegistry.ObjectHolder("weaken_helmet")
-	public static final Item weakenHelmet = null;
-
-	@GameRegistry.ObjectHolder("wither_boots")
-	public static final Item witherBoots = null;
-	@GameRegistry.ObjectHolder("wither_legs")
-	public static final Item witherLegs = null;
-	@GameRegistry.ObjectHolder("wither_chestplate")
-	public static final Item witherBody = null;
-	@GameRegistry.ObjectHolder("wither_helmet")
-	public static final Item witherHelmet = null;
-
-	@GameRegistry.ObjectHolder("zargonite_boots")
-	public static final Item zargoniteBoots = null;
-	@GameRegistry.ObjectHolder("zargonite_legs")
-	public static final Item zargoniteLegs = null;
-	@GameRegistry.ObjectHolder("zargonite_chestplate")
-	public static final Item zargoniteBody = null;
-	@GameRegistry.ObjectHolder("zargonite_helmet")
-	public static final Item zargoniteHelmet = null;
+	public static final Item ACHELOS_HELMET = ObjectHolder();
+	public static final Item FACE_MASK = ObjectHolder();
+	public static final Item NIGHT_VISION_GOGGLES = ObjectHolder();
+	public static final Item OCEANUS_HELMET = ObjectHolder();
+	public static final Item SEALORD_HELMET = ObjectHolder();
+
+	public static final Item ALACRITY_BOOTS = ObjectHolder();
+	public static final Item ALACRITY_LEGS = ObjectHolder();
+	public static final Item ALACRITY_CHESTPLATE = ObjectHolder();
+	public static final Item ALACRITY_HELMET = ObjectHolder();
+
+	public static final Item ALCHEMY_BOOTS = ObjectHolder();
+	public static final Item ALCHEMY_LEGS = ObjectHolder();
+	public static final Item ALCHEMY_CHESTPLATE = ObjectHolder();
+	public static final Item ALCHEMY_HELMET = ObjectHolder();
+
+	public static final Item AMETHIND_BOOTS = ObjectHolder();
+	public static final Item AMETHIND_LEGS = ObjectHolder();
+	public static final Item AMETHIND_CHESTPLATE = ObjectHolder();
+	public static final Item AMETHIND_HELMET = ObjectHolder();
+
+	public static final Item ANIMA_BOOTS = ObjectHolder();
+	public static final Item ANIMA_LEGS = ObjectHolder();
+	public static final Item ANIMA_CHESTPLATE = ObjectHolder();
+	public static final Item ANIMA_HELMET = ObjectHolder();
+
+	public static final Item ARCHAIC_BOOTS = ObjectHolder();
+	public static final Item ARCHAIC_LEGS = ObjectHolder();
+	public static final Item ARCHAIC_CHESTPLATE = ObjectHolder();
+	public static final Item ARCHAIC_HELMET = ObjectHolder();
+
+	public static final Item AUGURY_BOOTS = ObjectHolder();
+	public static final Item AUGURY_LEGS = ObjectHolder();
+	public static final Item AUGURY_CHESTPLATE = ObjectHolder();
+	public static final Item AUGURY_HELMET = ObjectHolder();
+
+	public static final Item BARON_BOOTS = ObjectHolder();
+	public static final Item BARON_LEGS = ObjectHolder();
+	public static final Item BARON_CHESTPLATE = ObjectHolder();
+	public static final Item BARON_HELMET = ObjectHolder();
+
+	public static final Item BATTLEBORN_BOOTS = ObjectHolder();
+	public static final Item BATTLEBORN_LEGS = ObjectHolder();
+	public static final Item BATTLEBORN_CHESTPLATE = ObjectHolder();
+	public static final Item BATTLEBORN_HELMET = ObjectHolder();
+
+	public static final Item BIOGENIC_BOOTS = ObjectHolder();
+	public static final Item BIOGENIC_LEGS = ObjectHolder();
+	public static final Item BIOGENIC_CHESTPLATE = ObjectHolder();
+	public static final Item BIOGENIC_HELMET = ObjectHolder();
+
+	public static final Item BOREIC_BOOTS = ObjectHolder();
+	public static final Item BOREIC_LEGS = ObjectHolder();
+	public static final Item BOREIC_CHESTPLATE = ObjectHolder();
+	public static final Item BOREIC_HELMET = ObjectHolder();
+
+	public static final Item BUTCHERY_BOOTS = ObjectHolder();
+	public static final Item BUTCHERY_LEGS = ObjectHolder();
+	public static final Item BUTCHERY_CHESTPLATE = ObjectHolder();
+	public static final Item BUTCHERY_HELMET = ObjectHolder();
+
+	public static final Item CANDY_BOOTS = ObjectHolder();
+	public static final Item CANDY_LEGS = ObjectHolder();
+	public static final Item CANDY_CHESTPLATE = ObjectHolder();
+	public static final Item CANDY_HELMET = ObjectHolder();
+
+	public static final Item COMMANDER_BOOTS = ObjectHolder();
+	public static final Item COMMANDER_LEGS = ObjectHolder();
+	public static final Item COMMANDER_CHESTPLATE = ObjectHolder();
+	public static final Item COMMANDER_HELMET = ObjectHolder();
+
+	public static final Item CREATION_BOOTS = ObjectHolder();
+	public static final Item CREATION_LEGS = ObjectHolder();
+	public static final Item CREATION_CHESTPLATE = ObjectHolder();
+	public static final Item CREATION_HELMET = ObjectHolder();
+
+	public static final Item CRYSTALLIS_BOOTS = ObjectHolder();
+	public static final Item CRYSTALLIS_LEGS = ObjectHolder();
+	public static final Item CRYSTALLIS_CHESTPLATE = ObjectHolder();
+	public static final Item CRYSTALLIS_HELMET = ObjectHolder();
+
+	public static final Item ELECANYTE_BOOTS = ObjectHolder();
+	public static final Item ELECANYTE_LEGS = ObjectHolder();
+	public static final Item ELECANYTE_CHESTPLATE = ObjectHolder();
+	public static final Item ELECANYTE_HELMET = ObjectHolder();
+
+	public static final Item EMBRODIUM_BOOTS = ObjectHolder();
+	public static final Item EMBRODIUM_LEGS = ObjectHolder();
+	public static final Item EMBRODIUM_CHESTPLATE = ObjectHolder();
+	public static final Item EMBRODIUM_HELMET = ObjectHolder();
+
+	public static final Item ENGINEERING_BOOTS = ObjectHolder();
+	public static final Item ENGINEERING_LEGS = ObjectHolder();
+	public static final Item ENGINEERING_CHESTPLATE = ObjectHolder();
+	public static final Item ENGINEERING_HELMET = ObjectHolder();
+
+	public static final Item EXOPLATE_BOOTS = ObjectHolder();
+	public static final Item EXOPLATE_LEGS = ObjectHolder();
+	public static final Item EXOPLATE_CHESTPLATE = ObjectHolder();
+	public static final Item EXOPLATE_HELMET = ObjectHolder();
+
+	public static final Item EXPEDITION_BOOTS = ObjectHolder();
+	public static final Item EXPEDITION_LEGS = ObjectHolder();
+	public static final Item EXPEDITION_CHESTPLATE = ObjectHolder();
+	public static final Item EXPEDITION_HELMET = ObjectHolder();
+
+	public static final Item EXPLOSIVE_BOOTS = ObjectHolder();
+	public static final Item EXPLOSIVE_LEGS = ObjectHolder();
+	public static final Item EXPLOSIVE_CHESTPLATE = ObjectHolder();
+	public static final Item EXPLOSIVE_HELMET = ObjectHolder();
+
+	public static final Item EXTRACTION_BOOTS = ObjectHolder();
+	public static final Item EXTRACTION_LEGS = ObjectHolder();
+	public static final Item EXTRACTION_CHESTPLATE = ObjectHolder();
+	public static final Item EXTRACTION_HELMET = ObjectHolder();
+
+	public static final Item FORAGING_BOOTS = ObjectHolder();
+	public static final Item FORAGING_LEGS = ObjectHolder();
+	public static final Item FORAGING_CHESTPLATE = ObjectHolder();
+	public static final Item FORAGING_HELMET = ObjectHolder();
+
+	public static final Item FUNGAL_BOOTS = ObjectHolder();
+	public static final Item FUNGAL_LEGS = ObjectHolder();
+	public static final Item FUNGAL_CHESTPLATE = ObjectHolder();
+	public static final Item FUNGAL_HELMET = ObjectHolder();
+
+	public static final Item GHASTLY_BOOTS = ObjectHolder();
+	public static final Item GHASTLY_LEGS = ObjectHolder();
+	public static final Item GHASTLY_CHESTPLATE = ObjectHolder();
+	public static final Item GHASTLY_HELMET = ObjectHolder();
+
+	public static final Item GHOULISH_BOOTS = ObjectHolder();
+	public static final Item GHOULISH_LEGS = ObjectHolder();
+	public static final Item GHOULISH_CHESTPLATE = ObjectHolder();
+	public static final Item GHOULISH_HELMET = ObjectHolder();
+
+	public static final Item HAULING_BOOTS = ObjectHolder();
+	public static final Item HAULING_LEGS = ObjectHolder();
+	public static final Item HAULING_CHESTPLATE = ObjectHolder();
+	public static final Item HAULING_HELMET = ObjectHolder();
+
+	public static final Item HAZMAT_BOOTS = ObjectHolder();
+	public static final Item HAZMAT_LEGS = ObjectHolder();
+	public static final Item HAZMAT_CHESTPLATE = ObjectHolder();
+	public static final Item HAZMAT_HELMET = ObjectHolder();
+
+	public static final Item HUNTER_BOOTS = ObjectHolder();
+	public static final Item HUNTER_LEGS = ObjectHolder();
+	public static final Item HUNTER_CHESTPLATE = ObjectHolder();
+	public static final Item HUNTER_HELMET = ObjectHolder();
+
+	public static final Item HYDRANGIC_BOOTS = ObjectHolder();
+	public static final Item HYDRANGIC_LEGS = ObjectHolder();
+	public static final Item HYDRANGIC_CHESTPLATE = ObjectHolder();
+	public static final Item HYDRANGIC_HELMET = ObjectHolder();
+
+	public static final Item HYDROPLATE_BOOTS = ObjectHolder();
+	public static final Item HYDROPLATE_LEGS = ObjectHolder();
+	public static final Item HYDROPLATE_CHESTPLATE = ObjectHolder();
+	public static final Item HYDROPLATE_HELMET = ObjectHolder();
+
+	public static final Item ICE_BOOTS = ObjectHolder();
+	public static final Item ICE_LEGS = ObjectHolder();
+	public static final Item ICE_CHESTPLATE = ObjectHolder();
+	public static final Item ICE_HELMET = ObjectHolder();
+
+	public static final Item INFERNAL_BOOTS = ObjectHolder();
+	public static final Item INFERNAL_LEGS = ObjectHolder();
+	public static final Item INFERNAL_CHESTPLATE = ObjectHolder();
+	public static final Item INFERNAL_HELMET = ObjectHolder();
+
+	public static final Item INFUSION_BOOTS = ObjectHolder();
+	public static final Item INFUSION_LEGS = ObjectHolder();
+	public static final Item INFUSION_CHESTPLATE = ObjectHolder();
+	public static final Item INFUSION_HELMET = ObjectHolder();
+
+	public static final Item INNERVATION_BOOTS = ObjectHolder();
+	public static final Item INNERVATION_LEGS = ObjectHolder();
+	public static final Item INNERVATION_CHESTPLATE = ObjectHolder();
+	public static final Item INNERVATION_HELMET = ObjectHolder();
+
+	public static final Item KNIGHT_BOOTS = ObjectHolder();
+	public static final Item KNIGHT_LEGS = ObjectHolder();
+	public static final Item KNIGHT_CHESTPLATE = ObjectHolder();
+	public static final Item KNIGHT_HELMET = ObjectHolder();
+
+	public static final Item LOGGING_BOOTS = ObjectHolder();
+	public static final Item LOGGING_LEGS = ObjectHolder();
+	public static final Item LOGGING_CHESTPLATE = ObjectHolder();
+	public static final Item LOGGING_HELMET = ObjectHolder();
+
+	public static final Item LUNAR_BOOTS = ObjectHolder();
+	public static final Item LUNAR_LEGS = ObjectHolder();
+	public static final Item LUNAR_CHESTPLATE = ObjectHolder();
+	public static final Item LUNAR_HELMET = ObjectHolder();
+
+	public static final Item LYNDAMYTE_BOOTS = ObjectHolder();
+	public static final Item LYNDAMYTE_LEGS = ObjectHolder();
+	public static final Item LYNDAMYTE_CHESTPLATE = ObjectHolder();
+	public static final Item LYNDAMYTE_HELMET = ObjectHolder();
+
+	public static final Item LYONIC_BOOTS = ObjectHolder();
+	public static final Item LYONIC_LEGS = ObjectHolder();
+	public static final Item LYONIC_CHESTPLATE = ObjectHolder();
+	public static final Item LYONIC_HELMET = ObjectHolder();
+
+	public static final Item MERCURIAL_BOOTS = ObjectHolder();
+	public static final Item MERCURIAL_LEGS = ObjectHolder();
+	public static final Item MERCURIAL_CHESTPLATE = ObjectHolder();
+	public static final Item MERCURIAL_HELMET = ObjectHolder();
+
+	public static final Item NECRO_BOOTS = ObjectHolder();
+	public static final Item NECRO_LEGS = ObjectHolder();
+	public static final Item NECRO_CHESTPLATE = ObjectHolder();
+	public static final Item NECRO_HELMET = ObjectHolder();
+
+	public static final Item NETHENGEIC_BOOTS = ObjectHolder();
+	public static final Item NETHENGEIC_LEGS = ObjectHolder();
+	public static final Item NETHENGEIC_CHESTPLATE = ObjectHolder();
+	public static final Item NETHENGEIC_HELMET = ObjectHolder();
+
+	public static final Item NIGHTMARE_BOOTS = ObjectHolder();
+	public static final Item NIGHTMARE_LEGS = ObjectHolder();
+	public static final Item NIGHTMARE_CHESTPLATE = ObjectHolder();
+	public static final Item NIGHTMARE_HELMET = ObjectHolder();
+
+	public static final Item OMNI_BOOTS = ObjectHolder();
+	public static final Item OMNI_LEGS = ObjectHolder();
+	public static final Item OMNI_CHESTPLATE = ObjectHolder();
+	public static final Item OMNI_HELMET = ObjectHolder();
+
+	public static final Item PHANTASM_BOOTS = ObjectHolder();
+	public static final Item PHANTASM_LEGS = ObjectHolder();
+	public static final Item PHANTASM_CHESTPLATE = ObjectHolder();
+	public static final Item PHANTASM_HELMET = ObjectHolder();
+
+	public static final Item POISON_BOOTS = ObjectHolder();
+	public static final Item POISON_LEGS = ObjectHolder();
+	public static final Item POISON_CHESTPLATE = ObjectHolder();
+	public static final Item POISON_HELMET = ObjectHolder();
+
+	public static final Item PREDATIOUS_BOOTS = ObjectHolder();
+	public static final Item PREDATIOUS_LEGS = ObjectHolder();
+	public static final Item PREDATIOUS_CHESTPLATE = ObjectHolder();
+	public static final Item PREDATIOUS_HELMET = ObjectHolder();
+
+	public static final Item PRIMORDIAL_BOOTS = ObjectHolder();
+	public static final Item PRIMORDIAL_LEGS = ObjectHolder();
+	public static final Item PRIMORDIAL_CHESTPLATE = ObjectHolder();
+	public static final Item PRIMORDIAL_HELMET = ObjectHolder();
+
+	public static final Item PURITY_BOOTS = ObjectHolder();
+	public static final Item PURITY_LEGS = ObjectHolder();
+	public static final Item PURITY_CHESTPLATE = ObjectHolder();
+	public static final Item PURITY_HELMET = ObjectHolder();
+
+	public static final Item ROCKBONE_BOOTS = ObjectHolder();
+	public static final Item ROCKBONE_LEGS = ObjectHolder();
+	public static final Item ROCKBONE_CHESTPLATE = ObjectHolder();
+	public static final Item ROCKBONE_HELMET = ObjectHolder();
+
+	public static final Item ROSIDIAN_BOOTS = ObjectHolder();
+	public static final Item ROSIDIAN_LEGS = ObjectHolder();
+	public static final Item ROSIDIAN_CHESTPLATE = ObjectHolder();
+	public static final Item ROSIDIAN_HELMET = ObjectHolder();
+
+	public static final Item RUNATION_BOOTS = ObjectHolder();
+	public static final Item RUNATION_LEGS = ObjectHolder();
+	public static final Item RUNATION_CHESTPLATE = ObjectHolder();
+	public static final Item RUNATION_HELMET = ObjectHolder();
+
+	public static final Item RUNIC_BOOTS = ObjectHolder();
+	public static final Item RUNIC_LEGS = ObjectHolder();
+	public static final Item RUNIC_CHESTPLATE = ObjectHolder();
+	public static final Item RUNIC_HELMET = ObjectHolder();
+
+	public static final Item SHARPSHOT_BOOTS = ObjectHolder();
+	public static final Item SHARPSHOT_LEGS = ObjectHolder();
+	public static final Item SHARPSHOT_CHESTPLATE = ObjectHolder();
+	public static final Item SHARPSHOT_HELMET = ObjectHolder();
+
+	public static final Item SKELETAL_BOOTS = ObjectHolder();
+	public static final Item SKELETAL_LEGS = ObjectHolder();
+	public static final Item SKELETAL_CHESTPLATE = ObjectHolder();
+	public static final Item SKELETAL_HELMET = ObjectHolder();
+
+	public static final Item SPACEKING_BOOTS = ObjectHolder();
+	public static final Item SPACEKING_LEGS = ObjectHolder();
+	public static final Item SPACEKING_CHESTPLATE = ObjectHolder();
+	public static final Item SPACEKING_HELMET = ObjectHolder();
+
+	public static final Item SPEED_BOOTS = ObjectHolder();
+	public static final Item SPEED_LEGS = ObjectHolder();
+	public static final Item SPEED_CHESTPLATE = ObjectHolder();
+	public static final Item SPEED_HELMET = ObjectHolder();
+
+	public static final Item SUBTERRANEAN_BOOTS = ObjectHolder();
+	public static final Item SUBTERRANEAN_LEGS = ObjectHolder();
+	public static final Item SUBTERRANEAN_CHESTPLATE = ObjectHolder();
+	public static final Item SUBTERRANEAN_HELMET = ObjectHolder();
+
+	public static final Item UTOPIAN_BOOTS = ObjectHolder();
+	public static final Item UTOPIAN_LEGS = ObjectHolder();
+	public static final Item UTOPIAN_CHESTPLATE = ObjectHolder();
+	public static final Item UTOPIAN_HELMET = ObjectHolder();
+
+	public static final Item VOID_BOOTS = ObjectHolder();
+	public static final Item VOID_LEGS = ObjectHolder();
+	public static final Item VOID_CHESTPLATE = ObjectHolder();
+	public static final Item VOID_HELMET = ObjectHolder();
+
+	public static final Item WEAKEN_BOOTS = ObjectHolder();
+	public static final Item WEAKEN_LEGS = ObjectHolder();
+	public static final Item WEAKEN_CHESTPLATE = ObjectHolder();
+	public static final Item WEAKEN_HELMET = ObjectHolder();
+
+	public static final Item WITHER_BOOTS = ObjectHolder();
+	public static final Item WITHER_LEGS = ObjectHolder();
+	public static final Item WITHER_CHESTPLATE = ObjectHolder();
+	public static final Item WITHER_HELMET = ObjectHolder();
+
+	public static final Item ZARGONITE_BOOTS = ObjectHolder();
+	public static final Item ZARGONITE_LEGS = ObjectHolder();
+	public static final Item ZARGONITE_CHESTPLATE = ObjectHolder();
+	public static final Item ZARGONITE_HELMET = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerArmours(final RegistryEvent.Register<Item> ev) {
@@ -732,5 +472,11 @@ public class ArmourRegister {
 				this.boots = boot;
 			}
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

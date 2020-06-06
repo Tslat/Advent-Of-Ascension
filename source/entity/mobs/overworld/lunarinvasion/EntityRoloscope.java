@@ -51,17 +51,17 @@ public class EntityRoloscope extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRoloscopeLiving;
+		return SoundsRegister.MOB_ROLOSCOPE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRoloscopeDeath;
+		return SoundsRegister.MOB_ROLOSCOPE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRoloscopeHit;
+		return SoundsRegister.MOB_ROLOSCOPE_HIT;
 	}
 
 	@Nullable
@@ -71,20 +71,9 @@ public class EntityRoloscope extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity target) {
-		if (super.attackEntityAsMob(target)) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 64, 1, true, true));
-
-			return true;
-		}
-
-		return false;
+	protected void doMeleeEffect(Entity target) {
+		if (target instanceof EntityLivingBase)
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 64, 1, true, true));
 	}
 
 	@Override

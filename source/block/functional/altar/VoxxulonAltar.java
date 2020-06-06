@@ -25,6 +25,6 @@ public class VoxxulonAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.vileStone;
+		return ItemRegister.VILE_STONE;
 	}
 }

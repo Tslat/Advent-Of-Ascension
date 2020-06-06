@@ -25,6 +25,6 @@ public class SilverfootAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.silvroCoin;
+		return ItemRegister.SILVRO_COIN;
 	}
 }

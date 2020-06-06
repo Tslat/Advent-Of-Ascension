@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HauntedTree1 extends AoAStructure { //StructureSize: 7x16x7
-	private static final IBlockState hauntedLeaves = BlockRegister.leavesHaunted.getDefaultState();
-	private static final IBlockState hauntedLog = BlockRegister.logHaunted.getDefaultState();
-	private static final IBlockState hauntedEyesLeaves = BlockRegister.leavesHauntedEyes.getDefaultState();
-	private static final IBlockState hauntedFlashingFaceLog = BlockRegister.logHauntedFlashing.getDefaultState();
-	private static final IBlockState hauntedEyesLog = BlockRegister.logHauntedEyes.getDefaultState();
+	private static final IBlockState hauntedLeaves = BlockRegister.HAUNTED_LEAVES.getDefaultState();
+	private static final IBlockState hauntedLog = BlockRegister.HAUNTED_LOG.getDefaultState();
+	private static final IBlockState hauntedEyesLeaves = BlockRegister.HAUNTED_EYES_LEAVES.getDefaultState();
+	private static final IBlockState hauntedFlashingFaceLog = BlockRegister.HAUNTED_FLASHING_LOG.getDefaultState();
+	private static final IBlockState hauntedEyesLog = BlockRegister.HAUNTED_EYES_LOG.getDefaultState();
 
 	public HauntedTree1() {
 		super("HauntedTree1");

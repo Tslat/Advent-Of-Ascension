@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 @SideOnly(Side.CLIENT)
 public class RunicornRenderer extends RenderLiving<EntityRunicorn> {
 	public static final ModelCharger chargerModel = new ModelCharger();
-	public static final ResourceLocation chargerTexture = new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger.png");
+	public static final ResourceLocation chargerTexture = ModelCharger.getChargerTexture(chargerModel, null);
 
 	private final ResourceLocation texture;
 

@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DawnCage2 extends AoAStructure { //StructureSize: 3x11x11
-	private static final IBlockState dawnwoodPlanks = BlockRegister.planksDawnwood.getDefaultState();
-	private static final IBlockState dawnwoodBars = BlockRegister.plantDawnwoodBars.getDefaultState();
-	private static final IBlockState stone = BlockRegister.stoneDustopia.getDefaultState();
+	private static final IBlockState dawnwoodPlanks = BlockRegister.DAWNWOOD_PLANKS.getDefaultState();
+	private static final IBlockState dawnwoodBars = BlockRegister.DAWNWOOD_BARS.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DUSTOPIA_STONE.getDefaultState();
 
 	public DawnCage2() {
 		super("DawnCage2");

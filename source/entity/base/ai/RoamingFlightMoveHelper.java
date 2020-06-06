@@ -1,15 +1,15 @@
 package net.tslat.aoa3.entity.base.ai;
 
-import net.minecraft.entity.EntityFlying;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 
 public class RoamingFlightMoveHelper extends EntityMoveHelper {
-	private final EntityFlying taskOwner;
+	private final EntityLiving taskOwner;
 	private int courseChangeCooldown;
 
-	public RoamingFlightMoveHelper(EntityFlying creature) {
+	public RoamingFlightMoveHelper(EntityLiving creature) {
 		super(creature);
 		this.taskOwner = creature;
 	}
@@ -24,7 +24,7 @@ public class RoamingFlightMoveHelper extends EntityMoveHelper {
 
 			if (this.courseChangeCooldown-- <= 0) {
 				this.courseChangeCooldown += this.taskOwner.getRNG().nextInt(5) + 2;
-				distance = (double)MathHelper.sqrt(distance);
+				distance = MathHelper.sqrt(distance);
 
 				if (!this.doesPathCollide(this.posX, this.posY, this.posZ, distance)) {
 					this.taskOwner.motionX += distanceX / distance * 0.1D;

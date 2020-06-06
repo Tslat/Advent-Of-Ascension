@@ -53,19 +53,19 @@ public class EntityCrusilisk extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCrusiliskLiving;
+        return SoundsRegister.MOB_CRUSILISK_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCrusiliskDeath;
+        return SoundsRegister.MOB_CRUSILISK_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCrusiliskHit;
+        return SoundsRegister.MOB_CRUSILISK_HIT;
     }
 
     @Nullable
@@ -77,7 +77,7 @@ public class EntityCrusilisk extends AoAMeleeMob {
     @Override
     protected void doMeleeEffect(Entity target) {
         if (target instanceof EntityLivingBase) {
-            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 150, 30, true, false));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 150, 0, true, false));
 
             if (target instanceof EntityPlayerMP)
                 PacketUtil.network.sendTo(new PacketScreenOverlay(50, Enums.ScreenOverlays.BLOODY), (EntityPlayerMP)target);

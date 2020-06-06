@@ -15,7 +15,7 @@ public class FenceBlock extends BlockFence {
 		setHardness(2.0f);
 		setResistance(5.0f);
 		doMaterialCheck(material);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	public FenceBlock(String name, String registryName) {

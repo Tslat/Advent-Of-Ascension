@@ -64,19 +64,19 @@ public class EntityRockCrawler extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCaveBugLiving;
+        return SoundsRegister.MOB_CAVE_BUG_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCaveBugDeath;
+        return SoundsRegister.MOB_CAVE_BUG_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobCaveBugHit;
+        return SoundsRegister.MOB_CAVE_BUG_HIT;
     }
 
     @Override

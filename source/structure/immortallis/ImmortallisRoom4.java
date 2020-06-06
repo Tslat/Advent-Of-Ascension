@@ -11,15 +11,15 @@ import java.util.Random;
 public class ImmortallisRoom4 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState archaicGlass = BlockRegister.glassArchaic.getDefaultState();
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicStreamVertical = BlockRegister.archaicVerticalStream.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
-	private static final IBlockState progressor4 = BlockRegister.immortallisProgressor4.getDefaultState();
-	private static final IBlockState spawnerSkeledon = BlockRegister.spawnerSkeledon.getDefaultState();
-	private static final IBlockState spawnerSkelekyte = BlockRegister.spawnerSkelekyte.getDefaultState();
+	private static final IBlockState archaicGlass = BlockRegister.ARCHAIC_GLASS.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicStreamVertical = BlockRegister.ARCHAIC_STREAM_VERTICAL.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
+	private static final IBlockState progressor4 = BlockRegister.IMMORTALLIS_PROGRESSOR_4.getDefaultState();
+	private static final IBlockState spawnerSkeledon = BlockRegister.SKELEDON_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerSkelekyte = BlockRegister.SKELEKYTE_SPAWNER.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

@@ -71,22 +71,22 @@ public class EntityArkback extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobArkbackLiving;
+		return SoundsRegister.MOB_ARKBACK_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobArkbackDeath;
+		return SoundsRegister.MOB_ARKBACK_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobArkbackHit;
+		return SoundsRegister.MOB_ARKBACK_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

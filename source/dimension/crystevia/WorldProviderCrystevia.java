@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderCrystevia extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionCrystevia;
+		return DimensionRegister.DIM_CRYSTEVIA;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeCrystevia.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_CRYSTEVIA.getBiomeProvider(world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class WorldProviderCrystevia extends WorldProvider implements AoAWorldPro
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeCrystevia.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_CRYSTEVIA.getChunkGenerator(world, null);
 	}
 
 	@Override

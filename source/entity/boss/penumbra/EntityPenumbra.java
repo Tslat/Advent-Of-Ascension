@@ -60,19 +60,19 @@ public class EntityPenumbra extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPenumbraLiving;
+		return SoundsRegister.MOB_PENUMBRA_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPenumbraDeath;
+		return SoundsRegister.MOB_PENUMBRA_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPenumbraHit;
+		return SoundsRegister.MOB_PENUMBRA_HIT;
 	}
 
 	@Nullable
@@ -162,7 +162,7 @@ public class EntityPenumbra extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicPenumbra;
+		return SoundsRegister.PENUMBRA_MUSIC;
 	}
 
 	@Override

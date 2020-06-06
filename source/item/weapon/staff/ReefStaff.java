@@ -28,13 +28,13 @@ public class ReefStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffReef;
+		return SoundsRegister.REEF_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeEnergy, 2);
-		runes.put(ItemRegister.runeWater, 1);
+		runes.put(ItemRegister.ENERGY_RUNE, 2);
+		runes.put(ItemRegister.WATER_RUNE, 1);
 	}
 
 	@Nullable

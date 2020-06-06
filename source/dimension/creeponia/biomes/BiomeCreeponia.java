@@ -9,8 +9,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
-import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenCreepTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -54,15 +54,15 @@ public class BiomeCreeponia extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.ornamyte.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreOrnamyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ornamyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ornamyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(12) + 3, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.ORNAMYTE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ornamyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ornamyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.CREEP_STONE || block.getBlock() == BlockRegister.PRIMED_STONE || block.getBlock() == BlockRegister.UNSTABLE_STONE).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(12) + 3, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.gemenyte.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreGemenyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.gemenyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.gemenyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.GEMENYTE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.gemenyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.gemenyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.CREEP_STONE || block.getBlock() == BlockRegister.PRIMED_STONE || block.getBlock() == BlockRegister.UNSTABLE_STONE).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.jewelyte.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreJewelyte.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jewelyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jewelyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.stoneCreep || block.getBlock() == BlockRegister.stonePrimed || block.getBlock() == BlockRegister.stoneUnstable).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.JEWELYTE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jewelyte.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jewelyte.maxOresPerVein) + 1), block -> block.getBlock() == BlockRegister.CREEP_STONE || block.getBlock() == BlockRegister.PRIMED_STONE || block.getBlock() == BlockRegister.UNSTABLE_STONE).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(15) + 22, rand.nextInt(16)));
 			}
 		}
 
@@ -75,10 +75,10 @@ public class BiomeCreeponia extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
 					if (rand.nextBoolean()) {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCreepGrass.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CREEP_GRASS.getDefaultState());
 					}
 					else {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantCreepFlowers.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.CREEP_FLOWERS.getDefaultState());
 					}
 				}
 			}
@@ -87,56 +87,12 @@ public class BiomeCreeponia extends Biome {
 		@Override
 		protected void doTreeGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < 7; i++) {
-				switch (rand.nextInt(6)) {
-					case 0:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 2, posZ + 2);
+				posX = basePos.getX() + rand.nextInt(16);
+				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = world.getHeight(posX + 3, posZ + 3);
 
-						if (world.getBlockState(pos.setPos(posX + 2, posY - 1, posZ + 2)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree1", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 1:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree2", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 2:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree3", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 3:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree4", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 4:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree5", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 5:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("CreepTree6", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-				}
+				if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
+					new WorldGenCreepTree(null).generate(world, rand, pos.up());
 			}
 		}
 	}

@@ -61,17 +61,17 @@ public class EntityGhostlyBugeye extends AoAMeleeMob implements SpecialPropertyE
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBugeyeLiving;
+		return SoundsRegister.MOB_BUGEYE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBugeyeDeath;
+		return SoundsRegister.MOB_BUGEYE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBugeyeHit;
+		return SoundsRegister.MOB_BUGEYE_HIT;
 	}
 
 	@Nullable

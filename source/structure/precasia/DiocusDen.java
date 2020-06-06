@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DiocusDen extends AoAStructure { //StructureSize: 28x18x30
-	private static final IBlockState skeletalBricks = BlockRegister.bricksSkeletal.getDefaultState();
+	private static final IBlockState skeletalBricks = BlockRegister.SKELETAL_BRICKS.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
-	private static final IBlockState diocusSpawner = BlockRegister.spawnerDiocus.getDefaultState();
+	private static final IBlockState diocusSpawner = BlockRegister.DIOCUS_SPAWNER.getDefaultState();
 
 	public DiocusDen() {
 		super("DiocusDen");

@@ -29,14 +29,14 @@ public class WizardsStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeLife, 3);
-		runes.put(ItemRegister.runePower, 3);
-		runes.put(ItemRegister.runeDistortion, 3);
+		runes.put(ItemRegister.LIFE_RUNE, 3);
+		runes.put(ItemRegister.POWER_RUNE, 3);
+		runes.put(ItemRegister.DISTORTION_RUNE, 3);
 	}
 
 	@Override

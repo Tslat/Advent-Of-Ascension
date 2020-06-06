@@ -14,7 +14,7 @@ public class WorldTypePrecasia extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomePrecasia);
+		return new BiomeProviderSingle(BiomeRegister.PRECASIA);
 	}
 
 	@Override

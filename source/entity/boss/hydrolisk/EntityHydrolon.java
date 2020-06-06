@@ -71,19 +71,19 @@ public class EntityHydrolon extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCoralonLiving;
+		return SoundsRegister.MOB_CORALON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCoralonDeath;
+		return SoundsRegister.MOB_CORALON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCoralonHit;
+		return SoundsRegister.MOB_CORALON_HIT;
 	}
 
 	@Nullable
@@ -105,6 +105,6 @@ public class EntityHydrolon extends AoAMeleeMob {
 		super.onDeath(cause);
 
 		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lborean)
-			entityDropItem(new ItemStack(ItemRegister.hydroStone, 1), 0);
+			entityDropItem(new ItemStack(ItemRegister.HYDRO_STONE, 1), 0);
 	}
 }

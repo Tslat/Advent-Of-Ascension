@@ -23,7 +23,7 @@ public class ToyGyrocopter extends Item {
 	public ToyGyrocopter() {
 		setTranslationKey("ToyGyrocopter");
 		setRegistryName("aoa3:toy_gyrocopter");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 		setMaxStackSize(1);
 	}
 

@@ -28,7 +28,7 @@ public class EntityLunarcher extends AoAFlyingRangedMob implements SpecialProper
 
 		this.isImmuneToFire = true;
 		this.mobProperties.add(Enums.MobProperties.GUN_IMMUNE);
-		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.bowLunar));
+		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.LUNAR_BOW));
 	}
 
 	@Override
@@ -59,19 +59,19 @@ public class EntityLunarcher extends AoAFlyingRangedMob implements SpecialProper
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobLunarcherLiving;
+		return SoundsRegister.MOB_LUNARCHER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobLunarcherHit;
+		return SoundsRegister.MOB_LUNARCHER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobLunarcherHit;
+		return SoundsRegister.MOB_LUNARCHER_HIT;
 	}
 
 	@Nullable
@@ -98,7 +98,7 @@ public class EntityLunarcher extends AoAFlyingRangedMob implements SpecialProper
 
 	@Override
 	public void attackEntityWithRangedAttack(@Nonnull EntityLivingBase target, float bowDamageFactor) {
-		EntityHollyArrow projectile = new EntityHollyArrow(world, WeaponRegister.bowLunar, this, getBaseProjectileDamage());
+		EntityHollyArrow projectile = new EntityHollyArrow(world, WeaponRegister.LUNAR_BOW, this, getBaseProjectileDamage());
 
 		double distanceFactorX = target.posX - projectile.posX;
 		double distanceFactorY = target.getEntityBoundingBox().minY + (target.height / 3) - projectile.posY;

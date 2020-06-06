@@ -21,13 +21,13 @@ import javax.annotation.Nullable;
 public class WorldProviderIromine extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionIromine;
+		return DimensionRegister.DIM_IROMINE;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypeIromine.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_IROMINE.getBiomeProvider(world);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class WorldProviderIromine extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeIromine.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_IROMINE.getChunkGenerator(world, null);
 	}
 
 	@Override

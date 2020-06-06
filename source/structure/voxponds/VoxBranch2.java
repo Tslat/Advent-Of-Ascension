@@ -11,7 +11,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class VoxBranch2 extends AoAStructure { //StructureSize: 4x1x1
-	private static final IBlockState voxLog = BlockRegister.voxLog.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.EAST);
+	private static final IBlockState voxLog = BlockRegister.VOX_LOG.getDefaultState().withProperty(BlockDirectional.FACING, EnumFacing.EAST);
 
 	public VoxBranch2() {
 		super("VoxBranch2");

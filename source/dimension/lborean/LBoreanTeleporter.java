@@ -23,11 +23,11 @@ public class LBoreanTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalBorean;
+		return BlockRegister.BOREAN_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.coralPink;
+		return BlockRegister.PINK_CORAL;
 	}
 }

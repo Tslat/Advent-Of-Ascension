@@ -25,7 +25,7 @@ public class Grenade extends BaseThrownWeapon {
 		super(0.0f, 10);
 		setTranslationKey("Grenade");
 		setRegistryName("aoa3:grenade");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

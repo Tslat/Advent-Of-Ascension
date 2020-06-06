@@ -35,7 +35,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeBarathos;
+	private final Biome biome = BiomeRegister.BARATHOS;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -116,15 +116,15 @@ public class ChunkGenBarathos implements IChunkGenerator {
 			for (int z = 0; z <= 15; z++) {
 				for (int y = 29; y >= 0; y--) {
 					if (y <= 2) {
-						primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+						primer.setBlockState(x, y, z, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 					}
 					else {
 						if (y > 25) {
-							if (y < 25 + rand.nextInt(4) && primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
-								primer.setBlockState(x, y, z, BlockRegister.stoneBarathos.getDefaultState());
+							if (y < 25 + rand.nextInt(4) && primer.getBlockState(x, y, z).getBlock() == BlockRegister.BARON_STONE)
+								primer.setBlockState(x, y, z, BlockRegister.BARATHOS_HELLSTONE.getDefaultState());
 						}
-						else if (primer.getBlockState(x, y, z).getBlock() == BlockRegister.stoneBaron)
-							primer.setBlockState(x, y, z, BlockRegister.stoneBarathos.getDefaultState());
+						else if (primer.getBlockState(x, y, z).getBlock() == BlockRegister.BARON_STONE)
+							primer.setBlockState(x, y, z, BlockRegister.BARATHOS_HELLSTONE.getDefaultState());
 					}
 				}
 			}
@@ -264,10 +264,10 @@ public class ChunkGenBarathos implements IChunkGenerator {
 
 							for (int l2 = 0; l2 < 4; ++l2) {
 								if ((lvt_45_1_ += d16) > 0.0D) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.stoneBaron.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.BARON_STONE.getDefaultState());
 								}
 								else if (i2 * 8 + j2 < this.world.getSeaLevel()) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.baronGround.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.BARON_GROUND.getDefaultState());
 								}
 							}
 
@@ -309,8 +309,8 @@ public class ChunkGenBarathos implements IChunkGenerator {
 		int i1 = z & 15;
 
 		for (int j1 = 255; j1 >= 0; --j1) {
-			if (j1 <= 2) {
-				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.dimensionalFabric.getDefaultState());
+			if (j1 <= 0) {
+				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 			}
 			else {
 				IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
@@ -318,7 +318,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 				if (iblockstate2.getMaterial() == Material.AIR) {
 					j = -1;
 				}
-				else if (iblockstate2.getBlock() == BlockRegister.stoneBaron) {
+				else if (iblockstate2.getBlock() == BlockRegister.BARON_STONE) {
 					if (j == -1) {
 						if (k <= 0) {
 							topBlock = Blocks.AIR.getDefaultState();
@@ -334,7 +334,7 @@ public class ChunkGenBarathos implements IChunkGenerator {
 								topBlock = Blocks.WATER.getDefaultState();
 							}
 							else {
-								topBlock = BlockRegister.stoneBaron.getDefaultState();
+								topBlock = BlockRegister.BARON_STONE.getDefaultState();
 							}
 						}
 

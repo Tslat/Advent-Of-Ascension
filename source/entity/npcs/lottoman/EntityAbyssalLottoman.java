@@ -34,9 +34,9 @@ public class EntityAbyssalLottoman extends EntityLottoman {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensAbyss, 28), new ItemStack(ItemRegister.lottoTotem)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensAbyss, 15), new ItemStack(ItemRegister.weaponsCase)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensAbyss, 10), new ItemStack(ItemRegister.runeBox)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensAbyss, 21), new ItemStack(ItemRegister.treasureBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ABYSS_TOKENS, 28), new ItemStack(ItemRegister.LOTTO_TOTEM)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ABYSS_TOKENS, 15), new ItemStack(ItemRegister.WEAPONS_CASE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ABYSS_TOKENS, 10), new ItemStack(ItemRegister.RUNE_BOX)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ABYSS_TOKENS, 21), new ItemStack(ItemRegister.TREASURE_BOX)));
 	}
 }

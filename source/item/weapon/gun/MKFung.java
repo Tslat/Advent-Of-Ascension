@@ -7,7 +7,6 @@ import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityShroomBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
@@ -22,7 +21,7 @@ public class MKFung extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolver;
+		return SoundsRegister.REVOLVER_FIRE;
 	}
 
 	@Override

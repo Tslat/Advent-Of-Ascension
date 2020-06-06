@@ -61,12 +61,12 @@ public class EntityProfessor extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(ItemRegister.ingotLyon, 5), new ItemStack(ItemRegister.mechaGear, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 1), new ItemStack(Items.IRON_NUGGET, 5), new ItemStack(ItemRegister.dischargeCapsule, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 5), new ItemStack(ItemRegister.magnetShard, 2), new ItemStack(ItemRegister.silvroCoin, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 15), new ItemStack(ItemRegister.scrapMetal, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(BlockRegister.iroCrate, 1), new ItemStack(ItemRegister.goldSpring, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 5), new ItemStack(WeaponRegister.cannonMiniCannon, 1), new ItemStack(WeaponRegister.cannonSuperCannon, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 3), new ItemStack(ItemRegister.ingotLyon, 7), new ItemStack(WeaponRegister.shotgunDemolisher, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 1), new ItemStack(ItemRegister.LYON_INGOT, 5), new ItemStack(ItemRegister.MECHA_GEAR, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 1), new ItemStack(Items.IRON_NUGGET, 5), new ItemStack(ItemRegister.DISCHARGE_CAPSULE, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 5), new ItemStack(ItemRegister.MAGNET_SHARD, 2), new ItemStack(ItemRegister.SILVRO_COIN, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 15), new ItemStack(ItemRegister.SCRAP_METAL, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(BlockRegister.IRO_CRATE, 1), new ItemStack(ItemRegister.GOLD_SPRING, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 5), new ItemStack(WeaponRegister.MINI_CANNON, 1), new ItemStack(WeaponRegister.SUPER_CANNON, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 3), new ItemStack(ItemRegister.LYON_INGOT, 7), new ItemStack(WeaponRegister.DEMOLISHER, 1)));
 	}
 }

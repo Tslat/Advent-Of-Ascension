@@ -70,7 +70,7 @@ public class EntityPaladin extends AoAMeleeMob implements SpecialPropertyEntity 
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

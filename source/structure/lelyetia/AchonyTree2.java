@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AchonyTree2 extends AoAStructure { //StructureSize: 7x32x7
-	private static final IBlockState achonyLeaves = BlockRegister.leavesAchony.getDefaultState();
-	private static final IBlockState achonyLog = BlockRegister.logAchony.getDefaultState();
-	private static final IBlockState lelyetianLeaves = BlockRegister.leavesLelyetian.getDefaultState();
+	private static final IBlockState achonyLeaves = BlockRegister.ACHONY_LEAVES.getDefaultState();
+	private static final IBlockState achonyLog = BlockRegister.ACHONY_LOG.getDefaultState();
+	private static final IBlockState lelyetianLeaves = BlockRegister.LELYETIAN_LEAVES.getDefaultState();
 
 	public AchonyTree2() {
 		super("AchonyTree2");

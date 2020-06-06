@@ -14,7 +14,7 @@ public class WorldTypeAncientCavern extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeAncientCavern);
+		return new BiomeProviderSingle(BiomeRegister.ANCIENT_CAVERN);
 	}
 
 	@Override

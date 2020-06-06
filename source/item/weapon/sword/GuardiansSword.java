@@ -18,7 +18,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.interfaces.CapabilityBaseMiscStackSerializable;
 import net.tslat.aoa3.capabilities.providers.AdventMiscStackSerializeableProvider;
 import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
@@ -37,7 +36,7 @@ public class GuardiansSword extends BaseSword {
 		ItemStack heldStack = player.getHeldItem(hand);
 		CapabilityBaseMiscStackSerializable cap = heldStack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, null);
 
-		if (cap != null && cap.getValue() <= 0 && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.gemCrystallite))) {
+		if (cap != null && cap.getValue() <= 0 && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.CRYSTALLITE))) {
 			cap.setValue(world.getTotalWorldTime());
 
 			if (world instanceof WorldServer) {

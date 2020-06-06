@@ -63,24 +63,24 @@ public class EntityXxeus extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobXxeusLiving;
+		return SoundsRegister.MOB_XXEUS_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobXxeusDeath;
+		return SoundsRegister.MOB_XXEUS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobXxeusHit;
+		return SoundsRegister.MOB_XXEUS_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -120,7 +120,7 @@ public class EntityXxeus extends AoAMeleeMob implements BossEntity {
 				motionY = target.posY > posY ? 0.85 : 0.449;
 				motionZ = (target.posZ - posZ) * 0.165;
 
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobXxeusDash, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_XXEUS_DASH, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 		}
 	}

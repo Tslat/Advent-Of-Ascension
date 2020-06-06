@@ -69,19 +69,19 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVoxxulonLiving;
+		return SoundsRegister.MOB_VOXXULON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVoxxulonDeath;
+		return SoundsRegister.MOB_VOXXULON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVoxxulonHit;
+		return SoundsRegister.MOB_VOXXULON_HIT;
 	}
 
 	@Nullable
@@ -164,7 +164,7 @@ public class EntityVoxxulon extends AoAMeleeMob implements BossEntity, SpecialPr
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicVoxxulon;
+		return SoundsRegister.VOXXULON_MUSIC;
 	}
 
 	@Nonnull

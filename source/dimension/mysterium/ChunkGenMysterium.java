@@ -26,7 +26,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeMysterium;
+	private final Biome biome = BiomeRegister.MYSTERIUM;
 
 	private int x;
 	private int y;
@@ -58,9 +58,9 @@ public class ChunkGenMysterium implements IChunkGenerator {
 
 	private void setBlocksInChunk() {
 		boolean isHole = rand.nextInt(3) == 0;
-		IBlockState stone = BlockRegister.stoneMysterium.getDefaultState();
-		IBlockState dirt = BlockRegister.dirtMysterium.getDefaultState();
-		IBlockState grass = BlockRegister.grassMysterium.getDefaultState();
+		IBlockState stone = BlockRegister.MYSTERIUM_STONE.getDefaultState();
+		IBlockState dirt = BlockRegister.MYSTERIUM_DIRT.getDefaultState();
+		IBlockState grass = BlockRegister.MYSTERIUM_GRASS.getDefaultState();
 
 		if (isHole) {
 			setAllBlocksInRegion(0, 1, 0, 15, 10, 15, stone);
@@ -99,7 +99,7 @@ public class ChunkGenMysterium implements IChunkGenerator {
 			for (int y = 0; y <= 5; y++) {
 				for (int z = 0; z <= 15; z++) {
 					if (y <= 2)
-						primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+						primer.setBlockState(x, y, z, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 				}
 			}
 		}

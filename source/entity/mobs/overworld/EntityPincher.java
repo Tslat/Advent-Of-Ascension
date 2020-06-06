@@ -67,17 +67,17 @@ public class EntityPincher extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPincherLiving;
+		return SoundsRegister.MOB_PINCHER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPincherDeath;
+		return SoundsRegister.MOB_PINCHER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPincherHit;
+		return SoundsRegister.MOB_PINCHER_HIT;
 	}
 
 	@Nullable

@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderDeeplands extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionDeeplands;
+		return DimensionRegister.DIM_DEEPLANDS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeDeeplands.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_DEEPLANDS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class WorldProviderDeeplands extends WorldProvider implements AoAWorldPro
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeDeeplands.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_DEEPLANDS.getChunkGenerator(world, null);
 	}
 
 	@Override

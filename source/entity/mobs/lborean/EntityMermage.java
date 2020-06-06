@@ -65,19 +65,19 @@ public class EntityMermage extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMermageLiving;
+		return SoundsRegister.MOB_MERMAGE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMermageDeath;
+		return SoundsRegister.MOB_MERMAGE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMermageHit;
+		return SoundsRegister.MOB_MERMAGE_HIT;
 	}
 
 	@Nullable
@@ -97,7 +97,7 @@ public class EntityMermage extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotMermageFire;
+		return SoundsRegister.MERMAGE_SHOOT;
 	}
 
 	@Override

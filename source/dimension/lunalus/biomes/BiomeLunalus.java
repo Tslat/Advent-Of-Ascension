@@ -11,6 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
+import net.tslat.aoa3.worldgen.trees.WorldGenLuniciaTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenLunossoTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -58,12 +60,12 @@ public class BiomeLunalus extends Biome {
 					for (int y = 36; y <= 60; y++) {
 						Block bl = world.getBlockState(pos.setPos(basePos.getX() + x, y - 1, basePos.getZ() + z)).getBlock();
 
-						if (rand.nextInt(10) == 0 && (bl == BlockRegister.grassLunasole || bl == BlockRegister.grassLunalyte) && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
+						if (rand.nextInt(10) == 0 && (bl == BlockRegister.LUNASOLE_GRASS || bl == BlockRegister.LUNALYTE_GRASS) && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
 							if (rand.nextBoolean()) {
-								world.setBlockState(pos.up(), BlockRegister.plantLuntar.getDefaultState());
+								world.setBlockState(pos.up(), BlockRegister.LUNTAR.getDefaultState());
 							}
 							else {
-								world.setBlockState(pos.up(), BlockRegister.plantLunalip.getDefaultState());
+								world.setBlockState(pos.up(), BlockRegister.LUNALIP.getDefaultState());
 							}
 						}
 					}
@@ -75,12 +77,12 @@ public class BiomeLunalus extends Biome {
 					for (int y = 61; y <= 85; y++) {
 						Block bl = world.getBlockState(pos.setPos(basePos.getX() + x, y - 1, basePos.getZ() + z)).getBlock();
 
-						if (rand.nextInt(10) == 0 && (bl == BlockRegister.grassLunasole || bl == BlockRegister.grassLunalyte) && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
+						if (rand.nextInt(10) == 0 && (bl == BlockRegister.LUNASOLE_GRASS || bl == BlockRegister.LUNALYTE_GRASS) && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
 							if (rand.nextBoolean()) {
-								world.setBlockState(pos.up(), BlockRegister.plantLuntar.getDefaultState());
+								world.setBlockState(pos.up(), BlockRegister.LUNTAR.getDefaultState());
 							}
 							else {
-								world.setBlockState(pos.up(), BlockRegister.plantLunalip.getDefaultState());
+								world.setBlockState(pos.up(), BlockRegister.LUNALIP.getDefaultState());
 							}
 						}
 					}
@@ -101,25 +103,25 @@ public class BiomeLunalus extends Biome {
 
 							switch (rand.nextInt(4)) {
 								case 0:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 1, y - 1, basePos.getZ() + z + 1)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
+									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 1, y - 1, basePos.getZ() + z + 1)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
 										StructuresHandler.generateStructure("LunossoTree1", world, rand, pos.add(-1, 1, -1));
 										count++;
 									}
 									break;
 								case 1:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
+									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
 										StructuresHandler.generateStructure("LunossoTree2", world, rand, pos.add(-2, 1, -2));
 										count++;
 									}
 									break;
 								case 2:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
+									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
 										StructuresHandler.generateStructure("LuniciaTree1", world, rand, pos.add(-2, 1, -2));
 										count++;
 									}
 									break;
 								case 3:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
+									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
 										StructuresHandler.generateStructure("LuniciaTree2", world, rand, pos.add(-2, 1, -2));
 										count++;
 									}
@@ -142,31 +144,17 @@ public class BiomeLunalus extends Biome {
 						if (rand.nextInt(25) == 0) {
 							Block bl;
 
-							switch (rand.nextInt(4)) {
-								case 0:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 1, y - 1, basePos.getZ() + z + 1)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
-										StructuresHandler.generateStructure("LunossoTree1", world, rand, pos.add(-1, 1, -1));
-										count++;
-									}
-									break;
-								case 1:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
-										StructuresHandler.generateStructure("LunossoTree2", world, rand, pos.add(-2, 1, -2));
-										count++;
-									}
-									break;
-								case 2:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
-										StructuresHandler.generateStructure("LuniciaTree1", world, rand, pos.add(-2, 1, -2));
-										count++;
-									}
-									break;
-								case 3:
-									if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.grassLunalyte || bl == BlockRegister.grassLunasole) {
-										StructuresHandler.generateStructure("LuniciaTree2", world, rand, pos.add(-2, 1, -2));
-										count++;
-									}
-									break;
+							if (rand.nextBoolean()) {
+								if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
+									new WorldGenLunossoTree(null).generate(world, rand, pos.up());
+									count++;
+								}
+							}
+							else {
+								if ((bl = world.getBlockState(pos.setPos(basePos.getX() + x + 2, y - 1, basePos.getZ() + z + 2)).getBlock()) == BlockRegister.LUNALYTE_GRASS || bl == BlockRegister.LUNASOLE_GRASS) {
+									new WorldGenLuniciaTree(null).generate(world, rand, pos.up());
+									count++;
+								}
 							}
 
 							if (count == 2)

@@ -41,842 +41,430 @@ import static net.tslat.aoa3.common.registration.MaterialsRegister.*;
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder("aoa3")
 public class WeaponRegister {
-	@GameRegistry.ObjectHolder("amethyst_sword")
-	public static final BaseSword swordAmethyst = null;
-	@GameRegistry.ObjectHolder("baron_sword")
-	public static final BaseSword swordBaron = null;
-	@GameRegistry.ObjectHolder("bloodfury")
-	public static final BaseSword swordBloodfury = null;
-	@GameRegistry.ObjectHolder("bloodstone_sword")
-	public static final BaseSword swordBloodstone = null;
-	@GameRegistry.ObjectHolder("candlefire_sword")
-	public static final BaseSword swordCandlefire = null;
-	@GameRegistry.ObjectHolder("caramel_carver")
-	public static final BaseSword swordCaramelCarver = null;
-	@GameRegistry.ObjectHolder("coralstorm_sword")
-	public static final BaseSword swordCoralstorm = null;
-	@GameRegistry.ObjectHolder("creepified_sword")
-	public static final BaseSword swordCreepified = null;
-	@GameRegistry.ObjectHolder("crystallite_sword")
-	public static final BaseSword swordCrystallite = null;
-	@GameRegistry.ObjectHolder("emberstone_sword")
-	public static final BaseSword swordEmberstone = null;
-	@GameRegistry.ObjectHolder("explochron_sword")
-	public static final BaseSword swordExplochron = null;
-	@GameRegistry.ObjectHolder("fireborne_sword")
-	public static final BaseSword swordFireborne = null;
-	@GameRegistry.ObjectHolder("guardian_sword")
-	public static final BaseSword swordGuardians = null;
-	@GameRegistry.ObjectHolder("harvester_sword")
-	public static final BaseSword swordHarvester = null;
-	@GameRegistry.ObjectHolder("holy_sword")
-	public static final BaseSword swordHoly = null;
-	@GameRegistry.ObjectHolder("illusion_sword")
-	public static final BaseSword swordIllusion = null;
-	@GameRegistry.ObjectHolder("jade_sword")
-	public static final BaseSword swordJade = null;
-	@GameRegistry.ObjectHolder("legbone_sword")
-	public static final BaseSword swordLegbone = null;
-	@GameRegistry.ObjectHolder("lights_way")
-	public static final BaseSword swordLightsWay = null;
-	@GameRegistry.ObjectHolder("limonite_sword")
-	public static final BaseSword swordLimonite = null;
-	@GameRegistry.ObjectHolder("nethengeic_sword")
-	public static final BaseSword swordNethengeic = null;
-	@GameRegistry.ObjectHolder("primal_sword")
-	public static final BaseSword swordPrimal = null;
-	@GameRegistry.ObjectHolder("rockbasher_sword")
-	public static final BaseSword swordRockbasher = null;
-	@GameRegistry.ObjectHolder("rock_pick_sword")
-	public static final BaseSword swordRockPick = null;
-	@GameRegistry.ObjectHolder("rosidian_sword")
-	public static final BaseSword swordRosidian = null;
-	@GameRegistry.ObjectHolder("rosite_sword")
-	public static final BaseSword swordRosite = null;
-	@GameRegistry.ObjectHolder("runic_sword")
-	public static final BaseSword swordRunic = null;
-	@GameRegistry.ObjectHolder("sapphire_sword")
-	public static final BaseSword swordSapphire = null;
-	@GameRegistry.ObjectHolder("shadow_sword")
-	public static final BaseSword swordShadow = null;
-	@GameRegistry.ObjectHolder("shroomus_sword")
-	public static final BaseSword swordShroomus = null;
-	@GameRegistry.ObjectHolder("skeletal_sword")
-	public static final BaseSword swordSkeletal = null;
-	@GameRegistry.ObjectHolder("supremacy_sword")
-	public static final BaseSword swordSupremacy = null;
-	@GameRegistry.ObjectHolder("sweet_sword")
-	public static final BaseSword swordSweet = null;
-	@GameRegistry.ObjectHolder("troll_basher_axe")
-	public static final BaseSword swordTrollBasherAxe = null;
-	@GameRegistry.ObjectHolder("ultraflame")
-	public static final BaseSword swordUltraflame = null;
-	@GameRegistry.ObjectHolder("void_sword")
-	public static final BaseSword swordVoid = null;
+	public static final BaseSword AMETHYST_SWORD = ObjectHolder();
+	public static final BaseSword BARON_SWORD = ObjectHolder();
+	public static final BaseSword BLOODFURY = ObjectHolder();
+	public static final BaseSword BLOODSTONE_SWORD = ObjectHolder();
+	public static final BaseSword CANDLEFIRE_SWORD = ObjectHolder();
+	public static final BaseSword CARAMEL_CARVER = ObjectHolder();
+	public static final BaseSword CORALSTORM_SWORD = ObjectHolder();
+	public static final BaseSword CREEPIFIED_SWORD = ObjectHolder();
+	public static final BaseSword CRYSTALLITE_SWORD = ObjectHolder();
+	public static final BaseSword EMBERSTONE_SWORD = ObjectHolder();
+	public static final BaseSword EXPLOCHRON_SWORD = ObjectHolder();
+	public static final BaseSword FIREBORNE_SWORD = ObjectHolder();
+	public static final BaseSword GUARDIANS_SWORD = ObjectHolder();
+	public static final BaseSword HARVESTER_SWORD = ObjectHolder();
+	public static final BaseSword HOLY_SWORD = ObjectHolder();
+	public static final BaseSword ILLUSION_SWORD = ObjectHolder();
+	public static final BaseSword JADE_SWORD = ObjectHolder();
+	public static final BaseSword LEGBONE_SWORD = ObjectHolder();
+	public static final BaseSword LIGHTS_WAY = ObjectHolder();
+	public static final BaseSword LIMONITE_SWORD = ObjectHolder();
+	public static final BaseSword NETHENGEIC_SWORD = ObjectHolder();
+	public static final BaseSword PRIMAL_SWORD = ObjectHolder();
+	public static final BaseSword ROCKBASHER_SWORD = ObjectHolder();
+	public static final BaseSword ROCK_PICK_SWORD = ObjectHolder();
+	public static final BaseSword ROSIDIAN_SWORD = ObjectHolder();
+	public static final BaseSword ROSITE_SWORD = ObjectHolder();
+	public static final BaseSword RUNIC_SWORD = ObjectHolder();
+	public static final BaseSword SAPPHIRE_SWORD = ObjectHolder();
+	public static final BaseSword SHADOW_SWORD = ObjectHolder();
+	public static final BaseSword SHROOMUS_SWORD = ObjectHolder();
+	public static final BaseSword SKELETAL_SWORD = ObjectHolder();
+	public static final BaseSword SUPREMACY_SWORD = ObjectHolder();
+	public static final BaseSword SWEET_SWORD = ObjectHolder();
+	public static final BaseSword TROLL_BASHER_AXE = ObjectHolder();
+	public static final BaseSword ULTRAFLAME = ObjectHolder();
+	public static final BaseSword VOID_SWORD = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("baron_greatblade")
-	public static final BaseGreatblade greatbladeBaron = null;
-	@GameRegistry.ObjectHolder("bloodlurker")
-	public static final BaseGreatblade greatbladeBloodlurker = null;
-	@GameRegistry.ObjectHolder("candy_blade")
-	public static final BaseGreatblade greatbladeCandyBlade = null;
-	@GameRegistry.ObjectHolder("coral_greatblade")
-	public static final BaseGreatblade greatbladeCoral = null;
-	@GameRegistry.ObjectHolder("cotton_crusher")
-	public static final BaseGreatblade greatbladeCottonCrusher = null;
-	@GameRegistry.ObjectHolder("creepoid_greatblade")
-	public static final BaseGreatblade greatbladeCreepoid = null;
-	@GameRegistry.ObjectHolder("crystal_greatblade")
-	public static final BaseGreatblade greatbladeCrystal = null;
-	@GameRegistry.ObjectHolder("erebon_scythe")
-	public static final BaseGreatblade greatbladeErebonScythe = null;
-	@GameRegistry.ObjectHolder("gods_greatblade")
-	public static final BaseGreatblade greatbladeGodsGreatblade = null;
-	@GameRegistry.ObjectHolder("goofy_greatblade")
-	public static final BaseGreatblade greatbladeGoofy = null;
-	@GameRegistry.ObjectHolder("haunted_greatblade")
-	public static final BaseGreatblade greatbladeHaunted = null;
-	@GameRegistry.ObjectHolder("knights_guard")
-	public static final BaseGreatblade greatbladeKnightsGuard = null;
-	@GameRegistry.ObjectHolder("lelyetian_greatblade")
-	public static final BaseGreatblade greatbladeLelyetian = null;
-	@GameRegistry.ObjectHolder("lunar_greatblade")
-	public static final BaseGreatblade greatbladeLunar = null;
-	@GameRegistry.ObjectHolder("luxon_scythe")
-	public static final BaseGreatblade greatbladeLuxonScythe = null;
-	@GameRegistry.ObjectHolder("lyonic_greatblade")
-	public static final BaseGreatblade greatbladeLyonic = null;
-	@GameRegistry.ObjectHolder("millennium_greatblade")
-	public static final BaseGreatblade greatbladeMillennium = null;
-	@GameRegistry.ObjectHolder("noxious_greatblade")
-	public static final BaseGreatblade greatbladeNoxious = null;
-	@GameRegistry.ObjectHolder("pluton_scythe")
-	public static final BaseGreatblade greatbladePlutonScythe = null;
-	@GameRegistry.ObjectHolder("primordial_greatblade")
-	public static final BaseGreatblade greatbladePrimordial = null;
-	@GameRegistry.ObjectHolder("rosidian_greatblade")
-	public static final BaseGreatblade greatbladeRosidian = null;
-	@GameRegistry.ObjectHolder("royal_greatblade")
-	public static final BaseGreatblade greatbladeRoyal = null;
-	@GameRegistry.ObjectHolder("runic_greatblade")
-	public static final BaseGreatblade greatbladeRunic = null;
-	@GameRegistry.ObjectHolder("selyan_scythe")
-	public static final BaseGreatblade greatbladeSelyanScythe = null;
-	@GameRegistry.ObjectHolder("shroomic_greatblade")
-	public static final BaseGreatblade greatbladeShroomic = null;
-	@GameRegistry.ObjectHolder("shyre_sword")
-	public static final BaseGreatblade greatbladeShyreSword = null;
-	@GameRegistry.ObjectHolder("subterranean_greatblade")
-	public static final BaseGreatblade greatbladeSubterranean = null;
-	@GameRegistry.ObjectHolder("tidal_greatblade")
-	public static final BaseGreatblade greatbladeTidal = null;
-	@GameRegistry.ObjectHolder("underworld_greatblade")
-	public static final BaseGreatblade greatbladeUnderworld = null;
+	public static final BaseGreatblade BARON_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade BLOODLURKER = ObjectHolder();
+	public static final BaseGreatblade CANDY_BLADE = ObjectHolder();
+	public static final BaseGreatblade CORAL_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade COTTON_CRUSHER = ObjectHolder();
+	public static final BaseGreatblade CREEPOID_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade CRYSTAL_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade EREBON_SCYTHE = ObjectHolder();
+	public static final BaseGreatblade GODS_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade GOOFY_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade HAUNTED_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade KNIGHTS_GUARD = ObjectHolder();
+	public static final BaseGreatblade LELYETIAN_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade LUNAR_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade LUXON_SCYTHE = ObjectHolder();
+	public static final BaseGreatblade LYONIC_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade MILLENNIUM_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade NOXIOUS_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade PLUTON_SCYTHE = ObjectHolder();
+	public static final BaseGreatblade PRIMORDIAL_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade ROSIDIAN_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade ROYAL_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade RUNIC_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade SELYAN_SCYTHE = ObjectHolder();
+	public static final BaseGreatblade SHROOMIC_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade SHYRE_SWORD = ObjectHolder();
+	public static final BaseGreatblade SUBTERRANEAN_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade TIDAL_GREATBLADE = ObjectHolder();
+	public static final BaseGreatblade UNDERWORLD_GREATBLADE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("coralstone_maul")
-	public static final BaseMaul maulCoralstone = null;
-	@GameRegistry.ObjectHolder("crystal_maul")
-	public static final BaseMaul maulCrystal = null;
-	@GameRegistry.ObjectHolder("electron_maul")
-	public static final BaseMaul maulElectron = null;
-	@GameRegistry.ObjectHolder("horizon_maul")
-	public static final BaseMaul maulHorizon = null;
-	@GameRegistry.ObjectHolder("vulcammer_maul")
-	public static final BaseMaul maulVulcammer = null;
+	public static final BaseMaul CORALSTONE_MAUL = ObjectHolder();
+	public static final BaseMaul CRYSTAL_MAUL = ObjectHolder();
+	public static final BaseMaul ELECTRON_MAUL = ObjectHolder();
+	public static final BaseMaul HORIZON_MAUL = ObjectHolder();
+	public static final BaseMaul VULCAMMER_MAUL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abominator")
-	public static final BaseGun gunAbominator = null;
-	@GameRegistry.ObjectHolder("apoco_assault_rifle")
-	public static final BaseGun gunApocoAssaultRifle = null;
-	@GameRegistry.ObjectHolder("apoco_rifle")
-	public static final BaseGun gunApocoRifle = null;
-	@GameRegistry.ObjectHolder("aqua_magnum")
-	public static final BaseGun gunAquaMagnum = null;
-	@GameRegistry.ObjectHolder("artifact")
-	public static final BaseGun gunArtifact = null;
-	@GameRegistry.ObjectHolder("baronator")
-	public static final BaseGun gunBaronator = null;
-	@GameRegistry.ObjectHolder("bayonette_rifle")
-	public static final BaseGun gunBayonetteRifle = null;
-	@GameRegistry.ObjectHolder("big_top")
-	public static final BaseGun gunBigTop = null;
-	@GameRegistry.ObjectHolder("blood_iron")
-	public static final BaseGun gunBloodIron = null;
-	@GameRegistry.ObjectHolder("chain_wrecker")
-	public static final BaseGun gunChainWrecker = null;
-	@GameRegistry.ObjectHolder("chilli_chugger")
-	public static final BaseGun gunChilliChugger = null;
-	@GameRegistry.ObjectHolder("clownershot")
-	public static final BaseGun gunClownershot = null;
-	@GameRegistry.ObjectHolder("construct")
-	public static final BaseGun gunConstruct = null;
-	@GameRegistry.ObjectHolder("coral_clogger")
-	public static final BaseGun gunCoralClogger = null;
-	@GameRegistry.ObjectHolder("core_rifle")
-	public static final BaseGun gunCoreRifle = null;
-	@GameRegistry.ObjectHolder("crystal_carver")
-	public static final BaseGun gunCrystalCarver = null;
-	@GameRegistry.ObjectHolder("cyclone")
-	public static final BaseGun gunCyclone = null;
-	@GameRegistry.ObjectHolder("darkener")
-	public static final BaseGun gunDarkener = null;
-	@GameRegistry.ObjectHolder("dart_gun")
-	public static final BaseGun gunDartGun = null;
-	@GameRegistry.ObjectHolder("destruction_rifle")
-	public static final BaseGun gunDestructionRifle = null;
-	@GameRegistry.ObjectHolder("discharge_rifle")
-	public static final BaseGun gunDischargeRifle = null;
-	@GameRegistry.ObjectHolder("draco")
-	public static final BaseGun gunDraco = null;
-	@GameRegistry.ObjectHolder("dragilator")
-	public static final BaseGun gunDragilator = null;
-	@GameRegistry.ObjectHolder("dustometer")
-	public static final BaseGun gunDustometer = null;
-	@GameRegistry.ObjectHolder("echo_gull")
-	public static final BaseGun gunEchoGull = null;
-	@GameRegistry.ObjectHolder("electinator")
-	public static final BaseGun gunElectinator = null;
-	@GameRegistry.ObjectHolder("flame_wrecker")
-	public static final BaseGun gunFlameWrecker = null;
-	@GameRegistry.ObjectHolder("flaming_fury")
-	public static final BaseGun gunFlamingFury = null;
-	@GameRegistry.ObjectHolder("floro_rifle")
-	public static final BaseGun gunFloroRifle = null;
-	@GameRegistry.ObjectHolder("flowers_fury")
-	public static final BaseGun gunFlowersFury = null;
-	@GameRegistry.ObjectHolder("frosticator")
-	public static final BaseGun gunFrosticator = null;
-	@GameRegistry.ObjectHolder("gardener")
-	public static final BaseGun gunGardener = null;
-	@GameRegistry.ObjectHolder("gauge_rifle")
-	public static final BaseGun gunGaugeRifle = null;
-	@GameRegistry.ObjectHolder("germinator")
-	public static final BaseGun gunGerminator = null;
-	@GameRegistry.ObjectHolder("golden_fury")
-	public static final BaseGun gunGoldenFury = null;
-	@GameRegistry.ObjectHolder("happy_haunter")
-	public static final BaseGun gunHappyHaunter = null;
-	@GameRegistry.ObjectHolder("haunter_rifle")
-	public static final BaseGun gunHaunterRifle = null;
-	@GameRegistry.ObjectHolder("heat_wave")
-	public static final BaseGun gunHeatWave = null;
-	@GameRegistry.ObjectHolder("hiver")
-	public static final BaseGun gunHiver = null;
-	@GameRegistry.ObjectHolder("hot_shot")
-	public static final BaseGun gunHotShot = null;
-	@GameRegistry.ObjectHolder("hunters_rifle")
-	public static final BaseGun gunHuntersRifle = null;
-	@GameRegistry.ObjectHolder("iominator")
-	public static final BaseGun gunIominator = null;
-	@GameRegistry.ObjectHolder("ion_revolver")
-	public static final BaseGun gunIonRevolver = null;
-	@GameRegistry.ObjectHolder("iro_rifle")
-	public static final BaseGun gunIroRifle = null;
-	@GameRegistry.ObjectHolder("krilinator")
-	public static final BaseGun gunKrilinator = null;
-	@GameRegistry.ObjectHolder("light_iron")
-	public static final BaseGun gunLightIron = null;
-	@GameRegistry.ObjectHolder("lunar_assault_rifle")
-	public static final BaseGun gunLunarAssaultRifle = null;
-	@GameRegistry.ObjectHolder("mechanical_assault_rifle")
-	public static final BaseGun gunMechanicalAssaultRifle = null;
-	@GameRegistry.ObjectHolder("megagun")
-	public static final BaseGun gunMegagun = null;
-	@GameRegistry.ObjectHolder("miasma")
-	public static final BaseGun gunMiasma = null;
-	@GameRegistry.ObjectHolder("minigun")
-	public static final BaseGun gunMinigun = null;
-	@GameRegistry.ObjectHolder("mint_magnum")
-	public static final BaseGun gunMintMagnum = null;
-	@GameRegistry.ObjectHolder("mk")
-	public static final BaseGun gunMK = null;
-	@GameRegistry.ObjectHolder("mk_fung")
-	public static final BaseGun gunMKFung = null;
-	@GameRegistry.ObjectHolder("nethenette_rifle")
-	public static final BaseGun gunNethenetteRifle = null;
-	@GameRegistry.ObjectHolder("nethengeic_slugger")
-	public static final BaseGun gunNethengeicSlugger = null;
-	@GameRegistry.ObjectHolder("overshot")
-	public static final BaseGun gunOvershot = null;
-	@GameRegistry.ObjectHolder("precasian_slugger")
-	public static final BaseGun gunPrecasianSlugger = null;
-	@GameRegistry.ObjectHolder("predator")
-	public static final BaseGun gunPredator = null;
-	@GameRegistry.ObjectHolder("predigun")
-	public static final BaseGun gunPredigun = null;
-	@GameRegistry.ObjectHolder("pulsator")
-	public static final BaseGun gunPulsator = null;
-	@GameRegistry.ObjectHolder("purity_rifle")
-	public static final BaseGun gunPurityRifle = null;
-	@GameRegistry.ObjectHolder("rocker_rifle")
-	public static final BaseGun gunRockerRifle = null;
-	@GameRegistry.ObjectHolder("roulette")
-	public static final BaseGun gunRoulette = null;
-	@GameRegistry.ObjectHolder("shoe_flinger")
-	public static final BaseGun gunShoeFlinger = null;
-	@GameRegistry.ObjectHolder("skullette")
-	public static final BaseGun gunSkullette = null;
-	@GameRegistry.ObjectHolder("skullifact")
-	public static final BaseGun gunSkullifact = null;
-	@GameRegistry.ObjectHolder("spectacle")
-	public static final BaseGun gunSpectacle = null;
-	@GameRegistry.ObjectHolder("spine_gun")
-	public static final BaseGun gunSpineGun = null;
-	@GameRegistry.ObjectHolder("squad_gun")
-	public static final BaseGun gunSquadGun = null;
-	@GameRegistry.ObjectHolder("stampede")
-	public static final BaseGun gunStampede = null;
-	@GameRegistry.ObjectHolder("stormer")
-	public static final BaseGun gunStormer = null;
-	@GameRegistry.ObjectHolder("sublimus")
-	public static final BaseGun gunSublimus = null;
-	@GameRegistry.ObjectHolder("tiger_tommy")
-	public static final BaseGun gunTigerTommy = null;
-	@GameRegistry.ObjectHolder("tommy")
-	public static final BaseGun gunTommy = null;
-	@GameRegistry.ObjectHolder("vile_vanquisher")
-	public static final BaseGun gunVileVanquisher = null;
-	@GameRegistry.ObjectHolder("wart_gun")
-	public static final BaseGun gunWartGun = null;
-	@GameRegistry.ObjectHolder("wrecker")
-	public static final BaseGun gunWrecker = null;
+	public static final BaseGun ABOMINATOR = ObjectHolder();
+	public static final BaseGun APOCO_ASSAULT_RIFLE = ObjectHolder();
+	public static final BaseGun APOCO_RIFLE = ObjectHolder();
+	public static final BaseGun AQUA_MAGNUM = ObjectHolder();
+	public static final BaseGun ARTIFACT = ObjectHolder();
+	public static final BaseGun BARONATOR = ObjectHolder();
+	public static final BaseGun BAYONETTE_RIFLE = ObjectHolder();
+	public static final BaseGun BIG_TOP = ObjectHolder();
+	public static final BaseGun BLOOD_IRON = ObjectHolder();
+	public static final BaseGun CHAIN_WRECKER = ObjectHolder();
+	public static final BaseGun CHILLI_CHUGGER = ObjectHolder();
+	public static final BaseGun CLOWNERSHOT = ObjectHolder();
+	public static final BaseGun CONSTRUCT = ObjectHolder();
+	public static final BaseGun CORAL_CLOGGER = ObjectHolder();
+	public static final BaseGun CORE_RIFLE = ObjectHolder();
+	public static final BaseGun CRYSTAL_CARVER = ObjectHolder();
+	public static final BaseGun CYCLONE = ObjectHolder();
+	public static final BaseGun DARKENER = ObjectHolder();
+	public static final BaseGun DART_GUN = ObjectHolder();
+	public static final BaseGun DESTRUCTION_RIFLE = ObjectHolder();
+	public static final BaseGun DISCHARGE_RIFLE = ObjectHolder();
+	public static final BaseGun DRACO = ObjectHolder();
+	public static final BaseGun DRAGILATOR = ObjectHolder();
+	public static final BaseGun DUSTOMETER = ObjectHolder();
+	public static final BaseGun ECHO_GULL = ObjectHolder();
+	public static final BaseGun ELECTINATOR = ObjectHolder();
+	public static final BaseGun FLAME_WRECKER = ObjectHolder();
+	public static final BaseGun FLAMING_FURY = ObjectHolder();
+	public static final BaseGun FLORO_RIFLE = ObjectHolder();
+	public static final BaseGun FLOWERS_FURY = ObjectHolder();
+	public static final BaseGun FROSTICATOR = ObjectHolder();
+	public static final BaseGun GARDENER = ObjectHolder();
+	public static final BaseGun GAUGE_RIFLE = ObjectHolder();
+	public static final BaseGun GERMINATOR = ObjectHolder();
+	public static final BaseGun GOLDEN_FURY = ObjectHolder();
+	public static final BaseGun HAPPY_HAUNTER = ObjectHolder();
+	public static final BaseGun HAUNTER_RIFLE = ObjectHolder();
+	public static final BaseGun HEAT_WAVE = ObjectHolder();
+	public static final BaseGun HIVER = ObjectHolder();
+	public static final BaseGun HOT_SHOT = ObjectHolder();
+	public static final BaseGun HUNTERS_RIFLE = ObjectHolder();
+	public static final BaseGun IOMINATOR = ObjectHolder();
+	public static final BaseGun ION_REVOLVER = ObjectHolder();
+	public static final BaseGun IRO_RIFLE = ObjectHolder();
+	public static final BaseGun KRILINATOR = ObjectHolder();
+	public static final BaseGun LIGHT_IRON = ObjectHolder();
+	public static final BaseGun LUNAR_ASSAULT_RIFLE = ObjectHolder();
+	public static final BaseGun MECHANICAL_ASSAULT_RIFLE = ObjectHolder();
+	public static final BaseGun MEGAGUN = ObjectHolder();
+	public static final BaseGun MIASMA = ObjectHolder();
+	public static final BaseGun MINIGUN = ObjectHolder();
+	public static final BaseGun MINT_MAGNUM = ObjectHolder();
+	public static final BaseGun MK = ObjectHolder();
+	public static final BaseGun MK_FUNG = ObjectHolder();
+	public static final BaseGun NETHENETTE_RIFLE = ObjectHolder();
+	public static final BaseGun NETHENGEIC_SLUGGER = ObjectHolder();
+	public static final BaseGun OVERSHOT = ObjectHolder();
+	public static final BaseGun PRECASIAN_SLUGGER = ObjectHolder();
+	public static final BaseGun PREDATOR = ObjectHolder();
+	public static final BaseGun PREDIGUN = ObjectHolder();
+	public static final BaseGun PULSATOR = ObjectHolder();
+	public static final BaseGun PURITY_RIFLE = ObjectHolder();
+	public static final BaseGun ROCKER_RIFLE = ObjectHolder();
+	public static final BaseGun ROULETTE = ObjectHolder();
+	public static final BaseGun SHOE_FLINGER = ObjectHolder();
+	public static final BaseGun SKULLETTE = ObjectHolder();
+	public static final BaseGun SKULLIFACT = ObjectHolder();
+	public static final BaseGun SPECTACLE = ObjectHolder();
+	public static final BaseGun SPINE_GUN = ObjectHolder();
+	public static final BaseGun SQUAD_GUN = ObjectHolder();
+	public static final BaseGun STAMPEDE = ObjectHolder();
+	public static final BaseGun STORMER = ObjectHolder();
+	public static final BaseGun SUBLIMUS = ObjectHolder();
+	public static final BaseGun TIGER_TOMMY = ObjectHolder();
+	public static final BaseGun TOMMY = ObjectHolder();
+	public static final BaseGun VILE_VANQUISHER = ObjectHolder();
+	public static final BaseGun WART_GUN = ObjectHolder();
+	public static final BaseGun WRECKER = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyssro")
-	public static final BaseShotgun shotgunAbyssro = null;
-	@GameRegistry.ObjectHolder("amplifier")
-	public static final BaseShotgun shotgunAmplifier = null;
-	@GameRegistry.ObjectHolder("blast_barrel")
-	public static final BaseShotgun shotgunBlastBarrel = null;
-	@GameRegistry.ObjectHolder("blue_barrel")
-	public static final BaseShotgun shotgunBlueBarrel = null;
-	@GameRegistry.ObjectHolder("boulder")
-	public static final BaseShotgun shotgunBoulder = null;
-	@GameRegistry.ObjectHolder("brown_blaster")
-	public static final BaseShotgun shotgunBrownBlaster = null;
-	@GameRegistry.ObjectHolder("demolisher")
-	public static final BaseShotgun shotgunDemolisher = null;
-	@GameRegistry.ObjectHolder("destruction_shotgun")
-	public static final BaseShotgun shotgunDestructionShotgun = null;
-	@GameRegistry.ObjectHolder("discharge_shotgun")
-	public static final BaseShotgun shotgunDischargeShotgun = null;
-	@GameRegistry.ObjectHolder("gimmick")
-	public static final BaseShotgun shotgunGimmick = null;
-	@GameRegistry.ObjectHolder("ginger_blaster")
-	public static final BaseShotgun shotgunGingerBlaster = null;
-	@GameRegistry.ObjectHolder("longshot")
-	public static final BaseShotgun shotgunLongshot = null;
-	@GameRegistry.ObjectHolder("mechyro")
-	public static final BaseShotgun shotgunMechyro = null;
-	@GameRegistry.ObjectHolder("purity_shotgun")
-	public static final BaseShotgun shotgunPurityShotgun = null;
-	@GameRegistry.ObjectHolder("purple_punisher")
-	public static final BaseShotgun shotgunPurplePunisher = null;
-	@GameRegistry.ObjectHolder("red_rocket")
-	public static final BaseShotgun shotgunRedRocket = null;
-	@GameRegistry.ObjectHolder("vivo")
-	public static final BaseShotgun shotgunVivo = null;
+	public static final BaseShotgun ABYSSRO = ObjectHolder();
+	public static final BaseShotgun AMPLIFIER = ObjectHolder();
+	public static final BaseShotgun BLAST_BARREL = ObjectHolder();
+	public static final BaseShotgun BLUE_BARREL = ObjectHolder();
+	public static final BaseShotgun BOULDER = ObjectHolder();
+	public static final BaseShotgun BROWN_BLASTER = ObjectHolder();
+	public static final BaseShotgun DEMOLISHER = ObjectHolder();
+	public static final BaseShotgun DESTRUCTION_SHOTGUN = ObjectHolder();
+	public static final BaseShotgun DISCHARGE_SHOTGUN = ObjectHolder();
+	public static final BaseShotgun GIMMICK = ObjectHolder();
+	public static final BaseShotgun GINGER_BLASTER = ObjectHolder();
+	public static final BaseShotgun LONG_SHOT = ObjectHolder();
+	public static final BaseShotgun MECHYRO = ObjectHolder();
+	public static final BaseShotgun PURITY_SHOTGUN = ObjectHolder();
+	public static final BaseShotgun PURPLE_PUNISHER = ObjectHolder();
+	public static final BaseShotgun RED_ROCKET = ObjectHolder();
+	public static final BaseShotgun VIVO = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("baron_ssr")
-	public static final BaseSniper sniperBaronSSR = null;
-	@GameRegistry.ObjectHolder("bayonette_sr")
-	public static final BaseSniper sniperBayonetteSR = null;
-	@GameRegistry.ObjectHolder("bolt_rifle")
-	public static final BaseSniper sniperBoltRifle = null;
-	@GameRegistry.ObjectHolder("camo_rifle")
-	public static final BaseSniper sniperCamoRifle = null;
-	@GameRegistry.ObjectHolder("clown_cracker")
-	public static final BaseSniper sniperClownCracker = null;
-	@GameRegistry.ObjectHolder("clownimator")
-	public static final BaseSniper sniperClownimator = null;
-	@GameRegistry.ObjectHolder("crystaneer")
-	public static final BaseSniper sniperCrystaneer = null;
-	@GameRegistry.ObjectHolder("dark_beast")
-	public static final BaseSniper sniperDarkBeast = null;
-	@GameRegistry.ObjectHolder("deadlock")
-	public static final BaseSniper sniperDeadlock = null;
-	@GameRegistry.ObjectHolder("decimator")
-	public static final BaseSniper sniperDecimator = null;
-	@GameRegistry.ObjectHolder("discharge_sniper")
-	public static final BaseSniper sniperDischargeSniper = null;
-	@GameRegistry.ObjectHolder("dual_sight")
-	public static final BaseSniper sniperDualSight = null;
-	@GameRegistry.ObjectHolder("duster")
-	public static final BaseSniper sniperDuster = null;
-	@GameRegistry.ObjectHolder("floro_500")
-	public static final BaseSniper sniperFloro500 = null;
-	@GameRegistry.ObjectHolder("head_hunter")
-	public static final BaseSniper sniperHeadHunter = null;
-	@GameRegistry.ObjectHolder("hive_cracker")
-	public static final BaseSniper sniperHiveCracker = null;
-	@GameRegistry.ObjectHolder("ka_500")
-	public static final BaseSniper sniperKa500 = null;
-	@GameRegistry.ObjectHolder("mark_maker")
-	public static final BaseSniper sniperMarkMaker = null;
-	@GameRegistry.ObjectHolder("mineral")
-	public static final BaseSniper sniperMineral = null;
-	@GameRegistry.ObjectHolder("monster")
-	public static final BaseSniper sniperMonster = null;
-	@GameRegistry.ObjectHolder("moon_maker")
-	public static final BaseSniper sniperMoonMaker = null;
-	@GameRegistry.ObjectHolder("rosid_rifle")
-	public static final BaseSniper sniperRosidRifle = null;
-	@GameRegistry.ObjectHolder("sabbath")
-	public static final BaseSniper sniperSabbath = null;
-	@GameRegistry.ObjectHolder("sludge_sniper")
-	public static final BaseSniper sniperSludgeSniper = null;
-	@GameRegistry.ObjectHolder("sweet_tooth")
-	public static final BaseSniper sniperSweetTooth = null;
-	@GameRegistry.ObjectHolder("terminator")
-	public static final BaseSniper sniperTerminator = null;
-	@GameRegistry.ObjectHolder("viper1")
-	public static final BaseSniper sniperViper1 = null;
+	public static final BaseSniper BARON_SSR = ObjectHolder();
+	public static final BaseSniper BAYONETTE_SR = ObjectHolder();
+	public static final BaseSniper BOLT_RIFLE = ObjectHolder();
+	public static final BaseSniper CAMO_RIFLE = ObjectHolder();
+	public static final BaseSniper CLOWN_CRACKER = ObjectHolder();
+	public static final BaseSniper CLOWNIMATOR = ObjectHolder();
+	public static final BaseSniper CRYSTANEER = ObjectHolder();
+	public static final BaseSniper DARK_BEAST = ObjectHolder();
+	public static final BaseSniper DEADLOCK = ObjectHolder();
+	public static final BaseSniper DECIMATOR = ObjectHolder();
+	public static final BaseSniper DISCHARGE_SNIPER = ObjectHolder();
+	public static final BaseSniper DUAL_SIGHT = ObjectHolder();
+	public static final BaseSniper DUSTER = ObjectHolder();
+	public static final BaseSniper FLORO500 = ObjectHolder();
+	public static final BaseSniper HEAD_HUNTER = ObjectHolder();
+	public static final BaseSniper HIVE_CRACKER = ObjectHolder();
+	public static final BaseSniper KA500 = ObjectHolder();
+	public static final BaseSniper MARK_MAKER = ObjectHolder();
+	public static final BaseSniper MINERAL = ObjectHolder();
+	public static final BaseSniper MONSTER = ObjectHolder();
+	public static final BaseSniper MOON_MAKER = ObjectHolder();
+	public static final BaseSniper ROSID_RIFLE = ObjectHolder();
+	public static final BaseSniper SABBATH = ObjectHolder();
+	public static final BaseSniper SLUDGE_SNIPER = ObjectHolder();
+	public static final BaseSniper SWEET_TOOTH = ObjectHolder();
+	public static final BaseSniper TERMINATOR = ObjectHolder();
+	public static final BaseSniper VIPER1 = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_bomber")
-	public static final BaseCannon cannonAncientBomber = null;
-	@GameRegistry.ObjectHolder("ancient_discharger")
-	public static final BaseCannon cannonAncientDischarger = null;
-	@GameRegistry.ObjectHolder("aqua_cannon")
-	public static final BaseCannon cannonAquaCannon = null;
-	@GameRegistry.ObjectHolder("balloon_bomber")
-	public static final BaseCannon cannonBalloonBomber = null;
-	@GameRegistry.ObjectHolder("big_blast")
-	public static final BaseCannon cannonBigBlast = null;
-	@GameRegistry.ObjectHolder("blast_cannon")
-	public static final BaseCannon cannonBlastCannon = null;
-	@GameRegistry.ObjectHolder("blissful_blast")
-	public static final BaseCannon cannonBlissfulBlast = null;
-	@GameRegistry.ObjectHolder("bomb_launcher")
-	public static final BaseCannon cannonBombLauncher = null;
-	@GameRegistry.ObjectHolder("boom_boom")
-	public static final BaseCannon cannonBoomBoom = null;
-	@GameRegistry.ObjectHolder("boom_cannon")
-	public static final BaseCannon cannonBoomCannon = null;
-	@GameRegistry.ObjectHolder("boulder_bomber")
-	public static final BaseCannon cannonBoulderBomber = null;
-	@GameRegistry.ObjectHolder("bozo_blaster")
-	public static final BaseCannon cannonBozoBlaster = null;
-	@GameRegistry.ObjectHolder("bulb_cannon")
-	public static final BaseCannon cannonBulbCannon = null;
-	@GameRegistry.ObjectHolder("carrot_cannon")
-	public static final BaseCannon cannonCarrotCannon = null;
-	@GameRegistry.ObjectHolder("clown_cannon")
-	public static final BaseCannon cannonClownCannon = null;
-	@GameRegistry.ObjectHolder("clowno_pulse")
-	public static final BaseCannon cannonClownoPulse = null;
-	@GameRegistry.ObjectHolder("coral_cannon")
-	public static final BaseCannon cannonCoralCannon = null;
-	@GameRegistry.ObjectHolder("discharge_cannon")
-	public static final BaseCannon cannonDischargeCannon = null;
-	@GameRegistry.ObjectHolder("energy_cannon")
-	public static final BaseCannon cannonEnergyCannon = null;
-	@GameRegistry.ObjectHolder("erebon_stickler")
-	public static final BaseCannon cannonErebonStickler = null;
-	@GameRegistry.ObjectHolder("floro_rpg")
-	public static final BaseCannon cannonFloroRPG = null;
-	@GameRegistry.ObjectHolder("flower_cannon")
-	public static final BaseCannon cannonFlowerCannon = null;
-	@GameRegistry.ObjectHolder("fungal_cannon")
-	public static final BaseCannon cannonFungalCannon = null;
-	@GameRegistry.ObjectHolder("ghast_blaster")
-	public static final BaseCannon cannonGhastBlaster = null;
-	@GameRegistry.ObjectHolder("ghoul_cannon")
-	public static final BaseCannon cannonGhoulCannon = null;
-	@GameRegistry.ObjectHolder("giga_cannon")
-	public static final BaseCannon cannonGigaCannon = null;
-	@GameRegistry.ObjectHolder("golder_bomber")
-	public static final BaseCannon cannonGolderBomber = null;
-	@GameRegistry.ObjectHolder("hive_blaster")
-	public static final BaseCannon cannonHiveBlaster = null;
-	@GameRegistry.ObjectHolder("hive_howitzer")
-	public static final BaseCannon cannonHiveHowitzer = null;
-	@GameRegistry.ObjectHolder("iro_cannon")
-	public static final BaseCannon cannonIroCannon = null;
-	@GameRegistry.ObjectHolder("jack_funger")
-	public static final BaseCannon cannonJackFunger = null;
-	@GameRegistry.ObjectHolder("jack_rocker")
-	public static final BaseCannon cannonJackRocker = null;
-	@GameRegistry.ObjectHolder("luxon_sticker")
-	public static final BaseCannon cannonLuxonStickler = null;
-	@GameRegistry.ObjectHolder("mecha_cannon")
-	public static final BaseCannon cannonMechaCannon = null;
-	@GameRegistry.ObjectHolder("mini_cannon")
-	public static final BaseCannon cannonMiniCannon = null;
-	@GameRegistry.ObjectHolder("missile_maker")
-	public static final BaseCannon cannonMissileMaker = null;
-	@GameRegistry.ObjectHolder("moon_cannon")
-	public static final BaseCannon cannonMoonCannon = null;
-	@GameRegistry.ObjectHolder("pluton_stickler")
-	public static final BaseCannon cannonPlutonStickler = null;
-	@GameRegistry.ObjectHolder("predatorian_blaster")
-	public static final BaseCannon cannonPredatorianBlaster = null;
-	@GameRegistry.ObjectHolder("pulse_cannon")
-	public static final BaseCannon cannonPulseCannon = null;
-	@GameRegistry.ObjectHolder("rpg")
-	public static final BaseCannon cannonRPG = null;
-	@GameRegistry.ObjectHolder("selyan_stickler")
-	public static final BaseCannon cannonSelyanStickler = null;
-	@GameRegistry.ObjectHolder("shadow_blaster")
-	public static final BaseCannon cannonShadowBlaster = null;
-	@GameRegistry.ObjectHolder("shyre_blaster")
-	public static final BaseCannon cannonShyreBlaster = null;
-	@GameRegistry.ObjectHolder("smile_blaster")
-	public static final BaseCannon cannonSmileBlaster = null;
-	@GameRegistry.ObjectHolder("super_cannon")
-	public static final BaseCannon cannonSuperCannon = null;
-	@GameRegistry.ObjectHolder("ultra_cannon")
-	public static final BaseCannon cannonUltraCannon = null;
-	@GameRegistry.ObjectHolder("vox_cannon")
-	public static final BaseCannon cannonVoxCannon = null;
-	@GameRegistry.ObjectHolder("water_balloon_bomber")
-	public static final BaseCannon cannonWaterBalloonBomber = null;
-	@GameRegistry.ObjectHolder("wither_cannon")
-	public static final BaseCannon cannonWitherCannon = null;
+	public static final BaseCannon ANCIENT_BOMBER = ObjectHolder();
+	public static final BaseCannon ANCIENT_DISCHARGER = ObjectHolder();
+	public static final BaseCannon AQUA_CANNON = ObjectHolder();
+	public static final BaseCannon BALLOON_BOMBER = ObjectHolder();
+	public static final BaseCannon BIG_BLAST = ObjectHolder();
+	public static final BaseCannon BLAST_CANNON = ObjectHolder();
+	public static final BaseCannon BLISSFUL_BLAST = ObjectHolder();
+	public static final BaseCannon BOMB_LAUNCHER = ObjectHolder();
+	public static final BaseCannon BOOM_BOOM = ObjectHolder();
+	public static final BaseCannon BOOM_CANNON = ObjectHolder();
+	public static final BaseCannon BOULDER_BOMBER = ObjectHolder();
+	public static final BaseCannon BOZO_BLASTER = ObjectHolder();
+	public static final BaseCannon BULB_CANNON = ObjectHolder();
+	public static final BaseCannon CARROT_CANNON = ObjectHolder();
+	public static final BaseCannon CLOWN_CANNON = ObjectHolder();
+	public static final BaseCannon CLOWNO_PULSE = ObjectHolder();
+	public static final BaseCannon CORAL_CANNON = ObjectHolder();
+	public static final BaseCannon DISCHARGE_CANNON = ObjectHolder();
+	public static final BaseCannon ENERGY_CANNON = ObjectHolder();
+	public static final BaseCannon EREBON_STICKLER = ObjectHolder();
+	public static final BaseCannon FLORO_RPG = ObjectHolder();
+	public static final BaseCannon FLOWER_CANNON = ObjectHolder();
+	public static final BaseCannon FUNGAL_CANNON = ObjectHolder();
+	public static final BaseCannon GHAST_BLASTER = ObjectHolder();
+	public static final BaseCannon GHOUL_CANNON = ObjectHolder();
+	public static final BaseCannon GIGA_CANNON = ObjectHolder();
+	public static final BaseCannon GOLDER_BOMBER = ObjectHolder();
+	public static final BaseCannon HIVE_BLASTER = ObjectHolder();
+	public static final BaseCannon HIVE_HOWITZER = ObjectHolder();
+	public static final BaseCannon IRO_CANNON = ObjectHolder();
+	public static final BaseCannon JACK_FUNGER = ObjectHolder();
+	public static final BaseCannon JACK_ROCKER = ObjectHolder();
+	public static final BaseCannon LUXON_STICKLER = ObjectHolder();
+	public static final BaseCannon MECHA_CANNON = ObjectHolder();
+	public static final BaseCannon MINI_CANNON = ObjectHolder();
+	public static final BaseCannon MISSILE_MAKER = ObjectHolder();
+	public static final BaseCannon MOON_CANNON = ObjectHolder();
+	public static final BaseCannon PLUTON_STICKLER = ObjectHolder();
+	public static final BaseCannon PREDATORIAN_BLASTER = ObjectHolder();
+	public static final BaseCannon PULSE_CANNON = ObjectHolder();
+	public static final BaseCannon RPG = ObjectHolder();
+	public static final BaseCannon SELYAN_STICKLER = ObjectHolder();
+	public static final BaseCannon SHADOW_BLASTER = ObjectHolder();
+	public static final BaseCannon SHYRE_BLASTER = ObjectHolder();
+	public static final BaseCannon SMILE_BLASTER = ObjectHolder();
+	public static final BaseCannon SUPER_CANNON = ObjectHolder();
+	public static final BaseCannon ULTRA_CANNON = ObjectHolder();
+	public static final BaseCannon VOX_CANNON = ObjectHolder();
+	public static final BaseCannon WATER_BALLOON_BOMBER = ObjectHolder();
+	public static final BaseCannon WITHER_CANNON = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("grenade")
-	public static final BaseThrownWeapon throwableGrenade = null;
-	@GameRegistry.ObjectHolder("slice_star")
-	public static final BaseThrownWeapon throwableSliceStar = null;
-	@GameRegistry.ObjectHolder("chakram")
-	public static final BaseThrownWeapon throwableChakram = null;
-	@GameRegistry.ObjectHolder("goo_ball")
-	public static final BaseThrownWeapon throwableGooBall = null;
-	@GameRegistry.ObjectHolder("vulkram")
-	public static final BaseThrownWeapon throwableVulkram = null;
-	@GameRegistry.ObjectHolder("hellfire")
-	public static final BaseThrownWeapon throwableHellfire = null;
-	@GameRegistry.ObjectHolder("runic_bomb")
-	public static final BaseThrownWeapon throwableRunicBomb = null;
+	public static final BaseThrownWeapon GRENADE = ObjectHolder();
+	public static final BaseThrownWeapon SLICE_STAR = ObjectHolder();
+	public static final BaseThrownWeapon CHAKRAM = ObjectHolder();
+	public static final BaseThrownWeapon GOO_BALL = ObjectHolder();
+	public static final BaseThrownWeapon VULKRAM = ObjectHolder();
+	public static final BaseThrownWeapon HELLFIRE = ObjectHolder();
+	public static final BaseThrownWeapon RUNIC_BOMB = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("vulcane")
-	public static final BaseVulcane vulcane = null;
-	@GameRegistry.ObjectHolder("battle_vulcane")
-	public static final BaseVulcane vulcaneBattle = null;
-	@GameRegistry.ObjectHolder("equality_vulcane")
-	public static final BaseVulcane vulcaneEquality = null;
-	@GameRegistry.ObjectHolder("fire_vulcane")
-	public static final BaseVulcane vulcaneFire = null;
-	@GameRegistry.ObjectHolder("impairment_vulcane")
-	public static final BaseVulcane vulcaneImpairment = null;
-	@GameRegistry.ObjectHolder("poison_vulcane")
-	public static final BaseVulcane vulcanePoison = null;
-	@GameRegistry.ObjectHolder("power_vulcane")
-	public static final BaseVulcane vulcanePower = null;
-	@GameRegistry.ObjectHolder("wither_vulcane")
-	public static final BaseVulcane vulcaneWither = null;
+	public static final BaseVulcane VULCANE = ObjectHolder();
+	public static final BaseVulcane BATTLE_VULCANE = ObjectHolder();
+	public static final BaseVulcane EQUALITY_VULCANE = ObjectHolder();
+	public static final BaseVulcane FIRE_VULCANE = ObjectHolder();
+	public static final BaseVulcane IMPAIRMENT_VULCANE = ObjectHolder();
+	public static final BaseVulcane POISON_VULCANE = ObjectHolder();
+	public static final BaseVulcane POWER_VULCANE = ObjectHolder();
+	public static final BaseVulcane WITHER_VULCANE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("alacrity_bow")
-	public static final BaseBow bowAlacrity = null;
-	@GameRegistry.ObjectHolder("ancient_bow")
-	public static final BaseBow bowAncient = null;
-	@GameRegistry.ObjectHolder("atlantic_bow")
-	public static final BaseBow bowAtlantic = null;
-	@GameRegistry.ObjectHolder("baron_bow")
-	public static final BaseBow bowBaron = null;
-	@GameRegistry.ObjectHolder("boreic_bow")
-	public static final BaseBow bowBoreic = null;
-	@GameRegistry.ObjectHolder("daybreaker_bow")
-	public static final BaseBow bowDaybreaker = null;
-	@GameRegistry.ObjectHolder("deep_bow")
-	public static final BaseBow bowDeep = null;
-	@GameRegistry.ObjectHolder("explosive_bow")
-	public static final BaseBow bowExplosive = null;
-	@GameRegistry.ObjectHolder("haunted_bow")
-	public static final BaseBow bowHaunted = null;
-	@GameRegistry.ObjectHolder("ice_bow")
-	public static final BaseBow bowIce = null;
-	@GameRegistry.ObjectHolder("infernal_bow")
-	public static final BaseBow bowInfernal = null;
-	@GameRegistry.ObjectHolder("justice_bow")
-	public static final BaseBow bowJustice = null;
-	@GameRegistry.ObjectHolder("lunar_bow")
-	public static final BaseBow bowLunar = null;
-	@GameRegistry.ObjectHolder("mecha_bow")
-	public static final BaseBow bowMecha = null;
-	@GameRegistry.ObjectHolder("nightmare_bow")
-	public static final BaseBow bowNightmare = null;
-	@GameRegistry.ObjectHolder("poison_bow")
-	public static final BaseBow bowPoison = null;
-	@GameRegistry.ObjectHolder("predatious_bow")
-	public static final BaseBow bowPredatious = null;
-	@GameRegistry.ObjectHolder("primordial_bow")
-	public static final BaseBow bowPrimordial = null;
-	@GameRegistry.ObjectHolder("rosidian_bow")
-	public static final BaseBow bowRosidian = null;
-	@GameRegistry.ObjectHolder("runic_bow")
-	public static final BaseBow bowRunic = null;
-	@GameRegistry.ObjectHolder("screamer_bow")
-	public static final BaseBow bowScreamer = null;
-	@GameRegistry.ObjectHolder("shyregem_bow")
-	public static final BaseBow bowShyregem = null;
-	@GameRegistry.ObjectHolder("skeletal_bow")
-	public static final BaseBow bowSkeletal = null;
-	@GameRegistry.ObjectHolder("skydriver_bow")
-	public static final BaseBow bowSkydriver = null;
-	@GameRegistry.ObjectHolder("slingshot")
-	public static final BaseBow bowSlingshot = null;
-	@GameRegistry.ObjectHolder("soulfire_bow")
-	public static final BaseBow bowSoulfire = null;
-	@GameRegistry.ObjectHolder("spectral_bow")
-	public static final BaseBow bowSpectral = null;
-	@GameRegistry.ObjectHolder("speed_bow")
-	public static final BaseBow bowSpeed = null;
-	@GameRegistry.ObjectHolder("sunshine_bow")
-	public static final BaseBow bowSunshine = null;
-	@GameRegistry.ObjectHolder("toxin_bow")
-	public static final BaseBow bowToxin = null;
-	@GameRegistry.ObjectHolder("void_bow")
-	public static final BaseBow bowVoid = null;
-	@GameRegistry.ObjectHolder("weaken_bow")
-	public static final BaseBow bowWeaken = null;
-	@GameRegistry.ObjectHolder("wither_bow")
-	public static final BaseBow bowWither = null;
+	public static final BaseBow ALACRITY_BOW = ObjectHolder();
+	public static final BaseBow ANCIENT_BOW = ObjectHolder();
+	public static final BaseBow ATLANTIC_BOW = ObjectHolder();
+	public static final BaseBow BARON_BOW = ObjectHolder();
+	public static final BaseBow BOREIC_BOW = ObjectHolder();
+	public static final BaseBow DAYBREAKER_BOW = ObjectHolder();
+	public static final BaseBow DEEP_BOW = ObjectHolder();
+	public static final BaseBow EXPLOSIVE_BOW = ObjectHolder();
+	public static final BaseBow HAUNTED_BOW = ObjectHolder();
+	public static final BaseBow ICE_BOW = ObjectHolder();
+	public static final BaseBow INFERNAL_BOW = ObjectHolder();
+	public static final BaseBow JUSTICE_BOW = ObjectHolder();
+	public static final BaseBow LUNAR_BOW = ObjectHolder();
+	public static final BaseBow MECHA_BOW = ObjectHolder();
+	public static final BaseBow NIGHTMARE_BOW = ObjectHolder();
+	public static final BaseBow POISON_BOW = ObjectHolder();
+	public static final BaseBow PREDATIOUS_BOW = ObjectHolder();
+	public static final BaseBow PRIMORDIAL_BOW = ObjectHolder();
+	public static final BaseBow ROSIDIAN_BOW = ObjectHolder();
+	public static final BaseBow RUNIC_BOW = ObjectHolder();
+	public static final BaseBow SCREAMER_BOW = ObjectHolder();
+	public static final BaseBow SHYREGEM_BOW = ObjectHolder();
+	public static final BaseBow SKELETAL_BOW = ObjectHolder();
+	public static final BaseBow SKYDRIVER_BOW = ObjectHolder();
+	public static final BaseBow SLINGSHOT = ObjectHolder();
+	public static final BaseBow SOULFIRE_BOW = ObjectHolder();
+	public static final BaseBow SPECTRAL_BOW = ObjectHolder();
+	public static final BaseBow SPEED_BOW = ObjectHolder();
+	public static final BaseBow SUNSHINE_BOW = ObjectHolder();
+	public static final BaseBow TOXIN_BOW = ObjectHolder();
+	public static final BaseBow VOID_BOW = ObjectHolder();
+	public static final BaseBow WEAKEN_BOW = ObjectHolder();
+	public static final BaseBow WITHER_BOW = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("coral_archergun")
-	public static final BaseArchergun archergunCoral = null;
-	@GameRegistry.ObjectHolder("lunar_archergun")
-	public static final BaseArchergun archergunLunar = null;
-	@GameRegistry.ObjectHolder("mecha_archergun")
-	public static final BaseArchergun archergunMecha = null;
-	@GameRegistry.ObjectHolder("pyro_archergun")
-	public static final BaseArchergun archergunPyro = null;
-	@GameRegistry.ObjectHolder("rosidian_archergun")
-	public static final BaseArchergun archergunRosidian = null;
-	@GameRegistry.ObjectHolder("skeletal_archergun")
-	public static final BaseArchergun archergunSkeletal = null;
-	@GameRegistry.ObjectHolder("spectral_archergun")
-	public static final BaseArchergun archergunSpectral = null;
-	@GameRegistry.ObjectHolder("trolls_archergun")
-	public static final BaseArchergun archergunTrolls = null;
-	@GameRegistry.ObjectHolder("viral_archergun")
-	public static final BaseArchergun archergunViral = null;
+	public static final BaseArchergun CORAL_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun LUNAR_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun MECHA_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun PYRO_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun ROSIDIAN_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun SKELETAL_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun SPECTRAL_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun TROLLS_ARCHERGUN = ObjectHolder();
+	public static final BaseArchergun VIRAL_ARCHERGUN = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("aquatic_staff")
-	public static final BaseStaff staffAquatic = null;
-	@GameRegistry.ObjectHolder("atlantic_staff")
-	public static final BaseStaff staffAtlantic = null;
-	@GameRegistry.ObjectHolder("baron_staff")
-	public static final BaseStaff staffBaron = null;
-	@GameRegistry.ObjectHolder("candy_staff")
-	public static final BaseStaff staffCandy = null;
-	@GameRegistry.ObjectHolder("celestial_staff")
-	public static final BaseStaff staffCelestial = null;
-	@GameRegistry.ObjectHolder("concussion_staff")
-	public static final BaseStaff staffConcussion = null;
-	@GameRegistry.ObjectHolder("coral_staff")
-	public static final BaseStaff staffCoral = null;
-	@GameRegistry.ObjectHolder("crystal_staff")
-	public static final BaseStaff staffCrystal = null;
-	@GameRegistry.ObjectHolder("crystik_staff")
-	public static final BaseStaff staffCrystik = null;
-	@GameRegistry.ObjectHolder("cryston_staff")
-	public static final BaseStaff staffCryston = null;
-	@GameRegistry.ObjectHolder("destruction_staff")
-	public static final BaseStaff staffDestruction = null;
-	@GameRegistry.ObjectHolder("ember_staff")
-	public static final BaseStaff staffEmber = null;
-	@GameRegistry.ObjectHolder("everfight_staff")
-	public static final BaseStaff staffEverfight = null;
-	@GameRegistry.ObjectHolder("evermight_staff")
-	public static final BaseStaff staffEvermight = null;
-	@GameRegistry.ObjectHolder("fire_staff")
-	public static final BaseStaff staffFire = null;
-	@GameRegistry.ObjectHolder("firefly_staff")
-	public static final BaseStaff staffFirefly = null;
-	@GameRegistry.ObjectHolder("firestorm_staff")
-	public static final BaseStaff staffFirestorm = null;
-	@GameRegistry.ObjectHolder("fungal")
-	public static final BaseStaff staffFungal = null;
-	@GameRegistry.ObjectHolder("ghoul_staff")
-	public static final BaseStaff staffGhoul = null;
-	@GameRegistry.ObjectHolder("haunters_staff")
-	public static final BaseStaff staffHaunters = null;
-	@GameRegistry.ObjectHolder("hive_staff")
-	public static final BaseStaff staffHive = null;
-	@GameRegistry.ObjectHolder("joker_staff")
-	public static final BaseStaff staffJoker = null;
-	@GameRegistry.ObjectHolder("kaiyu_staff")
-	public static final BaseStaff staffKaiyu = null;
-	@GameRegistry.ObjectHolder("lightning_staff")
-	public static final BaseStaff staffLightning = null;
-	@GameRegistry.ObjectHolder("lightshine")
-	public static final BaseStaff staffLightshine = null;
-	@GameRegistry.ObjectHolder("lunar_staff")
-	public static final BaseStaff staffLunar = null;
-	@GameRegistry.ObjectHolder("lyonic_staff")
-	public static final BaseStaff staffLyonic = null;
-	@GameRegistry.ObjectHolder("mecha_staff")
-	public static final BaseStaff staffMecha = null;
-	@GameRegistry.ObjectHolder("meteor_staff")
-	public static final BaseStaff staffMeteor = null;
-	@GameRegistry.ObjectHolder("moonlight_staff")
-	public static final BaseStaff staffMoonlight = null;
-	@GameRegistry.ObjectHolder("nature_staff")
-	public static final BaseStaff staffNature = null;
-	@GameRegistry.ObjectHolder("nightmare_staff")
-	public static final BaseStaff staffNightmare = null;
-	@GameRegistry.ObjectHolder("noxious_staff")
-	public static final BaseStaff staffNoxious = null;
-	@GameRegistry.ObjectHolder("phantom_staff")
-	public static final BaseStaff staffPhantom = null;
-	@GameRegistry.ObjectHolder("poison_staff")
-	public static final BaseStaff staffPoison = null;
-	@GameRegistry.ObjectHolder("power_staff")
-	public static final BaseStaff staffPower = null;
-	@GameRegistry.ObjectHolder("primordial_staff")
-	public static final BaseStaff staffPrimordial = null;
-	@GameRegistry.ObjectHolder("reef_staff")
-	public static final BaseStaff staffReef = null;
-	@GameRegistry.ObjectHolder("rejuvenation_staff")
-	public static final BaseStaff staffRejuvenation = null;
-	@GameRegistry.ObjectHolder("rosidian_staff")
-	public static final BaseStaff staffRosidian = null;
-	@GameRegistry.ObjectHolder("runic_staff")
-	public static final BaseStaff staffRunic = null;
-	@GameRegistry.ObjectHolder("shadowlord_staff")
-	public static final BaseStaff staffShadowlord = null;
-	@GameRegistry.ObjectHolder("show_staff")
-	public static final BaseStaff staffShow = null;
-	@GameRegistry.ObjectHolder("shyre_staff")
-	public static final BaseStaff staffShyre = null;
-	@GameRegistry.ObjectHolder("sky_staff")
-	public static final BaseStaff staffSky = null;
-	@GameRegistry.ObjectHolder("striker_staff")
-	public static final BaseStaff staffStriker = null;
-	@GameRegistry.ObjectHolder("sun_staff")
-	public static final BaseStaff staffSun = null;
-	@GameRegistry.ObjectHolder("surge_staff")
-	public static final BaseStaff staffSurge = null;
-	@GameRegistry.ObjectHolder("tangle_staff")
-	public static final BaseStaff staffTangle = null;
-	@GameRegistry.ObjectHolder("ultimatum_staff")
-	public static final BaseStaff staffUltimatum = null;
-	@GameRegistry.ObjectHolder("underworld_staff")
-	public static final BaseStaff staffUnderworld = null;
-	@GameRegistry.ObjectHolder("warlock_staff")
-	public static final BaseStaff staffWarlock = null;
-	@GameRegistry.ObjectHolder("water_staff")
-	public static final BaseStaff staffWater = null;
-	@GameRegistry.ObjectHolder("web_staff")
-	public static final BaseStaff staffWeb = null;
-	@GameRegistry.ObjectHolder("wind_staff")
-	public static final BaseStaff staffWind = null;
-	@GameRegistry.ObjectHolder("wither_staff")
-	public static final BaseStaff staffWither = null;
-	@GameRegistry.ObjectHolder("wizards_staff")
-	public static final BaseStaff staffWizards = null;
+	public static final BaseStaff AQUATIC_STAFF = ObjectHolder();
+	public static final BaseStaff ATLANTIC_STAFF = ObjectHolder();
+	public static final BaseStaff BARON_STAFF = ObjectHolder();
+	public static final BaseStaff CANDY_STAFF = ObjectHolder();
+	public static final BaseStaff CELESTIAL_STAFF = ObjectHolder();
+	public static final BaseStaff CONCUSSION_STAFF = ObjectHolder();
+	public static final BaseStaff CORAL_STAFF = ObjectHolder();
+	public static final BaseStaff CRYSTAL_STAFF = ObjectHolder();
+	public static final BaseStaff CRYSTIK_STAFF = ObjectHolder();
+	public static final BaseStaff CRYSTON_STAFF = ObjectHolder();
+	public static final BaseStaff DESTRUCTION_STAFF = ObjectHolder();
+	public static final BaseStaff EMBER_STAFF = ObjectHolder();
+	public static final BaseStaff EVERFIGHT_STAFF = ObjectHolder();
+	public static final BaseStaff EVERMIGHT_STAFF = ObjectHolder();
+	public static final BaseStaff FIRE_STAFF = ObjectHolder();
+	public static final BaseStaff FIREFLY_STAFF = ObjectHolder();
+	public static final BaseStaff FIRESTORM_STAFF = ObjectHolder();
+	public static final BaseStaff FUNGAL_STAFF = ObjectHolder();
+	public static final BaseStaff GHOUL_STAFF = ObjectHolder();
+	public static final BaseStaff HAUNTERS_STAFF = ObjectHolder();
+	public static final BaseStaff HIVE_STAFF = ObjectHolder();
+	public static final BaseStaff JOKER_STAFF = ObjectHolder();
+	public static final BaseStaff KAIYU_STAFF = ObjectHolder();
+	public static final BaseStaff LIGHTNING_STAFF = ObjectHolder();
+	public static final BaseStaff LIGHTSHINE = ObjectHolder();
+	public static final BaseStaff LUNAR_STAFF = ObjectHolder();
+	public static final BaseStaff LYONIC_STAFF = ObjectHolder();
+	public static final BaseStaff MECHA_STAFF = ObjectHolder();
+	public static final BaseStaff METEOR_STAFF = ObjectHolder();
+	public static final BaseStaff MOONLIGHT_STAFF = ObjectHolder();
+	public static final BaseStaff NATURE_STAFF = ObjectHolder();
+	public static final BaseStaff NIGHTMARE_STAFF = ObjectHolder();
+	public static final BaseStaff NOXIOUS_STAFF = ObjectHolder();
+	public static final BaseStaff PHANTOM_STAFF = ObjectHolder();
+	public static final BaseStaff POISON_STAFF = ObjectHolder();
+	public static final BaseStaff POWER_STAFF = ObjectHolder();
+	public static final BaseStaff PRIMORDIAL_STAFF = ObjectHolder();
+	public static final BaseStaff REEF_STAFF = ObjectHolder();
+	public static final BaseStaff REJUVENATION_STAFF = ObjectHolder();
+	public static final BaseStaff ROSIDIAN_STAFF = ObjectHolder();
+	public static final BaseStaff RUNIC_STAFF = ObjectHolder();
+	public static final BaseStaff SHADOWLORD_STAFF = ObjectHolder();
+	public static final BaseStaff SHOW_STAFF = ObjectHolder();
+	public static final BaseStaff SHYRE_STAFF = ObjectHolder();
+	public static final BaseStaff SKY_STAFF = ObjectHolder();
+	public static final BaseStaff STRIKER_STAFF = ObjectHolder();
+	public static final BaseStaff SUN_STAFF = ObjectHolder();
+	public static final BaseStaff SURGE_STAFF = ObjectHolder();
+	public static final BaseStaff TANGLE_STAFF = ObjectHolder();
+	public static final BaseStaff ULTIMATUM_STAFF = ObjectHolder();
+	public static final BaseStaff UNDERWORLD_STAFF = ObjectHolder();
+	public static final BaseStaff WARLOCK_STAFF = ObjectHolder();
+	public static final BaseStaff WATER_STAFF = ObjectHolder();
+	public static final BaseStaff WEB_STAFF = ObjectHolder();
+	public static final BaseStaff WIND_STAFF = ObjectHolder();
+	public static final BaseStaff WITHER_STAFF = ObjectHolder();
+	public static final BaseStaff WIZARDS_STAFF = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("apoco_shower")
-	public static final BaseBlaster blasterApocoShower = null;
-	@GameRegistry.ObjectHolder("atomizer")
-	public static final BaseBlaster blasterAtomizer = null;
-	@GameRegistry.ObjectHolder("beamer")
-	public static final BaseBlaster blasterBeamer = null;
-	@GameRegistry.ObjectHolder("blast_chiller")
-	public static final BaseBlaster blasterBlastChiller = null;
-	@GameRegistry.ObjectHolder("blood_drainer")
-	public static final BaseBlaster blasterBloodDrainer = null;
-	@GameRegistry.ObjectHolder("bone_blaster")
-	public static final BaseBlaster blasterBoneBlaster = null;
-	@GameRegistry.ObjectHolder("bubble_horn")
-	public static final BaseBlaster blasterBubbleHorn = null;
-	@GameRegistry.ObjectHolder("colour_cannon")
-	public static final BaseBlaster blasterColourCannon = null;
-	@GameRegistry.ObjectHolder("confetti_cannon")
-	public static final BaseBlaster blasterConfettiCannon = null;
-	@GameRegistry.ObjectHolder("confetti_cluster")
-	public static final BaseBlaster blasterConfettiCluster = null;
-	@GameRegistry.ObjectHolder("dark_destroyer")
-	public static final BaseBlaster blasterDarkDestroyer = null;
-	@GameRegistry.ObjectHolder("darkly_guster")
-	public static final BaseBlaster blasterDarklyGuster = null;
-	@GameRegistry.ObjectHolder("death_ray")
-	public static final BaseBlaster blasterDeathRay = null;
-	@GameRegistry.ObjectHolder("doom_bringer")
-	public static final BaseBlaster blasterDoomBringer = null;
-	@GameRegistry.ObjectHolder("eradicator")
-	public static final BaseBlaster blasterEradicator = null;
-	@GameRegistry.ObjectHolder("experiment_w801")
-	public static final BaseBlaster blasterExperimentW801 = null;
-	@GameRegistry.ObjectHolder("flowercorne")
-	public static final BaseBlaster blasterFlowercorne = null;
-	@GameRegistry.ObjectHolder("fragment")
-	public static final BaseBlaster blasterFragment = null;
-	@GameRegistry.ObjectHolder("froster")
-	public static final BaseBlaster blasterFroster = null;
-	@GameRegistry.ObjectHolder("gas_blaster")
-	public static final BaseBlaster blasterGasBlaster = null;
-	@GameRegistry.ObjectHolder("ghoul_gasser")
-	public static final BaseBlaster blasterGhoulGasser = null;
-	@GameRegistry.ObjectHolder("gold_bringer")
-	public static final BaseBlaster blasterGoldBringer = null;
-	@GameRegistry.ObjectHolder("gravity_blaster")
-	public static final BaseBlaster blasterGravityBlaster = null;
-	@GameRegistry.ObjectHolder("hell_horn")
-	public static final BaseBlaster blasterHellHorn = null;
-	@GameRegistry.ObjectHolder("illusion_revolver")
-	public static final BaseBlaster blasterIllusionRevolver = null;
-	@GameRegistry.ObjectHolder("illusion_smg")
-	public static final BaseBlaster blasterIllusionSMG = null;
-	@GameRegistry.ObjectHolder("ion_blaster")
-	public static final BaseBlaster blasterIonBlaster = null;
-	@GameRegistry.ObjectHolder("iro_miner")
-	public static final BaseBlaster blasterIroMiner = null;
-	@GameRegistry.ObjectHolder("laser_blaster")
-	public static final BaseBlaster blasterLaserBlaster = null;
-	@GameRegistry.ObjectHolder("light_blaster")
-	public static final BaseBlaster blasterLightBlaster = null;
-	@GameRegistry.ObjectHolder("light_spark")
-	public static final BaseBlaster blasterLightSpark = null;
-	@GameRegistry.ObjectHolder("luna_blaster")
-	public static final BaseBlaster blasterLunaBlaster = null;
-	@GameRegistry.ObjectHolder("mecha_blaster")
-	public static final BaseBlaster blasterMechaBlaster = null;
-	@GameRegistry.ObjectHolder("mind_blaster")
-	public static final BaseBlaster blasterMindBlaster = null;
-	@GameRegistry.ObjectHolder("moon_destroyer")
-	public static final BaseBlaster blasterMoonDestroyer = null;
-	@GameRegistry.ObjectHolder("moon_shiner")
-	public static final BaseBlaster blasterMoonShiner = null;
-	@GameRegistry.ObjectHolder("odious")
-	public static final BaseBlaster blasterOdious = null;
-	@GameRegistry.ObjectHolder("orbocron")
-	public static final BaseBlaster blasterOrbocron = null;
-	@GameRegistry.ObjectHolder("paralyzer")
-	public static final BaseBlaster blasterParalyzer = null;
-	@GameRegistry.ObjectHolder("party_popper")
-	public static final BaseBlaster blasterPartyPopper = null;
-	@GameRegistry.ObjectHolder("poison_plunger")
-	public static final BaseBlaster blasterPoisonPlunger = null;
-	@GameRegistry.ObjectHolder("power_ray")
-	public static final BaseBlaster blasterPowerRay = null;
-	@GameRegistry.ObjectHolder("proton")
-	public static final BaseBlaster blasterProton = null;
-	@GameRegistry.ObjectHolder("reefer")
-	public static final BaseBlaster blasterReefer = null;
-	@GameRegistry.ObjectHolder("revolution")
-	public static final BaseBlaster blasterRevolution = null;
-	@GameRegistry.ObjectHolder("seaocron")
-	public static final BaseBlaster blasterSeaocron = null;
-	@GameRegistry.ObjectHolder("skullo_blaster")
-	public static final BaseBlaster blasterSkulloBlaster = null;
-	@GameRegistry.ObjectHolder("soul_drainer")
-	public static final BaseBlaster blasterSoulDrainer = null;
-	@GameRegistry.ObjectHolder("soul_spark")
-	public static final BaseBlaster blasterSoulSpark = null;
-	@GameRegistry.ObjectHolder("soul_storm")
-	public static final BaseBlaster blasterSoulStorm = null;
-	@GameRegistry.ObjectHolder("spirit_shower")
-	public static final BaseBlaster blasterSpiritShower = null;
-	@GameRegistry.ObjectHolder("swarmotron")
-	public static final BaseBlaster blasterSwarmotron = null;
-	@GameRegistry.ObjectHolder("toxic_terrorizer")
-	public static final BaseBlaster blasterToxicTerrorizer = null;
-	@GameRegistry.ObjectHolder("vortex_blaster")
-	public static final BaseBlaster blasterVortexBlaster = null;
-	@GameRegistry.ObjectHolder("whimsy_winder")
-	public static final BaseBlaster blasterWhimsyWinder = null;
-	@GameRegistry.ObjectHolder("withers_wrath")
-	public static final BaseBlaster blasterWithersWrath = null;
+	public static final BaseBlaster APOCO_SHOWER = ObjectHolder();
+	public static final BaseBlaster ATOMIZER = ObjectHolder();
+	public static final BaseBlaster BEAMER = ObjectHolder();
+	public static final BaseBlaster BLAST_CHILLER = ObjectHolder();
+	public static final BaseBlaster BLOOD_DRAINER = ObjectHolder();
+	public static final BaseBlaster BONE_BLASTER = ObjectHolder();
+	public static final BaseBlaster BUBBLE_HORN = ObjectHolder();
+	public static final BaseBlaster COLOUR_CANNON = ObjectHolder();
+	public static final BaseBlaster CONFETTI_CANNON = ObjectHolder();
+	public static final BaseBlaster CONFETTI_CLUSTER = ObjectHolder();
+	public static final BaseBlaster DARK_DESTROYER = ObjectHolder();
+	public static final BaseBlaster DARKLY_GUSTER = ObjectHolder();
+	public static final BaseBlaster DEATH_RAY = ObjectHolder();
+	public static final BaseBlaster DOOM_BRINGER = ObjectHolder();
+	public static final BaseBlaster ERADICATOR = ObjectHolder();
+	public static final BaseBlaster EXPERIMENT_W801 = ObjectHolder();
+	public static final BaseBlaster FLOWERCORNE = ObjectHolder();
+	public static final BaseBlaster FRAGMENT = ObjectHolder();
+	public static final BaseBlaster FROSTER = ObjectHolder();
+	public static final BaseBlaster GAS_BLASTER = ObjectHolder();
+	public static final BaseBlaster GHOUL_GASSER = ObjectHolder();
+	public static final BaseBlaster GOLD_BRINGER = ObjectHolder();
+	public static final BaseBlaster GRAVITY_BLASTER = ObjectHolder();
+	public static final BaseBlaster HELL_HORN = ObjectHolder();
+	public static final BaseBlaster ILLUSION_REVOLVER = ObjectHolder();
+	public static final BaseBlaster ILLUSION_SMG = ObjectHolder();
+	public static final BaseBlaster ION_BLASTER = ObjectHolder();
+	public static final BaseBlaster IRO_MINER = ObjectHolder();
+	public static final BaseBlaster LASER_BLASTER = ObjectHolder();
+	public static final BaseBlaster LIGHT_BLASTER = ObjectHolder();
+	public static final BaseBlaster LIGHT_SPARK = ObjectHolder();
+	public static final BaseBlaster LUNA_BLASTER = ObjectHolder();
+	public static final BaseBlaster MECHA_BLASTER = ObjectHolder();
+	public static final BaseBlaster MIND_BLASTER = ObjectHolder();
+	public static final BaseBlaster MOON_DESTROYER = ObjectHolder();
+	public static final BaseBlaster MOON_SHINER = ObjectHolder();
+	public static final BaseBlaster ODIOUS = ObjectHolder();
+	public static final BaseBlaster ORBOCRON = ObjectHolder();
+	public static final BaseBlaster PARALYZER = ObjectHolder();
+	public static final BaseBlaster PARTY_POPPER = ObjectHolder();
+	public static final BaseBlaster POISON_PLUNGER = ObjectHolder();
+	public static final BaseBlaster POWER_RAY = ObjectHolder();
+	public static final BaseBlaster PROTON = ObjectHolder();
+	public static final BaseBlaster REEFER = ObjectHolder();
+	public static final BaseBlaster REVOLUTION = ObjectHolder();
+	public static final BaseBlaster SEAOCRON = ObjectHolder();
+	public static final BaseBlaster SKULLO_BLASTER = ObjectHolder();
+	public static final BaseBlaster SOUL_DRAINER = ObjectHolder();
+	public static final BaseBlaster SOUL_SPARK = ObjectHolder();
+	public static final BaseBlaster SOUL_STORM = ObjectHolder();
+	public static final BaseBlaster SPIRIT_SHOWER = ObjectHolder();
+	public static final BaseBlaster SWARMOTRON = ObjectHolder();
+	public static final BaseBlaster TOXIC_TERRORIZER = ObjectHolder();
+	public static final BaseBlaster VORTEX_BLASTER = ObjectHolder();
+	public static final BaseBlaster WHIMSY_WINDER = ObjectHolder();
+	public static final BaseBlaster WITHERS_WRATH = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerWeapon(final RegistryEvent.Register<Item> ev) {
@@ -891,7 +479,7 @@ public class WeaponRegister {
 				new CaramelCarver(		SWORD_CARAMEL_CARVER, 	0), // Candyland | Gingerbread Man
 				new CoralstormSword(	SWORD_CORALSTORM, 		0), // Overworld | Troll Trader
 				new CreepifiedSword(	SWORD_CREEPIFIED, 		0), // Creeponia | CREEP
-				new CrystalliteSword(	SWORD_CRYSTALLITE, 		0), // Haven | Crafting
+				new CrystalliteSword(	SWORD_CRYSTALLITE, 		-2.3D), // Haven | Crafting
 				new EmberstoneSword(	SWORD_EMBERSTONE, 		0), // Nether | Crafting
 				new ExplochronSword(	SWORD_EXPLOCHRON, 		0), // Iromine | Crafting
 				new FireborneSword(		SWORD_FIREBORNE, 		0), // Nether | Crafting
@@ -916,7 +504,7 @@ public class WeaponRegister {
 				new SkeletalSword(		SWORD_SKELETAL, 		-2D), // Precasia | Skeletron
 				new SupremacySword(		SWORD_SUPREMACY, 		0), // Celeve | Crafting
 				new SweetSword(			SWORD_SWEET, 			0), // Candyland | Crafting
-				new TrollBasherAxe(		TROLL_BASHER_AXE, 		0), // Overworld | Smash
+				new TrollBasherAxe(MaterialsRegister.TROLL_BASHER_AXE, 		0), // Overworld | Smash
 				new Ultraflame(			SWORD_ULTRAFLAME, 		0), // Lunalus | Gorb Engineer
 				new VoidSword(			SWORD_VOID, 			0) // Overworld | Mother Void Walker
 		);
@@ -1010,9 +598,9 @@ public class WeaponRegister {
 				new LightIron(				30.5f, 	1470, 32, 	14.0f), // UPGRADE KIT
 				new LunarAssaultRifle(		11.5f, 	1430, 12, 	5.0f), // Lunalus | Visualent
 				new MechanicalAssaultRifle(	18.5f, 	940, 	24, 	6.0f), // Iromine | Repair
-				new Megagun(				7.5f, 	1530, 8, 	3.0f), // UPGRADE KIT
+				new Megagun(				4.0f, 	1530, 4, 	3.0f), // UPGRADE KIT
 				new Miasma(					9.0f, 	940, 	12, 	3.0f), // Gardencia | Crafting
-				new Minigun(				5.0f, 	670, 	8, 	3.0f), // Lelyetia | Lelyetian Tower
+				new Minigun(				2.5f, 	670, 	4, 	3.0f), // Lelyetia | Lelyetian Tower
 				new MintMagnum(				6.0f, 	900, 	8, 	4.0f), // Candyland | Crafting
 				new MK(						14.5f, 	1240, 16, 	3.0f), // LBorean | Aquatic Castle
 				new MKFung(					15.0f, 	1490, 16, 	3.0f), // UPGRADE KIT
@@ -1021,10 +609,10 @@ public class WeaponRegister {
 				new Overshot(				6.5f, 	990, 	16, 	7.0f), // Iromine | Enforcer
 				new PrecasianSlugger(		29.5f, 	1490, 32, 	9.0f), // UPGRADE KIT
 				new Predator(				25.5f, 	1480, 28, 	6.0f), // UPGRADE KIT
-				new Predigun(				7.5f, 	1530, 8, 	3.0f), // UPGRADE KIT
+				new Predigun(				4.0f, 	1530, 4, 	3.0f), // UPGRADE KIT
 				new Pulsator(				25.0f, 	1190, 28, 	6.0f), // Lunalus | Crafting
 				new PurityRifle(			18.0f, 	1200, 20, 	3.0f), // Runandor | Crafting
-				new RockerRifle(			10.0f, 	630, 	16, 	0.0f), // Deeplands | Deep Case
+				new RockerRifle(			10.0f, 	630, 	16, 	6.0f), // Deeplands | Deep Case
 				new Roulette(				22.5f, 	1470, 24, 	8.0f), // UPGRADE KIT
 				new ShoeFlinger(			24.0f, 	400, 	24, 	7.0f), // SPECIAL | Crafting
 				new Skullette(				23.5f, 	1580, 24, 	8.0f), // UPGRADE KIT
@@ -1170,7 +758,7 @@ public class WeaponRegister {
 				new AlacrityBow(	9.5f, 		1f, 		600), // Overworld | Crafting
 				new AncientBow(		22.0f, 	1f, 		1510), // UPGRADE KIT Ancient
 				new AtlanticBow(	24.5f, 	0.9f, 	1480), // UPGRADE KIT Seaside
-				new BaronBow(		12.5f, 	1f, 		650), // Barathos | Crafting
+				new BaronBow(		12.0f, 	1.1f, 	3000), // Barathos | Crafting
 				new BoreicBow(		14.0f, 	1.3f, 	1190), // LBorean | Amphibior
 				new DaybreakerBow(	17.5f, 	1f, 		1180), // Dustopia | Primordial Merchant
 				new DeepBow(		15.5f, 	0.85f, 	700), // Deeplands | Deep Case
@@ -1416,16 +1004,16 @@ public class WeaponRegister {
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
 		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
 			if (map.key.toString().equals("aoa3:millenium_greatblade")) {
-				map.remap(greatbladeMillennium);
+				map.remap(MILLENNIUM_GREATBLADE);
 			}
 			else if (map.key.toString().equals("aoa3:grandsword")) {
-				map.remap(greatbladeBloodlurker);
+				map.remap(BLOODLURKER);
 			}
 		}
 	}
 
 	public static void registerDispensables() {
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableHellfire, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.HELLFIRE, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1433,7 +1021,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableGrenade, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.GRENADE, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1441,7 +1029,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableChakram, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.CHAKRAM, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1449,7 +1037,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableGooBall, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.GOO_BALL, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1457,7 +1045,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableRunicBomb, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.RUNIC_BOMB, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1465,7 +1053,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableVulkram, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.VULKRAM, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1473,7 +1061,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.throwableSliceStar, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(WeaponRegister.SLICE_STAR, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1481,7 +1069,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrow, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.HOLLY_ARROW, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1492,7 +1080,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrowTipped, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.TIPPED_HOLLY_ARROW, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1504,7 +1092,7 @@ public class WeaponRegister {
 			}
 		});
 
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.hollyArrowSpectral, new BehaviorProjectileDispense() {
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.SPECTRAL_HOLLY_ARROW, new BehaviorProjectileDispense() {
 			@Nonnull
 			@Override
 			protected IProjectile getProjectileEntity(@Nonnull World world, @Nonnull IPosition pos, @Nonnull ItemStack stack) {
@@ -1514,5 +1102,11 @@ public class WeaponRegister {
 				return arrow;
 			}
 		});
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

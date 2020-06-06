@@ -18,7 +18,7 @@ public class BoneBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMiniPistol;
+		return SoundsRegister.MINI_PISTOL_FIRE;
 	}
 
 	@Override

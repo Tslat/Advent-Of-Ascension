@@ -34,9 +34,9 @@ public class EntityCelevianLottoman extends EntityLottoman {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 28), new ItemStack(ItemRegister.lottoTotem)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 15), new ItemStack(ItemRegister.weaponsCase)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 10), new ItemStack(ItemRegister.runeBox)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 21), new ItemStack(ItemRegister.treasureBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CELEVE_TOKENS, 28), new ItemStack(ItemRegister.LOTTO_TOTEM)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CELEVE_TOKENS, 15), new ItemStack(ItemRegister.WEAPONS_CASE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CELEVE_TOKENS, 10), new ItemStack(ItemRegister.RUNE_BOX)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CELEVE_TOKENS, 21), new ItemStack(ItemRegister.TREASURE_BOX)));
 	}
 }

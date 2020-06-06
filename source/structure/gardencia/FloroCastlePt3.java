@@ -8,9 +8,9 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class FloroCastlePt3 {
-	private static final IBlockState unbreakableStem = BlockRegister.unbreakablePlantStem.getDefaultState();
-	private static final IBlockState blackPetals = BlockRegister.petalsBlack.getDefaultState();
-	private static final IBlockState vinocorneShrine = BlockRegister.vinocorneShrine.getDefaultState();
+	private static final IBlockState unbreakableStem = BlockRegister.UNBREAKABLE_PLANT_STEM.getDefaultState();
+	private static final IBlockState blackPetals = BlockRegister.BLACK_PETALS.getDefaultState();
+	private static final IBlockState vinocorneShrine = BlockRegister.VINOCORNE_SHRINE.getDefaultState();
 	
 	protected static void addBlocks(FloroCastle instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 4, 21, 13, blackPetals);

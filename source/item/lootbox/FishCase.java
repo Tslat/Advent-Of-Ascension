@@ -25,7 +25,7 @@ public class FishCase extends Item {
 	public FishCase() {
 		setTranslationKey("FishCase");
 		setRegistryName("aoa3:fish_case");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -35,6 +35,10 @@ public class FishCase extends Item {
 
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
+
+			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

@@ -26,7 +26,7 @@ public class TreatBag extends BasicFood {
 	public TreatBag() {
 		super("TreatBag", "treat_bag", 0, 0);
 		setAlwaysEdible();
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override

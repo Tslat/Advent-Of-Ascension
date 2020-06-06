@@ -58,17 +58,17 @@ public class EntityGhostlyCyclops extends AoAMeleeMob implements SpecialProperty
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCyclopsLiving;
+		return SoundsRegister.MOB_CYCLOPS_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCyclopsDeath;
+		return SoundsRegister.MOB_CYCLOPS_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCyclopsHit;
+		return SoundsRegister.MOB_CYCLOPS_HIT;
 	}
 
 	@Nullable

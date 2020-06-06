@@ -49,11 +49,11 @@ public class EntityToyMerchant extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 5), new ItemStack(ItemRegister.balloon, 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 46), new ItemStack(ItemRegister.gravitator)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 15), new ItemStack(ItemRegister.toyGyrocopter)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 64), new ItemStack(ItemRegister.circusCoin, 64), new ItemStack(ItemRegister.upgradeKitSmiley)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 15), new ItemStack(WeaponRegister.blasterConfettiCluster)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.circusCoin, 25), new ItemStack(WeaponRegister.cannonBalloonBomber)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 5), new ItemStack(ItemRegister.BALLOON, 10)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 46), new ItemStack(ItemRegister.GRAVITATOR)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 15), new ItemStack(ItemRegister.TOY_GYROCOPTER)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 64), new ItemStack(ItemRegister.CIRCUS_COIN, 64), new ItemStack(ItemRegister.SMILEY_UPGRADE_KIT), 0, 1));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 15), new ItemStack(WeaponRegister.CONFETTI_CLUSTER)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CIRCUS_COIN, 25), new ItemStack(WeaponRegister.BALLOON_BOMBER)));
 	}
 }

@@ -52,19 +52,19 @@ public class EntityDevourer extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDevourerLiving;
+		return SoundsRegister.MOB_DEVOURER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDevourerDeath;
+		return SoundsRegister.MOB_DEVOURER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDevourerHit;
+		return SoundsRegister.MOB_DEVOURER_HIT;
 	}
 
 	@Nullable

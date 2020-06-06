@@ -50,19 +50,19 @@ public class EntityHealingGolem extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAutomatonLiving;
+		return SoundsRegister.MOB_AUTOMATON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAutomatonHit;
+		return SoundsRegister.MOB_AUTOMATON_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAutomatonDeath;
+		return SoundsRegister.MOB_AUTOMATON_DEATH;
 	}
 
 	@Nullable

@@ -20,7 +20,7 @@ public class Rosidons extends BasicFood {
 	public Rosidons() {
 		super("Rosidons", "rosidons", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropRosidons.setCrop(this);
+		BlockRegister.ROSIDON_CROP.setCrop(this);
 	}
 
 	@Override

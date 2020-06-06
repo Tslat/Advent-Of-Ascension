@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FleshTemple extends AoAStructure { //StructureSize: 13x10x13
-	private static final IBlockState bloodstoneBars = BlockRegister.bloodstoneBars.getDefaultState();
-	private static final IBlockState bloodstoneBarBricks = BlockRegister.bloodstoneBarBricks.getDefaultState();
-	private static final IBlockState fleshEaterSpawner = BlockRegister.spawnerFleshEater.getDefaultState();
+	private static final IBlockState bloodstoneBars = BlockRegister.BLOODSTONE_BARS.getDefaultState();
+	private static final IBlockState bloodstoneBarBricks = BlockRegister.BLOODSTONE_BAR_BRICKS.getDefaultState();
+	private static final IBlockState fleshEaterSpawner = BlockRegister.FLESH_EATER_SPAWNER.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public FleshTemple() {

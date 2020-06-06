@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.fx.FXFluffyTrail;
 import net.tslat.aoa3.client.model.entities.mobs.haven.ModelRainicorn;
-import net.tslat.aoa3.client.render.AoAMinionRenderer;
+import net.tslat.aoa3.client.render.entities.AoAMinionRenderer;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.minions.EntityAlluricorn;
 import net.tslat.aoa3.library.Enums;

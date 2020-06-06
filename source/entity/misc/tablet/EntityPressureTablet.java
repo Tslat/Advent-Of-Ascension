@@ -27,6 +27,6 @@ public class EntityPressureTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletPressure;
+		return ItemRegister.PRESSURE_TABLET;
 	}
 }

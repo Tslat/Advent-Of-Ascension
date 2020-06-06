@@ -14,7 +14,7 @@ public class WorldTypeImmortallis extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeImmortallis);
+		return new BiomeProviderSingle(BiomeRegister.IMMORTALLIS);
 	}
 
 	@Override

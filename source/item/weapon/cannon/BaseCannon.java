@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class BaseCannon extends BaseGun {
 	public BaseCannon(double dmg, int durability, int fireDelayTicks, float recoil) {
 		super(dmg, durability, fireDelayTicks, recoil);
-		setCreativeTab(CreativeTabsRegister.cannonsTab);
+		setCreativeTab(CreativeTabsRegister.CANNONS);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public abstract class BaseCannon extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.cannonball, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.CANNONBALL, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityCannonball(player, gun, hand, 120, 0);

@@ -9,6 +9,6 @@ public class ChargingTable extends BasicNonCubeBlock {
 		super("ChargingTable", "charging_table", Material.ROCK);
 		setHardness(5f);
 		setResistance(4f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 }

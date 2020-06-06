@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ShadeTree2 extends AoAStructure { //StructureSize: 7x35x7
-	private static final IBlockState shadowLeaves = BlockRegister.leavesShadow.getDefaultState();
-	private static final IBlockState shadowLog = BlockRegister.logShadow.getDefaultState();
+	private static final IBlockState shadowLeaves = BlockRegister.SHADOW_LEAVES.getDefaultState();
+	private static final IBlockState shadowLog = BlockRegister.SHADOW_LOG.getDefaultState();
 
 	public ShadeTree2() {
 		super("ShadeTree2");

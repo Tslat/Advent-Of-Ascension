@@ -28,7 +28,7 @@ public class OverworldGen {
 				int posY = 14 + rand.nextInt(17);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreAmethyst.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.amethyst.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.amethyst.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.AMETHYST_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.amethyst.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.amethyst.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
@@ -38,7 +38,7 @@ public class OverworldGen {
 				int posY = 17 + rand.nextInt(31);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreRosite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.rosite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.rosite.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.ROSITE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.rosite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.rosite.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
@@ -48,7 +48,7 @@ public class OverworldGen {
 				int posY = 8 + rand.nextInt(60);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreLimonite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.limonite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.limonite.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.LIMONITE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.limonite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.limonite.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
@@ -58,7 +58,7 @@ public class OverworldGen {
 				int posY = 5 + rand.nextInt(128);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.runium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.runium.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.RUNIUM_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.runium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.runium.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
@@ -68,7 +68,7 @@ public class OverworldGen {
 				int posY = 7 + rand.nextInt(13);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreJade.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jade.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jade.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.JADE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.jade.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.jade.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 
@@ -78,7 +78,7 @@ public class OverworldGen {
 				int posY = 4 + rand.nextInt(8);
 				int posZ = chunkZ + rand.nextInt(16);
 
-				new WorldGenMinable(BlockRegister.oreSapphire.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.sapphire.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.sapphire.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
+				new WorldGenMinable(BlockRegister.SAPPHIRE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.sapphire.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.sapphire.maxOresPerVein) + 1)).generate(world, rand, new BlockPos(posX, posY, posZ));
 			}
 		}
 	}

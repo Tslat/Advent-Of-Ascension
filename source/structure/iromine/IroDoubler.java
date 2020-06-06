@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IroDoubler extends AoAStructure { //StructureSize: 5x8x5
-	private static final IBlockState leaves = BlockRegister.leavesIrogold.getDefaultState();
-	private static final IBlockState log = BlockRegister.logIro.getDefaultState();
+	private static final IBlockState leaves = BlockRegister.IROGOLD_LEAVES.getDefaultState();
+	private static final IBlockState log = BlockRegister.IRO_LOG.getDefaultState();
 
 	public IroDoubler() {
 		super("IroDoubler");

@@ -77,19 +77,19 @@ public class EntityMechaSkellox extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMechyonLiving;
+		return SoundsRegister.MOB_MECHYON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMechyonHit;
+		return SoundsRegister.MOB_MECHYON_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMechyonDeath;
+		return SoundsRegister.MOB_MECHYON_DEATH;
 	}
 
 	@Nullable

@@ -34,14 +34,14 @@ public class UltimatumStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffUltimatum;
+		return SoundsRegister.ULTIMATUM_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeLife, 5);
-		runes.put(ItemRegister.runePower, 3);
-		runes.put(ItemRegister.runeDistortion, 8);
+		runes.put(ItemRegister.LIFE_RUNE, 5);
+		runes.put(ItemRegister.POWER_RUNE, 3);
+		runes.put(ItemRegister.DISTORTION_RUNE, 8);
 	}
 
 	@Override

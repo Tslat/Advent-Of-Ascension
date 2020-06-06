@@ -26,13 +26,13 @@ import javax.annotation.Nullable;
 public class WorldProviderAncientCavern extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionAncientCavern;
+		return DimensionRegister.DIM_ANCIENT_CAVERN;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeAncientCavern.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_ANCIENT_CAVERN.getBiomeProvider(world);
 	}
 
 	@Override
@@ -51,8 +51,8 @@ public class WorldProviderAncientCavern extends WorldProvider implements AoAWorl
 	}
 
 	@Override
-	public boolean canPlaceBlock(EntityPlayer player, BlockPos pos, IBlockState block) {
-		return player.isCreative() || block.getBlock() instanceof BlockTorch;
+	public boolean canPlaceBlock(@Nullable EntityPlayer player, BlockPos pos, IBlockState block) {
+		return (player != null && player.isCreative()) || block.getBlock() instanceof BlockTorch;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class WorldProviderAncientCavern extends WorldProvider implements AoAWorl
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeAncientCavern.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_ANCIENT_CAVERN.getChunkGenerator(world, null);
 	}
 
 	@Override

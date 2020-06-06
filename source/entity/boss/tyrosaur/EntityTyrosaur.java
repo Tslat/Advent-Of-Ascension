@@ -64,24 +64,24 @@ public class EntityTyrosaur extends AoAMeleeMob implements BossEntity, SpecialPr
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTyrosaurLiving;
+		return SoundsRegister.MOB_TYROSAUR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTyrosaurDeath;
+		return SoundsRegister.MOB_TYROSAUR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTyrosaurHit;
+		return SoundsRegister.MOB_TYROSAUR_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobTyrosaurStep;
+		return SoundsRegister.MOB_TYROSAUR_STEP;
 	}
 
 	@Nullable
@@ -121,20 +121,20 @@ public class EntityTyrosaur extends AoAMeleeMob implements BossEntity, SpecialPr
 		if (stompCooldown > 70) {
 			if (getAttackTarget() != null && rand.nextInt(150) == 0) {
 				if (!world.isRemote)
-					world.playSound(null, posX, posY, posZ, SoundsRegister.mobTyrosaurCharge, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_TYROSAUR_CHARGE, SoundCategory.HOSTILE, 1.0f, 1.0f);
 
 				addVelocity(Math.signum(getAttackTarget().posX - posX) * 1.029, (getAttackTarget().posY - posY) * 0.0429, Math.signum(getAttackTarget().posZ - posZ) * 1.029);
 			}
 		}
 		else if (stompCooldown == 40) {
 			if (!world.isRemote)
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobTyrosaurReadyStomp, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_TYROSAUR_READY_STOMP, SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
 		else if (stompCooldown == 0) {
 			stompCooldown = 100;
 
 			if (!world.isRemote)
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobTyrosaurStomp, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_TYROSAUR_STOMP, SoundCategory.HOSTILE, 1.0f, 1.0f);
 
 			for (EntityPlayer pl : world.getEntitiesWithinAABB(EntityPlayer.class, getEntityBoundingBox().grow(35), PredicateUtil.IS_VULNERABLE_PLAYER)) {
 				if (pl.onGround && !world.isRemote) {
@@ -180,7 +180,7 @@ public class EntityTyrosaur extends AoAMeleeMob implements BossEntity, SpecialPr
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicTyrosaur;
+		return SoundsRegister.TYROSAUR_MUSIC;
 	}
 
 	@Nonnull

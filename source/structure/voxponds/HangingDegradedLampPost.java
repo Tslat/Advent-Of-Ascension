@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HangingDegradedLampPost extends AoAStructure { //StructureSize: 5x5x5
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState voxLight = BlockRegister.lightVox.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState voxLight = BlockRegister.VOX_LIGHT.getDefaultState();
 
 	public HangingDegradedLampPost() {
 		super("HangingDegradedLampPost");

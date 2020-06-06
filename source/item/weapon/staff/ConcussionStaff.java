@@ -32,7 +32,7 @@ public class ConcussionStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffConcussion;
+		return SoundsRegister.CONCUSSION_STAFF_CAST;
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class ConcussionStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runePower, 4);
-		runes.put(ItemRegister.runeStorm, 4);
+		runes.put(ItemRegister.POWER_RUNE, 4);
+		runes.put(ItemRegister.STORM_RUNE, 4);
 	}
 
 	@Override

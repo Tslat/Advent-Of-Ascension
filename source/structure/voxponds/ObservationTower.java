@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ObservationTower extends AoAStructure { //StructureSize: 16x30x20
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState steelLight = BlockRegister.lightSteel.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState steelLight = BlockRegister.STEEL_LIGHT.getDefaultState();
 
 	public ObservationTower() {
 		super("ObservationTower");

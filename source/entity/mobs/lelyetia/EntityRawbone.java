@@ -57,19 +57,19 @@ public class EntityRawbone extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRawboneLiving;
+		return SoundsRegister.MOB_RAWBONE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRawboneDeath;
+		return SoundsRegister.MOB_RAWBONE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRawboneHit;
+		return SoundsRegister.MOB_RAWBONE_HIT;
 	}
 
 	@Nullable

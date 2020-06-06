@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class DrownedLottoStand extends AoAStructure { //StructureSize: 12x11x12
 	private static final IBlockState glass = Blocks.GLASS.getDefaultState();
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 
 	public DrownedLottoStand() {

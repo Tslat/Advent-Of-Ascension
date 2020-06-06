@@ -23,7 +23,7 @@ public class HealingFood extends ItemFood {
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
 		this.healAmount = healing;
-		setCreativeTab(CreativeTabsRegister.foodTab);
+		setCreativeTab(CreativeTabsRegister.FOOD);
 	}
 
 	@Override

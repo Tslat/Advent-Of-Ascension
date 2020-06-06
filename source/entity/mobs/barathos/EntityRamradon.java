@@ -48,22 +48,22 @@ public class EntityRamradon extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRamradonLiving;
+		return SoundsRegister.MOB_RAMRADON_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRamradonDeath;
+		return SoundsRegister.MOB_RAMRADON_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRamradonHit;
+		return SoundsRegister.MOB_RAMRADON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

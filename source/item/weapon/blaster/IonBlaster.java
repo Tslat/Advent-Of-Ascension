@@ -18,7 +18,7 @@ public class IonBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunIonBlaster;
+		return SoundsRegister.ION_BLASTER_FIRE;
 	}
 
 	@Override

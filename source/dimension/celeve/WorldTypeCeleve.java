@@ -14,7 +14,7 @@ public class WorldTypeCeleve extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeCeleve);
+		return new BiomeProviderSingle(BiomeRegister.CELEVE);
 	}
 
 	@Override

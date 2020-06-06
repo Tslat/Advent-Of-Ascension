@@ -57,24 +57,24 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobKrorLiving;
+		return SoundsRegister.MOB_KROR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKrorDeath;
+		return SoundsRegister.MOB_KROR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobKrorLiving;
+		return SoundsRegister.MOB_KROR_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -119,7 +119,7 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 				if (!pl.isSneaking())
 					pl.addVelocity(Math.signum(posX - pl.posZ) * 0.229, 0, Math.signum(posZ - pl.posZ) * 0.229);
 
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobKrorLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_KROR_LIVING, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 		}
 	}
@@ -159,7 +159,7 @@ public class EntityKror extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicKror;
+		return SoundsRegister.KROR_MUSIC;
 	}
 
 	@Override

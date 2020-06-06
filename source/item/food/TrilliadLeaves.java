@@ -18,7 +18,7 @@ public class TrilliadLeaves extends BasicFood {
 	public TrilliadLeaves() {
 		super("TrilliadLeaves", "trilliad_leaves", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropTrilliads.setCrop(this);
+		BlockRegister.TRILLIAD_CROP.setCrop(this);
 	}
 
 	@Override

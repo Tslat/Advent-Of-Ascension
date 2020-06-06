@@ -11,11 +11,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HauntedCastle extends AoAStructure { //StructureSize: 39x39x29
-	private static final IBlockState hauntedBricks = BlockRegister.bricksHaunted.getDefaultState();
+	private static final IBlockState hauntedBricks = BlockRegister.HAUNTED_BRICKS.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState bansheeSpawner = BlockRegister.spawnerBanshee.getDefaultState();
-	private static final IBlockState undeadTrollSpawner = BlockRegister.spawnerUndeadTroll.getDefaultState();
-	private static final IBlockState nightmareSpiderSpawner = BlockRegister.spawnerNightmareSpider.getDefaultState();
+	private static final IBlockState bansheeSpawner = BlockRegister.BANSHEE_SPAWNER.getDefaultState();
+	private static final IBlockState undeadTrollSpawner = BlockRegister.UNDEAD_TROLL_SPAWNER.getDefaultState();
+	private static final IBlockState nightmareSpiderSpawner = BlockRegister.NIGHTMARE_SPIDER_SPAWNER.getDefaultState();
 
 	public HauntedCastle() {
 		super("HauntedCastle");

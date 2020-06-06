@@ -85,7 +85,7 @@ public class EntityDeadTree extends AoAMeleeMob {
 			if (treeSpirit.getHealth() <= 0)
 				ModUtil.completeAdvancement((EntityPlayerMP)source.getImmediateSource(), "overworld/mightiest_tree_in_the_forest", "tree_spirit_instakill");
 
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobTreeSpiritLiving, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_TREE_SPIRIT_LIVING, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			setDead();
 
 			return true;

@@ -5,6 +5,6 @@ import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 public class AmmoItem extends SimpleItem {
 	public AmmoItem(String name, String registryName) {
 		super(name, registryName);
-		setCreativeTab(CreativeTabsRegister.ammoTab);
+		setCreativeTab(CreativeTabsRegister.AMMUNITION);
 	}
 }

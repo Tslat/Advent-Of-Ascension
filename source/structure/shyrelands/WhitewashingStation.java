@@ -12,19 +12,19 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class WhitewashingStation extends AoAStructure { //StructureSize: 14x8x14
-	private static final IBlockState whiteBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState whiteBricksSlabBottom = BlockRegister.slabShyreWhiteBricks.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
-	private static final IBlockState whiteShyreStairsEast = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
-	private static final IBlockState whiteShyreStairsNorth = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
-	private static final IBlockState whiteShyreStairsSouth = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
-	private static final IBlockState whiteShyreStairsWest = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_RIGHT);
-	private static final IBlockState whitewashingTable = BlockRegister.whitewashingTable.getDefaultState();
-	private static final IBlockState yellowBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState yellowBricksSlabBottom = BlockRegister.slabShyreYellowBricks.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
-	private static final IBlockState yellowShyreStairsEast = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
-	private static final IBlockState yellowShyreStairsNorth = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
-	private static final IBlockState yellowShyreStairsSouth = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
-	private static final IBlockState yellowShyreStairsWest = BlockRegister.stairsShyreYellowBricks.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
+	private static final IBlockState whiteBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState whiteBricksSlabBottom = BlockRegister.DOUBLE_WHITE_SHYRE_BRICKS_SLAB.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+	private static final IBlockState whiteShyreStairsEast = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
+	private static final IBlockState whiteShyreStairsNorth = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
+	private static final IBlockState whiteShyreStairsSouth = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_LEFT);
+	private static final IBlockState whiteShyreStairsWest = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.OUTER_RIGHT);
+	private static final IBlockState whitewashingTable = BlockRegister.WHITEWASHING_TABLE.getDefaultState();
+	private static final IBlockState yellowBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowBricksSlabBottom = BlockRegister.DOUBLE_YELLOW_SHYRE_BRICKS_SLAB.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+	private static final IBlockState yellowShyreStairsEast = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
+	private static final IBlockState yellowShyreStairsNorth = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.NORTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
+	private static final IBlockState yellowShyreStairsSouth = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.SOUTH).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
+	private static final IBlockState yellowShyreStairsWest = BlockRegister.YELLOW_SHYRE_BRICKS_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST).withProperty(BlockStairs.HALF, BlockStairs.EnumHalf.BOTTOM).withProperty(BlockStairs.SHAPE, BlockStairs.EnumShape.STRAIGHT);
 
 	public WhitewashingStation() {
 		super("WhitewashingStation");

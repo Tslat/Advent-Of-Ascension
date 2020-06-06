@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunarCreationPlatform extends AoAStructure { //StructureSize: 9x5x9
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState lunarPillar = BlockRegister.lunarPillar.getDefaultState();
-	private static final IBlockState lunarPad = BlockRegister.lunarPad.getDefaultState();
-	private static final IBlockState lunarCreationTable = BlockRegister.lunarCreationTable.getDefaultState();
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState lunarPillar = BlockRegister.LUNAR_PILLAR.getDefaultState();
+	private static final IBlockState lunarPad = BlockRegister.LUNAR_PAD.getDefaultState();
+	private static final IBlockState lunarCreationTable = BlockRegister.LUNAR_CREATION_TABLE.getDefaultState();
 
 	public LunarCreationPlatform() {
 		super("LunarCreationPlatform");

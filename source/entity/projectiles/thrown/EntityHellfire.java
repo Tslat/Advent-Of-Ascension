@@ -57,7 +57,7 @@ public class EntityHellfire extends BaseBullet implements HardProjectile {
 		}
 
 		if (shooter instanceof EntityPlayer) {
-			world.playSound(null, posX, posY, posZ, SoundsRegister.hellfireImpact, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.HELLFIRE_IMPACT, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 			if (count >= 20 && shooter instanceof EntityPlayerMP)
 				ModUtil.completeAdvancement((EntityPlayerMP)shooter, "overworld/heckfire", "20_target_hellfire");

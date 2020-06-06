@@ -22,8 +22,8 @@ public class VinocorneShrine extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		player.world.setBlockState(blockPos.up(), BlockRegister.livingGrowth.getDefaultState());
-		player.world.scheduleUpdate(blockPos.up(), BlockRegister.livingGrowth, 40);
+		player.world.setBlockState(blockPos.up(), BlockRegister.LIVING_GROWTH.getDefaultState());
+		player.world.scheduleUpdate(blockPos.up(), BlockRegister.LIVING_GROWTH, 40);
 		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.vinocorne.spawn", player.getDisplayNameString()), blockPos);
 	}
 
@@ -31,12 +31,12 @@ public class VinocorneShrine extends BossAltarBlock {
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		super.breakBlock(world, pos, state);
 
-		if (world.getBlockState(pos.up()).getBlock() == BlockRegister.livingGrowth)
+		if (world.getBlockState(pos.up()).getBlock() == BlockRegister.LIVING_GROWTH)
 			world.setBlockToAir(pos.up());
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.petals;
+		return ItemRegister.PETALS;
 	}
 }

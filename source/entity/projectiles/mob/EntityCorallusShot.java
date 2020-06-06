@@ -75,7 +75,7 @@ public class EntityCorallusShot extends EntityFlying {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.staffCoral;
+		return SoundsRegister.CORAL_STAFF_CAST;
 	}
 
 	@Nullable

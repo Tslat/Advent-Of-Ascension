@@ -28,7 +28,7 @@ public abstract class BaseSword extends ItemSword implements AdventWeapon {
 		super(material);
 		this.dmg = getAttackDamage();
 		this.speed = speed == 0 ? Enums.WeaponSpeed.NORMAL.value : speed;
-		setCreativeTab(CreativeTabsRegister.swordsTab);
+		setCreativeTab(CreativeTabsRegister.SWORDS);
 	}
 
 	public float getDamage() {
@@ -66,8 +66,8 @@ public abstract class BaseSword extends ItemSword implements AdventWeapon {
 		Multimap<String, AttributeModifier> modifierMap = super.getItemAttributeModifiers(equipmentSlot);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg);
-			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, speed);
+			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage());
+			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, getAttackSpeed());
 		}
 
 		return modifierMap;

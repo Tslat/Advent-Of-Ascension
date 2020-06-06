@@ -45,13 +45,12 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 	protected final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", getReach() - 3.5f, 0);
 
 	public BaseGreatblade(final double dmg, final double speed, final int durability) {
-		setCreativeTab(CreativeTabsRegister.greatbladesTab);
+		setCreativeTab(CreativeTabsRegister.GREATBLADES);
 		this.dmg = dmg;
 		this.speed = speed == 0 ? -3.2400001287460327D : speed;
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
 	}
 
 	@Override
@@ -146,7 +145,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 					dmg -= (weak.getAmplifier() + 1) * 4;
 
 				float cooldownMultiplier = (((EntityPlayer)attacker).getCooledAttackStrength(0f));
-				final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
+				final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SEVER, stack);
 				final float finalDmg = (dmg + severModifier * 1.5f) * (cooldownMultiplier + 0.01f);
 
 				if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)(target.getParts())[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
@@ -191,7 +190,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 			if (weak != null)
 				dmg -= (weak.getAmplifier() + 1) * 4;
 
-			dmg += EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
+			dmg += EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SEVER, stack);
 
 			if (target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)) {
 				if (health > 0)
@@ -212,7 +211,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
 	}
 
 	@SideOnly(Side.CLIENT)

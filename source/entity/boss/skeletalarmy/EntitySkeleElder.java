@@ -122,7 +122,7 @@ public class EntitySkeleElder extends AoAMeleeMob {
 		if (wave >= 0 && armyBlockPos != null && getDistanceSq(armyBlockPos) < 50 * 50) {
 			Block bl = world.getBlockState(armyBlockPos).getBlock();
 
-			if (bl == BlockRegister.armyBlock)
+			if (bl == BlockRegister.ARMY_BLOCK)
 				ArmyBlock.spawnWave(world, armyBlockPos, wave + 1);
 		}
 	}

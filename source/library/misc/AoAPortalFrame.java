@@ -49,29 +49,29 @@ public class AoAPortalFrame {
         for (Vec3i pos : northSouthPattern) {
             Block testBlock = world.getBlockState(basePos.add(pos)).getBlock();
 
-            if (testBlock == BlockRegister.ancientRock) {
+            if (testBlock == BlockRegister.ANCIENT_ROCK) {
                 ancientRockCount++;
             }
             else if (testBlock instanceof CarvedRunicPortalBlock) {
-                if (testBlock == BlockRegister.carvedRuneTravel) {
+                if (testBlock == BlockRegister.CARVED_RUNE_TRAVEL) {
                     if (carvedRuneTravel != null)
                         return INVALID;
 
                     carvedRuneTravel = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneReality) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_REALITY) {
                     if (carvedRuneReality != null)
                         return INVALID;
 
                     carvedRuneReality = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneSpace) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_SPACE) {
                     if (carvedRuneSpace != null)
                         return INVALID;
 
                     carvedRuneSpace = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneDirection) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_DIRECTION) {
                     if (carvedRuneDirection != null)
                         return INVALID;
 
@@ -111,29 +111,29 @@ public class AoAPortalFrame {
         for (Vec3i pos : eastWestPattern) {
             Block testBlock = world.getBlockState(basePos.add(pos)).getBlock();
 
-            if (testBlock == BlockRegister.ancientRock) {
+            if (testBlock == BlockRegister.ANCIENT_ROCK) {
                 ancientRockCount++;
             }
             else if (testBlock instanceof CarvedRunicPortalBlock) {
-                if (testBlock == BlockRegister.carvedRuneTravel) {
+                if (testBlock == BlockRegister.CARVED_RUNE_TRAVEL) {
                     if (carvedRuneTravel != null)
                         return INVALID;
 
                     carvedRuneTravel = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneReality) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_REALITY) {
                     if (carvedRuneReality != null)
                         return INVALID;
 
                     carvedRuneReality = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneSpace) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_SPACE) {
                     if (carvedRuneSpace != null)
                         return INVALID;
 
                     carvedRuneSpace = testBlock;
                 }
-                else if (testBlock == BlockRegister.carvedRuneDirection) {
+                else if (testBlock == BlockRegister.CARVED_RUNE_DIRECTION) {
                     if (carvedRuneDirection != null)
                         return INVALID;
 

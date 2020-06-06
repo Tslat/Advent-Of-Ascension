@@ -1,11 +1,23 @@
 package net.tslat.aoa3.utils.skills;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.entity.misc.EntityBloodlust;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
+import org.apache.logging.log4j.Level;
+
+import java.util.HashSet;
 
 public class ButcheryUtil {
+	private static HashSet<String> bloodlustBlacklist = new HashSet<String>(1);
+
 	public static float getTickRegen(int lvl) {
 		if (lvl <= 19)
 			return 0.05f;
@@ -72,7 +84,19 @@ public class ButcheryUtil {
 		return 110;
 	}
 
+	public static boolean canMobSpawnBloodlust(Entity entity) {
+		ResourceLocation entityId = EntityList.getKey(entity);
+
+		if (entityId == null)
+			return false;
+
+		return !bloodlustBlacklist.contains(entityId.toString());
+	}
+
 	public static void tryCritical(LivingHurtEvent event, PlayerDataManager plData) {
+		if (!ConfigurationUtil.MainConfig.resourcesEnabled || !ConfigurationUtil.MainConfig.skillsEnabled)
+			return;
+
 		if (AdventOfAscension.rand.nextInt(100) + 1 <= plData.stats().getResourceValue(Enums.Resources.RAGE)) {
 			float multiplier = 1.0f;
 			multiplier *= getCriticalMultiplier(plData.stats().getLevel(Enums.Skills.BUTCHERY));
@@ -87,5 +111,29 @@ public class ButcheryUtil {
 
 			plData.stats().consumeResource(Enums.Resources.RAGE, 200.0f, true);
 		}
+	}
+
+	public static void tryBloodlustSpawn(EntityPlayer pl, EntityLivingBase target) {
+		if (ConfigurationUtil.MainConfig.skillsEnabled && AdventOfAscension.rand.nextInt(30) == 0 && canMobSpawnBloodlust(target))
+			pl.world.spawnEntity(new EntityBloodlust(pl.world, target.getPosition()));
+	}
+
+	public static void blacklistEntityFromBloodlusts(Entity entity) {
+		ResourceLocation entityId = EntityList.getKey(entity);
+
+		if (entityId == null) {
+			AdventOfAscension.logMessage(Level.WARN, "Unable to find registry ID for bloodlust blacklist: " + entity.getDisplayName());
+
+			return;
+		}
+
+		bloodlustBlacklist.add(entityId.toString());
+	}
+
+	public static void blacklistEntityIdFromBloodlusts(ResourceLocation entityId) {
+		if (!EntityList.isRegistered(entityId))
+			AdventOfAscension.logOptionalMessage("Entity ID: " + entityId.toString() + " is not mapped to a registered ID. There might be an error in the bloodlusts blacklist config.");
+
+		bloodlustBlacklist.add(entityId.toString());
 	}
 }

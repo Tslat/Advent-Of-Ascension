@@ -15,6 +15,6 @@ public class ShyregemBow extends BaseBow {
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
 		Item repairItem = repairMaterial.getItem();
 
-		return repairItem == ItemRegister.ingotShyrestone || repairItem == ItemRegister.gemShyregem || super.getIsRepairable(stack, repairMaterial);
+		return repairItem == ItemRegister.SHYRESTONE_INGOT || repairItem == ItemRegister.SHYREGEM || super.getIsRepairable(stack, repairMaterial);
 	}
 }

@@ -52,17 +52,17 @@ public class EntityYeti extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobYetiLiving;
+		return SoundsRegister.MOB_YETI_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobYetiDeath;
+		return SoundsRegister.MOB_YETI_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobYetiHit;
+		return SoundsRegister.MOB_YETI_HIT;
 	}
 
 	@Nullable

@@ -15,6 +15,6 @@ public class Megagun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMinigun;
+		return SoundsRegister.MINIGUN_FIRE;
 	}
 }

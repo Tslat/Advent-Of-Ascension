@@ -45,17 +45,17 @@ public class EntityHunch extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHunchLiving;
+		return SoundsRegister.MOB_HUNCH_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHunchDeath;
+		return SoundsRegister.MOB_HUNCH_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHunchHit;
+		return SoundsRegister.MOB_HUNCH_HIT;
 	}
 
 	@Nullable

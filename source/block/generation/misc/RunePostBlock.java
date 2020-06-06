@@ -47,7 +47,7 @@ public class RunePostBlock extends UnbreakableBlock {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.pureWaterStone));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.PURE_WATER_STONE));
 			world.setBlockToAir(pos);
 
 			return true;

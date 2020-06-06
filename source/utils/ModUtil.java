@@ -6,13 +6,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
@@ -23,24 +20,20 @@ import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.FluidsRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.event.GlobalEvents;
+import net.tslat.aoa3.utils.skills.ButcheryUtil;
 import net.tslat.aoa3.utils.skills.HunterUtil;
+import net.tslat.aoa3.utils.skills.InnervationUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
@@ -62,45 +55,15 @@ public class ModUtil {
 		AdventOfAscension.logOptionalMessage("Applying hunter statuses");
 
 		for (String entry : ConfigurationUtil.EntityConfig.hunterEntities.hunterEntities) {
-			String[] entryParts = entry.split(" ");
-
-			if (entryParts.length < 3) {
-				AdventOfAscension.logOptionalMessage("Invalid format for hunter entity entry: \"" + entry + "\"");
-
-				continue;
-			}
-
-			try {
-				String registryName = entryParts[0];
-				int levelReq = MathHelper.clamp(Integer.parseInt(entryParts[1].replace("lvl:", "")), 1, 100);
-				float hunterXp = MathHelper.clamp(Float.parseFloat(entryParts[2].replace("xp:", "")), 0, Float.MAX_VALUE);
-				EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(registryName));
-
-				if (entityEntry == null) {
-					AdventOfAscension.logOptionalMessage("Unable to find entity registered as: \"" + registryName + "\"");
-
-					continue;
-				}
-
-				Class<? extends Entity> entityClass = entityEntry.getEntityClass();
-
-				if (EntityLivingBase.class.isAssignableFrom(entityClass)) {
-					HunterUtil.registerHunterCreature((Class<? extends EntityLivingBase>)entityClass, levelReq, hunterXp);
-					AdventOfAscension.logOptionalMessage("Registered hunter entity: " + registryName + " , Lvl: " + levelReq + ", Xp: " + hunterXp);
-				}
-				else {
-					AdventOfAscension.logOptionalMessage("Entity \"" + registryName + "\" is does not extend EntityLivingBase. Hunter entities must be alive to apply");
-				}
-			}
-			catch (NumberFormatException ex) {
-				AdventOfAscension.logOptionalMessage("Invalid format for value: \"" + entryParts[1] + "\"", ex);
-			}
+			HunterUtil.parseHunterCreatureRegistration(entry);
 		}
 
-		AdventOfAscension.logOptionalMessage("Patching entity stats overrides");
+		for (String entry : ConfigurationUtil.EntityConfig.bloodlustBlacklist) {
+			ButcheryUtil.blacklistEntityIdFromBloodlusts(new ResourceLocation(entry));
+		}
 
-		for (String entry : ConfigurationUtil.EntityConfig.entityStats.entityStats) {
-
+		for (String entry : ConfigurationUtil.EntityConfig.heartstoneBlacklist) {
+			InnervationUtil.blacklistEntityIdFromHeartstones(new ResourceLocation(entry));
 		}
 	}
 
@@ -211,48 +174,6 @@ public class ModUtil {
 		}
 	}
 
-	@Nullable
-	public static String getTextFromResourceFile(ResourceLocation resourceLocation, String fileType, ResourceLocation... fallbackLocations) {
-		Object modContainer = resourceLocation.getNamespace().equals("aoa3") ? AdventOfAscension.instance() : Loader.instance().getIndexedModList().get(resourceLocation.getNamespace());
-
-		if (modContainer == null) {
-			AdventOfAscension.logMessage(Level.ERROR, "Unable to find mod with domain: " + resourceLocation.getNamespace());
-
-			return null;
-		}
-
-		ClassLoader loader = modContainer.getClass().getClassLoader();
-		InputStream streamIn = loader.getResourceAsStream("assets/" + resourceLocation.getNamespace() + "/" + resourceLocation.getPath() + "." + fileType);
-
-		if (streamIn == null) {
-			for (ResourceLocation fallback : fallbackLocations) {
-				streamIn = loader.getResourceAsStream("assets/" + fallback.getNamespace() + "/" + fallback.getPath() + "." + fileType);
-
-				if (streamIn != null)
-					break;
-			}
-
-			if (streamIn == null) {
-				AdventOfAscension.logOptionalMessage("Unable to find resource from " + resourceLocation.getNamespace() + " with path: " + resourceLocation.getPath() + ". Tried " + fallbackLocations.length + " fallback locations");
-
-				return null;
-			}
-		}
-
-		try (InputStreamReader streamReader = new InputStreamReader(streamIn, StandardCharsets.UTF_8); BufferedReader reader = new BufferedReader(streamReader)) {
-			final StringBuilder content = new StringBuilder();
-
-			reader.lines().forEach(line -> {content.append(line); content.append("\n");});
-
-			return content.toString();
-		}
-		catch (IOException ex) {
-			AdventOfAscension.logMessage(Level.ERROR, "Buffered reader failed for mod: " + resourceLocation.getNamespace() + ", filepath: " + resourceLocation.getPath(), ex);
-
-			return null;
-		}
-	}
-
 	public static float[] initFixedArray(float size) {
 		return new float[(int)size];
 	}
@@ -269,7 +190,7 @@ public class ModUtil {
 		logger.log(Level.INFO, "Total potions registered: " + ForgeRegistries.POTIONS.getValuesCollection().size());
 		logger.log(Level.INFO, "Total biomes registered: " + ForgeRegistries.BIOMES.getValuesCollection().size());
 		logger.log(Level.INFO, "Total entities registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size());
-		logger.log(Level.INFO, "Total enchantments registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size());
+		logger.log(Level.INFO, "Total enchantments registered: " + ForgeRegistries.ENCHANTMENTS.getValuesCollection().size());
 	}
 
 	public static boolean isClient() {

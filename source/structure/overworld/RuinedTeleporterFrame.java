@@ -12,11 +12,11 @@ import java.util.Random;
 
 public class RuinedTeleporterFrame extends AoAStructure { //StructureSize: 11x9x15
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
-	private static final IBlockState ancientRock = BlockRegister.ancientRock.getDefaultState();
-	private static final IBlockState carvedRuneOfDirection = BlockRegister.carvedRuneDirection.getDefaultState();
-	private static final IBlockState carvedRuneOfSpace = BlockRegister.carvedRuneSpace.getDefaultState();
-	private static final IBlockState carvedRuneOfReality = BlockRegister.carvedRuneReality.getDefaultState();
-	private static final IBlockState carvedRuneOfTravel = BlockRegister.carvedRuneTravel.getDefaultState();
+	private static final IBlockState ancientRock = BlockRegister.ANCIENT_ROCK.getDefaultState();
+	private static final IBlockState carvedRuneOfDirection = BlockRegister.CARVED_RUNE_DIRECTION.getDefaultState();
+	private static final IBlockState carvedRuneOfSpace = BlockRegister.CARVED_RUNE_SPACE.getDefaultState();
+	private static final IBlockState carvedRuneOfReality = BlockRegister.CARVED_RUNE_REALITY.getDefaultState();
+	private static final IBlockState carvedRuneOfTravel = BlockRegister.CARVED_RUNE_TRAVEL.getDefaultState();
 
 	public RuinedTeleporterFrame() {
 		super("RuinedTeleporterFrame");

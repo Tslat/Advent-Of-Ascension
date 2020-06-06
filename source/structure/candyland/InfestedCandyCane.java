@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class InfestedCandyCane extends AoAStructure { //StructureSize: 12x8x12
-	private static final IBlockState redCandy = BlockRegister.candyRed.getDefaultState();
-	private static final IBlockState whiteCandy = BlockRegister.candyWhite.getDefaultState();
-	private static final IBlockState caneBugSpawner = BlockRegister.spawnerCaneBug.getDefaultState();
+	private static final IBlockState redCandy = BlockRegister.RED_CANDY.getDefaultState();
+	private static final IBlockState whiteCandy = BlockRegister.WHITE_CANDY.getDefaultState();
+	private static final IBlockState caneBugSpawner = BlockRegister.CANE_BUG_SPAWNER.getDefaultState();
 
 	public InfestedCandyCane() {
 		super("InfestedCandyCane");

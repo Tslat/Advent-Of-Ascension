@@ -18,7 +18,7 @@ public class MindBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMindBlaster;
+		return SoundsRegister.MIND_BLASTER_FIRE;
 	}
 
 	@Override

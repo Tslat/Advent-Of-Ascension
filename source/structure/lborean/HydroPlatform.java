@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HydroPlatform extends AoAStructure { //StructureSize: 7x13x7
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
-	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
-	private static final IBlockState hydroTable = BlockRegister.hydroTable.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
+	private static final IBlockState glass = BlockRegister.AQUATIC_GLASS.getDefaultState();
+	private static final IBlockState hydroTable = BlockRegister.HYDRO_TABLE.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 
 	public HydroPlatform() {

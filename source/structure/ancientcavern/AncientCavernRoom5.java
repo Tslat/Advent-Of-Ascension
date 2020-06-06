@@ -12,17 +12,17 @@ import java.util.Random;
 public class AncientCavernRoom5 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState ancientGlass = BlockRegister.glassAncient.getDefaultState();
-	private static final IBlockState ancientLamp = BlockRegister.lightAncient.getDefaultState();
-	private static final IBlockState ancientVineCap = BlockRegister.plantAncientVinesCap.getDefaultState();
-	private static final IBlockState ancientVines = BlockRegister.plantAncientVines.getDefaultState();
-	private static final IBlockState blackAncientTile = BlockRegister.ancientTileBlack.getDefaultState();
-	private static final IBlockState coreAncientTile = BlockRegister.ancientTileCore.getDefaultState();
-	private static final IBlockState greenAncientTile = BlockRegister.ancientTileGreen.getDefaultState();
+	private static final IBlockState ancientGlass = BlockRegister.ANCIENT_GLASS.getDefaultState();
+	private static final IBlockState ancientLamp = BlockRegister.ANCIENT_LIGHT.getDefaultState();
+	private static final IBlockState ancientVineCap = BlockRegister.ANCIENT_VINES_CAP.getDefaultState();
+	private static final IBlockState ancientVines = BlockRegister.ANCIENT_VINES.getDefaultState();
+	private static final IBlockState blackAncientTile = BlockRegister.BLACK_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState coreAncientTile = BlockRegister.ANCIENT_TILE_CORE.getDefaultState();
+	private static final IBlockState greenAncientTile = BlockRegister.GREEN_ANCIENT_TILE.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState spawnerAutomaton = BlockRegister.spawnerAngelica.getDefaultState();
-	private static final IBlockState spawnerRockCritter = BlockRegister.spawnerRockCritter.getDefaultState();
-	private static final IBlockState whiteAncientTile = BlockRegister.ancientTileWhite.getDefaultState();
+	private static final IBlockState spawnerAutomaton = BlockRegister.ANGELICA_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerRockCritter = BlockRegister.ROCK_CRITTER_SPAWNER.getDefaultState();
+	private static final IBlockState whiteAncientTile = BlockRegister.WHITE_ANCIENT_TILE.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

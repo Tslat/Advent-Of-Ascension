@@ -26,7 +26,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeRunandor;
+	private final Biome biome = BiomeRegister.RUNANDOR;
 
 	private int x;
 	private int y;
@@ -64,8 +64,8 @@ public class ChunkGenRunandor implements IChunkGenerator {
 	}
 
 	private void setBlocksInChunk() {
-		setAllBlocksBetweenYCoords(0, 11 + count, BlockRegister.stoneRunic.getDefaultState());
-		setAllBlocksBetweenYCoords(11 + count, 11 + count, 11 + count <= 14 ? BlockRegister.stoneRunic.getDefaultState() : BlockRegister.grassRunic.getDefaultState());
+		setAllBlocksBetweenYCoords(0, 11 + count, BlockRegister.RUNIC_STONE.getDefaultState());
+		setAllBlocksBetweenYCoords(11 + count, 11 + count, 11 + count <= 14 ? BlockRegister.RUNIC_STONE.getDefaultState() : BlockRegister.RUNIC_GRASS.getDefaultState());
 
 		if (count < 4) {
 			for (x = 0; x <= 15; x++) {
@@ -81,7 +81,7 @@ public class ChunkGenRunandor implements IChunkGenerator {
 			for (int y = 0; y <= 5; y++) {
 				for (int z = 0; z <= 15; z++) {
 					if (y <= 2)
-						primer.setBlockState(x, y, z, BlockRegister.dimensionalFabric.getDefaultState());
+						primer.setBlockState(x, y, z, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 				}
 			}
 		}

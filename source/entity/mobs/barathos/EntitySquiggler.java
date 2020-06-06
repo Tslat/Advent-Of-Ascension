@@ -52,17 +52,17 @@ public class EntitySquiggler extends AoAMeleeMob implements SpecialPropertyEntit
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSquigglerLiving;
+		return SoundsRegister.MOB_SQUIGGLER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSquigglerDeath;
+		return SoundsRegister.MOB_SQUIGGLER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSquigglerDeath;
+		return SoundsRegister.MOB_SQUIGGLER_HIT;
 	}
 
 	@Nullable

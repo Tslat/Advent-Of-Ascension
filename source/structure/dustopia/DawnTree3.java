@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DawnTree3 extends AoAStructure { //StructureSize: 7x23x7
-	private static final IBlockState dawnLog = BlockRegister.logDawn.getDefaultState();
-	private static final IBlockState dawnLeaves = BlockRegister.leavesDawn.getDefaultState();
+	private static final IBlockState dawnLog = BlockRegister.DAWN_LOG.getDefaultState();
+	private static final IBlockState dawnLeaves = BlockRegister.DAWN_LEAVES.getDefaultState();
 
 	public DawnTree3() {
 		super("DawnTree3");

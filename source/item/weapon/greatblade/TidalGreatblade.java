@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.weapon.greatblade;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -23,6 +24,9 @@ public class TidalGreatblade extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
+		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0) < 0.75f)
+			return;
+
 		double xOffset = MathHelper.cos(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 		double zOffset = MathHelper.sin(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 

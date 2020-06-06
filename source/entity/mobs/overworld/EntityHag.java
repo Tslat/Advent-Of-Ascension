@@ -57,25 +57,25 @@ public class EntityHag extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHagLiving;
+		return SoundsRegister.MOB_HAG_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHagDeath;
+		return SoundsRegister.MOB_HAG_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHagHit;
+		return SoundsRegister.MOB_HAG_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotHagFire;
+		return SoundsRegister.HAG_SHOOT;
 	}
 
 	@Nullable

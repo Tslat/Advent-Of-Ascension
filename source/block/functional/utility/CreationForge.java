@@ -26,7 +26,7 @@ public class CreationForge extends Block {
 		setHardness(10.0f);
 		setResistance(15.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class CreationForge extends Block {
 					player.getHeldItem(hand).shrink(1);
 
 				plData.stats().addXp(Enums.Skills.CREATION, slab.sacrificeXp, false, false);
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.creationForgeUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.CREATION_FORGE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 				player.inventoryContainer.detectAndSendChanges();
 			}
 			else {

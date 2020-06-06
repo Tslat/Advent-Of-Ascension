@@ -45,19 +45,19 @@ public class EntitySugarface extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSugarfaceLiving;
+        return SoundsRegister.MOB_SUGARFACE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSugarfaceDeath;
+        return SoundsRegister.MOB_SUGARFACE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSugarfaceHit;
+        return SoundsRegister.MOB_SUGARFACE_HIT;
     }
 
     @Nullable

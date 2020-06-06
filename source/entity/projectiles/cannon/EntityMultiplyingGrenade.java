@@ -44,7 +44,7 @@ public class EntityMultiplyingGrenade extends BaseBullet implements HardProjecti
 
 		if (!world.isRemote && getAge() < 10 && shooter instanceof EntityPlayer && count < 5) {
 			world.spawnEntity(new EntityMultiplyingGrenade(shooter, gun, hand, 120, count + 1));
-			world.playSound(null, shooter.posX, shooter.posY, shooter.posZ, SoundsRegister.gunMissileMaker, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, shooter.posX, shooter.posY, shooter.posZ, SoundsRegister.MISSILE_MAKER_FIRE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class EntityMultiplyingGrenade extends BaseBullet implements HardProjecti
 
 		if (!world.isRemote && count < 5 && getAge() == 10 && shooter instanceof EntityPlayer) {
 			world.spawnEntity(new EntityMultiplyingGrenade(shooter, gun, hand, 120, count + 1));
-			world.playSound(null, shooter.posX, shooter.posY, shooter.posZ, SoundsRegister.gunMissileMaker, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, shooter.posX, shooter.posY, shooter.posZ, SoundsRegister.MISSILE_MAKER_FIRE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 }

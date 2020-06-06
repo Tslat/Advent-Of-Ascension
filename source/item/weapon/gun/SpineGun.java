@@ -2,7 +2,6 @@ package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
@@ -16,6 +15,6 @@ public class SpineGun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSquadGun;
+		return SoundsRegister.SQUAD_GUN_FIRE;
 	}
 }

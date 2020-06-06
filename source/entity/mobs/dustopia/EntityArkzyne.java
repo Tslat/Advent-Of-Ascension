@@ -45,19 +45,19 @@ public class EntityArkzyne extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobArkzyneLiving;
+        return SoundsRegister.MOB_ARKZYNE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobArkzyneDeath;
+        return SoundsRegister.MOB_ARKZYNE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobArkzyneHit;
+        return SoundsRegister.MOB_ARKZYNE_HIT;
     }
 
     @Nullable

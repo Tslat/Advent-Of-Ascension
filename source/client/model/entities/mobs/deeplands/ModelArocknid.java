@@ -1,131 +1,111 @@
 package net.tslat.aoa3.client.model.entities.mobs.deeplands;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelArocknid extends ModelBase {
-	private ModelRenderer head;
-	private ModelRenderer body;
-	private ModelRenderer RearEnd;
-	private ModelRenderer Leg8;
-	private ModelRenderer Leg6;
-	private ModelRenderer Leg4;
-	private ModelRenderer Leg2;
-	private ModelRenderer Leg7;
-	private ModelRenderer Leg5;
-	private ModelRenderer Leg3;
-	private ModelRenderer Leg1;
-	private ModelRenderer head2;
-	private ModelRenderer head3;
-	private ModelRenderer RearEnd2;
-	private ModelRenderer body2;
-	private ModelRenderer body3;
+	private final ModelRenderer Body;
+	private final ModelRenderer Leg1;
+	private final ModelRenderer Leg2;
+	private final ModelRenderer Leg3;
+	private final ModelRenderer Leg4;
+	private final ModelRenderer Leg5;
+	private final ModelRenderer Leg6;
+	private final ModelRenderer Leg7;
+	private final ModelRenderer Leg8;
+	private final ModelRenderer Head;
+	private final ModelRenderer Head3;
+	private final ModelRenderer Body3;
+	private final ModelRenderer RearEnd;
 
 	public ModelArocknid() {
 		textureWidth = 64;
 		textureHeight = 64;
-		(head = new ModelRenderer(this, 4, 33)).addBox(2.0f, -11.0f, -9.0f, 1, 4, 9);
-		head.setRotationPoint(0.0f, 15.5f, 3.0f);
-		head.setTextureSize(64, 64);
-		head.mirror = true;
-		setRotation(head, 0.6108652f, 0.0f, 0.0f);
-		(body = new ModelRenderer(this, 31, 23)).addBox(-1.0f, -4.0f, -2.0f, 1, 6, 13);
-		body.setRotationPoint(-1.0f, 14.5f, 2.0f);
-		body.setTextureSize(64, 64);
-		body.mirror = true;
-		setRotation(body, 0.912012f, 0.0f, 0.0f);
-		(RearEnd = new ModelRenderer(this, 0, 12)).addBox(1.0f, -4.0f, -6.0f, 3, 4, 12);
-		RearEnd.setRotationPoint(0.0f, 18.5f, 9.0f);
-		RearEnd.setTextureSize(64, 64);
-		RearEnd.mirror = true;
-		setRotation(RearEnd, 0.0f, 0.0f, 0.0f);
-		(Leg8 = new ModelRenderer(this, 18, 0)).addBox(-1.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg8.setRotationPoint(4.0f, 15.5f, -1.0f);
-		Leg8.setTextureSize(64, 64);
-		Leg8.mirror = true;
-		setRotation(Leg8, 0.0f, 0.5759587f, 0.1919862f);
-		(Leg6 = new ModelRenderer(this, 18, 0)).addBox(-1.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg6.setRotationPoint(4.0f, 15.5f, 0.0f);
-		Leg6.setTextureSize(64, 64);
-		Leg6.mirror = true;
-		setRotation(Leg6, 0.0f, 0.2792527f, 0.1919862f);
-		(Leg4 = new ModelRenderer(this, 18, 0)).addBox(-1.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg4.setRotationPoint(4.0f, 15.5f, 1.0f);
-		Leg4.setTextureSize(64, 64);
-		Leg4.mirror = true;
-		setRotation(Leg4, 0.0f, -0.2792527f, 0.1919862f);
-		(Leg2 = new ModelRenderer(this, 18, 0)).addBox(-1.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg2.setRotationPoint(4.0f, 15.5f, 2.0f);
-		Leg2.setTextureSize(64, 64);
-		Leg2.mirror = true;
-		setRotation(Leg2, 0.0f, -0.5759587f, 0.1919862f);
-		(Leg7 = new ModelRenderer(this, 18, 0)).addBox(-15.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg7.setRotationPoint(-4.0f, 15.5f, -1.0f);
-		Leg7.setTextureSize(64, 64);
-		Leg7.mirror = true;
-		setRotation(Leg7, 0.0f, -0.5759587f, -0.1919862f);
-		(Leg5 = new ModelRenderer(this, 18, 0)).addBox(-15.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg5.setRotationPoint(-4.0f, 15.5f, 0.0f);
-		Leg5.setTextureSize(64, 64);
-		Leg5.mirror = true;
-		setRotation(Leg5, 0.0f, -0.2792527f, -0.1919862f);
-		(Leg3 = new ModelRenderer(this, 18, 0)).addBox(-15.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg3.setRotationPoint(-4.0f, 15.5f, 1.0f);
-		Leg3.setTextureSize(64, 64);
-		Leg3.mirror = true;
-		setRotation(Leg3, 0.0f, 0.2792527f, -0.1919862f);
-		(Leg1 = new ModelRenderer(this, 18, 0)).addBox(-15.0f, -1.0f, -1.0f, 16, 2, 2);
-		Leg1.setRotationPoint(-4.0f, 15.5f, 2.0f);
-		Leg1.setTextureSize(64, 64);
-		Leg1.mirror = true;
-		setRotation(Leg1, 0.0f, 0.5759587f, -0.1919862f);
-		(head2 = new ModelRenderer(this, 32, 4)).addBox(-4.0f, -4.0f, -8.0f, 8, 8, 8);
-		head2.setRotationPoint(0.0f, 20.0f, -3.0f);
-		head2.setTextureSize(64, 64);
-		head2.mirror = true;
-		setRotation(head2, 0.0f, 0.0f, 0.0f);
-		(head3 = new ModelRenderer(this, 4, 33)).addBox(-3.0f, -11.0f, -9.0f, 1, 4, 9);
-		head3.setRotationPoint(0.0f, 15.5f, 3.0f);
-		head3.setTextureSize(64, 64);
-		head3.mirror = true;
-		setRotation(head3, 0.6108652f, 0.0f, 0.0f);
-		(RearEnd2 = new ModelRenderer(this, 0, 12)).addBox(-5.0f, -4.0f, -6.0f, 3, 4, 12);
-		RearEnd2.setRotationPoint(0.0f, 18.5f, 9.0f);
-		RearEnd2.setTextureSize(64, 64);
-		RearEnd2.mirror = true;
-		setRotation(RearEnd2, 0.0f, 0.0f, 0.0f);
-		(body2 = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -3.0f, -3.0f, 6, 6, 6);
-		body2.setRotationPoint(0.0f, 15.5f, 0.0f);
-		body2.setTextureSize(64, 64);
-		body2.mirror = true;
-		setRotation(body2, 0.0f, 0.0f, 0.0f);
-		(body3 = new ModelRenderer(this, 31, 23)).addBox(-1.0f, -4.0f, -2.0f, 1, 6, 13);
-		body3.setRotationPoint(1.0f, 14.5f, 2.0f);
-		body3.setTextureSize(64, 64);
-		body3.mirror = true;
-		setRotation(body3, 0.912012f, 0.0f, 0.0f);
+
+		Body = new ModelRenderer(this);
+		Body.setRotationPoint(0.0F, 20.0F, 0.0F);
+		Body.cubeList.add(new ModelBox(Body, 0, 0, -3.0F, -3.0F, -3.0F, 6, 6, 6, 0.0F, true));
+
+		Leg1 = new ModelRenderer(this);
+		Leg1.setRotationPoint(2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg1);
+		setRotation(Leg1, 0.0F, -0.576F, -0.2443F);
+		Leg1.cubeList.add(new ModelBox(Leg1, 18, 0, 0.4293F, -1.5413F, -0.7891F, 16, 2, 2, 0.0F, true));
+
+		Leg2 = new ModelRenderer(this);
+		Leg2.setRotationPoint(-2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg2);
+		setRotation(Leg2, 0.0F, 0.576F, 0.2443F);
+		Leg2.cubeList.add(new ModelBox(Leg2, 18, 0, -16.4293F, -1.5413F, -0.7891F, 16, 2, 2, 0.0F, false));
+
+		Leg3 = new ModelRenderer(this);
+		Leg3.setRotationPoint(2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg3);
+		setRotation(Leg3, 0.0F, -0.2793F, -0.2443F);
+		Leg3.cubeList.add(new ModelBox(Leg3, 18, 0, -0.0052F, -1.5196F, -1.0519F, 16, 2, 2, 0.0F, true));
+
+		Leg4 = new ModelRenderer(this);
+		Leg4.setRotationPoint(-2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg4);
+		setRotation(Leg4, 0.0F, 0.2793F, 0.2443F);
+		Leg4.cubeList.add(new ModelBox(Leg4, 18, 0, -15.9948F, -1.5196F, -1.0519F, 16, 2, 2, 0.0F, false));
+
+		Leg5 = new ModelRenderer(this);
+		Leg5.setRotationPoint(2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg5);
+		setRotation(Leg5, 0.0F, 0.2793F, -0.2443F);
+		Leg5.cubeList.add(new ModelBox(Leg5, 18, 0, -0.0052F, -1.5276F, -0.9481F, 16, 2, 2, 0.0F, true));
+
+		Leg6 = new ModelRenderer(this);
+		Leg6.setRotationPoint(-2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg6);
+		setRotation(Leg6, 0.0F, -0.2793F, 0.2443F);
+		Leg6.cubeList.add(new ModelBox(Leg6, 18, 0, -15.9948F, -1.5276F, -0.9481F, 16, 2, 2, 0.0F, false));
+
+		Leg7 = new ModelRenderer(this);
+		Leg7.setRotationPoint(2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg7);
+		setRotation(Leg7, 0.0F, 0.576F, -0.2443F);
+		Leg7.cubeList.add(new ModelBox(Leg7, 18, 0, 0.4293F, -1.5513F, -1.2109F, 16, 2, 2, 0.0F, true));
+
+		Leg8 = new ModelRenderer(this);
+		Leg8.setRotationPoint(-2.0F, 0.0F, 0.5F);
+		Body.addChild(Leg8);
+		setRotation(Leg8, 0.0F, -0.576F, 0.2443F);
+		Leg8.cubeList.add(new ModelBox(Leg8, 18, 0, -16.4293F, -1.5513F, -1.2109F, 16, 2, 2, 0.0F, false));
+
+		Head = new ModelRenderer(this);
+		Head.setRotationPoint(0.0F, 0.0F, -3.0F);
+		Body.addChild(Head);
+		Head.cubeList.add(new ModelBox(Head, 32, 4, -4.0F, -4.0F, -8.0F, 8, 8, 8, 0.0F, true));
+
+		Head3 = new ModelRenderer(this);
+		Head3.setRotationPoint(0.0F, 0.0F, 6.0F);
+		Head.addChild(Head3);
+		setRotation(Head3, 0.6109F, 0.0F, 0.0F);
+		Head3.cubeList.add(new ModelBox(Head3, 4, 33, 2.0F, -11.0F, -9.0F, 1, 4, 9, 0.0F, true));
+		Head3.cubeList.add(new ModelBox(Head3, 4, 33, -3.0F, -11.0F, -9.0F, 1, 4, 9, 0.0F, true));
+
+		Body3 = new ModelRenderer(this);
+		Body3.setRotationPoint(-1.0F, -1.0F, 2.0F);
+		Body.addChild(Body3);
+		setRotation(Body3, 0.912F, 0.0F, 0.0F);
+		Body3.cubeList.add(new ModelBox(Body3, 31, 23, 2.0F, -4.0F, -2.0F, 1, 6, 13, 0.0F, true));
+		Body3.cubeList.add(new ModelBox(Body3, 31, 23, -1.0F, -4.0F, -2.0F, 1, 6, 13, 0.0F, true));
+
+		RearEnd = new ModelRenderer(this);
+		RearEnd.setRotationPoint(0.0F, 3.0F, 3.0F);
+		Body.addChild(RearEnd);
+		RearEnd.cubeList.add(new ModelBox(RearEnd, 0, 12, -5.0F, -4.0F, 0.0F, 3, 4, 12, 0.0F, true));
+		RearEnd.cubeList.add(new ModelBox(RearEnd, 0, 12, 2.0F, -4.0F, 0.0F, 3, 4, 12, 0.0F, true));
 	}
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
-		head.render(par7);
-		body.render(par7);
-		RearEnd.render(par7);
-		Leg8.render(par7);
-		Leg6.render(par7);
-		Leg4.render(par7);
-		Leg2.render(par7);
-		Leg7.render(par7);
-		Leg5.render(par7);
-		Leg3.render(par7);
-		Leg1.render(par7);
-		head2.render(par7);
-		head3.render(par7);
-		RearEnd2.render(par7);
-		body2.render(par7);
-		body3.render(par7);
+		Body.render(par7);
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
@@ -135,64 +115,33 @@ public class ModelArocknid extends ModelBase {
 	}
 
 	public void setRotationAngles(final float par1, final float par2, final float par3, final float par4, final float par5, final float par6, final Entity par7Entity) {
-		final float var8 = 0.7853982f;
-		Leg1.rotateAngleZ = -var8;
-		Leg2.rotateAngleZ = var8;
-		Leg3.rotateAngleZ = -var8 * 0.74f;
-		Leg4.rotateAngleZ = var8 * 0.74f;
-		Leg5.rotateAngleZ = -var8 * 0.74f;
-		Leg6.rotateAngleZ = var8 * 0.74f;
-		Leg7.rotateAngleZ = -var8;
-		Leg8.rotateAngleZ = var8;
-		final float var9 = -0.0f;
-		final float var10 = 0.3926991f;
-		Leg1.rotateAngleY = var10 * 2.0f + var9;
-		Leg2.rotateAngleY = -var10 * 2.0f - var9;
-		Leg3.rotateAngleY = var10 * 1.0f + var9;
-		Leg4.rotateAngleY = -var10 * 1.0f - var9;
-		Leg5.rotateAngleY = -var10 * 1.0f + var9;
-		Leg6.rotateAngleY = var10 * 1.0f - var9;
-		Leg7.rotateAngleY = -var10 * 2.0f + var9;
-		Leg8.rotateAngleY = var10 * 2.0f - var9;
-		final float var11 = -(MathHelper.cos(par1 * 0.6662f * 2.0f + 0.0f) * 0.4f) * par2;
-		final float var12 = -(MathHelper.cos(par1 * 0.6662f * 2.0f + 3.1415927f) * 0.4f) * par2;
-		final float var13 = -(MathHelper.cos(par1 * 0.6662f * 2.0f + 1.5707964f) * 0.4f) * par2;
-		final float var14 = -(MathHelper.cos(par1 * 0.6662f * 2.0f + 4.712389f) * 0.4f) * par2;
-		final float var15 = Math.abs(MathHelper.sin(par1 * 0.6662f + 0.0f) * 0.4f) * par2;
-		final float var16 = Math.abs(MathHelper.sin(par1 * 0.6662f + 3.1415927f) * 0.4f) * par2;
-		final float var17 = Math.abs(MathHelper.sin(par1 * 0.6662f + 1.5707964f) * 0.4f) * par2;
-		final float var18 = Math.abs(MathHelper.sin(par1 * 0.6662f + 4.712389f) * 0.4f) * par2;
-		final ModelRenderer leg1 = Leg1;
-		leg1.rotateAngleY += var11;
-		final ModelRenderer leg2 = Leg2;
-		leg2.rotateAngleY += -var11;
-		final ModelRenderer leg3 = Leg3;
-		leg3.rotateAngleY += var12;
-		final ModelRenderer leg4 = Leg4;
-		leg4.rotateAngleY += -var12;
-		final ModelRenderer leg5 = Leg5;
-		leg5.rotateAngleY += var13;
-		final ModelRenderer leg6 = Leg6;
-		leg6.rotateAngleY += -var13;
-		final ModelRenderer leg7 = Leg7;
-		leg7.rotateAngleY += var14;
-		final ModelRenderer leg8 = Leg8;
-		leg8.rotateAngleY += -var14;
-		final ModelRenderer leg9 = Leg1;
-		leg9.rotateAngleZ += var15;
-		final ModelRenderer leg10 = Leg2;
-		leg10.rotateAngleZ += -var15;
-		final ModelRenderer leg11 = Leg3;
-		leg11.rotateAngleZ += var16;
-		final ModelRenderer leg12 = Leg4;
-		leg12.rotateAngleZ += -var16;
-		final ModelRenderer leg13 = Leg5;
-		leg13.rotateAngleZ += var17;
-		final ModelRenderer leg14 = Leg6;
-		leg14.rotateAngleZ += -var17;
-		final ModelRenderer leg15 = Leg7;
-		leg15.rotateAngleZ += var18;
-		final ModelRenderer leg16 = Leg8;
-		leg16.rotateAngleZ += -var18;
+		float rot1 = -(MathHelper.cos(par1 * 1.324f) * 0.4f) * par2;
+		float rot2 = -(MathHelper.cos(par1 * 1.324f + (float)Math.PI) * 0.4f) * par2;
+		float rot3 = -(MathHelper.cos(par1 * 1.324f + (float)Math.PI / 2f) * 0.4f) * par2;
+		float rot4 = -(MathHelper.cos(par1 * 1.324f + (float)Math.PI * 1.5f) * 0.4f) * par2;
+		float lift1 = Math.abs(MathHelper.sin(par1 * 0.6662f) * 0.4f) * par2;
+		float lift2 = Math.abs(MathHelper.sin(par1 * 0.6662f + (float)Math.PI) * 0.4f) * par2;
+		float lift3 = Math.abs(MathHelper.sin(par1 * 0.6662f + (float)Math.PI / 2f) * 0.4f) * par2;
+		float lift4 = Math.abs(MathHelper.sin(par1 * 0.6662f + (float)Math.PI * 1.5f) * 0.4f) * par2;
+		float quarterPi = -(float)Math.PI / 4f;
+		float eighthPi = -(float)Math.PI / 8f;
+
+		Leg1.rotateAngleY = quarterPi + rot1;
+		Leg2.rotateAngleY = -quarterPi + rot1;
+		Leg3.rotateAngleY = eighthPi + rot2;
+		Leg4.rotateAngleY = -eighthPi + rot2;
+		Leg5.rotateAngleY = -eighthPi + rot3;
+		Leg6.rotateAngleY = eighthPi + rot3;
+		Leg7.rotateAngleY = -quarterPi + rot4;
+		Leg8.rotateAngleY = quarterPi + rot4;
+
+		Leg1.rotateAngleZ = -eighthPi + lift1;
+		Leg2.rotateAngleZ = eighthPi - lift1;
+		Leg3.rotateAngleZ = -eighthPi * 0.74f + lift2;
+		Leg4.rotateAngleZ = eighthPi * 0.74f - lift2;
+		Leg5.rotateAngleZ = -eighthPi * 0.74f + lift3;
+		Leg6.rotateAngleZ = eighthPi * 0.74f - lift3;
+		Leg7.rotateAngleZ = -eighthPi + lift4;
+		Leg8.rotateAngleZ = eighthPi - lift4;
 	}
 }

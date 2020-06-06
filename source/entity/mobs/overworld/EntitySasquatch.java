@@ -45,17 +45,17 @@ public class EntitySasquatch extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSasquatchLiving;
+		return SoundsRegister.MOB_SASQUATCH_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobYetiDeath;
+		return SoundsRegister.MOB_YETI_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobYetiHit;
+		return SoundsRegister.MOB_YETI_HIT;
 	}
 
 	@Nullable

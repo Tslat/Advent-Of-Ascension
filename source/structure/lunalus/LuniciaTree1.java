@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LuniciaTree1 extends AoAStructure { //StructureSize: 5x9x5
-	private static final IBlockState luniciaLeaves = BlockRegister.leavesLunicia.getDefaultState();
-	private static final IBlockState lunideLog = BlockRegister.logLunide.getDefaultState();
+	private static final IBlockState luniciaLeaves = BlockRegister.LUNICIA_LEAVES.getDefaultState();
+	private static final IBlockState lunideLog = BlockRegister.LUNIDE_LOG.getDefaultState();
 
 	public LuniciaTree1() {
 		super("LuniciaTree1");

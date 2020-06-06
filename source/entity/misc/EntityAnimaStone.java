@@ -100,11 +100,11 @@ public class EntityAnimaStone extends Entity {
             int lvl = plData.stats().getLevel(Enums.Skills.ANIMA);
 
             plData.stats().addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(lvl / AnimaUtil.getExpDenominator(lvl)), false, false);
-            world.playSound(null, posX, posY, posZ, SoundsRegister.heartStonePickup, SoundCategory.PLAYERS, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.HEART_STONE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
             setDead();
 
             if (rand.nextInt(3) == 0)
-                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.fragmentedAnimaStone, 1));
+                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.FRAGMENTED_ANIMA_STONE, 1));
         }
     }
 

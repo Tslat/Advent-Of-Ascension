@@ -58,7 +58,7 @@ public class ContainerCorruptedTraveller extends Container {
 		if (!handledFood) {
 			ItemStack stack = inventorySlots.get(0).inventory.getStackInSlot(0);
 
-			if (!stack.isEmpty() && stack.getItem() instanceof ItemFood && player.inventory.addItemStackToInventory(new ItemStack(ItemRegister.wornBook)))
+			if (!stack.isEmpty() && stack.getItem() instanceof ItemFood && player.inventory.addItemStackToInventory(new ItemStack(ItemRegister.WORN_BOOK)))
 				stack.shrink(1);
 
 			handledFood = true;

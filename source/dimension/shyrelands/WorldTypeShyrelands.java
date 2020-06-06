@@ -14,7 +14,7 @@ public class WorldTypeShyrelands extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeShyrelands);
+		return new BiomeProviderSingle(BiomeRegister.SHYRELANDS);
 	}
 
 	@Override

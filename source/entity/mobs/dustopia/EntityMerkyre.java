@@ -50,19 +50,19 @@ public class EntityMerkyre extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobMerkyreLiving;
+        return SoundsRegister.MOB_MERKYRE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobMerkyreDeath;
+        return SoundsRegister.MOB_MERKYRE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobMerkyreHit;
+        return SoundsRegister.MOB_MERKYRE_HIT;
     }
 
     @Nullable

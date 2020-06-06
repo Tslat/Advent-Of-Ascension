@@ -69,13 +69,13 @@ public class EntityRunicGolem extends AoAMeleeMob implements SpecialPropertyEnti
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRunicGolemHit;
+		return SoundsRegister.MOB_RUNIC_GOLEM_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRunicGolemHit;
+		return SoundsRegister.MOB_RUNIC_GOLEM_HIT;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class EntityRunicGolem extends AoAMeleeMob implements SpecialPropertyEnti
 			if (isShielded()) {
 				if (EntityUtil.isMeleeDamage(source) && runeStoneCooldown <= 0) {
 					runeStoneCooldown = 120;
-					dropItem(ItemRegister.activeRuneStone, 1);
+					dropItem(ItemRegister.ACTIVE_RUNE_STONE, 1);
 				}
 
 				return false;
@@ -140,7 +140,7 @@ public class EntityRunicGolem extends AoAMeleeMob implements SpecialPropertyEnti
 		}
 		else if (shieldCooldown == 0) {
 			shieldCooldown = -1;
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobRunicGolemChange, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_RUNIC_GOLEM_CHANGE, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			setShielded(true);
 		}
 	}

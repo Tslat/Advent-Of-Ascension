@@ -26,7 +26,7 @@ public class EntitySeaSkeleton extends AoARangedMob {
 
 	public EntitySeaSkeleton(World world) {
 		super(world, entityWidth, 2.03125f);
-		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.bowSpeed));
+		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.SPEED_BOW));
 	}
 
 	public EntitySeaSkeleton(World world, double posX, double posY, double posZ) {
@@ -122,7 +122,7 @@ public class EntitySeaSkeleton extends AoARangedMob {
 
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float bowDamageFactor) {
-		EntityHollyArrow projectile = new EntityHollyArrow(world, (BaseBow)WeaponRegister.bowSpeed, this, getBaseProjectileDamage());
+		EntityHollyArrow projectile = new EntityHollyArrow(world, (BaseBow)WeaponRegister.SPEED_BOW, this, getBaseProjectileDamage());
 
 		double distanceFactorX = target.posX - this.posX;
 		double distanceFactorY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0f) - projectile.posY;

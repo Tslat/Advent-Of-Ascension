@@ -55,6 +55,6 @@ public class ClunkheadAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.megaRuneStone;
+		return ItemRegister.MEGA_RUNE_STONE;
 	}
 }

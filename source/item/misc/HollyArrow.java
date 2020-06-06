@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.misc;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -13,7 +14,12 @@ public class HollyArrow extends ItemArrow {
 	public HollyArrow(String name, String registryName) {
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.ammoTab);
+		setCreativeTab(CreativeTabsRegister.AMMUNITION);
+	}
+
+	@Override
+	public EntityArrow createArrow(World world, ItemStack stack, EntityLivingBase shooter) {
+		return new EntityHollyArrow(world, null, shooter, 9);
 	}
 
 	public EntityHollyArrow createArrow(World world, EntityHollyArrowShot archergunShot) {

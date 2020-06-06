@@ -40,7 +40,7 @@ public class WorldEvents {
 				int posY = rand.nextInt(10) + 10;
 				Block centerBlock = world.getBlockState(new BlockPos(posX + 5, posY, posZ + 7)).getBlock();
 
-				if (centerBlock != Blocks.AIR && centerBlock != BlockRegister.ancientRock)
+				if (centerBlock != Blocks.AIR && centerBlock != BlockRegister.ANCIENT_ROCK)
 					StructuresHandler.generateStructure("RuinedTeleporterFrame", world, rand, new BlockPos(posX, posY, posZ));
 			}
 

@@ -50,19 +50,19 @@ public class EntityFacelessFloater extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobFacelessRunnerLiving;
+        return SoundsRegister.MOB_FACELESS_RUNNER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobFacelessRunnerDeath;
+        return SoundsRegister.MOB_FACELESS_RUNNER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobFacelessRunnerHit;
+        return SoundsRegister.MOB_FACELESS_RUNNER_HIT;
     }
 
     @Nullable

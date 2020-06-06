@@ -82,7 +82,7 @@ public class EntityCentinel extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.gunWitherCannon;
+		return SoundsRegister.WITHER_CANNON_FIRE;
 	}
 
 	@Override

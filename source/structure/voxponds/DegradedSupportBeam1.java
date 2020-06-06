@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DegradedSupportBeam1 extends AoAStructure { //StructureSize: 4x16x4
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
 
 	public DegradedSupportBeam1() {
 		super("DegradedSupportBeam1");

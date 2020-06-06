@@ -47,19 +47,19 @@ public class EntityMuncher extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobMuncherLiving;
+		return SoundsRegister.MOB_MUNCHER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobMuncherDeath;
+		return SoundsRegister.MOB_MUNCHER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobMuncherHit;
+		return SoundsRegister.MOB_MUNCHER_HIT;
 	}
 
 	@Nullable

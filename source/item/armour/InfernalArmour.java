@@ -31,7 +31,7 @@ public class InfernalArmour extends AdventArmour {
 	@Override
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
 		if (event.getSource().isFireDamage() && slots != null)
-			event.setAmount(event.getAmount() *  0.15f * slots.size());
+			event.setAmount(event.getAmount() *  (1 - 0.15f * slots.size()));
 	}
 
 	@Override

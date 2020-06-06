@@ -92,17 +92,17 @@ public class OverworldEvents {
 						tributed = true;
 
 						if (pluton == 200 && luxon == 200 && erebon == 200 && selyan == 200)
-							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(WeaponRegister.swordHoly));
+							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(WeaponRegister.HOLY_SWORD));
 					}
 
 					if (tributed) {
-						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.tributeSuccess, SoundCategory.AMBIENT, 1.0f, 1.0f);
+						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.TRIBUTE_SUCCESS, SoundCategory.AMBIENT, 1.0f, 1.0f);
 					}
 					else {
 						if (ConfigurationUtil.MainConfig.showDailyMessages)
 							pl.sendMessage(StringUtil.getColourLocale("message.event.tribute.none." + AdventOfAscension.rand.nextInt(10), TextFormatting.DARK_GRAY));
 
-						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.tributeFail, SoundCategory.AMBIENT, 1.0f, 1.0f);
+						ev.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.TRIBUTE_FAIL, SoundCategory.AMBIENT, 1.0f, 1.0f);
 					}
 				}
 
@@ -170,24 +170,24 @@ public class OverworldEvents {
 
 			switch (event) {
 				case BIG_DAY:
-					sound = SoundsRegister.eventBigDayStart;
+					sound = SoundsRegister.BIG_DAY_START;
 					break;
 				case BLOOD_HUNT:
-					sound = SoundsRegister.eventBloodHuntStart;
+					sound = SoundsRegister.BLOOD_HUNT_START;
 					break;
 				case CREEP_DAY:
-					sound = SoundsRegister.eventCreepDayStart;
+					sound = SoundsRegister.CREEP_DAY_START;
 					break;
 				case DEATH_DAY:
-					sound = SoundsRegister.eventDeathDayStart;
+					sound = SoundsRegister.DEATH_DAY_START;
 					break;
 				case FULL_MOON:
 					break;
 				case LUNAR_INVASION:
-					sound = SoundsRegister.eventLunarInvasionStart;
+					sound = SoundsRegister.LUNAR_INVASION_START;
 					break;
 				case SOUL_SCURRY:
-					sound = SoundsRegister.eventSoulScurryStart;
+					sound = SoundsRegister.SOUL_SCURRY_START;
 					break;
 			}
 

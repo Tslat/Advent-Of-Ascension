@@ -51,17 +51,17 @@ public class EntityIrkling extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobIrklingLiving;
+		return SoundsRegister.MOB_IRKLING_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobIrklingDeath;
+		return SoundsRegister.MOB_IRKLING_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobIrklingHit;
+		return SoundsRegister.MOB_IRKLING_HIT;
 	}
 
 	@Nullable

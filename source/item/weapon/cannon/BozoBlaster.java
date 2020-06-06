@@ -8,7 +8,6 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityBozoBall;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 
@@ -24,12 +23,12 @@ public class BozoBlaster extends BaseCannon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunClowner;
+		return SoundsRegister.CLOWNER_FIRE;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, itemRand.nextInt(3) > 0, ItemRegister.cannonball, player.getHeldItem(hand));
+		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, itemRand.nextInt(3) > 0, ItemRegister.CANNONBALL, player.getHeldItem(hand));
 
 		if (ammo != null)
 			return new EntityBozoBall(player, gun, hand, 120, 0);

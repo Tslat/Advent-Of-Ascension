@@ -34,14 +34,14 @@ public class CelestialStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffCelestial;
+		return SoundsRegister.CELESTIAL_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeCompass, 1);
-		runes.put(ItemRegister.runeLunar, 2);
-		runes.put(ItemRegister.runeEnergy, 2);
+		runes.put(ItemRegister.COMPASS_RUNE, 1);
+		runes.put(ItemRegister.LUNAR_RUNE, 2);
+		runes.put(ItemRegister.ENERGY_RUNE, 2);
 	}
 
 	@Override

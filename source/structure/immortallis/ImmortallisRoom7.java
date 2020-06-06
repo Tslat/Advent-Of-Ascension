@@ -12,14 +12,14 @@ import java.util.Random;
 public class ImmortallisRoom7 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState archaicGlass = BlockRegister.glassArchaic.getDefaultState();
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
+	private static final IBlockState archaicGlass = BlockRegister.ARCHAIC_GLASS.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState progressor6 = BlockRegister.immortallisProgressor6.getDefaultState();
-	private static final IBlockState progressor7 = BlockRegister.immortallisProgressor7.getDefaultState();
+	private static final IBlockState progressor6 = BlockRegister.IMMORTALLIS_PROGRESSOR_6.getDefaultState();
+	private static final IBlockState progressor7 = BlockRegister.IMMORTALLIS_PROGRESSOR_7.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

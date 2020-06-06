@@ -21,7 +21,7 @@ public class EntityRuneTemplarBlue extends EntityRuneTemplar {
 
 	@Override
 	protected RuneItem getActivationRune() {
-		return ItemRegister.runeWater;
+		return ItemRegister.WATER_RUNE;
 	}
 
 	@Nullable

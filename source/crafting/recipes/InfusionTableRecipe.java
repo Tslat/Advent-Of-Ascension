@@ -3,6 +3,7 @@ package net.tslat.aoa3.crafting.recipes;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import net.minecraft.client.util.RecipeItemHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
@@ -23,15 +25,19 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.common.util.RecipeMatcher;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.tslat.aoa3.common.containers.ContainerInfusionTable;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Map;
 
 public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+	private static final InfusionTableRecipe EMPTY_RECIPE = new InfusionTableRecipe("", ItemStack.EMPTY, ItemStack.EMPTY, NonNullList.<Ingredient>create(), 1, 0, 0);
+
 	private final ItemStack output;
 	private final ItemStack input;
 	protected final NonNullList<Ingredient> ingredients;
@@ -52,7 +58,7 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 		this.input = input;
 		this.ingredients = ingredients;
 		this.group = group;
-		this.infusionReq = infusionLevelReq;
+		this.infusionReq = MathHelper.clamp(infusionLevelReq, 1, 1000);
 		boolean simple = true;
 
 		for (Ingredient ingredient : ingredients) {
@@ -76,7 +82,7 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 		this.enchantment = enchantment;
 		this.ingredients = ingredients;
 		this.enchantmentLevel = level;
-		this.infusionReq = infusionLevelReq;
+		this.infusionReq = MathHelper.clamp(infusionLevelReq, 1, 1000);
 		boolean simple = true;
 
 		for (Ingredient ingredient : ingredients) {
@@ -96,7 +102,7 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World world) {
-		if (inv instanceof ContainerInfusionTable.InventoryInfusion) {
+		if (this != EMPTY_RECIPE && inv instanceof ContainerInfusionTable.InventoryInfusion) {
 			int ingredientCount = 0;
 			RecipeItemHelper recipeItemHelper = new RecipeItemHelper();
 			ArrayList<ItemStack> inputIngredients = new ArrayList<ItemStack>();
@@ -175,8 +181,16 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 		return maxXp;
 	}
 
+	@Nullable
+	public EnchantmentData getEnchantment() {
+		if (enchantment == null)
+			return null;
+
+		return new EnchantmentData(enchantment, enchantmentLevel);
+	}
+
 	public ItemStack getEnchantmentAsBook() {
-		if (!isEnchanting)
+		if (!isEnchanting || this == EMPTY_RECIPE)
 			return ItemStack.EMPTY;
 
 		ItemStack bookStack = new ItemStack(Items.ENCHANTED_BOOK);
@@ -190,7 +204,9 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
 		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
-		for (int i = 0; i < remainingItems.size(); i++) {
+		remainingItems.set(0, ItemStack.EMPTY);
+
+		for (int i = 1; i < remainingItems.size(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 
 			remainingItems.set(i, ForgeHooks.getContainerItem(stack));
@@ -209,17 +225,8 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 		return group;
 	}
 
-	public boolean containsIngredient(ItemStack item) {
-		for (Ingredient ing : ingredients) {
-			if (ing.apply(item))
-				return true;
-		}
-
-		return false;
-	}
-
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {
-		if (!enchantment.canApply(inputStack) || (!ConfigurationUtil.MainConfig.allowUnsafeInfusion && enchantment.getMaxLevel() < enchantmentLevel))
+		if (this == EMPTY_RECIPE || !enchantment.canApply(inputStack) || (!ConfigurationUtil.MainConfig.allowUnsafeInfusion && enchantment.getMaxLevel() < enchantmentLevel))
 			return ItemStack.EMPTY;
 
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(inputStack);
@@ -282,7 +289,15 @@ public class InfusionTableRecipe extends IForgeRegistryEntry.Impl<IRecipe> imple
 					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + I18n.translateToLocal(enchantment.getName()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
 
 				for (JsonElement element : JsonUtils.getJsonArray(json, "ingredients")) {
-					ingredients.add(CraftingHelper.getIngredient(element, context));
+					try {
+						ingredients.add(CraftingHelper.getIngredient(element, context));
+					}
+					catch (JsonSyntaxException ex) {
+						if (ex.getMessage().startsWith("Unknown item") && !Loader.isModLoaded(ex.getMessage().split("'")[1].split(":")[0]))
+							return EMPTY_RECIPE;
+
+						throw ex;
+					}
 				}
 
 				if (ingredients.isEmpty())

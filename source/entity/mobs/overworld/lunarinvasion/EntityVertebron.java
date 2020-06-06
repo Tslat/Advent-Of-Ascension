@@ -55,28 +55,23 @@ public class EntityVertebron extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVertebronLiving;
+		return SoundsRegister.MOB_VERTEBRON_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVertebronDeath;
+		return SoundsRegister.MOB_VERTEBRON_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVertebronHit;
+		return SoundsRegister.MOB_VERTEBRON_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected ResourceLocation getLootTable() {
 		return LootSystemRegister.entityVertebron;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
 	}
 
 	@Override

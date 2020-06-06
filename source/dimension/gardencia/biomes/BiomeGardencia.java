@@ -59,10 +59,10 @@ public class BiomeGardencia extends Biome {
 				if (posY > 67 && world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock && world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
 					switch (rand.nextInt(3)) {
 						case 0:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDaileers.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAILEERS.getDefaultState());
 							break;
 						case 1:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantLylips.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.LYLIPS.getDefaultState());
 							break;
 						case 2:
 							StructuresHandler.generateStructure("GardenGrass", world, rand, pos.setPos(posX, posY, posZ));

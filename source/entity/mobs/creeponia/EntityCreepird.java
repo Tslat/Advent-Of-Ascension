@@ -51,19 +51,19 @@ public class EntityCreepird extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCreepirdLiving;
+		return SoundsRegister.MOB_CREEPIRD_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCreepirdDeath;
+		return SoundsRegister.MOB_CREEPIRD_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCreepirdHit;
+		return SoundsRegister.MOB_CREEPIRD_HIT;
 	}
 
 	@Nullable
@@ -93,8 +93,8 @@ public class EntityCreepird extends AoAFlyingMeleeMob {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		boolean success = super.attackEntityFrom(source, amount);
 
-		if (!world.isRemote && success && EntityUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.consumeItem(attackingPlayer, new ItemStack(ItemRegister.realmstoneBlank)))
-			ItemUtil.givePlayerItemOrDrop(attackingPlayer, new ItemStack(ItemRegister.realmstoneMysterium));
+		if (!world.isRemote && success && EntityUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.consumeItem(attackingPlayer, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			ItemUtil.givePlayerItemOrDrop(attackingPlayer, new ItemStack(ItemRegister.MYSTERIUM_REALMSTONE));
 
 		return success;
 	}

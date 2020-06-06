@@ -10,7 +10,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class TurquoiseHavenTree extends AoAStructure { //StructureSize: 14x33x14
-	private static final IBlockState turquoiseLeaves = BlockRegister.leavesHavenTurquoise.getDefaultState();
+	private static final IBlockState turquoiseLeaves = BlockRegister.TURQUOISE_HAVEN_LEAVES.getDefaultState();
 	private static final IBlockState log = Blocks.LOG.getDefaultState();
 
 	public TurquoiseHavenTree() {

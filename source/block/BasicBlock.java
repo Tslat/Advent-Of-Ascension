@@ -13,7 +13,7 @@ public class BasicBlock extends Block {
 		setRegistryName("aoa3:" + registryName);
 		setHardness(hardness);
 		setResistance(resistance);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		doMaterialCheck(material);
 	}
 

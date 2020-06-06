@@ -64,19 +64,19 @@ public class EntityPolytom extends AoAFlyingRangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPolytomLiving;
+		return SoundsRegister.MOB_POLYTOM_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPolytomDeath;
+		return SoundsRegister.MOB_POLYTOM_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPolytomHit;
+		return SoundsRegister.MOB_POLYTOM_HIT;
 	}
 
 	@Nullable

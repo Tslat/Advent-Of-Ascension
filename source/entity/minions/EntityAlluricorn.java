@@ -58,7 +58,7 @@ public class EntityAlluricorn extends AoAMinion {
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (stack != ItemStack.EMPTY && getOwner() != null && getOwnerId().equals(player.getUniqueID())) {
-			if (stack.getItem() == ItemRegister.runeKinetic && !player.isPotionActive(MobEffects.SPEED)) {
+			if (stack.getItem() == ItemRegister.KINETIC_RUNE && !player.isPotionActive(MobEffects.SPEED)) {
 				if (!player.capabilities.isCreativeMode)
 					stack.shrink(1);
 
@@ -74,18 +74,18 @@ public class EntityAlluricorn extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRainicornLiving;
+		return SoundsRegister.MOB_RAINICORN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRainicornHit;
+		return SoundsRegister.MOB_RAINICORN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRainicornDeath;
+		return SoundsRegister.MOB_RAINICORN_DEATH;
 	}
 }

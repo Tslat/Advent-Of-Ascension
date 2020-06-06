@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -227,13 +228,37 @@ public class XpParticlesRenderer {
 		XPParticle(float xp, boolean isLevelUp) {
 			this.levelUp = isLevelUp;
 			this.xp = xp;
-			this.xpString = "+" + StringUtil.floorAndAppendSuffix(xp, false);
+			this.xpString = AdventOfAscension.instance().holiday == AdventOfAscension.Holiday.APRIL_FOOLS ? getAprilFoolsXpString() : "+" + StringUtil.floorAndAppendSuffix(xp, false);
 		}
 
 		protected void modifyXp(float additionalXp, boolean isLevelUp) {
 			this.levelUp = levelUp || isLevelUp;
 			this.xp = xp + additionalXp;
-			this.xpString = "+" + StringUtil.floorAndAppendSuffix(xp, false);
+			this.xpString = AdventOfAscension.instance().holiday == AdventOfAscension.Holiday.APRIL_FOOLS ? getAprilFoolsXpString() : "+" + StringUtil.floorAndAppendSuffix(xp, false);
+		}
+	}
+
+	private static String getAprilFoolsXpString() {
+		switch (AdventOfAscension.rand.nextInt(9)) {
+			case 0:
+				return "Nice!";
+			case 1:
+				return "69xp";
+			case 2:
+				return "420xp";
+			case 3:
+				return "-1xp";
+			case 4:
+				return "422180734982xp";
+			case 5:
+				return "Xp Get!";
+			case 6:
+				return "GAINSSS";
+			case 7:
+				return "5xp maybe?";
+			case 8:
+			default:
+				return "⌈(⌈A1*50^1.3⌉/8+800)/46*37⌉+6xp";
 		}
 	}
 }

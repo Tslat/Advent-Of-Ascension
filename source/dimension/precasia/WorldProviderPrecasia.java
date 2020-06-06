@@ -18,13 +18,13 @@ import javax.annotation.Nullable;
 public class WorldProviderPrecasia extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionPrecasia;
+		return DimensionRegister.DIM_PRECASIA;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypePrecasia.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_PRECASIA.getBiomeProvider(world);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class WorldProviderPrecasia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypePrecasia.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_PRECASIA.getChunkGenerator(world, null);
 	}
 
 	@Override

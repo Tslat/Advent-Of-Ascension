@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ShroomStone extends BossSpawningItem {
 	public ShroomStone() {
-		super("ShroomStone", "shroom_stone", SoundsRegister.mobKingShroomusHeal, EnumParticleTypes.CLOUD, EnumParticleTypes.SPELL_MOB);
+		super("ShroomStone", "shroom_stone", SoundsRegister.MOB_KING_SHROOMUS_HEAL, EnumParticleTypes.CLOUD, EnumParticleTypes.SPELL_MOB);
 	}
 
 	@Override

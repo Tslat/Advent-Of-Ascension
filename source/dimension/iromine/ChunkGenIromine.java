@@ -35,7 +35,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeIromine;
+	private final Biome biome = BiomeRegister.IROMINE;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -244,10 +244,10 @@ public class ChunkGenIromine implements IChunkGenerator {
 
 							for (int l2 = 0; l2 < 4; ++l2) {
 								if ((lvt_45_1_ += d16) > 0.0D) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.stoneIromine.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.IROMINE_STONE.getDefaultState());
 								}
 								else if (i2 * 8 + j2 < this.world.getSeaLevel()) {
-									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.stoneIromine.getDefaultState());
+									primer.setBlockState(i * 4 + k2, i2 * 8 + j2, l * 4 + l2, BlockRegister.IROMINE_STONE.getDefaultState());
 								}
 							}
 
@@ -289,8 +289,8 @@ public class ChunkGenIromine implements IChunkGenerator {
 		int i1 = z & 15;
 
 		for (int j1 = 255; j1 >= 0; --j1) {
-			if (j1 <= 2) {
-				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.dimensionalFabric.getDefaultState());
+			if (j1 <= 0) {
+				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 			}
 			else {
 				IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
@@ -298,7 +298,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 				if (iblockstate2.getMaterial() == Material.AIR) {
 					j = -1;
 				}
-				else if (iblockstate2.getBlock() == BlockRegister.stoneIromine) {
+				else if (iblockstate2.getBlock() == BlockRegister.IROMINE_STONE) {
 					if (j == -1) {
 						if (k <= 0) {
 							topBlock = Blocks.AIR.getDefaultState();
@@ -314,7 +314,7 @@ public class ChunkGenIromine implements IChunkGenerator {
 								topBlock = Blocks.LAVA.getDefaultState();
 							}
 							else {
-								topBlock = BlockRegister.stoneIromine.getDefaultState();
+								topBlock = BlockRegister.IROMINE_STONE.getDefaultState();
 							}
 						}
 

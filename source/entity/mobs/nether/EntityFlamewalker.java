@@ -53,19 +53,19 @@ public class EntityFlamewalker extends AoAMeleeMob implements SpecialPropertyEnt
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobFlamewalkerLiving;
+        return SoundsRegister.MOB_FLAMEWALKER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobFlamewalkerDeath;
+        return SoundsRegister.MOB_FLAMEWALKER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobFlamewalkerHit;
+        return SoundsRegister.MOB_FLAMEWALKER_HIT;
     }
 
     @Nullable
@@ -94,8 +94,7 @@ public class EntityFlamewalker extends AoAMeleeMob implements SpecialPropertyEnt
     public void onLivingUpdate() {
         super.onLivingUpdate();
 
-        if (!world.isRemote && world.getGameRules().getBoolean("mobGriefing") && world.getBlockState(getPosition()).getMaterial().isReplaceable()) {
+        if (!world.isRemote && world.getGameRules().getBoolean("mobGriefing") && (getAttackTarget() != null || getRevengeTarget() != null) && world.isAirBlock(getPosition()))
             world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
-        }
     }
 }

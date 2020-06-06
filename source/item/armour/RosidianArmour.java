@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.minions.EntityRosid;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 
@@ -31,13 +32,15 @@ public class RosidianArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
-		if (slots == null) {
-			if (event.getAmount() >= 4)
-				spawnRosid(plData.player());
-		}
-		else {
-			if (itemRand.nextFloat() < 0.04 * slots.size())
-				spawnRosid(plData.player());
+		if (!EntityUtil.isEnvironmentalDamage(event.getSource()) && !EntityUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
+			if (slots == null) {
+				if (event.getAmount() >= 4)
+					spawnRosid(plData.player());
+			}
+			else {
+				if (itemRand.nextFloat() < 0.04 * slots.size())
+					spawnRosid(plData.player());
+			}
 		}
 	}
 

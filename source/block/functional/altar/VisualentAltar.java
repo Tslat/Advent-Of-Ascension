@@ -25,6 +25,6 @@ public class VisualentAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.observingEye;
+		return ItemRegister.OBSERVING_EYE;
 	}
 }

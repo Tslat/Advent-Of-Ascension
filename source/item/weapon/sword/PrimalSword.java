@@ -11,7 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.tslat.aoa3.capabilities.handlers.AdventMiscStackCapability;
 import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
@@ -27,15 +26,18 @@ public class PrimalSword extends BaseSword {
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (world.getWorldTime() % 10 == 0) {
+		if (world.getWorldTime() % 10 == 0 && entity instanceof EntityLivingBase) {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null) {
 				float currentDamageMod = cap.getValue();
 				float currentCalcBuff = getCurrentDamageBuff(entity);
 
-				if (currentDamageMod != currentCalcBuff)
+				if (currentDamageMod != currentCalcBuff) {
+					((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
 					cap.setValue(currentCalcBuff);
+					((EntityLivingBase)entity).getAttributeMap().applyAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+				}
 			}
 		}
 	}

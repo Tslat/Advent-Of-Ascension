@@ -17,17 +17,17 @@ import static net.minecraft.util.EnumFacing.EAST;
 public class ImmortallisRoom1 extends WorldGenerator {
 	private World world;
 	
-	private static final IBlockState archaicDirt = BlockRegister.archaicDirt.getDefaultState();
-	private static final IBlockState archaicGlass = BlockRegister.glassArchaic.getDefaultState();
-	private static final IBlockState archaicLight = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicStreamHorizontal = BlockRegister.archaicHorizontalStream.getDefaultState();
-	private static final IBlockState archaicStreamVertical = BlockRegister.archaicVerticalStream.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
+	private static final IBlockState archaicDirt = BlockRegister.ARCHAIC_DIRT.getDefaultState();
+	private static final IBlockState archaicGlass = BlockRegister.ARCHAIC_GLASS.getDefaultState();
+	private static final IBlockState archaicLight = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicStreamHorizontal = BlockRegister.ARCHAIC_STREAM_HORIZONTAL.getDefaultState();
+	private static final IBlockState archaicStreamVertical = BlockRegister.ARCHAIC_STREAM_VERTICAL.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState portalBlock = BlockRegister.portalImmortallis.getDefaultState().withProperty(BlockHorizontal.FACING, EAST);
-	private static final IBlockState progressor1 = BlockRegister.immortallisProgressor1.getDefaultState();
+	private static final IBlockState portalBlock = BlockRegister.IMMORTALLIS_PORTAL.getDefaultState().withProperty(BlockHorizontal.FACING, EAST);
+	private static final IBlockState progressor1 = BlockRegister.IMMORTALLIS_PROGRESSOR_1.getDefaultState();
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

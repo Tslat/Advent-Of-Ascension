@@ -29,8 +29,8 @@ public class PacketUtil {
 		network.registerMessage(PacketLongReachWeaponHit.Handler.class, PacketLongReachWeaponHit.class, 7, Side.SERVER);
 		network.registerMessage(PacketXpGain.Handler.class, PacketXpGain.class, 8, Side.CLIENT);
 		network.registerMessage(PacketLeaderboardStats.Handler.class, PacketLeaderboardStats.class, 9, Side.CLIENT);
-		network.registerMessage(PacketChangedCrown.Handler.class, PacketChangedCrown.class, 10, Side.SERVER);
-		network.registerMessage(PacketPlayerCrownInfo.Handler.class, PacketPlayerCrownInfo.class, 11, Side.CLIENT);
+		network.registerMessage(PacketChangedHalo.Handler.class, PacketChangedHalo.class, 10, Side.SERVER);
+		network.registerMessage(PacketPlayerHaloInfo.Handler.class, PacketPlayerHaloInfo.class, 11, Side.CLIENT);
 		network.registerMessage(PacketToastPopup.Handler.class, PacketToastPopup.class, 12, Side.CLIENT);
 		network.registerMessage(PacketGuiData.Handler.class, PacketGuiData.class, 13, Side.SERVER);
 	}

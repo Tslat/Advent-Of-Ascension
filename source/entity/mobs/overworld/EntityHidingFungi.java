@@ -65,7 +65,7 @@ public class EntityHidingFungi extends AoAMeleeMob {
 			livingFungi.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
 			world.spawnEntity(livingFungi);
 			livingFungi.attackEntityFrom(source, amount);
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobLivingFungiSpawn, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_LIVING_FUNGI_SPAWN, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			setDead();
 
 			return true;

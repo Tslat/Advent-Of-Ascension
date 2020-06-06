@@ -11,11 +11,11 @@ import java.util.Random;
 public class ImmortallisRoom8 extends WorldGenerator {
 	private World world;
 	
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
-	private static final IBlockState spawnerGhastus = BlockRegister.spawnerGhastus.getDefaultState();
-	private static final IBlockState spawnerUrv = BlockRegister.spawnerUrv.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
+	private static final IBlockState spawnerGhastus = BlockRegister.GHASTUS_SPAWNER.getDefaultState();
+	private static final IBlockState spawnerUrv = BlockRegister.URV_SPAWNER.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

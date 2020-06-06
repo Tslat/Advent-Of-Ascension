@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 public class CaveGenIromine extends MapGenCaves {
 	@Override
 	protected boolean canReplaceBlock(IBlockState targetBlock, IBlockState replacementBlock) {
-		return targetBlock.getBlock() == BlockRegister.stoneIromine;
+		return targetBlock.getBlock() == BlockRegister.IROMINE_STONE;
 	}
 
 	@Override

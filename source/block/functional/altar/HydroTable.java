@@ -25,6 +25,6 @@ public class HydroTable extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.pureWaterStone;
+		return ItemRegister.PURE_WATER_STONE;
 	}
 }

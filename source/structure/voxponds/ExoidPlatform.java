@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ExoidPlatform extends AoAStructure { //StructureSize: 16x3x16
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState voxGlass = BlockRegister.glassVox.getDefaultState();
-	private static final IBlockState toxicStone = BlockRegister.stoneToxic.getDefaultState();
-	private static final IBlockState steelLight = BlockRegister.lightSteel.getDefaultState();
-	private static final IBlockState exoidStation = BlockRegister.exoidStation.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState voxGlass = BlockRegister.VOX_GLASS.getDefaultState();
+	private static final IBlockState toxicStone = BlockRegister.TOXIC_STONE.getDefaultState();
+	private static final IBlockState steelLight = BlockRegister.STEEL_LIGHT.getDefaultState();
+	private static final IBlockState exoidStation = BlockRegister.EXOID_STATION.getDefaultState();
 
 	public ExoidPlatform() {
 		super("ExoidPlatform");

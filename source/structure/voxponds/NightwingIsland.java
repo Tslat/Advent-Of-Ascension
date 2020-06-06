@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class NightwingIsland extends AoAStructure { //StructureSize: 5x2x5
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState nightwingSpawner = BlockRegister.spawnerNightwing.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState nightwingSpawner = BlockRegister.NIGHTWING_SPAWNER.getDefaultState();
 
 	public NightwingIsland() {
 		super("NightwingIsland");

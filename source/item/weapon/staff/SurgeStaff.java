@@ -29,13 +29,13 @@ public class SurgeStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffSurge;
+		return SoundsRegister.SURGE_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runePower, 4);
-		runes.put(ItemRegister.runeEnergy, 1);
+		runes.put(ItemRegister.POWER_RUNE, 4);
+		runes.put(ItemRegister.ENERGY_RUNE, 1);
 	}
 
 	@Override

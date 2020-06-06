@@ -39,16 +39,16 @@ public class GuiFrameBench extends GuiContainer {
 	public void initGui() {
 		super.initGui();
 
-		buttonList.add(new FrameSelectButton(0, guiLeft + 45, guiTop + 33, "Helmet", "helmet", ItemRegister.frameHelmet));
-		buttonList.add(new FrameSelectButton(1, guiLeft + 65, guiTop + 33, "Chestplate", "chestplate", ItemRegister.frameChestplate));
-		buttonList.add(new FrameSelectButton(2, guiLeft + 85, guiTop + 33, "Leggings", "leggings", ItemRegister.frameLeggings));
-		buttonList.add(new FrameSelectButton(3, guiLeft + 105, guiTop + 33, "Boots", "boots", ItemRegister.frameBoots));
-		buttonList.add(new FrameSelectButton(4, guiLeft + 55, guiTop + 13, "Archergun", "archergun", ItemRegister.frameArchergun));
-		buttonList.add(new FrameSelectButton(5, guiLeft + 75, guiTop + 13, "Blaster", "blaster", ItemRegister.frameBlaster));
-		buttonList.add(new FrameSelectButton(6, guiLeft + 95, guiTop + 13, "Cannon", "cannon", ItemRegister.frameCannon));
-		buttonList.add(new FrameSelectButton(7, guiLeft + 55, guiTop + 53, "Gun", "gun", ItemRegister.frameGun));
-		buttonList.add(new FrameSelectButton(8, guiLeft + 75, guiTop + 53, "Shotgun", "shotgun", ItemRegister.frameShotgun));
-		buttonList.add(new FrameSelectButton(9, guiLeft + 95, guiTop + 53, "Sniper", "sniper", ItemRegister.frameSniper));
+		buttonList.add(new FrameSelectButton(0, guiLeft + 45, guiTop + 33, "Helmet", "helmet", ItemRegister.HELMET_FRAME));
+		buttonList.add(new FrameSelectButton(1, guiLeft + 65, guiTop + 33, "Chestplate", "chestplate", ItemRegister.CHESTPLATE_FRAME));
+		buttonList.add(new FrameSelectButton(2, guiLeft + 85, guiTop + 33, "Leggings", "leggings", ItemRegister.LEGGINGS_FRAME));
+		buttonList.add(new FrameSelectButton(3, guiLeft + 105, guiTop + 33, "Boots", "boots", ItemRegister.BOOTS_FRAME));
+		buttonList.add(new FrameSelectButton(4, guiLeft + 55, guiTop + 13, "Archergun", "archergun", ItemRegister.ARCHERGUN_FRAME));
+		buttonList.add(new FrameSelectButton(5, guiLeft + 75, guiTop + 13, "Blaster", "blaster", ItemRegister.BLASTER_FRAME));
+		buttonList.add(new FrameSelectButton(6, guiLeft + 95, guiTop + 13, "Cannon", "cannon", ItemRegister.CANNON_FRAME));
+		buttonList.add(new FrameSelectButton(7, guiLeft + 55, guiTop + 53, "Gun", "gun", ItemRegister.GUN_FRAME));
+		buttonList.add(new FrameSelectButton(8, guiLeft + 75, guiTop + 53, "Shotgun", "shotgun", ItemRegister.SHOTGUN_FRAME));
+		buttonList.add(new FrameSelectButton(9, guiLeft + 95, guiTop + 53, "Sniper", "sniper", ItemRegister.SNIPER_FRAME));
 	}
 
 	@Override

@@ -62,19 +62,19 @@ public class EntityAlarmo extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobAlarmoLiving;
+        return SoundsRegister.MOB_ALARMO_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobAlarmoDeath;
+        return SoundsRegister.MOB_ALARMO_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobAlarmoHit;
+        return SoundsRegister.MOB_ALARMO_HIT;
     }
 
     @Nullable

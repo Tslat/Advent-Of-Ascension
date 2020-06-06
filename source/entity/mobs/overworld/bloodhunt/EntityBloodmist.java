@@ -52,17 +52,17 @@ public class EntityBloodmist extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBloodmistLiving;
+		return SoundsRegister.MOB_BLOODMIST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBloodmistDeath;
+		return SoundsRegister.MOB_BLOODMIST_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBloodmistHit;
+		return SoundsRegister.MOB_BLOODMIST_HIT;
 	}
 
 	@Nullable

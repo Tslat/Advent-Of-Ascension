@@ -65,7 +65,7 @@ public class EntityFakePigman extends AoAMeleeMob {
                 EntityPigotron pigotron = new EntityPigotron(this);
 
                 world.spawnEntity(pigotron);
-                world.playSound(null, posX, posY, posZ, SoundsRegister.mobPigotronAppear, SoundCategory.HOSTILE, 1.0f, 1.0f);
+                world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_PIGOTRON_APPEAR, SoundCategory.HOSTILE, 1.0f, 1.0f);
                 setDead();
             }
         }

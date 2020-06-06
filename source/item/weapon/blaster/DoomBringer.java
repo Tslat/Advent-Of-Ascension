@@ -29,7 +29,7 @@ public class DoomBringer extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDoomGun;
+		return SoundsRegister.DOOM_GUN_FIRE;
 	}
 
 	@Override

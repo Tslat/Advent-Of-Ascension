@@ -16,7 +16,7 @@ public class BubbleBerries extends BasicFood {
 	public BubbleBerries() {
 		super("BubbleBerries", "bubble_berries", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropBubbleBerries.setCrop(this);
+		BlockRegister.BUBBLE_BERRY_CROP.setCrop(this);
 	}
 
 	@Override

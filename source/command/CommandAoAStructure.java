@@ -81,7 +81,7 @@ public class CommandAoAStructure extends CommandBase {
 			if (!sender.getEntityWorld().isChunkGeneratedAt(generationPos.getX(),generationPos.getZ()))
 				sender.getEntityWorld().getChunkProvider().provideChunk(generationPos.getX() >> 4, generationPos.getZ() >> 4);
 
-			StructuresHandler.generateStructure(structure, sender.getEntityWorld(), sender.getEntityWorld().rand, generationPos);
+			StructuresHandler.generateStructure(structure, sender.getEntityWorld(), null, generationPos);
 			messageSender(sender, Enums.CommandFeedbackType.SUCCESS, "command.aoastructure.success", args[0], String.valueOf(generationPos.getX()), String.valueOf(generationPos.getY()), String.valueOf(generationPos.getZ()));
 		}
 		else {

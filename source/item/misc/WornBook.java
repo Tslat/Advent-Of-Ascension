@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,8 +17,8 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.FileUtil;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.ModUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 public class WornBook extends ItemWrittenBook {
@@ -30,12 +29,12 @@ public class WornBook extends ItemWrittenBook {
 
 		this.setTranslationKey("WornBook");
 		this.setRegistryName("aoa3:worn_book");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public static ItemStack getBook() {
-		ItemStack stack = new ItemStack(ItemRegister.wornBook, 1);
+		ItemStack stack = new ItemStack(ItemRegister.WORN_BOOK, 1);
 		stack.setTagCompound(getBookContents());
 		return stack;
 	}
@@ -47,8 +46,8 @@ public class WornBook extends ItemWrittenBook {
 		if (world.isRemote) {
 			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.WORN_BOOK.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
-		else if (ItemUtil.findItemInInventory(player, ItemRegister.realmstoneBlank) == -1) {
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneBlank));
+		else if (ItemUtil.findItemInInventory(player, ItemRegister.BLANK_REALMSTONE) == -1) {
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.BLANK_REALMSTONE));
 			player.sendMessage(StringUtil.getLocale("message.feedback.wornBook.droppedRealmstone"));
 		}
 
@@ -59,7 +58,8 @@ public class WornBook extends ItemWrittenBook {
 	public static NBTTagCompound getBookContents() {
 		contents.setString("author", StringUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
 		contents.setString("title", StringUtil.getLocaleString("item.WornBook.name"));
-		String pageContents = ModUtil.getTextFromResourceFile(new ResourceLocation("aoa3", "lang/other/" + FMLCommonHandler.instance().getCurrentLanguage() + "/misc/worn_book"), "txt", new ResourceLocation("aoa3", "lang/other/en_us/misc/worn_book"));
+
+		String pageContents = FileUtil.getTextFromResourceFile("aoa3", "lang/aoa/misc/" + FMLCommonHandler.instance().getCurrentLanguage() + "/worn_book.txt", "lang/aoa3/misc/en_us/worn_book.txt");
 
 		if (pageContents == null)
 			return contents;

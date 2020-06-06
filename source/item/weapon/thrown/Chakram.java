@@ -31,7 +31,7 @@ public class Chakram extends BaseThrownWeapon {
 		super(dmg, 7);
 		setTranslationKey("Chakram");
 		setRegistryName("aoa3:chakram");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable

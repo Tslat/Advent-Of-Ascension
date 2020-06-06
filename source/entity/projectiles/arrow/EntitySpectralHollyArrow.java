@@ -30,7 +30,7 @@ public class EntitySpectralHollyArrow extends EntityHollyArrow {
 	}
 
 	protected ItemStack getArrowStack() {
-		return new ItemStack(ItemRegister.hollyArrowSpectral);
+		return new ItemStack(ItemRegister.SPECTRAL_HOLLY_ARROW);
 	}
 
 	public void onUpdate() {

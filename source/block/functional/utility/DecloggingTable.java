@@ -24,7 +24,7 @@ public class DecloggingTable extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class DecloggingTable extends Block {
 			ItemStack stack = player.getHeldItem(hand);
 			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(((WaterloggedItem)stack.getItem()).getFixedItem()));
 			stack.shrink(1);
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.decloggingTableUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.DECLOGGING_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 			return true;
 		}

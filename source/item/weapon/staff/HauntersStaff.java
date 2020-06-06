@@ -31,13 +31,13 @@ public class HauntersStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 4);
-		runes.put(ItemRegister.runeEnergy, 4);
+		runes.put(ItemRegister.WIND_RUNE, 4);
+		runes.put(ItemRegister.ENERGY_RUNE, 4);
 	}
 
 	@Override

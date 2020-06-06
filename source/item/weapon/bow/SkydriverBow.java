@@ -32,7 +32,7 @@ public class SkydriverBow extends BaseBow {
 			}
 
 			if (arrow.world.getBlockState(testPos).isFullCube())
-				arrow.world.setBlockState(testPos.up(), BlockRegister.orangeAcid.getDefaultState());
+				arrow.world.setBlockState(testPos.up(), BlockRegister.ORANGE_ACID.getDefaultState());
 		}
 	}
 

@@ -55,19 +55,19 @@ public class EntityAirhead extends AoAFlyingRangedMob implements SpecialProperty
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAirheadLiving;
+		return SoundsRegister.MOB_AIRHEAD_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAirheadHit;
+		return SoundsRegister.MOB_AIRHEAD_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAirheadDeath;
+		return SoundsRegister.MOB_AIRHEAD_DEATH;
 	}
 
 	@Nullable

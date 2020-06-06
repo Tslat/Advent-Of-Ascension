@@ -174,7 +174,7 @@ public class PortalBlock extends UnbreakableBlock {
 	private boolean isCompatibleNeighbour(IBlockState state) {
 		Block bl = state.getBlock();
 
-		return bl == BlockRegister.ancientRock || bl instanceof CarvedRunicPortalBlock || bl == this;
+		return bl == BlockRegister.ANCIENT_ROCK || bl instanceof CarvedRunicPortalBlock || bl == this;
 	}
 
 	@Override

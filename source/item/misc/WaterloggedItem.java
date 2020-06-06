@@ -14,15 +14,15 @@ public class WaterloggedItem extends SimpleItem {
 	public Item getFixedItem() {
 		switch (fixedItem) {
 			case 0:
-				return WeaponRegister.cannonAquaCannon;
+				return WeaponRegister.AQUA_CANNON;
 			case 1:
-				return WeaponRegister.archergunCoral;
+				return WeaponRegister.CORAL_ARCHERGUN;
 			case 2:
-				return WeaponRegister.cannonCoralCannon;
+				return WeaponRegister.CORAL_CANNON;
 			case 3:
-				return WeaponRegister.gunCoralClogger;
+				return WeaponRegister.CORAL_CLOGGER;
 			case 4:
-				return WeaponRegister.blasterReefer;
+				return WeaponRegister.REEFER;
 			default:
 				return null;
 		}

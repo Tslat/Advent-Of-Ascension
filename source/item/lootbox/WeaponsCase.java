@@ -25,7 +25,7 @@ public class WeaponsCase extends Item {
 	public WeaponsCase() {
 		setTranslationKey("WeaponsCase");
 		setRegistryName("aoa3:weapons_case");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class WeaponsCase extends Item {
 				player.getHeldItem(hand).shrink(1);
 
 			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

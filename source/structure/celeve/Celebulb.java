@@ -19,7 +19,7 @@ public class Celebulb extends AoAStructure {
 
 		while (y <= 8) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantCelebulbsStem.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.CELEBULBS_STEM.getDefaultState());
 				y++;
 			}
 			else {
@@ -31,10 +31,10 @@ public class Celebulb extends AoAStructure {
 		}
 
 		if (rand.nextBoolean()) {
-			addBlock(world, basePos, 0, y, 0, BlockRegister.plantCelebulbsGreen.getDefaultState());
+			addBlock(world, basePos, 0, y, 0, BlockRegister.CELEBULBS_GREEN.getDefaultState());
 		}
 		else {
-			addBlock(world, basePos, 0, y, 0, BlockRegister.plantCelebulbsYellow.getDefaultState());
+			addBlock(world, basePos, 0, y, 0, BlockRegister.CELEBULBS_YELLOW.getDefaultState());
 		}
 	}
 }

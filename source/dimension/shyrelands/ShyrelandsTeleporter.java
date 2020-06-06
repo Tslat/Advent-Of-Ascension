@@ -23,11 +23,11 @@ public class ShyrelandsTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalShyrelands;
+		return BlockRegister.SHYRELANDS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.bricksShyreYellow;
+		return BlockRegister.YELLOW_SHYRE_BRICKS;
 	}
 }

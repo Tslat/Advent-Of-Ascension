@@ -53,19 +53,19 @@ public class EntityWitherWizard extends AoARangedMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobWitherWizardLiving;
+        return SoundsRegister.MOB_WITHER_WIZARD_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobWitherWizardHit;
+        return SoundsRegister.MOB_WITHER_WIZARD_HIT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobWitherWizardHit;
+        return SoundsRegister.MOB_WITHER_WIZARD_HIT;
     }
 
     @Nullable
@@ -83,7 +83,7 @@ public class EntityWitherWizard extends AoARangedMob {
     @Nullable
     @Override
     protected SoundEvent getShootSound() {
-        return SoundsRegister.shotWizardBlast;
+        return SoundsRegister.WIZARD_BLAST_SHOOT;
     }
 
     @Override

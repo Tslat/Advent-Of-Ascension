@@ -50,17 +50,17 @@ public class EntityOcculent extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobOcculentLiving;
+		return SoundsRegister.MOB_OCCULENT_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobOcculentDeath;
+		return SoundsRegister.MOB_OCCULENT_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobOcculentHit;
+		return SoundsRegister.MOB_OCCULENT_HIT;
 	}
 
 	@Nullable

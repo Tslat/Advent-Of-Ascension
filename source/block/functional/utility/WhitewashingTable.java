@@ -21,7 +21,7 @@ public class WhitewashingTable extends Block {
 		setHardness(5.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

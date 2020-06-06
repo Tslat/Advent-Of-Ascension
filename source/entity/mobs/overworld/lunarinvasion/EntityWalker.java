@@ -53,28 +53,23 @@ public class EntityWalker extends AoAMeleeMob implements SpecialPropertyEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobWalkerLiving;
+		return SoundsRegister.MOB_WALKER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobWalkerDeath;
+		return SoundsRegister.MOB_WALKER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobWalkerHit;
+		return SoundsRegister.MOB_WALKER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected ResourceLocation getLootTable() {
 		return LootSystemRegister.entityWalker;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
 	}
 
 	@Override

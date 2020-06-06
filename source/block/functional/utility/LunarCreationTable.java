@@ -27,7 +27,7 @@ public class LunarCreationTable extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -44,19 +44,19 @@ public class LunarCreationTable extends Block {
 					BlockPos checkPos = pos.add(x, 0, z);
 					IBlockState block = world.getBlockState(checkPos);
 
-					if (block.getBlock() == BlockRegister.lunarOrbLunar) {
+					if (block.getBlock() == BlockRegister.LUNAR_ORB) {
 						lunarPos = checkPos;
 					}
-					else if (block.getBlock() == BlockRegister.lunarOrbMoonlight) {
+					else if (block.getBlock() == BlockRegister.MOONLIGHT_ORB) {
 						moonlightPos = checkPos;
 					}
-					else if (block.getBlock() == BlockRegister.lunarOrbDarklight) {
+					else if (block.getBlock() == BlockRegister.DARKLIGHT_ORB) {
 						darklightPos = checkPos;
 					}
-					else if (block.getBlock() == BlockRegister.lunarOrbDusk) {
+					else if (block.getBlock() == BlockRegister.DUSK_ORB) {
 						duskPos = checkPos;
 					}
-					else if (block.getBlock() == BlockRegister.lunarOrbSunfire) {
+					else if (block.getBlock() == BlockRegister.SUNFIRE_ORB) {
 						sunfirePos = checkPos;
 					}
 				}
@@ -66,10 +66,10 @@ public class LunarCreationTable extends Block {
 				if (darklightPos != null && sunfirePos != null && duskPos != null) {
 					HashSet<Item> armours = new HashSet<Item>(4);
 
-					armours.add(ArmourRegister.lunarBoots);
-					armours.add(ArmourRegister.lunarLegs);
-					armours.add(ArmourRegister.lunarBody);
-					armours.add(ArmourRegister.lunarHelmet);
+					armours.add(ArmourRegister.LUNAR_BOOTS);
+					armours.add(ArmourRegister.LUNAR_LEGS);
+					armours.add(ArmourRegister.LUNAR_CHESTPLATE);
+					armours.add(ArmourRegister.LUNAR_HELMET);
 
 					for (ItemStack stack : player.inventory.mainInventory) {
 						armours.removeIf(item -> item == stack.getItem());
@@ -84,10 +84,10 @@ public class LunarCreationTable extends Block {
 					}
 
 					if (armours.isEmpty()) {
-						armours.add(ArmourRegister.lunarBoots);
-						armours.add(ArmourRegister.lunarLegs);
-						armours.add(ArmourRegister.lunarBody);
-						armours.add(ArmourRegister.lunarHelmet);
+						armours.add(ArmourRegister.LUNAR_BOOTS);
+						armours.add(ArmourRegister.LUNAR_LEGS);
+						armours.add(ArmourRegister.LUNAR_CHESTPLATE);
+						armours.add(ArmourRegister.LUNAR_HELMET);
 					}
 
 					Item armourPiece = (Item)armours.toArray()[player.getRNG().nextInt(armours.size())];
@@ -100,7 +100,7 @@ public class LunarCreationTable extends Block {
 					world.setBlockToAir(darklightPos);
 				}
 				else {
-					world.spawnEntity(new EntityItem(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(ItemRegister.observingEye)));
+					world.spawnEntity(new EntityItem(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(ItemRegister.OBSERVING_EYE)));
 					world.setBlockToAir(lunarPos);
 					world.setBlockToAir(moonlightPos);
 				}

@@ -45,6 +45,7 @@ import net.tslat.aoa3.block.functional.misc.*;
 import net.tslat.aoa3.block.functional.portal.AncientCavernPortalBlock;
 import net.tslat.aoa3.block.functional.portal.ImmortallisPortalBlock;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.block.functional.saplings.*;
 import net.tslat.aoa3.block.functional.spawners.SpawnerBlock;
 import net.tslat.aoa3.block.functional.utility.*;
 import net.tslat.aoa3.block.generation.dirt.DirtBlock;
@@ -55,17 +56,19 @@ import net.tslat.aoa3.block.generation.leaves.TranslucentLeavesBlock;
 import net.tslat.aoa3.block.generation.misc.*;
 import net.tslat.aoa3.block.generation.ores.OreBlock;
 import net.tslat.aoa3.block.generation.plants.*;
-import net.tslat.aoa3.block.generation.sand.SandBlock;
 import net.tslat.aoa3.block.generation.special.DimensionalFabric;
 import net.tslat.aoa3.block.generation.special.DustopianLamp;
 import net.tslat.aoa3.block.generation.special.DustopianLampOff;
+import net.tslat.aoa3.block.generation.stone.DeeplandsStone;
 import net.tslat.aoa3.block.generation.stone.StoneBlock;
 import net.tslat.aoa3.block.generation.wood.LogBlock;
+import net.tslat.aoa3.block.generation.wood.StranglewoodLog;
 import net.tslat.aoa3.block.generation.wood.TentaclesEyeRed;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
@@ -77,2713 +80,1347 @@ import static net.tslat.aoa3.library.Enums.Deities.*;
 public final class BlockRegister {
 	private static ArrayList<BlockRegistryWrapper> blockRegistryList = new ArrayList<BlockRegistryWrapper>(1500);
 
-	private static final String oreDictCobble = "cobblestone";
-	private static final String oreDictFenceGateWood = "fenceGateWood";
-	private static final String oreDictFenceWood = "fenceWood";
-	private static final String oreDictGlass = "blockGlass";
-	private static final String oreDictLeaves = "treeLeaves";
-	private static final String oreDictPlanks = "plankWood";
-	private static final String oreDictSand = "sand";
-	private static final String oreDictSlabWood = "slabWood";
-	private static final String oreDictStairsWood = "stairWood";
-	private static final String oreDictStone = "stone";
-	private static final String oreDictWood = "logWood";
+	private static final String ORE_DICT_COBBLE = "cobblestone";
+	private static final String ORE_DICT_FENCE_GATE_WOOD = "fenceGateWood";
+	private static final String ORE_DICT_FENCE_WOOD = "fenceWood";
+	private static final String ORE_DICT_GLASS = "blockGlass";
+	private static final String ORE_DICT_LEAVES = "treeLeaves";
+	private static final String ORE_DICT_PLANKS = "plankWood";
+	private static final String ORE_DICT_SAND = "sand";
+	private static final String ORE_DICT_SLAB_WOOD = "slabWood";
+	private static final String ORE_DICT_STAIRS_WOOD = "stairWood";
+	private static final String ORE_DICT_STONE = "stone";
+	private static final String ORE_DICT_WOOD = "logWood";
 
-	@GameRegistry.ObjectHolder("abyss_stone")
-	public static final BasicBlock stoneAbyss = null;
-	@GameRegistry.ObjectHolder("barathos_hellstone")
-	public static final BasicBlock stoneBarathos = null;
-	@GameRegistry.ObjectHolder("baron_stone")
-	public static final BasicBlock stoneBaron = null;
-	@GameRegistry.ObjectHolder("borean_stone")
-	public static final BasicBlock stoneBorean = null;
-	@GameRegistry.ObjectHolder("creep_stone")
-	public static final BasicBlock stoneCreep = null;
-	@GameRegistry.ObjectHolder("crystevia_stone")
-	public static final BasicBlock stoneCrystevia = null;
-	@GameRegistry.ObjectHolder("deeplands_stone")
-	public static final BasicBlock stoneDeeplands = null;
-	@GameRegistry.ObjectHolder("dustopia_stone")
-	public static final BasicBlock stoneDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_stone")
-	public static final BasicBlock stoneGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_stone")
-	public static final BasicBlock stoneGreckon = null;
-	@GameRegistry.ObjectHolder("haven_stone")
-	public static final BasicBlock stoneHaven = null;
-	@GameRegistry.ObjectHolder("iromine_stone")
-	public static final BasicBlock stoneIromine = null;
-	@GameRegistry.ObjectHolder("lelyetia_stone")
-	public static final BasicBlock stoneLelyetia = null;
-	@GameRegistry.ObjectHolder("mysterium_stone")
-	public static final BasicBlock stoneMysterium = null;
-	@GameRegistry.ObjectHolder("high_precasia_stone")
-	public static final BasicBlock stonePrecasiaHigh = null;
-	@GameRegistry.ObjectHolder("low_precasia_stone")
-	public static final BasicBlock stonePrecasiaLow = null;
-	@GameRegistry.ObjectHolder("primed_stone")
-	public static final BasicBlock stonePrimed = null;
-	@GameRegistry.ObjectHolder("runic_stone")
-	public static final BasicBlock stoneRunic = null;
-	@GameRegistry.ObjectHolder("shyrelands_stone")
-	public static final BasicBlock stoneShyrelands = null;
-	@GameRegistry.ObjectHolder("toxic_stone")
-	public static final BasicBlock stoneToxic = null;
-	@GameRegistry.ObjectHolder("unstable_stone")
-	public static final BasicBlock stoneUnstable = null;
+	public static final BasicBlock ABYSS_STONE = ObjectHolder();
+	public static final BasicBlock BARATHOS_HELLSTONE = ObjectHolder();
+	public static final BasicBlock BARON_STONE = ObjectHolder();
+	public static final BasicBlock BOREAN_STONE = ObjectHolder();
+	public static final BasicBlock CREEP_STONE = ObjectHolder();
+	public static final BasicBlock CRYSTEVIA_STONE = ObjectHolder();
+	public static final BasicBlock DEEPLANDS_STONE = ObjectHolder();
+	public static final BasicBlock DUSTOPIA_STONE = ObjectHolder();
+	public static final BasicBlock GARDENCIA_STONE = ObjectHolder();
+	public static final BasicBlock GRECKON_STONE = ObjectHolder();
+	public static final BasicBlock HAVEN_STONE = ObjectHolder();
+	public static final BasicBlock IROMINE_STONE = ObjectHolder();
+	public static final BasicBlock LELYETIA_STONE = ObjectHolder();
+	public static final BasicBlock MYSTERIUM_STONE = ObjectHolder();
+	public static final BasicBlock HIGH_PRECASIA_STONE = ObjectHolder();
+	public static final BasicBlock LOW_PRECASIA_STONE = ObjectHolder();
+	public static final BasicBlock PRIMED_STONE = ObjectHolder();
+	public static final BasicBlock RUNIC_STONE = ObjectHolder();
+	public static final BasicBlock SHYRELANDS_STONE = ObjectHolder();
+	public static final BasicBlock TOXIC_STONE = ObjectHolder();
+	public static final BasicBlock UNSTABLE_STONE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("borean_dirt")
-	public static final DirtBlock dirtBorean = null;
-	@GameRegistry.ObjectHolder("candyland_dirt")
-	public static final DirtBlock dirtCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_dirt")
-	public static final DirtBlock dirtCeleve = null;
-	@GameRegistry.ObjectHolder("creeponia_dirt")
-	public static final DirtBlock dirtCreeponia = null;
-	@GameRegistry.ObjectHolder("dustopia_dirt")
-	public static final DirtBlock dirtDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_dirt")
-	public static final DirtBlock dirtGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_dirt")
-	public static final DirtBlock dirtGreckon = null;
-	@GameRegistry.ObjectHolder("haven_dirt")
-	public static final DirtBlock dirtHaven = null;
-	@GameRegistry.ObjectHolder("lunalyte_dirt")
-	public static final DirtBlock dirtLunalyte = null;
-	@GameRegistry.ObjectHolder("lunasole_dirt")
-	public static final DirtBlock dirtLunasole = null;
-	@GameRegistry.ObjectHolder("mysterium_dirt")
-	public static final DirtBlock dirtMysterium = null;
-	@GameRegistry.ObjectHolder("toxic_dirt")
-	public static final DirtBlock dirtToxic = null;
+	public static final DirtBlock BOREAN_DIRT = ObjectHolder();
+	public static final DirtBlock CANDYLAND_DIRT = ObjectHolder();
+	public static final DirtBlock CELEVE_DIRT = ObjectHolder();
+	public static final DirtBlock CREEPONIA_DIRT = ObjectHolder();
+	public static final DirtBlock DUSTOPIA_DIRT = ObjectHolder();
+	public static final DirtBlock GARDENCIA_DIRT = ObjectHolder();
+	public static final DirtBlock GRECKON_DIRT = ObjectHolder();
+	public static final DirtBlock HAVEN_DIRT = ObjectHolder();
+	public static final DirtBlock LUNALYTE_DIRT = ObjectHolder();
+	public static final DirtBlock LUNASOLE_DIRT = ObjectHolder();
+	public static final DirtBlock MYSTERIUM_DIRT = ObjectHolder();
+	public static final DirtBlock TOXIC_DIRT = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyss_grass")
-	public static final GrassBlock grassAbyss = null;
-	@GameRegistry.ObjectHolder("borean_grass")
-	public static final GrassBlock grassBorean = null;
-	@GameRegistry.ObjectHolder("candyland_grass")
-	public static final GrassBlock grassCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_grass")
-	public static final GrassBlock grassCeleve = null;
-	@GameRegistry.ObjectHolder("chocolate_grass")
-	public static final GrassBlock grassChocolate = null;
-	@GameRegistry.ObjectHolder("creeponia_grass")
-	public static final GrassBlock grassCreeponia = null;
-	@GameRegistry.ObjectHolder("crystal_grass")
-	public static final GrassBlock grassCrystal = null;
-	@GameRegistry.ObjectHolder("dustopia_grass")
-	public static final GrassBlock grassDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_grass")
-	public static final GrassBlock grassGardencia = null;
-	@GameRegistry.ObjectHolder("dirtGreckon")
-	public static final GrassBlock grassGreckon = null;
-	@GameRegistry.ObjectHolder("dirtHaven")
-	public static final GrassBlock grassHaven = null;
-	@GameRegistry.ObjectHolder("stoneIromine")
-	public static final GrassBlock grassIromine = null;
-	@GameRegistry.ObjectHolder("lelyetia_grass")
-	public static final GrassBlock grassLelyetia = null;
-	@GameRegistry.ObjectHolder("lelyetia_down_grass")
-	public static final GrassBlock grassLelyetiaDown = null;
-	@GameRegistry.ObjectHolder("lunalyte_grass")
-	public static final GrassBlock grassLunalyte = null;
-	@GameRegistry.ObjectHolder("lunasole_grass")
-	public static final GrassBlock grassLunasole = null;
-	@GameRegistry.ObjectHolder("marshmallow_grass")
-	public static final GrassBlock grassMarshmallow = null;
-	@GameRegistry.ObjectHolder("mysterium_grass")
-	public static final GrassBlock grassMysterium = null;
-	@GameRegistry.ObjectHolder("precasia_grass")
-	public static final GrassBlock grassPrecasia = null;
-	@GameRegistry.ObjectHolder("runic_grass")
-	public static final GrassBlock grassRunic = null;
-	@GameRegistry.ObjectHolder("shyrelands_grass")
-	public static final GrassBlock grassShyrelands = null;
-	@GameRegistry.ObjectHolder("silvro_grass")
-	public static final GrassBlock grassSilvro = null;
-	@GameRegistry.ObjectHolder("toxic_grass")
-	public static final GrassBlock grassToxic = null;
+	public static final GrassBlock ABYSS_GRASS = ObjectHolder();
+	public static final GrassBlock BOREAN_GRASS = ObjectHolder();
+	public static final GrassBlock CANDYLAND_GRASS = ObjectHolder();
+	public static final GrassBlock CELEVE_GRASS = ObjectHolder();
+	public static final GrassBlock CREEPONIA_GRASS = ObjectHolder();
+	public static final GrassBlock DUSTOPIA_GRASS = ObjectHolder();
+	public static final GrassBlock GARDENCIA_GRASS = ObjectHolder();
+	public static final GrassBlock GRECKON_GRASS = ObjectHolder();
+	public static final GrassBlock HAVEN_GRASS = ObjectHolder();
+	public static final GrassBlock IROMINE_GRASS = ObjectHolder();
+	public static final GrassBlock LELYETIA_GRASS = ObjectHolder();
+	public static final GrassBlock LELYETIA_DOWN_GRASS = ObjectHolder();
+	public static final GrassBlock LUNALYTE_GRASS = ObjectHolder();
+	public static final GrassBlock LUNASOLE_GRASS = ObjectHolder();
+	public static final GrassBlock MYSTERIUM_GRASS = ObjectHolder();
+	public static final GrassBlock PRECASIA_GRASS = ObjectHolder();
+	public static final GrassBlock RUNIC_GRASS = ObjectHolder();
+	public static final GrassBlock SHYRELANDS_GRASS = ObjectHolder();
+	public static final GrassBlock TOXIC_GRASS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst_ore")
-	public static final OreBlock oreAmethyst = null;
-	@GameRegistry.ObjectHolder("baronyte_ore")
-	public static final OreBlock oreBaronyte = null;
-	@GameRegistry.ObjectHolder("blazium_ore")
-	public static final OreBlock oreBlazium = null;
-	@GameRegistry.ObjectHolder("bloodstone_ore")
-	public static final OreBlock oreBloodstone = null;
-	@GameRegistry.ObjectHolder("blue_crystal_ore")
-	public static final OreBlock oreBlueGemstone = null;
-	@GameRegistry.ObjectHolder("charged_runium_ore")
-	public static final OreBlock oreChargedRunium = null;
-	@GameRegistry.ObjectHolder("chestbone_fragments_ore")
-	public static final OreBlock oreChestboneFragments = null;
-	@GameRegistry.ObjectHolder("crystallite_ore")
-	public static final OreBlock oreCrystallite = null;
-	@GameRegistry.ObjectHolder("elecanium_ore")
-	public static final OreBlock oreElecanium = null;
-	@GameRegistry.ObjectHolder("emberstone_ore")
-	public static final OreBlock oreEmberstone = null;
-	@GameRegistry.ObjectHolder("footbone_fragments_ore")
-	public static final OreBlock oreFootboneFragments = null;
-	@GameRegistry.ObjectHolder("gemenyte_ore")
-	public static final OreBlock oreGemenyte = null;
-	@GameRegistry.ObjectHolder("ghastly_ore")
-	public static final OreBlock oreGhastly = null;
-	@GameRegistry.ObjectHolder("ghoulish_ore")
-	public static final OreBlock oreGhoulish = null;
-	@GameRegistry.ObjectHolder("green_crystal_ore")
-	public static final OreBlock oreGreenGemstone = null;
-	@GameRegistry.ObjectHolder("jade_ore")
-	public static final OreBlock oreJade = null;
-	@GameRegistry.ObjectHolder("jewelyte_ore")
-	public static final OreBlock oreJewelyte = null;
-	@GameRegistry.ObjectHolder("legbone_fragments_ore")
-	public static final OreBlock oreLegboneFragments = null;
-	@GameRegistry.ObjectHolder("limonite_ore")
-	public static final OreBlock oreLimonite = null;
-	@GameRegistry.ObjectHolder("lyon_ore")
-	public static final OreBlock oreLyon = null;
-	@GameRegistry.ObjectHolder("mystite_ore")
-	public static final OreBlock oreMystite = null;
-	@GameRegistry.ObjectHolder("ornamyte_ore")
-	public static final OreBlock oreOrnamyte = null;
-	@GameRegistry.ObjectHolder("purple_crystal_ore")
-	public static final OreBlock orePurpleGemstone = null;
-	@GameRegistry.ObjectHolder("red_crystal_ore")
-	public static final OreBlock oreRedGemstone = null;
-	@GameRegistry.ObjectHolder("rosite_ore")
-	public static final OreBlock oreRosite = null;
-	@GameRegistry.ObjectHolder("runium_ore")
-	public static final OreBlock oreRunium = null;
-	@GameRegistry.ObjectHolder("sapphire_ore")
-	public static final OreBlock oreSapphire = null;
-	@GameRegistry.ObjectHolder("shyregem_ore")
-	public static final OreBlock oreShyregem = null;
-	@GameRegistry.ObjectHolder("shyrestone_ore")
-	public static final OreBlock oreShyrestone = null;
-	@GameRegistry.ObjectHolder("skullbone_fragments_ore")
-	public static final OreBlock oreSkullboneFragments = null;
-	@GameRegistry.ObjectHolder("varsium_ore")
-	public static final OreBlock oreVarsium = null;
-	@GameRegistry.ObjectHolder("white_crystal_ore")
-	public static final OreBlock oreWhiteGemstone = null;
-	@GameRegistry.ObjectHolder("yellow_crystal_ore")
-	public static final OreBlock oreYellowGemstone = null;
+	public static final OreBlock AMETHYST_ORE = ObjectHolder();
+	public static final OreBlock BARONYTE_ORE = ObjectHolder();
+	public static final OreBlock BLAZIUM_ORE = ObjectHolder();
+	public static final OreBlock BLOODSTONE_ORE = ObjectHolder();
+	public static final OreBlock BLUE_CRYSTAL_ORE = ObjectHolder();
+	public static final OreBlock CHARGED_RUNIUM_ORE = ObjectHolder();
+	public static final OreBlock CHESTBONE_FRAGMENTS_ORE = ObjectHolder();
+	public static final OreBlock CRYSTALLITE_ORE = ObjectHolder();
+	public static final OreBlock ELECANIUM_ORE = ObjectHolder();
+	public static final OreBlock EMBERSTONE_ORE = ObjectHolder();
+	public static final OreBlock FOOTBONE_FRAGMENTS_ORE = ObjectHolder();
+	public static final OreBlock GEMENYTE_ORE = ObjectHolder();
+	public static final OreBlock GHASTLY_ORE = ObjectHolder();
+	public static final OreBlock GHOULISH_ORE = ObjectHolder();
+	public static final OreBlock GREEN_CRYSTAL_ORE = ObjectHolder();
+	public static final OreBlock JADE_ORE = ObjectHolder();
+	public static final OreBlock JEWELYTE_ORE = ObjectHolder();
+	public static final OreBlock LEGBONE_FRAGMENTS_ORE = ObjectHolder();
+	public static final OreBlock LIMONITE_ORE = ObjectHolder();
+	public static final OreBlock LYON_ORE = ObjectHolder();
+	public static final OreBlock MYSTITE_ORE = ObjectHolder();
+	public static final OreBlock ORNAMYTE_ORE = ObjectHolder();
+	public static final OreBlock PURPLE_CRYSTAL_ORE = ObjectHolder();
+	public static final OreBlock RED_CRYSTAL_ORE = ObjectHolder();
+	public static final OreBlock ROSITE_ORE = ObjectHolder();
+	public static final OreBlock RUNIUM_ORE = ObjectHolder();
+	public static final OreBlock SAPPHIRE_ORE = ObjectHolder();
+	public static final OreBlock SHYREGEM_ORE = ObjectHolder();
+	public static final OreBlock SHYRESTONE_ORE = ObjectHolder();
+	public static final OreBlock SKULLBONE_FRAGMENTS_ORE = ObjectHolder();
+	public static final OreBlock VARSIUM_ORE = ObjectHolder();
+	public static final OreBlock WHITE_CRYSTAL_ORE = ObjectHolder();
+	public static final OreBlock YELLOW_CRYSTAL_ORE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("baron_bricks")
-	public static final BasicBlock bricksBaron = null;
-	@GameRegistry.ObjectHolder("black_bricks")
-	public static final BasicBlock bricksBlack = null;
-	@GameRegistry.ObjectHolder("bloodstone_bricks")
-	public static final BasicBlock bricksBloodstone = null;
-	@GameRegistry.ObjectHolder("blue_bricks")
-	public static final BasicBlock bricksBlue = null;
-	@GameRegistry.ObjectHolder("brown_bricks")
-	public static final BasicBlock bricksBrown = null;
-	@GameRegistry.ObjectHolder("coral_bricks")
-	public static final BasicBlock bricksCoral = null;
-	@GameRegistry.ObjectHolder("creeponia_bricks")
-	public static final BasicBlock bricksCreeponia = null;
-	@GameRegistry.ObjectHolder("crystallite_bricks")
-	public static final BasicBlock bricksCrystallite = null;
-	@GameRegistry.ObjectHolder("crystevia_bricks")
-	public static final BasicBlock bricksCrystevia = null;
-	@GameRegistry.ObjectHolder("cyan_bricks")
-	public static final BasicBlock bricksCyan = null;
-	@GameRegistry.ObjectHolder("dark_bricks")
-	public static final BasicBlock bricksDark = null;
-	@GameRegistry.ObjectHolder("dark_blue_bricks")
-	public static final BasicBlock bricksDarkBlue = null;
-	@GameRegistry.ObjectHolder("dark_grey_bricks")
-	public static final BasicBlock bricksDarkGrey = null;
-	@GameRegistry.ObjectHolder("darkwash_bricks")
-	public static final BasicBlock bricksDarkwash = null;
-	@GameRegistry.ObjectHolder("gardencia_bricks")
-	public static final BasicBlock bricksGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_bricks")
-	public static final BasicBlock bricksGreckon = null;
-	@GameRegistry.ObjectHolder("green_bricks")
-	public static final BasicBlock bricksGreen = null;
-	@GameRegistry.ObjectHolder("grey_bricks")
-	public static final BasicBlock bricksGrey = null;
-	@GameRegistry.ObjectHolder("haunted_bricks")
-	public static final BasicBlock bricksHaunted = null;
-	@GameRegistry.ObjectHolder("iro_dotted_bricks")
-	public static final BasicBlock bricksIroDotted = null;
-	@GameRegistry.ObjectHolder("iro_striped_bricks")
-	public static final BasicBlock bricksIroStriped = null;
-	@GameRegistry.ObjectHolder("lelyetia_bricks")
-	public static final BasicBlock bricksLelyetia = null;
-	@GameRegistry.ObjectHolder("lime_bricks")
-	public static final BasicBlock bricksLime = null;
-	@GameRegistry.ObjectHolder("lunar_bricks")
-	public static final BasicBlock bricksLunar = null;
-	@GameRegistry.ObjectHolder("magenta_bricks")
-	public static final BasicBlock bricksMagenta = null;
-	@GameRegistry.ObjectHolder("black_mysterium_bricks")
-	public static final BasicBlock bricksMysteriumBlack = null;
-	@GameRegistry.ObjectHolder("green_mysterium_bricks")
-	public static final BasicBlock bricksMysteriumGreen = null;
-	@GameRegistry.ObjectHolder("orange_bricks")
-	public static final BasicBlock bricksOrange = null;
-	@GameRegistry.ObjectHolder("pink_bricks")
-	public static final BasicBlock bricksPink = null;
-	@GameRegistry.ObjectHolder("purple_bricks")
-	public static final BasicBlock bricksPurple = null;
-	@GameRegistry.ObjectHolder("red_bricks")
-	public static final BasicBlock bricksRed = null;
-	@GameRegistry.ObjectHolder("rosidian_bricks")
-	public static final BasicBlock bricksRosidian = null;
-	@GameRegistry.ObjectHolder("runic_construct_bricks")
-	public static final BasicBlock bricksRunicConstruct = null;
-	@GameRegistry.ObjectHolder("white_shyre_bricks")
-	public static final BasicBlock bricksShyreWhite = null;
-	@GameRegistry.ObjectHolder("yellow_shyre_bricks")
-	public static final BasicBlock bricksShyreYellow = null;
-	@GameRegistry.ObjectHolder("skeletal_bricks")
-	public static final BasicBlock bricksSkeletal = null;
-	@GameRegistry.ObjectHolder("white_bricks")
-	public static final BasicBlock bricksWhite = null;
-	@GameRegistry.ObjectHolder("whitewash_bricks")
-	public static final BasicBlock bricksWhitewash = null;
-	@GameRegistry.ObjectHolder("yellow_bricks")
-	public static final BasicBlock bricksYellow = null;
+	public static final BasicBlock BARON_BRICKS = ObjectHolder();
+	public static final BasicBlock BLACK_BRICKS = ObjectHolder();
+	public static final BasicBlock BLOODSTONE_BRICKS = ObjectHolder();
+	public static final BasicBlock BLUE_BRICKS = ObjectHolder();
+	public static final BasicBlock BROWN_BRICKS = ObjectHolder();
+	public static final BasicBlock CORAL_BRICKS = ObjectHolder();
+	public static final BasicBlock CREEPONIA_BRICKS = ObjectHolder();
+	public static final BasicBlock CRYSTALLITE_BRICKS = ObjectHolder();
+	public static final BasicBlock CRYSTEVIA_BRICKS = ObjectHolder();
+	public static final BasicBlock CYAN_BRICKS = ObjectHolder();
+	public static final BasicBlock DARK_BRICKS = ObjectHolder();
+	public static final BasicBlock DARK_BLUE_BRICKS = ObjectHolder();
+	public static final BasicBlock DARK_GREY_BRICKS = ObjectHolder();
+	public static final BasicBlock DARKWASH_BRICKS = ObjectHolder();
+	public static final BasicBlock GARDENCIA_BRICKS = ObjectHolder();
+	public static final BasicBlock GRECKON_BRICKS = ObjectHolder();
+	public static final BasicBlock GREEN_BRICKS = ObjectHolder();
+	public static final BasicBlock GREY_BRICKS = ObjectHolder();
+	public static final BasicBlock HAUNTED_BRICKS = ObjectHolder();
+	public static final BasicBlock IRO_DOTTED_BRICKS = ObjectHolder();
+	public static final BasicBlock IRO_STRIPED_BRICKS = ObjectHolder();
+	public static final BasicBlock LELYETIA_BRICKS = ObjectHolder();
+	public static final BasicBlock LIME_BRICKS = ObjectHolder();
+	public static final BasicBlock LUNAR_BRICKS = ObjectHolder();
+	public static final BasicBlock MAGENTA_BRICKS = ObjectHolder();
+	public static final BasicBlock BLACK_MYSTERIUM_BRICKS = ObjectHolder();
+	public static final BasicBlock GREEN_MYSTERIUM_BRICKS = ObjectHolder();
+	public static final BasicBlock ORANGE_BRICKS = ObjectHolder();
+	public static final BasicBlock PINK_BRICKS = ObjectHolder();
+	public static final BasicBlock PURPLE_BRICKS = ObjectHolder();
+	public static final BasicBlock RED_BRICKS = ObjectHolder();
+	public static final BasicBlock ROSIDIAN_BRICKS = ObjectHolder();
+	public static final BasicBlock RUNIC_CONSTRUCT_BRICKS = ObjectHolder();
+	public static final BasicBlock WHITE_SHYRE_BRICKS = ObjectHolder();
+	public static final BasicBlock YELLOW_SHYRE_BRICKS = ObjectHolder();
+	public static final BasicBlock SKELETAL_BRICKS = ObjectHolder();
+	public static final BasicBlock WHITE_BRICKS = ObjectHolder();
+	public static final BasicBlock WHITEWASH_BRICKS = ObjectHolder();
+	public static final BasicBlock YELLOW_BRICKS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("intricate_amethyst_ivory")
-	public static final BasicBlock ivoryAmethystIntricate = null;
-	@GameRegistry.ObjectHolder("natural_amethyst_ivory")
-	public static final BasicBlock ivoryAmethystNatural = null;
-	@GameRegistry.ObjectHolder("ornate_amethyst_ivory")
-	public static final BasicBlock ivoryAmethystOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_amethyst_ivory")
-	public static final BasicBlock ivoryAmethystPatterned = null;
-	@GameRegistry.ObjectHolder("intricate_ivory")
-	public static final BasicBlock ivoryIntricate = null;
-	@GameRegistry.ObjectHolder("intricate_jade_ivory")
-	public static final BasicBlock ivoryJadeIntricate = null;
-	@GameRegistry.ObjectHolder("natural_jade_ivory")
-	public static final BasicBlock ivoryJadeNatural = null;
-	@GameRegistry.ObjectHolder("ornate_jade_ivory")
-	public static final BasicBlock ivoryJadeOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_jade_ivory")
-	public static final BasicBlock ivoryJadePatterned = null;
-	@GameRegistry.ObjectHolder("intricate_limonite_ivory")
-	public static final BasicBlock ivoryLimoniteIntricate = null;
-	@GameRegistry.ObjectHolder("natural_limonite_ivory")
-	public static final BasicBlock ivoryLimoniteNatural = null;
-	@GameRegistry.ObjectHolder("ornate_limonite_ivory")
-	public static final BasicBlock ivoryLimoniteOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_limonite_ivory")
-	public static final BasicBlock ivoryLimonitePatterned = null;
-	@GameRegistry.ObjectHolder("natural_ivory")
-	public static final BasicBlock ivoryNatural = null;
-	@GameRegistry.ObjectHolder("ornate_ivory")
-	public static final BasicBlock ivoryOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_ivory")
-	public static final BasicBlock ivoryPatterned = null;
-	@GameRegistry.ObjectHolder("intricate_rosite_ivory")
-	public static final BasicBlock ivoryRositeIntricate = null;
-	@GameRegistry.ObjectHolder("natural_rosite_ivory")
-	public static final BasicBlock ivoryRositeNatural = null;
-	@GameRegistry.ObjectHolder("ornate_rosite_ivory")
-	public static final BasicBlock ivoryRositeOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_rosite_ivory")
-	public static final BasicBlock ivoryRositePatterned = null;
-	@GameRegistry.ObjectHolder("intricate_sapphire_ivory")
-	public static final BasicBlock ivorySapphireIntricate = null;
-	@GameRegistry.ObjectHolder("natural_sapphire_ivory")
-	public static final BasicBlock ivorySapphireNatural = null;
-	@GameRegistry.ObjectHolder("ornate_sapphire_ivory")
-	public static final BasicBlock ivorySapphireOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_sapphire_ivory")
-	public static final BasicBlock ivorySapphirePatterned = null;
+	public static final BasicBlock INTRICATE_AMETHYST_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_AMETHYST_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_AMETHYST_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_AMETHYST_IVORY = ObjectHolder();
+	public static final BasicBlock INTRICATE_IVORY = ObjectHolder();
+	public static final BasicBlock INTRICATE_JADE_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_JADE_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_JADE_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_JADE_IVORY = ObjectHolder();
+	public static final BasicBlock INTRICATE_LIMONITE_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_LIMONITE_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_LIMONITE_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_LIMONITE_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_IVORY = ObjectHolder();
+	public static final BasicBlock INTRICATE_ROSITE_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_ROSITE_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_ROSITE_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_ROSITE_IVORY = ObjectHolder();
+	public static final BasicBlock INTRICATE_SAPPHIRE_IVORY = ObjectHolder();
+	public static final BasicBlock NATURAL_SAPPHIRE_IVORY = ObjectHolder();
+	public static final BasicBlock ORNATE_SAPPHIRE_IVORY = ObjectHolder();
+	public static final BasicBlock PATTERNED_SAPPHIRE_IVORY = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_leaves")
-	public static final LeavesBlock leavesAchony = null;
-	@GameRegistry.ObjectHolder("blood_leaves")
-	public static final LeavesBlock leavesBlood = null;
-	@GameRegistry.ObjectHolder("bubble_leaves")
-	public static final LeavesBlock leavesBubble = null;
-	@GameRegistry.ObjectHolder("blue_celevus_leaves")
-	public static final LeavesBlock leavesCelevusBlue = null;
-	@GameRegistry.ObjectHolder("green_celevus_leaves")
-	public static final LeavesBlock leavesCelevusGreen = null;
-	@GameRegistry.ObjectHolder("purple_celevus_leaves")
-	public static final LeavesBlock leavesCelevusPurple = null;
-	@GameRegistry.ObjectHolder("red_celevus_leaves")
-	public static final LeavesBlock leavesCelevusRed = null;
-	@GameRegistry.ObjectHolder("white_celevus_leaves")
-	public static final LeavesBlock leavesCelevusWhite = null;
-	@GameRegistry.ObjectHolder("yellow_celevus_leaves")
-	public static final LeavesBlock leavesCelevusYellow = null;
-	@GameRegistry.ObjectHolder("churry_leaves")
-	public static final LeavesBlock leavesChurry = null;
-	@GameRegistry.ObjectHolder("creep_leaves")
-	public static final LeavesBlock leavesCreep = null;
-	@GameRegistry.ObjectHolder("cycade_leaves")
-	public static final LeavesBlock leavesCycade = null;
-	@GameRegistry.ObjectHolder("dawn_leaves")
-	public static final LeavesBlock leavesDawn = null;
-	@GameRegistry.ObjectHolder("domiguous_leaves")
-	public static final LeavesBlock leavesDomiguous = null;
-	@GameRegistry.ObjectHolder("eternal_leaves")
-	public static final LeavesBlock leavesEternal = null;
-	@GameRegistry.ObjectHolder("eucadon_leaves")
-	public static final LeavesBlock leavesEucadon = null;
-	@GameRegistry.ObjectHolder("haunted_leaves")
-	public static final LeavesBlock leavesHaunted = null;
-	@GameRegistry.ObjectHolder("haunted_eyes_leaves")
-	public static final LeavesBlock leavesHauntedEyes = null;
-	@GameRegistry.ObjectHolder("blue_haven_leaves")
-	public static final LeavesBlock leavesHavenBlue = null;
-	@GameRegistry.ObjectHolder("pink_haven_leaves")
-	public static final LeavesBlock leavesHavenPink = null;
-	@GameRegistry.ObjectHolder("purple_haven_leaves")
-	public static final LeavesBlock leavesHavenPurple = null;
-	@GameRegistry.ObjectHolder("red_haven_leaves")
-	public static final LeavesBlock leavesHavenRed = null;
-	@GameRegistry.ObjectHolder("turquoise_haven_leaves")
-	public static final LeavesBlock leavesHavenTurquoise = null;
-	@GameRegistry.ObjectHolder("yellow_haven_leaves")
-	public static final LeavesBlock leavesHavenYellow = null;
-	@GameRegistry.ObjectHolder("irodust_leaves")
-	public static final LeavesBlock leavesIrodust = null;
-	@GameRegistry.ObjectHolder("irogold_leaves")
-	public static final LeavesBlock leavesIrogold = null;
-	@GameRegistry.ObjectHolder("lelyetian_leaves")
-	public static final LeavesBlock leavesLelyetian = null;
-	@GameRegistry.ObjectHolder("lucalus_leaves")
-	public static final LeavesBlock leavesLucalus = null;
-	@GameRegistry.ObjectHolder("lunicia_leaves")
-	public static final LeavesBlock leavesLunicia = null;
-	@GameRegistry.ObjectHolder("lunosso_leaves")
-	public static final LeavesBlock leavesLunosso = null;
-	@GameRegistry.ObjectHolder("melumia_leaves")
-	public static final LeavesBlock leavesMelumia = null;
-	@GameRegistry.ObjectHolder("opollo_leaves")
-	public static final LeavesBlock leavesOpollo = null;
-	@GameRegistry.ObjectHolder("runic_leaves")
-	public static final LeavesBlock leavesRunic = null;
-	@GameRegistry.ObjectHolder("shadow_leaves")
-	public static final LeavesBlock leavesShadow = null;
-	@GameRegistry.ObjectHolder("shadowblood_leaves")
-	public static final LeavesBlock leavesShadowblood = null;
-	@GameRegistry.ObjectHolder("shyre_leaves")
-	public static final LeavesBlock leavesShyre = null;
-	@GameRegistry.ObjectHolder("bright_shyre_leaves")
-	public static final LeavesBlock leavesShyreBright = null;
-	@GameRegistry.ObjectHolder("silvro_leaves")
-	public static final LeavesBlock leavesSilvro = null;
-	@GameRegistry.ObjectHolder("stranglewood_leaves")
-	public static final LeavesBlock leavesStranglewood = null;
-	@GameRegistry.ObjectHolder("vein_leaves")
-	public static final LeavesBlock leavesVein = null;
+	public static final LeavesBlock ACHONY_LEAVES = ObjectHolder();
+	public static final LeavesBlock BLOOD_LEAVES = ObjectHolder();
+	public static final LeavesBlock BLUE_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock GREEN_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock PURPLE_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock RED_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock WHITE_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock YELLOW_CELEVUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock CHURRY_LEAVES = ObjectHolder();
+	public static final LeavesBlock CREEP_LEAVES = ObjectHolder();
+	public static final LeavesBlock CYCADE_LEAVES = ObjectHolder();
+	public static final LeavesBlock DAWN_LEAVES = ObjectHolder();
+	public static final LeavesBlock HAUNTED_LEAVES = ObjectHolder();
+	public static final LeavesBlock HAUNTED_EYES_LEAVES = ObjectHolder();
+	public static final LeavesBlock BLUE_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock PINK_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock PURPLE_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock RED_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock TURQUOISE_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock YELLOW_HAVEN_LEAVES = ObjectHolder();
+	public static final LeavesBlock IRODUST_LEAVES = ObjectHolder();
+	public static final LeavesBlock IROGOLD_LEAVES = ObjectHolder();
+	public static final LeavesBlock LELYETIAN_LEAVES = ObjectHolder();
+	public static final LeavesBlock LUCALUS_LEAVES = ObjectHolder();
+	public static final LeavesBlock LUNICIA_LEAVES = ObjectHolder();
+	public static final LeavesBlock LUNOSSO_LEAVES = ObjectHolder();
+	public static final LeavesBlock RUNIC_LEAVES = ObjectHolder();
+	public static final LeavesBlock SHADOW_LEAVES = ObjectHolder();
+	public static final LeavesBlock SHADOWBLOOD_LEAVES = ObjectHolder();
+	public static final LeavesBlock SHYRE_LEAVES = ObjectHolder();
+	public static final LeavesBlock BRIGHT_SHYRE_LEAVES = ObjectHolder();
+	public static final LeavesBlock STRANGLEWOOD_LEAVES = ObjectHolder();
+	public static final LeavesBlock VEIN_LEAVES = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_log")
-	public static final LogBlock logAchony = null;
-	@GameRegistry.ObjectHolder("blood_log")
-	public static final LogBlock logBlood = null;
-	@GameRegistry.ObjectHolder("churry_log")
-	public static final LogBlock logChurry = null;
-	@GameRegistry.ObjectHolder("creep_log")
-	public static final LogBlock logCreep = null;
-	@GameRegistry.ObjectHolder("cycade_log")
-	public static final LogBlock logCycade = null;
-	@GameRegistry.ObjectHolder("dawn_log")
-	public static final LogBlock logDawn = null;
-	@GameRegistry.ObjectHolder("domiguous_log")
-	public static final LogBlock logDomiguous = null;
-	@GameRegistry.ObjectHolder("eternal_log")
-	public static final LogBlock logEternal = null;
-	@GameRegistry.ObjectHolder("eucadon_log")
-	public static final LogBlock logEucadon = null;
-	@GameRegistry.ObjectHolder("eyeball_log")
-	public static final LogBlock logEyeball = null;
-	@GameRegistry.ObjectHolder("haunted_log")
-	public static final LogBlock logHaunted = null;
-	@GameRegistry.ObjectHolder("haunted_eye_log")
-	public static final LogBlock logHauntedEye = null;
-	@GameRegistry.ObjectHolder("haunted_eyes_log")
-	public static final LogBlock logHauntedEyes = null;
-	@GameRegistry.ObjectHolder("haunted_flashing_log")
-	public static final LogBlock logHauntedFlashing = null;
-	@GameRegistry.ObjectHolder("haunted_purpling_log")
-	public static final LogBlock logHauntedPurpling = null;
-	@GameRegistry.ObjectHolder("iro_log")
-	public static final LogBlock logIro = null;
-	@GameRegistry.ObjectHolder("lucalus_log")
-	public static final LogBlock logLucalus = null;
-	@GameRegistry.ObjectHolder("lunide_log")
-	public static final LogBlock logLunide = null;
-	@GameRegistry.ObjectHolder("melumia_log")
-	public static final LogBlock logMelumia = null;
-	@GameRegistry.ObjectHolder("opollo_log")
-	public static final LogBlock logOpollo = null;
-	@GameRegistry.ObjectHolder("runic_log")
-	public static final LogBlock logRunic = null;
-	@GameRegistry.ObjectHolder("shadow_log")
-	public static final LogBlock logShadow = null;
-	@GameRegistry.ObjectHolder("shyre_log")
-	public static final LogBlock logShyre = null;
-	@GameRegistry.ObjectHolder("stranglewood_log")
-	public static final LogBlock logStranglewood = null;
-	@GameRegistry.ObjectHolder("toxic_log")
-	public static final LogBlock logToxic = null;
+	public static final LogBlock ACHONY_LOG = ObjectHolder();
+	public static final LogBlock BLOOD_LOG = ObjectHolder();
+	public static final LogBlock CHURRY_LOG = ObjectHolder();
+	public static final LogBlock CREEP_LOG = ObjectHolder();
+	public static final LogBlock CYCADE_LOG = ObjectHolder();
+	public static final LogBlock DAWN_LOG = ObjectHolder();
+	public static final LogBlock EYEBALL_LOG = ObjectHolder();
+	public static final LogBlock HAUNTED_LOG = ObjectHolder();
+	public static final LogBlock HAUNTED_EYE_LOG = ObjectHolder();
+	public static final LogBlock HAUNTED_EYES_LOG = ObjectHolder();
+	public static final LogBlock HAUNTED_FLASHING_LOG = ObjectHolder();
+	public static final LogBlock HAUNTED_PURPLING_LOG = ObjectHolder();
+	public static final LogBlock IRO_LOG = ObjectHolder();
+	public static final LogBlock LUCALUS_LOG = ObjectHolder();
+	public static final LogBlock LUNIDE_LOG = ObjectHolder();
+	public static final LogBlock RUNIC_LOG = ObjectHolder();
+	public static final LogBlock SHADOW_LOG = ObjectHolder();
+	public static final LogBlock SHYRE_LOG = ObjectHolder();
+	public static final LogBlock STRANGLEWOOD_LOG = ObjectHolder();
+	public static final LogBlock TOXIC_LOG = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_planks")
-	public static final BasicBlock planksAchony = null;
-	@GameRegistry.ObjectHolder("bloodwood_planks")
-	public static final BasicBlock planksBloodwood = null;
-	@GameRegistry.ObjectHolder("churry_planks")
-	public static final BasicBlock planksChurry = null;
-	@GameRegistry.ObjectHolder("creep_planks")
-	public static final BasicBlock planksCreep = null;
-	@GameRegistry.ObjectHolder("cycade_planks")
-	public static final BasicBlock planksCycade = null;
-	@GameRegistry.ObjectHolder("dawnwood_planks")
-	public static final BasicBlock planksDawnwood = null;
-	@GameRegistry.ObjectHolder("domiguous_planks")
-	public static final BasicBlock planksDomiguous = null;
-	@GameRegistry.ObjectHolder("eucadon_planks")
-	public static final BasicBlock planksEucadon = null;
-	@GameRegistry.ObjectHolder("hauntedwood_planks")
-	public static final BasicBlock planksHauntedwood = null;
-	@GameRegistry.ObjectHolder("irowood_planks")
-	public static final BasicBlock planksIrowood = null;
-	@GameRegistry.ObjectHolder("lucalus_planks")
-	public static final BasicBlock planksLucalus = null;
-	@GameRegistry.ObjectHolder("lunide_planks")
-	public static final BasicBlock planksLunide = null;
-	@GameRegistry.ObjectHolder("melumia_planks")
-	public static final BasicBlock planksMelumia = null;
-	@GameRegistry.ObjectHolder("opollo_planks")
-	public static final BasicBlock planksOpollo = null;
-	@GameRegistry.ObjectHolder("runic_planks")
-	public static final BasicBlock planksRunic = null;
-	@GameRegistry.ObjectHolder("shadow_planks")
-	public static final BasicBlock planksShadow = null;
-	@GameRegistry.ObjectHolder("shyre_planks")
-	public static final BasicBlock planksShyre = null;
-	@GameRegistry.ObjectHolder("stranglewood_planks")
-	public static final BasicBlock planksStranglewood = null;
-	@GameRegistry.ObjectHolder("toxicwood_planks")
-	public static final BasicBlock planksToxicwood = null;
+	public static final BasicBlock ACHONY_PLANKS = ObjectHolder();
+	public static final BasicBlock BLOODWOOD_PLANKS = ObjectHolder();
+	public static final BasicBlock CHURRY_PLANKS = ObjectHolder();
+	public static final BasicBlock CREEP_PLANKS = ObjectHolder();
+	public static final BasicBlock CYCADE_PLANKS = ObjectHolder();
+	public static final BasicBlock DAWNWOOD_PLANKS = ObjectHolder();
+	public static final BasicBlock HAUNTEDWOOD_PLANKS = ObjectHolder();
+	public static final BasicBlock IROWOOD_PLANKS = ObjectHolder();
+	public static final BasicBlock LUCALUS_PLANKS = ObjectHolder();
+	public static final BasicBlock LUNIDE_PLANKS = ObjectHolder();
+	public static final BasicBlock RUNIC_PLANKS = ObjectHolder();
+	public static final BasicBlock SHADOW_PLANKS = ObjectHolder();
+	public static final BasicBlock SHYRE_PLANKS = ObjectHolder();
+	public static final BasicBlock STRANGLEWOOD_PLANKS = ObjectHolder();
+	public static final BasicBlock TOXICWOOD_PLANKS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("double_achony_slab")
-	public static final SlabBlock.DoubleSlabBlock slabAchony = null;
-	@GameRegistry.ObjectHolder("double_baron_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBaronBricks = null;
-	@GameRegistry.ObjectHolder("double_black_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBlackBricks = null;
-	@GameRegistry.ObjectHolder("double_bloodstone_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBloodstoneBricks = null;
-	@GameRegistry.ObjectHolder("double_bloodwood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBloodwood = null;
-	@GameRegistry.ObjectHolder("double_blue_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBlueBricks = null;
-	@GameRegistry.ObjectHolder("double_brown_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabBrownBricks = null;
-	@GameRegistry.ObjectHolder("double_churry_slab")
-	public static final SlabBlock.DoubleSlabBlock slabChurry = null;
-	@GameRegistry.ObjectHolder("double_coral_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCoralBricks = null;
-	@GameRegistry.ObjectHolder("double_creep_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCreep = null;
-	@GameRegistry.ObjectHolder("double_creeponia_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCreeponiaBricks = null;
-	@GameRegistry.ObjectHolder("double_crystallite_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCrystalliteBricks = null;
-	@GameRegistry.ObjectHolder("double_crystevia_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCrysteviaBricks = null;
-	@GameRegistry.ObjectHolder("double_cyan_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCyanBricks = null;
-	@GameRegistry.ObjectHolder("double_cycade_slab")
-	public static final SlabBlock.DoubleSlabBlock slabCycade = null;
-	@GameRegistry.ObjectHolder("double_dark_blue_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDarkBlueBricks = null;
-	@GameRegistry.ObjectHolder("double_dark_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDarkBricks = null;
-	@GameRegistry.ObjectHolder("double_dark_grey_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDarkGreyBricks = null;
-	@GameRegistry.ObjectHolder("double_darkwash_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDarkwashBricks = null;
-	@GameRegistry.ObjectHolder("double_dawnwood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDawnwood = null;
-	@GameRegistry.ObjectHolder("double_domiguous_slab")
-	public static final SlabBlock.DoubleSlabBlock slabDomiguous = null;
-	@GameRegistry.ObjectHolder("double_eucadon_slab")
-	public static final SlabBlock.DoubleSlabBlock slabEucadon = null;
-	@GameRegistry.ObjectHolder("double_gardencia_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabGardenciaBricks = null;
-	@GameRegistry.ObjectHolder("double_greckon_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabGreckonBricks = null;
-	@GameRegistry.ObjectHolder("double_green_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabGreenBricks = null;
-	@GameRegistry.ObjectHolder("double_grey_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabGreyBricks = null;
-	@GameRegistry.ObjectHolder("double_haunted_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabHauntedBricks = null;
-	@GameRegistry.ObjectHolder("double_hauntedwood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabHauntedwood = null;
-	@GameRegistry.ObjectHolder("double_iro_dotted_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIroDottedBricks = null;
-	@GameRegistry.ObjectHolder("double_iro_striped_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIroStripedBricks = null;
-	@GameRegistry.ObjectHolder("double_irowood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIrowood = null;
-	@GameRegistry.ObjectHolder("double_intricate_amethyst_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryAmethystIntricate = null;
-	@GameRegistry.ObjectHolder("double_natural_amethyst_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryAmethystNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_amethyst_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryAmethystOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_amethyst_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryAmethystPatterned  = null;
-	@GameRegistry.ObjectHolder("double_intricate_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryIntricate = null;
-	@GameRegistry.ObjectHolder("double_intricate_jade_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryJadeIntricate = null;
-	@GameRegistry.ObjectHolder("double_natural_jade_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryJadeNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_jade_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryJadeOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_jade_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryJadePatterned = null;
-	@GameRegistry.ObjectHolder("double_intricate_limonite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryLimoniteIntricate = null;
-	@GameRegistry.ObjectHolder("double_natural_limonite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryLimoniteNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_limonite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryLimoniteOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_limonite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryLimonitePatterned = null;
-	@GameRegistry.ObjectHolder("double_natural_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryPatterned = null;
-	@GameRegistry.ObjectHolder("double_intricate_rosite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryRositeIntricate = null;
-	@GameRegistry.ObjectHolder("double_natural_rosite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryRositeNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_rosite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryRositeOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_rosite_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvoryRositePatterned = null;
-	@GameRegistry.ObjectHolder("double_intricate_sapphire_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvorySapphireIntricate = null;
-	@GameRegistry.ObjectHolder("double_natural_sapphire_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvorySapphireNatural = null;
-	@GameRegistry.ObjectHolder("double_ornate_sapphire_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvorySapphireOrnate = null;
-	@GameRegistry.ObjectHolder("double_patterned_sapphire_ivory_slab")
-	public static final SlabBlock.DoubleSlabBlock slabIvorySapphirePatterned = null;
-	@GameRegistry.ObjectHolder("double_lelyetia_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabLelyetiaBricks = null;
-	@GameRegistry.ObjectHolder("double_lime_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabLimeBricks = null;
-	@GameRegistry.ObjectHolder("double_lucalus_slab")
-	public static final SlabBlock.DoubleSlabBlock slabLucalus = null;
-	@GameRegistry.ObjectHolder("double_lunar_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabLunarBricks = null;
-	@GameRegistry.ObjectHolder("double_lunide_slab")
-	public static final SlabBlock.DoubleSlabBlock slabLunide = null;
-	@GameRegistry.ObjectHolder("double_magenta_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabMagentaBricks = null;
-	@GameRegistry.ObjectHolder("double_melumia_slab")
-	public static final SlabBlock.DoubleSlabBlock slabMelumia = null;
-	@GameRegistry.ObjectHolder("double_black_mysterium_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabMysteriumBlackBricks = null;
-	@GameRegistry.ObjectHolder("double_green_mysterium_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabMysteriumGreenBricks = null;
-	@GameRegistry.ObjectHolder("double_opollo_slab")
-	public static final SlabBlock.DoubleSlabBlock slabOpollo = null;
-	@GameRegistry.ObjectHolder("double_orange_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabOrangeBricks = null;
-	@GameRegistry.ObjectHolder("double_pink_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabPinkBricks = null;
-	@GameRegistry.ObjectHolder("double_purple_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabPurpleBricks = null;
-	@GameRegistry.ObjectHolder("double_red_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabRedBricks = null;
-	@GameRegistry.ObjectHolder("double_rosidian_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabRosidianBricks = null;
-	@GameRegistry.ObjectHolder("double_runic_slab")
-	public static final SlabBlock.DoubleSlabBlock slabRunic = null;
-	@GameRegistry.ObjectHolder("double_runic_construct_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabRunicConstructBricks = null;
-	@GameRegistry.ObjectHolder("double_shadow_slab")
-	public static final SlabBlock.DoubleSlabBlock slabShadow = null;
-	@GameRegistry.ObjectHolder("double_shyre_slab")
-	public static final SlabBlock.DoubleSlabBlock slabShyre = null;
-	@GameRegistry.ObjectHolder("double_white_shyre_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabShyreWhiteBricks = null;
-	@GameRegistry.ObjectHolder("double_yellow_shyre_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabShyreYellowBricks = null;
-	@GameRegistry.ObjectHolder("double_skeletal_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabSkeletalBricks = null;
-	@GameRegistry.ObjectHolder("double_stranglewood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabStranglewood = null;
-	@GameRegistry.ObjectHolder("double_toxicwood_slab")
-	public static final SlabBlock.DoubleSlabBlock slabToxicwood = null;
-	@GameRegistry.ObjectHolder("double_whitewash_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabWhitewashBricks = null;
-	@GameRegistry.ObjectHolder("double_yellow_bricks_slab")
-	public static final SlabBlock.DoubleSlabBlock slabYellowBricks = null;
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ACHONY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BARON_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BLACK_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BLOODSTONE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BLOODWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BLUE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BROWN_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CHURRY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CORAL_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CREEP_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CREEPONIA_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CRYSTALLITE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CRYSTEVIA_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CYAN_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_CYCADE_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_DARK_BLUE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_DARK_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_DARK_GREY_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_DARKWASH_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_DAWNWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_GARDENCIA_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_GRECKON_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_GREEN_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_GREY_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_HAUNTED_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_HAUNTEDWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_IRO_DOTTED_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_IRO_STRIPED_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_IROWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_AMETHYST_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_AMETHYST_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_AMETHYST_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_AMETHYST_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_JADE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_JADE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_JADE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_JADE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_LIMONITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_LIMONITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_LIMONITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_LIMONITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_ROSITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_ROSITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_ROSITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_ROSITE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_INTRICATE_SAPPHIRE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_NATURAL_SAPPHIRE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORNATE_SAPPHIRE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PATTERNED_SAPPHIRE_IVORY_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_LELYETIA_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_LIME_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_LUCALUS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_LUNAR_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_LUNIDE_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_MAGENTA_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_BLACK_MYSTERIUM_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_GREEN_MYSTERIUM_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ORANGE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PINK_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_PURPLE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_RED_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_ROSIDIAN_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_RUNIC_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_RUNIC_CONSTRUCT_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_SHADOW_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_SHYRE_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_WHITE_SHYRE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_YELLOW_SHYRE_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_SKELETAL_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_STRANGLEWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_TOXICWOOD_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_WHITEWASH_BRICKS_SLAB = ObjectHolder();
+	public static final SlabBlock.DoubleSlabBlock DOUBLE_YELLOW_BRICKS_SLAB = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_stairs")
-	public static final StairsBlock stairsAchony = null;
-	@GameRegistry.ObjectHolder("baron_bricks_stairs")
-	public static final StairsBlock stairsBaronBricks = null;
-	@GameRegistry.ObjectHolder("black_bricks_stairs")
-	public static final StairsBlock stairsBlackBricks = null;
-	@GameRegistry.ObjectHolder("bloodstone_bricks_stairs")
-	public static final StairsBlock stairsBloodstoneBricks = null;
-	@GameRegistry.ObjectHolder("bloodwood_stairs")
-	public static final StairsBlock stairsBloodwood = null;
-	@GameRegistry.ObjectHolder("blue_bricks_stairs")
-	public static final StairsBlock stairsBlueBricks = null;
-	@GameRegistry.ObjectHolder("brown_bricks_stairs")
-	public static final StairsBlock stairsBrownBricks = null;
-	@GameRegistry.ObjectHolder("churry_stairs")
-	public static final StairsBlock stairsChurry = null;
-	@GameRegistry.ObjectHolder("coral_bricks_stairs")
-	public static final StairsBlock stairsCoralBricks = null;
-	@GameRegistry.ObjectHolder("creep_stairs")
-	public static final StairsBlock stairsCreep = null;
-	@GameRegistry.ObjectHolder("creeponia_bricks_stairs")
-	public static final StairsBlock stairsCreeponiaBricks = null;
-	@GameRegistry.ObjectHolder("crystallite_bricks_stairs")
-	public static final StairsBlock stairsCrystalliteBricks = null;
-	@GameRegistry.ObjectHolder("crystevia_bricks_stairs")
-	public static final StairsBlock stairsCrysteviaBricks = null;
-	@GameRegistry.ObjectHolder("cyan_bricks_stairs")
-	public static final StairsBlock stairsCyanBricks = null;
-	@GameRegistry.ObjectHolder("cycade_stairs")
-	public static final StairsBlock stairsCycade = null;
-	@GameRegistry.ObjectHolder("dark_blue_bricks_stairs")
-	public static final StairsBlock stairsDarkBlueBricks = null;
-	@GameRegistry.ObjectHolder("dark_bricks_stairs")
-	public static final StairsBlock stairsDarkBricks = null;
-	@GameRegistry.ObjectHolder("dark_grey_bricks_stairs")
-	public static final StairsBlock stairsDarkGreyBricks = null;
-	@GameRegistry.ObjectHolder("darkwash_bricks_stairs")
-	public static final StairsBlock stairsDarkwashBricks = null;
-	@GameRegistry.ObjectHolder("dawnwood_stairs")
-	public static final StairsBlock stairsDawnwood = null;
-	@GameRegistry.ObjectHolder("domiguous_stairs")
-	public static final StairsBlock stairsDomiguous = null;
-	@GameRegistry.ObjectHolder("eucadon_stairs")
-	public static final StairsBlock stairsEucadon = null;
-	@GameRegistry.ObjectHolder("gardencia_bricks_stairs")
-	public static final StairsBlock stairsGardenciaBricks = null;
-	@GameRegistry.ObjectHolder("greckon_bricks_stairs")
-	public static final StairsBlock stairsGreckonBricks = null;
-	@GameRegistry.ObjectHolder("green_bricks_stairs")
-	public static final StairsBlock stairsGreenBricks = null;
-	@GameRegistry.ObjectHolder("grey_bricks_stairs")
-	public static final StairsBlock stairsGreyBricks = null;
-	@GameRegistry.ObjectHolder("haunted_bricks_stairs")
-	public static final StairsBlock stairsHauntedBricks = null;
-	@GameRegistry.ObjectHolder("hauntedwood_stairs")
-	public static final StairsBlock stairsHauntedwood = null;
-	@GameRegistry.ObjectHolder("iro_dotted_bricks_stairs")
-	public static final StairsBlock stairsIroDottedBricks = null;
-	@GameRegistry.ObjectHolder("iro_striped_bricks_stairs")
-	public static final StairsBlock stairsIroStripedBricks = null;
-	@GameRegistry.ObjectHolder("irowood_stairs")
-	public static final StairsBlock stairsIrowood = null;
-	@GameRegistry.ObjectHolder("intricate_amethyst_ivory_stairs")
-	public static final StairsBlock stairsIvoryAmethystIntricate = null;
-	@GameRegistry.ObjectHolder("natural_amethyst_ivory_stairs")
-	public static final StairsBlock stairsIvoryAmethystNatural = null;
-	@GameRegistry.ObjectHolder("ornate_amethyst_ivory_stairs")
-	public static final StairsBlock stairsIvoryAmethystOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_amethyst_ivory_stairs")
-	public static final StairsBlock stairsIvoryAmethystPatterned = null;
-	@GameRegistry.ObjectHolder("intricate_ivory_stairs")
-	public static final StairsBlock stairsIvoryIntricate = null;
-	@GameRegistry.ObjectHolder("intricate_jade_ivory_stairs")
-	public static final StairsBlock stairsIvoryJadeIntricate = null;
-	@GameRegistry.ObjectHolder("natural_jade_ivory_stairs")
-	public static final StairsBlock stairsIvoryJadeNatural = null;
-	@GameRegistry.ObjectHolder("ornate_jade_ivory_stairs")
-	public static final StairsBlock stairsIvoryJadeOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_jade_ivory_stairs")
-	public static final StairsBlock stairsIvoryJadePatterned = null;
-	@GameRegistry.ObjectHolder("intricate_limonite_ivory_stairs")
-	public static final StairsBlock stairsIvoryLimoniteIntricate = null;
-	@GameRegistry.ObjectHolder("natural_limonite_ivory_stairs")
-	public static final StairsBlock stairsIvoryLimoniteNatural = null;
-	@GameRegistry.ObjectHolder("ornate_limonite_ivory_stairs")
-	public static final StairsBlock stairsIvoryLimoniteOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_limonite_ivory_stairs")
-	public static final StairsBlock stairsIvoryLimonitePatterned = null;
-	@GameRegistry.ObjectHolder("natural_ivory_stairs")
-	public static final StairsBlock stairsIvoryNatural = null;
-	@GameRegistry.ObjectHolder("ornate_ivory_stairs")
-	public static final StairsBlock stairsIvoryOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_ivory_stairs")
-	public static final StairsBlock stairsIvoryPatterned = null;
-	@GameRegistry.ObjectHolder("intricate_rosite_ivory_stairs")
-	public static final StairsBlock stairsIvoryRositeIntricate = null;
-	@GameRegistry.ObjectHolder("natural_rosite_ivory_stairs")
-	public static final StairsBlock stairsIvoryRositeNatural = null;
-	@GameRegistry.ObjectHolder("ornate_rosite_ivory_stairs")
-	public static final StairsBlock stairsIvoryRositeOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_rosite_ivory_stairs")
-	public static final StairsBlock stairsIvoryRositePatterned = null;
-	@GameRegistry.ObjectHolder("intricate_sapphire_ivory_stairs")
-	public static final StairsBlock stairsIvorySapphireIntricate = null;
-	@GameRegistry.ObjectHolder("natural_sapphire_ivory_stairs")
-	public static final StairsBlock stairsIvorySapphireNatural = null;
-	@GameRegistry.ObjectHolder("ornate_sapphire_ivory_stairs")
-	public static final StairsBlock stairsIvorySapphireOrnate = null;
-	@GameRegistry.ObjectHolder("patterned_sapphire_ivory_stairs")
-	public static final StairsBlock stairsIvorySapphirePatterned = null;
-	@GameRegistry.ObjectHolder("lelyetia_bricks_stairs")
-	public static final StairsBlock stairsLelyetiaBricks = null;
-	@GameRegistry.ObjectHolder("lime_bricks_stairs")
-	public static final StairsBlock stairsLimeBricks = null;
-	@GameRegistry.ObjectHolder("lucalus_stairs")
-	public static final StairsBlock stairsLucalus = null;
-	@GameRegistry.ObjectHolder("lunar_bricks_stairs")
-	public static final StairsBlock stairsLunarBricks = null;
-	@GameRegistry.ObjectHolder("lunide_stairs")
-	public static final StairsBlock stairsLunide = null;
-	@GameRegistry.ObjectHolder("magenta_bricks_stairs")
-	public static final StairsBlock stairsMagentaBricks = null;
-	@GameRegistry.ObjectHolder("melumia_stairs")
-	public static final StairsBlock stairsMelumia = null;
-	@GameRegistry.ObjectHolder("black_mysterium_bricks_stairs")
-	public static final StairsBlock stairsMysteriumBlackBricks = null;
-	@GameRegistry.ObjectHolder("green_mysterium_bricks_stairs")
-	public static final StairsBlock stairsMysteriumGreenBricks = null;
-	@GameRegistry.ObjectHolder("opollo_stairs")
-	public static final StairsBlock stairsOpollo = null;
-	@GameRegistry.ObjectHolder("orange_bricks_stairs")
-	public static final StairsBlock stairsOrangeBricks = null;
-	@GameRegistry.ObjectHolder("pink_bricks_stairs")
-	public static final StairsBlock stairsPinkBricks = null;
-	@GameRegistry.ObjectHolder("purple_bricks_stairs")
-	public static final StairsBlock stairsPurpleBricks = null;
-	@GameRegistry.ObjectHolder("red_bricks_stairs")
-	public static final StairsBlock stairsRedBricks = null;
-	@GameRegistry.ObjectHolder("rosidian_bricks_stairs")
-	public static final StairsBlock stairsRosidianBricks = null;
-	@GameRegistry.ObjectHolder("runic_stairs")
-	public static final StairsBlock stairsRunic = null;
-	@GameRegistry.ObjectHolder("runic_construct_bricks_stairs")
-	public static final StairsBlock stairsRunicConstructBricks = null;
-	@GameRegistry.ObjectHolder("shadow_stairs")
-	public static final StairsBlock stairsShadow = null;
-	@GameRegistry.ObjectHolder("shyre_stairs")
-	public static final StairsBlock stairsShyre = null;
-	@GameRegistry.ObjectHolder("white_shyre_bricks_stairs")
-	public static final StairsBlock stairsShyreWhiteBricks = null;
-	@GameRegistry.ObjectHolder("yellow_shyre_bricks_stairs")
-	public static final StairsBlock stairsShyreYellowBricks = null;
-	@GameRegistry.ObjectHolder("skeletal_bricks_stairs")
-	public static final StairsBlock stairsSkeletalBricks = null;
-	@GameRegistry.ObjectHolder("stranglewood_stairs")
-	public static final StairsBlock stairsStranglewood = null;
-	@GameRegistry.ObjectHolder("toxicwood_stairs")
-	public static final StairsBlock stairsToxicwood = null;
-	@GameRegistry.ObjectHolder("whitewash_bricks_stairs")
-	public static final StairsBlock stairsWhitewashBricks = null;
-	@GameRegistry.ObjectHolder("yellow_bricks_stairs")
-	public static final StairsBlock stairsYellowBricks = null;
+	public static final StairsBlock ACHONY_STAIRS = ObjectHolder();
+	public static final StairsBlock BARON_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock BLACK_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock BLOODSTONE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock BLOODWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock BLUE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock BROWN_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CHURRY_STAIRS = ObjectHolder();
+	public static final StairsBlock CORAL_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CREEP_STAIRS = ObjectHolder();
+	public static final StairsBlock CREEPONIA_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CRYSTALLITE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CRYSTEVIA_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CYAN_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock CYCADE_STAIRS = ObjectHolder();
+	public static final StairsBlock DARK_BLUE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock DARK_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock DARK_GREY_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock DARKWASH_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock DAWNWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock GARDENCIA_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock GRECKON_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock GREEN_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock GREY_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock HAUNTED_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock HAUNTEDWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock IRO_DOTTED_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock IRO_STRIPED_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock IROWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_AMETHYST_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_AMETHYST_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_AMETHYST_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_AMETHYST_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_JADE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_JADE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_JADE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_JADE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_LIMONITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_LIMONITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_LIMONITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_LIMONITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_ROSITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_ROSITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_ROSITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_ROSITE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock INTRICATE_SAPPHIRE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock NATURAL_SAPPHIRE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock ORNATE_SAPPHIRE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock PATTERNED_SAPPHIRE_IVORY_STAIRS = ObjectHolder();
+	public static final StairsBlock LELYETIA_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock LIME_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock LUCALUS_STAIRS = ObjectHolder();
+	public static final StairsBlock LUNAR_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock LUNIDE_STAIRS = ObjectHolder();
+	public static final StairsBlock MAGENTA_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock BLACK_MYSTERIUM_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock GREEN_MYSTERIUM_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock ORANGE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock PINK_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock PURPLE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock RED_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock ROSIDIAN_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock RUNIC_STAIRS = ObjectHolder();
+	public static final StairsBlock RUNIC_CONSTRUCT_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock SHADOW_STAIRS = ObjectHolder();
+	public static final StairsBlock SHYRE_STAIRS = ObjectHolder();
+	public static final StairsBlock WHITE_SHYRE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock YELLOW_SHYRE_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock SKELETAL_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock STRANGLEWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock TOXICWOOD_STAIRS = ObjectHolder();
+	public static final StairsBlock WHITEWASH_BRICKS_STAIRS = ObjectHolder();
+	public static final StairsBlock YELLOW_BRICKS_STAIRS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceAchony = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceBloodwood = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceChurry = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceCreep = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceCycade = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceDawnwood = null;
-	@GameRegistry.ObjectHolder("achony_fence")
-	public static final FenceBlock fenceDomiguous = null;
-	@GameRegistry.ObjectHolder("eucadon_fence")
-	public static final FenceBlock fenceEucadon = null;
-	@GameRegistry.ObjectHolder("hauntedwood_fence")
-	public static final FenceBlock fenceHauntedwood = null;
-	@GameRegistry.ObjectHolder("irowood_fence")
-	public static final FenceBlock fenceIrowood = null;
-	@GameRegistry.ObjectHolder("lucalus_fence")
-	public static final FenceBlock fenceLucalus = null;
-	@GameRegistry.ObjectHolder("lunide_fence")
-	public static final FenceBlock fenceLunide = null;
-	@GameRegistry.ObjectHolder("melumia_fence")
-	public static final FenceBlock fenceMelumia = null;
-	@GameRegistry.ObjectHolder("opollo_fence")
-	public static final FenceBlock fenceOpollo = null;
-	@GameRegistry.ObjectHolder("runic_fence")
-	public static final FenceBlock fenceRunic = null;
-	@GameRegistry.ObjectHolder("shadow_fence")
-	public static final FenceBlock fenceShadow = null;
-	@GameRegistry.ObjectHolder("shyre_fence")
-	public static final FenceBlock fenceShyre = null;
-	@GameRegistry.ObjectHolder("stranglewood_fence")
-	public static final FenceBlock fenceStranglewood = null;
-	@GameRegistry.ObjectHolder("toxicwood_fence")
-	public static final FenceBlock fenceToxicwood = null;
-	@GameRegistry.ObjectHolder("twinklestone_fence")
-	public static final FenceBlock fenceTwinklestone = null;
+	public static final FenceBlock ACHONY_FENCE = ObjectHolder();
+	public static final FenceBlock BLOODWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock CHURRY_FENCE = ObjectHolder();
+	public static final FenceBlock CREEP_FENCE = ObjectHolder();
+	public static final FenceBlock CYCADE_FENCE = ObjectHolder();
+	public static final FenceBlock DAWNWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock HAUNTEDWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock IROWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock LUCALUS_FENCE = ObjectHolder();
+	public static final FenceBlock LUNIDE_FENCE = ObjectHolder();
+	public static final FenceBlock RUNIC_FENCE = ObjectHolder();
+	public static final FenceBlock SHADOW_FENCE = ObjectHolder();
+	public static final FenceBlock SHYRE_FENCE = ObjectHolder();
+	public static final FenceBlock STRANGLEWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock TOXICWOOD_FENCE = ObjectHolder();
+	public static final FenceBlock TWINKLESTONE_FENCE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("achony_gate")
-	public static final GateBlock gateAchony = null;
-	@GameRegistry.ObjectHolder("bloodwood_gate")
-	public static final GateBlock gateBloodwood = null;
-	@GameRegistry.ObjectHolder("churry_gate")
-	public static final GateBlock gateChurry = null;
-	@GameRegistry.ObjectHolder("creep_gate")
-	public static final GateBlock gateCreep = null;
-	@GameRegistry.ObjectHolder("cycade_gate")
-	public static final GateBlock gateCycade = null;
-	@GameRegistry.ObjectHolder("dawnwood_gate")
-	public static final GateBlock gateDawnwood = null;
-	@GameRegistry.ObjectHolder("domiguous_gate")
-	public static final GateBlock gateDomiguous = null;
-	@GameRegistry.ObjectHolder("eucadon_gate")
-	public static final GateBlock gateEucadon = null;
-	@GameRegistry.ObjectHolder("hauntedwood_gate")
-	public static final GateBlock gateHauntedwood = null;
-	@GameRegistry.ObjectHolder("irowood_gate")
-	public static final GateBlock gateIrowood = null;
-	@GameRegistry.ObjectHolder("lucalus_gate")
-	public static final GateBlock gateLucalus = null;
-	@GameRegistry.ObjectHolder("lunide_gate")
-	public static final GateBlock gateLunide = null;
-	@GameRegistry.ObjectHolder("melumia_gate")
-	public static final GateBlock gateMelumia = null;
-	@GameRegistry.ObjectHolder("opollo_gate")
-	public static final GateBlock gateOpollo = null;
-	@GameRegistry.ObjectHolder("runic_gate")
-	public static final GateBlock gateRunic = null;
-	@GameRegistry.ObjectHolder("shadow_gate")
-	public static final GateBlock gateShadow = null;
-	@GameRegistry.ObjectHolder("shyre_gate")
-	public static final GateBlock gateShyre = null;
-	@GameRegistry.ObjectHolder("stranglewood_gate")
-	public static final GateBlock gateStranglewood = null;
-	@GameRegistry.ObjectHolder("toxicwood_gate")
-	public static final GateBlock gateToxicwood = null;
+	public static final GateBlock ACHONY_GATE = ObjectHolder();
+	public static final GateBlock BLOODWOOD_GATE = ObjectHolder();
+	public static final GateBlock CHURRY_GATE = ObjectHolder();
+	public static final GateBlock CREEP_GATE = ObjectHolder();
+	public static final GateBlock CYCADE_GATE = ObjectHolder();
+	public static final GateBlock DAWNWOOD_GATE = ObjectHolder();
+	public static final GateBlock HAUNTEDWOOD_GATE = ObjectHolder();
+	public static final GateBlock IROWOOD_GATE = ObjectHolder();
+	public static final GateBlock LUCALUS_GATE = ObjectHolder();
+	public static final GateBlock LUNIDE_GATE = ObjectHolder();
+	public static final GateBlock RUNIC_GATE = ObjectHolder();
+	public static final GateBlock SHADOW_GATE = ObjectHolder();
+	public static final GateBlock SHYRE_GATE = ObjectHolder();
+	public static final GateBlock STRANGLEWOOD_GATE = ObjectHolder();
+	public static final GateBlock TOXICWOOD_GATE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("flower_core")
-	public static final BasicBlock flowerCore = null;
-	@GameRegistry.ObjectHolder("aqua_mushroom_inside")
-	public static final BasicBlock mushroomAquaInside = null;
-	@GameRegistry.ObjectHolder("aqua_mushroom_outside")
-	public static final BasicBlock mushroomAquaOutside = null;
-	@GameRegistry.ObjectHolder("black_mushroom")
-	public static final BasicBlock mushroomBlack = null;
-	@GameRegistry.ObjectHolder("blue_mushroom_inside")
-	public static final BasicBlock mushroomBlueInside = null;
-	@GameRegistry.ObjectHolder("blue_mushroom_outside")
-	public static final BasicBlock mushroomBlueOutside = null;
-	@GameRegistry.ObjectHolder("green_mushroom_inside")
-	public static final BasicBlock mushroomGreenInside = null;
-	@GameRegistry.ObjectHolder("green_mushroom_outside")
-	public static final BasicBlock mushroomGreenOutside = null;
-	@GameRegistry.ObjectHolder("orange_mushroom_inside")
-	public static final BasicBlock mushroomOrangeInside = null;
-	@GameRegistry.ObjectHolder("orange_mushroom_outside")
-	public static final BasicBlock mushroomOrangeOutside = null;
-	@GameRegistry.ObjectHolder("peach_mushroom_inside")
-	public static final BasicBlock mushroomPeachInside = null;
-	@GameRegistry.ObjectHolder("peach_mushroom_outside")
-	public static final BasicBlock mushroomPeachOutside = null;
-	@GameRegistry.ObjectHolder("purple_mushroom_inside")
-	public static final BasicBlock mushroomPurpleInside = null;
-	@GameRegistry.ObjectHolder("purple_mushroom_outside")
-	public static final BasicBlock mushroomPurpleOutside = null;
-	@GameRegistry.ObjectHolder("black_mushroom_stem")
-	public static final BasicBlock mushroomStemBlack = null;
-	@GameRegistry.ObjectHolder("blue_mushroom_stem")
-	public static final BasicBlock mushroomStemBlue = null;
-	@GameRegistry.ObjectHolder("green_mushroom_stem")
-	public static final BasicBlock mushroomStemGreen = null;
-	@GameRegistry.ObjectHolder("orange_mushroom_stem")
-	public static final BasicBlock mushroomStemOrange = null;
-	@GameRegistry.ObjectHolder("purple_mushroom_stem")
-	public static final BasicBlock mushroomStemPurple = null;
-	@GameRegistry.ObjectHolder("yellow_mushroom_stem")
-	public static final BasicBlock mushroomStemYellow = null;
-	@GameRegistry.ObjectHolder("yellow_mushroom_inside")
-	public static final BasicBlock mushroomYellowInside = null;
-	@GameRegistry.ObjectHolder("yellow_mushroom_outside")
-	public static final BasicBlock mushroomYellowOutside = null;
-	@GameRegistry.ObjectHolder("plant_stem")
-	public static final BasicBlock plantStem = null;
+	public static final BasicBlock FLOWER_CORE = ObjectHolder();
+	public static final BasicBlock BLACK_MUSHROOM = ObjectHolder();
+	public static final BasicBlock BLUE_MUSHROOM_INSIDE = ObjectHolder();
+	public static final BasicBlock BLUE_MUSHROOM_OUTSIDE = ObjectHolder();
+	public static final BasicBlock GREEN_MUSHROOM_INSIDE = ObjectHolder();
+	public static final BasicBlock GREEN_MUSHROOM_OUTSIDE = ObjectHolder();
+	public static final BasicBlock ORANGE_MUSHROOM_INSIDE = ObjectHolder();
+	public static final BasicBlock ORANGE_MUSHROOM_OUTSIDE = ObjectHolder();
+	public static final BasicBlock PURPLE_MUSHROOM_INSIDE = ObjectHolder();
+	public static final BasicBlock PURPLE_MUSHROOM_OUTSIDE = ObjectHolder();
+	public static final BasicBlock BLACK_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock BLUE_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock GREEN_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock ORANGE_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock PURPLE_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock YELLOW_MUSHROOM_STEM = ObjectHolder();
+	public static final BasicBlock YELLOW_MUSHROOM_INSIDE = ObjectHolder();
+	public static final BasicBlock YELLOW_MUSHROOM_OUTSIDE = ObjectHolder();
+	public static final BasicBlock PLANT_STEM = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("candied_water")
-	public static final BasicFluidBlock candiedWater = null;
+	public static final BasicFluidBlock CANDIED_WATER = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_light")
-	public static final LightBlock lightAncient = null;
-	@GameRegistry.ObjectHolder("archaic_light")
-	public static final LightBlock lightArchaic = null;
-	@GameRegistry.ObjectHolder("archaic_light_breakable")
-	public static final LightBlock lightArchaicBreakable = null;
-	@GameRegistry.ObjectHolder("creep_crystal")
-	public static final LightBlock lightCreepCrystal = null;
-	@GameRegistry.ObjectHolder("darkstone")
-	public static final LightBlock lightDarkstone = null;
-	@GameRegistry.ObjectHolder("deep_crystal")
-	public static final LightBlock lightDeepCrystal = null;
-	@GameRegistry.ObjectHolder("hive_light")
-	public static final LightBlock lightHiveLight = null;
-	@GameRegistry.ObjectHolder("steel_light")
-	public static final LightBlock lightSteel = null;
-	@GameRegistry.ObjectHolder("twinklestone")
-	public static final LightBlock lightTwinklestone = null;
-	@GameRegistry.ObjectHolder("vox_light")
-	public static final LightBlock lightVox = null;
+	public static final LightBlock ANCIENT_LIGHT = ObjectHolder();
+	public static final LightBlock ARCHAIC_LIGHT = ObjectHolder();
+	public static final LightBlock ARCHAIC_LIGHT_BREAKABLE = ObjectHolder();
+	public static final LightBlock CREEP_CRYSTAL = ObjectHolder();
+	public static final LightBlock DARKSTONE = ObjectHolder();
+	public static final LightBlock DEEP_CRYSTAL = ObjectHolder();
+	public static final LightBlock HIVE_LIGHT = ObjectHolder();
+	public static final LightBlock STEEL_LIGHT = ObjectHolder();
+	public static final LightBlock TWINKLESTONE = ObjectHolder();
+	public static final LightBlock VOX_LIGHT = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst_lamp")
-	public static final LampBlock lampAmethyst = null;
-	@GameRegistry.ObjectHolder("aquatic_lamp")
-	public static final LampBlock lampAquatic = null;
-	@GameRegistry.ObjectHolder("baronyte_lamp")
-	public static final LampBlock lampBaronyte = null;
-	@GameRegistry.ObjectHolder("blazium_lamp")
-	public static final LampBlock lampBlazium = null;
-	@GameRegistry.ObjectHolder("bloodstone_lamp")
-	public static final LampBlock lampBloodstone = null;
-	@GameRegistry.ObjectHolder("crystallite_lamp")
-	public static final LampBlock lampCrystallite = null;
-	@GameRegistry.ObjectHolder("elecanium_lamp")
-	public static final LampBlock lampElecanium = null;
-	@GameRegistry.ObjectHolder("emberstone_lamp")
-	public static final LampBlock lampEmberstone = null;
-	@GameRegistry.ObjectHolder("fire_lamp")
-	public static final LampBlock lampFire = null;
-	@GameRegistry.ObjectHolder("ghastly_lamp")
-	public static final LampBlock lampGhastly = null;
-	@GameRegistry.ObjectHolder("ghoulish_lamp")
-	public static final LampBlock lampGhoulish = null;
-	@GameRegistry.ObjectHolder("iro_lamp")
-	public static final LampBlock lampIro = null;
-	@GameRegistry.ObjectHolder("ivory_lamp")
-	public static final LampBlock lampIvory = null;
-	@GameRegistry.ObjectHolder("ivory_amethyst_lamp")
-	public static final LampBlock lampIvoryAmethyst = null;
-	@GameRegistry.ObjectHolder("ivory_jade_lamp")
-	public static final LampBlock lampIvoryJade = null;
-	@GameRegistry.ObjectHolder("ivory_limonite_lamp")
-	public static final LampBlock lampIvoryLimonite = null;
-	@GameRegistry.ObjectHolder("ivory_rosite_lamp")
-	public static final LampBlock lampIvoryRosite = null;
-	@GameRegistry.ObjectHolder("ivory_sapphire_lamp")
-	public static final LampBlock lampIvorySapphire = null;
-	@GameRegistry.ObjectHolder("jade_lamp")
-	public static final LampBlock lampJade = null;
-	@GameRegistry.ObjectHolder("aqua_life_lamp")
-	public static final LampBlock lampLifeAqua = null;
-	@GameRegistry.ObjectHolder("black_life_lamp")
-	public static final LampBlock lampLifeBlack = null;
-	@GameRegistry.ObjectHolder("blue_life_lamp")
-	public static final LampBlock lampLifeBlue = null;
-	@GameRegistry.ObjectHolder("brown_life_lamp")
-	public static final LampBlock lampLifeBrown = null;
-	@GameRegistry.ObjectHolder("cyan_life_lamp")
-	public static final LampBlock lampLifeCyan = null;
-	@GameRegistry.ObjectHolder("dark_grey_life_lamp")
-	public static final LampBlock lampLifeDarkGrey = null;
-	@GameRegistry.ObjectHolder("green_life_lamp")
-	public static final LampBlock lampLifeGreen = null;
-	@GameRegistry.ObjectHolder("grey_life_lamp")
-	public static final LampBlock lampLifeGrey = null;
-	@GameRegistry.ObjectHolder("lime_life_lamp")
-	public static final LampBlock lampLifeLime = null;
-	@GameRegistry.ObjectHolder("magenta_life_lamp")
-	public static final LampBlock lampLifeMagenta = null;
-	@GameRegistry.ObjectHolder("orange_life_lamp")
-	public static final LampBlock lampLifeOrange = null;
-	@GameRegistry.ObjectHolder("pink_life_lamp")
-	public static final LampBlock lampLifePink = null;
-	@GameRegistry.ObjectHolder("purple_life_lamp")
-	public static final LampBlock lampLifePurple = null;
-	@GameRegistry.ObjectHolder("red_life_lamp")
-	public static final LampBlock lampLifeRed = null;
-	@GameRegistry.ObjectHolder("white_life_lamp")
-	public static final LampBlock lampLifeWhite = null;
-	@GameRegistry.ObjectHolder("yellow_life_lamp")
-	public static final LampBlock lampLifeYellow = null;
-	@GameRegistry.ObjectHolder("limonite_lamp")
-	public static final LampBlock lampLimonite = null;
-	@GameRegistry.ObjectHolder("lunar_lamp")
-	public static final LampBlock lampLunar = null;
-	@GameRegistry.ObjectHolder("lyon_lamp")
-	public static final LampBlock lampLyon = null;
-	@GameRegistry.ObjectHolder("mystic_lamp")
-	public static final LampBlock lampMystic = null;
-	@GameRegistry.ObjectHolder("neon_lamp")
-	public static final LampBlock lampNeon = null;
-	@GameRegistry.ObjectHolder("neon_circling_lamp")
-	public static final LampBlock lampNeonCircling = null;
-	@GameRegistry.ObjectHolder("neon_lapis_lamp")
-	public static final LampBlock lampNeonLapis = null;
-	@GameRegistry.ObjectHolder("neon_lapis_circling_lamp")
-	public static final LampBlock lampNeonLapisCircling = null;
-	@GameRegistry.ObjectHolder("neon_lapis_triangles_lamp")
-	public static final LampBlock lampNeonLapisTriangles = null;
-	@GameRegistry.ObjectHolder("neon_runic_lamp")
-	public static final LampBlock lampNeonRunic = null;
-	@GameRegistry.ObjectHolder("neon_triangles_lamp")
-	public static final LampBlock lampNeonTriangles = null;
-	@GameRegistry.ObjectHolder("rosite_lamp")
-	public static final LampBlock lampRosite = null;
-	@GameRegistry.ObjectHolder("sapphire_lamp")
-	public static final LampBlock lampSapphire = null;
-	@GameRegistry.ObjectHolder("skeletal_lamp")
-	public static final LampBlock lampSkeletal = null;
+	public static final LampBlock AMETHYST_LAMP = ObjectHolder();
+	public static final LampBlock AQUATIC_LAMP = ObjectHolder();
+	public static final LampBlock BARONYTE_LAMP = ObjectHolder();
+	public static final LampBlock BLAZIUM_LAMP = ObjectHolder();
+	public static final LampBlock BLOODSTONE_LAMP = ObjectHolder();
+	public static final LampBlock CRYSTALLITE_LAMP = ObjectHolder();
+	public static final LampBlock ELECANIUM_LAMP = ObjectHolder();
+	public static final LampBlock EMBERSTONE_LAMP = ObjectHolder();
+	public static final LampBlock FIRE_LAMP = ObjectHolder();
+	public static final LampBlock GHASTLY_LAMP = ObjectHolder();
+	public static final LampBlock GHOULISH_LAMP = ObjectHolder();
+	public static final LampBlock IRO_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_AMETHYST_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_JADE_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_LIMONITE_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_ROSITE_LAMP = ObjectHolder();
+	public static final LampBlock IVORY_SAPPHIRE_LAMP = ObjectHolder();
+	public static final LampBlock JADE_LAMP = ObjectHolder();
+	public static final LampBlock AQUA_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock BLACK_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock BLUE_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock BROWN_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock CYAN_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock DARK_GREY_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock GREEN_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock GREY_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock LIME_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock MAGENTA_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock ORANGE_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock PINK_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock PURPLE_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock RED_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock WHITE_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock YELLOW_LIFE_LAMP = ObjectHolder();
+	public static final LampBlock LIMONITE_LAMP = ObjectHolder();
+	public static final LampBlock LUNAR_LAMP = ObjectHolder();
+	public static final LampBlock LYON_LAMP = ObjectHolder();
+	public static final LampBlock MYSTIC_LAMP = ObjectHolder();
+	public static final LampBlock NEON_LAMP = ObjectHolder();
+	public static final LampBlock NEON_CIRCLING_LAMP = ObjectHolder();
+	public static final LampBlock NEON_LAPIS_LAMP = ObjectHolder();
+	public static final LampBlock NEON_LAPIS_CIRCLING_LAMP = ObjectHolder();
+	public static final LampBlock NEON_LAPIS_TRIANGLES_LAMP = ObjectHolder();
+	public static final LampBlock NEON_RUNIC_LAMP = ObjectHolder();
+	public static final LampBlock NEON_TRIANGLES_LAMP = ObjectHolder();
+	public static final LampBlock ROSITE_LAMP = ObjectHolder();
+	public static final LampBlock SAPPHIRE_LAMP = ObjectHolder();
+	public static final LampBlock SKELETAL_LAMP = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyssal_glass")
-	public static final GlassBlock glassAbyssal = null;
-	@GameRegistry.ObjectHolder("ancient_glass")
-	public static final GlassBlock glassAncient = null;
-	@GameRegistry.ObjectHolder("aquatic_glass")
-	public static final GlassBlock glassAquatic = null;
-	@GameRegistry.ObjectHolder("archaic_glass")
-	public static final GlassBlock glassArchaic = null;
-	@GameRegistry.ObjectHolder("archaic_glass_breakable")
-	public static final GlassBlock glassArchaicBreakable = null;
-	@GameRegistry.ObjectHolder("baron_glass")
-	public static final GlassBlock glassBaron = null;
-	@GameRegistry.ObjectHolder("decayed_glass")
-	public static final GlassBlock glassDecayed = null;
-	@GameRegistry.ObjectHolder("gardencian_glass")
-	public static final GlassBlock glassGardencian = null;
-	@GameRegistry.ObjectHolder("haven_glass")
-	public static final GlassBlock glassHaven = null;
-	@GameRegistry.ObjectHolder("iro_glass")
-	public static final GlassBlock glassIro = null;
-	@GameRegistry.ObjectHolder("lelyetian_glass")
-	public static final GlassBlock glassLelyetian = null;
-	@GameRegistry.ObjectHolder("lunar_glass")
-	public static final GlassBlock glassLunar = null;
-	@GameRegistry.ObjectHolder("runic_glass")
-	public static final GlassBlock glassRunic = null;
-	@GameRegistry.ObjectHolder("unbreakable_runic_glass")
-	public static final GlassBlock glassRunicUnbreakable = null;
-	@GameRegistry.ObjectHolder("shyre_glass")
-	public static final GlassBlock glassShyre = null;
-	@GameRegistry.ObjectHolder("vox_glass")
-	public static final GlassBlock glassVox = null;
-	@GameRegistry.ObjectHolder("zhinx_glass")
-	public static final GlassBlock glassZhinx = null;
+	public static final GlassBlock ABYSSAL_GLASS = ObjectHolder();
+	public static final GlassBlock ANCIENT_GLASS = ObjectHolder();
+	public static final GlassBlock AQUATIC_GLASS = ObjectHolder();
+	public static final GlassBlock ARCHAIC_GLASS = ObjectHolder();
+	public static final GlassBlock ARCHAIC_GLASS_BREAKABLE = ObjectHolder();
+	public static final GlassBlock BARON_GLASS = ObjectHolder();
+	public static final GlassBlock DECAYED_GLASS = ObjectHolder();
+	public static final GlassBlock GARDENCIAN_GLASS = ObjectHolder();
+	public static final GlassBlock HAVEN_GLASS = ObjectHolder();
+	public static final GlassBlock IRO_GLASS = ObjectHolder();
+	public static final GlassBlock LELYETIAN_GLASS = ObjectHolder();
+	public static final GlassBlock LUNAR_GLASS = ObjectHolder();
+	public static final GlassBlock RUNIC_GLASS = ObjectHolder();
+	public static final GlassBlock UNBREAKABLE_RUNIC_GLASS = ObjectHolder();
+	public static final GlassBlock SHYRE_GLASS = ObjectHolder();
+	public static final GlassBlock VOX_GLASS = ObjectHolder();
+	public static final GlassBlock ZHINX_GLASS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("precasian_sand")
-	public static final SandBlock sandPrecasian = null;
+	public static final CompressedBlock AMETHYST_BLOCK = ObjectHolder();
+	public static final CompressedBlock BARONYTE_BLOCK = ObjectHolder();
+	public static final CompressedBlock BLAZIUM_BLOCK = ObjectHolder();
+	public static final CompressedBlock BLOODSTONE_BLOCK = ObjectHolder();
+	public static final CompressedBlock CRYSTALLITE_BLOCK = ObjectHolder();
+	public static final CompressedBlock ELECANIUM_BLOCK = ObjectHolder();
+	public static final CompressedBlock EMBERSTONE_BLOCK = ObjectHolder();
+	public static final CompressedBlock GEMENYTE_BLOCK = ObjectHolder();
+	public static final CompressedBlock GHASTLY_BLOCK = ObjectHolder();
+	public static final CompressedBlock GHOULISH_BLOCK = ObjectHolder();
+	public static final CompressedBlock JADE_BLOCK = ObjectHolder();
+	public static final CompressedBlock JEWELYTE_BLOCK = ObjectHolder();
+	public static final CompressedBlock LIMONITE_BLOCK = ObjectHolder();
+	public static final CompressedBlock LUNAR_BLOCK = ObjectHolder();
+	public static final CompressedBlock LYON_BLOCK = ObjectHolder();
+	public static final CompressedBlock MYSTITE_BLOCK = ObjectHolder();
+	public static final CompressedBlock ORNAMYTE_BLOCK = ObjectHolder();
+	public static final CompressedBlock ROSITE_BLOCK = ObjectHolder();
+	public static final CompressedBlock SAPPHIRE_BLOCK = ObjectHolder();
+	public static final CompressedBlock SHYREGEM_BLOCK = ObjectHolder();
+	public static final CompressedBlock SHYRESTONE_BLOCK = ObjectHolder();
+	public static final CompressedBlock SKELETAL_INGOT_BLOCK = ObjectHolder();
+	public static final CompressedBlock VARSIUM_BLOCK = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst_block")
-	public static final CompressedBlock amethystBlock = null;
-	@GameRegistry.ObjectHolder("baronyte_block")
-	public static final CompressedBlock baronyteBlock = null;
-	@GameRegistry.ObjectHolder("blazium_block")
-	public static final CompressedBlock blaziumBlock = null;
-	@GameRegistry.ObjectHolder("bloodstone_block")
-	public static final CompressedBlock bloodstoneBlock = null;
-	@GameRegistry.ObjectHolder("crystallite_block")
-	public static final CompressedBlock crystalliteBlock = null;
-	@GameRegistry.ObjectHolder("elecanium_block")
-	public static final CompressedBlock elecaniumBlock = null;
-	@GameRegistry.ObjectHolder("emberstone_block")
-	public static final CompressedBlock emberstoneBlock = null;
-	@GameRegistry.ObjectHolder("gemenyte_block")
-	public static final CompressedBlock gemenyteBlock = null;
-	@GameRegistry.ObjectHolder("ghastly_block")
-	public static final CompressedBlock ghastlyBlock = null;
-	@GameRegistry.ObjectHolder("ghoulish_block")
-	public static final CompressedBlock ghoulishBlock = null;
-	@GameRegistry.ObjectHolder("jade_block")
-	public static final CompressedBlock jadeBlock = null;
-	@GameRegistry.ObjectHolder("jewelyte_block")
-	public static final CompressedBlock jewelyteBlock = null;
-	@GameRegistry.ObjectHolder("limonite_block")
-	public static final CompressedBlock limoniteBlock = null;
-	@GameRegistry.ObjectHolder("lunar_block")
-	public static final CompressedBlock lunarBlock = null;
-	@GameRegistry.ObjectHolder("lyon_block")
-	public static final CompressedBlock lyonBlock = null;
-	@GameRegistry.ObjectHolder("mystite_block")
-	public static final CompressedBlock mystiteBlock = null;
-	@GameRegistry.ObjectHolder("ornamyte_block")
-	public static final CompressedBlock ornamyteBlock = null;
-	@GameRegistry.ObjectHolder("rosite_block")
-	public static final CompressedBlock rositeBlock = null;
-	@GameRegistry.ObjectHolder("sapphire_block")
-	public static final CompressedBlock sapphireBlock = null;
-	@GameRegistry.ObjectHolder("shyregem_block")
-	public static final CompressedBlock shyregemBlock = null;
-	@GameRegistry.ObjectHolder("shyrestone_block")
-	public static final CompressedBlock shyrestoneBlock = null;
-	@GameRegistry.ObjectHolder("skeletal_ingot_block")
-	public static final CompressedBlock skeletalIngotBlock = null;
-	@GameRegistry.ObjectHolder("varsium_block")
-	public static final CompressedBlock varsiumBlock = null;
+	public static final CarpetBlock BARON_CARPET = ObjectHolder();
+	public static final CarpetBlock BOREAN_CARPET = ObjectHolder();
+	public static final CarpetBlock GARDENCIAN_CARPET = ObjectHolder();
+	public static final CarpetBlock IRO_CARPET = ObjectHolder();
+	public static final CarpetBlock LUNAR_CARPET = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("baron_carpet")
-	public static final CarpetBlock carpetBaron = null;
-	@GameRegistry.ObjectHolder("borean_carpet")
-	public static final CarpetBlock carpetBorean = null;
-	@GameRegistry.ObjectHolder("gardencian_carpet")
-	public static final CarpetBlock carpetGardencian = null;
-	@GameRegistry.ObjectHolder("iro_carpet")
-	public static final CarpetBlock carpetIro = null;
-	@GameRegistry.ObjectHolder("lunar_carpet")
-	public static final CarpetBlock carpetLunar = null;
+	public static final BasicBlock CRYSTALLANIUM = ObjectHolder();
+	public static final BasicBlock EMBERIUM = ObjectHolder();
+	public static final BasicBlock SHADONANTIUM = ObjectHolder();
+	public static final BasicBlock SKELETANIUM = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("crystallanium")
-	public static final BasicBlock crystallanium = null;
-	@GameRegistry.ObjectHolder("emberium")
-	public static final BasicBlock emberium = null;
-	@GameRegistry.ObjectHolder("shadonantium")
-	public static final BasicBlock shadonantium = null;
-	@GameRegistry.ObjectHolder("skeletanium")
-	public static final BasicBlock skeletanium = null;
+	public static final BasicBlock ANCIENT_ROCK = ObjectHolder();
+	public static final BasicBlock BLACK_ANCIENT_TILE = ObjectHolder();
+	public static final BasicBlock ANCIENT_TILE_CORE = ObjectHolder();
+	public static final BasicBlock GREEN_ANCIENT_TILE = ObjectHolder();
+	public static final BasicBlock ANCIENT_TILE_SHRINE = ObjectHolder();
+	public static final BasicBlock WHITE_ANCIENT_TILE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_DIRT = ObjectHolder();
+	public static final BasicBlock ARCHAIC_DIRT_BREAKABLE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_STREAM_HORIZONTAL = ObjectHolder();
+	public static final BasicBlock ARCHAIC_STREAM_HORIZONTAL_BREAKABLE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_RECTANGLES = ObjectHolder();
+	public static final BasicBlock ARCHAIC_RECTANGLES_BREAKABLE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_SQUARES = ObjectHolder();
+	public static final BasicBlock ARCHAIC_SQUARES_BREAKABLE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_TILES = ObjectHolder();
+	public static final BasicBlock ARCHAIC_TILES_BREAKABLE = ObjectHolder();
+	public static final BasicBlock ARCHAIC_STREAM_VERTICAL = ObjectHolder();
+	public static final BasicBlock ARCHAIC_STREAM_VERTICAL_BREAKABLE = ObjectHolder();
+	public static final BasicBlock BARON_CASTLE_WALL = ObjectHolder();
+	public static final BasicBlock BARON_CUBE = ObjectHolder();
+	public static final BasicBlock BARON_GROUND = ObjectHolder();
+	public static final BasicBlock BLOODSTONE_BAR_BRICKS = ObjectHolder();
+	public static final BasicBlock BLOODSTONE_BARS = ObjectHolder();
+	public static final BasicBlock GREEN_CANDY = ObjectHolder();
+	public static final BasicBlock RED_CANDY = ObjectHolder();
+	public static final BasicBlock WHITE_CANDY = ObjectHolder();
+	public static final BasicBlock CHOCOLATE_BLOCK = ObjectHolder();
+	public static final BasicBlock DARK_CHOCOLATE_BLOCK = ObjectHolder();
+	public static final BasicBlock WHITE_CHOCOLATE_BLOCK = ObjectHolder();
+	public static final BasicBlock COG_BLOCK = ObjectHolder();
+	public static final BasicBlock BLUE_CORAL = ObjectHolder();
+	public static final BasicBlock GREEN_CORAL = ObjectHolder();
+	public static final BasicBlock ORANGE_CORAL = ObjectHolder();
+	public static final BasicBlock PINK_CORAL = ObjectHolder();
+	public static final BasicBlock WHITE_CORAL = ObjectHolder();
+	public static final BasicBlock YELLOW_CORAL = ObjectHolder();
+	public static final BasicBlock AQUA_COTTON_CANDY = ObjectHolder();
+	public static final BasicBlock PINK_COTTON_CANDY = ObjectHolder();
+	public static final BasicBlock CRATE = ObjectHolder();
+	public static final BasicBlock BLUE_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock GREEN_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock PURPLE_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock RED_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock WHITE_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock YELLOW_CRYSTAL_BLOCK = ObjectHolder();
+	public static final BasicBlock DARK_FACE_BRICK = ObjectHolder();
+	public static final BasicBlock DEEPLANDS_TRAP_EXPLOSION = ObjectHolder();
+	public static final BasicBlock DEEPLANDS_TRAP_LAVA = ObjectHolder();
+	public static final BasicBlock DEEPLANDS_TRAP_NIPPER = ObjectHolder();
+	public static final BasicBlock DEGRADED_STEEL = ObjectHolder();
+	public static final BasicBlock EYE_BLOCK = ObjectHolder();
+	public static final BasicBlock GIANT_SNAIL_ACID = ObjectHolder();
+	public static final BasicBlock GINGERBREAD = ObjectHolder();
+	public static final BasicBlock HIVE_WALL = ObjectHolder();
+	public static final BasicBlock IRO_BRICK_TRAP = ObjectHolder();
+	public static final BasicBlock IROPOLE = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_FACE = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_FLOW = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_MAZE = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_PASS = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_PLAIN = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_SQUARES = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_BLOCK_TRACK = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_TRAP_FLOW = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_TRAP_MAZE = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_TRAP_PASS = ObjectHolder();
+	public static final BasicBlock KAIYU_TEMPLE_TRAP_SQUARES = ObjectHolder();
+	public static final BasicBlock DARKLIGHT_ORB = ObjectHolder();
+	public static final BasicBlock DUSK_ORB = ObjectHolder();
+	public static final BasicBlock LUNAR_ORB = ObjectHolder();
+	public static final BasicBlock MOONLIGHT_ORB = ObjectHolder();
+	public static final BasicBlock SUNFIRE_ORB = ObjectHolder();
+	public static final BasicBlock LUNAR_PAD = ObjectHolder();
+	public static final BasicBlock ORANGE_ACID = ObjectHolder();
+	public static final BasicBlock PARAVITE_HIVE = ObjectHolder();
+	public static final BasicBlock BLACK_PETALS = ObjectHolder();
+	public static final BasicBlock BLUE_PETALS = ObjectHolder();
+	public static final BasicBlock LIGHT_BLUE_PETALS = ObjectHolder();
+	public static final BasicBlock MAGENTA_PETALS = ObjectHolder();
+	public static final BasicBlock PURPLE_PETALS = ObjectHolder();
+	public static final BasicBlock RED_PETALS = ObjectHolder();
+	public static final BasicBlock ROSE_PETALS = ObjectHolder();
+	public static final BasicBlock YELLOW_PETALS = ObjectHolder();
+	public static final BasicBlock PLASTIC = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_COMPASS = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_DISTORTION = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_ENERGY = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_FIRE = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_KINETIC = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_LIFE = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_LUNAR = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_POISON = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_POWER = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_STORM = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_STRIKE = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_WATER = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_WIND = ObjectHolder();
+	public static final RunePostBlock RUNE_POST_WITHER = ObjectHolder();
+	public static final BasicBlock SKELETAL_BLOCK = ObjectHolder();
+	public static final BasicBlock TENTACLES = ObjectHolder();
+	public static final BasicBlock TENTACLES_DOTS_LEFT = ObjectHolder();
+	public static final BasicBlock TENTACLES_DOTS_RIGHT = ObjectHolder();
+	public static final BasicBlock TENTACLES_EYE_ORANGE = ObjectHolder();
+	public static final BasicBlock TENTACLES_EYE_RED = ObjectHolder();
+	public static final BasicBlock TENTACLES_GREEN = ObjectHolder();
+	public static final BasicBlock TOXIC_STEM = ObjectHolder();
+	public static final BasicBlock UNBREAKABLE_IRO_BRICKS = ObjectHolder();
+	public static final BasicBlock UNBREAKABLE_PLANT_STEM = ObjectHolder();
+	public static final BasicBlock UNBREAKABLE_RUNIC_BRICKS = ObjectHolder();
+	public static final BasicNonCubeBlock BLUE_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock GREEN_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock ORANGE_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock PURPLE_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock SHROOM_STEM = ObjectHolder();
+	public static final BasicNonCubeBlock VOX_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock YELLOW_SHROOM = ObjectHolder();
+	public static final BasicNonCubeBlock VOX_LOG = ObjectHolder();
+	public static final BoneyBlock BONEY_BLOCK = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_DIRECTION = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_EMPOWERING = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_FOCUS = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_POWER = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_REALITY = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_SPACE = ObjectHolder();
+	public static final CarvedRunicBlock CARVED_RUNE_TRAVEL = ObjectHolder();
+	public static final ChargingTable CHARGING_TABLE = ObjectHolder();
+	public static final CloudBlock SHYRE_CLOUD = ObjectHolder();
+	public static final DimensionalFabric DIMENSIONAL_FABRIC = ObjectHolder();
+	public static final AirGap AIR_GAP = ObjectHolder();
+	public static final DustopianLamp DUSTOPIAN_LAMP = ObjectHolder();
+	public static final DustopianLampOff DUSTOPIAN_LAMP_OFF = ObjectHolder();
+	public static final EnhancerBlock DAMAGE_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock DIVINE_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock DURABILITY_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock LUCK_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock MAGIC_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock RESISTANCE_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock SPEED_ENHANCER = ObjectHolder();
+	public static final EnhancerBlock WEIGHT_ENHANCER = ObjectHolder();
+	public static final LadderBlock ARCHAIC_LADDER = ObjectHolder();
+	public static final LadderBlock ARCHAIC_LADDER_BREAKABLE = ObjectHolder();
+	public static final LivingGrowth LIVING_GROWTH = ObjectHolder();
+	public static final LogBlock CELEVE_STEM = ObjectHolder();
+	public static final LunarPillar LUNAR_PILLAR = ObjectHolder();
+	public static final SpikeyPillar SPIKEY_PILLAR = ObjectHolder();
+	public static final ToxicBlock TOXIC_BLOCK = ObjectHolder();
+	public static final ToxicWaste TOXIC_WASTE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_rock")
-	public static final BasicBlock ancientRock = null;
-	@GameRegistry.ObjectHolder("black_ancient_tile")
-	public static final BasicBlock ancientTileBlack = null;
-	@GameRegistry.ObjectHolder("ancient_tile_core")
-	public static final BasicBlock ancientTileCore = null;
-	@GameRegistry.ObjectHolder("green_ancient_tile")
-	public static final BasicBlock ancientTileGreen = null;
-	@GameRegistry.ObjectHolder("ancient_tile_shrine")
-	public static final BasicBlock ancientTileShrine = null;
-	@GameRegistry.ObjectHolder("white_ancient_tile")
-	public static final BasicBlock ancientTileWhite = null;
-	@GameRegistry.ObjectHolder("archaic_dirt")
-	public static final BasicBlock archaicDirt = null;
-	@GameRegistry.ObjectHolder("archaic_dirt_breakable")
-	public static final BasicBlock archaicDirtBreakable = null;
-	@GameRegistry.ObjectHolder("archaic_stream_horizontal")
-	public static final BasicBlock archaicHorizontalStream = null;
-	@GameRegistry.ObjectHolder("archaic_stream_horizontal_breakable")
-	public static final BasicBlock archaicHorizontalStreamBreakaable = null;
-	@GameRegistry.ObjectHolder("archaic_rectangles")
-	public static final BasicBlock archaicRectangles = null;
-	@GameRegistry.ObjectHolder("archaic_rectangles_breakable")
-	public static final BasicBlock archaicRectanglesBreakable = null;
-	@GameRegistry.ObjectHolder("archaic_squares")
-	public static final BasicBlock archaicSquares = null;
-	@GameRegistry.ObjectHolder("archaic_squares_breakable")
-	public static final BasicBlock archaicSquaresBreakable = null;
-	@GameRegistry.ObjectHolder("archaic_tiles")
-	public static final BasicBlock archaicTiles = null;
-	@GameRegistry.ObjectHolder("archaic_tiles_breakable")
-	public static final BasicBlock archaicTilesBreakable = null;
-	@GameRegistry.ObjectHolder("archaic_stream_vertical")
-	public static final BasicBlock archaicVerticalStream = null;
-	@GameRegistry.ObjectHolder("archaic_stream_vertical_breakable")
-	public static final BasicBlock archaicVerticalStreamBreakable = null;
-	@GameRegistry.ObjectHolder("baron_castle_wall")
-	public static final BasicBlock baronCastleWall = null;
-	@GameRegistry.ObjectHolder("baron_cube")
-	public static final BasicBlock baronCube = null;
-	@GameRegistry.ObjectHolder("baron_ground")
-	public static final BasicBlock baronGround = null;
-	@GameRegistry.ObjectHolder("bloodstone_bar_bricks")
-	public static final BasicBlock bloodstoneBarBricks = null;
-	@GameRegistry.ObjectHolder("bloodstone_bars")
-	public static final BasicBlock bloodstoneBars = null;
-	@GameRegistry.ObjectHolder("green_candy")
-	public static final BasicBlock candyGreen = null;
-	@GameRegistry.ObjectHolder("red_candy")
-	public static final BasicBlock candyRed = null;
-	@GameRegistry.ObjectHolder("white_candy")
-	public static final BasicBlock candyWhite = null;
-	@GameRegistry.ObjectHolder("chocolate_block")
-	public static final BasicBlock chocolateBlock = null;
-	@GameRegistry.ObjectHolder("dark_chocolate_block")
-	public static final BasicBlock chocolateBlockDark = null;
-	@GameRegistry.ObjectHolder("white_chocolate_block")
-	public static final BasicBlock chocolateBlockWhite = null;
-	@GameRegistry.ObjectHolder("cog_block")
-	public static final BasicBlock cogBlock = null;
-	@GameRegistry.ObjectHolder("blue_coral")
-	public static final BasicBlock coralBlue = null;
-	@GameRegistry.ObjectHolder("green_coral")
-	public static final BasicBlock coralGreen = null;
-	@GameRegistry.ObjectHolder("hard_coral")
-	public static final BasicBlock coralHard = null;
-	@GameRegistry.ObjectHolder("orange_coral")
-	public static final BasicBlock coralOrange = null;
-	@GameRegistry.ObjectHolder("pink_coral")
-	public static final BasicBlock coralPink = null;
-	@GameRegistry.ObjectHolder("white_coral")
-	public static final BasicBlock coralWhite = null;
-	@GameRegistry.ObjectHolder("yellow_coral")
-	public static final BasicBlock coralYellow = null;
-	@GameRegistry.ObjectHolder("aqua_cotton_candy")
-	public static final BasicBlock cottonCandyAqua = null;
-	@GameRegistry.ObjectHolder("pink_cotton_candy")
-	public static final BasicBlock cottonCandyPink = null;
-	@GameRegistry.ObjectHolder("crate")
-	public static final BasicBlock crate = null;
-	@GameRegistry.ObjectHolder("blue_crystal_block")
-	public static final BasicBlock crystalBlue = null;
-	@GameRegistry.ObjectHolder("green_crystal_block")
-	public static final BasicBlock crystalGreen = null;
-	@GameRegistry.ObjectHolder("purple_crystal_block")
-	public static final BasicBlock crystalPurple = null;
-	@GameRegistry.ObjectHolder("red_crystal_block")
-	public static final BasicBlock crystalRed = null;
-	@GameRegistry.ObjectHolder("white_crystal_block")
-	public static final BasicBlock crystalWhite = null;
-	@GameRegistry.ObjectHolder("yellow_crystal_block")
-	public static final BasicBlock crystalYellow = null;
-	@GameRegistry.ObjectHolder("dark_face_brick")
-	public static final BasicBlock darkFaceBrick = null;
-	@GameRegistry.ObjectHolder("deeplands_trap_explosion")
-	public static final BasicBlock deeplandsTrapExplosion = null;
-	@GameRegistry.ObjectHolder("deeplands_trap_lava")
-	public static final BasicBlock deeplandsTrapLava = null;
-	@GameRegistry.ObjectHolder("deeplands_trap_nipper")
-	public static final BasicBlock deeplandsTrapNipper = null;
-	@GameRegistry.ObjectHolder("deepshine")
-	public static final BasicBlock deepshine = null;
-	@GameRegistry.ObjectHolder("degraded_steel")
-	public static final BasicBlock degradedSteel = null;
-	@GameRegistry.ObjectHolder("eye_block")
-	public static final BasicBlock eyeBlock = null;
-	@GameRegistry.ObjectHolder("giant_snail_acid")
-	public static final BasicBlock giantSnailAcid = null;
-	@GameRegistry.ObjectHolder("gingerbread")
-	public static final BasicBlock gingerbread = null;
-	@GameRegistry.ObjectHolder("haunted_orb")
-	public static final BasicBlock hauntedOrb = null;
-	@GameRegistry.ObjectHolder("hive_wall")
-	public static final BasicBlock hiveWall = null;
-	@GameRegistry.ObjectHolder("iro_box")
-	public static final BasicBlock iroBox = null;
-	@GameRegistry.ObjectHolder("iro_brick_trap")
-	public static final BasicBlock iroBrickTrap = null;
-	@GameRegistry.ObjectHolder("iropole")
-	public static final BasicBlock iropole = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_face")
-	public static final BasicBlock kaiyuTempleBlockFace = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_flow")
-	public static final BasicBlock kaiyuTempleBlockFlow = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_maze")
-	public static final BasicBlock kaiyuTempleBlockMaze = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_pass")
-	public static final BasicBlock kaiyuTempleBlockPass = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_plain")
-	public static final BasicBlock kaiyuTempleBlockPlain = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_squares")
-	public static final BasicBlock kaiyuTempleBlockSquares = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_block_track")
-	public static final BasicBlock kaiyuTempleBlockTrack = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_trap_flow")
-	public static final BasicBlock kaiyuTempleTrapFlow = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_trap_maze")
-	public static final BasicBlock kaiyuTempleTrapMaze = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_trap_pass")
-	public static final BasicBlock kaiyuTempleTrapPass = null;
-	@GameRegistry.ObjectHolder("kaiyu_temple_trap_squares")
-	public static final BasicBlock kaiyuTempleTrapSquares = null;
-	@GameRegistry.ObjectHolder("licorice")
-	public static final BasicBlock licorice = null;
-	@GameRegistry.ObjectHolder("darklight_orb")
-	public static final BasicBlock lunarOrbDarklight = null;
-	@GameRegistry.ObjectHolder("dusk_orb")
-	public static final BasicBlock lunarOrbDusk = null;
-	@GameRegistry.ObjectHolder("lunar_orb")
-	public static final BasicBlock lunarOrbLunar = null;
-	@GameRegistry.ObjectHolder("moonlight_orb")
-	public static final BasicBlock lunarOrbMoonlight = null;
-	@GameRegistry.ObjectHolder("sunfire_orb")
-	public static final BasicBlock lunarOrbSunfire = null;
-	@GameRegistry.ObjectHolder("lunar_pad")
-	public static final BasicBlock lunarPad = null;
-	@GameRegistry.ObjectHolder("marshmallow")
-	public static final BasicBlock marshmallow = null;
-	@GameRegistry.ObjectHolder("orange_acid")
-	public static final BasicBlock orangeAcid = null;
-	@GameRegistry.ObjectHolder("paravite_hive")
-	public static final BasicBlock paraviteHive = null;
-	@GameRegistry.ObjectHolder("black_petals")
-	public static final BasicBlock petalsBlack = null;
-	@GameRegistry.ObjectHolder("blue_petals")
-	public static final BasicBlock petalsBlue = null;
-	@GameRegistry.ObjectHolder("light_blue_petals")
-	public static final BasicBlock petalsLightBlue = null;
-	@GameRegistry.ObjectHolder("magenta_petals")
-	public static final BasicBlock petalsMagenta = null;
-	@GameRegistry.ObjectHolder("orange_petals")
-	public static final BasicBlock petalsOrange = null;
-	@GameRegistry.ObjectHolder("purple_petals")
-	public static final BasicBlock petalsPurple = null;
-	@GameRegistry.ObjectHolder("red_petals")
-	public static final BasicBlock petalsRed = null;
-	@GameRegistry.ObjectHolder("rose_petals")
-	public static final BasicBlock petalsRose = null;
-	@GameRegistry.ObjectHolder("yellow_petals")
-	public static final BasicBlock petalsYellow = null;
-	@GameRegistry.ObjectHolder("plastic")
-	public static final BasicBlock plastic = null;
-	@GameRegistry.ObjectHolder("blue_rock_candy")
-	public static final BasicBlock rockCandyBlue = null;
-	@GameRegistry.ObjectHolder("green_rock_candy")
-	public static final BasicBlock rockCandyGreen = null;
-	@GameRegistry.ObjectHolder("pink_rock_candy")
-	public static final BasicBlock rockCandyPink = null;
-	@GameRegistry.ObjectHolder("purple_rock_candy")
-	public static final BasicBlock rockCandyPurple = null;
-	@GameRegistry.ObjectHolder("rune_post_compass")
-	public static final RunePostBlock runePostCompass = null;
-	@GameRegistry.ObjectHolder("rune_post_distortion")
-	public static final RunePostBlock runePostDistortion = null;
-	@GameRegistry.ObjectHolder("rune_post_energy")
-	public static final RunePostBlock runePostEnergy = null;
-	@GameRegistry.ObjectHolder("rune_post_fire")
-	public static final RunePostBlock runePostFire = null;
-	@GameRegistry.ObjectHolder("rune_post_kinetic")
-	public static final RunePostBlock runePostKinetic = null;
-	@GameRegistry.ObjectHolder("rune_post_life")
-	public static final RunePostBlock runePostLife = null;
-	@GameRegistry.ObjectHolder("rune_post_lunar")
-	public static final RunePostBlock runePostLunar = null;
-	@GameRegistry.ObjectHolder("rune_post_poison")
-	public static final RunePostBlock runePostPoison = null;
-	@GameRegistry.ObjectHolder("rune_post_power")
-	public static final RunePostBlock runePostPower = null;
-	@GameRegistry.ObjectHolder("rune_post_storm")
-	public static final RunePostBlock runePostStorm = null;
-	@GameRegistry.ObjectHolder("rune_post_strike")
-	public static final RunePostBlock runePostStrike = null;
-	@GameRegistry.ObjectHolder("rune_post_water")
-	public static final RunePostBlock runePostWater = null;
-	@GameRegistry.ObjectHolder("rune_post_wind")
-	public static final RunePostBlock runePostWind = null;
-	@GameRegistry.ObjectHolder("rune_post_wither")
-	public static final RunePostBlock runePostWither = null;
-	@GameRegistry.ObjectHolder("silvro_box")
-	public static final BasicBlock silvroBox = null;
-	@GameRegistry.ObjectHolder("skeletal_block")
-	public static final BasicBlock skeletalBlock = null;
-	@GameRegistry.ObjectHolder("skull_block")
-	public static final BasicBlock skullBlock = null;
-	@GameRegistry.ObjectHolder("dark_skull_block")
-	public static final BasicBlock skullBlockDark = null;
-	@GameRegistry.ObjectHolder("tentacles")
-	public static final BasicBlock tentacles = null;
-	@GameRegistry.ObjectHolder("tentacles_dots_left")
-	public static final BasicBlock tentaclesDotsLeft = null;
-	@GameRegistry.ObjectHolder("tentacles_dots_right")
-	public static final BasicBlock tentaclesDotsRight = null;
-	@GameRegistry.ObjectHolder("tentacles_eye_orange")
-	public static final BasicBlock tentaclesEyeOrange = null;
-	@GameRegistry.ObjectHolder("tentacles_eye_red")
-	public static final BasicBlock tentaclesEyeRed = null;
-	@GameRegistry.ObjectHolder("tentacles_green")
-	public static final BasicBlock tentaclesGreen = null;
-	@GameRegistry.ObjectHolder("toxic_stem")
-	public static final BasicBlock toxicStem = null;
-	@GameRegistry.ObjectHolder("unbreakable_iro_bricks")
-	public static final BasicBlock unbreakableIroBricks = null;
-	@GameRegistry.ObjectHolder("unbreakable_plant_stem")
-	public static final BasicBlock unbreakablePlantStem = null;
-	@GameRegistry.ObjectHolder("unbreakable_runic_bricks")
-	public static final BasicBlock unbreakableRunicBricks = null;
-	@GameRegistry.ObjectHolder("blue_shroom")
-	public static final BasicNonCubeBlock shroomBlue = null;
-	@GameRegistry.ObjectHolder("green_shroom")
-	public static final BasicNonCubeBlock shroomGreen = null;
-	@GameRegistry.ObjectHolder("orange_shroom")
-	public static final BasicNonCubeBlock shroomOrange = null;
-	@GameRegistry.ObjectHolder("purple_shroom")
-	public static final BasicNonCubeBlock shroomPurple = null;
-	@GameRegistry.ObjectHolder("shroom_stem")
-	public static final BasicNonCubeBlock shroomStem = null;
-	@GameRegistry.ObjectHolder("vox_shroom")
-	public static final BasicNonCubeBlock shroomVox = null;
-	@GameRegistry.ObjectHolder("yellow_shroom")
-	public static final BasicNonCubeBlock shroomYellow = null;
-	@GameRegistry.ObjectHolder("vox_log")
-	public static final BasicNonCubeBlock voxLog = null;
-	@GameRegistry.ObjectHolder("boney_block")
-	public static final BoneyBlock boneyBlock = null;
-	@GameRegistry.ObjectHolder("ancient_cactus")
-	public static final CactusBlock ancientCactus = null;
-	@GameRegistry.ObjectHolder("carved_rune_direction")
-	public static final CarvedRunicBlock carvedRuneDirection = null;
-	@GameRegistry.ObjectHolder("carved_rune_empowering")
-	public static final CarvedRunicBlock carvedRuneEmpowering = null;
-	@GameRegistry.ObjectHolder("carved_rune_focus")
-	public static final CarvedRunicBlock carvedRuneFocus = null;
-	@GameRegistry.ObjectHolder("carved_rune_power")
-	public static final CarvedRunicBlock carvedRunePower = null;
-	@GameRegistry.ObjectHolder("carved_rune_reality")
-	public static final CarvedRunicBlock carvedRuneReality = null;
-	@GameRegistry.ObjectHolder("carved_rune_space")
-	public static final CarvedRunicBlock carvedRuneSpace = null;
-	@GameRegistry.ObjectHolder("carved_rune_travel")
-	public static final CarvedRunicBlock carvedRuneTravel = null;
-	@GameRegistry.ObjectHolder("charging_table")
-	public static final ChargingTable chargingTable = null;
-	@GameRegistry.ObjectHolder("shyre_cloud")
-	public static final CloudBlock shyreCloud = null;
-	@GameRegistry.ObjectHolder("dimensional_fabric")
-	public static final DimensionalFabric dimensionalFabric = null;
-	@GameRegistry.ObjectHolder("dustopian_lamp")
-	public static final DustopianLamp dustopianLamp = null;
-	@GameRegistry.ObjectHolder("dustopian_lamp_off")
-	public static final DustopianLampOff dustopianLampOff = null;
-	@GameRegistry.ObjectHolder("damage_enhancer")
-	public static final EnhancerBlock enhancerDamage = null;
-	@GameRegistry.ObjectHolder("divine_enhancer")
-	public static final EnhancerBlock enhancerDivine = null;
-	@GameRegistry.ObjectHolder("durability_enhancer")
-	public static final EnhancerBlock enhancerDurability = null;
-	@GameRegistry.ObjectHolder("luck_enhancer")
-	public static final EnhancerBlock enhancerLuck = null;
-	@GameRegistry.ObjectHolder("magic_enhancer")
-	public static final EnhancerBlock enhancerMagic = null;
-	@GameRegistry.ObjectHolder("resistance_enhancer")
-	public static final EnhancerBlock enhancerResistance = null;
-	@GameRegistry.ObjectHolder("speed_enhancer")
-	public static final EnhancerBlock enhancerSpeed = null;
-	@GameRegistry.ObjectHolder("weight_enhancer")
-	public static final EnhancerBlock enhancerWeight = null;
-	@GameRegistry.ObjectHolder("archaic_ladder")
-	public static final LadderBlock archaicLadder = null;
-	@GameRegistry.ObjectHolder("archaic_ladder_breakable")
-	public static final LadderBlock archaicLadderBreakable = null;
-	@GameRegistry.ObjectHolder("living_growth")
-	public static final LivingGrowth livingGrowth = null;
-	@GameRegistry.ObjectHolder("celeve_stem")
-	public static final LogBlock celeveStem = null;
-	@GameRegistry.ObjectHolder("lunar_pillar")
-	public static final LunarPillar lunarPillar = null;
-	@GameRegistry.ObjectHolder("spikey_pillar")
-	public static final SpikeyPillar spikeyPillar = null;
-	@GameRegistry.ObjectHolder("toxic_block")
-	public static final ToxicBlock toxicBlock = null;
-	@GameRegistry.ObjectHolder("toxic_waste")
-	public static final ToxicWaste toxicWaste = null;
+	public static final SpawnerBlock AMPHIBIOR_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock AMPHIBIYTE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ANGELICA_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ARC_WIZARD_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ARKZYNE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock AROCKNID_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock BANSHEE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock BAUMBA_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock BLOODSUCKER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock CANE_BUG_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock CRUSILISK_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock DAWNLIGHT_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock DAYSEE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock DIOCUS_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ENFORCER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock EXOHEAD_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock FACELESS_FLOATER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock FENIX_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock FLESH_EATER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock FLOWERFACE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock FUNGOCK_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock GHASTUS_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock GINGERBIRD_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock GINGERBREAD_MAN_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock GOLDUM_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock GOLDUS_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock INMATE_X_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock INMATE_Y_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock IOSAUR_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock JAWE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock KAIYU_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock LIGHTWALKER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock LUXOCRON_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock MECHYON_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock MERKYRE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock MERMAGE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock MUSHROOM_SPIDER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock NETHENGEIC_BEAST_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock NIGHTMARE_SPIDER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock NIGHTWING_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock OPTERYX_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock PARAVITE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock PHANTOM_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock POD_PLANT_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock RAWBONE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock REAVER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock REFLUCT_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ROCK_CRITTER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock RUNIC_GOLEM_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock RUNIC_GUARDIAN_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SEEKER_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SHAVO_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SHYRE_TROLL_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SKELEDON_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SKELEKYTE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SOULSCORNE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SPECTRAL_WIZARD_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SPINOLEDON_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock SURVEYOR_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock THARAFLY_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock UNDEAD_TROLL_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock URIOH_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock URV_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock VINE_WIZARD_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock VISAGE_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock VOLAR_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ZARG_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ZHINX_SPAWNER = ObjectHolder();
+	public static final SpawnerBlock ZORP_SPAWNER = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amphibior_spawner")
-	public static final SpawnerBlock spawnerAmphibior = null;
-	@GameRegistry.ObjectHolder("amphibiyte_spawner")
-	public static final SpawnerBlock spawnerAmphibiyte = null;
-	@GameRegistry.ObjectHolder("angelica_spawner")
-	public static final SpawnerBlock spawnerAngelica = null;
-	@GameRegistry.ObjectHolder("arc_wizard_spawner")
-	public static final SpawnerBlock spawnerArcWizard = null;
-	@GameRegistry.ObjectHolder("arkzyne_spawner")
-	public static final SpawnerBlock spawnerArkzyne = null;
-	@GameRegistry.ObjectHolder("arocknid_spawner")
-	public static final SpawnerBlock spawnerArocknid = null;
-	@GameRegistry.ObjectHolder("banshee_spawner")
-	public static final SpawnerBlock spawnerBanshee = null;
-	@GameRegistry.ObjectHolder("baumba_spawner")
-	public static final SpawnerBlock spawnerBaumba = null;
-	@GameRegistry.ObjectHolder("bloodsucker_spawner")
-	public static final SpawnerBlock spawnerBloodsucker = null;
-	@GameRegistry.ObjectHolder("cane_bug_spawner")
-	public static final SpawnerBlock spawnerCaneBug = null;
-	@GameRegistry.ObjectHolder("crusilisk_spawner")
-	public static final SpawnerBlock spawnerCrusilisk = null;
-	@GameRegistry.ObjectHolder("dawnlight_spawner")
-	public static final SpawnerBlock spawnerDawnlight = null;
-	@GameRegistry.ObjectHolder("daysee_spawner")
-	public static final SpawnerBlock spawnerDaysee = null;
-	@GameRegistry.ObjectHolder("diocus_spawner")
-	public static final SpawnerBlock spawnerDiocus = null;
-	@GameRegistry.ObjectHolder("enforcer_spawner")
-	public static final SpawnerBlock spawnerEnforcer = null;
-	@GameRegistry.ObjectHolder("exohead_spawner")
-	public static final SpawnerBlock spawnerExohead = null;
-	@GameRegistry.ObjectHolder("faceless_floater_spawner")
-	public static final SpawnerBlock spawnerFacelessFloater = null;
-	@GameRegistry.ObjectHolder("fenix_spawner")
-	public static final SpawnerBlock spawnerFenix = null;
-	@GameRegistry.ObjectHolder("flesh_eater_spawner")
-	public static final SpawnerBlock spawnerFleshEater = null;
-	@GameRegistry.ObjectHolder("flowerface_spawner")
-	public static final SpawnerBlock spawnerFlowerface = null;
-	@GameRegistry.ObjectHolder("fungock_spawner")
-	public static final SpawnerBlock spawnerFungock = null;
-	@GameRegistry.ObjectHolder("ghastus_spawner")
-	public static final SpawnerBlock spawnerGhastus = null;
-	@GameRegistry.ObjectHolder("gingerbird_spawner")
-	public static final SpawnerBlock spawnerGingerbird = null;
-	@GameRegistry.ObjectHolder("gingerbread_man_spawner")
-	public static final SpawnerBlock spawnerGingerbreadMan = null;
-	@GameRegistry.ObjectHolder("goldum_spawner")
-	public static final SpawnerBlock spawnerGoldum = null;
-	@GameRegistry.ObjectHolder("goldus_spawner")
-	public static final SpawnerBlock spawnerGoldus = null;
-	@GameRegistry.ObjectHolder("inmate_x_spawner")
-	public static final SpawnerBlock spawnerInmateX = null;
-	@GameRegistry.ObjectHolder("inmate_y_spawner")
-	public static final SpawnerBlock spawnerInmateY = null;
-	@GameRegistry.ObjectHolder("iosaur_spawner")
-	public static final SpawnerBlock spawnerIosaur = null;
-	@GameRegistry.ObjectHolder("jawe_spawner")
-	public static final SpawnerBlock spawnerJawe = null;
-	@GameRegistry.ObjectHolder("kaiyu_spawner")
-	public static final SpawnerBlock spawnerKaiyu = null;
-	@GameRegistry.ObjectHolder("lightwalker_spawner")
-	public static final SpawnerBlock spawnerLightwalker = null;
-	@GameRegistry.ObjectHolder("luxocron_spawner")
-	public static final SpawnerBlock spawnerLuxocron = null;
-	@GameRegistry.ObjectHolder("mechyon_spawner")
-	public static final SpawnerBlock spawnerMechyon = null;
-	@GameRegistry.ObjectHolder("merkyre_spawner")
-	public static final SpawnerBlock spawnerMerkyre = null;
-	@GameRegistry.ObjectHolder("mermage_spawner")
-	public static final SpawnerBlock spawnerMermage = null;
-	@GameRegistry.ObjectHolder("mushroom_spider_spawner")
-	public static final SpawnerBlock spawnerMushroomSpider = null;
-	@GameRegistry.ObjectHolder("nethengeic_beast_spawner")
-	public static final SpawnerBlock spawnerNethengeicBeast = null;
-	@GameRegistry.ObjectHolder("nightmare_spider_spawner")
-	public static final SpawnerBlock spawnerNightmareSpider = null;
-	@GameRegistry.ObjectHolder("nightwing_spawner")
-	public static final SpawnerBlock spawnerNightwing = null;
-	@GameRegistry.ObjectHolder("opteryx_spawner")
-	public static final SpawnerBlock spawnerOpteryx = null;
-	@GameRegistry.ObjectHolder("paravite_spawner")
-	public static final SpawnerBlock spawnerParavite = null;
-	@GameRegistry.ObjectHolder("phantom_spawner")
-	public static final SpawnerBlock spawnerPhantom = null;
-	@GameRegistry.ObjectHolder("pod_plant_spawner")
-	public static final SpawnerBlock spawnerPodPlant = null;
-	@GameRegistry.ObjectHolder("rawbone_spawner")
-	public static final SpawnerBlock spawnerRawbone = null;
-	@GameRegistry.ObjectHolder("reaver_spawner")
-	public static final SpawnerBlock spawnerReaver = null;
-	@GameRegistry.ObjectHolder("refluct_spawner")
-	public static final SpawnerBlock spawnerRefluct = null;
-	@GameRegistry.ObjectHolder("rock_critter_spawner")
-	public static final SpawnerBlock spawnerRockCritter = null;
-	@GameRegistry.ObjectHolder("runic_golem_spawner")
-	public static final SpawnerBlock spawnerRunicGolem = null;
-	@GameRegistry.ObjectHolder("runic_guardian_spawner")
-	public static final SpawnerBlock spawnerRunicGuardian = null;
-	@GameRegistry.ObjectHolder("seeker_spawner")
-	public static final SpawnerBlock spawnerSeeker = null;
-	@GameRegistry.ObjectHolder("shavo_spawner")
-	public static final SpawnerBlock spawnerShavo = null;
-	@GameRegistry.ObjectHolder("shyre_troll_spawner")
-	public static final SpawnerBlock spawnerShyreTroll = null;
-	@GameRegistry.ObjectHolder("skeledon_spawner")
-	public static final SpawnerBlock spawnerSkeledon = null;
-	@GameRegistry.ObjectHolder("skelekyte_spawner")
-	public static final SpawnerBlock spawnerSkelekyte = null;
-	@GameRegistry.ObjectHolder("soulscorne_spawner")
-	public static final SpawnerBlock spawnerSoulscorne = null;
-	@GameRegistry.ObjectHolder("spectral_wizard_spawner")
-	public static final SpawnerBlock spawnerSpectralWizard = null;
-	@GameRegistry.ObjectHolder("spinoledon_spawner")
-	public static final SpawnerBlock spawnerSpinoledon = null;
-	@GameRegistry.ObjectHolder("surveyor_spawner")
-	public static final SpawnerBlock spawnerSurveyor = null;
-	@GameRegistry.ObjectHolder("tharafly_spawner")
-	public static final SpawnerBlock spawnerTharafly = null;
-	@GameRegistry.ObjectHolder("undead_troll_spawner")
-	public static final SpawnerBlock spawnerUndeadTroll = null;
-	@GameRegistry.ObjectHolder("urioh_spawner")
-	public static final SpawnerBlock spawnerUrioh = null;
-	@GameRegistry.ObjectHolder("urv_spawner")
-	public static final SpawnerBlock spawnerUrv = null;
-	@GameRegistry.ObjectHolder("vine_wizard_spawner")
-	public static final SpawnerBlock spawnerVineWizard = null;
-	@GameRegistry.ObjectHolder("visage_spawner")
-	public static final SpawnerBlock spawnerVisage = null;
-	@GameRegistry.ObjectHolder("volar_spawner")
-	public static final SpawnerBlock spawnerVolar = null;
-	@GameRegistry.ObjectHolder("zarg_spawner")
-	public static final SpawnerBlock spawnerZarg = null;
-	@GameRegistry.ObjectHolder("zhinx_spawner")
-	public static final SpawnerBlock spawnerZhinx = null;
-	@GameRegistry.ObjectHolder("zorp_spawner")
-	public static final SpawnerBlock spawnerZorp = null;
+	public static final BossAltarBlock ARMY_BLOCK = ObjectHolder();
+	public static final BossAltarBlock BARONESS_ALTAR = ObjectHolder();
+	public static final BossAltarBlock CANDY_BLOCK = ObjectHolder();
+	public static final BossAltarBlock CLUNKHEAD_ALTAR = ObjectHolder();
+	public static final BossAltarBlock CRAEXXEUS_ALTAR = ObjectHolder();
+	public static final BossAltarBlock CREEP_ALTAR = ObjectHolder();
+	public static final BossAltarBlock DRACYON_ALTAR = ObjectHolder();
+	public static final BossAltarBlock GRAW_ALTAR = ObjectHolder();
+	public static final GuardianAltar GUARDIAN_ALTAR = ObjectHolder();
+	public static final BossAltarBlock HIVE_SPAWNER = ObjectHolder();
+	public static final BossAltarBlock HYDRO_TABLE = ObjectHolder();
+	public static final BossAltarBlock ILLUSION_ALTAR = ObjectHolder();
+	public static final BossAltarBlock KROR_ALTAR = ObjectHolder();
+	public static final BossAltarBlock MECHBOT_ALTAR = ObjectHolder();
+	public static final BossAltarBlock POWER_STATION = ObjectHolder();
+	public static final BossAltarBlock PRIMORDIAL_SHRINE = ObjectHolder();
+	public static final BasicBlock ROCKRIDER_SHRINE = ObjectHolder();
+	public static final BossAltarBlock SHADOW_ALTAR = ObjectHolder();
+	public static final BossAltarBlock SILVERFOOT_ALTAR = ObjectHolder();
+	public static final BossAltarBlock TOY_BOX = ObjectHolder();
+	public static final BossAltarBlock VINOCORNE_SHRINE = ObjectHolder();
+	public static final BossAltarBlock VISUALENT_ALTAR = ObjectHolder();
+	public static final BossAltarBlock VOXXULON_ALTAR = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("army_block")
-	public static final BossAltarBlock armyBlock = null;
-	@GameRegistry.ObjectHolder("baroness_altar")
-	public static final BossAltarBlock baronessAltar = null;
-	@GameRegistry.ObjectHolder("candy_block")
-	public static final BossAltarBlock candyBlock = null;
-	@GameRegistry.ObjectHolder("clunkhead_altar")
-	public static final BossAltarBlock clunkheadAltar = null;
-	@GameRegistry.ObjectHolder("craexxeus_altar")
-	public static final BossAltarBlock craexxeusAltar = null;
-	@GameRegistry.ObjectHolder("creep_altar")
-	public static final BossAltarBlock creepAltar = null;
-	@GameRegistry.ObjectHolder("dracyon_altar")
-	public static final BossAltarBlock dracyonAltar = null;
-	@GameRegistry.ObjectHolder("graw_altar")
-	public static final BossAltarBlock grawAltar = null;
-	@GameRegistry.ObjectHolder("guardian_altar")
-	public static final GuardianAltar guardianAltar = null;
-	@GameRegistry.ObjectHolder("hive_spawner")
-	public static final BossAltarBlock hiveSpawner = null;
-	@GameRegistry.ObjectHolder("hydro_table")
-	public static final BossAltarBlock hydroTable = null;
-	@GameRegistry.ObjectHolder("illusion_altar")
-	public static final BossAltarBlock illusionAltar = null;
-	@GameRegistry.ObjectHolder("kror_altar")
-	public static final BossAltarBlock krorAltar = null;
-	@GameRegistry.ObjectHolder("mechbot_altar")
-	public static final BossAltarBlock mechbotAltar = null;
-	@GameRegistry.ObjectHolder("power_station")
-	public static final BossAltarBlock powerStation = null;
-	@GameRegistry.ObjectHolder("primordial_shrine")
-	public static final BossAltarBlock primordialShrine = null;
-	@GameRegistry.ObjectHolder("rockrider_shrine")
-	public static final BasicBlock rockriderShrine = null;
-	@GameRegistry.ObjectHolder("shadow_altar")
-	public static final BossAltarBlock shadowAltar = null;
-	@GameRegistry.ObjectHolder("silverfoot_altar")
-	public static final BossAltarBlock silverfootAltar = null;
-	@GameRegistry.ObjectHolder("toy_box")
-	public static final BossAltarBlock toyBox = null;
-	@GameRegistry.ObjectHolder("vinocorne_shrine")
-	public static final BossAltarBlock vinocorneShrine = null;
-	@GameRegistry.ObjectHolder("visualent_altar")
-	public static final BossAltarBlock visualentAltar = null;
-	@GameRegistry.ObjectHolder("voxxulon_altar")
-	public static final BossAltarBlock voxxulonAltar = null;
+	public static final PortalBlock ABYSS_PORTAL = ObjectHolder();
+	public static final PortalBlock ANCIENT_CAVERN_PORTAL = ObjectHolder();
+	public static final PortalBlock BARATHOS_PORTAL = ObjectHolder();
+	public static final PortalBlock BOREAN_PORTAL = ObjectHolder();
+	public static final PortalBlock CANDYLAND_PORTAL = ObjectHolder();
+	public static final PortalBlock CELEVE_PORTAL = ObjectHolder();
+	public static final PortalBlock CREEPONIA_PORTAL = ObjectHolder();
+	public static final PortalBlock CRYSTEVIA_PORTAL = ObjectHolder();
+	public static final PortalBlock DEEPLANDS_PORTAL = ObjectHolder();
+	public static final PortalBlock DUSTOPIA_PORTAL = ObjectHolder();
+	public static final PortalBlock GARDENCIA_PORTAL = ObjectHolder();
+	public static final PortalBlock GRECKON_PORTAL = ObjectHolder();
+	public static final PortalBlock HAVEN_PORTAL = ObjectHolder();
+	public static final PortalBlock IMMORTALLIS_PORTAL = ObjectHolder();
+	public static final PortalBlock IROMINE_PORTAL = ObjectHolder();
+	public static final PortalBlock LELYETIA_PORTAL = ObjectHolder();
+	public static final PortalBlock LUNALUS_PORTAL = ObjectHolder();
+	public static final PortalBlock MYSTERIUM_PORTAL = ObjectHolder();
+	public static final PortalBlock NETHER_PORTAL = ObjectHolder();
+	public static final PortalBlock PRECASIA_PORTAL = ObjectHolder();
+	public static final PortalBlock RUNANDOR_PORTAL = ObjectHolder();
+	public static final PortalBlock SHYRELANDS_PORTAL = ObjectHolder();
+	public static final PortalBlock VOX_PONDS_PORTAL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyss_portal")
-	public static final PortalBlock portalAbyss = null;
-	@GameRegistry.ObjectHolder("ancient_cavern_portal")
-	public static final PortalBlock portalAncientCavern = null;
-	@GameRegistry.ObjectHolder("barathos_portal")
-	public static final PortalBlock portalBarathos = null;
-	@GameRegistry.ObjectHolder("borean_portal")
-	public static final PortalBlock portalBorean = null;
-	@GameRegistry.ObjectHolder("candyland_portal")
-	public static final PortalBlock portalCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_portal")
-	public static final PortalBlock portalCeleve = null;
-	@GameRegistry.ObjectHolder("creeponia_portal")
-	public static final PortalBlock portalCreeponia = null;
-	@GameRegistry.ObjectHolder("crystevia_portal")
-	public static final PortalBlock portalCrystevia = null;
-	@GameRegistry.ObjectHolder("deeplands_portal")
-	public static final PortalBlock portalDeeplands = null;
-	@GameRegistry.ObjectHolder("dustopia_portal")
-	public static final PortalBlock portalDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_portal")
-	public static final PortalBlock portalGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_portal")
-	public static final PortalBlock portalGreckon = null;
-	@GameRegistry.ObjectHolder("haven_portal")
-	public static final PortalBlock portalHaven = null;
-	@GameRegistry.ObjectHolder("immortallis_portal")
-	public static final PortalBlock portalImmortallis = null;
-	@GameRegistry.ObjectHolder("iromine_portal")
-	public static final PortalBlock portalIromine = null;
-	@GameRegistry.ObjectHolder("lelyetia_portal")
-	public static final PortalBlock portalLelyetia = null;
-	@GameRegistry.ObjectHolder("lunalus_portal")
-	public static final PortalBlock portalLunalus = null;
-	@GameRegistry.ObjectHolder("mysterium_portal")
-	public static final PortalBlock portalMysterium = null;
-	@GameRegistry.ObjectHolder("nether_portal")
-	public static final PortalBlock portalNether = null;
-	@GameRegistry.ObjectHolder("precasia_portal")
-	public static final PortalBlock portalPrecasia = null;
-	@GameRegistry.ObjectHolder("runandor_portal")
-	public static final PortalBlock portalRunandor = null;
-	@GameRegistry.ObjectHolder("shyrelands_portal")
-	public static final PortalBlock portalShyrelands = null;
-	@GameRegistry.ObjectHolder("vox_ponds_portal")
-	public static final PortalBlock portalVoxPonds = null;
+	public static final AncientAltar ANCIENT_ALTAR = ObjectHolder();
+	public static final AncientCavernShrine EREBON_SHRINE = ObjectHolder();
+	public static final AncientCavernShrine LUXON_SHRINE = ObjectHolder();
+	public static final AncientCavernShrine PLUTON_SHRINE = ObjectHolder();
+	public static final AncientCavernShrine SELYAN_SHRINE = ObjectHolder();
+	public static final AscensionShrine ASCENSION_SHRINE = ObjectHolder();
+	public static final BasicBlock VOX_CRATE = ObjectHolder();
+	public static final CreationForge CREATION_FORGE = ObjectHolder();
+	public static final CrystalCreator BLUE_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalCreator GREEN_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalCreator PURPLE_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalCreator RED_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalCreator WHITE_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalCreator YELLOW_CRYSTAL_CREATOR = ObjectHolder();
+	public static final CrystalExtensionShrine CRYSTAL_EXTENSION_SHRINE = ObjectHolder();
+	public static final DecloggingTable DECLOGGING_TABLE = ObjectHolder();
+	public static final DeepCase DEEP_CASE = ObjectHolder();
+	public static final DivineStation DIVINE_STATION = ObjectHolder();
+	public static final EnigmaTable ENIGMA_TABLE = ObjectHolder();
+	public static final ExoidStation EXOID_STATION = ObjectHolder();
+	public static final ExtractionDevice EXTRACTION_DEVICE = ObjectHolder();
+	public static final ExtractionDevice EXTRACTION_DEVICE_ON = ObjectHolder();
+	public static final FiltrationSystem FILTRATION_SYSTEM = ObjectHolder();
+	public static final FrameBench FRAME_BENCH = ObjectHolder();
+	public static final GoldAccumulator GOLD_ACCUMULATOR = ObjectHolder();
+	public static final HauntingTable HAUNTING_TABLE = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_1 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_2 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_3 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_4 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_5 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_6 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_7 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_8 = ObjectHolder();
+	public static final ImmortallisProgressor IMMORTALLIS_PROGRESSOR_9 = ObjectHolder();
+	public static final InfusionTable INFUSION_TABLE = ObjectHolder();
+	public static final IroCrate IRO_CRATE = ObjectHolder();
+	public static final LunarCreationTable LUNAR_CREATION_TABLE = ObjectHolder();
+	public static final LunarEnrichmentTable LUNAR_ENRICHMENT_TABLE = ObjectHolder();
+	public static final MendingTable MENDING_TABLE = ObjectHolder();
+	public static final MineralizationStation MINERALIZATION_STATION = ObjectHolder();
+	public static final PetalCraftingStation PETAL_CRAFTING_STATION = ObjectHolder();
+	public static final PureGoldAccumulator PURE_GOLD_ACCUMULATOR = ObjectHolder();
+	public static final RecreationStation RECREATION_STATION = ObjectHolder();
+	public static final RuneRandomizer RUNE_RANDOMIZER = ObjectHolder();
+	public static final RuneShrine RUNE_SHRINE = ObjectHolder();
+	public static final RunicBlock RUNIC_BLOCK = ObjectHolder();
+	public static final StrangeBlock STRANGE_BLOCK = ObjectHolder();
+	public static final TeaSink TEA_SINK = ObjectHolder();
+	public static final VoxStoreCrate VOX_STORE_CRATE = ObjectHolder();
+	public static final WhitewashingTable WHITEWASHING_TABLE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_altar")
-	public static final AncientAltar ancientAltar = null;
-	@GameRegistry.ObjectHolder("erebon_shrine")
-	public static final AncientCavernShrine shrineErebon = null;
-	@GameRegistry.ObjectHolder("luxon_shrine")
-	public static final AncientCavernShrine shrineLuxon = null;
-	@GameRegistry.ObjectHolder("pluton_shrine")
-	public static final AncientCavernShrine shrinePluton = null;
-	@GameRegistry.ObjectHolder("selyan_shrine")
-	public static final AncientCavernShrine shrineSelyan = null;
-	@GameRegistry.ObjectHolder("ascension_shrine")
-	public static final AscensionShrine ascensionShrine = null;
-	@GameRegistry.ObjectHolder("vox_crate")
-	public static final BasicBlock voxCrate = null;
-	@GameRegistry.ObjectHolder("creation_forge")
-	public static final CreationForge creationForge = null;
-	@GameRegistry.ObjectHolder("blue_crystal_creator")
-	public static final CrystalCreator crystalCreatorBlue = null;
-	@GameRegistry.ObjectHolder("green_crystal_creator")
-	public static final CrystalCreator crystalCreatorGreen = null;
-	@GameRegistry.ObjectHolder("purple_crystal_creator")
-	public static final CrystalCreator crystalCreatorPurple = null;
-	@GameRegistry.ObjectHolder("red_crystal_creator")
-	public static final CrystalCreator crystalCreatorRed = null;
-	@GameRegistry.ObjectHolder("white_crystal_creator")
-	public static final CrystalCreator crystalCreatorWhite = null;
-	@GameRegistry.ObjectHolder("yellow_crystal_creator")
-	public static final CrystalCreator crystalCreatorYellow = null;
-	@GameRegistry.ObjectHolder("crystal_extension_shrine")
-	public static final CrystalExtensionShrine crystalExtensionShrine = null;
-	@GameRegistry.ObjectHolder("declogging_table")
-	public static final DecloggingTable decloggingTable = null;
-	@GameRegistry.ObjectHolder("deep_case")
-	public static final DeepCase deepCase = null;
-	@GameRegistry.ObjectHolder("divine_station")
-	public static final DivineStation divineStation = null;
-	@GameRegistry.ObjectHolder("enigma_table")
-	public static final EnigmaTable enigmaTable = null;
-	@GameRegistry.ObjectHolder("exoid_station")
-	public static final ExoidStation exoidStation = null;
-	@GameRegistry.ObjectHolder("extraction_device")
-	public static final ExtractionDevice extractionDevice = null;
-	@GameRegistry.ObjectHolder("extraction_device_on")
-	public static final ExtractionDevice extractionDeviceOn = null;
-	@GameRegistry.ObjectHolder("filtration_system")
-	public static final FiltrationSystem filtrationSystem = null;
-	@GameRegistry.ObjectHolder("frame_bench")
-	public static final FrameBench frameBench = null;
-	@GameRegistry.ObjectHolder("gold_accumulator")
-	public static final GoldAccumulator goldAccumulator = null;
-	@GameRegistry.ObjectHolder("haunting_table")
-	public static final HauntingTable hauntingTable = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_1")
-	public static final ImmortallisProgressor immortallisProgressor1 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_2")
-	public static final ImmortallisProgressor immortallisProgressor2 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_3")
-	public static final ImmortallisProgressor immortallisProgressor3 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_4")
-	public static final ImmortallisProgressor immortallisProgressor4 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_5")
-	public static final ImmortallisProgressor immortallisProgressor5 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_6")
-	public static final ImmortallisProgressor immortallisProgressor6 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_7")
-	public static final ImmortallisProgressor immortallisProgressor7 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_8")
-	public static final ImmortallisProgressor immortallisProgressor8 = null;
-	@GameRegistry.ObjectHolder("immortallis_progressor_9")
-	public static final ImmortallisProgressor immortallisProgressor9 = null;
-	@GameRegistry.ObjectHolder("infusion_table")
-	public static final InfusionTable infusionTable = null;
-	@GameRegistry.ObjectHolder("iro_crate")
-	public static final IroCrate iroCrate = null;
-	@GameRegistry.ObjectHolder("lunar_creation_table")
-	public static final LunarCreationTable lunarCreationTable = null;
-	@GameRegistry.ObjectHolder("lunar_enrichment_table")
-	public static final LunarEnrichmentTable lunarEnrichmentTable = null;
-	@GameRegistry.ObjectHolder("mending_table")
-	public static final MendingTable mendingTable = null;
-	@GameRegistry.ObjectHolder("mineralization_station")
-	public static final MineralizationStation mineralizationStation = null;
-	@GameRegistry.ObjectHolder("petal_crafting_station")
-	public static final PetalCraftingStation petalCraftingStation = null;
-	@GameRegistry.ObjectHolder("pure_gold_accumulator")
-	public static final PureGoldAccumulator pureGoldAccumulator = null;
-	@GameRegistry.ObjectHolder("recreation_station")
-	public static final RecreationStation recreationStation = null;
-	@GameRegistry.ObjectHolder("rune_randomizer")
-	public static final RuneRandomizer runeRandomizer = null;
-	@GameRegistry.ObjectHolder("rune_shrine")
-	public static final RuneShrine runeShrine = null;
-	@GameRegistry.ObjectHolder("runic_block")
-	public static final RunicBlock runicBlock = null;
-	@GameRegistry.ObjectHolder("strange_block")
-	public static final StrangeBlock strangeBlock = null;
-	@GameRegistry.ObjectHolder("tea_sink")
-	public static final TeaSink teaSink = null;
-	@GameRegistry.ObjectHolder("vox_store_crate")
-	public static final VoxStoreCrate voxStoreCrate = null;
-	@GameRegistry.ObjectHolder("whitewashing_table")
-	public static final WhitewashingTable whitewashingTable = null;
+	public static final GenericPlantBlock ARCBULB = ObjectHolder();
+	public static final GenericPlantBlock ARCFLOWER = ObjectHolder();
+	public static final GenericPlantBlock BUREAL_STOCKS = ObjectHolder();
+	public static final GenericPlantBlock CANDYCANE = ObjectHolder();
+	public static final GenericPlantBlock CANDY_GRASS = ObjectHolder();
+	public static final GenericPlantBlock BLUE_CANDY_GRASS = ObjectHolder();
+	public static final GenericPlantBlock CELEVIANS_BLUE = ObjectHolder();
+	public static final GenericPlantBlock CELEVIANS_PURPLE = ObjectHolder();
+	public static final GenericPlantBlock CELEVIANS_RED = ObjectHolder();
+	public static final GenericPlantBlock CELEVIANS_WHITE = ObjectHolder();
+	public static final GenericPlantBlock CREEP_FLOWERS = ObjectHolder();
+	public static final GenericPlantBlock CREEP_GRASS = ObjectHolder();
+	public static final CrysteviaCrystalPlant BLUE_CRYSTAL_PLANT = ObjectHolder();
+	public static final CrysteviaCrystalPlant GREEN_CRYSTAL_PLANT = ObjectHolder();
+	public static final CrysteviaCrystalPlant PURPLE_CRYSTAL_PLANT = ObjectHolder();
+	public static final CrysteviaCrystalPlant RED_CRYSTAL_PLANT = ObjectHolder();
+	public static final CrysteviaCrystalPlant WHITE_CRYSTAL_PLANT = ObjectHolder();
+	public static final CrysteviaCrystalPlant YELLOW_CRYSTAL_PLANT = ObjectHolder();
+	public static final GenericPlantBlock DAILEERS = ObjectHolder();
+	public static final GenericPlantBlock DAWN_BUSH = ObjectHolder();
+	public static final GenericPlantBlock DAWN_FLOWER = ObjectHolder();
+	public static final GenericPlantBlock DAWN_GRASS = ObjectHolder();
+	public static final GenericPlantBlock DAYLOOMS_BLUE = ObjectHolder();
+	public static final GenericPlantBlock DAYLOOMS_PINK = ObjectHolder();
+	public static final GenericPlantBlock DAYLOOMS_YELLOW = ObjectHolder();
+	public static final GenericPlantBlock DEAD_GRASS = ObjectHolder();
+	public static final GenericPlantBlock DEEP_BLOOMS = ObjectHolder();
+	public static final GenericPlantBlock DEEP_GRASS = ObjectHolder();
+	public static final GenericPlantBlock HAUNTED_FLOWER = ObjectHolder();
+	public static final GenericPlantBlock HAVEN_GRASS_PLANT = ObjectHolder();
+	public static final GenericPlantBlock HORIZON_DAISIES = ObjectHolder();
+	public static final GenericPlantBlock IRO_GRASS = ObjectHolder();
+	public static final GenericPlantBlock IROTOPS = ObjectHolder();
+	public static final GenericPlantBlock LELYETIAN_GRASS = ObjectHolder();
+	public static final GenericPlantBlock LELYETIAN_GRASS_DOWN = ObjectHolder();
+	public static final GenericPlantBlock LUCON_GRASS = ObjectHolder();
+	public static final GenericPlantBlock LUNALIP = ObjectHolder();
+	public static final GenericPlantBlock LUNTAR = ObjectHolder();
+	public static final GenericPlantBlock LURCHIANS = ObjectHolder();
+	public static final GenericPlantBlock LYLIPS = ObjectHolder();
+	public static final GenericPlantBlock MAGIAS = ObjectHolder();
+	public static final GenericPlantBlock MYSTIC_BUSH = ObjectHolder();
+	public static final GenericPlantBlock MYSTIC_FERNS = ObjectHolder();
+	public static final GenericPlantBlock OCEALITES_BLUE = ObjectHolder();
+	public static final GenericPlantBlock RAINBOW_GRASS = ObjectHolder();
+	public static final GenericPlantBlock RAINBOW_GRASS2 = ObjectHolder();
+	public static final GenericPlantBlock RAINBOW_GRASS3 = ObjectHolder();
+	public static final GenericPlantBlock RUNE_BULBS = ObjectHolder();
+	public static final GenericPlantBlock RUNIC_BUSH = ObjectHolder();
+	public static final GenericPlantBlock SHYRE_WEED = ObjectHolder();
+	public static final GenericPlantBlock TANGLE_THORNS = ObjectHolder();
+	public static final GenericPlantBlock TRILLIAD_BLOOM = ObjectHolder();
+	public static final GenericPlantBlock TUBEICLES = ObjectHolder();
+	public static final GenericPlantBlock GREEN_WATERWEEDS = ObjectHolder();
+	public static final GenericPlantBlock WHITE_WATERWEEDS = ObjectHolder();
+	public static final GenericPlantBlock YELLOW_WATERWEEDS = ObjectHolder();
+	public static final PlantMultiStackable BLUE_LOLLYPOP = ObjectHolder();
+	public static final PlantMultiStackable RED_LOLLYPOP = ObjectHolder();
+	public static final PlantMultiStackable YELLOW_LOLLYPOP = ObjectHolder();
+	public static final PlantStackable ANCIENT_VINES = ObjectHolder();
+	public static final PlantStackable ANCIENT_VINES_CAP = ObjectHolder();
+	public static final PlantStackable BLOOD_PINE_STEM = ObjectHolder();
+	public static final PlantStackable BLOOD_PINE = ObjectHolder();
+	public static final PlantStackable BLOOD_SPIKES = ObjectHolder();
+	public static final PlantStackable BLOOD_STRANDS = ObjectHolder();
+	public static final PlantStackable BULB_STOCK = ObjectHolder();
+	public static final PlantStackable BULB_STOCK_CAP = ObjectHolder();
+	public static final PlantStackable CELEBULBS_STEM = ObjectHolder();
+	public static final PlantStackable CELEBULBS_GREEN = ObjectHolder();
+	public static final PlantStackable CELEBULBS_YELLOW = ObjectHolder();
+	public static final PlantStackable CORAL_CAGE = ObjectHolder();
+	public static final PlantStackable DAWNWOOD_BARS = ObjectHolder();
+	public static final PlantStackable EYE_SHRUB_STEM = ObjectHolder();
+	public static final PlantStackable EYE_SHRUB = ObjectHolder();
+	public static final PlantStackable GARDEN_GRASS = ObjectHolder();
+	public static final PlantStackable HAVENDALES_BLUE_STEM = ObjectHolder();
+	public static final PlantStackable HAVENDALES_BLUE = ObjectHolder();
+	public static final PlantStackable HAVENDALES_PINK_STEM = ObjectHolder();
+	public static final PlantStackable HAVENDALES_PINK = ObjectHolder();
+	public static final PlantStackable HAVENDALES_YELLOW_STEM = ObjectHolder();
+	public static final PlantStackable HAVENDALES_YELLOW = ObjectHolder();
+	public static final PlantStackable LELYETIAN_STEM = ObjectHolder();
+	public static final PlantStackable LELYETIAN_STEM_CAP = ObjectHolder();
+	public static final PlantStackable LELYETIAN_STEM_CAP_DOWN = ObjectHolder();
+	public static final PlantStackable LELYETIAN_WIGGLER = ObjectHolder();
+	public static final PlantStackable LELYETIAN_WIGGLER_BOTTOM = ObjectHolder();
+	public static final PlantStackable LELYETIAN_WIGGLER_TOP = ObjectHolder();
+	public static final PlantStackable GREEN_PEPPERMINT = ObjectHolder();
+	public static final PlantStackable RED_PEPPERMINT = ObjectHolder();
+	public static final PlantStackable PLASTIC_STICK = ObjectHolder();
+	public static final PlantStackable CANDY_TUBE = ObjectHolder();
+	public static final PlantStackable SHYRE_STOCK = ObjectHolder();
+	public static final PlantStackable SHYRE_CAP = ObjectHolder();
+	public static final PlantStackable SHYRE_CAP_DOWN = ObjectHolder();
+	public static final PlantStackable VOX_FUNGI_STEM = ObjectHolder();
+	public static final PlantStackable VOX_FUNGI = ObjectHolder();
+	public static final PlantStackable VOX_TENTACLES_STEM = ObjectHolder();
+	public static final PlantStackable VOX_TENTACLES = ObjectHolder();
+	public static final RedWaterweeds RED_WATERWEEDS = ObjectHolder();
+	public static final VinesBlock CREEP_VINES = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("blue_aqua_fungi")
-	public static final GenericPlantBlock plantAquaFungiBlue = null;
-	@GameRegistry.ObjectHolder("yellow_aqua_fungi")
-	public static final GenericPlantBlock plantAquaFungiYellow = null;
-	@GameRegistry.ObjectHolder("arcbulb")
-	public static final GenericPlantBlock plantArcbulb = null;
-	@GameRegistry.ObjectHolder("arcflower")
-	public static final GenericPlantBlock plantArcflower = null;
-	@GameRegistry.ObjectHolder("bureal_stocks")
-	public static final GenericPlantBlock plantBurealStocks = null;
-	@GameRegistry.ObjectHolder("candycane")
-	public static final GenericPlantBlock plantCandycane = null;
-	@GameRegistry.ObjectHolder("candy_grass")
-	public static final GenericPlantBlock plantCandyGrass = null;
-	@GameRegistry.ObjectHolder("blue_candy_grass")
-	public static final GenericPlantBlock plantCandyGrassBlue = null;
-	@GameRegistry.ObjectHolder("white_candy_grass")
-	public static final GenericPlantBlock plantCandyGrassWhite = null;
-	@GameRegistry.ObjectHolder("celevians_blue")
-	public static final GenericPlantBlock plantCeleviansBlue = null;
-	@GameRegistry.ObjectHolder("celevians_purple")
-	public static final GenericPlantBlock plantCeleviansPurple = null;
-	@GameRegistry.ObjectHolder("celevians_red")
-	public static final GenericPlantBlock plantCeleviansRed = null;
-	@GameRegistry.ObjectHolder("celevians_white")
-	public static final GenericPlantBlock plantCeleviansWhite = null;
-	@GameRegistry.ObjectHolder("chocolate_grass_plant")
-	public static final GenericPlantBlock plantChocolateGrass = null;
-	@GameRegistry.ObjectHolder("chocolate_stocks")
-	public static final GenericPlantBlock plantChocolateStocks = null;
-	@GameRegistry.ObjectHolder("creep_flowers")
-	public static final GenericPlantBlock plantCreepFlowers = null;
-	@GameRegistry.ObjectHolder("creep_grass")
-	public static final GenericPlantBlock plantCreepGrass = null;
-	@GameRegistry.ObjectHolder("blue_crystal_plant")
-	public static final GenericPlantBlock plantCrystalBlue = null;
-	@GameRegistry.ObjectHolder("green_crystal_plant")
-	public static final GenericPlantBlock plantCrystalGreen = null;
-	@GameRegistry.ObjectHolder("purple_crystal_plant")
-	public static final GenericPlantBlock plantCrystalPurple = null;
-	@GameRegistry.ObjectHolder("red_crystal_plant")
-	public static final GenericPlantBlock plantCrystalRed = null;
-	@GameRegistry.ObjectHolder("white_crystal_plant")
-	public static final GenericPlantBlock plantCrystalWhite = null;
-	@GameRegistry.ObjectHolder("yellow_crystal_plant")
-	public static final GenericPlantBlock plantCrystalYellow = null;
-	@GameRegistry.ObjectHolder("daileers")
-	public static final GenericPlantBlock plantDaileers = null;
-	@GameRegistry.ObjectHolder("dawn_bulb")
-	public static final GenericPlantBlock plantDawnBulb = null;
-	@GameRegistry.ObjectHolder("dawn_bush")
-	public static final GenericPlantBlock plantDawnBush = null;
-	@GameRegistry.ObjectHolder("dawn_flower")
-	public static final GenericPlantBlock plantDawnFlower = null;
-	@GameRegistry.ObjectHolder("dawn_grass")
-	public static final GenericPlantBlock plantDawnGrass = null;
-	@GameRegistry.ObjectHolder("daylooms_blue")
-	public static final GenericPlantBlock plantDayloomsBlue = null;
-	@GameRegistry.ObjectHolder("daylooms_pink")
-	public static final GenericPlantBlock plantDayloomsPink = null;
-	@GameRegistry.ObjectHolder("daylooms_yellow")
-	public static final GenericPlantBlock plantDayloomsYellow = null;
-	@GameRegistry.ObjectHolder("dead_grass")
-	public static final GenericPlantBlock plantDeadGrass = null;
-	@GameRegistry.ObjectHolder("deep_blooms")
-	public static final GenericPlantBlock plantDeepBlooms = null;
-	@GameRegistry.ObjectHolder("deep_grass")
-	public static final GenericPlantBlock plantDeepGrass = null;
-	@GameRegistry.ObjectHolder("haunted_flower")
-	public static final GenericPlantBlock plantHauntedFlower = null;
-	@GameRegistry.ObjectHolder("haven_grass_plant")
-	public static final GenericPlantBlock plantHavenGrass = null;
-	@GameRegistry.ObjectHolder("horizon_daisies")
-	public static final GenericPlantBlock plantHorizonDaisies = null;
-	@GameRegistry.ObjectHolder("iro_grass")
-	public static final GenericPlantBlock plantIroGrass = null;
-	@GameRegistry.ObjectHolder("irotops")
-	public static final GenericPlantBlock plantIrotops = null;
-	@GameRegistry.ObjectHolder("lelyetian_grass")
-	public static final GenericPlantBlock plantLelyetianGrass = null;
-	@GameRegistry.ObjectHolder("lelyetian_grass_down")
-	public static final GenericPlantBlock plantLelyetianGrassDown = null;
-	@GameRegistry.ObjectHolder("lucon_grass")
-	public static final GenericPlantBlock plantLuconGrass = null;
-	@GameRegistry.ObjectHolder("lunalip")
-	public static final GenericPlantBlock plantLunalip = null;
-	@GameRegistry.ObjectHolder("luntar")
-	public static final GenericPlantBlock plantLuntar = null;
-	@GameRegistry.ObjectHolder("lurchians")
-	public static final GenericPlantBlock plantLurchians = null;
-	@GameRegistry.ObjectHolder("lylips")
-	public static final GenericPlantBlock plantLylips = null;
-	@GameRegistry.ObjectHolder("magias")
-	public static final GenericPlantBlock plantMagias = null;
-	@GameRegistry.ObjectHolder("mallow_pile")
-	public static final GenericPlantBlock plantMallowPile = null;
-	@GameRegistry.ObjectHolder("marsh_tube")
-	public static final GenericPlantBlock plantMarshTube = null;
-	@GameRegistry.ObjectHolder("mellians")
-	public static final GenericPlantBlock plantMellians = null;
-	@GameRegistry.ObjectHolder("mystic_bush")
-	public static final GenericPlantBlock plantMysticBush = null;
-	@GameRegistry.ObjectHolder("mystic_ferns")
-	public static final GenericPlantBlock plantMysticFerns = null;
-	@GameRegistry.ObjectHolder("ocealites_blue")
-	public static final GenericPlantBlock plantOcealitesBlue = null;
-	@GameRegistry.ObjectHolder("ocealites_red")
-	public static final GenericPlantBlock plantOcealitesRed = null;
-	@GameRegistry.ObjectHolder("pertonias")
-	public static final GenericPlantBlock plantPertonias = null;
-	@GameRegistry.ObjectHolder("rainbow_grass")
-	public static final GenericPlantBlock plantRainbowGrass = null;
-	@GameRegistry.ObjectHolder("rainbow_grass2")
-	public static final GenericPlantBlock plantRainbowGrass2 = null;
-	@GameRegistry.ObjectHolder("rainbow_grass3")
-	public static final GenericPlantBlock plantRainbowGrass3 = null;
-	@GameRegistry.ObjectHolder("rune_bulbs")
-	public static final GenericPlantBlock plantRuneBulbs = null;
-	@GameRegistry.ObjectHolder("runic_bush")
-	public static final GenericPlantBlock plantRunicBush = null;
-	@GameRegistry.ObjectHolder("shadow_shrub")
-	public static final GenericPlantBlock plantShadowShrub = null;
-	@GameRegistry.ObjectHolder("shyre_weed")
-	public static final GenericPlantBlock plantShyreWeed = null;
-	@GameRegistry.ObjectHolder("silver_grass")
-	public static final GenericPlantBlock plantSilverGrass = null;
-	@GameRegistry.ObjectHolder("tangle_thorns")
-	public static final GenericPlantBlock plantTangleThorns = null;
-	@GameRegistry.ObjectHolder("trilliad_bloom")
-	public static final GenericPlantBlock plantTrilliadBloom = null;
-	@GameRegistry.ObjectHolder("tubeicles")
-	public static final GenericPlantBlock plantTubeicles = null;
-	@GameRegistry.ObjectHolder("green_waterweeds")
-	public static final GenericPlantBlock plantWaterweedsGreen = null;
-	@GameRegistry.ObjectHolder("white_waterweeds")
-	public static final GenericPlantBlock plantWaterweedsWhite = null;
-	@GameRegistry.ObjectHolder("yellow_waterweeds")
-	public static final GenericPlantBlock plantWaterweedsYellow = null;
-	@GameRegistry.ObjectHolder("blue_lollypop")
-	public static final PlantMultiStackable plantLollypopBlue = null;
-	@GameRegistry.ObjectHolder("red_lollypop")
-	public static final PlantMultiStackable plantLollypopRed = null;
-	@GameRegistry.ObjectHolder("yellow_lollypop")
-	public static final PlantMultiStackable plantLollypopYellow = null;
-	@GameRegistry.ObjectHolder("ancient_vines")
-	public static final PlantStackable plantAncientVines = null;
-	@GameRegistry.ObjectHolder("ancient_vines_cap")
-	public static final PlantStackable plantAncientVinesCap = null;
-	@GameRegistry.ObjectHolder("blood_pine_stem")
-	public static final PlantStackable plantBloodPineStem = null;
-	@GameRegistry.ObjectHolder("blood_pine")
-	public static final PlantStackable plantBloodPine = null;
-	@GameRegistry.ObjectHolder("blood_spikes")
-	public static final PlantStackable plantBloodSpikes = null;
-	@GameRegistry.ObjectHolder("blood_strands")
-	public static final PlantStackable plantBloodStrands = null;
-	@GameRegistry.ObjectHolder("bulb_stock")
-	public static final PlantStackable plantBulbStock = null;
-	@GameRegistry.ObjectHolder("bulb_stock_cap")
-	public static final PlantStackable plantBulbStockCap = null;
-	@GameRegistry.ObjectHolder("celebulbs_stem")
-	public static final PlantStackable plantCelebulbsStem = null;
-	@GameRegistry.ObjectHolder("celebulbs_green")
-	public static final PlantStackable plantCelebulbsGreen = null;
-	@GameRegistry.ObjectHolder("celebulbs_yellow")
-	public static final PlantStackable plantCelebulbsYellow = null;
-	@GameRegistry.ObjectHolder("coral_cage")
-	public static final PlantStackable plantCoralCage = null;
-	@GameRegistry.ObjectHolder("dawn_stocks")
-	public static final PlantStackable plantDawnStocks = null;
-	@GameRegistry.ObjectHolder("dawn_stocks_top")
-	public static final PlantStackable plantDawnStocksTop = null;
-	@GameRegistry.ObjectHolder("dawnwood_bars")
-	public static final PlantStackable plantDawnwoodBars = null;
-	@GameRegistry.ObjectHolder("deep_bulb")
-	public static final PlantStackable plantDeepBulb = null;
-	@GameRegistry.ObjectHolder("deep_vines")
-	public static final PlantStackable plantDeepVines = null;
-	@GameRegistry.ObjectHolder("eye_shrub_stem")
-	public static final PlantStackable plantEyeShrubStem = null;
-	@GameRegistry.ObjectHolder("eye_shrub")
-	public static final PlantStackable plantEyeShrub = null;
-	@GameRegistry.ObjectHolder("flake_vine")
-	public static final PlantStackable plantFlakeVine = null;
-	@GameRegistry.ObjectHolder("flake_vine_top")
-	public static final PlantStackable plantFlakeVineTop = null;
-	@GameRegistry.ObjectHolder("garden_grass")
-	public static final PlantStackable plantGardenGrass = null;
-	@GameRegistry.ObjectHolder("havendales_blue_stem")
-	public static final PlantStackable plantHavendalesBlueStem = null;
-	@GameRegistry.ObjectHolder("havendales_blue")
-	public static final PlantStackable plantHavendalesBlue = null;
-	@GameRegistry.ObjectHolder("havendales_pink_stem")
-	public static final PlantStackable plantHavendalesPinkStem = null;
-	@GameRegistry.ObjectHolder("havendales_pink")
-	public static final PlantStackable plantHavendalesPink = null;
-	@GameRegistry.ObjectHolder("havendales_yellow_stem")
-	public static final PlantStackable plantHavendalesYellowStem = null;
-	@GameRegistry.ObjectHolder("havendales_yellow")
-	public static final PlantStackable plantHavendalesYellow = null;
-	@GameRegistry.ObjectHolder("lelyetian_stem")
-	public static final PlantStackable plantLelyetianStem = null;
-	@GameRegistry.ObjectHolder("lelyetian_stem_cap")
-	public static final PlantStackable plantLelyetianStemCap = null;
-	@GameRegistry.ObjectHolder("lelyetian_stem_cap_down")
-	public static final PlantStackable plantLelyetianStemCapDown = null;
-	@GameRegistry.ObjectHolder("lelyetian_wiggler")
-	public static final PlantStackable plantLelyetianWiggler = null;
-	@GameRegistry.ObjectHolder("lelyetian_wiggler_bottom")
-	public static final PlantStackable plantLelyetianWigglerBottom = null;
-	@GameRegistry.ObjectHolder("lelyetian_wiggler_top")
-	public static final PlantStackable plantLelyetianWigglerTop = null;
-	@GameRegistry.ObjectHolder("green_peppermint")
-	public static final PlantStackable plantPeppermintGreen = null;
-	@GameRegistry.ObjectHolder("red_peppermint")
-	public static final PlantStackable plantPeppermintRed = null;
-	@GameRegistry.ObjectHolder("plastic_stick")
-	public static final PlantStackable plantPlasticStick = null;
-	@GameRegistry.ObjectHolder("candy_tube")
-	public static final PlantStackable plantCandyTube = null;
-	@GameRegistry.ObjectHolder("shadicles")
-	public static final PlantStackable plantShadicles = null;
-	@GameRegistry.ObjectHolder("shadicles_top")
-	public static final PlantStackable plantShadiclesTop = null;
-	@GameRegistry.ObjectHolder("shyre_stock")
-	public static final PlantStackable plantShyreStock = null;
-	@GameRegistry.ObjectHolder("shyre_cap")
-	public static final PlantStackable plantShyreCap = null;
-	@GameRegistry.ObjectHolder("shyre_cap_down")
-	public static final PlantStackable plantShyreCapDown = null;
-	@GameRegistry.ObjectHolder("vox_fungi_stem")
-	public static final PlantStackable plantVoxFungiStem = null;
-	@GameRegistry.ObjectHolder("vox_fungi")
-	public static final PlantStackable plantVoxFungi = null;
-	@GameRegistry.ObjectHolder("vox_tentacles_stem")
-	public static final PlantStackable plantVoxTentaclesStem = null;
-	@GameRegistry.ObjectHolder("vox_tentacles")
-	public static final PlantStackable plantVoxTentacles = null;
-	@GameRegistry.ObjectHolder("red_waterweeds")
-	public static final RedWaterweeds plantWaterweedsRed = null;
-	@GameRegistry.ObjectHolder("creep_vines")
-	public static final VinesBlock plantCreepVines = null;
+	public static final CropBlock BUBBLE_BERRY_CROP = ObjectHolder(); // Seeds dropped in Lborean
+	public static final CropBlock CHILLI_CROP = ObjectHolder(); // Seeds dropped in Lelyetia
+	public static final CropBlock EYE_BULB_CROP = ObjectHolder(); // Dropped by Bulb stocks in Abyss grottos
+	public static final CropBlock FLORACLES_CROP = ObjectHolder(); // Lborean red waterweeds
+	public static final CropBlock GOLDICAPS_CROP = ObjectHolder(); // Garden Castle
+	public static final CropBlock HEART_FRUIT_CROP = ObjectHolder(); // Seeds dropped by tangle thorns in Precasia
+	public static final CropBlock HOLLY_TOPS_CROP = ObjectHolder(); // Dungeon Chests
+	public static final CropBlock LUNACRIKE_CROP = ObjectHolder(); // Zal herbalist & lunar garden
+	public static final CropBlock LUNA_GLOBE_CROP = ObjectHolder(); // Zal herbalist & lunar garden
+	public static final CropBlock LUNALON_CROP = ObjectHolder(); // Zal herbalist & lunar garden
+	public static final CropBlock MAGIC_MARANG_CROP = ObjectHolder(); // Haunted Leaves
+	public static final CropBlock MYSTIC_SHROOM_CROP = ObjectHolder(); // Mysterium & Haunted Castle
+	public static final CropBlock ROSIDON_CROP = ObjectHolder(); // Vinocorne
+	public static final CropBlock TEA_CROP = ObjectHolder(); // Overworld drops
+	public static final CropBlock THORNY_PLANT_CROP = ObjectHolder(); // TODO Obtain method
+	public static final CropBlock TRILLIAD_CROP = ObjectHolder(); // Seeds dropped by trilliad blooms
 
-   	@GameRegistry.ObjectHolder("bubble_berry_crop")
-	public static final CropBlock cropBubbleBerries = null; // Seeds dropped in Lborean
-	@GameRegistry.ObjectHolder("chilli_crop")
-	public static final CropBlock cropChilli = null; // Seeds dropped in Lelyetia
-	@GameRegistry.ObjectHolder("eye_bulb_crop")
-	public static final CropBlock cropEyeBulbs = null; // Dropped by Bulb stocks in Abyss grottos
-	@GameRegistry.ObjectHolder("floracles_crop")
-	public static final CropBlock cropFloracles = null; // Lborean red waterweeds
-	@GameRegistry.ObjectHolder("goldicaps_crop")
-	public static final CropBlock cropGoldicaps = null; // Garden Castle
-	@GameRegistry.ObjectHolder("heart_fruit_crop")
-	public static final CropBlock cropHeartFruit = null; // Seeds dropped by tangle thorns in Precasia
-	@GameRegistry.ObjectHolder("holly_tops_crop")
-	public static final CropBlock cropHollyTops = null; // Dungeon Chests
-	@GameRegistry.ObjectHolder("lunacrike_crop")
-	public static final CropBlock cropLunacrike = null; // Zal herbalist & lunar garden
-	@GameRegistry.ObjectHolder("luna_globe_crop")
-	public static final CropBlock cropLunaGlobes = null; // Zal herbalist & lunar garden
-	@GameRegistry.ObjectHolder("lunalon_crop")
-	public static final CropBlock cropLunalons = null; // Zal herbalist & lunar garden
-	@GameRegistry.ObjectHolder("magic_marang_crop")
-	public static final CropBlock cropMagicMarang = null; // Haunted Leaves
-	@GameRegistry.ObjectHolder("mystic_shroom_crop")
-	public static final CropBlock cropMysticShrooms = null; // Mysterium & Haunted Castle
-	@GameRegistry.ObjectHolder("rosidon_crop")
-	public static final CropBlock cropRosidons = null; // Vinocorne
-	@GameRegistry.ObjectHolder("tea_crop")
-	public static final CropBlock cropTea = null; // Overworld drops
-	@GameRegistry.ObjectHolder("thorny_plant_crop")
-	public static final CropBlock cropThornyPlant = null; // TODO Obtain method
-	@GameRegistry.ObjectHolder("trilliad_crop")
-	public static final CropBlock cropTrilliads = null; // Seeds dropped by trilliad blooms
+	public static final SaplingBlock ACHONY_SAPLING = ObjectHolder();
+	public static final SaplingBlock BLOODTWISTER_SAPLING = ObjectHolder();
+	public static final SaplingBlock BLUE_CELEVUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock BLUE_HAVEN_SAPLING = ObjectHolder();
+	public static final SaplingBlock BRIGHT_SHYRE_SAPLING = ObjectHolder();
+	public static final SaplingBlock CHURRY_SAPLING = ObjectHolder();
+	public static final SaplingBlock CREEP_SAPLING = ObjectHolder();
+	public static final SaplingBlock DAWNWOOD_SAPLING = ObjectHolder();
+	public static final SaplingBlock EYEBUSH_SAPLING = ObjectHolder();
+	public static final SaplingBlock EYE_HANGER_SAPLING = ObjectHolder();
+	public static final SaplingBlock GREEN_CELEVUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock HAUNTED_SAPLING = ObjectHolder();
+	public static final SaplingBlock IRODUST_SAPLING = ObjectHolder();
+	public static final SaplingBlock IROGOLD_SAPLING = ObjectHolder();
+	public static final SaplingBlock LUCALUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock LUNICIA_SAPLING = ObjectHolder();
+	public static final SaplingBlock LUNOSSO_SAPLING = ObjectHolder();
+	public static final SaplingBlock PINK_HAVEN_SAPLING = ObjectHolder();
+	public static final SaplingBlock PURPLE_CELEVUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock PURPLE_HAVEN_SAPLING = ObjectHolder();
+	public static final SaplingBlock RED_CELEVUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock RED_HAVEN_SAPLING = ObjectHolder();
+	public static final SaplingBlock RUNIC_SAPLING = ObjectHolder();
+	public static final SaplingBlock SHADOW_SAPLING = ObjectHolder();
+	public static final SaplingBlock SHYRE_SAPLING = ObjectHolder();
+	public static final SaplingBlock STRANGLEWOOD_SAPLING = ObjectHolder();
+	public static final SaplingBlock TURQUOISE_HAVEN_SAPLING = ObjectHolder();
+	public static final SaplingBlock YELLOW_CELEVUS_SAPLING = ObjectHolder();
+	public static final SaplingBlock YELLOW_HAVEN_SAPLING = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("bane_statue")
-	public static final StatueBlock statueBane = null;
-	@GameRegistry.ObjectHolder("gold_bane_statue")
-	public static final StatueBlock statueBaneGold = null;
-	@GameRegistry.ObjectHolder("ornate_bane_statue")
-	public static final StatueBlock statueBaneOrnate = null;
-	@GameRegistry.ObjectHolder("baroness_statue")
-	public static final StatueBlock statueBaroness = null;
-	@GameRegistry.ObjectHolder("gold_baroness_statue")
-	public static final StatueBlock statueBaronessGold = null;
-	@GameRegistry.ObjectHolder("ornate_baroness_statue")
-	public static final StatueBlock statueBaronessOrnate = null;
-	@GameRegistry.ObjectHolder("clunkhead_statue")
-	public static final StatueBlock statueClunkhead = null;
-	@GameRegistry.ObjectHolder("gold_clunkhead_statue")
-	public static final StatueBlock statueClunkheadGold = null;
-	@GameRegistry.ObjectHolder("ornate_clunkhead_statue")
-	public static final StatueBlock statueClunkheadOrnate = null;
-	@GameRegistry.ObjectHolder("coniferon_statue")
-	public static final StatueBlock statueConiferon = null;
-	@GameRegistry.ObjectHolder("gold_coniferon_statue")
-	public static final StatueBlock statueConiferonGold = null;
-	@GameRegistry.ObjectHolder("ornate_coniferon_statue")
-	public static final StatueBlock statueConiferonOrnate = null;
-	@GameRegistry.ObjectHolder("corallus_statue")
-	public static final StatueBlock statueCorallus = null;
-	@GameRegistry.ObjectHolder("gold_corallus_statue")
-	public static final StatueBlock statueCorallusGold = null;
-	@GameRegistry.ObjectHolder("ornate_corallus_statue")
-	public static final StatueBlock statueCorallusOrnate = null;
-	@GameRegistry.ObjectHolder("cotton_candor_statue")
-	public static final StatueBlock statueCottonCandor = null;
-	@GameRegistry.ObjectHolder("gold_cotton_candor_statue")
-	public static final StatueBlock statueCottonCandorGold = null;
-	@GameRegistry.ObjectHolder("ornate_cotton_candor_statue")
-	public static final StatueBlock statueCottonCandorOrnate = null;
-	@GameRegistry.ObjectHolder("craexxeus_statue")
-	public static final StatueBlock statueCraexxeus = null;
-	@GameRegistry.ObjectHolder("gold_craexxeus_statue")
-	public static final StatueBlock statueCraexxeusGold = null;
-	@GameRegistry.ObjectHolder("ornate_craexxeus_statue")
-	public static final StatueBlock statueCraexxeusOrnate = null;
-	@GameRegistry.ObjectHolder("creep_statue")
-	public static final StatueBlock statueCreep = null;
-	@GameRegistry.ObjectHolder("gold_creep_statue")
-	public static final StatueBlock statueCreepGold = null;
-	@GameRegistry.ObjectHolder("ornate_creep_statue")
-	public static final StatueBlock statueCreepOrnate = null;
-	@GameRegistry.ObjectHolder("crystocore_statue")
-	public static final StatueBlock statueCrystocore = null;
-	@GameRegistry.ObjectHolder("gold_crystocore_statue")
-	public static final StatueBlock statueCrystocoreGold = null;
-	@GameRegistry.ObjectHolder("ornate_crystocore_statue")
-	public static final StatueBlock statueCrystocoreOrnate = null;
-	@GameRegistry.ObjectHolder("dracyon_statue")
-	public static final StatueBlock statueDracyon = null;
-	@GameRegistry.ObjectHolder("gold_dracyon_statue")
-	public static final StatueBlock statueDracyonGold = null;
-	@GameRegistry.ObjectHolder("ornate_dracyon_statue")
-	public static final StatueBlock statueDracyonOrnate = null;
-	@GameRegistry.ObjectHolder("elusive_statue")
-	public static final StatueBlock statueElusive = null;
-	@GameRegistry.ObjectHolder("gold_elusive_statue")
-	public static final StatueBlock statueElusiveGold = null;
-	@GameRegistry.ObjectHolder("ornate_elusive_statue")
-	public static final StatueBlock statueElusiveOrnate = null;
-	@GameRegistry.ObjectHolder("flash_statue")
-	public static final StatueBlock statueFlash = null;
-	@GameRegistry.ObjectHolder("gold_flash_statue")
-	public static final StatueBlock statueFlashGold = null;
-	@GameRegistry.ObjectHolder("ornate_flash_statue")
-	public static final StatueBlock statueFlashOrnate = null;
-	@GameRegistry.ObjectHolder("goldorth_statue")
-	public static final StatueBlock statueGoldorth = null;
-	@GameRegistry.ObjectHolder("gold_goldorth_statue")
-	public static final StatueBlock statueGoldorthGold = null;
-	@GameRegistry.ObjectHolder("ornate_goldorth_statue")
-	public static final StatueBlock statueGoldorthOrnate = null;
-	@GameRegistry.ObjectHolder("graw_statue")
-	public static final StatueBlock statueGraw = null;
-	@GameRegistry.ObjectHolder("gold_graw_statue")
-	public static final StatueBlock statueGrawGold = null;
-	@GameRegistry.ObjectHolder("ornate_graw_statue")
-	public static final StatueBlock statueGrawOrnate = null;
-	@GameRegistry.ObjectHolder("guardian_statue")
-	public static final StatueBlock statueGuardian = null;
-	@GameRegistry.ObjectHolder("gold_guardian_statue")
-	public static final StatueBlock statueGuardianGold = null;
-	@GameRegistry.ObjectHolder("ornate_guardian_statue")
-	public static final StatueBlock statueGuardianOrnate = null;
-	@GameRegistry.ObjectHolder("gyro_statue")
-	public static final StatueBlock statueGyro = null;
-	@GameRegistry.ObjectHolder("gold_gyro_statue")
-	public static final StatueBlock statueGyroGold = null;
-	@GameRegistry.ObjectHolder("ornate_gyro_statue")
-	public static final StatueBlock statueGyroOrnate = null;
-	@GameRegistry.ObjectHolder("harkos_statue")
-	public static final StatueBlock statueHarkos = null;
-	@GameRegistry.ObjectHolder("gold_harkos_statue")
-	public static final StatueBlock statueHarkosGold = null;
-	@GameRegistry.ObjectHolder("ornate_harkos_statue")
-	public static final StatueBlock statueHarkosOrnate = null;
-	@GameRegistry.ObjectHolder("hive_king_statue")
-	public static final StatueBlock statueHiveKing = null;
-	@GameRegistry.ObjectHolder("gold_hive_king_statue")
-	public static final StatueBlock statueHiveKingGold = null;
-	@GameRegistry.ObjectHolder("ornate_hive_king_statue")
-	public static final StatueBlock statueHiveKingOrnate = null;
-	@GameRegistry.ObjectHolder("horon_statue")
-	public static final StatueBlock statueHoron = null;
-	@GameRegistry.ObjectHolder("gold_horon_statue")
-	public static final StatueBlock statueHoronGold = null;
-	@GameRegistry.ObjectHolder("ornate_horon_statue")
-	public static final StatueBlock statueHoronOrnate = null;
-	@GameRegistry.ObjectHolder("hydrolisk_statue")
-	public static final StatueBlock statueHydrolisk = null;
-	@GameRegistry.ObjectHolder("gold_hydrolisk_statue")
-	public static final StatueBlock statueHydroliskGold = null;
-	@GameRegistry.ObjectHolder("ornate_hydrolisk_statue")
-	public static final StatueBlock statueHydroliskOrnate = null;
-	@GameRegistry.ObjectHolder("kajaros_statue")
-	public static final StatueBlock statueKajaros = null;
-	@GameRegistry.ObjectHolder("gold_kajaros_statue")
-	public static final StatueBlock statueKajarosGold = null;
-	@GameRegistry.ObjectHolder("ornate_kajaros_statue")
-	public static final StatueBlock statueKajarosOrnate = null;
-	@GameRegistry.ObjectHolder("king_bambambam_statue")
-	public static final StatueBlock statueKingBamBamBam = null;
-	@GameRegistry.ObjectHolder("gold_king_bambambam_statue")
-	public static final StatueBlock statueKingBamBamBamGold = null;
-	@GameRegistry.ObjectHolder("ornate_king_bambambam_statue")
-	public static final StatueBlock statueKingBamBamBamOrnate = null;
-	@GameRegistry.ObjectHolder("king_shroomus_statue")
-	public static final StatueBlock statueKingShroomus = null;
-	@GameRegistry.ObjectHolder("gold_king_shroomus_statue")
-	public static final StatueBlock statueKingShroomusGold = null;
-	@GameRegistry.ObjectHolder("ornate_king_shroomus_statue")
-	public static final StatueBlock statueKingShroomusOrnate = null;
-	@GameRegistry.ObjectHolder("klobber_statue")
-	public static final StatueBlock statueKlobber = null;
-	@GameRegistry.ObjectHolder("gold_klobber_statue")
-	public static final StatueBlock statueKlobberGold = null;
-	@GameRegistry.ObjectHolder("ornate_klobber_statue")
-	public static final StatueBlock statueKlobberOrnate = null;
-	@GameRegistry.ObjectHolder("kror_statue")
-	public static final StatueBlock statueKror = null;
-	@GameRegistry.ObjectHolder("gold_kror_statue")
-	public static final StatueBlock statueKrorGold = null;
-	@GameRegistry.ObjectHolder("ornate_kror_statue")
-	public static final StatueBlock statueKrorOrnate = null;
-	@GameRegistry.ObjectHolder("mechbot_statue")
-	public static final StatueBlock statueMechbot = null;
-	@GameRegistry.ObjectHolder("gold_mechbot_statue")
-	public static final StatueBlock statueMechbotGold = null;
-	@GameRegistry.ObjectHolder("ornate_mechbot_statue")
-	public static final StatueBlock statueMechbotOrnate = null;
-	@GameRegistry.ObjectHolder("mirage_statue")
-	public static final StatueBlock statueMirage = null;
-	@GameRegistry.ObjectHolder("gold_mirage_statue")
-	public static final StatueBlock statueMirageGold = null;
-	@GameRegistry.ObjectHolder("ornate_mirage_statue")
-	public static final StatueBlock statueMirageOrnate = null;
-	@GameRegistry.ObjectHolder("miskel_statue")
-	public static final StatueBlock statueMiskel = null;
-	@GameRegistry.ObjectHolder("gold_miskel_statue")
-	public static final StatueBlock statueMiskelGold = null;
-	@GameRegistry.ObjectHolder("ornate_miskel_statue")
-	public static final StatueBlock statueMiskelOrnate = null;
-	@GameRegistry.ObjectHolder("nethengeic_wither_statue")
-	public static final StatueBlock statueNethengeicWither = null;
-	@GameRegistry.ObjectHolder("gold_nethengeic_wither_statue")
-	public static final StatueBlock statueNethengeicWitherGold = null;
-	@GameRegistry.ObjectHolder("ornate_nethengeic_wither_statue")
-	public static final StatueBlock statueNethengeicWitherOrnate = null;
-	@GameRegistry.ObjectHolder("okazor_statue")
-	public static final StatueBlock statueOkazor = null;
-	@GameRegistry.ObjectHolder("gold_okazor_statue")
-	public static final StatueBlock statueOkazorGold = null;
-	@GameRegistry.ObjectHolder("ornate_okazor_statue")
-	public static final StatueBlock statueOkazorOrnate = null;
-	@GameRegistry.ObjectHolder("penumbra_statue")
-	public static final StatueBlock statuePenumbra = null;
-	@GameRegistry.ObjectHolder("gold_penumbra_statue")
-	public static final StatueBlock statuePenumbraGold = null;
-	@GameRegistry.ObjectHolder("ornate_penumbra_statue")
-	public static final StatueBlock statuePenumbraOrnate = null;
-	@GameRegistry.ObjectHolder("proshield_statue")
-	public static final StatueBlock statueProshield = null;
-	@GameRegistry.ObjectHolder("gold_proshield_statue")
-	public static final StatueBlock statueProshieldGold = null;
-	@GameRegistry.ObjectHolder("ornate_proshield_statue")
-	public static final StatueBlock statueProshieldOrnate = null;
-	@GameRegistry.ObjectHolder("raxxan_statue")
-	public static final StatueBlock statueRaxxan = null;
-	@GameRegistry.ObjectHolder("gold_raxxan_statue")
-	public static final StatueBlock statueRaxxanGold = null;
-	@GameRegistry.ObjectHolder("ornate_raxxan_statue")
-	public static final StatueBlock statueRaxxanOrnate = null;
-	@GameRegistry.ObjectHolder("rockrider_statue")
-	public static final StatueBlock statueRockrider = null;
-	@GameRegistry.ObjectHolder("gold_rockrider_statue")
-	public static final StatueBlock statueRockriderGold = null;
-	@GameRegistry.ObjectHolder("ornate_rockrider_statue")
-	public static final StatueBlock statueRockriderOrnate = null;
-	@GameRegistry.ObjectHolder("shadowlord_statue")
-	public static final StatueBlock statueShadowlord = null;
-	@GameRegistry.ObjectHolder("gold_shadowlord_statue")
-	public static final StatueBlock statueShadowlordGold = null;
-	@GameRegistry.ObjectHolder("ornate_shadowlord_statue")
-	public static final StatueBlock statueShadowlordOrnate = null;
-	@GameRegistry.ObjectHolder("silverfoot_statue")
-	public static final StatueBlock statueSilverfoot = null;
-	@GameRegistry.ObjectHolder("gold_silverfoot_statue")
-	public static final StatueBlock statueSilverfootGold = null;
-	@GameRegistry.ObjectHolder("ornate_silverfoot_statue")
-	public static final StatueBlock statueSilverfootOrnate = null;
-	@GameRegistry.ObjectHolder("skeletron_statue")
-	public static final StatueBlock statueSkeletron = null;
-	@GameRegistry.ObjectHolder("gold_skeletron_statue")
-	public static final StatueBlock statueSkeletronGold = null;
-	@GameRegistry.ObjectHolder("ornate_skeletron_statue")
-	public static final StatueBlock statueSkeletronOrnate = null;
-	@GameRegistry.ObjectHolder("smash_statue")
-	public static final StatueBlock statueSmash = null;
-	@GameRegistry.ObjectHolder("gold_smash_statue")
-	public static final StatueBlock statueSmashGold = null;
-	@GameRegistry.ObjectHolder("ornate_smash_statue")
-	public static final StatueBlock statueSmashOrnate = null;
-	@GameRegistry.ObjectHolder("tyrosaur_statue")
-	public static final StatueBlock statueTyrosaur = null;
-	@GameRegistry.ObjectHolder("gold_tyrosaur_statue")
-	public static final StatueBlock statueTyrosaurGold = null;
-	@GameRegistry.ObjectHolder("ornate_tyrosaur_statue")
-	public static final StatueBlock statueTyrosaurOrnate = null;
-	@GameRegistry.ObjectHolder("vinocorne_statue")
-	public static final StatueBlock statueVinocorne = null;
-	@GameRegistry.ObjectHolder("gold_vinocorne_statue")
-	public static final StatueBlock statueVinocorneGold = null;
-	@GameRegistry.ObjectHolder("ornate_vinocorne_statue")
-	public static final StatueBlock statueVinocorneOrnate = null;
-	@GameRegistry.ObjectHolder("visualent_statue")
-	public static final StatueBlock statueVisualent = null;
-	@GameRegistry.ObjectHolder("gold_visualent_statue")
-	public static final StatueBlock statueVisualentGold = null;
-	@GameRegistry.ObjectHolder("ornate_visualent_statue")
-	public static final StatueBlock statueVisualentOrnate = null;
-	@GameRegistry.ObjectHolder("voxxulon_statue")
-	public static final StatueBlock statueVoxxulon = null;
-	@GameRegistry.ObjectHolder("gold_voxxulon_statue")
-	public static final StatueBlock statueVoxxulonGold = null;
-	@GameRegistry.ObjectHolder("ornate_voxxulon_statue")
-	public static final StatueBlock statueVoxxulonOrnate = null;
-	@GameRegistry.ObjectHolder("xxeus_statue")
-	public static final StatueBlock statueXxeus = null;
-	@GameRegistry.ObjectHolder("gold_xxeus_statue")
-	public static final StatueBlock statueXxeusGold = null;
-	@GameRegistry.ObjectHolder("ornate_xxeus_statue")
-	public static final StatueBlock statueXxeusOrnate = null;
+	public static final StatueBlock BANE_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_BANE_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_BANE_STATUE = ObjectHolder();
+	public static final StatueBlock BARONESS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_BARONESS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_BARONESS_STATUE = ObjectHolder();
+	public static final StatueBlock CLUNKHEAD_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CLUNKHEAD_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CLUNKHEAD_STATUE = ObjectHolder();
+	public static final StatueBlock CONIFERON_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CONIFERON_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CONIFERON_STATUE = ObjectHolder();
+	public static final StatueBlock CORALLUS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CORALLUS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CORALLUS_STATUE = ObjectHolder();
+	public static final StatueBlock COTTON_CANDOR_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_COTTON_CANDOR_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_COTTON_CANDOR_STATUE = ObjectHolder();
+	public static final StatueBlock CRAEXXEUS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CRAEXXEUS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CRAEXXEUS_STATUE = ObjectHolder();
+	public static final StatueBlock CREEP_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CREEP_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CREEP_STATUE = ObjectHolder();
+	public static final StatueBlock CRYSTOCORE_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_CRYSTOCORE_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_CRYSTOCORE_STATUE = ObjectHolder();
+	public static final StatueBlock DRACYON_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_DRACYON_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_DRACYON_STATUE = ObjectHolder();
+	public static final StatueBlock ELUSIVE_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_ELUSIVE_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_ELUSIVE_STATUE = ObjectHolder();
+	public static final StatueBlock FLASH_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_FLASH_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_FLASH_STATUE = ObjectHolder();
+	public static final StatueBlock GOLDORTH_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_GOLDORTH_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_GOLDORTH_STATUE = ObjectHolder();
+	public static final StatueBlock GRAW_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_GRAW_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_GRAW_STATUE = ObjectHolder();
+	public static final StatueBlock GUARDIAN_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_GUARDIAN_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_GUARDIAN_STATUE = ObjectHolder();
+	public static final StatueBlock GYRO_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_GYRO_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_GYRO_STATUE = ObjectHolder();
+	public static final StatueBlock HARKOS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_HARKOS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_HARKOS_STATUE = ObjectHolder();
+	public static final StatueBlock HIVE_KING_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_HIVE_KING_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_HIVE_KING_STATUE = ObjectHolder();
+	public static final StatueBlock HORON_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_HORON_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_HORON_STATUE = ObjectHolder();
+	public static final StatueBlock HYDROLISK_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_HYDROLISK_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_HYDROLISK_STATUE = ObjectHolder();
+	public static final StatueBlock KAJAROS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_KAJAROS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_KAJAROS_STATUE = ObjectHolder();
+	public static final StatueBlock KING_BAMBAMBAM_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_KING_BAMBAMBAM_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_KING_BAMBAMBAM_STATUE = ObjectHolder();
+	public static final StatueBlock KING_SHROOMUS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_KING_SHROOMUS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_KING_SHROOMUS_STATUE = ObjectHolder();
+	public static final StatueBlock KLOBBER_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_KLOBBER_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_KLOBBER_STATUE = ObjectHolder();
+	public static final StatueBlock KROR_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_KROR_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_KROR_STATUE = ObjectHolder();
+	public static final StatueBlock MECHBOT_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_MECHBOT_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_MECHBOT_STATUE = ObjectHolder();
+	public static final StatueBlock MIRAGE_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_MIRAGE_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_MIRAGE_STATUE = ObjectHolder();
+	public static final StatueBlock MISKEL_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_MISKEL_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_MISKEL_STATUE = ObjectHolder();
+	public static final StatueBlock NETHENGEIC_WITHER_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_NETHENGEIC_WITHER_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_NETHENGEIC_WITHER_STATUE = ObjectHolder();
+	public static final StatueBlock OKAZOR_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_OKAZOR_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_OKAZOR_STATUE = ObjectHolder();
+	public static final StatueBlock PENUMBRA_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_PENUMBRA_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_PENUMBRA_STATUE = ObjectHolder();
+	public static final StatueBlock PROSHIELD_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_PROSHIELD_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_PROSHIELD_STATUE = ObjectHolder();
+	public static final StatueBlock RAXXAN_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_RAXXAN_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_RAXXAN_STATUE = ObjectHolder();
+	public static final StatueBlock ROCKRIDER_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_ROCKRIDER_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_ROCKRIDER_STATUE = ObjectHolder();
+	public static final StatueBlock SHADOWLORD_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_SHADOWLORD_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_SHADOWLORD_STATUE = ObjectHolder();
+	public static final StatueBlock SILVERFOOT_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_SILVERFOOT_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_SILVERFOOT_STATUE = ObjectHolder();
+	public static final StatueBlock SKELETRON_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_SKELETRON_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_SKELETRON_STATUE = ObjectHolder();
+	public static final StatueBlock SMASH_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_SMASH_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_SMASH_STATUE = ObjectHolder();
+	public static final StatueBlock TYROSAUR_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_TYROSAUR_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_TYROSAUR_STATUE = ObjectHolder();
+	public static final StatueBlock VINOCORNE_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_VINOCORNE_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_VINOCORNE_STATUE = ObjectHolder();
+	public static final StatueBlock VISUALENT_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_VISUALENT_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_VISUALENT_STATUE = ObjectHolder();
+	public static final StatueBlock VOXXULON_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_VOXXULON_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_VOXXULON_STATUE = ObjectHolder();
+	public static final StatueBlock XXEUS_STATUE = ObjectHolder();
+	public static final StatueBlock GOLD_XXEUS_STATUE = ObjectHolder();
+	public static final StatueBlock ORNATE_XXEUS_STATUE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_banner")
-	public static final BannerBlock bannerAncient = null;
-	@GameRegistry.ObjectHolder("gilded_ancient_banner")
-	public static final BannerBlock bannerAncientGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_ancient_banner")
-	public static final BannerBlock bannerAncientEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_ancient_banner")
-	public static final BannerBlock bannerAncientBejewelled = null;
-	@GameRegistry.ObjectHolder("baron_banner")
-	public static final BannerBlock bannerBaron = null;
-	@GameRegistry.ObjectHolder("gilded_baron_banner")
-	public static final BannerBlock bannerBaronGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_baron_banner")
-	public static final BannerBlock bannerBaronEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_baron_banner")
-	public static final BannerBlock bannerBaronBejewelled = null;
-	@GameRegistry.ObjectHolder("blood_banner")
-	public static final BannerBlock bannerBlood = null;
-	@GameRegistry.ObjectHolder("gilded_blood_banner")
-	public static final BannerBlock bannerBloodGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_blood_banner")
-	public static final BannerBlock bannerBloodEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_blood_banner")
-	public static final BannerBlock bannerBloodBejewelled = null;
-	@GameRegistry.ObjectHolder("boreic_banner")
-	public static final BannerBlock bannerBoreic = null;
-	@GameRegistry.ObjectHolder("gilded_boreic_banner")
-	public static final BannerBlock bannerBoreicGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_boreic_banner")
-	public static final BannerBlock bannerBoreicEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_boreic_banner")
-	public static final BannerBlock bannerBoreicBejewelled = null;
-	@GameRegistry.ObjectHolder("candy_banner")
-	public static final BannerBlock bannerCandy = null;
-	@GameRegistry.ObjectHolder("gilded_candy_banner")
-	public static final BannerBlock bannerCandyGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_candy_banner")
-	public static final BannerBlock bannerCandyEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_candy_banner")
-	public static final BannerBlock bannerCandyBejewelled = null;
-	@GameRegistry.ObjectHolder("clown_banner")
-	public static final BannerBlock bannerClown = null;
-	@GameRegistry.ObjectHolder("gilded_clown_banner")
-	public static final BannerBlock bannerClownGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_clown_banner")
-	public static final BannerBlock bannerClownEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_clown_banner")
-	public static final BannerBlock bannerClownBejewelled = null;
-	@GameRegistry.ObjectHolder("creation_banner")
-	public static final BannerBlock bannerCreation = null;
-	@GameRegistry.ObjectHolder("gilded_creation_banner")
-	public static final BannerBlock bannerCreationGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_creation_banner")
-	public static final BannerBlock bannerCreationEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_creation_banner")
-	public static final BannerBlock bannerCreationBejewelled = null;
-	@GameRegistry.ObjectHolder("creepoid_banner")
-	public static final BannerBlock bannerCreepoid = null;
-	@GameRegistry.ObjectHolder("gilded_creepoid_banner")
-	public static final BannerBlock bannerCreepoidGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_creepoid_banner")
-	public static final BannerBlock bannerCreepoidEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_creepoid_banner")
-	public static final BannerBlock bannerCreepoidBejewelled = null;
-	@GameRegistry.ObjectHolder("creepy_banner")
-	public static final BannerBlock bannerCreepy = null;
-	@GameRegistry.ObjectHolder("gilded_creepy_banner")
-	public static final BannerBlock bannerCreepyGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_creepy_banner")
-	public static final BannerBlock bannerCreepyEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_creepy_banner")
-	public static final BannerBlock bannerCreepyBejewelled = null;
-	@GameRegistry.ObjectHolder("crystal_banner")
-	public static final BannerBlock bannerCrystal = null;
-	@GameRegistry.ObjectHolder("gilded_crystal_banner")
-	public static final BannerBlock bannerCrystalGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_crystal_banner")
-	public static final BannerBlock bannerCrystalEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_crystal_banner")
-	public static final BannerBlock bannerCrystalBejewelled = null;
-	@GameRegistry.ObjectHolder("deep_banner")
-	public static final BannerBlock bannerDeep = null;
-	@GameRegistry.ObjectHolder("gilded_deep_banner")
-	public static final BannerBlock bannerDeepGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_deep_banner")
-	public static final BannerBlock bannerDeepEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_deep_banner")
-	public static final BannerBlock bannerDeepBejewelled = null;
-	@GameRegistry.ObjectHolder("dustopian_banner")
-	public static final BannerBlock bannerDustopian = null;
-	@GameRegistry.ObjectHolder("gilded_dustopian_banner")
-	public static final BannerBlock bannerDustopianGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_dustopian_banner")
-	public static final BannerBlock bannerDustopianEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_dustopian_banner")
-	public static final BannerBlock bannerDustopianBejewelled = null;
-	@GameRegistry.ObjectHolder("energy_banner")
-	public static final BannerBlock bannerEnergy = null;
-	@GameRegistry.ObjectHolder("gilded_energy_banner")
-	public static final BannerBlock bannerEnergyGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_energy_banner")
-	public static final BannerBlock bannerEnergyEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_energy_banner")
-	public static final BannerBlock bannerEnergyBejewelled = null;
-	@GameRegistry.ObjectHolder("fungal_banner")
-	public static final BannerBlock bannerFungal = null;
-	@GameRegistry.ObjectHolder("gilded_fungal_banner")
-	public static final BannerBlock bannerFungalGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_fungal_banner")
-	public static final BannerBlock bannerFungalEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_fungal_banner")
-	public static final BannerBlock bannerFungalBejewelled = null;
-	@GameRegistry.ObjectHolder("ghostly_banner")
-	public static final BannerBlock bannerGhostly = null;
-	@GameRegistry.ObjectHolder("gilded_ghostly_banner")
-	public static final BannerBlock bannerGhostlyGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_ghostly_banner")
-	public static final BannerBlock bannerGhostlyEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_ghostly_banner")
-	public static final BannerBlock bannerGhostlyBejewelled = null;
-	@GameRegistry.ObjectHolder("ghoul_banner")
-	public static final BannerBlock bannerGhoul = null;
-	@GameRegistry.ObjectHolder("gilded_ghoul_banner")
-	public static final BannerBlock bannerGhoulGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_ghoul_banner")
-	public static final BannerBlock bannerGhoulEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_ghoul_banner")
-	public static final BannerBlock bannerGhoulBejewelled = null;
-	@GameRegistry.ObjectHolder("gingerbread_banner")
-	public static final BannerBlock bannerGingerbread = null;
-	@GameRegistry.ObjectHolder("gilded_gingerbread_banner")
-	public static final BannerBlock bannerGingerbreadGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_gingerbread_banner")
-	public static final BannerBlock bannerGingerbreadEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_gingerbread_banner")
-	public static final BannerBlock bannerGingerbreadBejewelled = null;
-	@GameRegistry.ObjectHolder("haunted_banner")
-	public static final BannerBlock bannerHaunted = null;
-	@GameRegistry.ObjectHolder("gilded_haunted_banner")
-	public static final BannerBlock bannerHauntedGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_haunted_banner")
-	public static final BannerBlock bannerHauntedEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_haunted_banner")
-	public static final BannerBlock bannerHauntedBejewelled = null;
-	@GameRegistry.ObjectHolder("illusion_banner")
-	public static final BannerBlock bannerIllusion = null;
-	@GameRegistry.ObjectHolder("gilded_illusion_banner")
-	public static final BannerBlock bannerIllusionGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_illusion_banner")
-	public static final BannerBlock bannerIllusionEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_illusion_banner")
-	public static final BannerBlock bannerIllusionBejewelled = null;
-	@GameRegistry.ObjectHolder("immortal_banner")
-	public static final BannerBlock bannerImmortal = null;
-	@GameRegistry.ObjectHolder("gilded_immortal_banner")
-	public static final BannerBlock bannerImmortalGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_immortal_banner")
-	public static final BannerBlock bannerImmortalEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_immortal_banner")
-	public static final BannerBlock bannerImmortalBejewelled = null;
-	@GameRegistry.ObjectHolder("lelyetian_banner")
-	public static final BannerBlock bannerLelyetian = null;
-	@GameRegistry.ObjectHolder("gilded_lelyetian_banner")
-	public static final BannerBlock bannerLelyetianGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_lelyetian_banner")
-	public static final BannerBlock bannerLelyetianEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_lelyetian_banner")
-	public static final BannerBlock bannerLelyetianBejewelled = null;
-	@GameRegistry.ObjectHolder("light_banner")
-	public static final BannerBlock bannerLight = null;
-	@GameRegistry.ObjectHolder("gilded_light_banner")
-	public static final BannerBlock bannerLightGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_light_banner")
-	public static final BannerBlock bannerLightEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_light_banner")
-	public static final BannerBlock bannerLightBejewelled = null;
-	@GameRegistry.ObjectHolder("lotto_banner")
-	public static final BannerBlock bannerLotto = null;
-	@GameRegistry.ObjectHolder("gilded_lotto_banner")
-	public static final BannerBlock bannerLottoGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_lotto_banner")
-	public static final BannerBlock bannerLottoEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_lotto_banner")
-	public static final BannerBlock bannerLottoBejewelled = null;
-	@GameRegistry.ObjectHolder("lunar_banner")
-	public static final BannerBlock bannerLunar = null;
-	@GameRegistry.ObjectHolder("gilded_lunar_banner")
-	public static final BannerBlock bannerLunarGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_lunar_banner")
-	public static final BannerBlock bannerLunarEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_lunar_banner")
-	public static final BannerBlock bannerLunarBejewelled = null;
-	@GameRegistry.ObjectHolder("mecha_banner")
-	public static final BannerBlock bannerMecha = null;
-	@GameRegistry.ObjectHolder("gilded_mecha_banner")
-	public static final BannerBlock bannerMechaGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_mecha_banner")
-	public static final BannerBlock bannerMechaEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_mecha_banner")
-	public static final BannerBlock bannerMechaBejewelled = null;
-	@GameRegistry.ObjectHolder("nethengeic_banner")
-	public static final BannerBlock bannerNethengeic = null;
-	@GameRegistry.ObjectHolder("gilded_nethengeic_banner")
-	public static final BannerBlock bannerNethengeicGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_nethengeic_banner")
-	public static final BannerBlock bannerNethengeicEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_nethengeic_banner")
-	public static final BannerBlock bannerNethengeicBejewelled = null;
-	@GameRegistry.ObjectHolder("nether_banner")
-	public static final BannerBlock bannerNether = null;
-	@GameRegistry.ObjectHolder("gilded_nether_banner")
-	public static final BannerBlock bannerNetherGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_nether_banner")
-	public static final BannerBlock bannerNetherEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_nether_banner")
-	public static final BannerBlock bannerNetherBejewelled = null;
-	@GameRegistry.ObjectHolder("rosidian_banner")
-	public static final BannerBlock bannerRosidian = null;
-	@GameRegistry.ObjectHolder("gilded_rosidian_banner")
-	public static final BannerBlock bannerRosidianGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_rosidian_banner")
-	public static final BannerBlock bannerRosidianEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_rosidian_banner")
-	public static final BannerBlock bannerRosidianBejewelled = null;
-	@GameRegistry.ObjectHolder("runic_banner")
-	public static final BannerBlock bannerRunic = null;
-	@GameRegistry.ObjectHolder("gilded_runic_banner")
-	public static final BannerBlock bannerRunicGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_runic_banner")
-	public static final BannerBlock bannerRunicEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_runic_banner")
-	public static final BannerBlock bannerRunicBejewelled = null;
-	@GameRegistry.ObjectHolder("sea_banner")
-	public static final BannerBlock bannerSea = null;
-	@GameRegistry.ObjectHolder("gilded_sea_banner")
-	public static final BannerBlock bannerSeaGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_sea_banner")
-	public static final BannerBlock bannerSeaEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_sea_banner")
-	public static final BannerBlock bannerSeaBejewelled = null;
-	@GameRegistry.ObjectHolder("shadow_banner")
-	public static final BannerBlock bannerShadow = null;
-	@GameRegistry.ObjectHolder("gilded_shadow_banner")
-	public static final BannerBlock bannerShadowGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_shadow_banner")
-	public static final BannerBlock bannerShadowEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_shadow_banner")
-	public static final BannerBlock bannerShadowBejewelled = null;
-	@GameRegistry.ObjectHolder("shiny_banner")
-	public static final BannerBlock bannerShiny = null;
-	@GameRegistry.ObjectHolder("gilded_shiny_banner")
-	public static final BannerBlock bannerShinyGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_shiny_banner")
-	public static final BannerBlock bannerShinyEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_shiny_banner")
-	public static final BannerBlock bannerShinyBejewelled = null;
-	@GameRegistry.ObjectHolder("shyre_banner")
-	public static final BannerBlock bannerShyre = null;
-	@GameRegistry.ObjectHolder("gilded_shyre_banner")
-	public static final BannerBlock bannerShyreGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_shyre_banner")
-	public static final BannerBlock bannerShyreEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_shyre_banner")
-	public static final BannerBlock bannerShyreBejewelled = null;
-	@GameRegistry.ObjectHolder("skeletal_banner")
-	public static final BannerBlock bannerSkeletal = null;
-	@GameRegistry.ObjectHolder("gilded_skeletal_banner")
-	public static final BannerBlock bannerSkeletalGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_skeletal_banner")
-	public static final BannerBlock bannerSkeletalEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_skeletal_banner")
-	public static final BannerBlock bannerSkeletalBejewelled = null;
-	@GameRegistry.ObjectHolder("soul_banner")
-	public static final BannerBlock bannerSoul = null;
-	@GameRegistry.ObjectHolder("gilded_soul_banner")
-	public static final BannerBlock bannerSoulGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_soul_banner")
-	public static final BannerBlock bannerSoulEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_soul_banner")
-	public static final BannerBlock bannerSoulBejewelled = null;
-	@GameRegistry.ObjectHolder("utopian_banner")
-	public static final BannerBlock bannerUtopian = null;
-	@GameRegistry.ObjectHolder("gilded_utopian_banner")
-	public static final BannerBlock bannerUtopianGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_utopian_banner")
-	public static final BannerBlock bannerUtopianEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_utopian_banner")
-	public static final BannerBlock bannerUtopianBejewelled = null;
-	@GameRegistry.ObjectHolder("void_banner")
-	public static final BannerBlock bannerVoid = null;
-	@GameRegistry.ObjectHolder("gilded_void_banner")
-	public static final BannerBlock bannerVoidGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_void_banner")
-	public static final BannerBlock bannerVoidEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_void_banner")
-	public static final BannerBlock bannerVoidBejewelled = null;
-	@GameRegistry.ObjectHolder("vox_banner")
-	public static final BannerBlock bannerVox = null;
-	@GameRegistry.ObjectHolder("gilded_vox_banner")
-	public static final BannerBlock bannerVoxGilded = null;
-	@GameRegistry.ObjectHolder("encrusted_vox_banner")
-	public static final BannerBlock bannerVoxEncrusted = null;
-	@GameRegistry.ObjectHolder("bejewelled_vox_banner")
-	public static final BannerBlock bannerVoxBejewelled = null;
-	@GameRegistry.ObjectHolder("pluton_banner")
-	public static final BannerBlock bannerPluton = null;
-	@GameRegistry.ObjectHolder("luxon_banner")
-	public static final BannerBlock bannerLuxon = null;
-	@GameRegistry.ObjectHolder("erebon_banner")
-	public static final BannerBlock bannerErebon = null;
-	@GameRegistry.ObjectHolder("selyan_banner")
-	public static final BannerBlock bannerSelyan = null;
+	public static final BannerBlock ANCIENT_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_ANCIENT_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_ANCIENT_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_ANCIENT_BANNER = ObjectHolder();
+	public static final BannerBlock BARON_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_BARON_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_BARON_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_BARON_BANNER = ObjectHolder();
+	public static final BannerBlock BLOOD_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_BLOOD_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_BLOOD_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_BLOOD_BANNER = ObjectHolder();
+	public static final BannerBlock BOREIC_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_BOREIC_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_BOREIC_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_BOREIC_BANNER = ObjectHolder();
+	public static final BannerBlock CANDY_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CANDY_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CANDY_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CANDY_BANNER = ObjectHolder();
+	public static final BannerBlock CLOWN_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CLOWN_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CLOWN_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CLOWN_BANNER = ObjectHolder();
+	public static final BannerBlock CREATION_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CREATION_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CREATION_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CREATION_BANNER = ObjectHolder();
+	public static final BannerBlock CREEPOID_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CREEPOID_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CREEPOID_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CREEPOID_BANNER = ObjectHolder();
+	public static final BannerBlock CREEPY_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CREEPY_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CREEPY_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CREEPY_BANNER = ObjectHolder();
+	public static final BannerBlock CRYSTAL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_CRYSTAL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_CRYSTAL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_CRYSTAL_BANNER = ObjectHolder();
+	public static final BannerBlock DEEP_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_DEEP_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_DEEP_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_DEEP_BANNER = ObjectHolder();
+	public static final BannerBlock DUSTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_DUSTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_DUSTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_DUSTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock ENERGY_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_ENERGY_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_ENERGY_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_ENERGY_BANNER = ObjectHolder();
+	public static final BannerBlock FUNGAL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_FUNGAL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_FUNGAL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_FUNGAL_BANNER = ObjectHolder();
+	public static final BannerBlock GHOSTLY_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_GHOSTLY_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_GHOSTLY_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_GHOSTLY_BANNER = ObjectHolder();
+	public static final BannerBlock GHOUL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_GHOUL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_GHOUL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_GHOUL_BANNER = ObjectHolder();
+	public static final BannerBlock GINGERBREAD_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_GINGERBREAD_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_GINGERBREAD_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_GINGERBREAD_BANNER = ObjectHolder();
+	public static final BannerBlock HAUNTED_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_HAUNTED_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_HAUNTED_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_HAUNTED_BANNER = ObjectHolder();
+	public static final BannerBlock ILLUSION_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_ILLUSION_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_ILLUSION_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_ILLUSION_BANNER = ObjectHolder();
+	public static final BannerBlock IMMORTAL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_IMMORTAL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_IMMORTAL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_IMMORTAL_BANNER = ObjectHolder();
+	public static final BannerBlock LELYETIAN_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_LELYETIAN_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_LELYETIAN_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_LELYETIAN_BANNER = ObjectHolder();
+	public static final BannerBlock LIGHT_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_LIGHT_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_LIGHT_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_LIGHT_BANNER = ObjectHolder();
+	public static final BannerBlock LOTTO_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_LOTTO_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_LOTTO_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_LOTTO_BANNER = ObjectHolder();
+	public static final BannerBlock LUNAR_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_LUNAR_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_LUNAR_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_LUNAR_BANNER = ObjectHolder();
+	public static final BannerBlock MECHA_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_MECHA_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_MECHA_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_MECHA_BANNER = ObjectHolder();
+	public static final BannerBlock NETHENGEIC_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_NETHENGEIC_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_NETHENGEIC_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_NETHENGEIC_BANNER = ObjectHolder();
+	public static final BannerBlock NETHER_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_NETHER_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_NETHER_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_NETHER_BANNER = ObjectHolder();
+	public static final BannerBlock ROSIDIAN_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_ROSIDIAN_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_ROSIDIAN_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_ROSIDIAN_BANNER = ObjectHolder();
+	public static final BannerBlock RUNIC_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_RUNIC_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_RUNIC_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_RUNIC_BANNER = ObjectHolder();
+	public static final BannerBlock SEA_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SEA_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SEA_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SEA_BANNER = ObjectHolder();
+	public static final BannerBlock SHADOW_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SHADOW_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SHADOW_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SHADOW_BANNER = ObjectHolder();
+	public static final BannerBlock SHINY_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SHINY_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SHINY_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SHINY_BANNER = ObjectHolder();
+	public static final BannerBlock SHYRE_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SHYRE_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SHYRE_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SHYRE_BANNER = ObjectHolder();
+	public static final BannerBlock SKELETAL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SKELETAL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SKELETAL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SKELETAL_BANNER = ObjectHolder();
+	public static final BannerBlock SOUL_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_SOUL_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_SOUL_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_SOUL_BANNER = ObjectHolder();
+	public static final BannerBlock UTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_UTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_UTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_UTOPIAN_BANNER = ObjectHolder();
+	public static final BannerBlock VOID_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_VOID_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_VOID_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_VOID_BANNER = ObjectHolder();
+	public static final BannerBlock VOX_BANNER = ObjectHolder();
+	public static final BannerBlock GILDED_VOX_BANNER = ObjectHolder();
+	public static final BannerBlock ENCRUSTED_VOX_BANNER = ObjectHolder();
+	public static final BannerBlock BEJEWELLED_VOX_BANNER = ObjectHolder();
+	public static final BannerBlock PLUTON_BANNER = ObjectHolder();
+	public static final BannerBlock LUXON_BANNER = ObjectHolder();
+	public static final BannerBlock EREBON_BANNER = ObjectHolder();
+	public static final BannerBlock SELYAN_BANNER = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> ev) {
 		AdventOfAscension.logMessage(Level.INFO, "Beginning block registration");
 		IForgeRegistry<Block> registry = ev.getRegistry();
 
-		registerBlock(registry, new StoneBlock("AbyssalStone", "abyss_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("BarathosHellstone", "barathos_hellstone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("BaronStone", "baron_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("BoreanStone", "borean_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("CreepStone", "creep_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("CrystevianStone", "crystevia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("DeeplandsStone", "deeplands_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("DustopianStone", "dustopia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("GardencianStone", "gardencia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("GreckonStone", "greckon_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("HavenStone", "haven_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("IroStone", "iromine_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("LelyetianStone", "lelyetia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("MysteriumStone", "mysterium_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("HighPrecasianStone", "high_precasia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("LowPrecasiaStone", "low_precasia_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("PrimedStone", "primed_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("RunicStone", "runic_stone"), "blocks/generation/stone/",oreDictCobble);
-		registerBlock(registry, new StoneBlock("ShyrelandsStone", "shyrelands_stone"), "blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("ToxicStone", "toxic_stone"),"blocks/generation/stone/", oreDictCobble);
-		registerBlock(registry, new StoneBlock("UnstableStone", "unstable_stone"), "blocks/generation/stone/", oreDictCobble);
+		registerBlock(registry, new StoneBlock("AbyssalStone", "abyss_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("BarathosHellstone", "barathos_hellstone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("BaronStone", "baron_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("BoreanStone", "borean_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("CreepStone", "creep_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("CrystevianStone", "crystevia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new DeeplandsStone(), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("DustopianStone", "dustopia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("GardencianStone", "gardencia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("GreckonStone", "greckon_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("HavenStone", "haven_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("IroStone", "iromine_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("LelyetianStone", "lelyetia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("MysteriumStone", "mysterium_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("HighPrecasianStone", "high_precasia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("LowPrecasiaStone", "low_precasia_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("PrimedStone", "primed_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("RunicStone", "runic_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("ShyrelandsStone", "shyrelands_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("ToxicStone", "toxic_stone"),"blocks/generation/stone/", ORE_DICT_COBBLE);
+		registerBlock(registry, new StoneBlock("UnstableStone", "unstable_stone"), "blocks/generation/stone/", ORE_DICT_COBBLE);
 
 		registerBlock(registry, new DirtBlock("BoreanDirt", "borean_dirt"), "blocks/generation/dirt/");
 		registerBlock(registry, new DirtBlock("CandylandDirt", "candyland_dirt"), "blocks/generation/dirt/");
@@ -2802,9 +1439,7 @@ public final class BlockRegister {
 		registerBlock(registry, new GrassBlock("BoreanGrass", "borean_grass", getUnmappedBlock("borean_dirt")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("CandylandGrass", "candyland_grass", getUnmappedBlock("candyland_dirt")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("CeleveGrass", "celeve_grass", getUnmappedBlock("celeve_dirt")), "blocks/generation/grass/");
-		registerBlock(registry, new GrassBlock("ChocolateGrass", "chocolate_grass", getUnmappedBlock("candyland_grass")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("CreeponiaGrass", "creeponia_grass", getUnmappedBlock("creeponia_dirt")),"blocks/generation/grass/");
-		registerBlock(registry, new GrassBlock("CrystalGrass", "crystal_grass", getUnmappedBlock("candyland_dirt")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("DustopiaGrass", "dustopia_grass", getUnmappedBlock("dustopia_dirt")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("GardenciaGrass", "gardencia_grass", getUnmappedBlock("gardencia_dirt")),"blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("GreckonGrass", "greckon_grass", getUnmappedBlock("greckon_dirt")), "blocks/generation/grass/");
@@ -2814,47 +1449,45 @@ public final class BlockRegister {
 		registerBlock(registry, new UpsideDownGrassBlock("LelyetiaDownGrass", "lelyetia_down_grass", getUnmappedBlock("lelyetia_stone"), 1.3f, 8f), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("LunalyteGrass", "lunalyte_grass", getUnmappedBlock("lunalyte_dirt")), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("LunasoleGrass", "lunasole_grass", getUnmappedBlock("lunasole_dirt")), "blocks/generation/grass/");
-		registerBlock(registry, new GrassBlock("MarshmallowGrass", "marshmallow_grass", getUnmappedBlock("candyland_dirt")), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("MysteriumGrass", "mysterium_grass", getUnmappedBlock("mysterium_dirt")), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("PrecasiaGrass", "precasia_grass", getUnmappedBlock("high_precasia_stone"), 1.3f, 8f), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("RunicGrass", "runic_grass", getUnmappedBlock("runic_stone"), 1.3f, 8f), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("ShyrelandsGrass", "shyrelands_grass", getUnmappedBlock("shyrelands_stone"), 1.3f, 8f), "blocks/generation/grass/");
-		registerBlock(registry, new GrassBlock("SilvroGrass", "silvro_grass", getUnmappedBlock("iromine_stone"), 1.3f, 8f), "blocks/generation/grass/");
 		registerBlock(registry, new GrassBlock("ToxicGrass", "toxic_grass", getUnmappedBlock("toxic_dirt")), "blocks/generation/grass/");
 
 		registerBlock(registry, new OreBlock("AmethystOre", "amethyst_ore", 2, 2, 8), "blocks/generation/ores/", "oreAmethyst");
 		registerBlock(registry, new OreBlock("BaronyteOre", "baronyte_ore", 3), "blocks/generation/ores/", "oreBaronyte");
 		registerBlock(registry, new OreBlock("BlaziumOre", "blazium_ore", 3), "blocks/generation/ores/", "oreBlazium");
-		registerBlock(registry, new OreBlock("BloodstoneOre", "bloodstone_ore", 3, 6, 11), "blocks/generation/ores/", "oreBloodstone");
-		registerBlock(registry, new OreBlock("BlueGemstoneOre", "blue_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreBlueGemstone");
+		registerBlock(registry, new OreBlock("BloodstoneOre", "bloodstone_ore", 4, 6, 11), "blocks/generation/ores/", "oreBloodstone");
+		registerBlock(registry, new OreBlock("BlueGemstoneOre", "blue_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "oreBlueGemstone");
 		registerBlock(registry, new OreBlock("ChargedRuniumOre", "charged_runium_ore", 3), "blocks/generation/ores/", "oreChargedRunium");
 		registerBlock(registry, new OreBlock("ChestboneFragmentsOre", "chestbone_fragments_ore", 3, 4, 8), "blocks/generation/ores/", "oreChestboneFragments");
-		registerBlock(registry, new OreBlock("CrystalliteOre", "crystallite_ore", 3, 6, 11), "blocks/generation/ores/", "oreCrystallite");
-		registerBlock(registry, new OreBlock("ElecaniumOre", "elecanium_ore", 3), "blocks/generation/ores/", "oreElecanium");
+		registerBlock(registry, new OreBlock("CrystalliteOre", "crystallite_ore", 4, 6, 11), "blocks/generation/ores/", "oreCrystallite");
+		registerBlock(registry, new OreBlock("ElecaniumOre", "elecanium_ore", 4), "blocks/generation/ores/", "oreElecanium");
 		registerBlock(registry, new OreBlock("EmberstoneOre", "emberstone_ore", 3), "blocks/generation/ores/", "oreEmberstone");
 		registerBlock(registry, new OreBlock("FootboneFragmentsOre", "footbone_fragments_ore", 3, 4, 8), "blocks/generation/ores/", "oreFootboneFragments");
 		registerBlock(registry, new OreBlock("GemenyteOre", "gemenyte_ore", 3, 4, 8), "blocks/generation/ores/", "oreGemenyte");
-		registerBlock(registry, new OreBlock("GhastlyOre", "ghastly_ore", 3), "blocks/generation/ores/", "oreGhastly");
-		registerBlock(registry, new OreBlock("GhoulishOre", "ghoulish_ore", 3), "blocks/generation/ores/", "oreGhoulish");
-		registerBlock(registry, new OreBlock("GreenGemstoneOre", "green_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreGreenGemstone");
-		registerBlock(registry, new OreBlock("JadeOre", "jade_ore", 3, 3, 8), "blocks/generation/ores/", "oreJade");
+		registerBlock(registry, new OreBlock("GhastlyOre", "ghastly_ore", 4), "blocks/generation/ores/", "oreGhastly");
+		registerBlock(registry, new OreBlock("GhoulishOre", "ghoulish_ore", 4), "blocks/generation/ores/", "oreGhoulish");
+		registerBlock(registry, new OreBlock("GreenGemstoneOre", "green_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "oreGreenGemstone");
+		registerBlock(registry, new OreBlock("JadeOre", "jade_ore", 2, 3, 8), "blocks/generation/ores/", "oreJade");
 		registerBlock(registry, new OreBlock("JewelyteOre", "jewelyte_ore", 3, 4, 8), "blocks/generation/ores/", "oreJewelyte");
 		registerBlock(registry, new OreBlock("LegboneFragmentsOre", "legbone_fragments_ore", 3, 4, 8), "blocks/generation/ores/", "oreLegboneFragments");
 		registerBlock(registry, new OreBlock("LimoniteOre", "limonite_ore", 1), "blocks/generation/ores/", "oreLimonite");
-		registerBlock(registry, new OreBlock("LyonOre", "lyon_ore", 3), "blocks/generation/ores/", "oreLyon");
-		registerBlock(registry, new OreBlock("MystiteOre", "mystite_ore", 3), "blocks/generation/ores/", "oreMystite");
+		registerBlock(registry, new OreBlock("LyonOre", "lyon_ore", 4), "blocks/generation/ores/", "oreLyon");
+		registerBlock(registry, new OreBlock("MystiteOre", "mystite_ore", 4), "blocks/generation/ores/", "oreMystite");
 		registerBlock(registry, new OreBlock("OrnamyteOre", "ornamyte_ore", 3, 4, 8), "blocks/generation/ores/", "oreOrnamyte");
-		registerBlock(registry, new OreBlock("PurpleGemstoneOre", "purple_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "orePurpleGemstone");
-		registerBlock(registry, new OreBlock("RedGemstoneOre", "red_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreRedGemstone");
-		registerBlock(registry, new OreBlock("RositeOre", "rosite_ore", 3), "blocks/generation/ores/", "oreRosite");
+		registerBlock(registry, new OreBlock("PurpleGemstoneOre", "purple_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "orePurpleGemstone");
+		registerBlock(registry, new OreBlock("RedGemstoneOre", "red_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "oreRedGemstone");
+		registerBlock(registry, new OreBlock("RositeOre", "rosite_ore", 2), "blocks/generation/ores/", "oreRosite");
 		registerBlock(registry, new OreBlock("RuniumOre", "runium_ore", 2), "blocks/generation/ores/", "oreRunium");
 		registerBlock(registry, new OreBlock("SapphireOre", "sapphire_ore", 3, 4, 9), "blocks/generation/ores/", "oreSapphire");
-		registerBlock(registry, new OreBlock("ShyregemOre", "shyregem_ore", 3, 6, 13), "blocks/generation/ores/", "oreShyregem");
-		registerBlock(registry, new OreBlock("ShyrestoneOre", "shyrestone_ore", 3), "blocks/generation/ores/", "oreShyrestone");
+		registerBlock(registry, new OreBlock("ShyregemOre", "shyregem_ore", 4, 6, 13), "blocks/generation/ores/", "oreShyregem");
+		registerBlock(registry, new OreBlock("ShyrestoneOre", "shyrestone_ore", 4), "blocks/generation/ores/", "oreShyrestone");
 		registerBlock(registry, new OreBlock("SkullboneFragmentsOre", "skullbone_fragments_ore", 3, 4, 8), "blocks/generation/ores/", "oreSkullboneFragments");
 		registerBlock(registry, new OreBlock("VarsiumOre", "varsium_ore", 3), "blocks/generation/ores/", "oreVarsium");
-		registerBlock(registry, new OreBlock("WhiteGemstoneOre", "white_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreWhiteGemstone");
-		registerBlock(registry, new OreBlock("YellowGemstoneOre", "yellow_crystal_ore", 3, 4, 7), "blocks/generation/ores/", "oreYellowGemstone");
+		registerBlock(registry, new OreBlock("WhiteGemstoneOre", "white_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "oreWhiteGemstone");
+		registerBlock(registry, new OreBlock("YellowGemstoneOre", "yellow_crystal_ore", 4, 4, 7), "blocks/generation/ores/", "oreYellowGemstone");
 
 		registerBlock(registry, new BasicDecorationBlock("BaronBricks", "baron_bricks", Material.ROCK, 10f, 15f), "blocks/decoration/bricks/");
 		registerBlock(registry, new BasicDecorationBlock("BlackBricks", "black_bricks", Material.ROCK, 2.0f, 10.0f), "blocks/decoration/bricks/");
@@ -2921,115 +1554,127 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicDecorationBlock("OrnateSapphireIvory", "ornate_sapphire_ivory", Material.ROCK, 5.0f, 5.0f), "blocks/decoration/ivory/");
 		registerBlock(registry, new BasicDecorationBlock("PatternedSapphireIvory", "patterned_sapphire_ivory", Material.ROCK, 5.0f, 5.0f), "blocks/decoration/ivory/");
 
-		registerBlock(registry, new LeavesBlock("AchonyLeaves", "achony_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("BloodLeaves", "blood_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new TranslucentLeavesBlock("BubbleLeaves", "bubble_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("BlueCelevusLeaves", "blue_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("GreenCelevusLeaves", "green_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("PurpleCelevusLeaves", "purple_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("RedCelevusLeaves", "red_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("WhiteCelevusLeaves", "white_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("YellowCelevusLeaves", "yellow_celevus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("ChurryLeaves", "churry_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("CreepLeaves", "creep_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("CycadeLeaves", "cycade_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("DawnLeaves", "dawn_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("DomiguousLeaves", "domiguous_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("EternalLeaves", "eternal_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("EucadonLeaves", "eucadon_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("HauntedLeaves", "haunted_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("HauntedEyesLeaves", "haunted_eyes_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("BlueHavenLeaves", "blue_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("PinkHavenLeaves", "pink_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("PurpleHavenLeaves", "purple_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("RedHavenLeaves", "red_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("TurquoiseHavenLeaves", "turquoise_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("YellowHavenLeaves", "yellow_haven_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("IrodustLeaves", "irodust_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("IrogoldLeaves", "irogold_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("LelyetianLeaves", "lelyetian_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("LucalusLeaves", "lucalus_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("LuniciaLeaves", "lunicia_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("LunossoLeaves", "lunosso_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("MelumiaLeaves", "melumia_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("OpolloLeaves", "opollo_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new TranslucentLeavesBlock("RunicLeaves", "runic_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("ShadowLeaves", "shadow_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("ShadowbloodLeaves", "shadowblood_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("ShyreLeaves", "shyre_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("BrightShyreLeaves", "bright_shyre_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("SilvroLeaves", "silvro_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("StranglewoodLeaves", "stranglewood_leaves"), "blocks/generation/leaves/", oreDictLeaves);
-		registerBlock(registry, new LeavesBlock("VeinLeaves", "vein_leaves"), "blocks/generation/leaves/", oreDictLeaves);
+		registerBlock(registry, new AchonySapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new BloodtwisterSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new BlueCelevusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new BlueHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new BrightShyreSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new ChurrySapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new CreepSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new DawnwoodSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new EyebushSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new EyeHangerSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new GreenCelevusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new HauntedSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new IrodustSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new IrogoldSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new LucalusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new LuniciaSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new LunossoSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new PinkHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new PurpleCelevusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new PurpleHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new RedCelevusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new RedHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new RunicSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new ShadowSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new ShyreSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new StranglewoodSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new TurquoiseHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new YellowCelevusSapling(), "blocks/decoration/saplings/", "treeSapling");
+		registerBlock(registry, new YellowHavenSapling(), "blocks/decoration/saplings/", "treeSapling");
 
-		registerBlock(registry, new LogBlock("AchonyLog", "achony_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("BloodLog", "blood_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("ChurryLog", "churry_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("CreepLog", "creep_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("CycadeLog", "cycade_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("DawnLog", "dawn_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("DomiguousLog", "domiguous_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("EternalLog", "eternal_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("EucadonLog", "eucadon_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("EyeballLog", "eyeball_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("HauntedLog", "haunted_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("HauntedEyeLog", "haunted_eye_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("HauntedEyesLog", "haunted_eyes_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("HauntedFlashingLog", "haunted_flashing_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("HauntedPurplingLog", "haunted_purpling_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("IroLog", "iro_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("LucalusLog", "lucalus_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("LunideLog", "lunide_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("MelumiaLog", "melumia_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("OpolloLog", "opollo_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("RunicLog", "runic_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("ShadowLog", "shadow_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("ShyreLog", "shyre_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("StranglewoodLog", "stranglewood_log"), "blocks/generation/wood/", oreDictWood);
-		registerBlock(registry, new LogBlock("ToxicLog", "toxic_log"), "blocks/generation/wood/", oreDictWood);
+		registerBlock(registry, new LeavesBlock("AchonyLeaves", "achony_leaves", getUnmappedBlock("achony_sapling"), 58), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("BloodLeaves", "blood_leaves", getUnmappedBlock("bloodtwister_sapling"), 30), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("BlueCelevusLeaves", "blue_celevus_leaves", getUnmappedBlock("blue_celevus_sapling"), 36), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("GreenCelevusLeaves", "green_celevus_leaves", getUnmappedBlock("green_celevus_sapling"), 36), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("PurpleCelevusLeaves", "purple_celevus_leaves", getUnmappedBlock("purple_celevus_sapling"), 36), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("RedCelevusLeaves", "red_celevus_leaves", getUnmappedBlock("red_celevus_sapling"), 36), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("WhiteCelevusLeaves", "white_celevus_leaves"), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("YellowCelevusLeaves", "yellow_celevus_leaves", getUnmappedBlock("yellow_celevus_sapling"), 36), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("ChurryLeaves", "churry_leaves", getUnmappedBlock("churry_sapling"), 66), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("CreepLeaves", "creep_leaves", getUnmappedBlock("creep_sapling"), 17), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("CycadeLeaves", "cycade_leaves"), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("DawnLeaves", "dawn_leaves", getUnmappedBlock("dawnwood_sapling"), 15), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("HauntedLeaves", "haunted_leaves", getUnmappedBlock("haunted_sapling"), 60), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("HauntedEyesLeaves", "haunted_eyes_leaves", getUnmappedBlock("haunted_sapling"), 60), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("BlueHavenLeaves", "blue_haven_leaves", getUnmappedBlock("blue_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("PinkHavenLeaves", "pink_haven_leaves", getUnmappedBlock("pink_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("PurpleHavenLeaves", "purple_haven_leaves", getUnmappedBlock("purple_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("RedHavenLeaves", "red_haven_leaves", getUnmappedBlock("red_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("TurquoiseHavenLeaves", "turquoise_haven_leaves", getUnmappedBlock("turquoise_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("YellowHavenLeaves", "yellow_haven_leaves", getUnmappedBlock("yellow_haven_sapling"), 38), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("IrodustLeaves", "irodust_leaves", getUnmappedBlock("irodust_sapling"), 19), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("IrogoldLeaves", "irogold_leaves", getUnmappedBlock("irogold_sapling"), 9), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("LelyetianLeaves", "lelyetian_leaves"), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("LucalusLeaves", "lucalus_leaves", getUnmappedBlock("lucalus_sapling"), 45), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("LuniciaLeaves", "lunicia_leaves", getUnmappedBlock("lunicia_sapling"), 14), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("LunossoLeaves", "lunosso_leaves", getUnmappedBlock("lunosso_sapling"), 8), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new TranslucentLeavesBlock("RunicLeaves", "runic_leaves", getUnmappedBlock("runic_sapling"), 23), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("ShadowLeaves", "shadow_leaves", getUnmappedBlock("shadow_sapling"), 27), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("ShadowbloodLeaves", "shadowblood_leaves", getUnmappedBlock("eye_hanger_sapling"), 21), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("ShyreLeaves", "shyre_leaves", getUnmappedBlock("shyre_sapling"), 7), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("BrightShyreLeaves", "bright_shyre_leaves", getUnmappedBlock("bright_shyre_sapling"), 7), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("StranglewoodLeaves", "stranglewood_leaves", getUnmappedBlock("stranglewood_sapling"), 34), "blocks/generation/leaves/", ORE_DICT_LEAVES);
+		registerBlock(registry, new LeavesBlock("VeinLeaves", "vein_leaves", getUnmappedBlock("eyebush_sapling"), 30), "blocks/generation/leaves/", ORE_DICT_LEAVES);
 
-		registerBlock(registry, new BasicDecorationBlock("AchonyPlanks", "achony_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("BloodwoodPlanks", "bloodwood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("ChurryPlanks", "churry_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("CreepPlanks", "creep_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("CycadePlanks", "cycade_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("DawnwoodPlanks", "dawnwood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("DomiguousPlanks", "domiguous_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("EucadonPlanks", "eucadon_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("HauntedwoodPlanks", "hauntedwood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("IrowoodPlanks", "irowood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("LucalusPlanks", "lucalus_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("LunidePlanks", "lunide_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("MelumiaPlanks", "melumia_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("OpolloPlanks", "opollo_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("RunicPlanks", "runic_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("ShadowPlanks", "shadow_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("ShyrePlanks", "shyre_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("StranglewoodPlanks", "stranglewood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
-		registerBlock(registry, new BasicDecorationBlock("ToxicwoodPlanks", "toxicwood_planks", Material.WOOD), "blocks/decoration/planks/", oreDictPlanks);
+		registerBlock(registry, new LogBlock("AchonyLog", "achony_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("BloodLog", "blood_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("ChurryLog", "churry_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("CreepLog", "creep_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("CycadeLog", "cycade_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("DawnLog", "dawn_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("EyeballLog", "eyeball_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("HauntedLog", "haunted_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("HauntedEyeLog", "haunted_eye_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("HauntedEyesLog", "haunted_eyes_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("HauntedFlashingLog", "haunted_flashing_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("HauntedPurplingLog", "haunted_purpling_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("IroLog", "iro_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("LucalusLog", "lucalus_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("LunideLog", "lunide_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("RunicLog", "runic_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("ShadowLog", "shadow_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("ShyreLog", "shyre_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new StranglewoodLog(), "blocks/generation/wood/", ORE_DICT_WOOD);
+		registerBlock(registry, new LogBlock("ToxicLog", "toxic_log"), "blocks/generation/wood/", ORE_DICT_WOOD);
 
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("AchonySlab", "achony_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new BasicDecorationBlock("AchonyPlanks", "achony_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("BloodwoodPlanks", "bloodwood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("ChurryPlanks", "churry_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("CreepPlanks", "creep_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("CycadePlanks", "cycade_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("DawnwoodPlanks", "dawnwood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("HauntedwoodPlanks", "hauntedwood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("IrowoodPlanks", "irowood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("LucalusPlanks", "lucalus_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("LunidePlanks", "lunide_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("RunicPlanks", "runic_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("ShadowPlanks", "shadow_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("ShyrePlanks", "shyre_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("StranglewoodPlanks", "stranglewood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+		registerBlock(registry, new BasicDecorationBlock("ToxicwoodPlanks", "toxicwood_planks", Material.WOOD), "blocks/decoration/planks/", ORE_DICT_PLANKS);
+
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("AchonySlab", "achony_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BaronBricksSlab", "baron_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BlackBricksSlab", "black_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BloodstoneBricksSlab", "bloodstone_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BloodwoodSlab", "bloodwood_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BloodwoodSlab", "bloodwood_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BlueBricksSlab", "blue_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("BrownBricksSlab", "brown_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ChurrySlab", "churry_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ChurrySlab", "churry_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CoralBricksSlab", "coral_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CreepSlab", "creep_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CreepSlab", "creep_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CreeponiaBricksSlab", "creeponia_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CrystalliteBricksSlab", "crystallite_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CrysteviaBricksSlab", "crystevia_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CyanBricksSlab", "cyan_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CycadeSlab", "cycade_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("CycadeSlab", "cycade_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DarkBlueBricksSlab", "dark_blue_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DarkBricksSlab", "dark_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DarkGreyBricksSlab", "dark_grey_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DarkwashBricksSlab", "darkwash_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DawnwoodSlab", "dawnwood_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DomiguousSlab", "domiguous_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("EucadonSlab", "eucadon_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("DawnwoodSlab", "dawnwood_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("GardenciaBricksSlab", "gardencia_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("GreckonBricksSlab", "greckon_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("GreenBricksSlab", "green_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
@@ -3038,7 +1683,7 @@ public final class BlockRegister {
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("HauntedwoodSlab", "hauntedwood_slab", Material.WOOD), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("IroDottedBricksSlab", "iro_dotted_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("IroStripedBricksSlab", "iro_striped_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("IrowoodSlab", "irowood_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("IrowoodSlab", "irowood_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("IntricateAmethystIvorySlab", "intricate_amethyst_ivory_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("NaturalAmethystIvorySlab", "natural_amethyst_ivory_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("OrnateAmethystIvorySlab", "ornate_amethyst_ivory_slab", Material.ROCK), "blocks/decoration/slabs/");
@@ -3065,62 +1710,58 @@ public final class BlockRegister {
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("PatternedSapphireIvorySlab", "patterned_sapphire_ivory_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LelyetiaBricksSlab", "lelyetia_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LimeBricksSlab", "lime_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LucalusSlab", "lucalus_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LucalusSlab", "lucalus_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LunarBricksSlab", "lunar_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LunideSlab", "lunide_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("LunideSlab", "lunide_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("MagentaBricksSlab", "magenta_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("MelumiaSlab", "melumia_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("MysteriumBlackBricksSlab", "black_mysterium_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("MysteriumGreenBricksSlab", "green_mysterium_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("OpolloSlab", "opollo_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("OrangeBricksSlab", "orange_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("PinkBricksSlab", "pink_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("PurpleBricksSlab", "purple_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("RedBricksSlab", "red_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("RosidianBricksSlab", "rosidian_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("RunicSlab", "runic_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("RunicSlab", "runic_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("RunicConstructBricksSlab", "runic_construct_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShadowSlab", "shadow_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShyreSlab", "shyre_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShadowSlab", "shadow_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShyreSlab", "shyre_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShyreWhiteBricksSlab", "white_shyre_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ShyreYellowBricksSlab", "yellow_shyre_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("SkeletalBricksSlab", "skeletal_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("StranglewoodSlab", "stranglewood_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
-		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ToxicwoodSlab", "toxicwood_slab", Material.WOOD), "blocks/decoration/slabs/", oreDictSlabWood);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("StranglewoodSlab", "stranglewood_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
+		registerBlock(registry, new SlabBlock.DoubleSlabBlock("ToxicwoodSlab", "toxicwood_slab", Material.WOOD), "blocks/decoration/slabs/", ORE_DICT_SLAB_WOOD);
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("WhitewashBricksSlab", "whitewash_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 		registerBlock(registry, new SlabBlock.DoubleSlabBlock("YellowBricksSlab", "yellow_bricks_slab", Material.ROCK), "blocks/decoration/slabs/");
 
-		registerBlock(registry, new StairsBlock("AchonyStairs", "achony_stairs", getUnmappedBlock("achony_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("AchonyStairs", "achony_stairs", getUnmappedBlock("achony_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("BaronBricksStairs", "baron_bricks_stairs", getUnmappedBlock("baron_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("BlackBricksStairs", "black_bricks_stairs", getUnmappedBlock("black_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("BloodstoneBricksStairs", "bloodstone_bricks_stairs", getUnmappedBlock("bloodstone_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("BloodwoodStairs", "bloodwood_stairs", getUnmappedBlock("bloodwood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("BloodwoodStairs", "bloodwood_stairs", getUnmappedBlock("bloodwood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("BlueBricksStairs", "blue_bricks_stairs", getUnmappedBlock("blue_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("BrownBricksStairs", "brown_bricks_stairs", getUnmappedBlock("brown_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("ChurryStairs", "churry_stairs", getUnmappedBlock("churry_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("ChurryStairs", "churry_stairs", getUnmappedBlock("churry_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("CoralBricksStairs", "coral_bricks_stairs", getUnmappedBlock("coral_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("CreepStairs", "creep_stairs", getUnmappedBlock("creep_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("CreepStairs", "creep_stairs", getUnmappedBlock("creep_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("CreeponiaBricksStairs", "creeponia_bricks_stairs", getUnmappedBlock("creeponia_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("CrystalliteBricksStairs", "crystallite_bricks_stairs", getUnmappedBlock("crystallite_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("CrysteviaBricksStairs", "crystevia_bricks_stairs", getUnmappedBlock("crystevia_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("CyanBricksStairs", "cyan_bricks_stairs", getUnmappedBlock("cyan_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("CycadeStairs", "cycade_stairs", getUnmappedBlock("cycade_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("CycadeStairs", "cycade_stairs", getUnmappedBlock("cycade_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("DarkBlueBricksStairs", "dark_blue_bricks_stairs", getUnmappedBlock("dark_blue_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("DarkBricksStairs", "dark_bricks_stairs", getUnmappedBlock("dark_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("DarkGreyBricksStairs", "dark_grey_bricks_stairs", getUnmappedBlock("dark_grey_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("DarkwashBricksStairs", "darkwash_bricks_stairs", getUnmappedBlock("darkwash_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("DawnwoodStairs", "dawnwood_stairs", getUnmappedBlock("dawnwood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
-		registerBlock(registry, new StairsBlock("DomiguousStairs", "domiguous_stairs", getUnmappedBlock("domiguous_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
-		registerBlock(registry, new StairsBlock("EucadonStairs", "eucadon_stairs", getUnmappedBlock("eucadon_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("DawnwoodStairs", "dawnwood_stairs", getUnmappedBlock("dawnwood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("GardenciaBricksStairs", "gardencia_bricks_stairs", getUnmappedBlock("gardencia_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("GreckonBricksStairs", "greckon_bricks_stairs", getUnmappedBlock("greckon_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("GreenBricksStairs", "green_bricks_stairs", getUnmappedBlock("green_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("GreyBricksStairs", "grey_bricks_stairs", getUnmappedBlock("grey_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("HauntedBricksStairs", "haunted_bricks_stairs", getUnmappedBlock("haunted_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("HauntedwoodStairs", "hauntedwood_stairs", getUnmappedBlock("hauntedwood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("HauntedwoodStairs", "hauntedwood_stairs", getUnmappedBlock("hauntedwood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("IroDottedBricksStairs", "iro_dotted_bricks_stairs", getUnmappedBlock("iro_dotted_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("IroStripedBricksStairs", "iro_striped_bricks_stairs", getUnmappedBlock("iro_striped_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("IrowoodStairs", "irowood_stairs", getUnmappedBlock("irowood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("IrowoodStairs", "irowood_stairs", getUnmappedBlock("irowood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("IntricateAmethystIvoryStairs", "intricate_amethyst_ivory_stairs", getUnmappedBlock("intricate_amethyst_ivory")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("NaturalAmethystIvoryStairs", "natural_amethyst_ivory_stairs", getUnmappedBlock("natural_amethyst_ivory")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("OrnateAmethystIvoryStairs", "ornate_amethyst_ivory_stairs", getUnmappedBlock("ornate_amethyst_ivory")), "blocks/decoration/stairs/");
@@ -3147,75 +1788,63 @@ public final class BlockRegister {
 		registerBlock(registry, new StairsBlock("PatternedSapphireIvoryStairs", "patterned_sapphire_ivory_stairs", getUnmappedBlock("patterned_sapphire_ivory")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("LelyetiaBricksStairs", "lelyetia_bricks_stairs", getUnmappedBlock("lelyetia_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("LimeBricksStairs", "lime_bricks_stairs", getUnmappedBlock("lime_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("LucalusStairs", "lucalus_stairs", getUnmappedBlock("lucalus_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("LucalusStairs", "lucalus_stairs", getUnmappedBlock("lucalus_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("LunarBricksStairs", "lunar_bricks_stairs", getUnmappedBlock("lunar_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("LunideStairs", "lunide_stairs", getUnmappedBlock("lunide_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("LunideStairs", "lunide_stairs", getUnmappedBlock("lunide_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("MagentaBricksStairs", "magenta_bricks_stairs", getUnmappedBlock("magenta_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("MelumiaStairs", "melumia_stairs", getUnmappedBlock("melumia_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
 		registerBlock(registry, new StairsBlock("MysteriumBlackBricksStairs", "black_mysterium_bricks_stairs", getUnmappedBlock("black_mysterium_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("MysteriumGreenBricksStairs", "green_mysterium_bricks_stairs", getUnmappedBlock("green_mysterium_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("OpolloStairs", "opollo_stairs", getUnmappedBlock("opollo_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
 		registerBlock(registry, new StairsBlock("OrangeBricksStairs", "orange_bricks_stairs", getUnmappedBlock("orange_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("PinkBricksStairs", "pink_bricks_stairs", getUnmappedBlock("pink_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("PurpleBricksStairs", "purple_bricks_stairs", getUnmappedBlock("purple_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("RedBricksStairs", "red_bricks_stairs", getUnmappedBlock("red_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("RosidianBricksStairs", "rosidian_bricks_stairs", getUnmappedBlock("rosidian_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("RunicStairs", "runic_stairs", getUnmappedBlock("runic_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("RunicStairs", "runic_stairs", getUnmappedBlock("runic_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("RunicConstructBricksStairs", "runic_construct_bricks_stairs", getUnmappedBlock("runic_construct_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("ShadowStairs", "shadow_stairs", getUnmappedBlock("shadow_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
-		registerBlock(registry, new StairsBlock("ShyreStairs", "shyre_stairs", getUnmappedBlock("shyre_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("ShadowStairs", "shadow_stairs", getUnmappedBlock("shadow_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
+		registerBlock(registry, new StairsBlock("ShyreStairs", "shyre_stairs", getUnmappedBlock("shyre_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("ShyreWhiteBricksStairs", "white_shyre_bricks_stairs", getUnmappedBlock("white_shyre_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("ShyreYellowBricksStairs", "yellow_shyre_bricks_stairs", getUnmappedBlock("yellow_shyre_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("SkeletalBricksStairs", "skeletal_bricks_stairs", getUnmappedBlock("skeletal_bricks")), "blocks/decoration/stairs/");
-		registerBlock(registry, new StairsBlock("StranglewoodStairs", "stranglewood_stairs", getUnmappedBlock("stranglewood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
-		registerBlock(registry, new StairsBlock("ToxicwoodStairs", "toxicwood_stairs", getUnmappedBlock("toxicwood_planks")), "blocks/decoration/stairs/", oreDictStairsWood);
+		registerBlock(registry, new StairsBlock("StranglewoodStairs", "stranglewood_stairs", getUnmappedBlock("stranglewood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
+		registerBlock(registry, new StairsBlock("ToxicwoodStairs", "toxicwood_stairs", getUnmappedBlock("toxicwood_planks")), "blocks/decoration/stairs/", ORE_DICT_STAIRS_WOOD);
 		registerBlock(registry, new StairsBlock("WhitewashBricksStairs", "whitewash_bricks_stairs", getUnmappedBlock("whitewash_bricks")), "blocks/decoration/stairs/");
 		registerBlock(registry, new StairsBlock("YellowBricksStairs", "yellow_bricks_stairs", getUnmappedBlock("yellow_bricks")), "blocks/decoration/stairs/");
 
-		registerBlock(registry, new FenceBlock("AchonyFence", "achony_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("BloodwoodFence", "bloodwood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("ChurryFence", "churry_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("CreepFence", "creep_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("CycadeFence", "cycade_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("DawnwoodFence", "dawnwood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("DomiguousFence", "domiguous_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("EucadonFence", "eucadon_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("HauntedwoodFence", "hauntedwood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("IrowoodFence", "irowood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("LucalusFence", "lucalus_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("LunideFence", "lunide_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("MelumiaFence", "melumia_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("OpolloFence", "opollo_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("RunicFence", "runic_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("ShadowFence", "shadow_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("ShyreFence", "shyre_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("StranglewoodFence", "stranglewood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
-		registerBlock(registry, new FenceBlock("ToxicwoodFence", "toxicwood_fence"), "blocks/decoration/fences/", oreDictFenceWood);
+		registerBlock(registry, new FenceBlock("AchonyFence", "achony_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("BloodwoodFence", "bloodwood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("ChurryFence", "churry_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("CreepFence", "creep_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("CycadeFence", "cycade_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("DawnwoodFence", "dawnwood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("HauntedwoodFence", "hauntedwood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("IrowoodFence", "irowood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("LucalusFence", "lucalus_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("LunideFence", "lunide_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("RunicFence", "runic_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("ShadowFence", "shadow_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("ShyreFence", "shyre_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("StranglewoodFence", "stranglewood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
+		registerBlock(registry, new FenceBlock("ToxicwoodFence", "toxicwood_fence"), "blocks/decoration/fences/", ORE_DICT_FENCE_WOOD);
 		registerBlock(registry, new TwinklestoneFence(), "blocks/decoration/fences/");
 
-		registerBlock(registry, new GateBlock("AchonyGate", "achony_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("BloodwoodGate", "bloodwood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("ChurryGate", "churry_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("CreepGate", "creep_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("CycadeGate", "cycade_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("DawnwoodGate", "dawnwood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("DomiguousGate", "domiguous_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("EucadonGate", "eucadon_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("HauntedwoodGate", "hauntedwood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("IrowoodGate", "irowood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("LucalusGate", "lucalus_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("LunideGate", "lunide_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("MelumiaGate", "melumia_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("OpolloGate", "opollo_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("RunicGate", "runic_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("ShadowGate", "shadow_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("ShyreGate", "shyre_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("StranglewoodGate", "stranglewood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
-		registerBlock(registry, new GateBlock("ToxicwoodGate", "toxicwood_gate"), "blocks/decoration/gates/", oreDictFenceGateWood);
+		registerBlock(registry, new GateBlock("AchonyGate", "achony_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("BloodwoodGate", "bloodwood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("ChurryGate", "churry_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("CreepGate", "creep_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("CycadeGate", "cycade_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("DawnwoodGate", "dawnwood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("HauntedwoodGate", "hauntedwood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("IrowoodGate", "irowood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("LucalusGate", "lucalus_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("LunideGate", "lunide_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("RunicGate", "runic_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("ShadowGate", "shadow_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("ShyreGate", "shyre_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("StranglewoodGate", "stranglewood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
+		registerBlock(registry, new GateBlock("ToxicwoodGate", "toxicwood_gate"), "blocks/decoration/gates/", ORE_DICT_FENCE_GATE_WOOD);
 
 		registerBlock(registry, new BasicBlock("FlowerCore", "flower_core", Material.GOURD), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("AquaMushroomInside", "aqua_mushroom_inside", Material.GOURD), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("AquaMushroomOutside", "aqua_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BlackMushroom", "black_mushroom", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BlueMushroomInside", "blue_mushroom_inside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BlueMushroomOutside", "blue_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
@@ -3223,8 +1852,6 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicBlock("GreenMushroomOutside", "green_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("OrangeMushroomInside", "orange_mushroom_inside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("OrangeMushroomOutside", "orange_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("PeachMushroomInside", "peach_mushroom_inside", Material.GOURD), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("PeachMushroomOutside", "peach_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("PurpleMushroomInside", "purple_mushroom_inside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("PurpleMushroomOutside", "purple_mushroom_outside", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BlackMushroomStem", "black_mushroom_stem", Material.GOURD), "blocks/generation/misc/");
@@ -3300,25 +1927,23 @@ public final class BlockRegister {
 		registerBlock(registry, new LampBlock("SapphireLamp", "sapphire_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 		registerBlock(registry, new LampBlock("SkeletalLamp", "skeletal_lamp", Material.REDSTONE_LIGHT, 1.0f, 1.5f, 1.0f), "blocks/functional/lamps/");
 
-		registerBlock(registry, new GlassBlock("AbyssalGlass", "abyssal_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new UnbreakableGlassBlock("AncientGlass", "ancient_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("AquaticGlass", "aquatic_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new UnbreakableGlassBlock("ArchaicGlass", "archaic_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("ArchaicGlassBreakable", "archaic_glass_breakable"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("BaronGlass", "baron_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new UnbreakableGlassBlock("DecayedGlass", "decayed_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("GardencianGlass", "gardencian_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("HavenGlass", "haven_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("IroGlass", "iro_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("LelyetianGlass", "lelyetian_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new UnbreakableGlassBlock("LunarGlass", "lunar_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("RunicGlass", "runic_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new UnbreakableGlassBlock("UnbreakableRunicGlass", "unbreakable_runic_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("ShyreGlass", "shyre_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("VoxGlass", "vox_glass"), "blocks/decoration/glass/", oreDictGlass);
-		registerBlock(registry, new GlassBlock("ZhinxGlass", "zhinx_glass"), "blocks/decoration/glass/", oreDictGlass);
-
-		registerBlock(registry, new SandBlock("PrecasianSand", "precasian_sand"), "blocks/generation/sand/", oreDictSand);
+		registerBlock(registry, new GlassBlock("AbyssalGlass", "abyssal_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new UnbreakableGlassBlock("AncientGlass", "ancient_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("AquaticGlass", "aquatic_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new UnbreakableGlassBlock("ArchaicGlass", "archaic_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("ArchaicGlassBreakable", "archaic_glass_breakable"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("BaronGlass", "baron_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new UnbreakableGlassBlock("DecayedGlass", "decayed_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("GardencianGlass", "gardencian_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("HavenGlass", "haven_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("IroGlass", "iro_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("LelyetianGlass", "lelyetian_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new UnbreakableGlassBlock("LunarGlass", "lunar_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("RunicGlass", "runic_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new UnbreakableGlassBlock("UnbreakableRunicGlass", "unbreakable_runic_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("ShyreGlass", "shyre_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("VoxGlass", "vox_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("ZhinxGlass", "zhinx_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 
 		registerBlock(registry, new CompressedBlock("AmethystBlock", "amethyst_block"), "blocks/decoration/compressedblock/", "blockAmethyst");
 		registerBlock(registry, new CompressedBlock("BaronyteBlock", "baronyte_block"), "blocks/decoration/compressedblock/", "blockBaronyte");
@@ -3355,7 +1980,7 @@ public final class BlockRegister {
 		registerBlock(registry, new Shadonantium(), "blocks/functional/misc/");
 		registerBlock(registry, new Skeletanium(), "blocks/functional/misc/");
 
-		registerBlock(registry, new BasicBlock("AncientRock", "ancient_rock", Material.ROCK), "blocks/generation/misc/", oreDictStone);
+		registerBlock(registry, new BasicBlock("AncientRock", "ancient_rock", Material.ROCK), "blocks/generation/misc/", ORE_DICT_STONE);
 		registerBlock(registry, new UnbreakableBlock("BlackAncientTile", "black_ancient_tile", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new UnbreakableBlock("AncientTileCore", "ancient_tile_core", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new UnbreakableBlock("GreenAncientTile", "green_ancient_tile", Material.ROCK), "blocks/generation/misc/");
@@ -3387,7 +2012,6 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicBlock("CogBlock", "cog_block", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BlueCoral", "blue_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("GreenCoral", "green_coral", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("HardCoral", "hard_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("OrangeCoral", "orange_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("PinkCoral", "pink_coral", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("WhiteCoral", "white_coral", Material.ROCK), "blocks/generation/misc/");
@@ -3405,14 +2029,11 @@ public final class BlockRegister {
 		registerBlock(registry, new DeeplandsTrapExplosion(), "blocks/generation/misc/");
 		registerBlock(registry, new DeeplandsTrapLava(), "blocks/generation/misc/");
 		registerBlock(registry, new DeeplandsTrapNipper(), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("Deepshine", "deepshine", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("DegradedSteel", "degraded_steel", Material.IRON, 5.0f, 10.0f), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("EyeBlock", "eye_block", Material.GOURD, 4.0f, 1.5f), "blocks/generation/misc/");
 		registerBlock(registry, new GiantSnailAcid(), "blocks/functional/misc/");
 		registerBlock(registry, new BasicBlock("Gingerbread", "gingerbread", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("HauntedOrb", "haunted_orb", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("HiveWall", "hive_wall", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicDecorationBlock("IroBox", "iro_box", Material.IRON), "blocks/decoration/misc/");
 
 		registerBlock(registry, new IroBrickTrap(), "blocks/generation/misc/");
 		registerBlock(registry, new BasicNonCubeBlock("Iropole", "iropole", Material.ROCK), "blocks/generation/misc/");
@@ -3427,30 +2048,23 @@ public final class BlockRegister {
 		registerBlock(registry, new KaiyuTempleTrapDamage(), "blocks/generation/misc/");
 		registerBlock(registry, new KaiyuTempleTrapPoison(), "blocks/generation/misc/");
 		registerBlock(registry,	new KaiyuTempleTrapFire(), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("Licorice", "licorice", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new LunarOrbBlock("DarklightOrb", "darklight_orb"), "blocks/generation/misc/");
 		registerBlock(registry, new LunarOrbBlock("DuskOrb", "dusk_orb"), "blocks/generation/misc/");
 		registerBlock(registry, new LunarOrbBlock("LunarOrb", "lunar_orb"), "blocks/generation/misc/");
 		registerBlock(registry, new LunarOrbBlock("MoonlightOrb", "moonlight_orb"), "blocks/generation/misc/");
 		registerBlock(registry, new LunarOrbBlock("SunfireOrb", "sunfire_orb"), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("LunarPad", "lunar_pad", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("Marshmallow", "marshmallow", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new AcidBlock("OrangeAcid", "orange_acid"), "blocks/functional/misc/");
 		registerBlock(registry, new BasicBlock("ParaviteHive", "paravite_hive", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new UnbreakableBlock("BlackPetals", "black_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("BluePetals", "blue_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("LightBluePetals", "light_blue_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("MagentaPetals", "magenta_petals", Material.GOURD), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("OrangePetals", "orange_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("PurplePetals", "purple_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("RedPetals", "red_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("RosePetals", "rose_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("YellowPetals", "yellow_petals", Material.GOURD), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("Plastic", "plastic", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("BlueRockCandy", "blue_rock_candy", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("GreenRockCandy", "green_rock_candy", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("PinkRockCandy", "pink_rock_candy", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("PurpleRockCandy", "purple_rock_candy", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new RunePostBlock("RunePostCompass", "rune_post_compass",63, 45), "blocks/generation/misc/");
 		registerBlock(registry, new RunePostBlock("RunePostDistortion", "rune_post_distortion", 65, 50), "blocks/generation/misc/");
 		registerBlock(registry, new RunePostBlock("RunePostEnergy", "rune_post_energy", 36, 22), "blocks/generation/misc/");
@@ -3465,10 +2079,7 @@ public final class BlockRegister {
 		registerBlock(registry, new RunePostBlock("RunePostWater", "rune_post_water", 15, 10), "blocks/generation/misc/");
 		registerBlock(registry, new RunePostBlock("RunePostWind", "rune_post_wind", 0, 4), "blocks/generation/misc/");
 		registerBlock(registry, new RunePostBlock("RunePostWither", "rune_post_wither", 30, 15), "blocks/generation/misc/");
-		registerBlock(registry, new BasicDecorationBlock("SilvroBox", "silvro_box", Material.IRON), "blocks/decoration/misc/");
 		registerBlock(registry, new BasicBlock("SkeletalBlock", "skeletal_block", Material.ROCK, 5.0f, 5.0f), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("SkullBlock", "skull_block", Material.ROCK), "blocks/generation/misc/");
-		registerBlock(registry, new BasicBlock("DarkSkullBlock", "dark_skull_block", Material.ROCK), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("Tentacles", "tentacles", Material.GOURD, 3.0f, 1.0f), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("TentaclesDotsLeft", "tentacles_dots_left", Material.GOURD, 3.0f, 1.0f), "blocks/generation/misc/");
 		registerBlock(registry, new BasicBlock("TentaclesDotsRight", "tentacles_dots_right", Material.GOURD, 3.0f, 1.0f), "blocks/generation/misc/");
@@ -3488,7 +2099,6 @@ public final class BlockRegister {
 		registerBlock(registry, new BasicNonCubeBlock("YellowShroom", "yellow_shroom", Material.GOURD, 2.0f, 0.5f), "blocks/generation/misc/");
 		registerBlock(registry, new DirectionalBlock("VoxLog", "vox_log", Material.WOOD, 1.2f, 0.5f), "blocks/generation/misc/");
 		registerBlock(registry, new BoneyBlock(), "blocks/generation/misc/");
-		registerBlock(registry, new CactusBlock("AncientCactus", "ancient_cactus"), "blocks/generation/plants/");
 		registerBlock(registry, new CarvedRunicPortalBlock("CarvedRuneOfDirection", "carved_rune_direction"), "blocks/generation/misc/");
 		registerBlock(registry, new CarvedRunicBlock("CarvedRuneOfEmpowering", "carved_rune_empowering"), "blocks/generation/misc/");
 		registerBlock(registry, new CarvedRunicBlock("CarvedRuneOfFocus", "carved_rune_focus"), "blocks/generation/misc/");
@@ -3499,6 +2109,7 @@ public final class BlockRegister {
 		registerBlock(registry, new ChargingTable(), "blocks/functional/utility/");
 		registerBlock(registry, new CloudBlock("ShyreCloud", "shyre_cloud", Material.AIR), "blocks/generation/misc/");
 		registerItemlessBlock(registry, new DimensionalFabric());
+		registerItemlessBlock(registry, new AirGap());
 		registerBlock(registry, new DustopianLamp(), "blocks/generation/special/");
 		registerBlock(registry, new DustopianLampOff(), "blocks/generation/special/");
 		registerBlock(registry, new EnhancerBlock("DamageEnhancer", "damage_enhancer"), "blocks/functional/misc/");
@@ -3690,31 +2301,25 @@ public final class BlockRegister {
 		registerBlock(registry, new VoxStoreCrate(), "blocks/functional/utility/");
 		registerBlock(registry, new WhitewashingTable(), "blocks/functional/utility/");
 
-		registerBlock(registry, new GenericPlantBlock("BlueAquaFungi", "blue_aqua_fungi", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("YellowAquaFungi", "yellow_aqua_fungi", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("Arcbulb", "arcbulb", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("Arcflower", "arcflower", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("BurealStocks", "bureal_stocks", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("Candycane", "candycane", Material.ROCK, 0.0f, Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("CandyGrass", "candy_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("BlueCandyGrass", "blue_candy_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("WhiteCandyGrass", "white_candy_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("CeleviansBlue", "celevians_blue", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("CeleviansPurple", "celevians_purple", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("CeleviansRed", "celevians_red", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("CeleviansWhite", "celevians_white", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("ChocolateGrassPlant", "chocolate_grass_plant", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new FlowerBlock("ChocolateStocks", "chocolate_stocks", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("CreepFlowers", "creep_flowers", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("CreepGrass", "creep_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("BlueCrystalPlant", "blue_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("GreenCrystalPlant", "green_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("PurpleCrystalPlant", "purple_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("RedCrystalPlant", "red_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("WhiteCrystalPlant", "white_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("YellowCrystalPlant", "yellow_crystal_plant", Material.GLASS, 0.0f, Material.ROCK), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("BlueCrystal", "blue_crystal_plant"), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("GreenCrystalPlant", "green_crystal_plant"), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("PurpleCrystalPlant", "purple_crystal_plant"), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("RedCrystalPlant", "red_crystal_plant"), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("WhiteCrystalPlant", "white_crystal_plant"), "blocks/generation/plants/");
+		registerBlock(registry, new CrysteviaCrystalPlant("YellowCrystalPlant", "yellow_crystal_plant"), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("Daileers", "daileers", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("DawnBulb", "dawn_bulb", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("DawnBush", "dawn_bush", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("DawnFlower", "dawn_flower", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("DawnGrass", "dawn_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
@@ -3737,26 +2342,20 @@ public final class BlockRegister {
 		registerBlock(registry, new GenericPlantBlock("Lurchians", "lurchians", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("Lylips", "lylips", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("Magias", "magias", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("MallowPile", "mallow_pile", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("MarshTube", "marsh_tube", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new FlowerBlock("Mellians", "mellians", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new MysticBush(), "blocks/generation/plants/");
 		registerBlock(registry, new MysticFerns(), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("OcealitesBlue", "ocealites_blue", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new FlowerBlock("OcealitesRed", "ocealites_red", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new FlowerBlock("Pertonias", "pertonias", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("RainbowGrass", "rainbow_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("RainbowGrass2", "rainbow_grass2", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("RainbowGrass3", "rainbow_grass3", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("RuneBulbs", "rune_bulbs", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("RunicBush", "runic_bush", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("ShadowShrub", "shadow_shrub", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new FlowerBlock("ShyreWeed", "shyre_weed", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new GenericPlantBlock("SilverGrass", "silver_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new TangleThorns(), "blocks/generation/plants/");
 		registerBlock(registry, new TrilliadBloom(), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("Tubeicles", "tubeicles", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("GreenWaterweeds", "green_waterweeds", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
+		registerBlock(registry, new RedWaterweeds(), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("WhiteWaterweeds", "white_waterweeds", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new GenericPlantBlock("YellowWaterweeds", "yellow_waterweeds", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantMultiStackable("BlueLollypop", "blue_lollypop", Material.GLASS, 0.0f, Material.GRASS, Material.GROUND), "blocks/generation/plants/");
@@ -3774,15 +2373,9 @@ public final class BlockRegister {
 		registerBlock(registry, new PlantStackable("CelebulbsGreen", "celebulbs_green", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("celebulbs_stem")), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("CelebulbsYellow", "celebulbs_yellow", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("celebulbs_stem")), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("CoralCage", "coral_cage", Material.GRASS, Material.GROUND, Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("DawnStocks", "dawn_stocks", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("DawnStocksTop", "dawn_stocks_top", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("dawn_stocks")), "blocks/generation/plants/");
 		registerBlock(registry, new DawnwoodBars(), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("DeepBulb", "deep_bulb", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("DeepVines", "deep_vines", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("EyeShrubStem", "eye_shrub_stem", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("EyeShrub", "eye_shrub", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("eye_shrub_stem")), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("FlakeVine", "flake_vine", Material.ROCK), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("FlakeVineTop", "flake_vine_top", Material.ROCK).setStemBlock((PlantStackable)getUnmappedBlock("flake_vine")), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("GardenGrass", "garden_grass", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("HavendalesBlueStem", "havendales_blue_stem", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("HavendalesBlue", "havendales_blue", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("havendales_blue_stem")), "blocks/generation/plants/");
@@ -3800,8 +2393,6 @@ public final class BlockRegister {
 		registerBlock(registry, new PlantStackable("RedPeppermint", "red_peppermint", Material.GLASS, 0.0f, Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("PlasticStick", "plastic_stick", Material.ROCK, 0.0f, Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("CandyTube", "candy_tube", Material.GLASS, 0.0f, Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("plastic_stick")), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("Shadicles", "shadicles", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
-		registerBlock(registry, new PlantStackable("ShadiclesTop", "shadicles_top", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("shadicles")), "blocks/generation/plants/");
 		registerBlock(registry, new BidirectionalPlantStackable("ShyreStock", "shyre_stock", Material.GRASS, Material.GROUND), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("ShyreCap", "shyre_cap", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("shyre_stock")), "blocks/generation/plants/");
 		registerBlock(registry, new UpsideDownPlantStackable("ShyreCapDown", "shyre_cap_down", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("shyre_stock")), "blocks/generation/plants/");
@@ -3809,7 +2400,6 @@ public final class BlockRegister {
 		registerBlock(registry, new PlantStackable("VoxFungi", "vox_fungi", Material.GRASS, Material.GROUND).setStemBlock((PlantStackable)getUnmappedBlock("vox_fungi_stem")), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("VoxTentaclesStem", "vox_tentacles_stem", Material.GRASS, Material.GROUND, Material.SPONGE), "blocks/generation/plants/");
 		registerBlock(registry, new PlantStackable("VoxTentacles", "vox_tentacles", Material.GRASS, Material.GROUND, Material.SPONGE).setStemBlock((PlantStackable)getUnmappedBlock("vox_tentacles_stem")), "blocks/generation/plants/");
-		registerBlock(registry, new RedWaterweeds(), "blocks/generation/plants/");
 		registerBlock(registry, new VinesBlock("CreepVines", "creep_vines"), "blocks/generation/plants/");
 
 		registerItemlessBlock(registry, new CropBlock("BubbleBerryCrop", "bubble_berry_crop", true));
@@ -3829,135 +2419,135 @@ public final class BlockRegister {
 		registerItemlessBlock(registry, new CropBlock("ThornyPlantCrop", "thorny_plant_crop", true));
 		registerItemlessBlock(registry, new CropBlock("TrilliadCrop", "trilliad_crop", true));
 
-		registerBlock(registry, new StatueBlock("BaneStatue", "bane_statue", SoundsRegister.mobBaneLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldBaneStatue", "gold_bane_statue", SoundsRegister.mobBaneLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateBaneStatue", "ornate_bane_statue", SoundsRegister.mobBaneLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("BaronessStatue", "baroness_statue", SoundsRegister.mobArielLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldBaronessStatue", "gold_baroness_statue", SoundsRegister.mobArielLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateBaronessStatue", "ornate_baroness_statue", SoundsRegister.mobArielLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("ClunkheadStatue", "clunkhead_statue", SoundsRegister.mobClunkheadDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldClunkheadStatue", "gold_clunkhead_statue", SoundsRegister.mobClunkheadDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateClunkheadStatue", "ornate_clunkhead_statue", SoundsRegister.mobClunkheadDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("ConiferonStatue", "coniferon_statue", SoundsRegister.mobConiferonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldConiferonStatue", "gold_coniferon_statue", SoundsRegister.mobConiferonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateConiferonStatue", "ornate_coniferon_statue", SoundsRegister.mobConiferonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("CorallusStatue", "corallus_statue", SoundsRegister.mobCorallusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldCorallusStatue", "gold_corallus_statue", SoundsRegister.mobCorallusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateCorallusStatue", "ornate_corallus_statue", SoundsRegister.mobCorallusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("CottonCandorStatue", "cotton_candor_statue", SoundsRegister.mobCottonCandorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldCottonCandorStatue", "gold_cotton_candor_statue", SoundsRegister.mobCottonCandorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateCottonCandorStatue", "ornate_cotton_candor_statue", SoundsRegister.mobCottonCandorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("CraexxeusStatue", "craexxeus_statue", SoundsRegister.mobCraexxeusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldCraexxeusStatue", "gold_craexxeus_statue", SoundsRegister.mobCraexxeusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateCraexxeusStatue", "ornate_craexxeus_statue", SoundsRegister.mobCraexxeusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("CreepStatue", "creep_statue", SoundsRegister.mobCreepoidLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldCreepStatue", "gold_creep_statue", SoundsRegister.mobCreepoidLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateCreepStatue", "ornate_creep_statue", SoundsRegister.mobCreepoidLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("CrystocoreStatue", "crystocore_statue", SoundsRegister.mobCrystalConstructLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldCrystocoreStatue", "gold_crystocore_statue", SoundsRegister.mobCrystalConstructLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateCrystocoreStatue", "ornate_crystocore_statue", SoundsRegister.mobCrystalConstructLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("DracyonStatue", "dracyon_statue", SoundsRegister.mobDracyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldDracyonStatue", "gold_dracyon_statue", SoundsRegister.mobDracyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateDracyonStatue", "ornate_dracyon_statue", SoundsRegister.mobDracyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("ElusiveStatue", "elusive_statue", SoundsRegister.mobElusiveLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldElusiveStatue", "gold_elusive_statue", SoundsRegister.mobElusiveLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateElusiveStatue", "ornate_elusive_statue", SoundsRegister.mobElusiveLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("FlashStatue", "flash_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateFlashStatue", "ornate_flash_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldFlashStatue", "gold_flash_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldorthStatue", "goldorth_statue", SoundsRegister.mobGoldorthLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldGoldorthStatue", "gold_goldorth_statue", SoundsRegister.mobGoldorthLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateGoldorthStatue", "ornate_goldorth_statue", SoundsRegister.mobGoldorthLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GrawStatue", "graw_statue", SoundsRegister.mobGrawLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldGrawStatue", "gold_graw_statue", SoundsRegister.mobGrawLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateGrawStatue", "ornate_graw_statue", SoundsRegister.mobGrawLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GuardianStatue", "guardian_statue", SoundsRegister.mobGuardianDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldGuardianStatue", "gold_guardian_statue", SoundsRegister.mobGuardianDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateGuardianStatue", "ornate_guardian_statue", SoundsRegister.mobGuardianDeath), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GyroStatue", "gyro_statue", SoundsRegister.mobGyroLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldGyroStatue", "gold_gyro_statue", SoundsRegister.mobGyroLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateGyroStatue", "ornate_gyro_statue", SoundsRegister.mobGyroLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("HarkosStatue", "harkos_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldHarkosStatue", "gold_harkos_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateHarkosStatue", "ornate_harkos_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("HiveKingStatue", "hive_king_statue", SoundsRegister.mobHiveKingLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldHiveKingStatue", "gold_hive_king_statue", SoundsRegister.mobHiveKingLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateHiveKingStatue", "ornate_hive_king_statue", SoundsRegister.mobHiveKingLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("HoronStatue", "horon_statue", SoundsRegister.mobHoronLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldHoronStatue", "gold_horon_statue", SoundsRegister.mobHoronLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateHoronStatue", "ornate_horon_statue", SoundsRegister.mobHoronLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("HydroliskStatue", "hydrolisk_statue", SoundsRegister.mobHydroliskLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldHydroliskStatue", "gold_hydrolisk_statue", SoundsRegister.mobHydroliskLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateHydroliskStatue", "ornate_hydrolisk_statue", SoundsRegister.mobHydroliskLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("KajarosStatue", "kajaros_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldKajarosStatue", "gold_kajaros_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateKajarosStatue", "ornate_kajaros_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("KingBamBamBamStatue", "king_bambambam_statue", SoundsRegister.mobKingBamBamBamLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldKingBamBamBamStatue", "gold_king_bambambam_statue", SoundsRegister.mobKingBamBamBamLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateKingBamBamBamStatue", "ornate_king_bambambam_statue", SoundsRegister.mobKingBamBamBamLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("KingShroomusStatue", "king_shroomus_statue", SoundsRegister.mobFungiLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldKingShroomusStatue", "gold_king_shroomus_statue", SoundsRegister.mobFungiLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateKingShroomusStatue", "ornate_king_shroomus_statue", SoundsRegister.mobFungiLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("KlobberStatue", "klobber_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldKlobberStatue", "gold_klobber_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateKlobberStatue", "ornate_klobber_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("KrorStatue", "kror_statue", SoundsRegister.mobKrorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldKrorStatue", "gold_kror_statue", SoundsRegister.mobKrorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateKrorStatue", "ornate_kror_statue", SoundsRegister.mobKrorLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("MechbotStatue", "mechbot_statue", SoundsRegister.mobMechyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldMechbotStatue", "gold_mechbot_statue", SoundsRegister.mobMechyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateMechbotStatue", "ornate_mechbot_statue", SoundsRegister.mobMechyonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("MirageStatue", "mirage_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldMirageStatue", "gold_mirage_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateMirageStatue", "ornate_mirage_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("MiskelStatue", "miskel_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldMiskelStatue", "gold_miskel_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateMiskelStatue", "ornate_miskel_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("NethengeicWitherStatue", "nethengeic_wither_statue", SoundsRegister.mobNethengeicWitherLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldNethengeicWitherStatue", "gold_nethengeic_wither_statue", SoundsRegister.mobNethengeicWitherLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateNethengeicWitherStatue", "ornate_nethengeic_wither_statue", SoundsRegister.mobNethengeicWitherLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OkazorStatue", "okazor_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldOkazorStatue", "gold_okazor_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateOkazorStatue", "ornate_okazor_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("PenumbraStatue", "penumbra_statue", SoundsRegister.mobPenumbraLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldPenumbraStatue", "gold_penumbra_statue", SoundsRegister.mobPenumbraLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnatePenumbraStatue", "ornate_penumbra_statue", SoundsRegister.mobPenumbraLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("ProshieldStatue", "proshield_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldProshieldStatue", "gold_proshield_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateProshieldStatue", "ornate_proshield_statue", SoundsRegister.mobImmortalLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("RaxxanStatue", "raxxan_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldRaxxanStatue", "gold_raxxan_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateRaxxanStatue", "ornate_raxxan_statue", SoundsRegister.mobPrimordialLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("RockriderStatue", "rockrider_statue", SoundsRegister.mobRockRiderSwitch), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldRockriderStatue", "gold_rockrider_statue", SoundsRegister.mobRockRiderSwitch), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateRockriderStatue", "ornate_rockrider_statue", SoundsRegister.mobRockRiderSwitch), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("ShadowlordStatue", "shadowlord_statue", SoundsRegister.mobShadowlordLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldShadowlordStatue", "gold_shadowlord_statue", SoundsRegister.mobShadowlordLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateShadowlordStatue", "ornate_shadowlord_statue", SoundsRegister.mobShadowlordLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("SilverfootStatue", "silverfoot_statue", SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldSilverfootStatue", "gold_silverfoot_statue", SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateSilverfootStatue", "ornate_silverfoot_statue", SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("SkeletronStatue", "skeletron_statue", SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldSkeletronStatue", "gold_skeletron_statue", SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateSkeletronStatue", "ornate_skeletron_statue", SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("SmashStatue", "smash_statue", SoundsRegister.mobSmashLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateSmashStatue", "ornate_smash_statue", SoundsRegister.mobSmashLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldSmashStatue", "gold_smash_statue", SoundsRegister.mobSmashLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("TyrosaurStatue", "tyrosaur_statue", SoundsRegister.mobTyrosaurLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldTyrosaurStatue", "gold_tyrosaur_statue", SoundsRegister.mobTyrosaurLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateTyrosaurStatue", "ornate_tyrosaur_statue", SoundsRegister.mobTyrosaurLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("VinocorneStatue", "vinocorne_statue", SoundsRegister.mobTreeSpiritLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldVinocorneStatue", "gold_vinocorne_statue", SoundsRegister.mobTreeSpiritLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateVinocorneStatue", "ornate_vinocorne_statue", SoundsRegister.mobTreeSpiritLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("VisualentStatue", "visualent_statue", SoundsRegister.mobVisularLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldVisualentStatue", "gold_visualent_statue", SoundsRegister.mobVisularLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateVisualentStatue", "ornate_visualent_statue", SoundsRegister.mobVisularLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("VoxxulonStatue", "voxxulon_statue", SoundsRegister.mobVoxxulonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldVoxxulonStatue", "gold_voxxulon_statue", SoundsRegister.mobVoxxulonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateVoxxulonStatue", "ornate_voxxulon_statue", SoundsRegister.mobVoxxulonLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("XxeusStatue", "xxeus_statue", SoundsRegister.mobXxeusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("GoldXxeusStatue", "gold_xxeus_statue", SoundsRegister.mobXxeusLiving), "blocks/decoration/statues/");
-		registerBlock(registry, new StatueBlock("OrnateXxeusStatue", "ornate_xxeus_statue", SoundsRegister.mobXxeusLiving), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("BaneStatue", "bane_statue", () -> SoundsRegister.MOB_BANE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldBaneStatue", "gold_bane_statue", () -> SoundsRegister.MOB_BANE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateBaneStatue", "ornate_bane_statue", () -> SoundsRegister.MOB_BANE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("BaronessStatue", "baroness_statue", () -> SoundsRegister.MOB_ARIEL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldBaronessStatue", "gold_baroness_statue", () -> SoundsRegister.MOB_ARIEL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateBaronessStatue", "ornate_baroness_statue", () -> SoundsRegister.MOB_ARIEL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("ClunkheadStatue", "clunkhead_statue", () -> SoundsRegister.MOB_CLUNKHEAD_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldClunkheadStatue", "gold_clunkhead_statue", () -> SoundsRegister.MOB_CLUNKHEAD_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateClunkheadStatue", "ornate_clunkhead_statue", () -> SoundsRegister.MOB_CLUNKHEAD_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("ConiferonStatue", "coniferon_statue", () -> SoundsRegister.MOB_CONIFERON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldConiferonStatue", "gold_coniferon_statue", () -> SoundsRegister.MOB_CONIFERON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateConiferonStatue", "ornate_coniferon_statue", () -> SoundsRegister.MOB_CONIFERON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("CorallusStatue", "corallus_statue", () -> SoundsRegister.MOB_CORALLUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldCorallusStatue", "gold_corallus_statue", () -> SoundsRegister.MOB_CORALLUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateCorallusStatue", "ornate_corallus_statue", () -> SoundsRegister.MOB_CORALLUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("CottonCandorStatue", "cotton_candor_statue", () -> SoundsRegister.MOB_COTTON_CANDOR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldCottonCandorStatue", "gold_cotton_candor_statue", () -> SoundsRegister.MOB_COTTON_CANDOR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateCottonCandorStatue", "ornate_cotton_candor_statue", () -> SoundsRegister.MOB_COTTON_CANDOR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("CraexxeusStatue", "craexxeus_statue", () -> SoundsRegister.MOB_CRAEXXEUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldCraexxeusStatue", "gold_craexxeus_statue", () -> SoundsRegister.MOB_CRAEXXEUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateCraexxeusStatue", "ornate_craexxeus_statue", () -> SoundsRegister.MOB_CRAEXXEUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("CreepStatue", "creep_statue", () -> SoundsRegister.MOB_CREEPOID_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldCreepStatue", "gold_creep_statue", () -> SoundsRegister.MOB_CREEPOID_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateCreepStatue", "ornate_creep_statue", () -> SoundsRegister.MOB_CREEPOID_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("CrystocoreStatue", "crystocore_statue", () -> SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldCrystocoreStatue", "gold_crystocore_statue", () -> SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateCrystocoreStatue", "ornate_crystocore_statue", () -> SoundsRegister.MOB_CRYSTAL_CONSTRUCT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("DracyonStatue", "dracyon_statue", () -> SoundsRegister.MOB_DRACYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldDracyonStatue", "gold_dracyon_statue", () -> SoundsRegister.MOB_DRACYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateDracyonStatue", "ornate_dracyon_statue", () -> SoundsRegister.MOB_DRACYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("ElusiveStatue", "elusive_statue", () -> SoundsRegister.MOB_ELUSIVE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldElusiveStatue", "gold_elusive_statue", () -> SoundsRegister.MOB_ELUSIVE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateElusiveStatue", "ornate_elusive_statue", () -> SoundsRegister.MOB_ELUSIVE_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("FlashStatue", "flash_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateFlashStatue", "ornate_flash_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldFlashStatue", "gold_flash_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldorthStatue", "goldorth_statue", () -> SoundsRegister.MOB_GOLDORTH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldGoldorthStatue", "gold_goldorth_statue", () -> SoundsRegister.MOB_GOLDORTH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateGoldorthStatue", "ornate_goldorth_statue", () -> SoundsRegister.MOB_GOLDORTH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GrawStatue", "graw_statue", () -> SoundsRegister.MOB_GRAW_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldGrawStatue", "gold_graw_statue", () -> SoundsRegister.MOB_GRAW_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateGrawStatue", "ornate_graw_statue", () -> SoundsRegister.MOB_GRAW_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GuardianStatue", "guardian_statue", () -> SoundsRegister.MOB_GUARDIAN_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldGuardianStatue", "gold_guardian_statue", () -> SoundsRegister.MOB_GUARDIAN_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateGuardianStatue", "ornate_guardian_statue", () -> SoundsRegister.MOB_GUARDIAN_DEATH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GyroStatue", "gyro_statue", () -> SoundsRegister.MOB_GYRO_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldGyroStatue", "gold_gyro_statue", () -> SoundsRegister.MOB_GYRO_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateGyroStatue", "ornate_gyro_statue", () -> SoundsRegister.MOB_GYRO_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("HarkosStatue", "harkos_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldHarkosStatue", "gold_harkos_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateHarkosStatue", "ornate_harkos_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("HiveKingStatue", "hive_king_statue", () -> SoundsRegister.MOB_HIVE_KING_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldHiveKingStatue", "gold_hive_king_statue", () -> SoundsRegister.MOB_HIVE_KING_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateHiveKingStatue", "ornate_hive_king_statue", () -> SoundsRegister.MOB_HIVE_KING_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("HoronStatue", "horon_statue", () -> SoundsRegister.MOB_HORON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldHoronStatue", "gold_horon_statue", () -> SoundsRegister.MOB_HORON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateHoronStatue", "ornate_horon_statue", () -> SoundsRegister.MOB_HORON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("HydroliskStatue", "hydrolisk_statue", () -> SoundsRegister.MOB_HYDROLISK_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldHydroliskStatue", "gold_hydrolisk_statue", () -> SoundsRegister.MOB_HYDROLISK_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateHydroliskStatue", "ornate_hydrolisk_statue", () -> SoundsRegister.MOB_HYDROLISK_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("KajarosStatue", "kajaros_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldKajarosStatue", "gold_kajaros_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateKajarosStatue", "ornate_kajaros_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("KingBamBamBamStatue", "king_bambambam_statue", () -> SoundsRegister.MOB_KING_BAMBAMBAM_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldKingBamBamBamStatue", "gold_king_bambambam_statue", () -> SoundsRegister.MOB_KING_BAMBAMBAM_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateKingBamBamBamStatue", "ornate_king_bambambam_statue", () -> SoundsRegister.MOB_KING_BAMBAMBAM_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("KingShroomusStatue", "king_shroomus_statue", () -> SoundsRegister.MOB_FUNGI_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldKingShroomusStatue", "gold_king_shroomus_statue", () -> SoundsRegister.MOB_FUNGI_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateKingShroomusStatue", "ornate_king_shroomus_statue", () -> SoundsRegister.MOB_FUNGI_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("KlobberStatue", "klobber_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldKlobberStatue", "gold_klobber_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateKlobberStatue", "ornate_klobber_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("KrorStatue", "kror_statue", () -> SoundsRegister.MOB_KROR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldKrorStatue", "gold_kror_statue", () -> SoundsRegister.MOB_KROR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateKrorStatue", "ornate_kror_statue", () -> SoundsRegister.MOB_KROR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("MechbotStatue", "mechbot_statue", () -> SoundsRegister.MOB_MECHYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldMechbotStatue", "gold_mechbot_statue", () -> SoundsRegister.MOB_MECHYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateMechbotStatue", "ornate_mechbot_statue", () -> SoundsRegister.MOB_MECHYON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("MirageStatue", "mirage_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldMirageStatue", "gold_mirage_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateMirageStatue", "ornate_mirage_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("MiskelStatue", "miskel_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldMiskelStatue", "gold_miskel_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateMiskelStatue", "ornate_miskel_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("NethengeicWitherStatue", "nethengeic_wither_statue", () -> SoundsRegister.MOB_NETHENGEIC_WITHER_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldNethengeicWitherStatue", "gold_nethengeic_wither_statue", () -> SoundsRegister.MOB_NETHENGEIC_WITHER_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateNethengeicWitherStatue", "ornate_nethengeic_wither_statue", () -> SoundsRegister.MOB_NETHENGEIC_WITHER_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OkazorStatue", "okazor_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldOkazorStatue", "gold_okazor_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateOkazorStatue", "ornate_okazor_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("PenumbraStatue", "penumbra_statue", () -> SoundsRegister.MOB_PENUMBRA_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldPenumbraStatue", "gold_penumbra_statue", () -> SoundsRegister.MOB_PENUMBRA_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnatePenumbraStatue", "ornate_penumbra_statue", () -> SoundsRegister.MOB_PENUMBRA_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("ProshieldStatue", "proshield_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldProshieldStatue", "gold_proshield_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateProshieldStatue", "ornate_proshield_statue", () -> SoundsRegister.MOB_IMMORTAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("RaxxanStatue", "raxxan_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldRaxxanStatue", "gold_raxxan_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateRaxxanStatue", "ornate_raxxan_statue", () -> SoundsRegister.MOB_PRIMORDIAL_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("RockriderStatue", "rockrider_statue", () -> SoundsRegister.MOB_ROCK_RIDER_SWITCH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldRockriderStatue", "gold_rockrider_statue", () -> SoundsRegister.MOB_ROCK_RIDER_SWITCH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateRockriderStatue", "ornate_rockrider_statue", () -> SoundsRegister.MOB_ROCK_RIDER_SWITCH), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("ShadowlordStatue", "shadowlord_statue", () -> SoundsRegister.MOB_SHADOWLORD_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldShadowlordStatue", "gold_shadowlord_statue", () -> SoundsRegister.MOB_SHADOWLORD_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateShadowlordStatue", "ornate_shadowlord_statue", () -> SoundsRegister.MOB_SHADOWLORD_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("SilverfootStatue", "silverfoot_statue", () -> SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldSilverfootStatue", "gold_silverfoot_statue", () -> SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateSilverfootStatue", "ornate_silverfoot_statue", () -> SoundEvents.BLOCK_ANVIL_FALL), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("SkeletronStatue", "skeletron_statue", () -> SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldSkeletronStatue", "gold_skeletron_statue", () -> SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateSkeletronStatue", "ornate_skeletron_statue", () -> SoundEvents.ENTITY_SKELETON_AMBIENT), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("SmashStatue", "smash_statue", () -> SoundsRegister.MOB_SMASH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateSmashStatue", "ornate_smash_statue", () -> SoundsRegister.MOB_SMASH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldSmashStatue", "gold_smash_statue", () -> SoundsRegister.MOB_SMASH_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("TyrosaurStatue", "tyrosaur_statue", () -> SoundsRegister.MOB_TYROSAUR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldTyrosaurStatue", "gold_tyrosaur_statue", () -> SoundsRegister.MOB_TYROSAUR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateTyrosaurStatue", "ornate_tyrosaur_statue", () -> SoundsRegister.MOB_TYROSAUR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("VinocorneStatue", "vinocorne_statue", () -> SoundsRegister.MOB_TREE_SPIRIT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldVinocorneStatue", "gold_vinocorne_statue", () -> SoundsRegister.MOB_TREE_SPIRIT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateVinocorneStatue", "ornate_vinocorne_statue", () -> SoundsRegister.MOB_TREE_SPIRIT_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("VisualentStatue", "visualent_statue", () -> SoundsRegister.MOB_VISULAR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldVisualentStatue", "gold_visualent_statue", () -> SoundsRegister.MOB_VISULAR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateVisualentStatue", "ornate_visualent_statue", () -> SoundsRegister.MOB_VISULAR_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("VoxxulonStatue", "voxxulon_statue", () -> SoundsRegister.MOB_VOXXULON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldVoxxulonStatue", "gold_voxxulon_statue", () -> SoundsRegister.MOB_VOXXULON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateVoxxulonStatue", "ornate_voxxulon_statue", () -> SoundsRegister.MOB_VOXXULON_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("XxeusStatue", "xxeus_statue", () -> SoundsRegister.MOB_XXEUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("GoldXxeusStatue", "gold_xxeus_statue", () -> SoundsRegister.MOB_XXEUS_LIVING), "blocks/decoration/statues/");
+		registerBlock(registry, new StatueBlock("OrnateXxeusStatue", "ornate_xxeus_statue", () -> SoundsRegister.MOB_XXEUS_LIVING), "blocks/decoration/statues/");
 
 		registerBlock(registry, new BannerBlock("AncientBanner", "ancient_banner"), "blocks/decoration/banners/normal/");
 		registerBlock(registry, new BannerBlock("GildedAncientBanner", "gilded_ancient_banner"), "blocks/decoration/banners/gilded/");
@@ -4122,28 +2712,28 @@ public final class BlockRegister {
 		for (RegistryEvent.MissingMappings.Mapping<Block> map : ev.getAllMappings()) {
 			switch (map.key.toString()) {
 				case "aoa3:blue_crystal_ore":
-					map.remap(oreBlueGemstone);
+					map.remap(BLUE_CRYSTAL_ORE);
 					break;
 				case "aoa3:green_crystal_ore":
-					map.remap(oreGreenGemstone);
+					map.remap(GREEN_CRYSTAL_ORE);
 					break;
 				case "aoa3:red_crystal_ore":
-					map.remap(oreRedGemstone);
+					map.remap(RED_CRYSTAL_ORE);
 					break;
 				case "aoa3:purple_crystal_ore":
-					map.remap(orePurpleGemstone);
+					map.remap(PURPLE_CRYSTAL_ORE);
 					break;
 				case "aoa3:white_crystal_ore":
-					map.remap(oreWhiteGemstone);
+					map.remap(WHITE_CRYSTAL_ORE);
 					break;
 				case "aoa3:yellow_crystal_ore":
-					map.remap(oreYellowGemstone);
+					map.remap(YELLOW_CRYSTAL_ORE);
 					break;
 				case "aoa3:magical_enhancer":
-					map.remap(enhancerMagic);
+					map.remap(MAGIC_ENHANCER);
 					break;
 				case "aoa3:vox_log2":
-					map.remap(voxLog);
+					map.remap(VOX_LOG);
 					break;
 				default:
 					break;
@@ -4172,31 +2762,37 @@ public final class BlockRegister {
 			}
 		});
 
-		crystalCreatorBlue.setConversionItems(ItemRegister.gemstonesBlue, ItemRegister.crystalBlue);
-		crystalCreatorGreen.setConversionItems(ItemRegister.gemstonesGreen, ItemRegister.crystalGreen);
-		crystalCreatorPurple.setConversionItems(ItemRegister.gemstonesPurple, ItemRegister.crystalPurple);
-		crystalCreatorRed.setConversionItems(ItemRegister.gemstonesRed, ItemRegister.crystalRed);
-		crystalCreatorWhite.setConversionItems(ItemRegister.gemstonesWhite, ItemRegister.crystalWhite);
-		crystalCreatorYellow.setConversionItems(ItemRegister.gemstonesYellow, ItemRegister.crystalYellow);
-		oreAmethyst.setDrop(ItemRegister.gemAmethyst);
-		oreBloodstone.setDrop(ItemRegister.gemBloodstone);
-		oreBlueGemstone.setDrop(ItemRegister.gemstonesBlue);
-		oreChestboneFragments.setDrop(ItemRegister.boneFragmentChestbone);
-		oreCrystallite.setDrop(ItemRegister.gemCrystallite);
-		oreFootboneFragments.setDrop(ItemRegister.boneFragmentFootbone);
-		oreGemenyte.setDrop(ItemRegister.gemGemenyte);
-		oreGreenGemstone.setDrop(ItemRegister.gemstonesGreen);
-		oreJade.setDrop(ItemRegister.gemJade);
-		oreJewelyte.setDrop(ItemRegister.gemJewelyte);
-		oreLegboneFragments.setDrop(ItemRegister.boneFragmentLegbone);
-		oreOrnamyte.setDrop(ItemRegister.gemOrnamyte);
-		orePurpleGemstone.setDrop(ItemRegister.gemstonesPurple);
-		oreRedGemstone.setDrop(ItemRegister.gemstonesRed);
-		oreSapphire.setDrop(ItemRegister.gemSapphire);
-		oreShyregem.setDrop(ItemRegister.gemShyregem);
-		oreSkullboneFragments.setDrop(ItemRegister.boneFragmentSkullbone);
-		oreWhiteGemstone.setDrop(ItemRegister.gemstonesWhite);
-		oreYellowGemstone.setDrop(ItemRegister.gemstonesYellow);
+		BLUE_CRYSTAL_CREATOR.setConversionItems(ItemRegister.BLUE_GEMSTONES, ItemRegister.BLUE_CRYSTAL);
+		GREEN_CRYSTAL_CREATOR.setConversionItems(ItemRegister.GREEN_GEMSTONES, ItemRegister.GREEN_CRYSTAL);
+		PURPLE_CRYSTAL_CREATOR.setConversionItems(ItemRegister.PURPLE_GEMSTONES, ItemRegister.PURPLE_CRYSTAL);
+		RED_CRYSTAL_CREATOR.setConversionItems(ItemRegister.RED_GEMSTONES, ItemRegister.RED_CRYSTAL);
+		WHITE_CRYSTAL_CREATOR.setConversionItems(ItemRegister.WHITE_GEMSTONES, ItemRegister.WHITE_CRYSTAL);
+		YELLOW_CRYSTAL_CREATOR.setConversionItems(ItemRegister.YELLOW_GEMSTONES, ItemRegister.YELLOW_CRYSTAL);
+		AMETHYST_ORE.setDrop(ItemRegister.AMETHYST);
+		BLOODSTONE_ORE.setDrop(ItemRegister.BLOODSTONE);
+		BLUE_CRYSTAL_ORE.setDrop(ItemRegister.BLUE_GEMSTONES);
+		CHESTBONE_FRAGMENTS_ORE.setDrop(ItemRegister.CHESTBONE_FRAGMENT);
+		CRYSTALLITE_ORE.setDrop(ItemRegister.CRYSTALLITE);
+		FOOTBONE_FRAGMENTS_ORE.setDrop(ItemRegister.FOOTBONE_FRAGMENT);
+		GEMENYTE_ORE.setDrop(ItemRegister.GEMENYTE);
+		GREEN_CRYSTAL_ORE.setDrop(ItemRegister.GREEN_GEMSTONES);
+		JADE_ORE.setDrop(ItemRegister.JADE);
+		JEWELYTE_ORE.setDrop(ItemRegister.JEWELYTE);
+		LEGBONE_FRAGMENTS_ORE.setDrop(ItemRegister.LEGBONE_FRAGMENT);
+		ORNAMYTE_ORE.setDrop(ItemRegister.ORNAMYTE);
+		PURPLE_CRYSTAL_ORE.setDrop(ItemRegister.PURPLE_GEMSTONES);
+		RED_CRYSTAL_ORE.setDrop(ItemRegister.RED_GEMSTONES);
+		SAPPHIRE_ORE.setDrop(ItemRegister.SAPPHIRE);
+		SHYREGEM_ORE.setDrop(ItemRegister.SHYREGEM);
+		SKULLBONE_FRAGMENTS_ORE.setDrop(ItemRegister.SKULLBONE_FRAGMENT);
+		WHITE_CRYSTAL_ORE.setDrop(ItemRegister.WHITE_GEMSTONES);
+		YELLOW_CRYSTAL_ORE.setDrop(ItemRegister.YELLOW_GEMSTONES);
+		BLUE_CRYSTAL_PLANT.setDruseDrop(ItemRegister.BLUE_DRUSE);
+		GREEN_CRYSTAL_PLANT.setDruseDrop(ItemRegister.GREEN_DRUSE);
+		PURPLE_CRYSTAL_PLANT.setDruseDrop(ItemRegister.PURPLE_DRUSE);
+		RED_CRYSTAL_PLANT.setDruseDrop(ItemRegister.RED_DRUSE);
+		YELLOW_CRYSTAL_PLANT.setDruseDrop(ItemRegister.YELLOW_DRUSE);
+		WHITE_CRYSTAL_PLANT.setDruseDrop(ItemRegister.WHITE_DRUSE);
 
 		blockRegistryList = null;
 	}
@@ -4293,7 +2889,7 @@ public final class BlockRegister {
 		private final String[] oreDictEntries;
 		private final String modelSubfolder;
 		private final Block block;
-		private ItemBlock itemBlock;
+		private final ItemBlock itemBlock;
 
 		private BlockRegistryWrapper(Block block, ItemBlock itemBlock, String modelSubfolder, String... oreDictEntries) {
 			this.block = block;
@@ -4301,5 +2897,11 @@ public final class BlockRegister {
 			this.modelSubfolder = modelSubfolder;
 			this.oreDictEntries = oreDictEntries == null || oreDictEntries.length == 0 ? null : oreDictEntries;
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

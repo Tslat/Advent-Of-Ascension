@@ -14,7 +14,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGrenade;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
@@ -30,7 +29,7 @@ public class Baronator extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolver;
+		return SoundsRegister.REVOLVER_FIRE;
 	}
 
 	@Override

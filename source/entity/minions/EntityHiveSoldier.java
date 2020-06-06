@@ -44,19 +44,19 @@ public class EntityHiveSoldier extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobParasectLiving;
+		return SoundsRegister.MOB_PARASECT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobParasectHit;
+		return SoundsRegister.MOB_PARASECT_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobParasectDeath;
+		return SoundsRegister.MOB_PARASECT_DEATH;
 	}
 
 	@Nullable

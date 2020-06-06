@@ -73,14 +73,12 @@ public class AdventGuiTabHelp extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		if (button instanceof ThemeButton) {
-			int newOrdinal = AdventMainGui.currentTheme.ordinal() + 1;
+			AdventMainGui.currentTextureIndex++;
 
-			if (newOrdinal >= Enums.MainWindowThemes.values().length)
-				newOrdinal = 0;
+			if (AdventMainGui.currentTextureIndex == AdventMainGui.textures.size())
+				AdventMainGui.currentTextureIndex = 0;
 
-			Enums.MainWindowThemes theme = Enums.MainWindowThemes.values()[newOrdinal];
-
-			AdventMainGui.changeTheme(theme);
+			AdventMainGui.changeTheme();
 		}
 		else if (button instanceof WebLinkButton) {
 			this.openURL(((WebLinkButton)button).url);
@@ -153,13 +151,13 @@ public class AdventGuiTabHelp extends GuiScreen {
 
 	private static class ThemeButton extends GuiButton {
 		public ThemeButton(int buttonId, int x, int y, int width, int height) {
-			super(buttonId, x, y, width, height, ConfigurationUtil.MainConfig.mainWindowTheme.toString().replace("_", " "));
+			super(buttonId, x, y, width, height, ConfigurationUtil.MainConfig.mainWindowTheme);
 		}
 
 		@Override
 		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
-				mc.getTextureManager().bindTexture(AdventMainGui.menuButtonTexture);
+				mc.getTextureManager().bindTexture(AdventMainGui.textures.get(AdventMainGui.currentTextureIndex).menuButtonTexture);
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 				hovered = isMouseInRegion(mouseX, mouseY, x, y);

@@ -9,13 +9,13 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class KaiyuTemplePt8 {
-	private static final IBlockState plainTempleBlock = BlockRegister.kaiyuTempleBlockPlain.getDefaultState();
-	private static final IBlockState squaresTempleBlock = BlockRegister.kaiyuTempleBlockSquares.getDefaultState();
-	private static final IBlockState fireTrap = BlockRegister.kaiyuTempleTrapSquares.getDefaultState();
-	private static final IBlockState trackTempleBlock = BlockRegister.kaiyuTempleBlockTrack.getDefaultState();
-	private static final IBlockState passTempleBlock = BlockRegister.kaiyuTempleBlockPass.getDefaultState();
-	private static final IBlockState poisonTrap = BlockRegister.kaiyuTempleTrapPass.getDefaultState();
-	private static final IBlockState faceTempleBlock = BlockRegister.kaiyuTempleBlockFace.getDefaultState();
+	private static final IBlockState plainTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_PLAIN.getDefaultState();
+	private static final IBlockState squaresTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_SQUARES.getDefaultState();
+	private static final IBlockState fireTrap = BlockRegister.KAIYU_TEMPLE_TRAP_SQUARES.getDefaultState();
+	private static final IBlockState trackTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_TRACK.getDefaultState();
+	private static final IBlockState passTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_PASS.getDefaultState();
+	private static final IBlockState poisonTrap = BlockRegister.KAIYU_TEMPLE_TRAP_PASS.getDefaultState();
+	private static final IBlockState faceTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_FACE.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	protected static void addBlocks(KaiyuTemple instance, World world, Random rand, BlockPos basePos) {

@@ -55,19 +55,19 @@ public class EntityRunicorn extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRainicornLiving;
+		return SoundsRegister.MOB_RAINICORN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRainicornDeath;
+		return SoundsRegister.MOB_RAINICORN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRainicornHit;
+		return SoundsRegister.MOB_RAINICORN_HIT;
 	}
 
 	@Nullable

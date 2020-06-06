@@ -56,17 +56,17 @@ public class EntityFleshEater extends AoAMeleeMob implements SpecialPropertyEnti
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFleshEaterLiving;
+		return SoundsRegister.MOB_FLESH_EATER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFleshEaterDeath;
+		return SoundsRegister.MOB_FLESH_EATER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFleshEaterHit;
+		return SoundsRegister.MOB_FLESH_EATER_HIT;
 	}
 
 	@Nullable

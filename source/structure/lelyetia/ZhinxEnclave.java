@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ZhinxEnclave extends AoAStructure { //StructureSize: 11x40x13
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState zhinxGlass = BlockRegister.glassZhinx.getDefaultState();
-	private static final IBlockState zhinxSpawner = BlockRegister.spawnerZhinx.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState zhinxGlass = BlockRegister.ZHINX_GLASS.getDefaultState();
+	private static final IBlockState zhinxSpawner = BlockRegister.ZHINX_SPAWNER.getDefaultState();
 
 	public ZhinxEnclave() {
 		super("ZhinxEnclave");

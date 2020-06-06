@@ -52,17 +52,17 @@ public class EntitySpinux extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSpinuxLiving;
+		return SoundsRegister.MOB_SPINUX_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSpinuxDeath;
+		return SoundsRegister.MOB_SPINUX_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSpinuxHit;
+		return SoundsRegister.MOB_SPINUX_HIT;
 	}
 
 	@Nullable

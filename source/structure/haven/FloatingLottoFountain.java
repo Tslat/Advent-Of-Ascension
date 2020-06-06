@@ -11,7 +11,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FloatingLottoFountain extends AoAStructure { //StructureSize: 7x17x7
-	private static final IBlockState crystalliteBricks = BlockRegister.bricksCrystallite.getDefaultState();
+	private static final IBlockState crystalliteBricks = BlockRegister.CRYSTALLITE_BRICKS.getDefaultState();
 	private static final IBlockState glass = Blocks.GLASS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 

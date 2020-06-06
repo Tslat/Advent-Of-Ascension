@@ -49,17 +49,17 @@ public class EntityChimera extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobChimeraLiving;
+		return SoundsRegister.MOB_CHIMERA_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobChimeraDeath;
+		return SoundsRegister.MOB_CHIMERA_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobChimeraHit;
+		return SoundsRegister.MOB_CHIMERA_HIT;
 	}
 
 	@Nullable

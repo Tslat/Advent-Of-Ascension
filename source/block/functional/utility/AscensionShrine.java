@@ -27,7 +27,7 @@ public class AscensionShrine extends Block {
 		setHardness(10.0f);
 		setResistance(15.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

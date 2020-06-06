@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class PinkCoral3 extends AoAStructure { //StructureSize: 12x9x3
-	private static final IBlockState pinkCoral = BlockRegister.coralPink.getDefaultState();
+	private static final IBlockState pinkCoral = BlockRegister.PINK_CORAL.getDefaultState();
 
 	public PinkCoral3() {
 		super("PinkCoral3");

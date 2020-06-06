@@ -23,11 +23,11 @@ public class RunandorTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalRunandor;
+		return BlockRegister.RUNANDOR_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.stoneRunic;
+		return BlockRegister.RUNIC_STONE;
 	}
 }

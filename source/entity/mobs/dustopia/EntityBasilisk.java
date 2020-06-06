@@ -42,19 +42,19 @@ public class EntityBasilisk extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobBasiliskLiving;
+        return SoundsRegister.MOB_BASILISK_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobBasiliskDeath;
+        return SoundsRegister.MOB_BASILISK_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobBasiliskHit;
+        return SoundsRegister.MOB_BASILISK_HIT;
     }
 
     @Nullable

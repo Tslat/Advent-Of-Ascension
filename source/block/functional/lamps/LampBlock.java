@@ -29,7 +29,7 @@ public class LampBlock extends LightBlock implements CustomStateMapperBlock {
 	public LampBlock(String name, String registryName, Material material, float luminosity, float hardness, float resistance) {
 		super(name, registryName, material, luminosity, hardness, resistance);
 		setTickRandomly(true);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 		setDefaultState(getDefaultState().withProperty(FIXED_LAMP, false));
 	}
 

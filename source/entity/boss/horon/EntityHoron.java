@@ -62,24 +62,24 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHoronLiving;
+		return SoundsRegister.MOB_HORON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHoronDeath;
+		return SoundsRegister.MOB_HORON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHoronHit;
+		return SoundsRegister.MOB_HORON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -143,7 +143,7 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicHoron;
+		return SoundsRegister.HORON_MUSIC;
 	}
 
 	@Nonnull

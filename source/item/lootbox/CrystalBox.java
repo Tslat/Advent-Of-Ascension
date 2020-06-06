@@ -25,7 +25,7 @@ public class CrystalBox extends Item {
 	public CrystalBox() {
 		setTranslationKey("CrystalBox");
 		setRegistryName("aoa3:crystal_box");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class CrystalBox extends Item {
 				player.getHeldItem(hand).shrink(1);
 
 			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

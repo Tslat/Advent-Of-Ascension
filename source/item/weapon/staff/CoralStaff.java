@@ -36,13 +36,13 @@ public class CoralStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffCoral;
+		return SoundsRegister.CORAL_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWater, 2);
-		runes.put(ItemRegister.runeKinetic, 8);
+		runes.put(ItemRegister.WATER_RUNE, 2);
+		runes.put(ItemRegister.KINETIC_RUNE, 8);
 	}
 
 	@Override
@@ -93,10 +93,10 @@ public class CoralStaff extends BaseStaff {
 	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
 		if (!world.isRemote && caster instanceof EntityPlayer) {
 			for (BlockPos pos : (ArrayList<BlockPos>)args) {
-				world.setBlockState(pos, BlockRegister.coralPink.getDefaultState(), 2);
+				world.setBlockState(pos, BlockRegister.PINK_CORAL.getDefaultState(), 2);
 			}
 
-			world.playSound(null, caster.posX, caster.posY, caster.posZ, SoundsRegister.staffReef, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, caster.posX, caster.posY, caster.posZ, SoundsRegister.REEF_STAFF_CAST, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			new CoralStaffTask(world, (ArrayList<BlockPos>)args).schedule(30, TimeUnit.SECONDS);
 		}
 	}

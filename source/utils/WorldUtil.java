@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.function.BiPredicate;
 
-public class WorldUtil {
+public final class WorldUtil {
 	public static int getTrueWorldHeight(World world, int x, int z) {
 		boolean match1 = false;
 		boolean match2 = false;
@@ -328,5 +328,30 @@ public class WorldUtil {
 
 	public static boolean isOreBlock(IBlockState block) {
 		return isOreBlock(block.getBlock());
+	}
+
+	public static float getAmbientTemperature(World world, BlockPos pos) {
+		Biome biome = world.getBiome(pos);
+		float temp = biome.getTemperature(pos);
+
+		if (world.canSeeSky(pos)) {
+			if (world.isDaytime()) {
+				temp *= 1.35f;
+			}
+			else {
+				temp /= 1.35f;
+			}
+
+			if (world.isRaining() && world.getPrecipitationHeight(pos).getY() < pos.getY()) {
+				if (biome.getEnableSnow()) {
+					temp /= 1.5f;
+				}
+				else if (biome.canRain()) {
+					temp /= 1.25f;
+				}
+			}
+		}
+
+		return temp;
 	}
 }

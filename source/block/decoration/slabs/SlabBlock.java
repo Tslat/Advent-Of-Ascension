@@ -48,7 +48,7 @@ public abstract class SlabBlock extends BlockSlab {
 		}
 
 		setDefaultState(state);
-		setCreativeTab(CreativeTabsRegister.decorationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	@Override

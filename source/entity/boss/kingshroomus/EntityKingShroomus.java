@@ -59,30 +59,30 @@ public class EntityKingShroomus extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFungiLiving;
+		return SoundsRegister.MOB_FUNGI_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKingShroomusDeath;
+		return SoundsRegister.MOB_KING_SHROOMUS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFungiHit;
+		return SoundsRegister.MOB_FUNGI_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotWizardBlast;
+		return SoundsRegister.WIZARD_BLAST_SHOOT;
 	}
 
 	@Nullable
@@ -110,7 +110,7 @@ public class EntityKingShroomus extends AoARangedMob implements BossEntity {
 
 		if (healingCounter == 0 && rand.nextInt(200) == 0) {
 			if (!world.isRemote)
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobKingShroomusHeal, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_KING_SHROOMUS_HEAL, SoundCategory.HOSTILE, 1.0f, 1.0f);
 
 			healingCounter = 80;
 		}
@@ -155,7 +155,7 @@ public class EntityKingShroomus extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicKingShroomus;
+		return SoundsRegister.KING_SHROOMUS_MUSIC;
 	}
 
 	@Override

@@ -23,11 +23,11 @@ public class AbyssTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalAbyss;
+		return BlockRegister.ABYSS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.lightDarkstone;
+		return BlockRegister.DARKSTONE;
 	}
 }

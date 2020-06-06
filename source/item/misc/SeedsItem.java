@@ -10,7 +10,7 @@ public class SeedsItem extends ItemSeeds {
 		super(plant, growthMaterial);
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 		plant.setSeeds(this);
 	}
 }

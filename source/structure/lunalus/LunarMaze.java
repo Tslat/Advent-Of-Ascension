@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunarMaze extends AoAStructure { //StructureSize: 18x15x18
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState lunarGlass = BlockRegister.glassLunar.getDefaultState();
-	private static final IBlockState lunarEnrichmentTable = BlockRegister.lunarEnrichmentTable.getDefaultState();
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState lunarGlass = BlockRegister.LUNAR_GLASS.getDefaultState();
+	private static final IBlockState lunarEnrichmentTable = BlockRegister.LUNAR_ENRICHMENT_TABLE.getDefaultState();
 
 	public LunarMaze() {
 		super("LunarMaze");

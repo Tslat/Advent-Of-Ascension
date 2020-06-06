@@ -30,7 +30,7 @@ public class CrystikStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffCrystevia;
+		return SoundsRegister.CRYSTEVIA_STAFF_CAST;
 	}
 
 	@Override
@@ -45,9 +45,9 @@ public class CrystikStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 2);
-		runes.put(ItemRegister.runeLife, 1);
-		runes.put(ItemRegister.runeWater, 1);
+		runes.put(ItemRegister.DISTORTION_RUNE, 2);
+		runes.put(ItemRegister.LIFE_RUNE, 1);
+		runes.put(ItemRegister.WATER_RUNE, 1);
 	}
 
 	@Override

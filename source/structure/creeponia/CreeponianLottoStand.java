@@ -11,7 +11,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CreeponianLottoStand extends AoAStructure { //StructureSize: 8x10x8
-	private static final IBlockState creeponiaBricks = BlockRegister.bricksCreeponia.getDefaultState();
+	private static final IBlockState creeponiaBricks = BlockRegister.CREEPONIA_BRICKS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 
 	public CreeponianLottoStand() {

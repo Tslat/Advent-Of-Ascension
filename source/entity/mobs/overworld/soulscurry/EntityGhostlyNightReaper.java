@@ -61,17 +61,17 @@ public class EntityGhostlyNightReaper extends AoAMeleeMob implements SpecialProp
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobReaperLiving;
+		return SoundsRegister.MOB_REAPER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobReaperDeath;
+		return SoundsRegister.MOB_REAPER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobReaperHit;
+		return SoundsRegister.MOB_REAPER_HIT;
 	}
 
 	@Nullable

@@ -17,7 +17,6 @@ import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -36,7 +35,7 @@ public class HeadHunter extends BaseSniper {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class HeadHunter extends BaseSniper {
 
 					if (cap != null) {
 						cap.setNextShotDelay(((cap.getNextFireTime() - GlobalEvents.tick) / 2));
-						PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.foragingLoot, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
+						PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.FORAGING_LOOT, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
 					}
 				}
 			}

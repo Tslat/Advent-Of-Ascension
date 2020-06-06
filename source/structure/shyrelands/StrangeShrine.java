@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class StrangeShrine extends AoAStructure { //StructureSize: 14x5x14
-	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState shyreLeaves = BlockRegister.leavesShyre.getDefaultState();
-	private static final IBlockState strangeBlock = BlockRegister.strangeBlock.getDefaultState();
-	private static final IBlockState shyreLog = BlockRegister.logShyre.getDefaultState();
+	private static final IBlockState whiteShyreBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowShyreBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState shyreLeaves = BlockRegister.SHYRE_LEAVES.getDefaultState();
+	private static final IBlockState strangeBlock = BlockRegister.STRANGE_BLOCK.getDefaultState();
+	private static final IBlockState shyreLog = BlockRegister.SHYRE_LOG.getDefaultState();
 
 	public StrangeShrine() {
 		super("StrangeShrine");

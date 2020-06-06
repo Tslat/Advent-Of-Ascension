@@ -68,19 +68,19 @@ public class EntityNightmareSpider extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNightmareSpiderLiving;
+		return SoundsRegister.MOB_NIGHTMARE_SPIDER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNightmareSpiderDeath;
+		return SoundsRegister.MOB_NIGHTMARE_SPIDER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNightmareSpiderHit;
+		return SoundsRegister.MOB_NIGHTMARE_SPIDER_HIT;
 	}
 
 	@Override

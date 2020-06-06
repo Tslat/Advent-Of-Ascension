@@ -30,6 +30,7 @@ import net.tslat.aoa3.structure.shyrelands.*;
 import net.tslat.aoa3.structure.voxponds.*;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,7 +51,7 @@ public class StructuresHandler {
 		return generateStructure(getStructure(name), world, rand, basePos);
 	}
 
-	public static boolean generateStructure(final AoAStructure structure, final World world, final Random rand, final BlockPos basePos) {
+	public static boolean generateStructure(final AoAStructure structure, final World world, @Nullable Random rand, final BlockPos basePos) {
 		if (structure == EMPTY_STRUCTURE)
 			return false;
 
@@ -117,14 +118,10 @@ public class StructuresHandler {
 		new AbyssalTree4();
 		new AchonyTree1();
 		new AchonyTree2();
-		new AlienTree1();
-		new AlienTree2();
-		new AlienTree3();
 		new AmphibiyteCove();
 		new AncientShrine();
 		new AquaCottonCandyTree1();
 		new AquaCottonCandyTree2();
-		new AquaGardenFungi();
 		new AquaticCastle();
 		new ArcWizardCheckpoint();
 		new ArkzyneOutpost();
@@ -148,11 +145,6 @@ public class StructuresHandler {
 		new BaronRock8();
 		new BloodPine();
 		new BloodSpikes();
-		new BlueCandyRock1();
-		new BlueCandyRock2();
-		new BlueCandyRock3();
-		new BlueCandyRock4();
-		new BlueCandyRock5();
 		new BlueCelevusTree();
 		new BlueCrystalChunk1();
 		new BlueCrystalChunk2();
@@ -161,7 +153,6 @@ public class StructuresHandler {
 		new BlueCrystalChunk5();
 		new BlueCrystalChunk6();
 		new BlueCrystalTransferHut();
-		new BlueGardenFungi();
 		new BlueHavendales();
 		new BlueHavenTree();
 		new BlueMushroomTree();
@@ -172,10 +163,6 @@ public class StructuresHandler {
 		new BoneyDungeon();
 		new BrightShyreTree1();
 		new BrightShyreTree2();
-		new BubbleTree1();
-		new BubbleTree2();
-		new BubbleTree3();
-		new BubbleTree4();
 		new BulbStock();
 		new CandyCane1();
 		new CandyCane2();
@@ -218,27 +205,19 @@ public class StructuresHandler {
 		new CrystalTradingPost();
 		new DarkChocolateBar1();
 		new DarkChocolateBar2();
-		new DawnBulb();
 		new DawnCage1();
 		new DawnCage2();
 		new DawnCage3();
 		new DawnlightDungeon();
-		new DawnStocks();
 		new DawnTree1();
 		new DawnTree2();
 		new DawnTree3();
 		new DayseeFlower();
 		new DeepLottoShelter();
-		new Deepshine1();
-		new Deepshine2();
-		new Deepshine3();
-		new Deepshine4();
-		new Deepshine5();
 		new Deepshroom1();
 		new Deepshroom2();
 		new DeepSpire1();
 		new DeepSpire2();
-		new DeepVines();
 		new DegradedLampPost();
 		new DegradedSupportBeam1();
 		new DegradedSupportBeam2();
@@ -247,15 +226,12 @@ public class StructuresHandler {
 		new DiocusDen();
 		new DistortionRuneShrine();
 		new DivinePlatform();
-		new DomiguousTree1();
-		new DomiguousTree2();
 		new DracyonFountain();
 		new DrownedLottoStand();
 		new DustopianVillage();
 		new EnergyRuneShrine();
 		new EnforcerTower();
 		new EnigmaStation();
-		new EucadonTree();
 		new ExoidPlatform();
 		new ExplosivesTower();
 		new EyeBulbGrotto();
@@ -269,7 +245,6 @@ public class StructuresHandler {
 		new EyeShrub();
 		new FacelessTree();
 		new FireRuneShrine();
-		new FlakeVine();
 		new FleshTemple();
 		new FloatingLottoFountain();
 		new FloroCastle();
@@ -281,17 +256,10 @@ public class StructuresHandler {
 		new GiantDeepshroom1();
 		new GiantDeepshroom2();
 		new GiantDeepshroom3();
-		new GiantMarshFern1();
-		new GiantMarshFern2();
 		new GingerbirdAviary();
 		new GingerbreadHouse();
 		new GorbVillage();
 		new GrawPillar();
-		new GreenCandyRock1();
-		new GreenCandyRock2();
-		new GreenCandyRock3();
-		new GreenCandyRock4();
-		new GreenCandyRock5();
 		new GreenCelevusTree();
 		new GreenCoral1();
 		new GreenCoral2();
@@ -371,15 +339,10 @@ public class StructuresHandler {
 		new LunossoTree2();
 		new LuxocronDungeon();
 		new MagentaTulip();
-		new MallowTree1();
-		new MallowTree2();
-		new MallowTree3();
-		new MallowTree4();
 		new MarshLilly1();
 		new MarshLilly2();
 		new MarshLilly3();
 		new MechyonTemple();
-		new MelumiaTree();
 		new MerkyreTower();
 		new MiniBlueMushroomTree();
 		new MiniTentacles();
@@ -394,12 +357,6 @@ public class StructuresHandler {
 		new OrangeCoral();
 		new OrangeMushroomTree();
 		new ParaviteHive();
-		new PeachGardenFungi();
-		new PinkCandyRock1();
-		new PinkCandyRock2();
-		new PinkCandyRock3();
-		new PinkCandyRock4();
-		new PinkCandyRock5();
 		new PinkCoral1();
 		new PinkCoral2();
 		new PinkCoral3();
@@ -410,11 +367,6 @@ public class StructuresHandler {
 		new PowerStation();
 		new PrimordialShrine();
 		new ProfessorsLab();
-		new PurpleCandyRock1();
-		new PurpleCandyRock2();
-		new PurpleCandyRock3();
-		new PurpleCandyRock4();
-		new PurpleCandyRock5();
 		new PurpleCelevusTree();
 		new PurpleCrystalChunk1();
 		new PurpleCrystalChunk2();
@@ -459,7 +411,6 @@ public class StructuresHandler {
 		new ShadeTree3();
 		new ShadeTree4();
 		new ShadeTree5();
-		new Shadicles();
 		new ShadowlordPlatform();
 		new ShyreDecoration1();
 		new ShyreDecoration2();
@@ -468,15 +419,7 @@ public class StructuresHandler {
 		new ShyreTree1();
 		new ShyreTree2();
 		new ShyreTrollDungeon();
-		new SilvroFloater1();
-		new SilvroFloater2();
-		new SilvroFloater3();
-		new SilvroFloater4();
-		new SilvroTree1();
-		new SilvroTree2();
-		new SilvroTree3();
 		new SkeletalArmyArena();
-		new SkullPost();
 		new SmallBaronRock1();
 		new SmallBaronRock2();
 		new SmallBaronRock3();

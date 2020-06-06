@@ -57,19 +57,19 @@ public class EntityEeo extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHunchLiving;
+		return SoundsRegister.MOB_HUNCH_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHunchDeath;
+		return SoundsRegister.MOB_HUNCH_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHunchHit;
+		return SoundsRegister.MOB_HUNCH_HIT;
 	}
 
 	@Nullable

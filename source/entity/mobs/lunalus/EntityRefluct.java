@@ -54,19 +54,19 @@ public class EntityRefluct extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRefluctLiving;
+		return SoundsRegister.MOB_REFLUCT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRefluctDeath;
+		return SoundsRegister.MOB_REFLUCT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRefluctHit;
+		return SoundsRegister.MOB_REFLUCT_HIT;
 	}
 
 	@Nullable

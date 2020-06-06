@@ -19,7 +19,7 @@ public class RedPeppermintStack extends AoAStructure {
 
 		while (y <= 4) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantPeppermintRed.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.RED_PEPPERMINT.getDefaultState());
 				y++;
 			}
 			else {

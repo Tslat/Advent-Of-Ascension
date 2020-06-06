@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TrollIdol extends BossSpawningItem {
 	public TrollIdol() {
-		super("TrollIdol", "troll_idol", SoundsRegister.mobSmashLiving, EnumParticleTypes.SMOKE_NORMAL, EnumParticleTypes.SMOKE_LARGE);
+		super("TrollIdol", "troll_idol", SoundsRegister.MOB_SMASH_LIVING, EnumParticleTypes.SMOKE_NORMAL, EnumParticleTypes.SMOKE_LARGE);
 	}
 
 	@Override

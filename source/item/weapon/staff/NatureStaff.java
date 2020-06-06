@@ -33,7 +33,7 @@ public class NatureStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffNature;
+		return SoundsRegister.NATURE_STAFF_CAST;
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class NatureStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeLife, 4);
-		runes.put(ItemRegister.runeEnergy, 2);
+		runes.put(ItemRegister.LIFE_RUNE, 4);
+		runes.put(ItemRegister.ENERGY_RUNE, 2);
 	}
 
 	@Override

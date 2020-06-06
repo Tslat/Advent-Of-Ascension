@@ -81,24 +81,24 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCorallusLiving;
+		return SoundsRegister.MOB_CORALLUS_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCorallusDeath;
+		return SoundsRegister.MOB_CORALLUS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCorallusHit;
+		return SoundsRegister.MOB_CORALLUS_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -143,7 +143,7 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 			jumpCooldown = 320;
 			shootStageTimer = 60;
 
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobCorallusTaunt, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_CORALLUS_TAUNT, SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
 		else {
 			jumpCooldown--;
@@ -244,7 +244,7 @@ public class EntityCorallus extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicCorallus;
+		return SoundsRegister.CORALLUS_MUSIC;
 	}
 
 	@Override

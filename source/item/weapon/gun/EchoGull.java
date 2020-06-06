@@ -11,7 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.library.scheduling.async.EchoGullTask;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -32,7 +31,7 @@ public class EchoGull extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunFastRifle;
+		return SoundsRegister.FAST_RIFLE_FIRE;
 	}
 
 	@Override

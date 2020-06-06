@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class IosaurDenPt2 {
-	private static final IBlockState skeletalBricks = BlockRegister.bricksSkeletal.getDefaultState();
+	private static final IBlockState skeletalBricks = BlockRegister.SKELETAL_BRICKS.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	protected static void addBlocks(IosaurDen instance, World world, Random rand, BlockPos basePos) {

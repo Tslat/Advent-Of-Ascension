@@ -47,17 +47,17 @@ public class EntityGrunt extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGruntLiving;
+		return SoundsRegister.MOB_GRUNT_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGruntDeath;
+		return SoundsRegister.MOB_GRUNT_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGruntHit;
+		return SoundsRegister.MOB_GRUNT_HIT;
 	}
 
 	@Nullable

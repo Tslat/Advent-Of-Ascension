@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderAbyss extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionAbyss;
+		return DimensionRegister.DIM_ABYSS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeAbyss.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_ABYSS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class WorldProviderAbyss extends WorldProvider implements AoAWorldProvide
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeAbyss.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_ABYSS.getChunkGenerator(world, null);
 	}
 
 	@Override
@@ -98,10 +98,10 @@ public class WorldProviderAbyss extends WorldProvider implements AoAWorldProvide
 	@SideOnly(Side.CLIENT)
 	public Vec3d getFogColor(float x, float z) {
 		float f2 = MathHelper.clamp(MathHelper.cos(x * (float)Math.PI * 2.0F) * 2.0F + 0.5F, 1.5f, 5f);
-		float f3 = 0.414F * f2;
-		float f4 = 0.021F * f2;
-		float f5 = 0.03F * f2;
-		return new Vec3d(f3, f4, f5);
+		float red = 0.414F * f2;
+		float green = 0.021F * f2;
+		float blue = 0.03F * f2;
+		return new Vec3d(red, green, blue);
 	}
 
 	@Override

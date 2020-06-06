@@ -54,25 +54,25 @@ public class EntityLinger extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobLingerLiving;
+		return SoundsRegister.MOB_LINGER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobLingerDeath;
+		return SoundsRegister.MOB_LINGER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobLingerHit;
+		return SoundsRegister.MOB_LINGER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotLingerFire;
+		return SoundsRegister.LINGER_SHOOT;
 	}
 
 	@Nullable
