@@ -31,6 +31,10 @@ NOTE: You are currently viewing the language files for the Minecraft-1.12.2 vers
 You can read a tutorial on the editing process here:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
+3. Find information on creating an Addon/Extension for AoA or integration as a third-party mod.
+Relevant information for developers looking to integrate with AoA can head here:
+https://adventofascension.gamepedia.com/Third-Party_Mod_Integration/Making_an_Addon
+
 --
 
 Русский:
