@@ -40,7 +40,6 @@ public abstract class AoAMeleeMob extends EntityMob {
     protected final TreeSet<Enums.MobProperties> mobProperties;
     private boolean isSlipperyMob = false;
     private int animationTicks = 0;
-    protected String currentAnimation = null;
 
     public AoAMeleeMob(World world, float entityWidth, float entityHeight) {
         super(world);

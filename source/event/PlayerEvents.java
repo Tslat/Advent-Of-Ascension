@@ -253,7 +253,7 @@ public class PlayerEvents {
 
 		if (bl instanceof BlockCrops || bl instanceof BlockFlower || bl instanceof BlockVine || bl instanceof BlockLeaves) {
 			if (!(bl instanceof BlockCrops) || ((BlockCrops)bl).isMaxAge(ev.getState())) {
-				if (bl instanceof BlockCrops) {
+				if (bl instanceof BlockCrops && ev.getWorld().isDaytime()) {
 					PlayerUtil.getAdventPlayer(pl).stats().addTribute(Enums.Deities.SELYAN, 2);
 
 					if (AdventOfAscension.rand.nextInt(2000) == 0)
@@ -281,7 +281,7 @@ public class PlayerEvents {
 
 					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.FORAGING_LOOT, SoundCategory.MASTER, 1.0f, 1.0f);
 
-					if (ev.getWorld().provider.getDimension() == 0)
+					if (ev.getWorld().provider.getDimension() == 0 && ev.getWorld().isDaytime())
 						plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
 				}
 			}

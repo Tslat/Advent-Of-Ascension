@@ -74,7 +74,7 @@ public class EntityShik extends AoAAnimal {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundsRegister.ENTITY_MEGANEUROPSIS_HIT;
+		return SoundsRegister.ENTITY_SHIK_HIT;
 	}
 
 	@Nullable
@@ -103,8 +103,8 @@ public class EntityShik extends AoAAnimal {
 	}
 
 	@Override
-	protected boolean canDespawn() {
-		return true;
+	public boolean getCanSpawnHere() {
+		return posY < 120 && super.getCanSpawnHere();
 	}
 
 	@Override

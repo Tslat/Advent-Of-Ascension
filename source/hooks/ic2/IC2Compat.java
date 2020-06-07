@@ -25,9 +25,9 @@ import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.item.misc.SimpleItem;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.ItemUtil;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -216,7 +216,7 @@ public class IC2Compat {
 
 		@Override
 		public List<ItemStack> getInputs() {
-			return Arrays.asList(new ItemStack[]{input});
+			return Arrays.asList(input);
 		}
 
 		@Override

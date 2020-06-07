@@ -17,7 +17,7 @@ import net.tslat.aoa3.utils.StringUtil;
 
 public class SkillsRenderer {
 	private final Minecraft mc;
-	private static final ResourceLocation resources = new ResourceLocation("aoa3:textures/gui/maingui/skills.png");
+	private static final ResourceLocation skills = new ResourceLocation("aoa3:textures/gui/maingui/skills.png");
 
 	public SkillsRenderer() {
 		mc = Minecraft.getMinecraft();
@@ -32,17 +32,26 @@ public class SkillsRenderer {
 			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			GlStateManager.enableAlpha();
 
-			int renderOffset = getPotionGuiRenderOffset();
 			final ScaledResolution res = new ScaledResolution(mc);
+			int renderOffsetY = getPotionGuiRenderOffset();
+			int renderOffsetX = (int)((res.getScaledWidth() - 200) / 0.5f);
 
-			if (KeyBinder.statusResourceGui) {
-				renderOffset += 50;
-			}
-			else if (KeyBinder.statusResourceGuiMessage) {
-				renderOffset += 15;
+			if (ConfigurationUtil.MainConfig.hudResourcesPosition == ResourcesRenderer.HudResourcesPosition.Top_Right) {
+				if (!ConfigurationUtil.MainConfig.hudResourcesHorizontal) {
+					if (KeyBinder.statusResourceGui)
+						renderOffsetX -= 50;
+				}
+				else {
+					if (KeyBinder.statusResourceGui) {
+						renderOffsetY += 50;
+					}
+					else if (KeyBinder.statusResourceGuiMessage) {
+						renderOffsetY += 15;
+					}
+				}
 			}
 
-			renderSkills((int)((res.getScaledWidth() - 200) / 0.5f), renderOffset);
+			renderSkills(renderOffsetX, renderOffsetY);
 
 			GlStateManager.disableAlpha();
 			GlStateManager.popMatrix();
@@ -51,12 +60,13 @@ public class SkillsRenderer {
 
 	private void renderSkills(int rootX, int rootY) {
 		if (KeyBinder.statusSkillGui) {
-			mc.getTextureManager().bindTexture(resources);
-
 			int x;
 			int y;
 
 			for (Enums.Skills skill : Enums.Skills.values()) {
+				mc.getTextureManager().bindTexture(skills);
+				GlStateManager.color(1f, 1f, 1f);
+
 				y = rootY + (int)Math.floor(skill.id / 8f) * 50;
 				x = rootX + 50 * (skill.id % 8);
 				int progressBarPercent = AdventGuiTabPlayer.getPercentCompleteLevel(skill);
@@ -149,7 +159,9 @@ public class SkillsRenderer {
 				RenderUtil.drawScaledCustomSizeModalRect(x, y + 37, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 50f, 13, 450, 240);
 
 				if (optionalUvX >= 0)
-					RenderUtil.drawScaledCustomSizeModalRect(x + 26, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
+					RenderUtil.drawScaledCustomSizeModalRect(x, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
+
+				RenderUtil.drawScaledString(mc.fontRenderer, String.valueOf(level), x + 45 - (int)(mc.fontRenderer.getStringWidth(String.valueOf(level)) * 1.5f), y, 1.5f, level < 100 ? Enums.RGBIntegers.WHITE : Enums.RGBIntegers.GOLD_YELLOW, RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
 		else if (KeyBinder.statusSkillGuiMessage && KeyBinder.keySkillGui.getKeyCode() != 0) {
