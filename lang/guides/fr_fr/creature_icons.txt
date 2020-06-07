@@ -20,7 +20,7 @@ Le pistolet:
   Un symbole de pistolet indique que la créature est immunisée aux pistolets. Çela inclut les fusils, snipers, canons, et carabines, mais n'inclut pas les blasters ni les arcs.
 
 La spirale arc-en-ciel:
-  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Cela compte principalement les dégâts de bâtons, mais çela peut aussi affecter d'autres choses.
+  Un symbole spirale colorée indique que la créature est immunisée aux attaques et dégâts magiques. Cela compte principalement les dégâts de baguettes, mais çela peut aussi affecter d'autres choses.
 
 L'épée seule:
   Un symbole d'une seule épée violette indique que la créature est immunisée aux dégâts de mélée.
