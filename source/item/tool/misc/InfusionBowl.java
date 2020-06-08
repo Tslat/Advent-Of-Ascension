@@ -80,7 +80,7 @@ public class InfusionBowl extends Item {
 		if (!harvestStacks.isEmpty())
 			ItemUtil.givePlayerMultipleItems(player, harvestStacks);
 
-		if (pixon.world.provider.getDimension() == 0)
+		if (pixon.world.provider.getDimension() == 0 && pixon.world.isDaytime())
 			plData.stats().addTribute(Enums.Deities.LUXON, 4 * harvestCount);
 
 		if (pixon.isEntityAlive()) {

@@ -36,7 +36,6 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 		setMaxDamage(durability);
 		setFull3D();
 		setMaxStackSize(1);
-		setNoRepair();
 	}
 
 	@Override

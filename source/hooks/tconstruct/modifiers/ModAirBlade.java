@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.tslat.aoa3.hooks.tconstruct.traits.Traits;
 import slimeknights.tconstruct.library.Util;
+import slimeknights.tconstruct.library.modifiers.ModifierAspect;
 import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 import slimeknights.tconstruct.tools.melee.item.BroadSword;
@@ -17,6 +18,13 @@ import java.util.List;
 public class ModAirBlade extends ModifierTrait {
 	public ModAirBlade() {
 		super("air_blade", 0xFFFDD8, 3, 1);
+
+		addAspects(ModifierAspect.weaponOnly);
+	}
+
+	@Override
+	public boolean canApplyCustom(ItemStack stack) {
+		return super.canApplyCustom(stack) && stack.getItem() instanceof BroadSword;
 	}
 
 	@Override

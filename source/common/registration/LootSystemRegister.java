@@ -289,6 +289,7 @@ public class LootSystemRegister {
 	public static final ResourceLocation entityMechamaton = registerLootTable("entities/mobs/iromine/mechamaton");
 	public static final ResourceLocation entityMechbot = registerLootTable("entities/bosses/mechbot");
 	public static final ResourceLocation entityMechyon = registerLootTable("entities/mobs/iromine/mechyon");
+	public static final ResourceLocation entityMeganeuropsis = registerLootTable("entities/passive/meganeuropsis");
 	public static final ResourceLocation entityMerkyre = registerLootTable("entities/mobs/dustopia/merkyre");
 	public static final ResourceLocation entityMermage = registerLootTable("entities/mobs/lborean/mermage");
 	public static final ResourceLocation entityMetalloid = registerLootTable("entities/npcs/traders/metalloid");

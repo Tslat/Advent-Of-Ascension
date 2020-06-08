@@ -90,7 +90,7 @@ public class ContainerDivineStation extends Container {
 
 				slot.onSlotChange(slotStack, stack);
 			}
-			else if (index != 1) {
+			else if (index > 2) {
 				if (index < 39 && !mergeItemStack(slotStack, 1, 3, false))
 					return ItemStack.EMPTY;
 			}

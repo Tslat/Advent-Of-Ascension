@@ -128,7 +128,7 @@ public class EntityMeganeuropsis extends AoAAnimal implements EntityFlying {
 	@Nullable
 	@Override
 	protected ResourceLocation getLootTable() {
-		return LootSystemRegister.entityShik;
+		return LootSystemRegister.entityMeganeuropsis;
 	}
 
 	@Override
