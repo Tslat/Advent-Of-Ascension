@@ -1,4 +1,4 @@
-  A long-lost, primitive form of the Carrotop found in Gardencia, this strange creature is an anomaly seemingly only found within Precasia.
-Even though it does have a much more primal appearance and demeanor, it seems to be equally aggressive and hostile as its Gardencian relative.
+  ガーデンシアで発見されたキャロットップの太古の形態で、この奇妙な生き物は、プレカーシアでしか発見されていないように思われる異常な存在である。
+より太古の外見と風貌をしているにもかかわらず、ガーデンシアの親類と同様に攻撃的で敵対的であるようだ。
 
-Testing appears to confirm that the Carrotop is a direct descendant of this creature, though the mechanics of which is not known.
+テストでは、キャロットップがこの生き物の直系の子孫であることが確認されているようだが、そのメカニズムは不明である。
