@@ -107,7 +107,7 @@ public class EntityClown extends AoARangedMob {
 		if (!world.isRemote && cause.getTrueSource() instanceof EntityPlayer) {
 			EntityPlayer pl = (EntityPlayer)cause.getTrueSource();
 
-			if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == WeaponRegister.LELYETIAN_GREATBLADE && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == WeaponRegister.LELYETIAN_GREATBLADE && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.CELEVE_REALMSTONE));
 		}
 	}

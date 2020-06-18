@@ -110,7 +110,7 @@ public class EntityConstructStrength extends AoAMeleeMob implements SpecialPrope
     public boolean attackEntityAsMob(Entity target) {
         if (super.attackEntityAsMob(target)) {
 
-            if (!world.isRemote && target instanceof EntityPlayer && ((EntityPlayer)target).getHealth() > 0 && isPotionActive(MobEffects.STRENGTH) && ItemUtil.consumeItem((EntityPlayer)target, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+            if (!world.isRemote && target instanceof EntityPlayer && ((EntityPlayer)target).getHealth() > 0 && isPotionActive(MobEffects.STRENGTH) && ItemUtil.findInventoryItem((EntityPlayer)target, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
                 ItemUtil.givePlayerItemOrDrop((EntityPlayer)target, new ItemStack(ItemRegister.IMMORTALLIS_REALMSTONE));
 
             return true;

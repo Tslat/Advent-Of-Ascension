@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TraitRunic extends AbstractTraitLeveled {
 	public TraitRunic(int level) {
-		super("runic", String.valueOf(level), 0x89FBFF, 2, level);
+		super("runic", String.valueOf(level), 0x89FBFF, 3, level);
 
 		addAspects(ModifierAspect.weaponOnly);
 	}

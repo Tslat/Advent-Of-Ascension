@@ -43,7 +43,7 @@ public class ImmortallisProgressor extends Block {
 
 			switch (place) {
 				case 1:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN0))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN0), true, 1)) {
 						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.RETURN_CRYSTAL))) {
 							plData = PlayerUtil.getAdventPlayer(player);
 
@@ -73,7 +73,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 3:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN1))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN1), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.skeletalSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(81, 21, 2);
 
@@ -93,7 +93,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 5:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN2))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN2), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.0", TextFormatting.GOLD));
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.1", TextFormatting.GOLD));
 						player.setPositionAndUpdate(141, 24, 2);
@@ -114,7 +114,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 7:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN3))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN3), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.evilSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(189, 20, 2);
 
@@ -134,9 +134,9 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 9:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.PROGRESS_COIN4))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN4), true, 1)) {
 						player.setPositionAndUpdate(0, 20, 0);
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.RETURN_CRYSTAL));
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.RETURN_CRYSTAL), true, 1);
 						PlayerUtil.getAdventPlayer(player).stats().resetAllTribute();
 
 						return true;

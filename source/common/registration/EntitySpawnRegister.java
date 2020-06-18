@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -65,6 +66,8 @@ import java.util.List;
 import static net.tslat.aoa3.common.registration.BiomeRegister.*;
 
 public class EntitySpawnRegister {
+    private static boolean forceAllSpawns = false;
+
 	private static final ArrayList<SpawnEntry> bigDaySpawns = new ArrayList<SpawnEntry>(5);
 	private static final ArrayList<SpawnEntry> bloodHuntSpawns = new ArrayList<SpawnEntry>(3);
 	private static final ArrayList<SpawnEntry> creepDaySpawns = new ArrayList<SpawnEntry>(1);
@@ -76,8 +79,12 @@ public class EntitySpawnRegister {
     public static void registerEntitySpawns() {
         AdventOfAscension.logOptionalMessage("Registering entity spawns");
 
-        if (!ConfigurationUtil.MainConfig.disableOverworldMobs)
-            addSpawns(getOverworldSpawns(false));
+        if (!ConfigurationUtil.MainConfig.disableOverworldMobs) {
+            if (Loader.isModLoaded("openterraingenerator"))
+                forceAllSpawns = true;
+
+            addSpawns(getOverworldSpawns(forceAllSpawns));
+        }
 
         addSpawns(getNetherSpawns());
         addSpawns(getDimensionSpawns());
@@ -527,6 +534,9 @@ public class EntitySpawnRegister {
     }
 
     public static void addEventSpawns(Enums.CreatureEvents event) {
+        if (forceAllSpawns)
+            return;
+
         ArrayList<SpawnEntry> spawnList = null;
 
         switch (event) {
@@ -557,6 +567,9 @@ public class EntitySpawnRegister {
     }
 
     public static void removeEventSpawns(Enums.CreatureEvents event) {
+        if (forceAllSpawns)
+            return;
+
         ArrayList<SpawnEntry> spawnList = null;
 
         switch (event) {

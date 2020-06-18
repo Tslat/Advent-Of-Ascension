@@ -159,7 +159,7 @@ public class EntityFlye extends AoAFlyingMeleeMob {
 			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lelyetia && EntityUtil.isMeleeDamage(cause) && cause.getTrueSource() instanceof EntityPlayer) {
 				EntityPlayer pl = (EntityPlayer)cause.getTrueSource();
 
-				if (pl.posY >= 80 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+				if (pl.posY >= 80 && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.HAVEN_REALMSTONE));
 			}
 

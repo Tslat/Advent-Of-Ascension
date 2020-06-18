@@ -1,13 +1,14 @@
 package net.tslat.aoa3.item.weapon.archergun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLunarHollyArrowShot;
@@ -31,14 +32,9 @@ public class LunarArchergun extends BaseArchergun {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand, boolean consume) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, consume, ItemRegister.HOLLY_ARROW, player.getHeldItem(hand));
-
-		if (ammo != null) {
-			EntityLunarHollyArrowShot arrow = new EntityLunarHollyArrowShot(player, gun, hand,120, 0);
-			//arrow.motionY += 0.25f;
-			return arrow;
-		}
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.HOLLY_ARROW), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityLunarHollyArrowShot(player, (BaseGun)gunStack.getItem(), hand,120, 0);
 
 		return null;
 	}

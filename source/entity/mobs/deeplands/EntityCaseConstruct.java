@@ -93,7 +93,7 @@ public class EntityCaseConstruct extends AoAMeleeMob implements SpecialPropertyE
     @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {
         if (!world.isRemote && player.getHeldItem(hand).getItem() == Item.getItemFromBlock(BlockRegister.DEEP_CRYSTAL)) {
-            if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+            if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
                 ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CRYSTEVIA_REALMSTONE));
 
             return true;

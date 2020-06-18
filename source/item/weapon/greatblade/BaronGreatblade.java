@@ -27,7 +27,7 @@ public class BaronGreatblade extends BaseGreatblade {
 		if (super.attackEntity(stack, target, attacker, dmg)) {
 			if (!attacker.world.isRemote && attacker instanceof EntityPlayer) {
 				if (((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f) {
-					if (((EntityPlayer)attacker).capabilities.isCreativeMode || ItemUtil.findAndConsumeSpecialBullet(attacker, null, true, WeaponRegister.GRENADE, ItemStack.EMPTY) != null) {
+					if (((EntityPlayer)attacker).capabilities.isCreativeMode || ItemUtil.findInventoryItem((EntityPlayer)attacker, new ItemStack(WeaponRegister.GRENADE), true, 1 )) {
 						attacker.world.spawnEntity(new EntityGrenade(attacker, null));
 						stack.damageItem(1, attacker);
 					}

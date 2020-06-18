@@ -344,7 +344,7 @@ public class LootSystemRegister {
 	public static final ResourceLocation entityQuickpocket = registerLootTable("entities/mobs/iromine/quickpocket");
 	public static final ResourceLocation entityRainicorn = registerLootTable("entities/mobs/runandor/rainicorn");
 	public static final ResourceLocation entityRammerhead = registerLootTable("entities/mobs/overworld/rammerhead");
-	public static final ResourceLocation entityRammerhorn = registerLootTable("entities/mobs/barathos/rammerhorn");
+	public static final ResourceLocation entityRammerhorn = registerLootTable("entities/minions/rammerhorn");
 	public static final ResourceLocation entityRamradon = registerLootTable("entities/mobs/barathos/ramradon");
 	public static final ResourceLocation entityRawbone = registerLootTable("entities/mobs/lelyetia/rawbone");
 	public static final ResourceLocation entityRaxxan = registerLootTable("entities/bosses/raxxan");

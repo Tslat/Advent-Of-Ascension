@@ -1,7 +1,6 @@
 package net.tslat.aoa3.item.record;
 
 import net.minecraft.item.ItemRecord;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,11 +29,6 @@ public class RecordItem extends ItemRecord {
 
 		recordsMap.remove(null);
 		recordsMap.put(music.get(), this);
-	}
-
-	@Override
-	public String getItemStackDisplayName(ItemStack stack) {
-		return super.getItemStackDisplayName(stack);
 	}
 
 	@Override

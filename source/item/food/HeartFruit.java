@@ -29,7 +29,7 @@ public class HeartFruit extends BasicFood {
 		if (!world.isRemote) {
 			EntityUtil.dealSelfHarmDamage(player, 7.0f);
 
-			if (player.getHealth() > 0 && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			if (player.getHealth() > 0 && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CANDYLAND_REALMSTONE));
 		}
 	}

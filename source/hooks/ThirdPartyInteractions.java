@@ -175,7 +175,16 @@ public final class ThirdPartyInteractions {
 						return;
 					}
 
-					AdventGuiTabBestiary.registerThirdPartyEntryHandler(message.getSender(), bestiaryFunction.get());
+					AdventGuiTabBestiary.registerThirdPartyBestiaryHandler(message.getSender(), bestiaryFunction.get());
+					break;
+				case "mod_has_bestiary_entries":
+					if (!message.isStringMessage()) {
+						AdventOfAscension.logMessage(Level.WARN, "Received invalidly formatted bestiary entry IMC from mod: " + message.getSender() + ", skipping.");
+
+						return;
+					}
+
+					AdventGuiTabBestiary.registerThirdPartyEntryHandler(message.getSender());
 					break;
 				case "add_advent_gui_theme":
 					if (!message.isStringMessage()) {

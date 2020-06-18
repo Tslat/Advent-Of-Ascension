@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -8,6 +9,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
@@ -31,13 +34,15 @@ public class Cyclone extends BaseGun {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		BaseBullet bullet = super.findAndConsumeAmmo(player, gun, hand,true);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CANNONBALL), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack))) {
+			if (itemRand.nextInt(5) == 0)
+				player.world.spawnEntity(new EntityLimoniteBullet(player, (BaseGun)gunStack.getItem(), hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
 
-		if (bullet != null && itemRand.nextInt(5) == 0)
-			player.world.spawnEntity(new EntityLimoniteBullet(player, gun, hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
+			return new EntityLimoniteBullet(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+		}
 
-		return bullet;
+		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

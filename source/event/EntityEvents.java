@@ -152,7 +152,7 @@ public class EntityEvents {
 			else if (ev.getEntity() instanceof EntityWither) {
 				if (ev.getWorld().provider.getDimension() == -1) {
 					for (EntityPlayer pl : ev.getWorld().getEntitiesWithinAABB(EntityPlayer.class, ev.getEntity().getEntityBoundingBox().grow(50))) {
-						if (ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+						if (ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.ABYSS_REALMSTONE));
 					}
 				}

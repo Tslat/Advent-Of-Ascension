@@ -124,6 +124,8 @@ advancement.aoa.completionist.half_way_there.desc=Reach level 50 in any skill
 advancement.aoa.completionist.half_way_there.title=Half Way There
 advancement.aoa.completionist.hauling_mastery.desc=Reach level 100 Hauling
 advancement.aoa.completionist.hauling_mastery.title=Hauling Mastery
+advancement.aoa.completionist.high_flying_spelunker.desc=Obtain a Caverns music disc.
+advancement.aoa.completionist.high_flying_spelunker.title=High-Flying Spelunker
 advancement.aoa.completionist.hunter_mastery.desc=Reach level 100 Hunter
 advancement.aoa.completionist.hunter_mastery.title=Hunter Mastery
 advancement.aoa.completionist.infusion_mastery.desc=Reach level 100 Infusion
@@ -1589,8 +1591,10 @@ gui.aoaentityconfig.title.tooltip=Configure Various Entity Statistics And Attrib
 gui.aoaentityconfig.title=Entity Config
 gui.aoaintegrationsconfig.craftTweaker=CraftTweaker
 gui.aoaintegrationsconfig.enabled=Enabled
+gui.aoaintegrationsconfig.ic2.compressorRecipes=Compressor Recipes
 gui.aoaintegrationsconfig.ic2.extractorRecipes=Extractor Recipes
 gui.aoaintegrationsconfig.ic2.hazmatArmour=Hazmat Armour
+gui.aoaintegrationsconfig.ic2.materials=Materials
 gui.aoaintegrationsconfig.ic2=IndustrialCraft2
 gui.aoaintegrationsconfig.immersiveEngineering=Immersive Engineering
 gui.aoaintegrationsconfig.jei=JEI
@@ -3635,6 +3639,7 @@ item.ZargoniteLegs.name=Zargonite Leggings
 item.ZhinxDust.name=Zhinx Dust
 
 item.record.Outlaw.desc=Firch - outlaw
+item.record.Caverns.desc=MrCakeSamurai - caverns
 
 itemGroup.AdventAmmoTab=Advent Ammunition
 itemGroup.AdventArchergunsTab=Advent Archerguns

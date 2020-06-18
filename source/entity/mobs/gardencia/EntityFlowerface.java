@@ -140,7 +140,7 @@ public class EntityFlowerface extends AoAMeleeMob {
                     PlayerUtil.addTributeToPlayer(killer, Enums.Deities.SELYAN, 8);
             }
 
-            if (candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.consumeItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+            if (candiedWater && cause.getTrueSource() instanceof EntityPlayer && ItemUtil.findInventoryItem((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
                 ItemUtil.givePlayerItemOrDrop((EntityPlayer)cause.getTrueSource(), new ItemStack(ItemRegister.BOREAN_REALMSTONE));
         }
     }

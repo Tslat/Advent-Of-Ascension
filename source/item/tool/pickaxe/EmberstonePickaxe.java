@@ -27,7 +27,7 @@ public class EmberstonePickaxe extends BasePickaxe implements SpecialHarvestTool
 
 			if (!smeltedStack.isEmpty()) {
 				int xp = (int)FurnaceRecipes.instance().getSmeltingExperience(smeltedStack);
-				System.out.println(smeltedStack.getItem().getRegistryName());
+
 				e.getDrops().set(0, smeltedStack.copy());
 				e.getState().getBlock().dropXpOnBlockBreak(e.getHarvester().world, e.getPos(), xp);
 			}

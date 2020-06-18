@@ -9,7 +9,7 @@ import slimeknights.tconstruct.library.modifiers.ModifierTrait;
 
 public class ModMoneybags extends ModifierTrait {
 	public ModMoneybags() {
-		super("moneybags", 0xFFCC00, 3, 0);
+		super("moneybags", 0xFFCC00, 3, 1);
 	}
 
 	@Override
