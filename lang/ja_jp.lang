@@ -124,6 +124,8 @@ advancement.aoa.completionist.half_way_there.desc=いずれかのスキルでレ
 advancement.aoa.completionist.half_way_there.title=途中経過
 advancement.aoa.completionist.hauling_mastery.desc=漁労スキルでレベル100に到達する
 advancement.aoa.completionist.hauling_mastery.title=漁労スキルの名人
+advancement.aoa.completionist.high_flying_spelunker.desc=Cavernsの音楽ディスクを手に入れる
+advancement.aoa.completionist.high_flying_spelunker.title=高く飛ぶスペランカー
 advancement.aoa.completionist.hunter_mastery.desc=狩猟スキルでレベル100に到達する
 advancement.aoa.completionist.hunter_mastery.title=狩猟スキルの名人
 advancement.aoa.completionist.infusion_mastery.desc=注入スキルでレベル100に到達する
@@ -1589,8 +1591,10 @@ gui.aoaentityconfig.title.tooltip=さまざまなエンティティの統計情�
 gui.aoaentityconfig.title=エンティティの設定
 gui.aoaintegrationsconfig.craftTweaker=CraftTweaker
 gui.aoaintegrationsconfig.enabled=有効にする
+gui.aoaintegrationsconfig.ic2.compressorRecipes=圧縮機のレシピ
 gui.aoaintegrationsconfig.ic2.extractorRecipes=レシピの抽出
 gui.aoaintegrationsconfig.ic2.hazmatArmour=化学防護服(Hazmat装備)
+gui.aoaintegrationsconfig.ic2.materials=素材
 gui.aoaintegrationsconfig.ic2=IndustrialCraft2
 gui.aoaintegrationsconfig.immersiveEngineering=Immersive Engineering
 gui.aoaintegrationsconfig.jei=JEI
@@ -3635,6 +3639,7 @@ item.ZargoniteLegs.name=ザーゴナイトレギンス
 item.ZhinxDust.name=ジンクスの粉塵
 
 item.record.Outlaw.desc=Firch - outlaw
+item.record.Caverns.desc=MrCakeSamurai - caverns
 
 itemGroup.AdventAmmoTab=アドベントの弾薬
 itemGroup.AdventArchergunsTab=アドベントの弓ライフル
