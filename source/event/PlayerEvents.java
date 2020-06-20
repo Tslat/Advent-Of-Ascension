@@ -4,6 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -24,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -43,6 +45,7 @@ import net.tslat.aoa3.common.handlers.PlayerHaloHandler;
 import net.tslat.aoa3.common.packet.PacketResourceData;
 import net.tslat.aoa3.common.packet.PacketSkillData;
 import net.tslat.aoa3.common.packet.PacketTributeData;
+import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
@@ -145,7 +148,7 @@ public class PlayerEvents {
 				Entity creeper = ev.getSource().getImmediateSource();
 
 				if (pl.getHealth() > 0 && ev.getSource().isExplosion() && creeper instanceof EntityCreeper) {
-					if ((!pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, creeper.getEntityBoundingBox().grow(3)).isEmpty() || !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, pl.getEntityBoundingBox().grow(3)).isEmpty()) && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+					if ((!pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, creeper.getEntityBoundingBox().grow(3)).isEmpty() || !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, pl.getEntityBoundingBox().grow(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.CREEPONIA_REALMSTONE));
 				}
 			}
@@ -165,7 +168,7 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public void onPlayerFall(final LivingFallEvent ev) {
 		if (!ev.getEntity().world.isRemote && ev.getEntity() instanceof EntityPlayer) {
-			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.consumeItem((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 				ItemUtil.givePlayerItemOrDrop((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.LELYETIA_REALMSTONE));
 
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
@@ -190,7 +193,7 @@ public class PlayerEvents {
 					ev.getSource().getTrueSource().onKillEntity((EntityLivingBase)ev.getEntity());
 			}
 			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
-				if (ev.getEntity().world.provider.getDimension() == 0) {
+				if (ev.getEntity().world.provider.getDimensionType() == DimensionType.OVERWORLD) {
 					if (ev.getEntity().world.isDaytime()) {
 						PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
 
@@ -198,11 +201,17 @@ public class PlayerEvents {
 						plData.stats().addTribute(Enums.Deities.LUXON, -8);
 					}
 				}
-				else if (ev.getEntity().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.crystevia && ev.getEntity().getClass().toString().contains("Construct")) {
-					ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((EntityPlayer)ev.getSource().getTrueSource(), ItemRegister.BLANK_REALMSTONE);
+				else if (ev.getEntity().world.provider.getDimensionType() == DimensionRegister.DIM_DEEPLANDS) {
+					if (ev.getEntityLiving() instanceof EntityFlying)
+						ev.getEntityLiving().entityDropItem(new ItemStack(ItemRegister.CAVERNS_DISC), 0.5f);
+				}
+				else if (ev.getEntity().world.provider.getDimensionType() == DimensionRegister.DIM_CRYSTEVIA) {
+					if (ev.getEntity().getClass().toString().contains("Construct")) {
+						ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((EntityPlayer)ev.getSource().getTrueSource(), ItemRegister.BLANK_REALMSTONE);
 
-					if (blankRealmstoneStack != null)
-						BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource());
+						if (blankRealmstoneStack != null)
+							BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource());
+					}
 				}
 			}
 		}
@@ -253,7 +262,7 @@ public class PlayerEvents {
 
 		if (bl instanceof BlockCrops || bl instanceof BlockFlower || bl instanceof BlockVine || bl instanceof BlockLeaves) {
 			if (!(bl instanceof BlockCrops) || ((BlockCrops)bl).isMaxAge(ev.getState())) {
-				if (bl instanceof BlockCrops) {
+				if (bl instanceof BlockCrops && ev.getWorld().isDaytime()) {
 					PlayerUtil.getAdventPlayer(pl).stats().addTribute(Enums.Deities.SELYAN, 2);
 
 					if (AdventOfAscension.rand.nextInt(2000) == 0)
@@ -281,7 +290,7 @@ public class PlayerEvents {
 
 					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.FORAGING_LOOT, SoundCategory.MASTER, 1.0f, 1.0f);
 
-					if (ev.getWorld().provider.getDimension() == 0)
+					if (ev.getWorld().provider.getDimension() == 0 && ev.getWorld().isDaytime())
 						plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
 				}
 			}
@@ -321,7 +330,7 @@ public class PlayerEvents {
 				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.FORAGING_LOOT, SoundCategory.MASTER, 1.0f, 1.0f);
 			}
 		}
-		else if (WorldUtil.isOreBlock(bl) && ev.getPos().getY() <= 5 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE))) {
+		else if (WorldUtil.isOreBlock(bl) && ev.getPos().getY() <= 5 && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1)) {
 			ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.DEEPLANDS_REALMSTONE));
 		}
 	}

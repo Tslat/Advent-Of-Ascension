@@ -114,47 +114,47 @@ public class ResourcesRenderer {
 			if (revengeActive)
 				RenderUtil.drawScaledCustomSizeModalRect(rootX, rootY, 100, 90, 50, 50, 50, 50, 400, 590);
 
-			float percentComplete = AdventGuiTabPlayer.resourceRage / 200f;
+			float percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceRage / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 50, rootY, 0, 190, 50, 50, 50, 50, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 50, rootY, AdventGuiTabPlayer.resourceRage >= 150 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 50, rootY, AdventGuiTabPlayer.resourceRage >= 150 ? 50 : 0, 240, percentComplete, 50, percentComplete, 50, 400, 590);
 
-			percentComplete = AdventGuiTabPlayer.tributeSelyan / 200f;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeSelyan / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY, 0, 490, 50, 15, 50, 15, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY, 0, 540, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY, 0, 540, percentComplete, 15, percentComplete, 15, 400, 590);
 
-			percentComplete = AdventGuiTabPlayer.tributeLuxon / 200f;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeLuxon / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 15, 0, 505, 50, 10, 50, 10, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 15, 0, 555, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 15, 0, 555, percentComplete, 10, percentComplete, 10, 400, 590);
 
-			percentComplete = AdventGuiTabPlayer.tributeErebon / 200f;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeErebon / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 25, 0, 515, 50, 10, 50, 10, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 25, 0, 565, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 25, 0, 565, percentComplete, 10, percentComplete, 10, 400, 590);
 
-			percentComplete = AdventGuiTabPlayer.tributePluton / 200f;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributePluton / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 35, 0, 525, 50, 15, 50, 15, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 35, 0, 575, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 100, rootY + 35, 0, 575, percentComplete, 15, percentComplete, 15, 400, 590);
 
-			percentComplete = AdventGuiTabPlayer.resourceEnergy / 200f;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceEnergy / 200f * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 150, rootY, 0, 90, 50, 50, 50, 50, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 150, rootY, 0, 140, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 150, rootY, 0, 140, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			float currentMax = AuguryUtil.getMaxCreation(AdventGuiTabPlayer.getSkillLevel(Enums.Skills.AUGURY));
-			percentComplete = AdventGuiTabPlayer.resourceCreation / currentMax;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceCreation / currentMax * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 200, rootY, 0, 290, 50, 50, 50, 50, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 200, rootY, 0, 340, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 200, rootY, 0, 340, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			currentMax = AuguryUtil.getMaxSoul(AdventGuiTabPlayer.getSkillLevel(Enums.Skills.AUGURY));
-			percentComplete = AdventGuiTabPlayer.resourceSoul / currentMax;
+			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceSoul / currentMax * 50);
 
 			RenderUtil.drawScaledCustomSizeModalRect(rootX + 250, rootY, 0, 390, 50, 50, 50, 50, 400, 590);
-			RenderUtil.drawScaledCustomSizeModalRect(rootX + 250, rootY, 0, 440, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.drawScaledCustomSizeModalRect(rootX + 250, rootY, 0, 440, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceRage), rootX + 76, rootY + 28, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceEnergy), rootX + 176, rootY + 28, 2f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.OUTLINED);

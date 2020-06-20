@@ -130,7 +130,7 @@ public abstract class EntityRuneTemplar extends EntityCreature implements Specia
 		ItemStack heldStack = player.getHeldItem(hand);
 
 		if (isDisabled() && heldStack.getItem() == getActivationRune()) {
-			if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.RUNIC_ENERGY)))
+			if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.RUNIC_ENERGY), true, 1))
 				changeState(false);
 
 			return true;

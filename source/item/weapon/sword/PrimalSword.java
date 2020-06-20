@@ -30,13 +30,19 @@ public class PrimalSword extends BaseSword {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null) {
-				float currentDamageMod = cap.getValue();
-				float currentCalcBuff = getCurrentDamageBuff(entity);
+				if (isSelected) {
+					float currentDamageMod = cap.getValue();
+					float currentCalcBuff = getCurrentDamageBuff(entity);
 
-				if (currentDamageMod != currentCalcBuff) {
+					if (currentDamageMod != currentCalcBuff) {
+						((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+						cap.setValue(currentCalcBuff);
+						((EntityLivingBase)entity).getAttributeMap().applyAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+					}
+				}
+				else if (cap.getValue() != 0) {
 					((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
-					cap.setValue(currentCalcBuff);
-					((EntityLivingBase)entity).getAttributeMap().applyAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+					cap.setValue(0);
 				}
 			}
 		}
@@ -65,7 +71,7 @@ public class PrimalSword extends BaseSword {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null)
-				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg * (cap.getValue() == 0 ? 1 : cap.getValue()));
+				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
 		}
 
 		return modifierMap;

@@ -93,7 +93,7 @@ public class EntityCreepird extends AoAFlyingMeleeMob {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		boolean success = super.attackEntityFrom(source, amount);
 
-		if (!world.isRemote && success && EntityUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.consumeItem(attackingPlayer, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+		if (!world.isRemote && success && EntityUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.findInventoryItem(attackingPlayer, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 			ItemUtil.givePlayerItemOrDrop(attackingPlayer, new ItemStack(ItemRegister.MYSTERIUM_REALMSTONE));
 
 		return success;

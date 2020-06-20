@@ -76,7 +76,7 @@ public class AdventGuiTabGuides extends GuiScreen {
 		infoBundles = new ArrayList<InfoBundle>();
 
 		for (String modId : guideModIds) {
-			FileUtil.walkAllAvailableResourceFiles("txt", modId, "lang/aoa/guides/" + currentLanguage, "lang/aoa/guides/en_us", reader -> infoBundles.add(new InfoBundle(FileUtil.bufferedReaderToString(reader))));
+			FileUtil.walkAllAvailableResourceFiles("txt", modId, "lang/aoa3/guides/" + currentLanguage, "lang/aoa3/guides/en_us", reader -> infoBundles.add(new InfoBundle(FileUtil.bufferedReaderToString(reader))));
 		}
 
 		File guidesConfigFolder = new File(Loader.instance().getConfigDir(), FilenameUtils.separatorsToSystem("aoa3/data/guides"));

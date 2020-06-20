@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TraitAntiAir extends AbstractTraitLeveled {
 	public TraitAntiAir(int level) {
-		super("anti_air", String.valueOf(level), 0xCFF99F, 2, level);
+		super("anti_air", String.valueOf(level), 0xCFF99F, 3, level);
 	}
 
 	@Override

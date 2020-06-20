@@ -77,7 +77,7 @@ public class EntityChimera extends AoAMeleeMob {
 	public boolean attackEntityAsMob(Entity target) {
 		if (super.attackEntityAsMob(target)) {
 			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 240, 2, true, true));
+				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 240, 1, true, true));
 
 			return true;
 		}

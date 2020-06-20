@@ -36,7 +36,7 @@ public class GuardiansSword extends BaseSword {
 		ItemStack heldStack = player.getHeldItem(hand);
 		CapabilityBaseMiscStackSerializable cap = heldStack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, null);
 
-		if (cap != null && cap.getValue() <= 0 && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.CRYSTALLITE))) {
+		if (cap != null && cap.getValue() <= 0 && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CRYSTALLITE), true, 1)) {
 			cap.setValue(world.getTotalWorldTime());
 
 			if (world instanceof WorldServer) {
@@ -93,7 +93,7 @@ public class GuardiansSword extends BaseSword {
 			if (cap != null && cap.getValue() > 0)
 				buff = 5;
 
-			ItemUtil.setAttribute(attributeMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg + buff);
+			ItemUtil.setAttribute(attributeMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() + buff);
 		}
 
 		return attributeMap;

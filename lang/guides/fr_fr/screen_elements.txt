@@ -11,14 +11,13 @@ L'éclair:
 
 L'icône de créature à cornes:
   Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent passivement pendant que tu joues. Les modèles de création de la compétence création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
-  Tu peux augmenter ton maximum de points de création en montant ta compétence augure.
 
 L'icône alien bleu:
-  Cette icône est appelée pouvoir des âmes. Elle représente la quantité de pouvoir des âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Ils sont actuellement inutilisés, donc pas besoin de s'en préoccuper pour l'instant.
+  Cette icône est appelée pouvoir des âmes. Elle représente la quantité de pouvoir des âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Le pouvoir des âmes est utilisé pour activer et alimenter les tablettes, qui offrent des bonus dans la zone autour d'elles une fois placées.
 
 Les quatres lignes:
   Logée entre la rage de combat et l'énergie est l'icône de tribut. Cette icône est divisée en quatre lignes individuelles, chacune représentant une divinité spécifique. Il y a quatre principales divinités dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et déteste différentes choses, et il peut donc être difficile de toutes les combler.
   Lorsque tu accomplis certaines tâches pendant la journée en revanche, tu verras ces barres se remplir. Si tu réussis à remplir une barre en entier, alors quand le soleil se couchera, tu recevras une faveur de la part de la divinité que tu as apaisée. Ces faveurs peuvent être très utiles, alors au travail!
 
-L'icône de crâne:
+L'icône du sceptre:
   Cette icône n'apparaît pas toujours, elle n'apparaît que pendant un court instant parfois après avoir pris des dégâts. Quand cette icône apparaît, le mob qui t'a attaqué voit son âme être liée à la tienne. Tu peux alors utiliser un sceptre pour infliger des dégâts instantanés en revanche. Essaie d'obtenir vite un sceptre, car cela peut façilement faire beaucoup de dégâts!

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.hooks.ic2;
 
+import ic2.api.item.IC2Items;
 import ic2.api.recipe.Recipes;
 import ic2.core.recipe.RecipeInputBase;
 import net.minecraft.block.Block;
@@ -25,9 +26,9 @@ import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.item.misc.SimpleItem;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.ItemUtil;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -38,18 +39,20 @@ public class IC2Compat {
 	public static void preInit() {
 		MinecraftForge.EVENT_BUS.register(new IC2Compat());
 
-		materials.add(new IC2CompatMaterial("Baronyte", "baronyte", "baronyte_ore", "baronyte_ingot"));
-		materials.add(new IC2CompatMaterial("Blazium", "blazium", "blazium_ore", "blazium_ingot"));
-		materials.add(new IC2CompatMaterial("Elecanium", "elecanium", "elecanium_ore", "elecanium_ingot"));
-		materials.add(new IC2CompatMaterial("Emberstone", "emberstone", "emberstone_ore", "emberstone_ingot"));
-		materials.add(new IC2CompatMaterial("Ghastly", "ghastly", "ghastly_ore", "ghastly_ingot"));
-		materials.add(new IC2CompatMaterial("Ghoulish", "ghoulish", "ghoulish_ore", "ghoulish_ingot"));
-		materials.add(new IC2CompatMaterial("Limonite", "limonite", "limonite_ore", "limonite_ingot"));
-		materials.add(new IC2CompatMaterial("Lyon", "lyon", "lyon_ore", "lyon_ingot"));
-		materials.add(new IC2CompatMaterial("Mystite", "mystite", "mystite_ore", "mystite_ingot"));
-		materials.add(new IC2CompatMaterial("Rosite", "rosite", "rosite_ore", "rosite_ingot"));
-		materials.add(new IC2CompatMaterial("Shyrestone", "shyrestone", "shyrestone_ore", "shyrestone_ingot"));
-		materials.add(new IC2CompatMaterial("Varsium", "varsium", "varsium_ore", "varsium_ingot"));
+		if (ConfigurationUtil.IntegrationsConfig.ic2.materials) {
+			materials.add(new IC2CompatMaterial("Baronyte", "baronyte", "baronyte_ore", "baronyte_block", "baronyte_ingot"));
+			materials.add(new IC2CompatMaterial("Blazium", "blazium", "blazium_ore", "blazium_block",  "blazium_ingot"));
+			materials.add(new IC2CompatMaterial("Elecanium", "elecanium", "elecanium_ore", "elecanium_block", "elecanium_ingot"));
+			materials.add(new IC2CompatMaterial("Emberstone", "emberstone", "emberstone_ore", "emberstone_block", "emberstone_ingot"));
+			materials.add(new IC2CompatMaterial("Ghastly", "ghastly", "ghastly_ore", "ghastly_block", "ghastly_ingot"));
+			materials.add(new IC2CompatMaterial("Ghoulish", "ghoulish", "ghoulish_ore", "ghoulish_block", "ghoulish_ingot"));
+			materials.add(new IC2CompatMaterial("Limonite", "limonite", "limonite_ore", "limonite_block", "limonite_ingot"));
+			materials.add(new IC2CompatMaterial("Lyon", "lyon", "lyon_ore", "lyon_block", "lyon_ingot"));
+			materials.add(new IC2CompatMaterial("Mystite", "mystite", "mystite_ore", "mystite_block", "mystite_ingot"));
+			materials.add(new IC2CompatMaterial("Rosite", "rosite", "rosite_ore", "rosite_block", "rosite_ingot"));
+			materials.add(new IC2CompatMaterial("Shyrestone", "shyrestone", "shyrestone_ore", "shyrestone_block", "shyrestone_ingot"));
+			materials.add(new IC2CompatMaterial("Varsium", "varsium", "varsium_ore", "varsium_block", "varsium_ingot"));
+		}
 	}
 
 	public static void init() {
@@ -58,8 +61,8 @@ public class IC2Compat {
 		}
 
 		if (ConfigurationUtil.IntegrationsConfig.ic2.extractorRecipes) {
-			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.UNPOWERED_RUNE)), new NBTTagCompound(), false, new ItemStack(ItemRegister.RUNIUM_CHUNK, 14));
-			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.CHARGED_RUNE)), new NBTTagCompound(), false, new ItemStack(ItemRegister.CHARGED_RUNIUM_CHUNK, 14));
+			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.UNPOWERED_RUNE, 16)), new NBTTagCompound(), false, new ItemStack(ItemRegister.RUNIUM_CHUNK, 1));
+			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.CHARGED_RUNE, 16)), new NBTTagCompound(), false, new ItemStack(ItemRegister.CHARGED_RUNIUM_CHUNK, 1));
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.RUSTED_IRON_INGOT)), new NBTTagCompound(), false, new ItemStack(ItemRegister.SCRAP_METAL, 1));
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(WeaponRegister.GRENADE, 2)), new NBTTagCompound(), false, new ItemStack(Items.GUNPOWDER, 1));
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.CHESTBONE_FRAGMENT)), new NBTTagCompound(), false, new ItemStack(Items.DYE, 5, 15));
@@ -67,6 +70,9 @@ public class IC2Compat {
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.SKULLBONE_FRAGMENT)), new NBTTagCompound(), false, new ItemStack(Items.DYE, 5, 15));
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.FOOTBONE_FRAGMENT)), new NBTTagCompound(), false, new ItemStack(Items.DYE, 5, 15));
 			Recipes.extractor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.GOLD_COIN)), new NBTTagCompound(), false, new ItemStack(Items.GOLD_INGOT, 10));
+		}
+
+		if (ConfigurationUtil.IntegrationsConfig.ic2.compressorRecipes) {
 			Recipes.compressor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.CHITIN, 2)), new NBTTagCompound(), false, new ItemStack(ItemRegister.ARMOUR_PLATING));
 			Recipes.compressor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ItemRegister.ICE_CRYSTAL, 4)), new NBTTagCompound(), false, new ItemStack(Blocks.PACKED_ICE, 8));
 		}
@@ -82,6 +88,7 @@ public class IC2Compat {
 		private final String registryPrefix;
 
 		private final Supplier<Block> oreBlock;
+		private final Supplier<Block> mineralBlock;
 		private final Supplier<Item> ingot;
 		private final Item crushedOre;
 		private final Item purifiedCrushedOre;
@@ -90,9 +97,34 @@ public class IC2Compat {
 		private final Item plate;
 		private final Item densePlate;
 
-		private IC2CompatMaterial(String namePrefix, String registryPrefix, String oreBlockId, String ingotId) {
+		private IC2CompatMaterial(String namePrefix, String registryPrefix, String oreBlockId, String mineralBlockId, String ingotId) {
 			this.registryPrefix = registryPrefix;
-			this.oreBlock = () -> ForgeRegistries.BLOCKS.getValue(new ResourceLocation("aoa3", oreBlockId));
+			this.mineralBlock = new Supplier<Block>() {
+				private Block block = null;
+
+				@Override
+				public Block get() {
+					if (block != null)
+						return block;
+
+					block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("aoa3", mineralBlockId));
+
+					return block;
+				}
+			};
+			this.oreBlock = new Supplier<Block>() {
+				private Block block = null;
+
+				@Override
+				public Block get() {
+					if (block != null)
+						return block;
+
+					block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("aoa3", oreBlockId));
+
+					return block;
+				}
+			};
 			this.ingot = new Supplier<Item>() {
 				private Item ingot = null;
 
@@ -134,9 +166,15 @@ public class IC2Compat {
 		}
 
 		private void addMiscRecipes() {
+			GameRegistry.addShapelessRecipe(new ResourceLocation("aoa3", "ic2_" + registryPrefix + "_plate"), new ResourceLocation(""), new ItemStack(plate), Ingredient.fromItem(ingot.get()), Ingredient.fromStacks(new ItemStack(IC2Items.getItemAPI().getItem("forge_hammer"), 1, 32767)));
 			GameRegistry.addShapelessRecipe(new ResourceLocation("aoa3", "ic2_" + registryPrefix + "_dust"), new ResourceLocation(""), new ItemStack(dust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust), Ingredient.fromItem(tinyDust));
 			Recipes.compressor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(tinyDust), 9), new NBTTagCompound(), false, new ItemStack(dust));
 			Recipes.compressor.addRecipe(new IC2RecipeInputItemStack(new ItemStack(plate), 9), new NBTTagCompound(), false, new ItemStack(densePlate));
+			Recipes.metalformerRolling.addRecipe(new IC2RecipeInputItemStack(new ItemStack(ingot.get())), new NBTTagCompound(), false, new ItemStack(plate));
+			Recipes.blockcutter.addRecipe(new IC2RecipeInputItemStack(new ItemStack(mineralBlock.get())), new NBTTagCompound(), false, new ItemStack(plate, 9));
+			Recipes.oreWashing.addRecipe(new IC2RecipeInputItemStack(new ItemStack(crushedOre)), new NBTTagCompound(), false, new ItemStack(purifiedCrushedOre), new ItemStack(tinyDust, 2), new ItemStack(IC2Items.getItemAPI().getItem("dust"), 1, 15));
+			Recipes.centrifuge.addRecipe(new IC2RecipeInputItemStack(new ItemStack(crushedOre)), new NBTTagCompound(), false, new ItemStack(tinyDust), new ItemStack(dust), new ItemStack(IC2Items.getItemAPI().getItem("dust"), 1, 15));
+			Recipes.centrifuge.addRecipe(new IC2RecipeInputItemStack(new ItemStack(purifiedCrushedOre)), new NBTTagCompound(), false, new ItemStack(tinyDust), new ItemStack(dust));
 		}
 
 		private void register(IForgeRegistry<Item> registry) {
@@ -216,7 +254,7 @@ public class IC2Compat {
 
 		@Override
 		public List<ItemStack> getInputs() {
-			return Arrays.asList(new ItemStack[]{input});
+			return Arrays.asList(input);
 		}
 
 		@Override

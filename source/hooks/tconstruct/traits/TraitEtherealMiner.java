@@ -1,5 +1,7 @@
 package net.tslat.aoa3.hooks.tconstruct.traits;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDragonEgg;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.WorldType;
@@ -17,7 +19,9 @@ public class TraitEtherealMiner extends AbstractTrait {
 		if (event.getWorld().isOutsideBuildHeight(event.getPos().up()) || (!event.getWorld().isRemote && event.getWorld().getWorldInfo().getTerrainType() == WorldType.DEBUG_ALL_BLOCK_STATES))
 			return;
 
-		if (!(event.getWorld().getBlockState(event.getPos().up()).getBlock() instanceof BlockFalling))
+		Block block = event.getWorld().getBlockState(event.getPos().up()).getBlock();
+
+		if (!(block instanceof BlockFalling) && !(block instanceof BlockDragonEgg))
 			return;
 
 		event.getWorld().setBlockState(event.getPos(), BlockRegister.AIR_GAP.getDefaultState(), 16);

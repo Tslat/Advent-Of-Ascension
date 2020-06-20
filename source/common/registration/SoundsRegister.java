@@ -922,6 +922,7 @@ public class SoundsRegister {
 	public static final SoundEvent VULCANE_USE = ObjectHolder();
 
 	public static final SoundEvent OUTLAW_DISC = ObjectHolder();
+	public static final SoundEvent CAVERNS_DISC = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerSounds(final RegistryEvent.Register<SoundEvent> ev) {
@@ -999,6 +1000,7 @@ public class SoundsRegister {
 			createSoundEvent("item.chainsaw.use", "chainsaw_use"),
 			createSoundEvent("item.creation_slab.use", "creation_slab_use"),
 			createSoundEvent("item.disc.outlaw", "outlaw_disc", true),
+			createSoundEvent("item.disc.caverns", "caverns_disc", true),
 			createSoundEvent("item.gun.abominator.fire", "abominator_fire"),
 			createSoundEvent("item.gun.archergun.fire", "archergun_fire"),
 			createSoundEvent("item.gun.artifact.fire", "artifact_fire"),

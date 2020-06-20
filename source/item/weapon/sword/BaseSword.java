@@ -16,6 +16,7 @@ import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
@@ -32,7 +33,7 @@ public abstract class BaseSword extends ItemSword implements AdventWeapon {
 	}
 
 	public float getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public double getAttackSpeed() {

@@ -59,7 +59,7 @@ public class WornBook extends ItemWrittenBook {
 		contents.setString("author", StringUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
 		contents.setString("title", StringUtil.getLocaleString("item.WornBook.name"));
 
-		String pageContents = FileUtil.getTextFromResourceFile("aoa3", "lang/aoa/misc/" + FMLCommonHandler.instance().getCurrentLanguage() + "/worn_book.txt", "lang/aoa3/misc/en_us/worn_book.txt");
+		String pageContents = FileUtil.getTextFromResourceFile("aoa3", "lang/aoa3/misc/" + FMLCommonHandler.instance().getCurrentLanguage() + "/worn_book.txt", "lang/aoa3/misc/en_us/worn_book.txt");
 
 		if (pageContents == null)
 			return contents;

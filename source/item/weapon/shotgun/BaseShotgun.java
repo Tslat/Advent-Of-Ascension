@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
@@ -73,7 +72,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
 		if (cap.getNextFireTime() <= GlobalEvents.tick) {
-			BaseBullet ammo = findAndConsumeAmmo(player, this, hand);
+			BaseBullet ammo = findAndConsumeAmmo(player, stack, hand);
 
 			if (ammo != null) {
 				if (!world.isRemote) {
@@ -133,11 +132,9 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.SPREADSHOT, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityMetalSlug(player, gun, hand,4, 0);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.SPREADSHOT), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityMetalSlug(player, (BaseGun)gunStack.getItem(), hand, 4, 0);
 
 		return null;
 	}

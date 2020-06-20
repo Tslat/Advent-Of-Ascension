@@ -377,9 +377,14 @@ public class AdventGuiTabBestiary extends GuiScreen implements IProgressMeter {
 		}
 	}
 
-	public static void registerThirdPartyEntryHandler(String modId, Function<EntityLivingBase, Tuple> entityHandlerFunction) {
+	public static void registerThirdPartyBestiaryHandler(String modId, Function<EntityLivingBase, Tuple> entityHandlerFunction) {
 		if (!modId.equalsIgnoreCase("aoa3"))
 			registeredEntryHandlers.put(modId, entityHandlerFunction);
+	}
+
+	public static void registerThirdPartyEntryHandler(String modId) {
+		if (!modId.equalsIgnoreCase("aoa3"))
+			bestiaryInfoProviders.add(modId);
 	}
 
 	private class BestiaryMenu extends ScrollablePane {

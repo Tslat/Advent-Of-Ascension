@@ -37,6 +37,8 @@ public class GemBag extends Item {
 				player.getHeldItem(hand).shrink(1);
 
 			player.inventoryContainer.detectAndSendChanges();
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

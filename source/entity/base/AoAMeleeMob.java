@@ -40,7 +40,6 @@ public abstract class AoAMeleeMob extends EntityMob {
     protected final TreeSet<Enums.MobProperties> mobProperties;
     private boolean isSlipperyMob = false;
     private int animationTicks = 0;
-    protected String currentAnimation = null;
 
     public AoAMeleeMob(World world, float entityWidth, float entityHeight) {
         super(world);
@@ -68,12 +67,12 @@ public abstract class AoAMeleeMob extends EntityMob {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage());
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f));
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
     }
 
     protected abstract double getBaseKnockbackResistance();

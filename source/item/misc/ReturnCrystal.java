@@ -34,10 +34,10 @@ public class ReturnCrystal extends BasicFood {
 
 				if (world.provider.getDimension() == DimensionRegister.DIM_IMMORTALLIS.getId()) {
 					plData.stats().resetAllTribute();
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN1));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN2));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN3));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN4));
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN1), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN2), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN3), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN4), true, 1);
 
 					if (!((EntityPlayer)eater).capabilities.isCreativeMode)
 						stack.shrink(1);

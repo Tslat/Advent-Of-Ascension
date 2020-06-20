@@ -21,7 +21,7 @@ public class LelyetianGreatblade extends BaseGreatblade {
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return EntityUtil.isFlyingCreature(target) ? (float)this.dmg * 1.25f : (float)this.dmg;
+		return EntityUtil.isFlyingCreature(target) ? (float)this.getDamage() * 1.25f : (float)this.getDamage();
 	}
 
 	@Override

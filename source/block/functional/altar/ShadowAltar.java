@@ -23,7 +23,7 @@ public class ShadowAltar extends BossAltarBlock {
 		if (!player.world.isRemote) {
 			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.isPotionActive(MobEffects.NIGHT_VISION) && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE)))
+			if (player.isPotionActive(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.DUSTOPIA_REALMSTONE));
 		}
 	}

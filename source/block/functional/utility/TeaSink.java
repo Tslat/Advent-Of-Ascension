@@ -53,19 +53,19 @@ public class TeaSink extends BasicNonCubeBlock {
 				if (player.getHeldItem(hand).getItem() == ItemRegister.CUP && player.inventory.hasItemStack(new ItemStack(ItemRegister.TEA_SHREDDINGS))) {
 					boolean success = false;
 
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.MYSTIC_SHROOMS))) {
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS));
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.MYSTIC_SHROOMS), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.FUNGAL_TEA));
 
 						success = true;
 					}
-					else if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.NATURE_MELON_SLICE))) {
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS));
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.NATURE_MELON_SLICE), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.NATURAL_TEA));
 
 						success = true;
 					}
-					else if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS))) {
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1)) {
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.TEA));
 
 						success = true;
