@@ -203,9 +203,9 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.effect", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / 100d)));
 
-		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack)) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack))));
+		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack))) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack)));
 
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, StringUtil.roundToNthDecimalPlace(energyConsumption, 1), StringUtil.getLocaleString("resources.energy.name")));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, StringUtil.roundToNthDecimalPlace(energyConsumption, 2), StringUtil.getLocaleString("resources.energy.name")));
 	}
 
 	@Override

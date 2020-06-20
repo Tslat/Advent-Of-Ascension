@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TraitCounterweight extends AbstractTraitLeveled {
 	public TraitCounterweight(int level) {
-		super("counterweight", String.valueOf(level), 0xFF8CBF, 2, level);
+		super("counterweight", String.valueOf(level), 0xFF8CBF, 3, level);
 
 		addAspects(ModifierAspect.toolOnly);
 	}

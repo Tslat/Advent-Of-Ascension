@@ -61,6 +61,12 @@ public class TinkersMaterialRegistry {
 		TORN_CLOTH.addItem(ItemRegister.TORN_CLOTH);
 		TORN_CLOTH.setRepresentativeItem(ItemRegister.TORN_CLOTH);
 
+		doSlimeIslandBlacklist();
+		registerCustomMelting();
+		applyTraits();
+	}
+
+	private static void doSlimeIslandBlacklist() {
 		ArrayList<Integer> aoaSlimeIslandBlacklist = new ArrayList<Integer>();
 
 		for (String st : ConfigurationUtil.IntegrationsConfig.tinkersConstruct.slimeIslandBlacklist) {
@@ -86,9 +92,6 @@ public class TinkersMaterialRegistry {
 		}
 
 		Config.slimeIslandBlacklist = newSlimeIslandBlacklist;
-
-		registerCustomMelting();
-		applyTraits();
 	}
 
 	private static void setMaterialStats() {
@@ -256,11 +259,11 @@ public class TinkersMaterialRegistry {
 	}
 
 	private static void integrate(Material material) {
-		TinkerRegistry.integrate(material);
+		TinkerRegistry.integrate(material).preInit();
 	}
 
 	private static void integrate(Material material, Fluid fluid) {
-		TinkerRegistry.integrate(material, fluid);
+		TinkerRegistry.integrate(material, fluid).preInit();
 	}
 
 	private static void integrate(Material material, Fluid fluid, String oreSuffix, boolean toolForgeMaterial) {

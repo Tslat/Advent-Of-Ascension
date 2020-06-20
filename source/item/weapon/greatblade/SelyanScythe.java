@@ -25,7 +25,7 @@ public class SelyanScythe extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = Math.min(dmgDealt / (float)dmg, 1f);
+		float damagePercent = Math.min(dmgDealt / (float)getDamage(), 1f);
 
 		attacker.heal(1 * damagePercent);
 

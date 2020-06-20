@@ -106,7 +106,6 @@ public class ArmyBlock extends BossAltarBlock {
 							new EntitySkelePig(world),
 							new EntitySkeleHopper(world),
 							new EntitySkeleman(world),
-							new EntitySkeleElder(world),
 							new EntitySkeleElder(world, blockPos, wave));
 					break;
 				case 8:

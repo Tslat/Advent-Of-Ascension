@@ -110,7 +110,7 @@ public class CTPlayerData {
 	}
 
 	@ZenMethod
-	public boolean consumeResource(String resourceName, int amount, boolean forceConsume) {
+	public boolean consumeResource(String resourceName, float amount, boolean forceConsume) {
 		if (!validatePlayerData())
 			return false;
 

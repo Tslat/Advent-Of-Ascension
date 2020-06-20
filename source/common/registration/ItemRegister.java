@@ -534,6 +534,7 @@ public class ItemRegister {
 	public static final SeedsItem TRILLIAD_SEEDS = ObjectHolder();
 
 	public static final RecordItem OUTLAW_DISC = ObjectHolder();
+	public static final RecordItem CAVERNS_DISC = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> ev) {
@@ -977,17 +978,19 @@ public class ItemRegister {
 		registerItem(registry, new BasicFood("ChargerShank", "charger_shank", 7, 0.3f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new BasicFood("RawChimeraChop", "raw_chimera_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
 		registerItem(registry, new BasicFood("ChimeraChop", "chimera_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new BasicFood("RawUrsaMeat", "raw_ursa_meat", 3, 0.3f, true), "food/meat/raw/", "listAllmeatraw");
+		registerItem(registry, new BasicFood("UrsaMeat", "ursa_meat", 8, 0.8f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new BasicFood("RawFurlionChop", "raw_furlion_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
+		registerItem(registry, new BasicFood("FurlionChop", "furlion_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new RawHalyconBeef(), "food/meat/raw/", "listAllbeefraw", "listAllmeatraw");
+		registerItem(registry, new HalyconBeef(), "food/meat/", "listAllbeef", "listAllmeatcooked");
 		registerItem(registry, new EyeCandy(), "food/misc/", "foodCandy");
 		registerItem(registry, new FieryChops(), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new FloracleSticks(), "food/plants/");
 		registerItem(registry, new FungalTea().setContainerItem(ItemRegister.CUP), "food/drinks/");
-		registerItem(registry, new BasicFood("RawFurlionChop", "raw_furlion_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
-		registerItem(registry, new BasicFood("FurlionChop", "furlion_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new BasicFood("GingerbreadCookie", "gingerbread_cookie", 2, 0.25f), "food/misc/", "listAllcookie", "foodGingerbread");
 		registerItem(registry, new BasicFood("GingerbreadWing", "gingerbread_wing", 2, 0.2f), "food/misc/", "listAllcookie", "foodGingerbread");
 		registerItem(registry, new GoldicapPetals(), "food/plants/");
-		registerItem(registry, new RawHalyconBeef(), "food/meat/raw/", "listAllbeefraw", "listAllmeatraw");
-		registerItem(registry, new HalyconBeef(), "food/meat/", "listAllbeef", "listAllmeatcooked");
 		registerItem(registry, new HalyconMilk(), "food/drinks/", "listAllmilk");
 		registerItem(registry, new HeartFruit(), "food/plants/", "listAllfruit");
 		registerItem(registry, new HotRod(), "food/meat/", "listAllmeatcooked");
@@ -1007,8 +1010,6 @@ public class ItemRegister {
 		registerItem(registry, new BasicFood("SpearmintCandy", "spearmint_candy", 1, 0.25f), "food/misc/", "foodMints", "foodCandy");
 		registerItem(registry, new Tea().setContainerItem(ItemRegister.CUP), "food/drinks/");
 		registerItem(registry, new TrilliadLeaves(), "food/plants/");
-		registerItem(registry, new BasicFood("RawUrsaMeat", "raw_ursa_meat", 3, 0.3f, true), "food/meat/raw/", "listAllmeatraw");
-		registerItem(registry, new BasicFood("UrsaMeat", "ursa_meat", 8, 0.8f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new YetiFingernails(), "food/misc/");
 
 		registerItem(registry, new InfusionBowl("DiamondBowl", "diamond_bowl", 750, 5, 10), "tools/misc/");
@@ -1054,6 +1055,7 @@ public class ItemRegister {
 		registerItem(registry, new SeedsItem("TrilliadSeeds", "trilliad_seeds", BlockRegister.TRILLIAD_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
 
 		registerItem(registry, new RecordItem("Outlaw", "outlaw_disc", () -> SoundsRegister.OUTLAW_DISC), "records/", "record");
+		registerItem(registry, new RecordItem("Caverns", "caverns_disc", () -> SoundsRegister.CAVERNS_DISC), "records/", "record");
 	}
 
 	@SubscribeEvent

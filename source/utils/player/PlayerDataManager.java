@@ -276,9 +276,9 @@ public final class PlayerDataManager {
 		storeInterventionItems();
 
 		if (ConfigurationUtil.MainConfig.funOptions.hardcoreMode) {
-			for (Enums.Skills skill : Enums.Skills.values()) {
-				stats.levels.put(skill, Math.max(1, stats.levels.get(skill) - 1));
-			}
+			Enums.Skills skill = Enums.Skills.values()[AdventOfAscension.rand.nextInt(Enums.Skills.values().length)];
+
+			stats.levels.put(skill, Math.max(1, stats.levels.get(skill) - 1));
 		}
 	}
 

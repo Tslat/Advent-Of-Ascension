@@ -24,6 +24,7 @@ import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.packet.PacketRecoil;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
 import net.tslat.aoa3.event.GlobalEvents;
@@ -33,10 +34,7 @@ import net.tslat.aoa3.item.weapon.staff.BaseStaff;
 import net.tslat.aoa3.item.weapon.thrown.BaseThrownWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PacketUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.utils.*;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -59,7 +57,7 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 	}
 
 	public double getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public float getRecoil() {
@@ -122,7 +120,7 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 			BaseBullet ammo = null;
 
 			if (!world.isRemote)
-				ammo = findAndConsumeAmmo(player, this, hand);
+				ammo = findAndConsumeAmmo(player, stack, hand);
 
 			if (ammo != null) {
 				world.spawnEntity(ammo);
@@ -171,21 +169,9 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 
 	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {}
 
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		return findAndConsumeAmmo(player, gun, hand, true);
-	}
-
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand, boolean consume) {
-		Item ammo = ItemUtil.findAndConsumeBullet(player, gun, consume, player.getHeldItem(hand));
-
-		if (ammo != null) {
-			switch (ammo.getTranslationKey()) {
-				case "item.LimoniteBullet":
-					return new EntityLimoniteBullet(player, gun, hand, 120, 0);
-				default:
-					return null;
-			}
-		}
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.LIMONITE_BULLET), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityLimoniteBullet(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
 	}

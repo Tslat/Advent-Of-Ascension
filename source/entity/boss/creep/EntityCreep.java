@@ -125,7 +125,7 @@ public class EntityCreep extends AoARangedMob implements BossEntity, SpecialProp
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isAIDisabled())
+		if (isAIDisabled() || isDead)
 			return;
 
 		if (rand.nextInt(10) == 0) {

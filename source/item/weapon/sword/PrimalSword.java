@@ -71,7 +71,7 @@ public class PrimalSword extends BaseSword {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null)
-				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg * (cap.getValue() == 0 ? 1 : cap.getValue()));
+				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
 		}
 
 		return modifierMap;

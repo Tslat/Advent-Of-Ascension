@@ -11,7 +11,7 @@ import slimeknights.tconstruct.library.utils.TinkerUtil;
 
 public class ModCreepified extends ModifierTrait {
 	public ModCreepified() {
-		super("creepified", 0xA4EA00, 2, 0);
+		super("creepified", 0xA4EA00, 2, 1);
 	}
 
 	@Override

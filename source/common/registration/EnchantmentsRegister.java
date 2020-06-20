@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.registration;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +26,7 @@ public class EnchantmentsRegister {
 	public static final EnumEnchantmentType GREATBLADE = EnumHelper.addEnchantmentType("GREATBLADE", item -> item instanceof BaseGreatblade);
 	public static final EnumEnchantmentType SHOTGUN = EnumHelper.addEnchantmentType("SHOTGUN", item -> item instanceof BaseShotgun);
 	public static final EnumEnchantmentType MAUL = EnumHelper.addEnchantmentType("MAUL", item -> item instanceof BaseMaul);
+	public static final EnumEnchantmentType MELEE_WEAPON = EnumHelper.addEnchantmentType("MELEE_WEAPON", item -> item instanceof ItemSword || item instanceof BaseGreatblade || item instanceof BaseMaul);
 	public static final EnumEnchantmentType STAFF = EnumHelper.addEnchantmentType("STAFF", item -> item instanceof BaseStaff);
 	public static final EnumEnchantmentType AMMO_CONSUMING = EnumHelper.addEnchantmentType("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
 	public static final EnumEnchantmentType BULLET_FIRING = EnumHelper.addEnchantmentType("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon) && !(item instanceof BaseArchergun));

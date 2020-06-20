@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @SideOnly(Side.CLIENT)
 public class AdventMainGui extends GuiScreen implements IProgressMeter {
-	private static final ResourceLocation titleResource = new ResourceLocation("aoa3", "textures/gui/maingui/aoa_title.png");
+	private static final ResourceLocation titleResource = AdventOfAscension.instance().getCurrentHoliday() == AdventOfAscension.Holiday.APRIL_FOOLS ? new ResourceLocation("aoa3", "textures/gui/maingui/aoa_title_alt.png") : new ResourceLocation("aoa3", "textures/gui/maingui/aoa_title.png");
 
 	public static String currentLanguage = FMLCommonHandler.instance().getCurrentLanguage();
 

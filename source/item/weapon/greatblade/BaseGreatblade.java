@@ -36,6 +36,7 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import java.util.UUID;
 
@@ -79,7 +80,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 	}
 
 	public double getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public double getAttackSpeed() {
@@ -115,7 +116,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 	}
 
 	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return this.dmg;
+		return getDamage();
 	}
 
 	@Override
@@ -123,7 +124,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		float damageDealt = 0;
 
 		if (dmg < 0)
-			dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg) + 1;
+			dmg = (float)getDamageForAttack(stack, target, attacker, getDamage()) + 1;
 
 		if (attacker instanceof EntityPlayer) {
 			if (target instanceof EntityFireball) {
@@ -178,7 +179,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		}
 		else {
 			if (dmg < 0)
-				dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg);
+				dmg = (float)getDamageForAttack(stack, target, attacker, getDamage());
 
 			PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 			PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);

@@ -25,7 +25,7 @@ public class TraitEvilPressure extends AbstractTrait {
 			if (negativeEffects.isEmpty())
 				return;
 
-			PotionEffect effect = negativeEffects.get(random.nextInt(negativeEffects.size() - 1));
+			PotionEffect effect = negativeEffects.get(random.nextInt(negativeEffects.size()));
 
 			effect.combine(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier() + 2, effect.getIsAmbient(), effect.doesShowParticles()));
 			player.addPotionEffect(effect);

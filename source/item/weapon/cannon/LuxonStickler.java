@@ -1,16 +1,17 @@
 package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityLuxonSticklerShot;
@@ -43,6 +44,14 @@ public class LuxonStickler extends BaseCannon {
 	}
 
 	@Override
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(WeaponRegister.GRENADE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityLuxonSticklerShot(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+
+		return null;
+	}
+
+	@Override
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
 
@@ -50,16 +59,6 @@ public class LuxonStickler extends BaseCannon {
 			target.world.spawnEntity(new EntityLuxonSticklerStuck(shooter, this, (EntityLivingBase)target, bulletDmgMultiplier));
 
 		bullet.setDead();
-	}
-
-	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, WeaponRegister.GRENADE, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityLuxonSticklerShot(player, gun, hand, 120, 0);
-
-		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

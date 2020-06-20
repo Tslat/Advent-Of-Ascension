@@ -28,7 +28,7 @@ public class ErebonScythe extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
 		if (!attacker.world.isRemote) {
-			float damagePercent = dmgDealt / (float)dmg;
+			float damagePercent = dmgDealt / (float)getDamage();
 
 			for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, new AxisAlignedBB(target.posX, target.getEntityBoundingBox().minY, target.posZ, target.posX - 2, target.getEntityBoundingBox().minY + 1, target.posZ + 2), PredicateUtil.IS_HOSTILE_MOB)) {
 				entity.setFire((int)(5 * damagePercent));

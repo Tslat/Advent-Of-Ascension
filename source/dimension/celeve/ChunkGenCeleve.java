@@ -67,8 +67,6 @@ public class ChunkGenCeleve implements IChunkGenerator {
 		islandNoise = new NoiseGeneratorSimplex(rand);
 	}
 
-
-
 	@Override
 	public Chunk generateChunk(int chunkX, int chunkZ) {
 		this.curChunkX = chunkX;

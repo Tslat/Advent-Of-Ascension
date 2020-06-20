@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.Collection;
@@ -68,7 +69,7 @@ public abstract class EntityCreeponiaCreeper extends EntityCreeper {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
 		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
 	}

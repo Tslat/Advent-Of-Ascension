@@ -83,9 +83,9 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
 
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(42);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
     }
 
     @Override
@@ -270,20 +270,21 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     @Override
     public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
         boolean success;
+        float mod = ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f;
 
         switch (projectile.getProjectileType()) {
             case MAGIC:
-                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage(), false);
+                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage() * mod, false);
                 break;
             case GUN:
-                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case PHYSICAL:
-                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case OTHER:
             default:
-                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage());
+                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage() * mod);
                 break;
         }
 

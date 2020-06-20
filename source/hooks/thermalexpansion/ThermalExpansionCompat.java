@@ -25,6 +25,17 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
 public class ThermalExpansionCompat {
+	public static void init() {
+		addPulverizerRecipes();
+		addSawmillRecipes();
+		addPhytogenicInsolatorRecipes();
+		addFractionatingStillRecipes();
+		addGlacialPrecipitatorRecipes();
+		addArborealExtractorRecipes();
+		addEnervationDynamoRecipes();
+		addNumismaticDynamoRecipes();
+	}
+
 	private static void addPulverizerRecipes() {
 		if (!ConfigurationUtil.IntegrationsConfig.thermalExpansion.pulverizerRecipes)
 			return;
@@ -131,16 +142,5 @@ public class ThermalExpansionCompat {
 		NumismaticManager.addFuel(new ItemStack(ItemRegister.SILVER_COIN), 200000);
 		NumismaticManager.addFuel(new ItemStack(ItemRegister.GOLD_COIN), 700000);
 		NumismaticManager.addFuel(new ItemStack(ItemRegister.LUNAVER_COIN), 2000000);
-	}
-
-	public static void init() {
-		addPulverizerRecipes();
-		addSawmillRecipes();
-		addPhytogenicInsolatorRecipes();
-		addFractionatingStillRecipes();
-		addGlacialPrecipitatorRecipes();
-		addArborealExtractorRecipes();
-		addEnervationDynamoRecipes();
-		addNumismaticDynamoRecipes();
 	}
 }

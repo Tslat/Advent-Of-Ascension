@@ -164,7 +164,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isAIDisabled())
+		if (isAIDisabled() || isDead)
 			return;
 
 		if (invulnerableTicks > 0) {

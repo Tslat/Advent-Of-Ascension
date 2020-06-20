@@ -18,7 +18,7 @@ public class ConfigurationUtil {
 		@Config.LangKey("gui.aoaconfig.showVanityLevels")
 		public static boolean showVanityLevels = true;
 
-		@Config.Comment("Set this to true to enable more detailed debugging. If you don't mind your logs having a bit more info, or you are trying to figure out a bug or crash, this can be very helpful to have leaderboardEnabled")
+		@Config.Comment("Set this to true to enable more detailed debugging. If you don't mind your logs having a bit more info, or you are trying to figure out a bug or crash, this can be very helpful to have")
 		@Config.LangKey("gui.aoaconfig.doVerboseDebugging")
 		public static boolean doVerboseDebugging = false;
 
@@ -241,8 +241,9 @@ public class ConfigurationUtil {
 		}
 
 		public static class SubCategoryFunOptions {
-			@Config.Comment("Set this to true to enable AoA hardcore mode. When a player dies, they lose one level from every skill")
+			@Config.Comment("Set this to true to enable AoA hardcore mode.")
 			@Config.LangKey("gui.aoaconfig.funOptions.hardcoreMode")
+			@Config.RequiresMcRestart
 			public boolean hardcoreMode = false;
 
 			@Config.Comment("Set this to true to enable party deaths")
@@ -1647,7 +1648,7 @@ public class ConfigurationUtil {
 			@Config.RequiresMcRestart
 			public boolean modifiers = true;
 
-			@Config.Comment("Set this to false to disable AoA's customer materials for Tinkers Construct")
+			@Config.Comment("Set this to false to disable AoA's custom materials for Tinkers Construct")
 			@Config.LangKey("gui.aoaintegrationsconfig.tinkersConstruct.materials")
 			@Config.RequiresMcRestart
 			public boolean materials = true;
@@ -1678,9 +1679,17 @@ public class ConfigurationUtil {
 			@Config.LangKey("gui.aoaintegrationsconfig.ic2.hazmatArmour")
 			public boolean hazmatArmour = true;
 
+			@Config.Comment("Set this to false to disable additional compressor recipes from AoA")
+			@Config.LangKey("gui.aoaintegrationsconfig.ic2.compressorRecipes")
+			public boolean compressorRecipes = true;
+
 			@Config.Comment("Set this to false to disable additional extractor recipes from AoA")
 			@Config.LangKey("gui.aoaintegrationsconfig.ic2.extractorRecipes")
 			public boolean extractorRecipes = true;
+
+			@Config.Comment("Set this to false to disable custom materials from AoA")
+			@Config.LangKey("gui.aoaintegrationsconfig.ic2.materials")
+			public boolean materials = true;
 		}
 
 		@Config.Comment("Configure CraftTweaker integration options")

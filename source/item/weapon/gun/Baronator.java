@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +12,13 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
+import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGrenade;
+import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
@@ -33,13 +38,15 @@ public class Baronator extends BaseGun {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		BaseBullet bullet = super.findAndConsumeAmmo(player, gun, hand);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.LIMONITE_BULLET), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack))) {
+			if (!player.world.isRemote && itemRand.nextInt(5) == 0)
+				player.world.spawnEntity(new EntityGrenade(player, (BaseGun)gunStack.getItem(), hand, 120, 0));
 
-		if (bullet != null && !player.world.isRemote && itemRand.nextInt(5) == 0)
-			player.world.spawnEntity(new EntityGrenade(player, gun, hand, 120, 0));
+			return new EntityLimoniteBullet(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+		}
 
-		return bullet;
+		return null;
 	}
 
 	@Override

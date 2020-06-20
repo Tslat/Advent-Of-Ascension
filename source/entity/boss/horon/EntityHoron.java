@@ -121,6 +121,9 @@ public class EntityHoron extends AoAMeleeMob implements BossEntity, SpecialPrope
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (isDead)
+			return;
+
 		if (!world.isRemote) {
 			if (rand.nextInt(60) == 0)
 				WorldUtil.createExplosion(this, world, 2f);

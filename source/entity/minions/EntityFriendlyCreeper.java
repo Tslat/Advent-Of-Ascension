@@ -169,6 +169,14 @@ public class EntityFriendlyCreeper extends AoAMinion {
 		return true;
 	}
 
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (source.isExplosion() && source.getTrueSource() != null && source.getTrueSource().getUniqueID().equals(getOwnerId()))
+			return false;
+
+		return super.attackEntityFrom(source, amount);
+	}
+
 	public boolean getPowered() {
 		return dataManager.get(POWERED);
 	}
@@ -218,8 +226,10 @@ public class EntityFriendlyCreeper extends AoAMinion {
 
 	public void explode() {
 		if (!world.isRemote) {
-			world.createExplosion(getOwner(), posX, posY, posZ, explosionRadius, WorldUtil.checkGameRule(world, "doStrongerMobGriefing"));
+			EntityLivingBase owner = getOwner();
+
 			setDead();
+			world.createExplosion(owner == null ? this : owner, posX, posY, posZ, explosionRadius, WorldUtil.checkGameRule(world, "doStrongerMobGriefing"));
 			spawnLingeringCloud();
 		}
 	}

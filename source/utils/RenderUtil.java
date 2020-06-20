@@ -12,16 +12,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderUtil {
 	public static void drawScaledCustomSizeModalRect(double x, double y, float u, float v, float uWidth, float vHeight, double width, double height, float tileWidth, float tileHeight) {
-		float f = 1.0F / tileWidth;
-		float f1 = 1.0F / tileHeight;
+		float widthRatio = 1.0F / tileWidth;
+		float heightRatio = 1.0F / tileHeight;
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos(x, y + height, 0.0D).tex((double)(u * f), (double)((v + vHeight) * f1)).endVertex();
-		bufferbuilder.pos(x + width, y + height, 0.0D).tex((double)((u + uWidth) * f), (double)((v + vHeight) * f1)).endVertex();
-		bufferbuilder.pos(x + width, y, 0.0D).tex((double)((u + uWidth) * f), (double)(v * f1)).endVertex();
-		bufferbuilder.pos(x, y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+		bufferbuilder.pos(x, y + height, 0.0D).tex(u * widthRatio, (v + vHeight) * heightRatio).endVertex();
+		bufferbuilder.pos(x + width, y + height, 0.0D).tex((u + uWidth) * widthRatio, (v + vHeight) * heightRatio).endVertex();
+		bufferbuilder.pos(x + width, y, 0.0D).tex((u + uWidth) * widthRatio, v * heightRatio).endVertex();
+		bufferbuilder.pos(x, y, 0.0D).tex(u * widthRatio, v * heightRatio).endVertex();
 		tessellator.draw();
 	}
 
