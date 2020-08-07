@@ -1060,7 +1060,7 @@ public class ItemRegister {
 
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
-		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
+		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getMappings()) {
 			switch (map.key.toString()) {
 				case "aoa3:amethyst_ingot":
 					map.remap(AMETHYST);

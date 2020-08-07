@@ -35,7 +35,7 @@ public class CTPlayerData {
 		return new CTPlayerData(PlayerUtil.getAdventPlayer((EntityPlayer)player.getInternal()));
 	}
 
-	@ZenGetter
+	@ZenMethod
 	public int getLevel(String skillName, @Optional boolean ignoreLevelCap) {
 		if (!validatePlayerData())
 			return 0;
@@ -48,7 +48,7 @@ public class CTPlayerData {
 		return ignoreLevelCap ? plData.stats().getLevelForDisplay(skill) : plData.stats().getLevel(skill);
 	}
 
-	@ZenGetter
+	@ZenMethod
 	public float getXp(String skillName) {
 		if (!validatePlayerData())
 			return 0;
@@ -72,7 +72,7 @@ public class CTPlayerData {
 			plData.stats().addXp(skill, xpAmount, false, false);
 	}
 
-	@ZenGetter
+	@ZenMethod
 	public float getResourceValue(String resourceName) {
 		if (!validatePlayerData())
 			return -1;
@@ -96,7 +96,7 @@ public class CTPlayerData {
 			plData.stats().regenResource(resource, amount);
 	}
 
-	@ZenGetter
+	@ZenMethod
 	public int getTribute(String deityName) {
 		if (!validatePlayerData())
 			return -1;
@@ -138,7 +138,7 @@ public class CTPlayerData {
 		plData.stats().resetAllTribute();
 	}
 
-	@ZenGetter
+	@ZenMethod
 	public float getGlobalXpModifier() {
 		if (!validatePlayerData())
 			return -1;

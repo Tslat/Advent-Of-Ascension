@@ -35,7 +35,7 @@ public class Cyclone extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CANNONBALL), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack))) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.LIMONITE_BULLET), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack))) {
 			if (itemRand.nextInt(5) == 0)
 				player.world.spawnEntity(new EntityLimoniteBullet(player, (BaseGun)gunStack.getItem(), hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
 

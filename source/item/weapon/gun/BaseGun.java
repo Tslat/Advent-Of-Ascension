@@ -19,15 +19,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.packet.PacketRecoil;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.item.weapon.staff.BaseStaff;
@@ -111,42 +108,32 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 		if (player.getCooledAttackStrength(0.0f) < 1)
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
+		BaseBullet ammo = null;
 
-		if (cap == null)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (!world.isRemote)
+			ammo = findAndConsumeAmmo(player, stack, hand);
 
-		if (cap.getNextFireTime() <= GlobalEvents.tick) {
-			BaseBullet ammo = null;
+		if (ammo != null) {
+			world.spawnEntity(ammo);
+			player.addStat(StatList.getObjectUseStats(this));
+			player.getCooldownTracker().setCooldown(this, getFiringDelay());
+			stack.damageItem(1, player);
 
-			if (!world.isRemote)
-				ammo = findAndConsumeAmmo(player, stack, hand);
+			if (getFiringSound() != null)
+				player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-			if (ammo != null) {
-				world.spawnEntity(ammo);
-				player.addStat(StatList.getObjectUseStats(this));
-				stack.damageItem(1, player);
-				cap.setNextShotDelay(getFiringDelay());
+			if (player instanceof EntityPlayerMP) {
+				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, stack);
+				float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
 
-				if (getFiringSound() != null)
-					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-				if (player instanceof EntityPlayerMP) {
-					int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, stack);
-					float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
-
-					PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
-				}
-
-				return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+				PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
 			}
 
-			if (player instanceof EntityPlayerMP)
-				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextShotDelay(0);
-		}
+
+		if (player instanceof EntityPlayerMP)
+			((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 
 		return ActionResult.newResult(EnumActionResult.PASS, stack);
 	}
@@ -194,7 +181,7 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 
 		stack.getTagCompound().setByte("HideFlags", (byte)2);
 
-		return new AdventGunProvider();
+		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

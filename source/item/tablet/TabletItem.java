@@ -79,9 +79,6 @@ public abstract class TabletItem extends Item {
 
 						return EnumActionResult.SUCCESS;
 					}
-					else {
-						PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.SOUL, soulCost);
-					}
 				}
 			}
 			else {

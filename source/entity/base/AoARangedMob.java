@@ -9,7 +9,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -114,7 +113,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
 
     @Nullable
     protected SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_PIG_STEP;
+        return null;
     }
 
     @Nullable
@@ -224,9 +223,13 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         return !canBreatheUnderwater() ? super.isNotColliding() : this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
     }
 
-    protected void playStepSound(BlockPos pos, Block blockIn) {
-        if (getStepSound() != null)
+    protected void playStepSound(BlockPos pos, Block block) {
+        if (getStepSound() != null) {
             playSound(getStepSound(), 0.55f, 1.0F);
+        }
+        else {
+            super.playStepSound(pos, block);
+        }
     }
 
     @Override

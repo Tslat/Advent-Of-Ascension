@@ -529,7 +529,7 @@ public class WeaponRegister {
 				new MillenniumGreatblade(	26.5f, 	0, 		2050), // UPGRADE KIT
 				new NoxiousGreatblade(		23.0f, 	0, 		1580), // Vox Ponds | Voxxulon
 				new PlutonScythe(			19.0f, 	-3.0D, 	1750), // Ancient Cavern | Goldorth
-				new PrimordialGreatblade(	25.5f, 	0, 		1900), // Dustopia | Primordial Five
+				new PrimordialGreatblade(	25.5f, 	0, 		1900), // Dustopiaend | Primordial Five
 				new RosidianGreatblade(		22.5f, 	0, 		1470), // Gardencia | Floro Castle Loot
 				new RoyalGreatblade(		19.0f, 	0, 		1130), // Barathos | Crafting
 				new RunicGreatblade(		24.5f, 	0, 		1800), // Runandor | Crafting
@@ -1002,7 +1002,7 @@ public class WeaponRegister {
 
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
-		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
+		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getMappings()) {
 			if (map.key.toString().equals("aoa3:millenium_greatblade")) {
 				map.remap(MILLENNIUM_GREATBLADE);
 			}

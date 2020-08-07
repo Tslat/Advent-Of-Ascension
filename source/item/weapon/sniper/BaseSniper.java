@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -14,15 +15,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.packet.PacketRecoil;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntitySniperSlug;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
@@ -48,32 +46,25 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 		if (player.getCooledAttackStrength(0.0f) < 1)
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
+		BaseBullet bullet = findAndConsumeAmmo(player, stack, hand);
 
-		if (cap == null)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (bullet != null) {
+			if (!world.isRemote)
+				fireSniper(player, hand, bullet);
 
-		if (cap.getNextFireTime() < GlobalEvents.tick) {
-			BaseBullet bullet = findAndConsumeAmmo(player, stack, hand);
+			if (getFiringSound() != null)
+				player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-			if (bullet != null) {
-				if (!world.isRemote)
-					fireSniper(player, hand, bullet);
+			stack.damageItem(1, player);
+			player.addStat(StatList.getObjectUseStats(this));
+			player.getCooldownTracker().setCooldown(this, getFiringDelay());
 
-				if (getFiringSound() != null)
-					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-				stack.damageItem(1, player);
-				cap.setNextShotDelay(getFiringDelay());
-				return ActionResult.newResult(EnumActionResult.PASS, stack);
-			}
-
-			if (player instanceof EntityPlayerMP)
-				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+			return ActionResult.newResult(EnumActionResult.PASS, stack);
 		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextShotDelay(0);
-		}
+
+		if (player instanceof EntityPlayerMP)
+			((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
 	}

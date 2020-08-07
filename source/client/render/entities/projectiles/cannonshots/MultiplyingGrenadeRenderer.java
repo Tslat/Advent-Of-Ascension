@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityMultiplyingGrenade;
 import net.tslat.aoa3.library.Enums;
 
@@ -58,7 +58,7 @@ public class MultiplyingGrenadeRenderer extends Render<EntityMultiplyingGrenade>
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();
 
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0,0, 0, Enums.RGBIntegers.YELLOW, 3, 0.75f).create();
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0,0, 0, Enums.RGBIntegers.YELLOW, 75, 3, 3);
 	}
 
 	@Nullable

@@ -141,7 +141,7 @@ public class PlayerUtil {
     }
 
     public static boolean shouldPlayerBeAffected(EntityPlayer pl) {
-        return !pl.isDead && !pl.isSpectator() && !pl.isCreative();
+        return !pl.isDead && pl.getHealth() > 0 && !pl.isSpectator() && !pl.isCreative();
     }
 
     public static void playSoundForPlayer(EntityPlayerMP player, SoundEvent sound, SoundCategory category, double posX, double posY, double posZ, float volume, float pitch) {

@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXSwirlyTrail;
 import net.tslat.aoa3.client.model.entities.misc.ModelBloodlust;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.misc.EntityBloodlust;
 import net.tslat.aoa3.library.Enums;
 import org.lwjgl.opengl.GL11;
@@ -26,7 +26,7 @@ public class BloodlustRenderer extends RenderLiving<EntityBloodlust> {
 	public void doRender(EntityBloodlust entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-		new FXSwirlyTrail(entity.world, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 5, 1).create();
+		entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 5);
 	}
 
 	@Override

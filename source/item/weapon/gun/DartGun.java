@@ -41,7 +41,7 @@ public class DartGun extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItemType(player, ItemSeeds.class, true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)) != null)
+		if (player.isCreative() || ItemUtil.findInventoryItemType(player, ItemSeeds.class, true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)) != null)
 			return new EntitySeedDart(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;

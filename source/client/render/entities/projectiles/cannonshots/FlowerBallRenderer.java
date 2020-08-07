@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityFlowerBall;
 import net.tslat.aoa3.library.Enums;
 
@@ -59,7 +59,7 @@ public class FlowerBallRenderer extends Render<EntityFlowerBall> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + 0.3, entity.posZ, 0,0, 0, Enums.RGBIntegers.GREEN, 8, 1).create();
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.3, entity.posZ, 0,0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
 		}
 	}
 

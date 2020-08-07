@@ -12,7 +12,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -101,7 +100,7 @@ public abstract class AoAMeleeMob extends EntityMob {
 
     @Nullable
     protected SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_PIG_STEP;
+        return null;
     }
 
     protected void setXpValue(int amount) {
@@ -209,8 +208,12 @@ public abstract class AoAMeleeMob extends EntityMob {
     }
 
     protected void playStepSound(BlockPos pos, Block block) {
-        if (getStepSound() != null)
+        if (getStepSound() != null) {
             playSound(getStepSound(), 0.55f, 1.0F);
+        }
+        else {
+            super.playStepSound(pos, block);
+        }
     }
 
     @Override

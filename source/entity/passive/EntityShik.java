@@ -32,6 +32,8 @@ public class EntityShik extends AoAAnimal {
 
 	public EntityShik(World world) {
 		super(world, entityWidth, 0.4375f);
+
+		spawnableBlock = BlockRegister.DEEPLANDS_STONE;
 	}
 
 	@Override
@@ -105,6 +107,16 @@ public class EntityShik extends AoAAnimal {
 	@Override
 	public boolean getCanSpawnHere() {
 		return posY < 120 && super.getCanSpawnHere();
+	}
+
+	@Override
+	protected int getSpawnChanceFactor() {
+		return 500;
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return ticksExisted > 400;
 	}
 
 	@Override

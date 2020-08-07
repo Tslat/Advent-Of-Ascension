@@ -35,7 +35,7 @@ public class StatueBlock extends BasicBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (sound != null)
+		if (sound != null && hand == EnumHand.MAIN_HAND)
 			player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), sound.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 		return true;

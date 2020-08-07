@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.weapon.sniper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -12,11 +13,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -57,19 +55,14 @@ public class HeadHunter extends BaseSniper {
 						((WorldServer)target.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, true, preciseImpactSpot.x + itemRand.nextDouble() - 0.5, preciseImpactSpot.y + itemRand.nextDouble() - 0.5, preciseImpactSpot.z + itemRand.nextDouble() - 0.5, 3, 0, 0, 0, (double)0);
 					}
 
-					ItemStack gunStack = shooter.getHeldItem(EnumHand.MAIN_HAND);
-
-					if (gunStack.getItem() != this)
-						gunStack = shooter.getHeldItem(EnumHand.OFF_HAND);
-
-					if (gunStack.getItem() != this)
+					if (shooter.getHeldItem(EnumHand.MAIN_HAND).getItem() != this && shooter.getHeldItem(EnumHand.OFF_HAND).getItem() != this)
 						return;
 
-					AdventGunCapability cap = (AdventGunCapability)gunStack.getCapability(AdventGunProvider.ADVENT_GUN, null);
+					if (shooter instanceof EntityPlayer) {
+						if (shooter instanceof EntityPlayerMP)
+							PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.FORAGING_LOOT, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
 
-					if (cap != null) {
-						cap.setNextShotDelay(((cap.getNextFireTime() - GlobalEvents.tick) / 2));
-						PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.FORAGING_LOOT, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
+						((EntityPlayer)shooter).getCooldownTracker().setCooldown(this, (int)(((EntityPlayer)shooter).getCooldownTracker().getCooldown(this, 0) / 2f));
 					}
 				}
 			}

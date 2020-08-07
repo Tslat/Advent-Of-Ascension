@@ -14,7 +14,7 @@ public class EntityOccultBlock extends Entity {
 	public EntityOccultBlock(World world, BlockPos pos) {
 		super(world);
 		setSize(0.99f, 0.99f);
-		this.setPositionAndUpdate(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		this.setPositionAndUpdate(pos.getX() + 0.5, pos.getY() + 0.005f, pos.getZ() + 0.5);
 	}
 
 	@Override

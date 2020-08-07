@@ -21,7 +21,7 @@ public class DeeplandsStone extends StoneBlock {
 			if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(EnumHand.MAIN_HAND)) == 0) {
 				EntityShik shik = new EntityShik(world);
 
-				shik.setPositionAndUpdate(pos.getX(), pos.getY() + 0.1f, pos.getZ());
+				shik.setPositionAndUpdate(pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f);
 				world.spawnEntity(shik);
 			}
 		}

@@ -9,8 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityTriDischargeShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -60,9 +59,9 @@ public class TriDischargeShotRenderer extends Render<EntityTriDischargeShot> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 5, 1).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 5, 1).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 5, 1).create();
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
 		}
 	}
 

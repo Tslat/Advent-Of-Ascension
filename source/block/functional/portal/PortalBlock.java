@@ -26,8 +26,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.block.UnbreakableBlock;
 import net.tslat.aoa3.block.functional.misc.CarvedRunicPortalBlock;
-import net.tslat.aoa3.client.fx.FXPortalFloater;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.dimension.nether.NetherTeleporter;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
@@ -286,7 +286,7 @@ public class PortalBlock extends UnbreakableBlock {
 				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			new FXPortalFloater(world, posXStart, posYStart, posZStart, motionX, motionY, motionZ, getParticleColour()).create();
+			world.spawnParticle(ParticleRegister.PORTAL_FLOATER, posXStart, posYStart, posZStart, motionX, motionY, motionZ, getParticleColour(), 100);
 		}
 	}
 }

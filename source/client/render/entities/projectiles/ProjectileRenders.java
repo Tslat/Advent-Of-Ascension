@@ -5,7 +5,6 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,11 +34,10 @@ import net.tslat.aoa3.entity.projectiles.thrown.*;
 import net.tslat.aoa3.library.Enums;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = "aoa3")
 public class ProjectileRenders {
 
 	@SubscribeEvent
-	public static void registerEntityRenders(final ModelRegistryEvent ev) {
+	public void registerEntityRenders(final ModelRegistryEvent ev) {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAnemiaBomb.class, renderManager -> new AnemiaBombRenderer(renderManager, null));
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcwormShot.class, renderManager -> new ArcwormShotRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/arcworm.png")));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAquaball.class, renderManager -> new AquaballRenderer(renderManager, null));

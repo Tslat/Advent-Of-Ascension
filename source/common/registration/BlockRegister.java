@@ -2709,7 +2709,7 @@ public final class BlockRegister {
 
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Block> ev) {
-		for (RegistryEvent.MissingMappings.Mapping<Block> map : ev.getAllMappings()) {
+		for (RegistryEvent.MissingMappings.Mapping<Block> map : ev.getMappings()) {
 			switch (map.key.toString()) {
 				case "aoa3:blue_crystal_ore":
 					map.remap(BLUE_CRYSTAL_ORE);

@@ -24,8 +24,9 @@ public class SpectralArchergun extends BaseArchergun {
 		setRegistryName("aoa3:spectral_archergun");
 	}
 
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		EntityHollyArrowShot arrow = new EntityHollyArrowShot(player, gun, hand,120, 0);
+	@Override
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		EntityHollyArrowShot arrow = new EntityHollyArrowShot(player, (BaseGun)gunStack.getItem(), hand,120, 0);
 
 		arrow.motionY += 0.25f;
 

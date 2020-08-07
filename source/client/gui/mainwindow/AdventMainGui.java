@@ -120,8 +120,10 @@ public class AdventMainGui extends GuiScreen implements IProgressMeter {
 		GlStateManager.scale(scale, scale, scale);
 
 		if (currentTextures.overlayTexture != null) {
+			GlStateManager.enableBlend();
 			mc.getTextureManager().bindTexture(currentTextures.overlayTexture);
 			drawModalRectWithCustomSizedTexture(scaledRootX - ((1024 - guiWidth) / 2), scaledRootY - ((512 - guiHeight) / 2), 0, 0, 1024, 512, 1024, 512);
+			GlStateManager.disableBlend();
 		}
 
 		GlStateManager.scale(1.25, 1.25, 1.25);
