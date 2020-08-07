@@ -1,58 +1,47 @@
-package net.tslat.aoa3.client.fx;
+package net.tslat.aoa3.client.particles;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.render.FXRenders;
+import net.tslat.aoa3.common.registration.ParticleRegister;
+import net.tslat.aoa3.library.Enums;
 
 import javax.annotation.Nullable;
 
 @SideOnly(Side.CLIENT)
-public class FXPortalFloater extends Particle {
-	public static final int particleId = 5;
-
-	public static final ResourceLocation texture = new ResourceLocation("aoa3", "fx/portal_floater");
-
+public class PortalFloaterParticle extends Particle {
 	private final double originPosX;
 	private final double originPosY;
 	private final double originPosZ;
 
-	public FXPortalFloater(World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int colour, float... scale) {
-		super(world, posX, posY, posZ, speedX, speedY, speedZ);
+	public PortalFloaterParticle(World world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int colour, float scale) {
+		super(world, posX, posY, posZ, velocityX, velocityY, velocityZ);
 
+		this.particleTexture = ParticleRegister.getTextureAtlas();
 		this.originPosX = posX;
 		this.originPosY = posY;
 		this.originPosZ = posZ;
-		this.motionX = speedX;
-		this.motionY = speedY;
-		this.motionZ = speedZ;
-		this.particleScale = rand.nextFloat() * 0.07F;
-
-		if (scale.length > 0)
-			particleScale *= scale[0];
-
+		this.motionX = velocityX;
+		this.motionY = velocityY;
+		this.motionZ = velocityZ;
+		this.particleScale = rand.nextFloat() * 0.07F * scale;
 		this.particleMaxAge = (int)(Math.random() * 10.0D) + 40;
 		this.particleRed = (colour >> 16) / 255.0f;
 		this.particleGreen = ((colour >> 8) & 0xff) / 255.0f;
 		this.particleBlue = (colour & 0xff) / 255.0f;
 		this.particleAlpha = 1.0f;
-		this.setParticleTexture(Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry(texture.toString()));
-		this.setParticleTextureIndex((int)(Math.random() * 8d));
+		this.particleTextureIndexY = 4;
+		this.particleTextureIndexX = (int)(Math.random() * 8d);
 	}
 
 	@Override
 	public int getFXLayer() {
-		return particleTexture == null ? 1 : 0;
-	}
-
-	@Override
-	public boolean shouldDisableDepth() {
-		return false;
+		return 1;
 	}
 
 	@Override
@@ -79,10 +68,11 @@ public class FXPortalFloater extends Particle {
 
 	@Override
 	public void renderParticle(BufferBuilder buffer, Entity entity, float partialTick, float edgeLRdirectionX, float edgeUDdirectionY, float edgeLRdirectionZ, float edgeUDdirectionX, float edgeUDdirectionZ) {
-		double minU = particleTextureIndexX / 16.0f;
-		double maxU = minU + 0.0624375F;
-		double minV = particleTextureIndexY / 16.0f;
-		double maxV = minV + 0.0624375F;
+		double texturePixelRatio = ParticleRegister.getParticleTextureRatio() * 8;
+		double minU = particleTexture.getMinU() + particleTextureIndexX * texturePixelRatio;
+		double maxU = minU + texturePixelRatio;
+		double minV = particleTexture.getMinV() + particleTextureIndexY * texturePixelRatio;
+		double maxV = minV + texturePixelRatio;
 		double x = prevPosX + (posX - prevPosX) * partialTick - interpPosX;
 		double y = prevPosY + (posY - prevPosY) * partialTick - interpPosY;
 		double z = prevPosZ + (posZ - prevPosZ) * partialTick - interpPosZ;
@@ -133,20 +123,11 @@ public class FXPortalFloater extends Particle {
 		return brightnessLowerBits | brightnessUpperBits << 16;
 	}
 
-	public void create() {
-		Minecraft.getMinecraft().effectRenderer.addEffect(this);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public static class Factory implements FXRenders.FXFactory {
+	public static class Factory implements IParticleFactory {
 		@Nullable
 		@Override
-		public Particle createParticle(double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int textureOffsetIndex, float scale, int... args) {
-			Particle particle = new FXPortalFloater(Minecraft.getMinecraft().world, posX, posY, posZ, velocityX, velocityY, velocityZ, textureOffsetIndex, scale);
-
-			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
-
-			return particle;
+		public Particle createParticle(int id, World world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, int... args) {
+			return new PortalFloaterParticle(Minecraft.getMinecraft().world, posX, posY, posZ, velocityX, velocityY, velocityZ, args.length > 0 ? args[0] : Enums.RGBIntegers.BLACK, args.length > 1 ? args[1] / 100f : 1f);
 		}
 	}
 }

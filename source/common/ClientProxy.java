@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
@@ -20,13 +19,13 @@ import net.tslat.aoa3.client.gui.toasts.LevelRequirementToast;
 import net.tslat.aoa3.client.gui.toasts.ResourceRequirementToast;
 import net.tslat.aoa3.client.gui.toasts.TributeRequirementToast;
 import net.tslat.aoa3.client.model.entities.player.LayerPlayerHalo;
-import net.tslat.aoa3.client.render.FXRenders;
 import net.tslat.aoa3.client.render.entities.projectiles.ProjectileRenders;
 import net.tslat.aoa3.client.sound.MusicSound;
 import net.tslat.aoa3.command.CommandAoAWiki;
 import net.tslat.aoa3.common.packet.PacketToastPopup;
 import net.tslat.aoa3.common.packet.leaderboard.PacketLeaderboardStats;
 import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.mobs.greckon.EntitySilencer;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
@@ -94,7 +93,7 @@ public class ClientProxy extends ServerProxy {
 		forgeBus.register(new BossBarRenderer());
 		forgeBus.register(new ClientEventHandler());
 		forgeBus.register(new ProjectileRenders());
-		forgeBus.register(new FXRenders());
+		forgeBus.register(new ParticleRegister());
 	}
 
 	@Override
@@ -141,11 +140,6 @@ public class ClientProxy extends ServerProxy {
 	public void doSilencerSilence(EntitySilencer silencer) {
 		if (silencer.getDistanceSq(Minecraft.getMinecraft().player) < 8 * 8)
 			Minecraft.getMinecraft().getSoundHandler().stopSounds();
-	}
-
-	@Override
-	public void spawnParticle(int particleId, World world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, int textureOffsetIndex, float scale, int... args) {
-		FXRenders.spawnParticle(particleId, posX, posY, posZ, speedX, speedY, speedZ, textureOffsetIndex, scale, args);
 	}
 
 	@Override

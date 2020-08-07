@@ -7,8 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -26,7 +24,7 @@ public class CrystalGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
 		for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(2.0f), PredicateUtil.IS_HOSTILE_MOB)) {
-			EntityUtil.dealAoeDamage(null, attacker, entity, itemRand.nextFloat() * 2f * (dmgDealt / (float)getDamage()), false);
+			EntityUtil.dealAoeDamage(null, attacker, entity, itemRand.nextFloat() * 1.5f * (dmgDealt / (float)getDamage()), false);
 		}
 	}
 

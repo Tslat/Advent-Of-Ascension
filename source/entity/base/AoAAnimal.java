@@ -95,7 +95,7 @@ public abstract class AoAAnimal extends EntityAnimal {
 		BlockPos checkPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
 		IBlockState spawnBlock = world.getBlockState(checkPos.down());
 
-		return checkSpawnChance() && (spawnBlock.getBlock() instanceof BlockGrass || spawnBlock.getBlock() instanceof BlockStone || spawnBlock instanceof StoneBlock) && spawnBlock.canEntitySpawn(this) && checkSpawningLightConditions() && getBlockPathWeight(checkPos) >= 0.0F;
+		return checkSpawnChance() && (spawnBlock.getBlock() instanceof BlockGrass || spawnBlock.getBlock() instanceof BlockStone || spawnBlock.getBlock() instanceof StoneBlock) && spawnBlock.canEntitySpawn(this) && checkSpawningLightConditions() && getBlockPathWeight(checkPos) >= 0.0F;
 	}
 
 	protected int getSpawnChanceFactor() {

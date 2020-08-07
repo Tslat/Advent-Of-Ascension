@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.boss.kingbambambam;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -84,6 +85,22 @@ public class EntityLittleBam extends AoAMeleeMob {
 	@Override
 	protected ResourceLocation getLootTable() {
 		return isMinion	? null : LootSystemRegister.entityLittleBam;
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+
+		if (compound.hasKey("IsKingBamBamBamMinion"))
+			isMinion = true;
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
+
+		if (isMinion)
+			compound.setBoolean("IsKingBamBamBamMinion", true);
 	}
 
 	@Override

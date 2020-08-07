@@ -53,12 +53,12 @@ public class TinkersMaterialRegistry {
 	}
 
 	public static void init() {
-		CHARGER.addItem(ItemRegister.RAW_CHARGER_SHANK, 6, 1);
-		CHARGER.addItem(ItemRegister.CHARGER_SHANK, 5, 1);
+		CHARGER.addItem(ItemRegister.RAW_CHARGER_SHANK, 4, 1);
+		CHARGER.addItem(ItemRegister.CHARGER_SHANK, 3, 1);
 		CHARGER.setRepresentativeItem(new ItemStack(ItemRegister.RAW_CHARGER_SHANK, 6));
 		LIMONITE_ROD.addItem(ItemRegister.LIMONITE_ROD);
 		LIMONITE_ROD.setRepresentativeItem(ItemRegister.LIMONITE_ROD);
-		TORN_CLOTH.addItem(ItemRegister.TORN_CLOTH);
+		TORN_CLOTH.addItem(ItemRegister.TORN_CLOTH, 1, Material.VALUE_Ingot * 2);
 		TORN_CLOTH.setRepresentativeItem(ItemRegister.TORN_CLOTH);
 
 		doSlimeIslandBlacklist();
@@ -247,15 +247,15 @@ public class TinkersMaterialRegistry {
 		registerSmelting(ItemRegister.CHARGER_SHANK, TinkersFluidRegistry.CHARGER, 20);
 		registerSmelting(ItemRegister.RAW_CHARGER_SHANK, TinkersFluidRegistry.CHARGER, 17);
 
-		TinkerRegistry.registerEntityMelting(EntityCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntityKingCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 8));
-		TinkerRegistry.registerEntityMelting(EntityDesertCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntityHillCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntityGhostlyCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntitySeaCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntitySwampCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntityVoidCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
-		TinkerRegistry.registerEntityMelting(EntitySnowCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 3));
+		TinkerRegistry.registerEntityMelting(EntityCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntityKingCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 16));
+		TinkerRegistry.registerEntityMelting(EntityDesertCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntityHillCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntityGhostlyCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntitySeaCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntitySwampCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntityVoidCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
+		TinkerRegistry.registerEntityMelting(EntitySnowCharger.class, new FluidStack(TinkersFluidRegistry.CHARGER, 6));
 	}
 
 	private static void integrate(Material material) {

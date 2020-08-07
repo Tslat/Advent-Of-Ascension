@@ -22,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -155,49 +154,6 @@ public abstract class BaseMaul extends Item implements AdventWeapon, LongReachWe
 					stack.damageItem(1, attacker);
 					doMeleeEffect(stack, (EntityPlayer)attacker, target, finalDmg, cooldownMultiplier);
 				}
-			}
-		}
-		else if (target instanceof EntityLivingBase) {
-			((EntityLivingBase)target).knockBack(attacker, (float)knockback, attacker.posX - target.posX, attacker.posZ - target.posZ);
-		}
-
-		return false;
-	}
-
-	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker) {
-		if (attacker instanceof EntityPlayer) {
-			float dmg = this.dmg;
-			PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
-			PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
-			float targetHealth = 0;
-
-			if (target instanceof EntityLivingBase)
-				targetHealth = ((EntityLivingBase)target).getHealth();
-
-			if (str != null)
-				dmg += (str.getAmplifier() + 1) * 3;
-
-			if (weak != null)
-				dmg -= (weak.getAmplifier() + 1) * 4;
-
-			float cooldownMultiplier = ((EntityPlayer)attacker).getCooledAttackStrength(0f);
-			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CRUSH, stack);
-			final float finalDmg = dmg * cooldownMultiplier + 0.1f;
-
-			if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)target.getParts()[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
-				if (target instanceof EntityLivingBase)
-					EntityUtil.doScaledKnockback((EntityLivingBase)target, attacker, (float)knockback * crushMod * cooldownMultiplier, attacker.posX - target.posX, attacker.posZ - target.posZ);
-
-				if (attacker.world instanceof WorldServer && target instanceof EntityLivingBase) {
-					int hearts = (int) ((targetHealth - ((EntityLivingBase)target).getHealth()) / 2);
-
-					if (hearts > 0) {
-						((WorldServer) attacker.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, target.posX, target.posY + (double) (target.height * 0.5F), target.posZ, hearts, 0.1D, 0.0D, 0.1D, 0.2D);
-					}
-				}
-
-				stack.damageItem(1, attacker);
-				doMeleeEffect(stack, (EntityPlayer)attacker, target, finalDmg, stack.getCapability(AdventMiscStackProvider.MISC_STACK, EnumFacing.NORTH).getValue());
 			}
 		}
 		else if (target instanceof EntityLivingBase) {

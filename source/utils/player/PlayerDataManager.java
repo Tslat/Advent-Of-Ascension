@@ -42,7 +42,6 @@ import net.tslat.aoa3.library.leaderboard.AoALeaderboard;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
 import net.tslat.aoa3.utils.*;
-import net.tslat.aoa3.utils.skills.AuguryUtil;
 import net.tslat.aoa3.utils.skills.ButcheryUtil;
 import net.tslat.aoa3.utils.skills.InnervationUtil;
 import org.apache.logging.log4j.Level;
@@ -753,13 +752,13 @@ public final class PlayerDataManager {
 			if (resources.get(Enums.Resources.ENERGY) < 200 && (nextEnergyRegenTime < GlobalEvents.tick || GlobalEvents.tick + 60 < nextEnergyRegenTime))
 				regenResource(Enums.Resources.ENERGY, 0.32f);
 
-			if (resources.get(Enums.Resources.CREATION) < AuguryUtil.getMaxCreation(levels.get(Enums.Skills.AUGURY)))
+			if (resources.get(Enums.Resources.CREATION) < 200)
 				regenResource(Enums.Resources.CREATION, 0.033f);
 
 			if (resources.get(Enums.Resources.RAGE) < 200 && (nextRageRegenTime < GlobalEvents.tick || GlobalEvents.tick + 120 < nextRageRegenTime))
 				regenResource(Enums.Resources.RAGE, ButcheryUtil.getTickRegen(levels.get(Enums.Skills.BUTCHERY)));
 
-			if (resources.get(Enums.Resources.SOUL) < AuguryUtil.getMaxSoul(levels.get(Enums.Skills.AUGURY)))
+			if (resources.get(Enums.Resources.SOUL) < 200)
 				regenResource(Enums.Resources.SOUL, 0.01f);
 		}
 
@@ -951,23 +950,8 @@ public final class PlayerDataManager {
 
 		public void regenResource(Enums.Resources resource, float amount) {
 			float current = resources.get(resource);
-			float max = 0;
+			float max = 200;
 			amount = buffs.applyResourceRegenBuffs(resource, amount);
-
-			switch (resource) {
-				case CREATION:
-					max = AuguryUtil.getMaxCreation(levels.get(Enums.Skills.AUGURY));
-					break;
-				case SOUL:
-					max = AuguryUtil.getMaxSoul(levels.get(Enums.Skills.AUGURY));
-					break;
-				case RAGE:
-				case ENERGY:
-					max = 200;
-					break;
-				default:
-					break;
-			}
 
 			resources.put(resource, Math.min(current + amount, max));
 

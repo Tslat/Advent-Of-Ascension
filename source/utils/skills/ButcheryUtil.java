@@ -97,7 +97,7 @@ public class ButcheryUtil {
 		if (!ConfigurationUtil.MainConfig.resourcesEnabled || !ConfigurationUtil.MainConfig.skillsEnabled)
 			return;
 
-		if (AdventOfAscension.rand.nextInt(100) + 1 <= plData.stats().getResourceValue(Enums.Resources.RAGE)) {
+		if (AdventOfAscension.rand.nextInt(50) + 51 <= plData.stats().getResourceValue(Enums.Resources.RAGE)) {
 			float multiplier = 1.0f;
 			multiplier *= getCriticalMultiplier(plData.stats().getLevel(Enums.Skills.BUTCHERY));
 

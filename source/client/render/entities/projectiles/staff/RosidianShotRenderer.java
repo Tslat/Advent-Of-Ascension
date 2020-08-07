@@ -5,8 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
-import net.tslat.aoa3.client.fx.FXSwirlyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.staff.EntityRosidianShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -25,11 +24,11 @@ public class RosidianShotRenderer extends Render<EntityRosidianShot> {
 	public void doRender(EntityRosidianShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		if (entity.motionY > 0.98) {
 			for (int i = 0; i < 8; i++) {
-				new FXSwirlyTrail(entity.world, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 3, 1).create();
+				entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 100, 3, 3);
 			}
 		}
 		else {
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 3, 1).create();
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 3);
 		}
 	}
 

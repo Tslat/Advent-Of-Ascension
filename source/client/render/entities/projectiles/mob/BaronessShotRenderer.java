@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.mob.EntityBaronessShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -22,7 +22,7 @@ public class BaronessShotRenderer extends Render<EntityBaronessShot> {
 
 	@Override
 	public void doRender(EntityBaronessShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 8, 0.5f).create();
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 50, 3, 7);
 	}
 
 	@Nullable

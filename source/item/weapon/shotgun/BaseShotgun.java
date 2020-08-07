@@ -11,8 +11,6 @@ import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.packet.PacketRecoil;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
@@ -21,7 +19,6 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityMetalSlug;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
@@ -66,43 +63,33 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 		if (player.getCooledAttackStrength(0.0f) < 1)
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
+		BaseBullet ammo = findAndConsumeAmmo(player, stack, hand);
 
-		if (cap == null)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (ammo != null) {
+			if (!world.isRemote) {
+				float form = 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.FORM, stack);
 
-		if (cap.getNextFireTime() <= GlobalEvents.tick) {
-			BaseBullet ammo = findAndConsumeAmmo(player, stack, hand);
-
-			if (ammo != null) {
-				if (!world.isRemote) {
-					float form = 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.FORM, stack);
-
-					fireShotgun(player, hand, 0.1f * pelletCount * (1 - form), pelletCount);
-				}
-
-				if (getFiringSound() != null)
-					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-				stack.damageItem(1, player);
-				cap.setNextShotDelay(getFiringDelay());
-
-				if (player instanceof EntityPlayerMP) {
-					int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, stack);
-					float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
-
-					PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
-				}
-
-				return ActionResult.newResult(EnumActionResult.PASS, stack);
+				fireShotgun(player, hand, 0.1f * pelletCount * (1 - form), pelletCount);
 			}
 
-			if (player instanceof EntityPlayerMP)
-				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+			if (getFiringSound() != null)
+				player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+			stack.damageItem(1, player);
+			player.getCooldownTracker().setCooldown(this, getFiringDelay());
+
+			if (player instanceof EntityPlayerMP) {
+				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, stack);
+				float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
+
+				PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
+			}
+
+			return ActionResult.newResult(EnumActionResult.PASS, stack);
 		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextShotDelay(0);
-		}
+
+		if (player instanceof EntityPlayerMP)
+			((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
 	}
@@ -123,7 +110,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, shooter.getHeldItem(bullet.getHand()));
 
 			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
-				if (knockbackFactor > 0)
+				if (knockbackFactor > 0 && target instanceof EntityLivingBase)
 					EntityUtil.doScaledKnockback((EntityLivingBase)target, shooter, knockbackFactor, shooter.posX - target.posX, shooter.posZ - target.posZ);
 
 				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);

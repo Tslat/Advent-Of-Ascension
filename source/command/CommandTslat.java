@@ -6,16 +6,21 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.potion.Potion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.common.ForgeVersion;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.GameData;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -169,6 +174,13 @@ public class CommandTslat extends CommandBase {
                     int maxEntities = 0;
                     int maxEnchantments = 0;
 
+                    int aoaBlocks = 0;
+                    int aoaItems = 0;
+                    int aoaPotions = 0;
+                    int aoaBiomes = 0;
+                    int aoaEntities = 0;
+                    int aoaEnchantments = 0;
+
                     try {
                         GameData dataClass = new GameData();
                         Field maxBlocksField = GameData.class.getDeclaredField("MAX_BLOCK_ID");
@@ -210,12 +222,42 @@ public class CommandTslat extends CommandBase {
                     }
                     catch (Exception e) {}
 
-                    sender.sendMessage(new TextComponentString("Total blocks registered: " + ForgeRegistries.BLOCKS.getValuesCollection().size() + "/" + maxBlocks));
-                    sender.sendMessage(new TextComponentString("Total items registered: " + ForgeRegistries.ITEMS.getValuesCollection().size() + "/" + maxItems));
-                    sender.sendMessage(new TextComponentString("Total potions registered: " + ForgeRegistries.POTIONS.getValuesCollection().size() + "/" + maxPotions));
-                    sender.sendMessage(new TextComponentString("Total biomes registered: " + ForgeRegistries.BIOMES.getValuesCollection().size() + "/" + maxBiomes));
-                    sender.sendMessage(new TextComponentString("Total entities registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size() + "/" + maxEntities));
-                    sender.sendMessage(new TextComponentString("Total enchantments registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size() + "/" + maxEnchantments));
+                    for (Block bl : ForgeRegistries.BLOCKS) {
+                        if (bl.getRegistryName() != null && bl.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaBlocks++;
+                    }
+
+                    for (Item item : ForgeRegistries.ITEMS) {
+                        if (item.getRegistryName() != null && item.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaItems++;
+                    }
+
+                    for (Potion potion : ForgeRegistries.POTIONS) {
+                        if (potion.getRegistryName() != null && potion.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaPotions++;
+                    }
+
+                    for (Biome biome : ForgeRegistries.BIOMES) {
+                        if (biome.getRegistryName() != null && biome.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaBiomes++;
+                    }
+
+                    for (EntityEntry entity : ForgeRegistries.ENTITIES) {
+                        if (entity.getRegistryName() != null && entity.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaEntities++;
+                    }
+
+                    for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
+                        if (enchantment.getRegistryName() != null && enchantment.getRegistryName().getNamespace().equals("aoa3"))
+                            aoaEnchantments++;
+                    }
+
+                    sender.sendMessage(new TextComponentString("Total blocks registered: " + ForgeRegistries.BLOCKS.getValuesCollection().size() + "/" + maxBlocks + " (" + aoaBlocks + " from AoA)"));
+                    sender.sendMessage(new TextComponentString("Total items registered: " + ForgeRegistries.ITEMS.getValuesCollection().size() + "/" + maxItems + " (" + aoaItems + " from AoA)"));
+                    sender.sendMessage(new TextComponentString("Total potions registered: " + ForgeRegistries.POTIONS.getValuesCollection().size() + "/" + maxPotions + " (" + aoaPotions + " from AoA)"));
+                    sender.sendMessage(new TextComponentString("Total biomes registered: " + ForgeRegistries.BIOMES.getValuesCollection().size() + "/" + maxBiomes + " (" + aoaBiomes + " from AoA)"));
+                    sender.sendMessage(new TextComponentString("Total entities registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size() + "/" + maxEntities + " (" + aoaEntities + " from AoA)"));
+                    sender.sendMessage(new TextComponentString("Total enchantments registered: " + ForgeRegistries.ENTITIES.getValuesCollection().size() + "/" + maxEnchantments + " (" + aoaEnchantments + " from AoA)"));
                     break;
 				case "heal":
 					player = (EntityPlayer)sender;

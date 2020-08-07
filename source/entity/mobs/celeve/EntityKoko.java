@@ -73,6 +73,6 @@ public class EntityKoko extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 35, true, false));
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, false));
 	}
 }

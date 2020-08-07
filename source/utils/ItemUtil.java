@@ -382,7 +382,10 @@ public class ItemUtil {
 	}
 
 	public static boolean findInventoryItem(EntityPlayer player, ItemStack stack, boolean consumeItem, int amount) {
-		if (amount <= 0 || stack.isEmpty())
+		if (stack.isEmpty())
+			return false;
+
+		if (amount <= 0 || player.isCreative())
 			return true;
 
 		if (amount == 1) {
@@ -488,7 +491,7 @@ public class ItemUtil {
 		if (!a.isItemStackDamageable() && a.getItemDamage() != b.getItemDamage())
 			return false;
 
-		return a.getTagCompound() == null ? b.getTagCompound() == null : b.getTagCompound() != null && a.getTagCompound().equals(b.getTagCompound());
+		return !a.hasTagCompound() ? !b.hasTagCompound() : b.hasTagCompound() && a.getTagCompound().equals(b.getTagCompound());
 	}
 
 	public static String getFormattedDescriptionText(String langKey, Enums.ItemDescriptionType type, String... args) {

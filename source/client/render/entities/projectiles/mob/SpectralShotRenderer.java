@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.mob.EntitySpectralShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -22,9 +22,9 @@ public class SpectralShotRenderer extends Render<EntitySpectralShot> {
 
 	@Override
 	public void doRender(EntitySpectralShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ - 0.25, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 1).create();
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 5, 1).create();
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY + 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 1).create();
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ - 0.25, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 5);
 	}
 
 	@Nullable

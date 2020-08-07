@@ -629,14 +629,6 @@ public final class Enums {
 		}
 	}
 
-	public enum MainWindowThemes {
-		Default,
-		Jungle,
-		Ancient_Ruins,
-		Hell,
-		Crystals
-	}
-
 	public enum PlayerHaloTypes {
 		Donator,
 		Super_Donator,
@@ -663,18 +655,6 @@ public final class Enums {
 				}
 			}
 		}
-	}
-
-	public enum ArmourListenerTypes {
-		AFTER_ATTACK,
-		ATTACK_RECEIVED,
-		DAMAGE_DEALT,
-		DEATH,
-		EQUIP,
-		FALL,
-		INCOMING_ATTACK,
-		TICK,
-		UNEQUIP
 	}
 
 	public enum BlockUpdateFlags {
@@ -707,15 +687,41 @@ public final class Enums {
 		}
 	}
 
-	public static final class EntityAnimations {
-		public static final String ATTACK_1 = "ATTACK_1";
-		public static final String ATTACK_2 = "ATTACK_2";
-		public static final String HURT_1 = "HURT_1";
-		public static final String HURT_2 = "HURT_2";
-		public static final String DEATH = "DEATH";
-		public static final String IDLE_1 = "IDLE_1";
-		public static final String IDLE_2 = "IDLE_2";
-		public static final String IDLE_3 = "IDLE_3";
-		public static final String INTERACT = "INTERACT";
+	public enum Particles {
+		STAR_TRAIL(0),
+		FLUFFY_TRAIL(1),
+		FLICKERING_FLUFFY_TRAIL(2),
+		SWIRLY_TRAIL(3),
+		LINGERING_FLUFFY_TRAIL(4),
+		FLUFFY_RAINBOW_TRAIL(5),
+		PORTAL_FLOATER(6);
+
+		public final int id;
+
+		Particles(int id) {
+			this.id = id;
+		}
+
+		@Nullable
+		public static Particles byId(int id) {
+			switch (id) {
+				case 0:
+					return STAR_TRAIL;
+				case 1:
+					return FLUFFY_TRAIL;
+				case 2:
+					return FLICKERING_FLUFFY_TRAIL;
+				case 3:
+					return SWIRLY_TRAIL;
+				case 4:
+					return LINGERING_FLUFFY_TRAIL;
+				case 5:
+					return FLUFFY_RAINBOW_TRAIL;
+				case 6:
+					return PORTAL_FLOATER;
+				default:
+					return null;
+			}
+		}
 	}
 }

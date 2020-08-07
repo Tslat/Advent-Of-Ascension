@@ -70,6 +70,6 @@ public class ShadowlordSpawnTask implements Runnable {
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        ModUtil.scheduleRequiredAsyncTask(this, time, units);
+        ModUtil.scheduleAsyncTask(this, time, units);
     }
 }

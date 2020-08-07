@@ -24,7 +24,7 @@ public class TidalGreatblade extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0) < 0.75f)
+		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0) < 0.95f)
 			return;
 
 		double xOffset = MathHelper.cos(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;

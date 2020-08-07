@@ -438,8 +438,8 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
 		entityToRender.renderYawOffset = 0;
 
-		entityToRender.rotationYaw = (float)Math.atan((double)((((AdventMainGui.scaledRootX + 273) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
-		entityToRender.rotationPitch = -((float)Math.atan((double)((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
+		entityToRender.rotationYaw = (float)Math.atan(((((AdventMainGui.scaledRootX + 273) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
+		entityToRender.rotationPitch = -((float)Math.atan(((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
 		entityToRender.rotationYawHead = entityToRender.rotationYaw;
 		entityToRender.prevRotationYawHead = entityToRender.rotationYaw;
 		entityToRender.limbSwingAmount = 0;

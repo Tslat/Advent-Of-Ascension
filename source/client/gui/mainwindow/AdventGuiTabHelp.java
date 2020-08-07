@@ -25,7 +25,7 @@ public class AdventGuiTabHelp extends GuiScreen {
 	private int tipNumber = 0;
 
 	AdventGuiTabHelp() {
-		tipNumber = AdventOfAscension.rand.nextInt(16);
+		tipNumber = AdventOfAscension.rand.nextInt(15);
 	}
 
 	@Override
@@ -161,7 +161,7 @@ public class AdventGuiTabHelp extends GuiScreen {
 				GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
 				hovered = isMouseInRegion(mouseX, mouseY, x, y);
-				displayString = ConfigurationUtil.MainConfig.mainWindowTheme.toString().replace("_", " ");
+				displayString = ConfigurationUtil.MainConfig.mainWindowTheme.replace("_", " ");
 				width = (int)(Math.max(width - 10, 10 + mc.fontRenderer.getStringWidth(displayString) * 1.5f));
 
 				drawScaledCustomSizeModalRect(AdventMainGui.scaledTabRootX + x, AdventMainGui.scaledTabRootY + y, 0, (getHoverState(hovered) == 2 ? 60 : 120), 180, 60, width, height, 180, 180);

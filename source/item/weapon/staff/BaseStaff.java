@@ -7,22 +7,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
@@ -50,10 +45,6 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
-		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
-
-		if (cap == null)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
 		if (hand == EnumHand.OFF_HAND) {
 			Item mainItem = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
@@ -62,32 +53,25 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 				return ActionResult.newResult(EnumActionResult.FAIL, stack);
 		}
 
-		if (cap.getNextFireTime() < GlobalEvents.tick) {
-			if (!world.isRemote) {
-				Object preconditionResult = checkPreconditions(player, stack);
+		if (!world.isRemote) {
+			Object preconditionResult = checkPreconditions(player, stack);
 
-				if (preconditionResult == null)
-					return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			if (preconditionResult == null)
+				return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-				if (!findAndConsumeRunes(getRunes(), player, true, stack))
-					return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			if (!findAndConsumeRunes(getRunes(), player, true, stack))
+				return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-				if (getCastingSound() != null)
-					world.playSound(null, player.posX, player.posY, player.posZ, getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			if (getCastingSound() != null)
+				world.playSound(null, player.posX, player.posY, player.posZ, getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-				cap.setNextShotDelay(12);
-				player.addStat(StatList.getObjectUseStats(this));
-				stack.damageItem(1, player);
-				cast(world, stack, player, preconditionResult);
-			}
-
-			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
-		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + 20) {
-			cap.setNextShotDelay(0);
+			player.getCooldownTracker().setCooldown(this, 12);
+			player.addStat(StatList.getObjectUseStats(this));
+			stack.damageItem(1, player);
+			cast(world, stack, player, preconditionResult);
 		}
 
-		return ActionResult.newResult(EnumActionResult.PASS, stack);
+		return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 	}
 
 	public boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runes, EntityPlayer player, boolean allowBuffs, ItemStack staff) {
@@ -143,12 +127,6 @@ public abstract class BaseStaff extends Item implements AdventWeapon, EnergyProj
 	@Override
 	public int getItemEnchantability() {
 		return 8;
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new AdventGunProvider();
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -11,8 +11,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
 import net.tslat.aoa3.client.model.entities.misc.ModelAnimaStone;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.library.Enums;
 import org.apache.logging.log4j.Level;
 
@@ -42,7 +42,7 @@ public class AnimaStoneRenderer extends RenderEntity {
 			GlStateManager.translate(0, -1.5, 0);
 			GlStateManager.scale(-1, 1, 1);
 			renderModel(entity, 0, 0, rotation, entity.rotationYaw, entity.rotationPitch, 0.0625f);
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY + 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 5, 0.5f).create();
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 50, 3, 5);
 			GlStateManager.depthMask(true);
 			GlStateManager.disableRescaleNormal();
 			GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
