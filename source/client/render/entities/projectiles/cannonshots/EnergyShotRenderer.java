@@ -50,8 +50,8 @@ public class EnergyShotRenderer extends Render<EntityEnergyShot> {
 					entity.toggle2 = !entity.toggle2;
 			}
 
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY + entity.yOffset1, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY + entity.yOffset2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 100, 3, 7);
 		}
 	}
 

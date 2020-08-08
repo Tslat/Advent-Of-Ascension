@@ -24,9 +24,9 @@ public class ShyreBeamRenderer extends Render<EntityShyreBeam> {
 	public void doRender(EntityShyreBeam entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 5);
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 5);
 	}
 
 	@Nullable

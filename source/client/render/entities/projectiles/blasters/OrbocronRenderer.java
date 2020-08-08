@@ -23,7 +23,7 @@ public class OrbocronRenderer extends Render<EntityOrbocron> {
 	@Override
 	public void doRender(EntityOrbocron entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_VIOLET, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_VIOLET, 100, 3, 7);
 		}
 	}
 

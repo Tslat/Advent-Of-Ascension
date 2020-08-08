@@ -59,8 +59,8 @@ public class SunsetBulletRenderer extends Render<EntitySunsetBullet> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 5);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 100, 3, 5);
 		}
 	}
 

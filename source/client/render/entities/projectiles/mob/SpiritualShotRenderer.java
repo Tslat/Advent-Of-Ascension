@@ -22,7 +22,7 @@ public class SpiritualShotRenderer extends Render<EntitySpiritualShot> {
 
 	@Override
 	public void doRender(EntitySpiritualShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
 	}
 
 	@Nullable

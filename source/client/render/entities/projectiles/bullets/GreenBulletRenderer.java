@@ -59,7 +59,7 @@ public class GreenBulletRenderer extends Render<EntityGreenBullet> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 5);
 		}
 	}
 

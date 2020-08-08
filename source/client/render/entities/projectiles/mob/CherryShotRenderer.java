@@ -22,8 +22,8 @@ public class CherryShotRenderer extends Render<EntityCherryShot> {
 
 	@Override
 	public void doRender(EntityCherryShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY + 0.2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 5);
-		entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY - 0.2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY + 0.2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY - 0.2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 5);
 	}
 
 	@Nullable

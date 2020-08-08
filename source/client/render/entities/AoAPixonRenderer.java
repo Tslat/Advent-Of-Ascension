@@ -19,7 +19,7 @@ public class AoAPixonRenderer extends RenderLiving<EntityPixon> {
 
 	@Override
 	public void doRender(EntityPixon entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.65d, entity.posZ, 0, 0, 0, colour, 150, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY + 0.65d, entity.posZ, 0, 0, 0, colour, 150, 3, 5);
 	}
 
 	@Nullable

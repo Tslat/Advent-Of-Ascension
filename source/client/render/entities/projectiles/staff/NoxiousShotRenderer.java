@@ -23,7 +23,7 @@ public class NoxiousShotRenderer extends Render<EntityNoxiousShot> {
 	@Override
 	public void doRender(EntityNoxiousShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 3);
 		}
 	}
 

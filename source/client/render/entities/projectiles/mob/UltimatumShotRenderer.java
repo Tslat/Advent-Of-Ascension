@@ -23,9 +23,9 @@ public class UltimatumShotRenderer extends Render<EntityUltimatumShot> {
 
 	@Override
 	public void doRender(EntityUltimatumShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25, 3, 0);
-		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 3);
-		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX + AdventOfAscension.rand.nextDouble() - 0.5d, entity.posY + AdventOfAscension.rand.nextDouble() - 0.5d, entity.posZ + AdventOfAscension.rand.nextDouble() - 0.5d, 0, 0, 0, Enums.RGBIntegers.YELLOW, 50, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25, 3, 0);
+		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX + AdventOfAscension.rand.nextDouble() - 0.5d, entity.posY + AdventOfAscension.rand.nextDouble() - 0.5d, entity.posZ + AdventOfAscension.rand.nextDouble() - 0.5d, 0, 0, 0, Enums.RGBIntegers.YELLOW, 50, 3, 3);
 	}
 
 	@Nullable

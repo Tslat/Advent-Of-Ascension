@@ -22,7 +22,7 @@ public class BaronessShotRenderer extends Render<EntityBaronessShot> {
 
 	@Override
 	public void doRender(EntityBaronessShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 50, 3, 7);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 50, 3, 7);
 	}
 
 	@Nullable

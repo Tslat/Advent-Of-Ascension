@@ -43,6 +43,7 @@ public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void postInit() {
+		ParticleRegister.doInitTasks();
 		ProjectileRenders.postInit();
 		ClientCommandHandler.instance.registerCommand(new CommandAoAWiki());
 

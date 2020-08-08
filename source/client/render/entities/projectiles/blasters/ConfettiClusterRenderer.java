@@ -22,15 +22,15 @@ public class ConfettiClusterRenderer extends Render<EntityConfettiCluster> {
 	@Override
 	public void doRender(EntityConfettiCluster entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ + -0.05, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ + 0.05, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ + 0.05, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ + -0.05, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ + -0.05, 15, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ + 0.05, 15, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ + -0.05, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + -0.05, entity.motionY, entity.motionZ + 0.05, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ + 0.05, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX + 0.05, entity.motionY, entity.motionZ + -0.05, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ + -0.05, 15, 10, 3);
+			entity.world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, true, entity.posX, entity.posY, entity.posZ, entity.motionX, entity.motionY, entity.motionZ + 0.05, 15, 10, 3);
 		}
 	}
 
