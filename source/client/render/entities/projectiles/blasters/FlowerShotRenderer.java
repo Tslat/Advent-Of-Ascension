@@ -25,12 +25,12 @@ public class FlowerShotRenderer extends Render<EntityFlowerShot> {
 	public void doRender(EntityFlowerShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		if (AdventOfAscension.rand.nextBoolean()) {
 			for (int i = 0; i < 3; i++) {
-				entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
 			}
 		}
 		else {
 			for (int i = 0; i < 3; i++) {
-				entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 7);
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 7);
 			}
 		}
 	}

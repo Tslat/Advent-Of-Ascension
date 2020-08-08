@@ -23,13 +23,13 @@ public class RainbowShotRenderer extends Render<EntityRainbowShot> {
 	@Override
 	public void doRender(EntityRainbowShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 1.0, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 1.0, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 20, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 1.0, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 1.0, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 20, 7);
 		}
 	}
 

@@ -59,8 +59,8 @@ public class CarrotBallRenderer extends Render<EntityCarrotBall> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.2, entity.posZ, 0,0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY - 0.2, entity.posZ, 0,0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.2, entity.posZ, 0,0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY - 0.2, entity.posZ, 0,0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
 		}
 	}
 

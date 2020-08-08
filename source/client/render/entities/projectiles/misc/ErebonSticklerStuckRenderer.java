@@ -23,7 +23,7 @@ public class ErebonSticklerStuckRenderer extends Render<EntityErebonSticklerStuc
 	@Override
 	public void doRender(EntityErebonSticklerStuck entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 7; i++) {
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 5);
 		}
 	}
 

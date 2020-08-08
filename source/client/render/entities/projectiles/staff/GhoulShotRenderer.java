@@ -23,8 +23,8 @@ public class GhoulShotRenderer extends Render<EntityGhoulShot> {
 	@Override
 	public void doRender(EntityGhoulShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 20, 3);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW_2, 50, 20, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 20, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW_2, 50, 20, 3);
 		}
 	}
 

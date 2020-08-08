@@ -23,8 +23,8 @@ public class SoulStormRenderer extends Render<EntitySoulStorm> {
 	@Override
 	public void doRender(EntitySoulStorm entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 6; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 25, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 25, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 25, 3, 7);
 		}
 	}
 

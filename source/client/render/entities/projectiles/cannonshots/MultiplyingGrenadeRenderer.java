@@ -58,7 +58,7 @@ public class MultiplyingGrenadeRenderer extends Render<EntityMultiplyingGrenade>
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.popMatrix();
 
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0,0, 0, Enums.RGBIntegers.YELLOW, 75, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0,0, 0, Enums.RGBIntegers.YELLOW, 75, 3, 3);
 	}
 
 	@Nullable

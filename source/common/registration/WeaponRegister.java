@@ -2,11 +2,15 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
+import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Bootstrap;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -1100,6 +1104,26 @@ public class WeaponRegister {
 
 				arrow.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
 				return arrow;
+			}
+		});
+
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ItemRegister.FRAGMENTED_ANIMA_STONE, new Bootstrap.BehaviorDispenseOptional() {
+			@Override
+			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
+				successful = true;
+
+				World world = source.getWorld();
+				BlockPos pos = source.getBlockPos().offset(source.getBlockState().getValue(BlockDispenser.FACING));
+
+				if (ItemDye.applyBonemeal(stack, world, pos)) {
+					if (!world.isRemote)
+						world.playEvent(2005, pos, 0);
+				}
+				else {
+					successful = false;
+				}
+
+				return stack;
 			}
 		});
 	}

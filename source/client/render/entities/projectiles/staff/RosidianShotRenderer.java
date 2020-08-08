@@ -24,11 +24,11 @@ public class RosidianShotRenderer extends Render<EntityRosidianShot> {
 	public void doRender(EntityRosidianShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		if (entity.motionY > 0.98) {
 			for (int i = 0; i < 8; i++) {
-				entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 100, 3, 3);
+				entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 100, 3, 3);
 			}
 		}
 		else {
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 3);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class PlutonSticklerStuckRenderer extends Render<EntityPlutonSticklerStuc
 	@Override
 	public void doRender(EntityPlutonSticklerStuck entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 7; i++) {
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
 		}
 	}
 

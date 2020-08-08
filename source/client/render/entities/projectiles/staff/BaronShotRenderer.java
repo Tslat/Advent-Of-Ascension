@@ -23,7 +23,7 @@ public class BaronShotRenderer extends Render<EntityBaronShot> {
 	@Override
 	public void doRender(EntityBaronShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 3);
 		}
 	}
 
