@@ -23,7 +23,7 @@ public class SwarmShotRenderer extends Render<EntitySwarmShot> {
 	@Override
 	public void doRender(EntitySwarmShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BROWN, 100, 3, 3);
 		}
 	}
 

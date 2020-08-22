@@ -50,7 +50,6 @@ public class GasBlaster extends BaseBlaster {
 			}
 		}
 
-
 		return super.doEntityImpact(shot, target, shooter);
 	}
 

@@ -23,7 +23,7 @@ public class LyonicShotRenderer extends Render<EntityLyonicShot> {
 
 	@Override
 	public void doRender(EntityLyonicShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, AdventOfAscension.rand.nextBoolean() ? Enums.RGBIntegers.DARK_GRAY : Enums.RGBIntegers.GOLD, 100, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, AdventOfAscension.rand.nextBoolean() ? Enums.RGBIntegers.DARK_GRAY : Enums.RGBIntegers.GOLD, 100, 3, 3);
 	}
 
 	@Nullable

@@ -25,8 +25,8 @@ public class SunShotRenderer extends Render<EntitySunShot> {
 
 	@Override
 	public void doRender(EntitySunShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 200, 3, 3);
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 200, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 200, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 200, 3, 3);
 
 		double posX = entity.posX + AdventOfAscension.rand.nextGaussian() * 0.5;
 		double posY = entity.posY + AdventOfAscension.rand.nextGaussian() * 0.5;

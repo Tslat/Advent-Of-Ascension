@@ -22,7 +22,7 @@ public class YellowGuardianShotRenderer extends Render<EntityYellowGuardianShot>
 
 	@Override
 	public void doRender(EntityYellowGuardianShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 5);
 	}
 
 	@Nullable

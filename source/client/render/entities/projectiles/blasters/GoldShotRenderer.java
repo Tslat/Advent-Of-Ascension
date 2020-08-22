@@ -23,8 +23,8 @@ public class GoldShotRenderer extends Render<EntityGoldShot> {
 	@Override
 	public void doRender(EntityGoldShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 1, 3, 5);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 1, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 1, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 1, 3, 5);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class ErebonSticklerShotRenderer extends Render<EntityErebonSticklerShot>
 	@Override
 	public void doRender(EntityErebonSticklerShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 14; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 7);
 		}
 	}
 

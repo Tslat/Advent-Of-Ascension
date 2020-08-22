@@ -59,8 +59,8 @@ public class StickyCoolBombRenderer extends Render<EntityStickyCoolBomb> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY + 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.SWIRLY, entity.posX, entity.posY - 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY + 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY - 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 3, 7);
 		}
 	}
 

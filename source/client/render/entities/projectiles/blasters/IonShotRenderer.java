@@ -23,9 +23,9 @@ public class IonShotRenderer extends Render<EntityIonShot> {
 	@Override
 	public void doRender(EntityIonShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 7);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 2, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 7);
 		}
 	}
 

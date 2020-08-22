@@ -23,7 +23,7 @@ public class ShyreShotRenderer extends Render<EntityShyreShot> {
 	@Override
 	public void doRender(EntityShyreShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY + 0.25d, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 3);
 		}
 	}
 

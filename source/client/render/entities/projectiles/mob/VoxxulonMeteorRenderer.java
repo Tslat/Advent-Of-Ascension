@@ -22,9 +22,9 @@ public class VoxxulonMeteorRenderer extends Render<EntityVoxxulonMeteor> {
 
 	@Override
 	public void doRender(EntityVoxxulonMeteor entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 7);
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 7);
-		entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.6, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 7);
+		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 7);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 7);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.6, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 7);
 	}
 
 	@Nullable

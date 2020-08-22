@@ -23,9 +23,9 @@ public class MeteorFallRenderer extends Render<EntityMeteorFall> {
 	@Override
 	public void doRender(EntityMeteorFall entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY , entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.3D , entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 3);
-			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY - 0.6D , entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY , entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.3D , entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 100, 3, 3);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.6D , entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 3);
 		}
 	}
 
