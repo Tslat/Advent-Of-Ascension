@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.client.gui.mainwindow.AdventMainGui;
+import org.lwjgl.input.Keyboard;
+
 @SideOnly(Side.CLIENT)
 public class KeyBinder {
 	public static KeyBinding keyCreatureStats;
@@ -22,10 +24,10 @@ public class KeyBinder {
 	public static boolean statusSkillGuiMessage = true;
 
 	public static void init() {
-		ClientRegistry.registerKeyBinding(keyCreatureStats = new KeyBinding("key.cstats", 0, "key.categories.advent"));
-		ClientRegistry.registerKeyBinding(keyResourceGui = new KeyBinding("key.resources", 24, "key.categories.advent"));
-		ClientRegistry.registerKeyBinding(keySkillGui = new KeyBinding("key.skills", 0, "key.categories.advent"));
-		ClientRegistry.registerKeyBinding(keyAdventGui = new KeyBinding("key.adventGui", 211, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keyCreatureStats = new KeyBinding("key.cstats", Keyboard.KEY_NONE, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keyResourceGui = new KeyBinding("key.resources", Keyboard.KEY_O, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keySkillGui = new KeyBinding("key.skills", Keyboard.KEY_NONE, "key.categories.advent"));
+		ClientRegistry.registerKeyBinding(keyAdventGui = new KeyBinding("key.adventGui", Keyboard.KEY_DELETE, "key.categories.advent"));
 	}
 
 	@SubscribeEvent

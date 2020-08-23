@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.generation.plants;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -11,6 +12,8 @@ public class CrysteviaCrystalPlant extends PlantStackable {
 
 	public CrysteviaCrystalPlant(String name, String registryName) {
 		super(name, registryName, Material.GLASS, 0, Material.ROCK);
+
+		setSoundType(SoundType.GLASS);
 	}
 
 	public void setDruseDrop(Item druse) {

@@ -149,8 +149,13 @@ public abstract class BaseGun extends Item implements AdventWeapon {
 			if (bullet.getHand() != null)
 				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, shooter.getHeldItem(bullet.getHand()));
 
-			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod))
+			System.out.println(target);
+			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
 				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
+			}
+			else if (!(target instanceof EntityLivingBase)) {
+				target.attackEntityFrom(new EntityDamageSourceIndirect("gun", bullet, shooter).setProjectile(), (float)getDamage() * bulletDmgMultiplier * shellMod);
+			}
 		}
 	}
 

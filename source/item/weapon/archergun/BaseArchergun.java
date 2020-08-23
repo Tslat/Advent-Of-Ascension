@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
@@ -55,8 +56,15 @@ public abstract class BaseArchergun extends BaseGun {
 
 	@Override
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet arrow, float bulletDmgMultiplier) {
-		if (target != null && EntityUtil.dealRangedDamage(target, shooter, arrow, (float)getDamage()))
+		if (target == null)
+			return;
+
+		if (EntityUtil.dealRangedDamage(target, shooter, arrow, (float)getDamage())) {
 			doImpactEffect(target, shooter, arrow, bulletDmgMultiplier);
+		}
+		else if (!(target instanceof EntityLivingBase)) {
+			target.attackEntityFrom(DamageSource.causeThrownDamage(arrow, shooter), (float)getDamage());
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

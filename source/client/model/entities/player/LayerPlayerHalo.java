@@ -55,6 +55,7 @@ public class LayerPlayerHalo implements LayerRenderer<AbstractClientPlayer> {
 
 			playerRenderer.bindTexture(haloTexture);
 			GlStateManager.pushMatrix();
+			GlStateManager.pushAttrib();
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
@@ -66,9 +67,9 @@ public class LayerPlayerHalo implements LayerRenderer<AbstractClientPlayer> {
 			haloModel.halo.renderWithRotation(scale);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, player.getBrightnessForRender() % 65536, player.getBrightnessForRender() / 65536f);
-			GlStateManager.enableAlpha();
 			GlStateManager.disableBlend();
-			GlStateManager.color(1, 1, 1, 1);
+			GlStateManager.enableAlpha();
+			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 		}
 	}

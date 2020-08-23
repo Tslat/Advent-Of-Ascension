@@ -50,7 +50,7 @@ public class StringUtil {
 	}
 
 	public static void sendMessageWithinRadius(TextComponentTranslation msg, Entity center, int radius) {
-		for (EntityPlayer pl : center.world.getEntitiesWithinAABB(EntityPlayer.class, center.getEntityBoundingBox().grow(50))) {
+		for (EntityPlayer pl : center.world.getEntitiesWithinAABB(EntityPlayer.class, center.getEntityBoundingBox().grow(radius))) {
 			pl.sendMessage(msg);
 		}
 	}

@@ -22,6 +22,7 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGooBall;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
@@ -46,20 +47,20 @@ public class GooBall extends BaseThrownWeapon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
 		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
-			return new EntityGooBall(player, (BaseGun)weaponStack.getItem());
+			return new EntityGooBall(player, item);
 
 		return null;
 	}
 
 	@Override
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet gooBall, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, gooBall, bulletDmgMultiplier);
-
-		if (target instanceof EntityLivingBase)
+		if (target != null && EntityUtil.dealRangedDamage(target, shooter, gooBall, dmg * bulletDmgMultiplier)) {
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 1));
-
-		shooter.world.playSound(null, gooBall.posX, gooBall.posY, gooBall.posZ, SoundsRegister.GOO_BALL_IMPACT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			shooter.world.playSound(null, gooBall.posX, gooBall.posY, gooBall.posZ, SoundsRegister.GOO_BALL_IMPACT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

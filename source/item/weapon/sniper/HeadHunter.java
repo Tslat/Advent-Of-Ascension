@@ -62,7 +62,7 @@ public class HeadHunter extends BaseSniper {
 						if (shooter instanceof EntityPlayerMP)
 							PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.FORAGING_LOOT, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
 
-						((EntityPlayer)shooter).getCooldownTracker().setCooldown(this, (int)(((EntityPlayer)shooter).getCooldownTracker().getCooldown(this, 0) / 2f));
+						((EntityPlayer)shooter).getCooldownTracker().setCooldown(this, (int)(getFiringDelay() / 2f));
 					}
 				}
 			}

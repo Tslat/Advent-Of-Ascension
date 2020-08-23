@@ -6,6 +6,7 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -164,6 +165,14 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 
 		dataManager.set(GROWTH_PERCENT, growthPercent);
 		setHealth(getMaxHealth() / (100 / (float)growthPercent));
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		if (dataManager.get(GROWTH_PERCENT) < 100)
+			setHealth(getMaxHealth());
+
+		super.writeEntityToNBT(compound);
 	}
 
 	@Override
