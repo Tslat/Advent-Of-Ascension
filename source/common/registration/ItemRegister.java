@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
@@ -536,7 +537,7 @@ public class ItemRegister {
 	public static final RecordItem OUTLAW_DISC = ObjectHolder();
 	public static final RecordItem CAVERNS_DISC = ObjectHolder();
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void registerItems(final RegistryEvent.Register<Item> ev) {
 		AdventOfAscension.logMessage(Level.INFO, "Beginning item registration");
 
@@ -1116,7 +1117,7 @@ public class ItemRegister {
 			}
 		}
 
-		return null;
+		throw new RuntimeException("itemRegistryList is accessed before item registration");
 	}
 
 	protected static void registerRender(Item item, String location) {
