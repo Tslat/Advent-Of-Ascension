@@ -56,6 +56,8 @@ public class CreepSpawnTask implements Runnable {
 
             creep.setPosition(x, centerY, z);
             world.spawnEntity(creep);
+
+            return;
         }
 
         currentCorner += 1;

@@ -45,6 +45,11 @@ public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
 		return null;
 	}
 
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {

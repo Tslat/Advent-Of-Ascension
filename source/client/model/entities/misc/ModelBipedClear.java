@@ -58,7 +58,7 @@ public class ModelBipedClear extends ModelBase {
 		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(770, 771);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		head.render(f5);
 		body.render(f5);
 		rightArm.render(f5);

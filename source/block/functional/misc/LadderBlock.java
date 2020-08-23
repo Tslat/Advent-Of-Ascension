@@ -9,6 +9,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 
 import java.util.Random;
 
@@ -20,7 +21,7 @@ public class LadderBlock extends BlockLadder {
 		setHardness(hardness);
 		setResistance(resistance);
 		setDefaultState(blockState.getBaseState().withProperty(BlockLadder.FACING, EnumFacing.NORTH));
-		setCreativeTab(null);
+		setCreativeTab(CreativeTabsRegister.DECORATION_BLOCKS);
 	}
 
 	@Override

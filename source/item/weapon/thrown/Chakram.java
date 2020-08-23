@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityChakram;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
@@ -44,17 +45,17 @@ public class Chakram extends BaseThrownWeapon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
 		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
-			return new EntityChakram(player, (BaseGun)weaponStack.getItem());
+			return new EntityChakram(player, item);
 
 		return null;
 	}
 
 	@Override
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
-
-		if (target instanceof EntityLivingBase)
+		if (target != null && EntityUtil.dealRangedDamage(target, shooter, bullet, dmg * bulletDmgMultiplier))
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 1));
 	}
 

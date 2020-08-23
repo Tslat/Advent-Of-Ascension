@@ -38,8 +38,10 @@ public class Grenade extends BaseThrownWeapon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
 		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
-			return new EntityGrenade(player, (BaseGun)weaponStack.getItem());
+			return new EntityGrenade(player, item);
 
 		return null;
 	}

@@ -43,17 +43,17 @@ public class Vulkram extends BaseThrownWeapon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
 		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
-			return new EntityVulkram(player, (BaseGun)weaponStack.getItem());
+			return new EntityVulkram(player, item);
 
 		return null;
 	}
 
 	@Override
 	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
-
-		if (target != null)
+		if (target != null && EntityUtil.dealRangedDamage(target, shooter, bullet, dmg * bulletDmgMultiplier))
 			EntityUtil.healEntity(shooter, 1.0f);
 	}
 

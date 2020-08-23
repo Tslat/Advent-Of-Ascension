@@ -1933,7 +1933,7 @@ public final class BlockRegister {
 		registerBlock(registry, new UnbreakableGlassBlock("ArchaicGlass", "archaic_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 		registerBlock(registry, new GlassBlock("ArchaicGlassBreakable", "archaic_glass_breakable"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 		registerBlock(registry, new GlassBlock("BaronGlass", "baron_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
-		registerBlock(registry, new UnbreakableGlassBlock("DecayedGlass", "decayed_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
+		registerBlock(registry, new GlassBlock("DecayedGlass", "decayed_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 		registerBlock(registry, new GlassBlock("GardencianGlass", "gardencian_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 		registerBlock(registry, new GlassBlock("HavenGlass", "haven_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
 		registerBlock(registry, new GlassBlock("IroGlass", "iro_glass"), "blocks/decoration/glass/", ORE_DICT_GLASS);
