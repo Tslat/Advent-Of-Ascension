@@ -73,13 +73,22 @@ public class EntityAIFlyingMeleeAttack extends EntityAIBase {
 	@Override
 	public void updateTask() {
 		EntityLivingBase target = this.taskOwner.getAttackTarget();
+
+		if (target == null) {
+			resetTask();
+
+			return;
+		}
+
 		double attackDistance = this.taskOwner.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ);
 
 		this.taskOwner.getLookHelper().setLookPositionWithEntity(target, 30, 30);
 		this.delayTicks--;
 
 		if ((this.retainTarget || this.taskOwner.getEntitySenses().canSee(target)) &&
-				this.delayTicks <= 0 && (this.targetX == 0 && this.targetY == 0 && this.targetZ == 0 || target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1 || this.taskOwner.getRNG().nextFloat() < 0.05f)) {
+				this.delayTicks <= 0 &&
+				(this.targetX == 0 && this.targetY == 0 && this.targetZ == 0 || target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1 ||
+						this.taskOwner.getRNG().nextFloat() < 0.05f)) {
 			this.targetX = target.posX;
 			this.targetY = target.getEntityBoundingBox().minY;
 			this.targetZ = target.posZ;

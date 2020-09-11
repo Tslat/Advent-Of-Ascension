@@ -86,6 +86,11 @@ public class ExtractionDevice extends Block {
 	}
 
 	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return false;
+	}
+
+	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
 		if (!world.isRemote) {
 			IBlockState topBlock = world.getBlockState(pos.up());
@@ -125,7 +130,7 @@ public class ExtractionDevice extends Block {
 							player.sendMessage(StringUtil.getLocale("message.feedback.extraction").appendSibling(new TextComponentTranslation(stack.getTranslationKey() + ".name")));
 						}
 						else {
-							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.empty"));
+							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.nothing"));
 						}
 
 						ItemHandlerHelper.giveItemToPlayer(player, stack);

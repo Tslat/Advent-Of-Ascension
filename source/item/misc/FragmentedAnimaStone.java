@@ -50,7 +50,7 @@ public class FragmentedAnimaStone extends SimpleItem {
 					world.setBlockState(pos, state.withProperty(BlockCocoa.AGE, 2), 2);
 				}
 				else {
-					int backupCounter = block instanceof BlockGrass ? 1 : 10;
+					int backupCounter = (block instanceof BlockGrass || block instanceof BlockDoublePlant) ? 1 : 10;
 
 					while (world.getBlockState(pos).equals(state) && backupCounter > 0) {
 						backupCounter--;

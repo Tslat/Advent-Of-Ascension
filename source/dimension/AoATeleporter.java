@@ -551,8 +551,6 @@ public abstract class AoATeleporter implements ITeleporter {
 			}
 		}
 
-
-
 		if (!world.getBlockState(pos = pos.down()).isOpaqueCube())
 			makePortalPlatformAndDecorate(world, pos, direction);
 
