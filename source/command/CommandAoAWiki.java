@@ -13,6 +13,8 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.List;
 
 public class CommandAoAWiki extends CommandBase {
 	private static final TextComponentString commandPrefix = new TextComponentString(TextFormatting.DARK_RED + "[AoA" + TextFormatting.GOLD + "Wiki" + TextFormatting.DARK_RED + "] ");
@@ -20,6 +22,11 @@ public class CommandAoAWiki extends CommandBase {
 	@Override
 	public String getName() {
 		return "aoawiki";
+	}
+
+	@Override
+	public List<String> getAliases() {
+		return Collections.<String>singletonList("aoawiki");
 	}
 
 	@Override

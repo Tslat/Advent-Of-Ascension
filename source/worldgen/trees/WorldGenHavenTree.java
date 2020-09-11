@@ -52,19 +52,19 @@ public class WorldGenHavenTree extends WorldGenTree {
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(world, rand, pos, 2);
 
-		switch (rand.nextInt(multiSaplingPos != null ? 6 : 3)) {
+		switch (rand.nextInt(3) + (multiSaplingPos == null ? 0 : 3)) {
 			case 0:
-				return generateTree1(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree1(world, rand, pos);
 			case 1:
-				return generateTree2(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree2(world, rand, pos);
 			case 2:
-				return generateTree3(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree3(world, rand, pos);
 			case 3:
-				return generateTree4(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree4(world, rand, multiSaplingPos);
 			case 4:
-				return generateTree5(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree5(world, rand, multiSaplingPos);
 			case 5:
-				return generateTree6(world, rand, multiSaplingPos == null ? pos : multiSaplingPos);
+				return generateTree6(world, rand, multiSaplingPos);
 		}
 
 		return false;

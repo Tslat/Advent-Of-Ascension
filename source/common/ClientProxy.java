@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,7 +20,6 @@ import net.tslat.aoa3.client.gui.toasts.TributeRequirementToast;
 import net.tslat.aoa3.client.model.entities.player.LayerPlayerHalo;
 import net.tslat.aoa3.client.render.entities.projectiles.ProjectileRenders;
 import net.tslat.aoa3.client.sound.MusicSound;
-import net.tslat.aoa3.command.CommandAoAWiki;
 import net.tslat.aoa3.common.packet.PacketToastPopup;
 import net.tslat.aoa3.common.packet.leaderboard.PacketLeaderboardStats;
 import net.tslat.aoa3.common.registration.BlockRegister;
@@ -45,7 +43,6 @@ public class ClientProxy extends ServerProxy {
 	public void postInit() {
 		ParticleRegister.doInitTasks();
 		ProjectileRenders.postInit();
-		ClientCommandHandler.instance.registerCommand(new CommandAoAWiki());
 
 		for (RenderPlayer playerRenderer : Minecraft.getMinecraft().getRenderManager().getSkinMap().values()) {
 			playerRenderer.addLayer(new LayerPlayerHalo(playerRenderer));

@@ -92,7 +92,7 @@ public final class BlockRegister {
 	private static final String ORE_DICT_STONE = "stone";
 	private static final String ORE_DICT_WOOD = "logWood";
 
-	public static final BasicBlock ABYSS_STONE = ObjectHolder();
+	public static final BasicBlock ABYSS_STONE = null;
 	public static final BasicBlock BARATHOS_HELLSTONE = ObjectHolder();
 	public static final BasicBlock BARON_STONE = ObjectHolder();
 	public static final BasicBlock BOREAN_STONE = ObjectHolder();
@@ -2812,15 +2812,6 @@ public final class BlockRegister {
 
 				ModelLoader.setCustomStateMapper(wrapper.block, fluidStateMapper);
 			}
-		}
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	private static void setStateMapper(Block... blocks) {
-		for (Block block : blocks) {
-			if (block instanceof CustomStateMapperBlock)
-				ModelLoader.setCustomStateMapper(block, ((CustomStateMapperBlock)block).getStateMapper());
 		}
 	}
 

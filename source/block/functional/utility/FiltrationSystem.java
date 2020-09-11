@@ -45,6 +45,16 @@ public class FiltrationSystem extends BasicNonCubeBlock {
 	}
 
 	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(BlockRegister.FILTRATION_SYSTEM);
+	}
+
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return false;
+	}
+
+	@Override
 	public int quantityDropped(Random random) {
 		return 1;
 	}

@@ -67,6 +67,7 @@ public class LayerPlayerHalo implements LayerRenderer<AbstractClientPlayer> {
 			haloModel.halo.renderWithRotation(scale);
 			Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, player.getBrightnessForRender() % 65536, player.getBrightnessForRender() / 65536f);
+			GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 			GlStateManager.disableBlend();
 			GlStateManager.enableAlpha();
 			GlStateManager.popAttrib();
