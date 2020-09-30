@@ -31,7 +31,7 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 		return new Slot(inputs, 1, 76, 23) {
 			@Override
 			public boolean isItemValid(ItemStack stack) {
-				return stack.getItem() == ItemRegister.whitewashingSolution || stack.getItem() == ItemRegister.darklyPowder;
+				return stack.getItem() == ItemRegister.WHITEWASHING_SOLUTION || stack.getItem() == ItemRegister.DARKLY_POWDER;
 			}
 		};
 	}
@@ -74,11 +74,11 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 		ItemStack powderStack = inputs.getStackInSlot(1);
 
 		if (!powderStack.isEmpty() && brickStack.getItem() == ItemBlock.getItemFromBlock(Blocks.OBSIDIAN)) {
-			if (powderStack.getItem() == ItemRegister.darklyPowder) {
-				output.setInventorySlotContents(0, new ItemStack(BlockRegister.bricksDarkwash, 2));
+			if (powderStack.getItem() == ItemRegister.DARKLY_POWDER) {
+				output.setInventorySlotContents(0, new ItemStack(BlockRegister.DARKWASH_BRICKS, 2));
 			}
-			else if (powderStack.getItem() == ItemRegister.whitewashingSolution) {
-				output.setInventorySlotContents(0, new ItemStack(BlockRegister.bricksWhitewash, 2));
+			else if (powderStack.getItem() == ItemRegister.WHITEWASHING_SOLUTION) {
+				output.setInventorySlotContents(0, new ItemStack(BlockRegister.WHITEWASH_BRICKS, 2));
 			}
 			else {
 				output.setInventorySlotContents(0, ItemStack.EMPTY);
@@ -91,7 +91,7 @@ public class ContainerWhitewashingTable extends ContainerBasicUtility {
 
 	@Override
 	protected Block getBlock() {
-		return BlockRegister.whitewashingTable;
+		return BlockRegister.WHITEWASHING_TABLE;
 	}
 
 	@Override

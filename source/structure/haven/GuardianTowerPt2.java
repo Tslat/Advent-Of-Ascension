@@ -13,20 +13,20 @@ import static net.minecraft.block.BlockStairs.FACING;
 import static net.minecraft.block.BlockStairs.HALF;
 
 public class GuardianTowerPt2 {
-	private static final IBlockState havenStone = BlockRegister.stoneHaven.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState crystalliteBricks = BlockRegister.bricksCrystallite.getDefaultState();
-	private static final IBlockState twinklestoneFence = BlockRegister.fenceTwinklestone.getDefaultState();
-	private static final IBlockState volarSpawner = BlockRegister.spawnerVolar.getDefaultState();
-	private static final IBlockState surveyorSpawner = BlockRegister.spawnerSurveyor.getDefaultState();
-	private static final IBlockState crystalliteStairsTopNorth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
-	private static final IBlockState crystalliteStairsBottomNorth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.NORTH);
-	private static final IBlockState crystalliteStairsTopEast = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.EAST).withProperty(HALF, BlockStairs.EnumHalf.TOP);
-	private static final IBlockState crystalliteStairsBottomEast = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.EAST);
-	private static final IBlockState crystalliteStairsTopWest = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.WEST).withProperty(HALF, BlockStairs.EnumHalf.TOP);
-	private static final IBlockState crystalliteStairsBottomWest = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.WEST);
-	private static final IBlockState crystalliteStairsTopSouth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
-	private static final IBlockState crystalliteStairsBottomSouth = BlockRegister.stairsCrystalliteBricks.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
+	private static final IBlockState havenStone = BlockRegister.HAVEN_STONE.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState crystalliteBricks = BlockRegister.CRYSTALLITE_BRICKS.getDefaultState();
+	private static final IBlockState twinklestoneFence = BlockRegister.TWINKLESTONE_FENCE.getDefaultState();
+	private static final IBlockState volarSpawner = BlockRegister.VOLAR_SPAWNER.getDefaultState();
+	private static final IBlockState surveyorSpawner = BlockRegister.SURVEYOR_SPAWNER.getDefaultState();
+	private static final IBlockState crystalliteStairsTopNorth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.NORTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsBottomNorth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.NORTH);
+	private static final IBlockState crystalliteStairsTopEast = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.EAST).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsBottomEast = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.EAST);
+	private static final IBlockState crystalliteStairsTopWest = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.WEST).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsBottomWest = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.WEST);
+	private static final IBlockState crystalliteStairsTopSouth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.SOUTH).withProperty(HALF, BlockStairs.EnumHalf.TOP);
+	private static final IBlockState crystalliteStairsBottomSouth = BlockRegister.CRYSTALLITE_BRICKS_STAIRS.getDefaultState().withProperty(FACING, EnumFacing.SOUTH);
 
 	protected static void addBlocks(GuardianTower instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 6, 28, 15, whitewashBricks);

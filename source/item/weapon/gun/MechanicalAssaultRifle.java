@@ -2,11 +2,10 @@ package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class MechanicalAssaultRifle extends BaseGun implements AdventWeapon {
+public class MechanicalAssaultRifle extends BaseGun {
 	public MechanicalAssaultRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("MechanicalAssaultRifle");
@@ -16,6 +15,6 @@ public class MechanicalAssaultRifle extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolver;
+		return SoundsRegister.REVOLVER_FIRE;
 	}
 }

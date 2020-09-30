@@ -51,17 +51,17 @@ public class EntityNatura extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNaturaLiving;
+		return SoundsRegister.MOB_NATURA_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNaturaDeath;
+		return SoundsRegister.MOB_NATURA_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNaturaHit;
+		return SoundsRegister.MOB_NATURA_HIT;
 	}
 
 	@Nullable

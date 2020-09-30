@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderGreckon extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionGreckon;
+		return DimensionRegister.DIM_GRECKON;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeGreckon.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_GRECKON.getBiomeProvider(world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class WorldProviderGreckon extends WorldProvider implements AoAWorldProvi
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeGreckon.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_GRECKON.getChunkGenerator(world, null);
 	}
 
 	@Override

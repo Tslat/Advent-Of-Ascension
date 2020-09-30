@@ -53,17 +53,17 @@ public class EntityHeadlessDestroyer extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSlimerDeath;
+		return SoundsRegister.MOB_SLIMER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSlimerHit;
+		return SoundsRegister.MOB_SLIMER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

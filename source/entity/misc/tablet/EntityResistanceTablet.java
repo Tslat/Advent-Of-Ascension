@@ -25,6 +25,6 @@ public class EntityResistanceTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletResistance;
+		return ItemRegister.RESISTANCE_TABLET;
 	}
 }

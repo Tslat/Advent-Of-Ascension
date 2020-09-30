@@ -16,6 +16,7 @@ import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
@@ -28,11 +29,11 @@ public abstract class BaseSword extends ItemSword implements AdventWeapon {
 		super(material);
 		this.dmg = getAttackDamage();
 		this.speed = speed == 0 ? Enums.WeaponSpeed.NORMAL.value : speed;
-		setCreativeTab(CreativeTabsRegister.swordsTab);
+		setCreativeTab(CreativeTabsRegister.SWORDS);
 	}
 
 	public float getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public double getAttackSpeed() {
@@ -66,8 +67,8 @@ public abstract class BaseSword extends ItemSword implements AdventWeapon {
 		Multimap<String, AttributeModifier> modifierMap = super.getItemAttributeModifiers(equipmentSlot);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg);
-			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, speed);
+			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage());
+			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER, getAttackSpeed());
 		}
 
 		return modifierMap;

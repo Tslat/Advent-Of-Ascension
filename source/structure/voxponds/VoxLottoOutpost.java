@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class VoxLottoOutpost extends AoAStructure { //StructureSize: 9x22x9
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState steelLight = BlockRegister.lightSteel.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState steelLight = BlockRegister.STEEL_LIGHT.getDefaultState();
 	private static final IBlockState glass = Blocks.GLASS.getDefaultState();
-	private static final IBlockState voxCrate = BlockRegister.voxCrate.getDefaultState();
+	private static final IBlockState voxCrate = BlockRegister.VOX_CRATE.getDefaultState();
 
 	public VoxLottoOutpost() {
 		super("VoxLottoOutpost");

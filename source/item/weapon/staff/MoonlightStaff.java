@@ -36,14 +36,14 @@ public class MoonlightStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffMoonlight;
+		return SoundsRegister.MOONLIGHT_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeCompass, 1);
-		runes.put(ItemRegister.runeLunar, 2);
-		runes.put(ItemRegister.runeKinetic, 2);
+		runes.put(ItemRegister.COMPASS_RUNE, 1);
+		runes.put(ItemRegister.LUNAR_RUNE, 2);
+		runes.put(ItemRegister.KINETIC_RUNE, 2);
 	}
 
 	@Override

@@ -51,19 +51,19 @@ public class EntitySpiritGuardian extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSpiritLiving;
+		return SoundsRegister.MOB_SPIRIT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSpiritDeath;
+		return SoundsRegister.MOB_SPIRIT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSpiritLiving;
+		return SoundsRegister.MOB_SPIRIT_LIVING;
 	}
 
 	@Nullable

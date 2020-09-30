@@ -50,24 +50,24 @@ public class EntityGrocculate extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobGrocculateLiving;
+        return SoundsRegister.MOB_GROCCULATE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobGrocculateHit;
+        return SoundsRegister.MOB_GROCCULATE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobGrocculateHit;
+        return SoundsRegister.MOB_GROCCULATE_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.veryHeavyStep;
+        return SoundsRegister.VERY_HEAVY_STEP;
     }
 
     @Nullable

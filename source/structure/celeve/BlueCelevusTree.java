@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BlueCelevusTree extends AoAStructure { //StructureSize: 5x19x5
-	private static final IBlockState whiteCelevus = BlockRegister.leavesCelevusWhite.getDefaultState();
-	private static final IBlockState blueCelevus = BlockRegister.leavesCelevusBlue.getDefaultState();
-	private static final IBlockState celevusStem = BlockRegister.celeveStem.getDefaultState();
+	private static final IBlockState whiteCelevus = BlockRegister.WHITE_CELEVUS_LEAVES.getDefaultState();
+	private static final IBlockState blueCelevus = BlockRegister.BLUE_CELEVUS_LEAVES.getDefaultState();
+	private static final IBlockState celevusStem = BlockRegister.CELEVE_STEM.getDefaultState();
 
 	public BlueCelevusTree() {
 		super("BlueCelevusTree");

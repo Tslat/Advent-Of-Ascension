@@ -13,14 +13,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class RunicSword extends BaseSword implements AdventWeapon {
+public class RunicSword extends BaseSword {
 	public RunicSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("RunicSword");
@@ -35,22 +34,22 @@ public class RunicSword extends BaseSword implements AdventWeapon {
 			if (offhandStack.getItem() instanceof RuneItem && offhandStack.getCount() >= 5) {
 				RuneItem rune = (RuneItem)offhandStack.getItem();
 
-				if (rune == ItemRegister.runePoison) {
+				if (rune == ItemRegister.POISON_RUNE) {
 					target.addPotionEffect(new PotionEffect(MobEffects.POISON, 72, 1, false, true));
 				}
-				else if (rune == ItemRegister.runeWither) {
+				else if (rune == ItemRegister.WITHER_RUNE) {
 					target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 40, 2, false, true));
 				}
-				else if (rune == ItemRegister.runeFire) {
+				else if (rune == ItemRegister.FIRE_RUNE) {
 					target.setFire(5);
 				}
-				else if (rune == ItemRegister.runeWind) {
+				else if (rune == ItemRegister.WIND_RUNE) {
 					EntityUtil.doScaledKnockback(target, attacker, 0.5f, attacker.posX - target.posX, attacker.posZ - target.posZ);
 				}
-				else if (rune == ItemRegister.runeWater) {
+				else if (rune == ItemRegister.WATER_RUNE) {
 					target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 0, false, true));
 				}
-				else if (rune == ItemRegister.runeCharged) {
+				else if (rune == ItemRegister.CHARGED_RUNE) {
 					((WorldServer)target.world).spawnParticle(EnumParticleTypes.VILLAGER_ANGRY, target.posX + (itemRand.nextFloat() * target.width * 2f) - target.width, target.posY + 1 + (itemRand.nextFloat() * target.height), target.posZ + (itemRand.nextFloat() * target.width * 2f) - target.width, 3, 0, 0, 0, (double)0);
 				}
 				else {

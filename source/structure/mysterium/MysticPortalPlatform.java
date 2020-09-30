@@ -16,9 +16,9 @@ import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class MysticPortalPlatform extends AoAStructure { //StructureSize: 13x31x9
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
-	private static final IBlockState runicStone = BlockRegister.stoneRunic.getDefaultState();
-	private static final IBlockState runandorPortal = BlockRegister.portalRunandor.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
-	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState runicStone = BlockRegister.RUNIC_STONE.getDefaultState();
+	private static final IBlockState runandorPortal = BlockRegister.RUNANDOR_PORTAL.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST);
+	private static final IBlockState neonLapisLamp = BlockRegister.NEON_LAPIS_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
 
 	public MysticPortalPlatform() {
 		super("MysticPortalPlatform");

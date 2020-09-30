@@ -46,13 +46,13 @@ public class EntityLollypopper extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobLollypopperDeath;
+		return SoundsRegister.MOB_LOLLYPOPPER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.candyThump;
+		return SoundsRegister.CANDY_THUMP;
 	}
 
 	@Nullable

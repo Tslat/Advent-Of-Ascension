@@ -45,24 +45,24 @@ public class EntitySabretooth extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSabretoothLiving;
+		return SoundsRegister.MOB_SABRETOOTH_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSabretoothDeath;
+		return SoundsRegister.MOB_SABRETOOTH_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSabretoothHit;
+		return SoundsRegister.MOB_SABRETOOTH_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable

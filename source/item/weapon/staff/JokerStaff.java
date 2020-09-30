@@ -31,13 +31,13 @@ public class JokerStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffJoker;
+		return SoundsRegister.JOKER_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 4);
-		runes.put(ItemRegister.runeKinetic, 4);
+		runes.put(ItemRegister.WIND_RUNE, 4);
+		runes.put(ItemRegister.KINETIC_RUNE, 4);
 	}
 
 	@Override

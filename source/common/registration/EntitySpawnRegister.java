@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.init.Biomes;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -53,16 +54,20 @@ import net.tslat.aoa3.entity.npcs.lottoman.EntityLottoman;
 import net.tslat.aoa3.entity.npcs.lottoman.EntityWitheringLottoman;
 import net.tslat.aoa3.entity.npcs.skillmaster.*;
 import net.tslat.aoa3.entity.npcs.trader.*;
+import net.tslat.aoa3.entity.passive.*;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 import static net.tslat.aoa3.common.registration.BiomeRegister.*;
 
 public class EntitySpawnRegister {
+    private static boolean forceAllSpawns = false;
+
 	private static final ArrayList<SpawnEntry> bigDaySpawns = new ArrayList<SpawnEntry>(5);
 	private static final ArrayList<SpawnEntry> bloodHuntSpawns = new ArrayList<SpawnEntry>(3);
 	private static final ArrayList<SpawnEntry> creepDaySpawns = new ArrayList<SpawnEntry>(1);
@@ -75,357 +80,399 @@ public class EntitySpawnRegister {
         AdventOfAscension.logOptionalMessage("Registering entity spawns");
 
         if (!ConfigurationUtil.MainConfig.disableOverworldMobs) {
-            final BiomeDictionary.Type[] emptyTypeList = new BiomeDictionary.Type[0];
+            if (Loader.isModLoaded("openterraingenerator"))
+                forceAllSpawns = true;
 
-            Biome[] overworldBiomes = getOverworldBiomes();
-            Biome[] mountainBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.MOUNTAIN}, emptyTypeList);
-            Biome[] snowyBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY}, emptyTypeList);
-            Biome[] sandyBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SANDY}, emptyTypeList);
-            Biome[] savannaBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SAVANNA}, emptyTypeList);
-            Biome[] jungleBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE}, emptyTypeList);
-            Biome[] swampBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SWAMP}, emptyTypeList);
-            Biome[] warmConiferousBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.CONIFEROUS}, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY});
-            Biome[] mesaBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.MESA}, emptyTypeList);
-            Biome[] oceanBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.OCEAN}, emptyTypeList);
-            Biome[] beachBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.BEACH}, emptyTypeList);
-            Biome[] genericBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST}, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY});
-            Biome[] genericPlainsBiomes = extractAllBiomesMatching(genericBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.PLAINS}, emptyTypeList);
-
-            EntityRegistry.addSpawn(EntityBombCarrier.class, 1, 0, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            fullMoonSpawns.add(new SpawnEntry(EntityIrkling.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            deathDaySpawns.add(new SpawnEntry(EntityReaperTwins.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            lunarInvasionSpawns.add(new SpawnEntry(EntityRoloscope.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            bigDaySpawns.add(new SpawnEntry(EntityWoodGiant.class, 50, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            deathDaySpawns.add(new SpawnEntry(EntityTriclops.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            lunarInvasionSpawns.add(new SpawnEntry(EntityVertebron.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            lunarInvasionSpawns.add(new SpawnEntry(EntityWalker.class, 70, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            EntityRegistry.addSpawn(EntityEverbeast.class, 2, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityFacelessRunner.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityGhost.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityMotherVoidWalker.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityShadow.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityTrickster.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityVoidCharger.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityVoidWalker.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            deathDaySpawns.add(new SpawnEntry(EntityHeadlessDestroyer.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            bloodHuntSpawns.add(new SpawnEntry(EntityBloodmist.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            bloodHuntSpawns.add(new SpawnEntry(EntityLinger.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            EntityRegistry.addSpawn(EntityBugeye.class, 70, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityDicer.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlyBugeye.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlyCharger.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlyCyclops.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlyNightReaper.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlyGoblin.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            soulScurrySpawns.add(new SpawnEntry(EntityGhostlySasquatch.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            lunarInvasionSpawns.add(new SpawnEntry(EntityTerrestrial.class, 2, 0, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            fullMoonSpawns.add(new SpawnEntry(EntitySkellox.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            fullMoonSpawns.add(new SpawnEntry(EntityScrubby.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            fullMoonSpawns.add(new SpawnEntry(EntityNightWatcher.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            EntityRegistry.addSpawn(EntityNightReaper.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            EntityRegistry.addSpawn(EntityDemonReaper.class, 1, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            fullMoonSpawns.add(new SpawnEntry(EntityDarkBeast.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            EntityRegistry.addSpawn(EntityClown.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes);
-            creepDaySpawns.add(new SpawnEntry(EntityHost.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            deathDaySpawns.add(new SpawnEntry(EntityDeathHunter.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            bloodHuntSpawns.add(new SpawnEntry(EntityAnemia.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-            lunarInvasionSpawns.add(new SpawnEntry(EntityModulo.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
-
-            EntityRegistry.addSpawn(EntityGoalby.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes);
-            EntityRegistry.addSpawn(EntityGrunt.class, 20, 1, 1, EnumCreatureType.MONSTER, mountainBiomes);
-            bigDaySpawns.add(new SpawnEntry(EntityStoneGiant.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes));
-            EntityRegistry.addSpawn(EntityMagicke.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes);
-
-            EntityRegistry.addSpawn(EntityHunch.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes);
-            bigDaySpawns.add(new SpawnEntry(EntityIceGiant.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
-            EntityRegistry.addSpawn(EntityPolarUrsa.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes);
-            EntityRegistry.addSpawn(EntityYeti.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes);
-            EntityRegistry.addSpawn(EntitySnowCharger.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes);
-
-            EntityRegistry.addSpawn(EntityDesertCharger.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes);
-            EntityRegistry.addSpawn(EntityFurlion.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes);
-            bigDaySpawns.add(new SpawnEntry(EntitySandGiant.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
-            EntityRegistry.addSpawn(EntitySandGolem.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes);
-            EntityRegistry.addSpawn(EntitySphinx.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes);
-            EntityRegistry.addSpawn(EntityWickett.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes);
-
-            EntityRegistry.addSpawn(EntityChimera.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes);
-            EntityRegistry.addSpawn(EntityBoneback.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes);
-            EntityRegistry.addSpawn(EntityRammerhead.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes);
-            EntityRegistry.addSpawn(EntityElkanyne.class, 20, 1, 1, EnumCreatureType.CREATURE, savannaBiomes);
-
-            EntityRegistry.addSpawn(EntityBushBaby.class, 70, 1, 1, EnumCreatureType.MONSTER, jungleBiomes);
-            EntityRegistry.addSpawn(EntityStinger.class, 70, 1, 1, EnumCreatureType.MONSTER, jungleBiomes);
-
-            EntityRegistry.addSpawn(EntityChomper.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
-            EntityRegistry.addSpawn(EntitySkipper.class, 30, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
-            EntityRegistry.addSpawn(EntityFishix.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
-            EntityRegistry.addSpawn(EntitySwampCharger.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
-            EntityRegistry.addSpawn(EntityHag.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes);
-
-            EntityRegistry.addSpawn(EntityBlackUrsa.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-            EntityRegistry.addSpawn(EntityHidingFungi.class, 40, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-            bigDaySpawns.add(new SpawnEntry(EntityLeafyGiant.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
-            EntityRegistry.addSpawn(EntityNatura.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-            EntityRegistry.addSpawn(EntitySkolle.class, 15, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-            EntityRegistry.addSpawn(EntityUrka.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes);
-
-            EntityRegistry.addSpawn(EntityHillCharger.class, 50, 1, 1, EnumCreatureType.MONSTER, mesaBiomes);
-            EntityRegistry.addSpawn(EntityMuckopede.class, 50, 1, 1, EnumCreatureType.MONSTER, mesaBiomes);
-
-            EntityRegistry.addSpawn(EntityPincher.class, 1, 0, 1, EnumCreatureType.WATER_CREATURE, oceanBiomes);
-
-            EntityRegistry.addSpawn(EntitySeaCharger.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes);
-            EntityRegistry.addSpawn(EntitySpinux.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes);
-            EntityRegistry.addSpawn(EntitySeaTroll.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes);
-            EntityRegistry.addSpawn(EntityTrollTrader.class, 1, 0, 1, EnumCreatureType.CREATURE, beachBiomes);
-
-            EntityRegistry.addSpawn(EntityCyclops.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityCharger.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntitySasquatch.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityHeadlessHunter.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityGlisteningPixon.class, 30, 1, 3, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityBoneCreature.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityKingCharger.class, 1, 0, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityBrute.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityGhostineAncient.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityGoblin.class, 20, 0, 1, EnumCreatureType.MONSTER, genericBiomes);
-            EntityRegistry.addSpawn(EntityAssassin.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityNaturalist.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityRealmshifter.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-            EntityRegistry.addSpawn(EntityNightfly.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes);
-
-            if (ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance == 0)
-                EntityRegistry.addSpawn(EntityCorruptedTraveller.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes);
-
-            EntityRegistry.addSpawn(EntityHorndron.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes);
-            EntityRegistry.addSpawn(EntityWarclops.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes);
-            EntityRegistry.addSpawn(EntityAncientGolem.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes);
-
-            EntityRegistry.addSpawn(EntityDeadTree.class, 10, 0, 1, EnumCreatureType.MONSTER, Biomes.FOREST, Biomes.FOREST_HILLS);
+            addSpawns(getOverworldSpawns(forceAllSpawns));
         }
 
-        EntityRegistry.addSpawn(EntityWitheringLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityEmbrake.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityFakePigman.class, 80, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityFlamewalker.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityHellspot.class, 60, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityInfernal.class, 10, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityWitherWizard.class, 55, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntitySkeletalCowman.class, 45, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityHellcat.class, 50, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
-        EntityRegistry.addSpawn(EntityLittleBam.class, 35, 0, 1, EnumCreatureType.MONSTER, Biomes.HELL);
+        addSpawns(getNetherSpawns());
+        addSpawns(getDimensionSpawns());
+    }
 
-        EntityRegistry.addSpawn(EntityBloomingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeMysterium);
-        EntityRegistry.addSpawn(EntityRunationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeMysterium);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeMysterium);
-        EntityRegistry.addSpawn(EntityFungat.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeMysterium);
-        EntityRegistry.addSpawn(EntityFungback.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeMysterium);
-        EntityRegistry.addSpawn(EntityFungik.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeMysterium);
-        EntityRegistry.addSpawn(EntityFungung.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeMysterium);
-        EntityRegistry.addSpawn(EntityEeo.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeMysterium);
+	public static HashSet<SpawnEntry> getOverworldSpawns(boolean includeEventSpawns) {
+	    final HashSet<SpawnEntry> spawns = new HashSet<SpawnEntry>();
+        final BiomeDictionary.Type[] emptyTypeList = new BiomeDictionary.Type[0];
 
-        EntityRegistry.addSpawn(EntityGlaringPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityLoggingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityFlye.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityGrobbler.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityLelyetianCaster.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityLelyetianWarrior.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityTracker.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLelyetia);
-        EntityRegistry.addSpawn(EntityTrotter.class, 20, 0, 1, EnumCreatureType.CREATURE, biomeLelyetia);
+        Biome[] overworldBiomes = getOverworldBiomes();
+        Biome[] mountainBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.MOUNTAIN}, emptyTypeList);
+        Biome[] snowyBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY}, emptyTypeList);
+        Biome[] sandyBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SANDY}, emptyTypeList);
+        Biome[] savannaBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SAVANNA}, emptyTypeList);
+        Biome[] jungleBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE}, emptyTypeList);
+        Biome[] swampBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.SWAMP}, emptyTypeList);
+        Biome[] warmConiferousBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.CONIFEROUS}, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY});
+        Biome[] mesaBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.MESA}, emptyTypeList);
+        Biome[] oceanBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.OCEAN}, emptyTypeList);
+        Biome[] beachBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.BEACH}, emptyTypeList);
+        Biome[] genericBiomes = extractAllBiomesMatching(overworldBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST}, new BiomeDictionary.Type[]{BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY});
+        Biome[] genericPlainsBiomes = extractAllBiomesMatching(genericBiomes, new BiomeDictionary.Type[]{BiomeDictionary.Type.PLAINS}, emptyTypeList);
+        
+        spawns.add(new SpawnEntry(EntityBombCarrier.class, 1, 0, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityEverbeast.class, 5, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityFacelessRunner.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityGhost.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityMotherVoidWalker.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityShadow.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityTrickster.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityVoidCharger.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityVoidWalker.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityBugeye.class, 70, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityDicer.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityNightReaper.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityDemonReaper.class, 1, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        spawns.add(new SpawnEntry(EntityClown.class, 65, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        fullMoonSpawns.add(new SpawnEntry(EntityIrkling.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        deathDaySpawns.add(new SpawnEntry(EntityReaperTwins.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        lunarInvasionSpawns.add(new SpawnEntry(EntityRoloscope.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        bigDaySpawns.add(new SpawnEntry(EntityWoodGiant.class, 50, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        deathDaySpawns.add(new SpawnEntry(EntityTriclops.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        lunarInvasionSpawns.add(new SpawnEntry(EntityVertebron.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        lunarInvasionSpawns.add(new SpawnEntry(EntityWalker.class, 70, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        deathDaySpawns.add(new SpawnEntry(EntityHeadlessDestroyer.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        bloodHuntSpawns.add(new SpawnEntry(EntityBloodmist.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        bloodHuntSpawns.add(new SpawnEntry(EntityLinger.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlyBugeye.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlyCharger.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlyCyclops.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlyNightReaper.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlyGoblin.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        soulScurrySpawns.add(new SpawnEntry(EntityGhostlySasquatch.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        lunarInvasionSpawns.add(new SpawnEntry(EntityTerrestrial.class, 2, 0, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        fullMoonSpawns.add(new SpawnEntry(EntitySkellox.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        fullMoonSpawns.add(new SpawnEntry(EntityScrubby.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        fullMoonSpawns.add(new SpawnEntry(EntityNightWatcher.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        fullMoonSpawns.add(new SpawnEntry(EntityDarkBeast.class, 60, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        creepDaySpawns.add(new SpawnEntry(EntityHost.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        deathDaySpawns.add(new SpawnEntry(EntityDeathHunter.class, 40, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        bloodHuntSpawns.add(new SpawnEntry(EntityAnemia.class, 35, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        lunarInvasionSpawns.add(new SpawnEntry(EntityModulo.class, 100, 1, 1, EnumCreatureType.MONSTER, overworldBiomes));
+        
+        spawns.add(new SpawnEntry(EntityGoalby.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes));
+        spawns.add(new SpawnEntry(EntityGrunt.class, 20, 1, 1, EnumCreatureType.MONSTER, mountainBiomes));
+        spawns.add(new SpawnEntry(EntityMagicke.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes));
+        bigDaySpawns.add(new SpawnEntry(EntityStoneGiant.class, 60, 1, 1, EnumCreatureType.MONSTER, mountainBiomes));
 
-        EntityRegistry.addSpawn(EntityGleamingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeRunandor);
-        EntityRegistry.addSpawn(EntityAnimaMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeRunandor);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeRunandor);
-        EntityRegistry.addSpawn(EntityAriel.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
-        EntityRegistry.addSpawn(EntityBouncer.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
-        EntityRegistry.addSpawn(EntityEyeCreature.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
-        EntityRegistry.addSpawn(EntityPaladin.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
-        EntityRegistry.addSpawn(EntityRunicorn.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
-        EntityRegistry.addSpawn(EntityRunicornRider.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeRunandor);
+        spawns.add(new SpawnEntry(EntityHunch.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
+        spawns.add(new SpawnEntry(EntityPolarUrsa.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
+        spawns.add(new SpawnEntry(EntityYeti.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
+        spawns.add(new SpawnEntry(EntitySnowCharger.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
+        bigDaySpawns.add(new SpawnEntry(EntityIceGiant.class, 70, 1, 1, EnumCreatureType.MONSTER, snowyBiomes));
 
-        EntityRegistry.addSpawn(EntityGlowingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeLBorean);
-        EntityRegistry.addSpawn(EntityHaulingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeLBorean);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeLBorean);
-        EntityRegistry.addSpawn(EntityAngler.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLBorean);
-        EntityRegistry.addSpawn(EntityCoralon.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLBorean);
-        EntityRegistry.addSpawn(EntityMuncher.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLBorean);
-        EntityRegistry.addSpawn(EntityNeptuno.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeLBorean);
-        EntityRegistry.addSpawn(EntitySeaViper.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLBorean);
-        EntityRegistry.addSpawn(EntityCoratee.class, 20, 0, 1, EnumCreatureType.CREATURE, biomeLBorean);
+        spawns.add(new SpawnEntry(EntityDesertCharger.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
+        spawns.add(new SpawnEntry(EntityFurlion.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
+        spawns.add(new SpawnEntry(EntitySandGolem.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
+        spawns.add(new SpawnEntry(EntitySphinx.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
+        spawns.add(new SpawnEntry(EntityWickett.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
+        bigDaySpawns.add(new SpawnEntry(EntitySandGiant.class, 30, 1, 1, EnumCreatureType.MONSTER, sandyBiomes));
 
-        EntityRegistry.addSpawn(EntityRadiantPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeDustopia);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeDustopia);
-        EntityRegistry.addSpawn(EntityBasilisk.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityDevourer.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityDuston.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityLostSoul.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityDusteiva.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityStalker.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityStalkerPrime.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
-        EntityRegistry.addSpawn(EntityLurker.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDustopia);
+        spawns.add(new SpawnEntry(EntityChimera.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes));
+        spawns.add(new SpawnEntry(EntityBoneback.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes));
+        spawns.add(new SpawnEntry(EntityRammerhead.class, 75, 1, 1, EnumCreatureType.MONSTER, savannaBiomes));
+        spawns.add(new SpawnEntry(EntityElkanyne.class, 20, 1, 1, EnumCreatureType.CREATURE, savannaBiomes));
 
-        EntityRegistry.addSpawn(EntityShiningPixon.class, 12, 1, 1, EnumCreatureType.CREATURE, biomeAbyss);
-        EntityRegistry.addSpawn(EntityButcheryMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeAbyss);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeAbyss);
-        EntityRegistry.addSpawn(EntityApparition.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntityBloodsucker.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntityDistorter.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntityFiend.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntityOcculent.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntityWebReaper.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
-        EntityRegistry.addSpawn(EntitySlimer.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeAbyss);
+        spawns.add(new SpawnEntry(EntityBushBaby.class, 70, 1, 1, EnumCreatureType.MONSTER, jungleBiomes));
+        spawns.add(new SpawnEntry(EntityStinger.class, 70, 1, 1, EnumCreatureType.MONSTER, jungleBiomes));
 
-        EntityRegistry.addSpawn(EntityCreationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeBarathos);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeBarathos);
-        EntityRegistry.addSpawn(EntityCryptid.class, 30, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityArkback.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityEchodar.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityEilosapien.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityNospike.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityEmperorBeast.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityParasect.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityKeeler.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntitySquiggler.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityTharafly.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
-        EntityRegistry.addSpawn(EntityRamradon.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeBarathos);
+        spawns.add(new SpawnEntry(EntityChomper.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes));
+        spawns.add(new SpawnEntry(EntitySkipper.class, 30, 1, 1, EnumCreatureType.MONSTER, swampBiomes));
+        spawns.add(new SpawnEntry(EntityFishix.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes));
+        spawns.add(new SpawnEntry(EntitySwampCharger.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes));
+        spawns.add(new SpawnEntry(EntityHag.class, 70, 1, 1, EnumCreatureType.MONSTER, swampBiomes));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeCandyland);
-        EntityRegistry.addSpawn(EntityAirhead.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCandyland);
-        EntityRegistry.addSpawn(EntityCandyCorny.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCandyland);
-        EntityRegistry.addSpawn(EntityCherryBarrager.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeCandyland);
-        EntityRegistry.addSpawn(EntityLollypopper.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCandyland);
-        EntityRegistry.addSpawn(EntityCherryBlaster.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCandyland);
-        EntityRegistry.addSpawn(EntityPeppermintSnail.class, 20, 0, 1, EnumCreatureType.CREATURE, biomeCandyland);
-        EntityRegistry.addSpawn(EntitySpearmintSnail.class, 20, 0, 1, EnumCreatureType.CREATURE, biomeCandyland);
+        spawns.add(new SpawnEntry(EntityBlackUrsa.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
+        spawns.add(new SpawnEntry(EntityHidingFungi.class, 40, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
+        spawns.add(new SpawnEntry(EntityNatura.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
+        spawns.add(new SpawnEntry(EntitySkolle.class, 15, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
+        spawns.add(new SpawnEntry(EntityUrka.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
+        bigDaySpawns.add(new SpawnEntry(EntityLeafyGiant.class, 70, 1, 1, EnumCreatureType.MONSTER, warmConiferousBiomes));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructStrength.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructRange.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructTerror.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructSpeed.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructResistance.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructFlight.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
-        EntityRegistry.addSpawn(EntityConstructMind.class, 2, 0, 1, EnumCreatureType.MONSTER, biomeCrystevia);
+        spawns.add(new SpawnEntry(EntityHillCharger.class, 50, 1, 1, EnumCreatureType.MONSTER, mesaBiomes));
+        spawns.add(new SpawnEntry(EntityMuckopede.class, 50, 1, 1, EnumCreatureType.MONSTER, mesaBiomes));
 
-        EntityRegistry.addSpawn(EntityExtractionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityCaseConstruct.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityDoubler.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityDweller.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityCaveCreep.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityRockbiter.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityRockCritter.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
-        EntityRegistry.addSpawn(EntityRockCrawler.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeDeeplands);
+        spawns.add(new SpawnEntry(EntityPincher.class, 1, 0, 1, EnumCreatureType.WATER_CREATURE, oceanBiomes));
 
-        EntityRegistry.addSpawn(EntityMetalloid.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeIromine);
-        EntityRegistry.addSpawn(EntityForagingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeIromine);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeIromine);
-        EntityRegistry.addSpawn(EntityMechachron.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeIromine);
-        EntityRegistry.addSpawn(EntityMechamaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeIromine);
-        EntityRegistry.addSpawn(EntityPolytom.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeIromine);
-        EntityRegistry.addSpawn(EntityQuickpocket.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeIromine);
-        EntityRegistry.addSpawn(EntityVoltron.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeIromine);
+        spawns.add(new SpawnEntry(EntitySeaCharger.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes));
+        spawns.add(new SpawnEntry(EntitySpinux.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes));
+        spawns.add(new SpawnEntry(EntitySeaTroll.class, 20, 1, 1, EnumCreatureType.MONSTER, beachBiomes));
+        spawns.add(new SpawnEntry(EntityTrollTrader.class, 1, 0, 1, EnumCreatureType.CREATURE, beachBiomes));
 
-        //EntityRegistry.addSpawn(EntityAuguryMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeHaven);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeHaven);
-        EntityRegistry.addSpawn(EntityAngelica.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityBlueAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityYellowAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityRedAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityPurpleAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityGreenAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityOrbiter.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntitySeeker.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityRainicorn.class, 2, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntitySurveyor.class, 5, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityVolar.class, 3, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityVoliant.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeHaven);
-        EntityRegistry.addSpawn(EntityHalycon.class, 5, 0, 1, EnumCreatureType.CREATURE, biomeHaven);
+        spawns.add(new SpawnEntry(EntityCyclops.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityCharger.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntitySasquatch.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityHeadlessHunter.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityGlisteningPixon.class, 30, 1, 3, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityBoneCreature.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityKingCharger.class, 1, 0, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityBrute.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityGhostineAncient.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityGoblin.class, 20, 0, 1, EnumCreatureType.MONSTER, genericBiomes));
+        spawns.add(new SpawnEntry(EntityAssassin.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityNaturalist.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityRealmshifter.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
+        spawns.add(new SpawnEntry(EntityNightfly.class, 20, 1, 1, EnumCreatureType.MONSTER, genericBiomes));
 
-        EntityRegistry.addSpawn(EntityInfusionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeGreckon);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeGreckon);
-        EntityRegistry.addSpawn(EntityGrillface.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntityShifter.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntitySilencer.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntitySkullCreature.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntitySugarface.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntityValkyrie.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
-        EntityRegistry.addSpawn(EntityHunter.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGreckon);
+        if (ConfigurationUtil.StructureConfig.overworld.ruinedTeleporterFrameSpawnChance == 0)
+            spawns.add(new SpawnEntry(EntityCorruptedTraveller.class, 1, 0, 1, EnumCreatureType.CREATURE, genericBiomes));
 
-        EntityRegistry.addSpawn(EntityInnervationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeCeleve);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeCeleve);
-        EntityRegistry.addSpawn(EntityBobo.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityChocko.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityJumbo.class, 2, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityKoko.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityKranky.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntitySnappy.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntitySticky.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityStitches.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
-        EntityRegistry.addSpawn(EntityTipsy.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeCeleve);
+        spawns.add(new SpawnEntry(EntityHorndron.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes));
+        spawns.add(new SpawnEntry(EntityWarclops.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes));
+        spawns.add(new SpawnEntry(EntityAncientGolem.class, 5, 0, 1, EnumCreatureType.MONSTER, genericPlainsBiomes));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeLunalus);
-        EntityRegistry.addSpawn(EntityExplodot.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLunalus);
-        EntityRegistry.addSpawn(EntityLunarcher.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLunalus);
-        EntityRegistry.addSpawn(EntityVisular.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeLunalus);
-        EntityRegistry.addSpawn(EntityVisulon.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeLunalus);
+        spawns.add(new SpawnEntry(EntityDeadTree.class, 10, 0, 1, EnumCreatureType.MONSTER, Biomes.FOREST, Biomes.FOREST_HILLS));
+        
+        if (includeEventSpawns) {
+            spawns.addAll(bigDaySpawns);
+            spawns.addAll(creepDaySpawns);
+            spawns.addAll(deathDaySpawns);
+            spawns.addAll(fullMoonSpawns);
+            spawns.addAll(bloodHuntSpawns);
+            spawns.addAll(soulScurrySpawns);
+            spawns.addAll(lunarInvasionSpawns);
+        }
+        
+        return spawns;
+    }
+    
+    public static HashSet<SpawnEntry> getNetherSpawns() {
+	    final HashSet<SpawnEntry> spawns = new HashSet<SpawnEntry>();
+        Biome[] netherBiomes = biomes(BiomeDictionary.Type.NETHER);
+        
+        spawns.add(new SpawnEntry(EntityWitheringLottoman.class, 1, 0, 1, EnumCreatureType.CREATURE, netherBiomes));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, netherBiomes));
+        spawns.add(new SpawnEntry(EntityEmbrake.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityFakePigman.class, 80, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityFlamewalker.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityHellspot.class, 60, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityInfernal.class, 10, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityWitherWizard.class, 55, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntitySkeletalCowman.class, 45, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityHellcat.class, 50, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        spawns.add(new SpawnEntry(EntityLittleBam.class, 35, 0, 1, EnumCreatureType.MONSTER, netherBiomes));
+        
+        return spawns;
+    }
+    
+    public static HashSet<SpawnEntry> getDimensionSpawns() {
+	    final HashSet<SpawnEntry> spawns = new HashSet<SpawnEntry>();
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityBoneCreeper.class, 40, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCaveCreepoid.class, 25, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCreeper.class, 40, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCreeperlock.class, 25, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCreepird.class, 15, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCreepuple.class, 40, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityKingCreeper.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityMagicalCreeper.class, 25, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityWingedCreeper.class, 30, 0, 1, EnumCreatureType.MONSTER, biomeCreeponia);
-        EntityRegistry.addSpawn(EntityCreepCow.class, 5, 0, 1, EnumCreatureType.CREATURE, biomeCreeponia);
+        spawns.add(new SpawnEntry(EntityBloomingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityRunationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityFungat.class, 20, 0, 1, EnumCreatureType.MONSTER, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityFungback.class, 15, 0, 1, EnumCreatureType.MONSTER, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityFungik.class, 15, 0, 1, EnumCreatureType.MONSTER, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityFungung.class, 1, 0, 1, EnumCreatureType.MONSTER, MYSTERIUM));
+        spawns.add(new SpawnEntry(EntityEeo.class, 15, 0, 1, EnumCreatureType.MONSTER, MYSTERIUM));
 
-        EntityRegistry.addSpawn(EntityAmbientPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, biomeHaven, biomeRunandor, biomeCandyland, biomeShyrelands);
+        spawns.add(new SpawnEntry(EntityGlaringPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, LELYETIA));
+        spawns.add(new SpawnEntry(EntityLoggingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, LELYETIA));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, LELYETIA));
+        spawns.add(new SpawnEntry(EntityFlye.class, 20, 0, 1, EnumCreatureType.MONSTER, LELYETIA));
+        spawns.add(new SpawnEntry(EntityGrobbler.class, 1, 0, 1, EnumCreatureType.MONSTER, LELYETIA));
+        spawns.add(new SpawnEntry(EntityLelyetianCaster.class, 20, 0, 1, EnumCreatureType.MONSTER, LELYETIA));
+        spawns.add(new SpawnEntry(EntityLelyetianWarrior.class, 20, 0, 1, EnumCreatureType.MONSTER, LELYETIA));
+        spawns.add(new SpawnEntry(EntityTracker.class, 20, 0, 1, EnumCreatureType.MONSTER, LELYETIA));
+        spawns.add(new SpawnEntry(EntityTrotter.class, 20, 0, 1, EnumCreatureType.CREATURE, LELYETIA));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomePrecasia);
-        EntityRegistry.addSpawn(EntityDyrehorn.class, 20, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
-        EntityRegistry.addSpawn(EntityGiantSnail.class, 20, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
-        EntityRegistry.addSpawn(EntityDeinotherium.class, 20, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
-        EntityRegistry.addSpawn(EntitySabretooth.class, 20, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
-        EntityRegistry.addSpawn(EntityTerradon.class, 1, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
-        EntityRegistry.addSpawn(EntityTortione.class, 3, 0, 1, EnumCreatureType.MONSTER, biomePrecasia);
+        spawns.add(new SpawnEntry(EntityGleamingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityAnimaMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityAriel.class, 20, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityBouncer.class, 20, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityEyeCreature.class, 20, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityPaladin.class, 20, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityRunicorn.class, 20, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
+        spawns.add(new SpawnEntry(EntityRunicornRider.class, 1, 0, 1, EnumCreatureType.MONSTER, RUNANDOR));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityToxxulous.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityGrocculate.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityGadgetoid.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityAlarmo.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityFischer.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityDestructor.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
-        EntityRegistry.addSpawn(EntityCentinel.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeVoxPonds);
+        spawns.add(new SpawnEntry(EntityGlowingPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, LBOREAN));
+        spawns.add(new SpawnEntry(EntityHaulingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, LBOREAN));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, LBOREAN));
+        spawns.add(new SpawnEntry(EntityAngler.class, 20, 0, 1, EnumCreatureType.MONSTER, LBOREAN));
+        spawns.add(new SpawnEntry(EntityCoralon.class, 20, 0, 1, EnumCreatureType.MONSTER, LBOREAN));
+        spawns.add(new SpawnEntry(EntityMuncher.class, 20, 0, 1, EnumCreatureType.MONSTER, LBOREAN));
+        spawns.add(new SpawnEntry(EntityNeptuno.class, 1, 0, 1, EnumCreatureType.MONSTER, LBOREAN));
+        spawns.add(new SpawnEntry(EntitySeaViper.class, 20, 0, 1, EnumCreatureType.MONSTER, LBOREAN));
+        spawns.add(new SpawnEntry(EntityCoratee.class, 20, 0, 1, EnumCreatureType.CREATURE, LBOREAN));
 
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeGardencia);
-        EntityRegistry.addSpawn(EntityArchvine.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntityBroccohead.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntityCarrotop.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntityFlowerface.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntitySquasher.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntitySunny.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
-        EntityRegistry.addSpawn(EntityCorny.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeGardencia);
+        spawns.add(new SpawnEntry(EntityRadiantPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityBasilisk.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityDevourer.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityDuston.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityLostSoul.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityDusteiva.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityStalker.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityStalkerPrime.class, 1, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
+        spawns.add(new SpawnEntry(EntityLurker.class, 20, 0, 1, EnumCreatureType.MONSTER, DUSTOPIA));
 
-        EntityRegistry.addSpawn(EntityExpeditionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, biomeShyrelands);
-        EntityRegistry.addSpawn(EntitySysker.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityShyreKnight.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityAxiolight.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityArcFlower.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityArcbeast.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityStimulo.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityStimulosus.class, 1, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntitySoulvyre.class, 5, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
-        EntityRegistry.addSpawn(EntityOmnilight.class, 20, 0, 1, EnumCreatureType.MONSTER, biomeShyrelands);
+        spawns.add(new SpawnEntry(EntityShiningPixon.class, 12, 1, 1, EnumCreatureType.CREATURE, ABYSS));
+        spawns.add(new SpawnEntry(EntityButcheryMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, ABYSS));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, ABYSS));
+        spawns.add(new SpawnEntry(EntityApparition.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntityBloodsucker.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntityDistorter.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntityFiend.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntityOcculent.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntityWebReaper.class, 20, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+        spawns.add(new SpawnEntry(EntitySlimer.class, 1, 0, 1, EnumCreatureType.MONSTER, ABYSS));
+
+        spawns.add(new SpawnEntry(EntityCreationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, BARATHOS));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, BARATHOS));
+        spawns.add(new SpawnEntry(EntityCryptid.class, 30, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityArkback.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityEchodar.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityEilosapien.class, 1, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityNospike.class, 1, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityEmperorBeast.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityParasect.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityKeeler.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntitySquiggler.class, 1, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityTharafly.class, 15, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+        spawns.add(new SpawnEntry(EntityRamradon.class, 20, 0, 1, EnumCreatureType.MONSTER, BARATHOS));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityAirhead.class, 20, 0, 1, EnumCreatureType.MONSTER, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityCandyCorny.class, 20, 0, 1, EnumCreatureType.MONSTER, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityCherryBarrager.class, 1, 0, 1, EnumCreatureType.MONSTER, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityLollypopper.class, 20, 0, 1, EnumCreatureType.MONSTER, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityCherryBlaster.class, 20, 0, 1, EnumCreatureType.MONSTER, CANDYLAND));
+        spawns.add(new SpawnEntry(EntityPeppermintSnail.class, 20, 0, 1, EnumCreatureType.CREATURE, CANDYLAND));
+        spawns.add(new SpawnEntry(EntitySpearmintSnail.class, 20, 0, 1, EnumCreatureType.CREATURE, CANDYLAND));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructStrength.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructRange.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructTerror.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructSpeed.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructResistance.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructFlight.class, 20, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+        spawns.add(new SpawnEntry(EntityConstructMind.class, 2, 0, 1, EnumCreatureType.MONSTER, CRYSTEVIA));
+
+        spawns.add(new SpawnEntry(EntityExtractionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityCaseConstruct.class, 1, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityDoubler.class, 1, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityDweller.class, 20, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityCaveCreep.class, 20, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityRockbiter.class, 20, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityRockCritter.class, 20, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityRockCrawler.class, 20, 0, 1, EnumCreatureType.MONSTER, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityShik.class, 5, 0, 3, EnumCreatureType.AMBIENT, DEEPLANDS));
+        spawns.add(new SpawnEntry(EntityMetalloid.class, 1, 0, 1, EnumCreatureType.CREATURE, IROMINE));
+        spawns.add(new SpawnEntry(EntityForagingMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, IROMINE));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, IROMINE));
+        spawns.add(new SpawnEntry(EntityMechachron.class, 1, 0, 1, EnumCreatureType.MONSTER, IROMINE));
+        spawns.add(new SpawnEntry(EntityMechamaton.class, 20, 0, 1, EnumCreatureType.MONSTER, IROMINE));
+        spawns.add(new SpawnEntry(EntityPolytom.class, 20, 0, 1, EnumCreatureType.MONSTER, IROMINE));
+        spawns.add(new SpawnEntry(EntityQuickpocket.class, 20, 0, 1, EnumCreatureType.MONSTER, IROMINE));
+        spawns.add(new SpawnEntry(EntityVoltron.class, 20, 0, 1, EnumCreatureType.MONSTER, IROMINE));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, HAVEN));
+        spawns.add(new SpawnEntry(EntityAngelica.class, 15, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityAutomaton.class, 20, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityOrbiter.class, 15, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntitySeeker.class, 15, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityRainicorn.class, 2, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntitySurveyor.class, 5, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityVolar.class, 3, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityVoliant.class, 1, 0, 1, EnumCreatureType.MONSTER, HAVEN));
+        spawns.add(new SpawnEntry(EntityHalycon.class, 5, 1, 1, EnumCreatureType.CREATURE, HAVEN));
+
+        spawns.add(new SpawnEntry(EntityInfusionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, GRECKON));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, GRECKON));
+        spawns.add(new SpawnEntry(EntityGrillface.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntityShifter.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntitySilencer.class, 1, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntitySkullCreature.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntitySugarface.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntityValkyrie.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+        spawns.add(new SpawnEntry(EntityHunter.class, 20, 0, 1, EnumCreatureType.MONSTER, GRECKON));
+
+        spawns.add(new SpawnEntry(EntityInnervationMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, CELEVE));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, CELEVE));
+        spawns.add(new SpawnEntry(EntityBobo.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityChocko.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityJumbo.class, 2, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityKoko.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityKranky.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntitySnappy.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntitySticky.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityStitches.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+        spawns.add(new SpawnEntry(EntityTipsy.class, 20, 0, 1, EnumCreatureType.MONSTER, CELEVE));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, LUNALUS));
+        spawns.add(new SpawnEntry(EntityExplodot.class, 20, 0, 1, EnumCreatureType.MONSTER, LUNALUS));
+        spawns.add(new SpawnEntry(EntityLunarcher.class, 20, 0, 1, EnumCreatureType.MONSTER, LUNALUS));
+        spawns.add(new SpawnEntry(EntityVisular.class, 20, 0, 1, EnumCreatureType.MONSTER, LUNALUS));
+        spawns.add(new SpawnEntry(EntityVisulon.class, 1, 0, 1, EnumCreatureType.MONSTER, LUNALUS));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityBoneCreeper.class, 40, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCaveCreepoid.class, 25, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCreeper.class, 40, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCreeperlock.class, 25, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCreepird.class, 15, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCreepuple.class, 40, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityKingCreeper.class, 1, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityMagicalCreeper.class, 25, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityWingedCreeper.class, 30, 0, 1, EnumCreatureType.MONSTER, CREEPONIA));
+        spawns.add(new SpawnEntry(EntityCreepCow.class, 5, 0, 1, EnumCreatureType.CREATURE, CREEPONIA));
+
+        spawns.add(new SpawnEntry(EntityAmbientPixon.class, 12, 1, 3, EnumCreatureType.CREATURE, HAVEN, RUNANDOR, CANDYLAND, SHYRELANDS));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, PRECASIA));
+        spawns.add(new SpawnEntry(EntityDyrehorn.class, 20, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntityGiantSnail.class, 20, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntityDeinotherium.class, 20, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntitySabretooth.class, 20, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntityTerradon.class, 1, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntityTortione.class, 3, 0, 1, EnumCreatureType.MONSTER, PRECASIA));
+        spawns.add(new SpawnEntry(EntityMeganeuropsis.class, 5, 1, 2, EnumCreatureType.CREATURE, PRECASIA));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityToxxulous.class, 20, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityGrocculate.class, 20, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityGadgetoid.class, 20, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityAlarmo.class, 20, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityFischer.class, 1, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityDestructor.class, 1, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+        spawns.add(new SpawnEntry(EntityCentinel.class, 20, 0, 1, EnumCreatureType.MONSTER, VOX_PONDS));
+
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, GARDENCIA));
+        spawns.add(new SpawnEntry(EntityArchvine.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntityBroccohead.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntityCarrotop.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntityFlowerface.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntitySquasher.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntitySunny.class, 1, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+        spawns.add(new SpawnEntry(EntityCorny.class, 20, 0, 1, EnumCreatureType.MONSTER, GARDENCIA));
+
+        spawns.add(new SpawnEntry(EntityExpeditionMaster.class, 1, 0, 1, EnumCreatureType.CREATURE, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityUndeadHerald.class, 1, 0, 1, EnumCreatureType.CREATURE, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntitySysker.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityShyreKnight.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityAxiolight.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityArcFlower.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityArcbeast.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityStimulo.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityStimulosus.class, 1, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntitySoulvyre.class, 5, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+        spawns.add(new SpawnEntry(EntityOmnilight.class, 20, 0, 1, EnumCreatureType.MONSTER, SHYRELANDS));
+
+        return spawns;
+    }
+
+    private static Biome[] biomes(BiomeDictionary.Type... biomeTypes) {
+        List<Biome> matchedBiomes = new ArrayList<Biome>();
+
+        for (BiomeDictionary.Type type : biomeTypes) {
+            matchedBiomes.addAll(BiomeDictionary.getBiomes(type));
+        }
+
+        return matchedBiomes.toArray(new Biome[0]);
     }
 
     private static Biome[] extractAllBiomesMatching(Biome[] preFilledList, BiomeDictionary.Type[] matchingTypes, BiomeDictionary.Type[] blacklistTypes) {
@@ -452,28 +499,28 @@ public class EntitySpawnRegister {
         List<Biome> suspectedOverworldBiomes = new ArrayList<Biome>();
         HashSet<Biome> blacklist = new HashSet<Biome>();
 
-        blacklist.add(biomeAbyss);
-        blacklist.add(biomeAncientCavern);
-        blacklist.add(biomeBarathos);
-        blacklist.add(biomeCeleve);
-        blacklist.add(biomeCandyland);
-        blacklist.add(biomeCreeponia);
-        blacklist.add(biomeCrystevia);
-        blacklist.add(biomeDeeplands);
-        blacklist.add(biomeDustopia);
-        blacklist.add(biomeGardencia);
-        blacklist.add(biomeGreckon);
-        blacklist.add(biomeHaven);
-        blacklist.add(biomeIromine);
-        blacklist.add(biomeImmortallis);
-        blacklist.add(biomeLBorean);
-        blacklist.add(biomeLelyetia);
-        blacklist.add(biomeLunalus);
-        blacklist.add(biomeMysterium);
-        blacklist.add(biomePrecasia);
-        blacklist.add(biomeRunandor);
-        blacklist.add(biomeShyrelands);
-        blacklist.add(biomeVoxPonds);
+        blacklist.add(ABYSS);
+        blacklist.add(ANCIENT_CAVERN);
+        blacklist.add(BARATHOS);
+        blacklist.add(CELEVE);
+        blacklist.add(CANDYLAND);
+        blacklist.add(CREEPONIA);
+        blacklist.add(CRYSTEVIA);
+        blacklist.add(DEEPLANDS);
+        blacklist.add(DUSTOPIA);
+        blacklist.add(GARDENCIA);
+        blacklist.add(GRECKON);
+        blacklist.add(HAVEN);
+        blacklist.add(IROMINE);
+        blacklist.add(IMMORTALLIS);
+        blacklist.add(LBOREAN);
+        blacklist.add(LELYETIA);
+        blacklist.add(LUNALUS);
+        blacklist.add(MYSTERIUM);
+        blacklist.add(PRECASIA);
+        blacklist.add(RUNANDOR);
+        blacklist.add(SHYRELANDS);
+        blacklist.add(VOX_PONDS);
         blacklist.add(Biomes.HELL);
         blacklist.add(Biomes.VOID);
         blacklist.add(Biomes.SKY);
@@ -487,6 +534,9 @@ public class EntitySpawnRegister {
     }
 
     public static void addEventSpawns(Enums.CreatureEvents event) {
+        if (forceAllSpawns)
+            return;
+
         ArrayList<SpawnEntry> spawnList = null;
 
         switch (event) {
@@ -513,12 +563,13 @@ public class EntitySpawnRegister {
                 break;
         }
 
-        for (SpawnEntry entry : spawnList) {
-            EntityRegistry.addSpawn(entry.entityClass, entry.weight, entry.minGroupSize, entry.maxGroupSize, entry.creatureType, entry.biomes);
-        }
+        addSpawns(spawnList);
     }
 
     public static void removeEventSpawns(Enums.CreatureEvents event) {
+        if (forceAllSpawns)
+            return;
+
         ArrayList<SpawnEntry> spawnList = null;
 
         switch (event) {
@@ -545,18 +596,24 @@ public class EntitySpawnRegister {
                 break;
         }
 
-        for (SpawnEntry entry : spawnList) {
-            EntityRegistry.removeSpawn(entry.entityClass, entry.creatureType, entry.biomes);
-        }
+        removeSpawns(spawnList);
     }
 
-    private static class SpawnEntry {
-    	private final Class<? extends EntityLiving> entityClass;
-    	private final int weight;
-    	private final int minGroupSize;
-    	private final int maxGroupSize;
-    	private final EnumCreatureType creatureType;
-    	private final Biome[] biomes;
+    public static void addSpawns(Collection<SpawnEntry> spawns) {
+        spawns.forEach(entry -> EntityRegistry.addSpawn(entry.entityClass, entry.weight, entry.minGroupSize, entry.maxGroupSize, entry.creatureType, entry.biomes));
+    }
+
+    public static void removeSpawns(Collection<SpawnEntry> spawns) {
+        spawns.forEach(entry -> EntityRegistry.removeSpawn(entry.entityClass, entry.creatureType, entry.biomes));
+    }
+
+    public static class SpawnEntry {
+        public final Class<? extends EntityLiving> entityClass;
+        public final int weight;
+        public final int minGroupSize;
+        public final int maxGroupSize;
+        public final EnumCreatureType creatureType;
+        public final Biome[] biomes;
 
     	private SpawnEntry(Class<? extends EntityLiving> entityClass, int weight, int minGroupSize, int maxGroupSize, EnumCreatureType creatureType, Biome... biomes) {
     	    this.entityClass = entityClass;

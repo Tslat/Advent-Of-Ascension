@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.weapon.thrown;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityRunicBomb;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
@@ -25,7 +27,7 @@ public class RunicBomb extends BaseThrownWeapon {
 		super(0.0f, 10);
 		setTranslationKey("RunicBomb");
 		setRegistryName("aoa3:runic_bomb");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable
@@ -35,9 +37,11 @@ public class RunicBomb extends BaseThrownWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		if (ItemUtil.findAndConsumeSpecialBullet(player, gun, true, this, player.getHeldItem(hand)) != null)
-			return new EntityRunicBomb(player, gun);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
+		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
+			return new EntityRunicBomb(player, item);
 
 		return null;
 	}

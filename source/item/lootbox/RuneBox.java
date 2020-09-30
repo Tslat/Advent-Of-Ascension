@@ -28,7 +28,7 @@ public class RuneBox extends Item {
 	public RuneBox() {
 		setTranslationKey("RuneBox");
 		setRegistryName("aoa3:rune_box");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -40,6 +40,8 @@ public class RuneBox extends Item {
 
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
+
+			return EnumActionResult.SUCCESS;
 		}
 
 		return EnumActionResult.PASS;

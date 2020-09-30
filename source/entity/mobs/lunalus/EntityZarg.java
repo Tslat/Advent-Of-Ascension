@@ -45,19 +45,19 @@ public class EntityZarg extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobZargLiving;
+		return SoundsRegister.MOB_ZARG_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobZargDeath;
+		return SoundsRegister.MOB_ZARG_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobZargHit;
+		return SoundsRegister.MOB_ZARG_HIT;
 	}
 
 	@Nullable

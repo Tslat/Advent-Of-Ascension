@@ -8,7 +8,7 @@ public class BasicFood extends ItemFood {
 		super(hunger, saturation, isWolfFood);
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.foodTab);
+		setCreativeTab(CreativeTabsRegister.FOOD);
 	}
 
 	public BasicFood(String name, String registryName, int hunger, float saturation) {

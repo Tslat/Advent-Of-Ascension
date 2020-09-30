@@ -86,7 +86,7 @@ public class EntityRunicGuardian extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotWizardBlast;
+		return SoundsRegister.WIZARD_BLAST_SHOOT;
 	}
 
 	@Override

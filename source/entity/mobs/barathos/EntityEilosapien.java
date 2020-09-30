@@ -50,17 +50,17 @@ public class EntityEilosapien extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEilosapienLiving;
+		return SoundsRegister.MOB_EILOSAPIEN_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEilosapienDeath;
+		return SoundsRegister.MOB_EILOSAPIEN_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEilosapienHit;
+		return SoundsRegister.MOB_EILOSAPIEN_HIT;
 	}
 
 	@Nullable

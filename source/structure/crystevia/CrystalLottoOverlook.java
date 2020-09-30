@@ -11,8 +11,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CrystalLottoOverlook extends AoAStructure { //StructureSize: 9x7x9
-	private static final IBlockState crystevianBricks = BlockRegister.bricksCrystevia.getDefaultState();
-	private static final IBlockState greenCrystal = BlockRegister.crystalGreen.getDefaultState();
+	private static final IBlockState crystevianBricks = BlockRegister.CRYSTEVIA_BRICKS.getDefaultState();
+	private static final IBlockState greenCrystal = BlockRegister.GREEN_CRYSTAL_BLOCK.getDefaultState();
 
 	public CrystalLottoOverlook() {
 		super("CrystalLottoOverlook");

@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CrystalExtensionStation extends AoAStructure { //StructureSize: 11x12x11
-	private static final IBlockState crystevianBricks = BlockRegister.bricksCrystevia.getDefaultState();
-	private static final IBlockState yellowCrystal = BlockRegister.crystalYellow.getDefaultState();
-	private static final IBlockState crystalExtensionShrine = BlockRegister.crystalExtensionShrine.getDefaultState();
+	private static final IBlockState crystevianBricks = BlockRegister.CRYSTEVIA_BRICKS.getDefaultState();
+	private static final IBlockState yellowCrystal = BlockRegister.YELLOW_CRYSTAL_BLOCK.getDefaultState();
+	private static final IBlockState crystalExtensionShrine = BlockRegister.CRYSTAL_EXTENSION_SHRINE.getDefaultState();
 
 	public CrystalExtensionStation() {
 		super("CrystalExtensionStation");

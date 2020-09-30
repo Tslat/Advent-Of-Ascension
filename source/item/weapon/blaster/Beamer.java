@@ -25,7 +25,7 @@ public class Beamer extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSprayer;
+		return SoundsRegister.SPRAYER_FIRE;
 	}
 
 	@Override

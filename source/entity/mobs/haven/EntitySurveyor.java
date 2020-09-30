@@ -45,19 +45,19 @@ public class EntitySurveyor extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSurveyorLiving;
+		return SoundsRegister.MOB_SURVEYOR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSurveyorDeath;
+		return SoundsRegister.MOB_SURVEYOR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSurveyorHit;
+		return SoundsRegister.MOB_SURVEYOR_HIT;
 	}
 
 	@Nullable

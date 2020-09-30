@@ -32,6 +32,6 @@ public class EntitySanctityTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletSanctity;
+		return ItemRegister.SANCTITY_TABLET;
 	}
 }

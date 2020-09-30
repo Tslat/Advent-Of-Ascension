@@ -31,14 +31,14 @@ public class GhoulStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runeDistortion, 1);
-		runes.put(ItemRegister.runeLife, 2);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.DISTORTION_RUNE, 1);
+		runes.put(ItemRegister.LIFE_RUNE, 2);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class GhoulStaff extends BaseStaff {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.random", Enums.ItemDescriptionType.ITEM_DAMAGE, "8", "22"));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.random", Enums.ItemDescriptionType.ITEM_DAMAGE, "8", "30"));
 
 		super.addInformation(stack, world, tooltip, flag);
 	}

@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class TechTree2 extends AoAStructure { //StructureSize: 5x8x5
-	private static final IBlockState log = BlockRegister.logIro.getDefaultState();
-	private static final IBlockState glass = BlockRegister.glassIro.getDefaultState();
-	private static final IBlockState iroCrate = BlockRegister.iroCrate.getDefaultState();
+	private static final IBlockState log = BlockRegister.IRO_LOG.getDefaultState();
+	private static final IBlockState glass = BlockRegister.IRO_GLASS.getDefaultState();
+	private static final IBlockState iroCrate = BlockRegister.IRO_CRATE.getDefaultState();
 
 	public TechTree2() {
 		super("TechTree2");

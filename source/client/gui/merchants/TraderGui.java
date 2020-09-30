@@ -82,11 +82,19 @@ public class TraderGui extends GuiContainer {
 		boolean changeRecipe = false;
 
 		if (button == nextRecipeButton) {
-			currentRecipeIndex++;
+			MerchantRecipeList trades = trader.getRecipes(mc.player);
+
+			if (trades == null) {
+				currentRecipeIndex = 0;
+			}
+			else {
+				currentRecipeIndex = Math.min(trades.size() - 1, currentRecipeIndex + 1);
+			}
+
 			changeRecipe = true;
 		}
 		else if (button == previousRecipeButton) {
-			currentRecipeIndex--;
+			currentRecipeIndex = (Math.max(0, currentRecipeIndex - 1));
 			changeRecipe = true;
 		}
 

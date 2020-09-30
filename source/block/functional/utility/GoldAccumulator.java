@@ -27,7 +27,7 @@ public class GoldAccumulator extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.impureGold) {
+		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.IMPURE_GOLD) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			if (!player.capabilities.isCreativeMode)

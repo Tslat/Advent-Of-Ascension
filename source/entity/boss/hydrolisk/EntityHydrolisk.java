@@ -87,24 +87,24 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHydroliskLiving;
+		return SoundsRegister.MOB_HYDROLISK_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHydroliskDeath;
+		return SoundsRegister.MOB_HYDROLISK_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHydroliskHit;
+		return SoundsRegister.MOB_HYDROLISK_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobEmperorBeastStep;
+		return SoundsRegister.MOB_EMPEROR_BEAST_STEP;
 	}
 
 	@Nullable
@@ -147,25 +147,18 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (isAIDisabled())
+			return;
+
 		if (isInWater())
 			heal(1);
 
 		if (!world.isRemote) {
 			if (shielded) {
-				if (rand.nextInt(80) == 0) {
-					EntityHydrolon hydrolon = new EntityHydrolon(this);
-
-					world.spawnEntity(hydrolon);
-				}
+				if (rand.nextInt(80) == 0)
+					world.spawnEntity(new EntityHydrolon(this));
 			}
 			else {
-				if (rand.nextInt(130) == 0) {
-					EntityPlayer pl = world.getClosestPlayer(posX, posY, posZ, 20, false);
-
-					if (pl != null && !pl.capabilities.isCreativeMode)
-						setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
-				}
-
 				if (rand.nextInt(120) == 0 && !world.provider.doesWaterVaporize() && world.getBlockState(getPosition()).getMaterial().isReplaceable())
 					world.setBlockState(getPosition(), Blocks.FLOWING_WATER.getDefaultState());
 			}
@@ -177,7 +170,7 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 		if (shielded) {
 			ItemStack heldItem = player.getHeldItem(hand);
 
-			if (heldItem.getItem() == ItemRegister.hydroStone) {
+			if (heldItem.getItem() == ItemRegister.HYDRO_STONE) {
 				if (!player.capabilities.isCreativeMode)
 					heldItem.shrink(1);
 
@@ -203,7 +196,7 @@ public class EntityHydrolisk extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicHydrolisk;
+		return SoundsRegister.HYDROLISK_MUSIC;
 	}
 
 	@Nonnull

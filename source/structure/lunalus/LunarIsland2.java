@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunarIsland2 extends AoAStructure { //StructureSize: 11x11x11
-	private static final IBlockState lunarOrb = BlockRegister.lunarOrbLunar.getDefaultState();
-	private static final IBlockState lunalyteDirt = BlockRegister.dirtLunalyte.getDefaultState();
-	private static final IBlockState lunalyteGrass = BlockRegister.grassLunalyte.getDefaultState();
+	private static final IBlockState lunarOrb = BlockRegister.LUNAR_ORB.getDefaultState();
+	private static final IBlockState lunalyteDirt = BlockRegister.LUNALYTE_DIRT.getDefaultState();
+	private static final IBlockState lunalyteGrass = BlockRegister.LUNALYTE_GRASS.getDefaultState();
 
 	public LunarIsland2() {
 		super("LunarIsland2");
@@ -26,7 +26,7 @@ public class LunarIsland2 extends AoAStructure { //StructureSize: 11x11x11
 	protected void build(World world, Random rand, BlockPos basePos) {
 		if (rand.nextInt(10) == 0) {
 			if (rand.nextInt(5) == 0) {
-				addBlock(world, basePos, 5, 5, 5, BlockRegister.lunarOrbSunfire.getDefaultState());
+				addBlock(world, basePos, 5, 5, 5, BlockRegister.SUNFIRE_ORB.getDefaultState());
 			}
 			else {
 				addBlock(world, basePos, 5, 5, 5, lunarOrb);

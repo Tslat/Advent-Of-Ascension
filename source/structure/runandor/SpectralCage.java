@@ -10,11 +10,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class SpectralCage extends AoAStructure { //StructureSize: 17x5x11
-	private static final IBlockState stone = BlockRegister.stoneRunic.getDefaultState();
+	private static final IBlockState stone = BlockRegister.RUNIC_STONE.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState spectralWizardSpawner = BlockRegister.spawnerSpectralWizard.getDefaultState();
-	private static final IBlockState neonLapisLamp = BlockRegister.lampNeonLapis.getOffLamp().getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState spectralWizardSpawner = BlockRegister.SPECTRAL_WIZARD_SPAWNER.getDefaultState();
+	private static final IBlockState neonLapisLamp = BlockRegister.NEON_LAPIS_LAMP.getOffLamp().getDefaultState();
 
 	public SpectralCage() {
 		super("SpectralCage");

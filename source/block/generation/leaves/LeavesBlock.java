@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.generation.leaves;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.SoundType;
@@ -7,10 +8,10 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -29,15 +30,25 @@ import java.util.List;
 import java.util.Random;
 
 public class LeavesBlock extends BlockLeaves {
+	private final Block sapling;
+	private final int saplingDropChance;
+
 	public LeavesBlock(String name, String registryName) {
+		this(name, registryName, null, 20);
+	}
+
+	public LeavesBlock(String name, String registryName, Block sapling, int saplingDropChance) {
 		super();
 		AdventOfAscension.proxy.setFancyLeaves(this);
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 		setSoundType(SoundType.PLANT);
 		Blocks.FIRE.setFireInfo(this, 30, 60);
 		setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, false));
+
+		this.sapling = sapling;
+		this.saplingDropChance = saplingDropChance;
 	}
 
 	@Override
@@ -55,12 +66,23 @@ public class LeavesBlock extends BlockLeaves {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getBlock() == BlockRegister.leavesHaunted ? ItemRegister.seedsMagicMarang : null;
-	}
-
-	@Override
-	public int quantityDropped(IBlockState state, int fortune, Random random) {
-		return state.getBlock() == BlockRegister.leavesHaunted && random.nextInt(100) <= fortune ? 1 : 0;
+		if (state.getBlock() == BlockRegister.HAUNTED_LEAVES) {
+			if (rand.nextBoolean() && rand.nextInt(50) <= fortune) {
+				return ItemRegister.MAGIC_MARANG_SEEDS;
+			}
+			else if (sapling != null) {
+				return Item.getItemFromBlock(sapling);
+			}
+			else {
+				return Items.AIR;
+			}
+		}
+		else if (sapling != null) {
+			return Item.getItemFromBlock(sapling);
+		}
+		else {
+			return Items.AIR;
+		}
 	}
 
 	@Override
@@ -89,11 +111,6 @@ public class LeavesBlock extends BlockLeaves {
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return super.getRenderType(state);
-	}
-
-	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
 	}
@@ -101,6 +118,11 @@ public class LeavesBlock extends BlockLeaves {
 	@Override
 	public BlockPlanks.EnumType getWoodType(int meta) {
 		return null;
+	}
+
+	@Override
+	protected int getSaplingDropChance(IBlockState state) {
+		return saplingDropChance;
 	}
 
 	@Nonnull

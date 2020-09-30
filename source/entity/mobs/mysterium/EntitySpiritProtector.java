@@ -53,7 +53,7 @@ public class EntitySpiritProtector extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotSpiritProtectorFire;
+		return SoundsRegister.SPIRIT_PROTECTOR_SHOOT;
 	}
 
 	@Nullable

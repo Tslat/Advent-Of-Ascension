@@ -13,6 +13,8 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenIrodustTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenIrogoldTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -56,7 +58,7 @@ public class BiomeIromine extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.lyon.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreLyon.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.lyon.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.lyon.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneIromine)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 45, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.LYON_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.lyon.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.lyon.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.IROMINE_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 45, rand.nextInt(16)));
 			}
 		}
 
@@ -70,13 +72,13 @@ public class BiomeIromine extends Biome {
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == topBlock) {
 					switch (rand.nextInt(3)) {
 						case 0:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantIroGrass.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.IRO_GRASS.getDefaultState());
 							break;
 						case 1:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantLurchians.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.LURCHIANS.getDefaultState());
 							break;
 						case 2:
-							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantIrotops.getDefaultState());
+							world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.IROTOPS.getDefaultState());
 							break;
 					}
 				}
@@ -89,32 +91,15 @@ public class BiomeIromine extends Biome {
 			for (int i = 0; i < 3; i++) {
 				posX = basePos.getX() + rand.nextInt(16);
 				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = world.getHeight(posX + 4, posZ + 4);
 
-				switch (rand.nextInt(4)) {
-					case 0:
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("IrodustTree1", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 1:
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("IrodustTree2", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 2:
-						posY = world.getHeight(posX + 4, posZ + 4);
-
-						if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock)
-							StructuresHandler.generateStructure("IrogoldTree1", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 3:
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("IrogoldTree2", world, rand, pos.setPos(posX, posY, posZ));
-						break;
+				if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock) {
+					if (rand.nextBoolean()) {
+						new WorldGenIrogoldTree(null).generate(world, rand, pos.up());
+					}
+					else {
+						new WorldGenIrodustTree(null).generate(world, rand, pos.up());
+					}
 				}
 			}
 		}

@@ -11,15 +11,13 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.List;
 
-public class HauntedGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class HauntedGreatblade extends BaseGreatblade {
 	public HauntedGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("HauntedGreatblade");

@@ -29,7 +29,7 @@ public class RuneRandomizer extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class RuneRandomizer extends Block {
 
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem.getItem() != ItemRegister.runeUnpowered && heldItem.getItem() != ItemRegister.runeCharged)
+		if (heldItem.getItem() != ItemRegister.UNPOWERED_RUNE && heldItem.getItem() != ItemRegister.CHARGED_RUNE)
 			return true;
 
 		PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
@@ -63,7 +63,7 @@ public class RuneRandomizer extends Block {
 			LootUtil.generateAndProvideLootDirectly((EntityPlayerMP)player, LootSystemRegister.blockRuneRandomizer);
 
 		plData.stats().addXp(Enums.Skills.RUNATION, 5, false, false);
-		player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.runeRandomizer, SoundCategory.BLOCKS, 1.0f, 1.0f);
+		player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.RUNE_RANDOMIZER_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		return true;
 	}
 }

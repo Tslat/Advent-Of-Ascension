@@ -23,11 +23,11 @@ public class LunalusTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalLunalus;
+		return BlockRegister.LUNALUS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.lightTwinklestone;
+		return BlockRegister.TWINKLESTONE;
 	}
 }

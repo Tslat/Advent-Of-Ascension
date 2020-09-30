@@ -32,6 +32,6 @@ public class BaronessAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.warlockGem;
+		return ItemRegister.WARLOCK_GEM;
 	}
 }

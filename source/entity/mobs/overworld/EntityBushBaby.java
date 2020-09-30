@@ -45,17 +45,17 @@ public class EntityBushBaby extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBushBabyLiving;
+		return SoundsRegister.MOB_BUSH_BABY_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBushBabyDeath;
+		return SoundsRegister.MOB_BUSH_BABY_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBushBabyHit;
+		return SoundsRegister.MOB_BUSH_BABY_HIT;
 	}
 
 	@Nullable

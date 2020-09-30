@@ -8,7 +8,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.WorldUtil;
@@ -16,7 +15,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BigBlast extends BaseCannon implements AdventWeapon {
+public class BigBlast extends BaseCannon {
 	public BigBlast(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BigBlast");
@@ -26,7 +25,7 @@ public class BigBlast extends BaseCannon implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunBigBlast;
+		return SoundsRegister.BIG_BLAST_FIRE;
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class BigBlast extends BaseCannon implements AdventWeapon {
 
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.BigBlast.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.explosion", Enums.ItemDescriptionType.POSITIVE));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

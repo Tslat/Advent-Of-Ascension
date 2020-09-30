@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class VoxxulonBeacon extends AoAStructure { //StructureSize: 16x8x16
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState voxLight = BlockRegister.lightVox.getDefaultState();
-	private static final IBlockState toxicStone = BlockRegister.stoneToxic.getDefaultState();
-	private static final IBlockState voxxulonAltar = BlockRegister.voxxulonAltar.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState voxLight = BlockRegister.VOX_LIGHT.getDefaultState();
+	private static final IBlockState toxicStone = BlockRegister.TOXIC_STONE.getDefaultState();
+	private static final IBlockState voxxulonAltar = BlockRegister.VOXXULON_ALTAR.getDefaultState();
 
 	public VoxxulonBeacon() {
 		super("VoxxulonBeacon");

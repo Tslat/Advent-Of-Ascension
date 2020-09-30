@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GyroPlatform extends AoAStructure { //StructureSize: 19x9x19
-	private static final IBlockState greenCelevus = BlockRegister.leavesCelevusGreen.getDefaultState();
-	private static final IBlockState celevusStem = BlockRegister.celeveStem.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState bloodstoneBricks = BlockRegister.bricksBloodstone.getDefaultState();
-	private static final IBlockState toyBox = BlockRegister.toyBox.getDefaultState();
+	private static final IBlockState greenCelevus = BlockRegister.GREEN_CELEVUS_LEAVES.getDefaultState();
+	private static final IBlockState celevusStem = BlockRegister.CELEVE_STEM.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState bloodstoneBricks = BlockRegister.BLOODSTONE_BRICKS.getDefaultState();
+	private static final IBlockState toyBox = BlockRegister.TOY_BOX.getDefaultState();
 
 	public GyroPlatform() {
 		super("GyroPlatform");

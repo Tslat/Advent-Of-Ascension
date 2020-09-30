@@ -4,7 +4,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.SkillItem;
@@ -14,7 +13,6 @@ import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
-import java.util.HashSet;
 import java.util.List;
 
 import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_EXTRACTION;
@@ -49,20 +47,6 @@ public class ExtractionArmour extends AdventArmour implements SkillItem {
 	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
 		if (slot == null)
 			plBuffs.removeXpModifier(Enums.Skills.EXTRACTION, 0.3f);
-	}
-
-	@Override
-	public void onPreAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && event.getSource().isFireDamage())
-			event.setCanceled(true);
-	}
-
-	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		if (slots == null && plData.player().isInLava()) {
-			plData.player().motionX *= 1.8;
-			plData.player().motionZ *= 1.8;
-		}
 	}
 
 	@SideOnly(Side.CLIENT)

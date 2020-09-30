@@ -50,19 +50,19 @@ public class EntityFakeZorp extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobZorpLiving;
+		return SoundsRegister.MOB_ZORP_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobZorpDeath;
+		return SoundsRegister.MOB_ZORP_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobZorpHit;
+		return SoundsRegister.MOB_ZORP_HIT;
 	}
 
 	@Override

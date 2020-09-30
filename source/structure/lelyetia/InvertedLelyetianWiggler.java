@@ -19,7 +19,7 @@ public class InvertedLelyetianWiggler extends AoAStructure {
 
 		while (y <= 14) {
 			if (world.getBlockState(basePos.add(0, -y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, -y, 0, BlockRegister.plantLelyetianWiggler.getDefaultState());
+				addBlock(world, basePos, 0, -y, 0, BlockRegister.LELYETIAN_WIGGLER.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class InvertedLelyetianWiggler extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, -y, 0, BlockRegister.plantLelyetianWigglerBottom.getDefaultState());
+		addBlock(world, basePos, 0, -y, 0, BlockRegister.LELYETIAN_WIGGLER_BOTTOM.getDefaultState());
 	}
 }

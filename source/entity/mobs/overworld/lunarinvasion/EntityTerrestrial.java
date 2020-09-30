@@ -51,17 +51,17 @@ public class EntityTerrestrial extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTerrestrialLiving;
+		return SoundsRegister.MOB_TERRESTRIAL_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTerrestrialDeath;
+		return SoundsRegister.MOB_TERRESTRIAL_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTerrestrialHit;
+		return SoundsRegister.MOB_TERRESTRIAL_HIT;
 	}
 
 	@Nullable

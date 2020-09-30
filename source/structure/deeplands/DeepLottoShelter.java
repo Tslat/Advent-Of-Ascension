@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class DeepLottoShelter extends AoAStructure { //StructureSize: 14x4x14
-	private static final IBlockState stone = BlockRegister.stoneDeeplands.getDefaultState();
-	private static final IBlockState decayedGlass = BlockRegister.glassDecayed.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DEEPLANDS_STONE.getDefaultState();
+	private static final IBlockState decayedGlass = BlockRegister.DECAYED_GLASS.getDefaultState();
 
 	public DeepLottoShelter() {
 		super("DeepLottoShelter");

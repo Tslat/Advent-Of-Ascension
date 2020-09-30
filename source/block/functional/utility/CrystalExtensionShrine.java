@@ -29,7 +29,7 @@ public class CrystalExtensionShrine extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.GLASS);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class CrystalExtensionShrine extends Block {
 		if (!player.getHeldItem(hand).isEmpty()) {
 			ItemStack heldStack = player.getHeldItem(hand);
 
-			if (heldStack.getItem() == ItemRegister.druseRainbow) {
+			if (heldStack.getItem() == ItemRegister.RAINBOW_DRUSE) {
 				if (!world.isRemote ) {
 					List<EntityItem> crystalList = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pos.getX() - 5, pos.getY() - 1, pos.getZ() - 5, pos.getX() + 5, pos.getY() + 1, pos.getZ() + 5), entity -> isCrystal(entity.getItem().getItem()));
 					int count = 0;
@@ -68,7 +68,10 @@ public class CrystalExtensionShrine extends Block {
 						i -= size;
 					}
 
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.giantCrystal));
+					if (!player.capabilities.isCreativeMode)
+						heldStack.shrink(1);
+					
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.GIANT_CRYSTAL));
 				}
 
 				return true;
@@ -79,6 +82,6 @@ public class CrystalExtensionShrine extends Block {
 	}
 
 	private static boolean isCrystal(Item item) {
-		return item == ItemRegister.crystalBlue || item == ItemRegister.crystalGreen || item == ItemRegister.crystalPurple || item == ItemRegister.crystalRed || item == ItemRegister.crystalWhite || item == ItemRegister.crystalYellow;
+		return item == ItemRegister.BLUE_CRYSTAL || item == ItemRegister.GREEN_CRYSTAL || item == ItemRegister.PURPLE_CRYSTAL || item == ItemRegister.RED_CRYSTAL || item == ItemRegister.WHITE_CRYSTAL || item == ItemRegister.YELLOW_CRYSTAL;
 	}
 }

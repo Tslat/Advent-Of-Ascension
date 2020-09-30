@@ -47,9 +47,9 @@ public class EntityLottoman extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 14), new ItemStack(ItemRegister.lottoTotem)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 31), new ItemStack(ItemRegister.weaponsCase)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 14), new ItemStack(ItemRegister.runeBox)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 41), new ItemStack(ItemRegister.treasureBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 14), new ItemStack(ItemRegister.LOTTO_TOTEM)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 31), new ItemStack(ItemRegister.WEAPONS_CASE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 14), new ItemStack(ItemRegister.RUNE_BOX)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 41), new ItemStack(ItemRegister.TREASURE_BOX)));
 	}
 }

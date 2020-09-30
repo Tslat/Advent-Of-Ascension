@@ -12,11 +12,11 @@ public class BasePickaxe extends ItemPickaxe {
 
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+		setCreativeTab(CreativeTabsRegister.TOOLS);
 	}
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
+		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false) || super.getIsRepairable(stack, repairMaterial);
 	}
 }

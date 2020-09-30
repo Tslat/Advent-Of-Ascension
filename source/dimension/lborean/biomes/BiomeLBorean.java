@@ -57,24 +57,24 @@ public class BiomeLBorean extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY, posZ).down()) == biome.topBlock) {
 					if (rand.nextInt(6500) == 0) {
-						world.setBlockState(pos, BlockRegister.plantWaterweedsRed.getDefaultState());
+						world.setBlockState(pos, BlockRegister.RED_WATERWEEDS.getDefaultState());
 					}
 					else {
 						switch (rand.nextInt(5)) {
 							case 0:
-								world.setBlockState(pos, BlockRegister.plantBurealStocks.getDefaultState());
+								world.setBlockState(pos, BlockRegister.BUREAL_STOCKS.getDefaultState());
 								break;
 							case 1:
-								world.setBlockState(pos, BlockRegister.plantWaterweedsGreen.getDefaultState());
+								world.setBlockState(pos, BlockRegister.GREEN_WATERWEEDS.getDefaultState());
 								break;
 							case 2:
-								world.setBlockState(pos, BlockRegister.plantWaterweedsWhite.getDefaultState());
+								world.setBlockState(pos, BlockRegister.WHITE_WATERWEEDS.getDefaultState());
 								break;
 							case 3:
-								world.setBlockState(pos, BlockRegister.plantWaterweedsYellow.getDefaultState());
+								world.setBlockState(pos, BlockRegister.YELLOW_WATERWEEDS.getDefaultState());
 								break;
 							case 4:
-								world.setBlockState(pos, BlockRegister.plantOcealitesBlue.getDefaultState());
+								world.setBlockState(pos, BlockRegister.OCEALITES_BLUE.getDefaultState());
 								break;
 						}
 					}

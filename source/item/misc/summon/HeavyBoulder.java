@@ -20,7 +20,7 @@ import java.util.List;
 
 public class HeavyBoulder extends BossSpawningItem {
 	public HeavyBoulder() {
-		super("HeavyBoulder", "heavy_boulder", SoundsRegister.mobRockRiderSwitch, EnumParticleTypes.SUSPENDED_DEPTH, EnumParticleTypes.SMOKE_LARGE);
+		super("HeavyBoulder", "heavy_boulder", SoundsRegister.MOB_ROCK_RIDER_SWITCH, EnumParticleTypes.SUSPENDED_DEPTH, EnumParticleTypes.SMOKE_LARGE);
 	}
 
 	@Override

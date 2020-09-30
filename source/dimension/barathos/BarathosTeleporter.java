@@ -23,11 +23,11 @@ public class BarathosTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalBarathos;
+		return BlockRegister.BARATHOS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.bricksBaron;
+		return BlockRegister.BARON_BRICKS;
 	}
 }

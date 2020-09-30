@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class NethengeicPit extends AoAStructure { //StructureSize: 16x10x16
 	private static final IBlockState netherBricks = Blocks.NETHER_BRICK.getDefaultState();
-	private static final IBlockState nethengeicSpawner = BlockRegister.spawnerNethengeicBeast.getDefaultState();
-	private static final IBlockState fireLamp = BlockRegister.lampFire.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
+	private static final IBlockState nethengeicSpawner = BlockRegister.NETHENGEIC_BEAST_SPAWNER.getDefaultState();
+	private static final IBlockState fireLamp = BlockRegister.FIRE_LAMP.getDefaultState().withProperty(LampBlock.FIXED_LAMP, true);
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public NethengeicPit() {

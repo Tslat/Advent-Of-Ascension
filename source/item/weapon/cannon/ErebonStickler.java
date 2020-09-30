@@ -1,22 +1,22 @@
 package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityErebonSticklerShot;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.misc.EntityErebonSticklerStuck;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ErebonStickler extends BaseCannon implements AdventWeapon {
+public class ErebonStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
@@ -40,7 +40,15 @@ public class ErebonStickler extends BaseCannon implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunCarrotCannon;
+		return SoundsRegister.CARROT_CANNON_FIRE;
+	}
+
+	@Override
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(WeaponRegister.GRENADE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityErebonSticklerShot(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+
+		return null;
 	}
 
 	@Override
@@ -51,16 +59,6 @@ public class ErebonStickler extends BaseCannon implements AdventWeapon {
 			target.world.spawnEntity(new EntityErebonSticklerStuck(shooter, this, (EntityLivingBase)target, bulletDmgMultiplier));
 
 		bullet.setDead();
-	}
-
-	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, WeaponRegister.throwableGrenade, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityErebonSticklerShot(player, gun, hand, 120, 0);
-
-		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

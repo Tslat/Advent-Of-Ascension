@@ -25,6 +25,6 @@ public class CandyBlock extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.treatBag;
+		return ItemRegister.TREAT_BAG;
 	}
 }

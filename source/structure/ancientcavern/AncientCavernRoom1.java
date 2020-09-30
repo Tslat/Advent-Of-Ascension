@@ -12,15 +12,15 @@ import java.util.Random;
 public class AncientCavernRoom1 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState ancientGlass = BlockRegister.glassAncient.getDefaultState();
-	private static final IBlockState ancientLamp = BlockRegister.lightAncient.getDefaultState();
-	private static final IBlockState blackAncientTile = BlockRegister.ancientTileBlack.getDefaultState();
-	private static final IBlockState greenAncientTile = BlockRegister.ancientTileGreen.getDefaultState();
+	private static final IBlockState ancientGlass = BlockRegister.ANCIENT_GLASS.getDefaultState();
+	private static final IBlockState ancientLamp = BlockRegister.ANCIENT_LIGHT.getDefaultState();
+	private static final IBlockState blackAncientTile = BlockRegister.BLACK_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState greenAncientTile = BlockRegister.GREEN_ANCIENT_TILE.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
-	private static final IBlockState plutonShrine = BlockRegister.shrinePluton.getDefaultState();
-	private static final IBlockState selyanShrine = BlockRegister.shrineSelyan.getDefaultState();
-	private static final IBlockState shrineAncientTile = BlockRegister.ancientTileShrine.getDefaultState();
-	private static final IBlockState whiteAncientTile = BlockRegister.ancientTileWhite.getDefaultState();
+	private static final IBlockState plutonShrine = BlockRegister.PLUTON_SHRINE.getDefaultState();
+	private static final IBlockState selyanShrine = BlockRegister.SELYAN_SHRINE.getDefaultState();
+	private static final IBlockState shrineAncientTile = BlockRegister.ANCIENT_TILE_SHRINE.getDefaultState();
+	private static final IBlockState whiteAncientTile = BlockRegister.WHITE_ANCIENT_TILE.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

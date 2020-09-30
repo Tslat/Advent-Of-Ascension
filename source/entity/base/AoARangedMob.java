@@ -9,7 +9,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -54,7 +53,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseProjectileDamage() * 2) / 10f));
     }
 
     @Override
@@ -83,9 +82,9 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
 
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
     }
 
     protected abstract double getBaseKnockbackResistance();
@@ -114,7 +113,7 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
 
     @Nullable
     protected SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_PIG_STEP;
+        return null;
     }
 
     @Nullable
@@ -224,9 +223,13 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
         return !canBreatheUnderwater() ? super.isNotColliding() : this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
     }
 
-    protected void playStepSound(BlockPos pos, Block blockIn) {
-        if (getStepSound() != null)
+    protected void playStepSound(BlockPos pos, Block block) {
+        if (getStepSound() != null) {
             playSound(getStepSound(), 0.55f, 1.0F);
+        }
+        else {
+            super.playStepSound(pos, block);
+        }
     }
 
     @Override
@@ -260,20 +263,20 @@ public abstract class AoARangedMob extends EntityMob implements IRangedAttackMob
     @Override
     public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
         boolean success;
-
+        float mod = ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f;
         switch (projectile.getProjectileType()) {
             case MAGIC:
-                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage(), false);
+                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage() * mod, false);
                 break;
             case GUN:
-                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case PHYSICAL:
-                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case OTHER:
             default:
-                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage());
+                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage() * mod);
                 break;
         }
 

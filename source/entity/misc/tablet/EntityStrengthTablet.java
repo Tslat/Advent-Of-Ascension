@@ -25,6 +25,6 @@ public class EntityStrengthTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletStrength;
+		return ItemRegister.STRENGTH_TABLET;
 	}
 }

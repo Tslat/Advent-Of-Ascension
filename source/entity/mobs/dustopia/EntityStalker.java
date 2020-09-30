@@ -53,19 +53,19 @@ public class EntityStalker extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobStalkerLiving;
+        return SoundsRegister.MOB_STALKER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobStalkerDeath;
+        return SoundsRegister.MOB_STALKER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobStalkerHit;
+        return SoundsRegister.MOB_STALKER_HIT;
     }
 
     @Nullable

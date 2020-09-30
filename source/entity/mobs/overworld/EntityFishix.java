@@ -52,17 +52,17 @@ public class EntityFishix extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFishixLiving;
+		return SoundsRegister.MOB_FISHIX_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFishixDeath;
+		return SoundsRegister.MOB_FISHIX_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFishixHit;
+		return SoundsRegister.MOB_FISHIX_HIT;
 	}
 
 	@Nullable
@@ -78,7 +78,7 @@ public class EntityFishix extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

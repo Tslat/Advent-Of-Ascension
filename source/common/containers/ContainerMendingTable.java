@@ -86,8 +86,8 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 			else {
 				ItemStack repairedStack = repairStack.copy();
 
-				if (repairMaterial.getItem() == ItemRegister.magicRepairDust || repairMaterial.getItem() == ItemRegister.magicMendingCompound) {
-					int repairPortionValue = (repairMaterial.getItem() == ItemRegister.magicMendingCompound ? repairedStack.getItemDamage() : Math.min(repairedStack.getItemDamage(), repairedStack.getMaxDamage() / 5));
+				if (repairMaterial.getItem() == ItemRegister.MAGIC_REPAIR_DUST || repairMaterial.getItem() == ItemRegister.MAGIC_MENDING_COMPOUND) {
+					int repairPortionValue = (repairMaterial.getItem() == ItemRegister.MAGIC_MENDING_COMPOUND ? repairedStack.getItemDamage() : Math.min(repairedStack.getItemDamage(), repairedStack.getMaxDamage() / 5));
 
 					if (repairPortionValue <= 0) {
 						resetMendingContainerState();
@@ -121,6 +121,6 @@ public class ContainerMendingTable extends ContainerBasicUtility {
 
 	@Override
 	protected Block getBlock() {
-		return BlockRegister.mendingTable;
+		return BlockRegister.MENDING_TABLE;
 	}
 }

@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
@@ -14,7 +13,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
-public class VulcammerMaul extends BaseMaul implements AdventWeapon {
+public class VulcammerMaul extends BaseMaul {
 	public VulcammerMaul(Float dmg, Double speed, double knockback, int durability) {
 		super(dmg, speed, knockback, durability);
 		setTranslationKey("VulcammerMaul");
@@ -23,7 +22,7 @@ public class VulcammerMaul extends BaseMaul implements AdventWeapon {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {
-		if (attackCooldown > 0.75) {
+		if (attackCooldown > 0.85f) {
 			boolean doWorldDamage = WorldUtil.checkGameRule(attacker.world, "destructiveWeaponPhysics");
 
 			WorldUtil.createExplosion(attacker, attacker.world, (attacker.posX + target.posX) / 2d, (attacker.posY + target.posY) / 2d, (attacker.posZ + target.posZ) / 2d, 2f, doWorldDamage, doWorldDamage);

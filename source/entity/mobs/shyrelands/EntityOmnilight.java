@@ -55,19 +55,19 @@ public class EntityOmnilight extends AoAFlyingRangedMob implements SpecialProper
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobOmnilightLiving;
+        return SoundsRegister.MOB_OMNILIGHT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobOmnilightDeath;
+        return SoundsRegister.MOB_OMNILIGHT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobOmnilightHit;
+        return SoundsRegister.MOB_OMNILIGHT_HIT;
     }
 
     @Nullable

@@ -1,11 +1,11 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
@@ -14,11 +14,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityMetalSlug;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.utils.EntityUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -26,7 +26,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CoralClogger extends BaseGun implements AdventWeapon {
+public class CoralClogger extends BaseGun {
 	private final double dmg;
 	private final int firingDelay;
 
@@ -41,7 +41,15 @@ public class CoralClogger extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSlugger;
+		return SoundsRegister.SLUGGER_FIRE;
+	}
+
+	@Override
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.METAL_SLUG), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityMetalSlug(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+
+		return null;
 	}
 
 	@Override
@@ -52,16 +60,6 @@ public class CoralClogger extends BaseGun implements AdventWeapon {
 			EntityUtil.doScaledKnockback((EntityLivingBase)target, shooter, 1.143f, shooter.posX - target.posX, shooter.posZ - target.posZ);
 			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 0));
 		}
-	}
-
-	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.metalSlug, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityMetalSlug(player, gun, hand, 120, 0);
-
-		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

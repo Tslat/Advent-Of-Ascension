@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
@@ -18,7 +16,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class SelyanScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class SelyanScythe extends BaseGreatblade {
 	public SelyanScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("SelyanScythe");
@@ -27,7 +25,7 @@ public class SelyanScythe extends BaseGreatblade implements AdventWeapon, LongRe
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = Math.min(dmgDealt / (float)dmg, 1f);
+		float damagePercent = Math.min(dmgDealt / (float)getDamage(), 1f);
 
 		attacker.heal(1 * damagePercent);
 

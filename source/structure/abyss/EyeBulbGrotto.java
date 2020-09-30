@@ -10,12 +10,12 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class EyeBulbGrotto extends AoAStructure { //StructureSize: 4x12x5
-	private static final IBlockState toxicBlock = BlockRegister.toxicBlock.getDefaultState();
-	private static final IBlockState grass = BlockRegister.grassAbyss.getDefaultState();
+	private static final IBlockState toxicBlock = BlockRegister.TOXIC_BLOCK.getDefaultState();
+	private static final IBlockState grass = BlockRegister.ABYSS_GRASS.getDefaultState();
 	private static final IBlockState water = Blocks.FLOWING_WATER.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
-	private static final IBlockState bulbStockCap = BlockRegister.plantBulbStockCap.getDefaultState();
-	private static final IBlockState bulbStock = BlockRegister.plantBulbStock.getDefaultState();
+	private static final IBlockState bulbStockCap = BlockRegister.BULB_STOCK_CAP.getDefaultState();
+	private static final IBlockState bulbStock = BlockRegister.BULB_STOCK.getDefaultState();
 
 	public EyeBulbGrotto() {
 		super("EyeBulbGrotto");

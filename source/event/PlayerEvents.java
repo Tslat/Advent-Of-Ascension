@@ -4,6 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
@@ -24,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -39,18 +41,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.block.generation.stone.StoneBlock;
-import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
+import net.tslat.aoa3.common.handlers.PlayerHaloHandler;
 import net.tslat.aoa3.common.packet.PacketResourceData;
 import net.tslat.aoa3.common.packet.PacketSkillData;
 import net.tslat.aoa3.common.packet.PacketTributeData;
+import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.entity.misc.EntityAnimaStone;
-import net.tslat.aoa3.entity.misc.EntityBloodlust;
 import net.tslat.aoa3.event.custom.PlayerLevelChangeEvent;
-import net.tslat.aoa3.event.dimension.*;
+import net.tslat.aoa3.event.dimension.LelyetiaEvents;
+import net.tslat.aoa3.event.dimension.OverworldEvents;
+import net.tslat.aoa3.event.dimension.ShyrelandsEvents;
+import net.tslat.aoa3.event.dimension.VoxPondsEvents;
 import net.tslat.aoa3.item.misc.BlankRealmstone;
 import net.tslat.aoa3.item.misc.ReservedItem;
 import net.tslat.aoa3.item.misc.summon.BossSpawningItem;
@@ -69,25 +74,26 @@ import java.util.UUID;
 public class PlayerEvents {
 	@SubscribeEvent
 	public void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
-		if (ev.phase == TickEvent.Phase.END && !ev.player.world.isRemote) {
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.player);
+		if (ev.phase == TickEvent.Phase.END) {
+			if (!ev.player.world.isRemote) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.player);
 
-			plData.tickPlayer();
+				plData.tickPlayer();
+			}
 
 			if (!ev.player.world.isRemote && !ev.player.capabilities.isCreativeMode && ev.player.onGround && !ev.player.isRiding())
-				ExpeditionUtil.handleRunningTick(ev, plData);
+				ExpeditionUtil.handleRunningTick(ev, ev.player);
 
 			if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.shyrelands) {
-				ShyrelandsEvents.doPlayerTick(plData);
+				if (!ev.player.world.isRemote)
+					ShyrelandsEvents.doPlayerTick(ev.player);
 			}
 			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.lelyetia) {
-				LelyetiaEvents.doPlayerTick(plData);
+				LelyetiaEvents.doPlayerTick(ev.player);
 			}
 			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.voxPonds) {
-				VoxPondsEvents.doPlayerTick(plData);
-			}
-			else if (ev.player.dimension == ConfigurationUtil.MainConfig.dimensionIds.candyland) {
-				CandylandEvents.doPlayerTick(plData);
+				if (!ev.player.world.isRemote)
+					VoxPondsEvents.doPlayerTick(ev.player);
 			}
 		}
 	}
@@ -98,6 +104,9 @@ public class PlayerEvents {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
 
 			plData.handleIncomingAttack(ev);
+
+			if (ev.getEntityLiving().getHealth() - ev.getAmount() <= 0 && ev.getEntityLiving().world.getWorldInfo().isHardcoreModeEnabled())
+				ReservedItem.handlePlayerDeath((EntityPlayer)ev.getEntity());
 		}
 	}
 
@@ -139,8 +148,8 @@ public class PlayerEvents {
 				Entity creeper = ev.getSource().getImmediateSource();
 
 				if (pl.getHealth() > 0 && ev.getSource().isExplosion() && creeper instanceof EntityCreeper) {
-					if ((!pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, creeper.getEntityBoundingBox().grow(3)).isEmpty() || !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, pl.getEntityBoundingBox().grow(3)).isEmpty()) && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCreeponia));
+					if ((!pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, creeper.getEntityBoundingBox().grow(3)).isEmpty() || !pl.world.getEntitiesWithinAABB(EntityTNTPrimed.class, pl.getEntityBoundingBox().grow(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.CREEPONIA_REALMSTONE));
 				}
 			}
 			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
@@ -150,9 +159,7 @@ public class PlayerEvents {
 
 				if (EntityUtil.isMeleeDamage(ev.getSource()) && !ev.getSource().isDamageAbsolute()) {
 					ButcheryUtil.tryCritical(ev, plData);
-
-					if (AdventOfAscension.rand.nextInt(30) == 0)
-						ev.getEntity().world.spawnEntity(new EntityBloodlust(ev.getEntity().world, ev.getEntity().getPosition()));
+					ButcheryUtil.tryBloodlustSpawn(plData.player(), ev.getEntityLiving());
 				}
 			}
 		}
@@ -161,8 +168,8 @@ public class PlayerEvents {
 	@SubscribeEvent
 	public void onPlayerFall(final LivingFallEvent ev) {
 		if (!ev.getEntity().world.isRemote && ev.getEntity() instanceof EntityPlayer) {
-			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.consumeItem((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.realmstoneBlank)))
-				ItemUtil.givePlayerItemOrDrop((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.realmstoneLelyetia));
+			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+				ItemUtil.givePlayerItemOrDrop((EntityPlayer)ev.getEntity(), new ItemStack(ItemRegister.LELYETIA_REALMSTONE));
 
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getEntity());
 
@@ -186,7 +193,7 @@ public class PlayerEvents {
 					ev.getSource().getTrueSource().onKillEntity((EntityLivingBase)ev.getEntity());
 			}
 			else if (ev.getSource().getTrueSource() instanceof EntityPlayer) {
-				if (ev.getEntity().world.provider.getDimension() == 0) {
+				if (ev.getEntity().world.provider.getDimensionType() == DimensionType.OVERWORLD) {
 					if (ev.getEntity().world.isDaytime()) {
 						PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)ev.getSource().getTrueSource());
 
@@ -194,11 +201,17 @@ public class PlayerEvents {
 						plData.stats().addTribute(Enums.Deities.LUXON, -8);
 					}
 				}
-				else if (ev.getEntity().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.crystevia && ev.getEntity().getClass().toString().contains("Construct")) {
-					ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((EntityPlayer)ev.getSource().getTrueSource(), ItemRegister.realmstoneBlank);
+				else if (ev.getEntity().world.provider.getDimensionType() == DimensionRegister.DIM_DEEPLANDS) {
+					if (ev.getEntityLiving() instanceof EntityFlying)
+						ev.getEntityLiving().entityDropItem(new ItemStack(ItemRegister.CAVERNS_DISC), 0.5f);
+				}
+				else if (ev.getEntity().world.provider.getDimensionType() == DimensionRegister.DIM_CRYSTEVIA) {
+					if (ev.getEntity().getClass().toString().contains("Construct")) {
+						ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((EntityPlayer)ev.getSource().getTrueSource(), ItemRegister.BLANK_REALMSTONE);
 
-					if (blankRealmstoneStack != null)
-						BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource());
+						if (blankRealmstoneStack != null)
+							BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource());
+					}
 				}
 			}
 		}
@@ -249,17 +262,17 @@ public class PlayerEvents {
 
 		if (bl instanceof BlockCrops || bl instanceof BlockFlower || bl instanceof BlockVine || bl instanceof BlockLeaves) {
 			if (!(bl instanceof BlockCrops) || ((BlockCrops)bl).isMaxAge(ev.getState())) {
-				if (bl instanceof BlockCrops) {
+				if (bl instanceof BlockCrops && ev.getWorld().isDaytime()) {
 					PlayerUtil.getAdventPlayer(pl).stats().addTribute(Enums.Deities.SELYAN, 2);
 
 					if (AdventOfAscension.rand.nextInt(2000) == 0)
-						pl.entityDropItem(new ItemStack(WeaponRegister.gunGardener), 0);
+						pl.entityDropItem(new ItemStack(WeaponRegister.GARDENER), 0);
 				}
 
 				if (bl instanceof BlockLeaves ? AdventOfAscension.rand.nextInt(35) == 0 : bl instanceof BlockCrops ? AdventOfAscension.rand.nextInt(6) == 0 : AdventOfAscension.rand.nextInt(8) == 0) {
 					EntityAnimaStone animaStone = new EntityAnimaStone(ev.getWorld(), ev.getPos());
 
-					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.heartStoneSpawn, SoundCategory.MASTER, 1.0f, 1.0f);
+					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.HEART_STONE_SPAWN, SoundCategory.MASTER, 1.0f, 1.0f);
 					ev.getWorld().spawnEntity(animaStone);
 				}
 			}
@@ -275,9 +288,9 @@ public class PlayerEvents {
 					if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.FORAGING)
 						ev.getDrops().addAll(ForagingUtil.getLoot(pl));
 
-					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
+					ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.FORAGING_LOOT, SoundCategory.MASTER, 1.0f, 1.0f);
 
-					if (ev.getWorld().provider.getDimension() == 0)
+					if (ev.getWorld().provider.getDimension() == 0 && ev.getWorld().isDaytime())
 						plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
 				}
 			}
@@ -314,11 +327,11 @@ public class PlayerEvents {
 				if (ev.getWorld().provider.getDimension() == 0)
 					plData.stats().addTribute(Enums.Deities.PLUTON, 11 - lvl / 10);
 
-				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.foragingLoot, SoundCategory.MASTER, 1.0f, 1.0f);
+				ev.getWorld().playSound(null, ev.getPos(), SoundsRegister.FORAGING_LOOT, SoundCategory.MASTER, 1.0f, 1.0f);
 			}
 		}
-		else if (WorldUtil.isOreBlock(bl) && ev.getPos().getY() <= 5 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank))) {
-			ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneDeeplands));
+		else if (WorldUtil.isOreBlock(bl) && ev.getPos().getY() <= 5 && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1)) {
+			ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.DEEPLANDS_REALMSTONE));
 		}
 	}
 
@@ -388,7 +401,7 @@ public class PlayerEvents {
 			else if (uuid.equals(UUID.fromString("010318ef-28fc-4c7c-8940-2f0d62eabfa6"))) {
 				msg = TextFormatting.LIGHT_PURPLE + "Xolova creeps in to watch you suffer. Feel free to die now.";
 			}
-			else if (PlayerCrownHandler.isCrazyDonator(uuid)) {
+			else if (PlayerHaloHandler.isCrazyDonator(uuid)) {
 				msg = TextFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
 			}
 
@@ -400,14 +413,20 @@ public class PlayerEvents {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.player);
 			PlayerDataManager.PlayerStats stats = plData.stats();
 
-			for (Enums.Skills sk : Enums.Skills.values()) {
-				PacketUtil.network.sendTo(new PacketSkillData(sk.id, stats.getLevelForDisplay(sk), stats.getExp(sk), stats.getSkillData(Enums.Skills.EXPEDITION)), (EntityPlayerMP)ev.player);
+			if (ConfigurationUtil.MainConfig.skillsEnabled) {
+				for (Enums.Skills sk : Enums.Skills.values()) {
+					PacketUtil.network.sendTo(new PacketSkillData(sk.id, stats.getLevelForDisplay(sk), stats.getExp(sk), stats.getSkillData(Enums.Skills.EXPEDITION)), (EntityPlayerMP)ev.player);
+				}
+
+				EntityUtil.applyAttributeModifierSafely(ev.player, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(InnervationUtil.getHealthBuff(stats.getLevel(Enums.Skills.INNERVATION))));
 			}
 
-			EntityUtil.applyAttributeModifierSafely(ev.player, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(InnervationUtil.getHealthBuff(stats.getLevel(Enums.Skills.INNERVATION))));
-			PacketUtil.network.sendTo(new PacketTributeData(stats.getTribute(Enums.Deities.EREBON), stats.getTribute(Enums.Deities.LUXON), stats.getTribute(Enums.Deities.PLUTON), stats.getTribute(Enums.Deities.SELYAN)), (EntityPlayerMP)ev.player);
-			PacketUtil.network.sendTo(new PacketResourceData(stats.getResourceValue(Enums.Resources.CREATION), stats.getResourceValue(Enums.Resources.ENERGY), stats.getResourceValue(Enums.Resources.RAGE), stats.getResourceValue(Enums.Resources.SOUL), plData.isRevengeActive()), (EntityPlayerMP)ev.player);
-			PlayerCrownHandler.syncWithNewClient((EntityPlayerMP)ev.player);
+			if (ConfigurationUtil.MainConfig.resourcesEnabled) {
+				PacketUtil.network.sendTo(new PacketTributeData(stats.getTribute(Enums.Deities.EREBON), stats.getTribute(Enums.Deities.LUXON), stats.getTribute(Enums.Deities.PLUTON), stats.getTribute(Enums.Deities.SELYAN)), (EntityPlayerMP)ev.player);
+				PacketUtil.network.sendTo(new PacketResourceData(stats.getResourceValue(Enums.Resources.CREATION), stats.getResourceValue(Enums.Resources.ENERGY), stats.getResourceValue(Enums.Resources.RAGE), stats.getResourceValue(Enums.Resources.SOUL), plData.isRevengeActive()), (EntityPlayerMP)ev.player);
+			}
+
+			PlayerHaloHandler.syncWithNewClient((EntityPlayerMP)ev.player);
 
 			PlayerAdvancements plAdvancements = ((EntityPlayerMP)ev.player).getAdvancements();
 			Advancement rootAdv = ModUtil.getAdvancement("overworld/root");
@@ -420,8 +439,7 @@ public class PlayerEvents {
 					FMLCommonHandler.instance().getMinecraftServerInstance().getAdvancementManager().getAdvancements().forEach(advancement -> AdventOfAscension.logOptionalMessage(advancement.getId().toString()));
 				}
 			}
-
-			if (!plAdvancements.getProgress(rootAdv).isDone()) {
+			else if (!plAdvancements.getProgress(rootAdv).isDone()) {
 				plAdvancements.grantCriterion(ModUtil.getAdvancement("overworld/by_the_books"), "legitimate");
 				plAdvancements.grantCriterion(rootAdv, "playerjoin");
 			}
@@ -436,9 +454,9 @@ public class PlayerEvents {
 			EntityItem entityItem = ev.getEntityItem();
 			Item item = entityItem.getItem().getItem();
 
-			if (item == ItemRegister.realmstoneBlank) {
+			if (item == ItemRegister.BLANK_REALMSTONE) {
 				if (entityItem.isInLava())
-					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(ItemRegister.realmstoneNether));
+					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(ItemRegister.NETHER_REALMSTONE));
 			}
 			else if (item instanceof BossSpawningItem) {
 				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
@@ -462,7 +480,7 @@ public class PlayerEvents {
 		EntityPlayer pl = ev.getEntityPlayer();
 
 		if (!pl.world.isRemote && ev.getOrb().xpValue > 0) {
-			int i = ItemUtil.findItemInInventory(pl, ItemRegister.expFlask);
+			int i = ItemUtil.findItemInInventory(pl, ItemRegister.EXP_FLASK);
 
 			if (i < 0)
 				return;
@@ -482,7 +500,7 @@ public class PlayerEvents {
 			EntityFishHook hook = ev.getHookEntity();
 			EntityPlayer pl = ev.getEntityPlayer();
 
-			EntityItem drop = new EntityItem(pl.world, hook.posX, hook.posY, hook.posZ, new ItemStack(ItemRegister.callOfTheDrake));
+			EntityItem drop = new EntityItem(pl.world, hook.posX, hook.posY, hook.posZ, new ItemStack(ItemRegister.CALL_OF_THE_DRAKE));
 			double velocityX = pl.posX - hook.posX;
 			double velocityY = pl.posY - hook.posY;
 			double velocityZ = pl.posZ - hook.posZ;

@@ -12,7 +12,7 @@ import net.tslat.aoa3.item.misc.FrameItem;
 public class ContainerFrameBench extends Container {
 	private final InventoryBasic input;
 	private final InventoryCraftResult output;
-	private FrameItem currentSelection = ItemRegister.frameHelmet;
+	private FrameItem currentSelection = ItemRegister.HELMET_FRAME;
 
 	private final World world;
 	private final BlockPos pos;
@@ -34,7 +34,7 @@ public class ContainerFrameBench extends Container {
 
 			@Override
 			public boolean isItemValidForSlot(int index, ItemStack stack) {
-				return stack.getItem() == ItemRegister.scrapMetal;
+				return stack.getItem() == ItemRegister.SCRAP_METAL;
 			}
 		};
 
@@ -60,7 +60,7 @@ public class ContainerFrameBench extends Container {
 		addSlotToContainer(new Slot(input, 0, 11, 34) {
 			@Override
 			public boolean isItemValid(ItemStack stack) {
-				return stack.getItem() == ItemRegister.scrapMetal;
+				return stack.getItem() == ItemRegister.SCRAP_METAL;
 			}
 		});
 
@@ -94,37 +94,37 @@ public class ContainerFrameBench extends Container {
 	public void changeSelection(String selection) {
 		switch (selection) {
 			case "archergun":
-				currentSelection = ItemRegister.frameArchergun;
+				currentSelection = ItemRegister.ARCHERGUN_FRAME;
 				break;
 			case "blaster":
-				currentSelection = ItemRegister.frameBlaster;
+				currentSelection = ItemRegister.BLASTER_FRAME;
 				break;
 			case "boots":
-				currentSelection = ItemRegister.frameBoots;
+				currentSelection = ItemRegister.BOOTS_FRAME;
 				break;
 			case "cannon":
-				currentSelection = ItemRegister.frameCannon;
+				currentSelection = ItemRegister.CANNON_FRAME;
 				break;
 			case "chestplate":
-				currentSelection = ItemRegister.frameChestplate;
+				currentSelection = ItemRegister.CHESTPLATE_FRAME;
 				break;
 			case "gun":
-				currentSelection = ItemRegister.frameGun;
+				currentSelection = ItemRegister.GUN_FRAME;
 				break;
 			case "helmet":
-				currentSelection = ItemRegister.frameHelmet;
+				currentSelection = ItemRegister.HELMET_FRAME;
 				break;
 			case "leggings":
-				currentSelection = ItemRegister.frameLeggings;
+				currentSelection = ItemRegister.LEGGINGS_FRAME;
 				break;
 			case "shotgun":
-				currentSelection = ItemRegister.frameShotgun;
+				currentSelection = ItemRegister.SHOTGUN_FRAME;
 				break;
 			case "sniper":
-				currentSelection = ItemRegister.frameSniper;
+				currentSelection = ItemRegister.SNIPER_FRAME;
 				break;
 			default:
-				currentSelection = ItemRegister.frameHelmet;
+				currentSelection = ItemRegister.HELMET_FRAME;
 				break;
 		}
 
@@ -147,11 +147,11 @@ public class ContainerFrameBench extends Container {
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 2 && index < 29) {
-				if (!mergeItemStack(slotStack, 29, 38, false))
+				if (!mergeItemStack(slotStack, 1, 2, false) && !mergeItemStack(slotStack, 29, 38, false))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 29 && index < 38) {
-				if (!mergeItemStack(slotStack, 2, 29, false))
+				if (!mergeItemStack(slotStack, 1, 2, false) && !mergeItemStack(slotStack, 2, 29, false))
 					return ItemStack.EMPTY;
 			}
 			else if (!mergeItemStack(slotStack, 2, 38, false)) {
@@ -188,7 +188,7 @@ public class ContainerFrameBench extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
-		if (world.getBlockState(pos).getBlock() != BlockRegister.frameBench)
+		if (world.getBlockState(pos).getBlock() != BlockRegister.FRAME_BENCH)
 			return false;
 
 		return this.player.getDistanceSq(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d) <= 64;

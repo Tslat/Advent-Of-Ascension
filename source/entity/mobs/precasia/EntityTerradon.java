@@ -66,24 +66,24 @@ public class EntityTerradon extends AoAMeleeMob implements SpecialPropertyEntity
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTerradonLiving;
+		return SoundsRegister.MOB_TERRADON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTerradonDeath;
+		return SoundsRegister.MOB_TERRADON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTerradonHit;
+		return SoundsRegister.MOB_TERRADON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

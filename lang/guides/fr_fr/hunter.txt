@@ -1,8 +1,8 @@
-Chasse (Skill)
+Chasse (compétence)
 
 Alors que la pêche c'est faire une pause et se relaxer avec une belle canne à pêche, la chasse est l'exact opposé - c'est poignarder des trucs dans la face. Ou partout ailleurs.
 Tu remarqueras peut-être tandis que tu te balades que certaines créatures ont une icône de deux épées croisées flottant au-dessus de leur tête.
-Ces icônes indiquent que ces créatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'exp de chasse lorsqu'ils sont tués, mais ils ne peuvent être attaqués que si tu as le bon niveau de chasse.
+Ces icônes indiquent que ces créatures sont des mobs chasseurs. Les mobs chasseurs donnent de l'xp de chasse lorsqu'ils sont tués, mais ils ne peuvent être attaqués que si tu as le bon niveau de chasse.
 Les mobs chasseurs donnent souvent de belles récompenses, et ceux de haut niveau donnent particulièrement souvent du butin unique.
 
 N'oublie pas: Épées vertes = CHARGEEEZ! Épées rouges = Fais autre chose que charger. Un sandwich, par exemple? Je sais pas.

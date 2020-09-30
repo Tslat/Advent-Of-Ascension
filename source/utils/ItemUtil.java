@@ -17,12 +17,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
+import net.tslat.aoa3.common.registration.ArmourRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.hooks.ThirdPartyInteractions;
+import net.tslat.aoa3.hooks.ic2.IC2Compat;
 import net.tslat.aoa3.item.SkillItem;
-import net.tslat.aoa3.item.misc.ItemTieredBullet;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
@@ -79,93 +79,14 @@ public class ItemUtil {
 		return percentageChance > percent;
 	}
 
-	public static Item findAndConsumeBullet(final EntityLivingBase shooter, final BaseGun gun, boolean consume, ItemStack weaponStack) {
-		if (!(shooter instanceof EntityPlayer)) {
-			return ItemRegister.bulletLimonite;
-		}
-		else {
-			EntityPlayer pl = (EntityPlayer)shooter;
-
-			int greed = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, weaponStack);
-
-			if (pl.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemTieredBullet) {
-				return consumeBullet(pl.getHeldItem(EnumHand.OFF_HAND), pl, gun, consume, greed);
-			}
-			else if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemTieredBullet) {
-				return consumeBullet(pl.getHeldItem(EnumHand.MAIN_HAND), pl, gun, consume, greed);
-			}
-			else {
-				ItemStack stack;
-
-				for (int i = 0; i < pl.inventory.getSizeInventory(); ++i) {
-					stack = pl.inventory.getStackInSlot(i);
-
-					if (stack.getItem() instanceof ItemTieredBullet)
-						return consumeBullet(stack, pl, gun, consume, greed);
-				}
-			}
-
-			if (pl.capabilities.isCreativeMode)
-				return ItemRegister.bulletLimonite;
-		}
-		return null;
-	}
-
-	private static Item consumeBullet(ItemStack stack, EntityPlayer player, BaseGun gun, boolean consume, int amount) {
-		if (!player.capabilities.isCreativeMode && consume)
-			stack.shrink(amount);
-
-		return stack.getItem();
-	}
-
-	public static Item findAndConsumeSpecialBullet(final EntityLivingBase shooter, final BaseGun gun, boolean consume, Item ammo, ItemStack weaponStack) {
-		if (shooter instanceof EntityPlayer && !((EntityPlayer)shooter).capabilities.isCreativeMode) {
-			EntityPlayer pl = (EntityPlayer)shooter;
-			ItemStack stack = ItemStack.EMPTY;
-			int amount = 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, weaponStack);
-
-			if (pl.getHeldItem(EnumHand.OFF_HAND).getItem() == ammo) {
-				stack = pl.getHeldItem(EnumHand.OFF_HAND);
-
-				if (stack.isEmpty())
-					return null;
-
-				return consumeBullet(stack, pl, gun, consume, amount);
-			}
-			else if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == ammo) {
-				stack = pl.getHeldItem(EnumHand.MAIN_HAND);
-
-				if (stack.isEmpty())
-					return null;
-
-				return consumeBullet(stack, pl, gun, consume, amount);
-			}
-			else {
-				for (int i = 0; i < pl.inventory.getSizeInventory(); ++i) {
-					if (pl.inventory.getStackInSlot(i).getItem() == ammo) {
-						stack = pl.inventory.getStackInSlot(i);
-						break;
-					}
-				}
-
-				if (stack.isEmpty())
-					return null;
-
-				return consumeBullet(stack, pl, gun, consume, amount);
-			}
-		}
-
-		return ammo;
-	}
-
 	public static boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runeMap, EntityPlayer player, boolean allowBuffs, @Nonnull ItemStack heldItem) {
 		if (player.capabilities.isCreativeMode)
 			return true;
 
 		Enums.ArmourSets armour = PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet();
-		int archmage = allowBuffs ? EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.archmage, heldItem) : 0;
+		int archmage = allowBuffs ? EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.ARCHMAGE, heldItem) : 0;
 		boolean nightmareArmour = allowBuffs && armour == Enums.ArmourSets.NIGHTMARE;
-		boolean greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.greed, heldItem) > 0;
+		boolean greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, heldItem) > 0;
 		HashMap<RuneItem, Integer> requiredRunes = new HashMap<RuneItem, Integer>();
 
 		for (Map.Entry<RuneItem, Integer> runeEntry : runeMap.entrySet()) {
@@ -360,72 +281,217 @@ public class ItemUtil {
 		player.inventoryContainer.detectAndSendChanges();
 	}
 
-	public static boolean consumeItem(EntityPlayer player, ItemStack stack) {
-		for (ItemStack invStack : player.inventory.mainInventory) {
-			if (!invStack.isEmpty() && areStacksFunctionallyEqual(invStack, stack)) {
-				if (!player.capabilities.isCreativeMode)
-					invStack.shrink(1);
+	@Nullable
+	public static Item findInventoryItemType(EntityPlayer player, Class<? extends Item> itemType, boolean consumeItem, int amount) {
+		if (amount <= 0)
+			return null;
 
-				return true;
+		if (amount == 1) {
+			ItemStack checkStack;
+
+			if (itemType.isInstance((checkStack = player.getHeldItem(EnumHand.MAIN_HAND)).getItem()) && !checkStack.isEmpty()) {
+				if (consumeItem && !player.capabilities.isCreativeMode)
+					checkStack.shrink(1);
+
+				return checkStack.getItem();
 			}
-		}
+			else if (itemType.isInstance((checkStack = player.getHeldItem(EnumHand.OFF_HAND)).getItem()) && !checkStack.isEmpty()) {
+				if (consumeItem && !player.capabilities.isCreativeMode)
+					checkStack.shrink(1);
 
-		return false;
+				return checkStack.getItem();
+			}
+			else {
+				for (ItemStack checkStack2 : player.inventory.mainInventory) {
+					if (!checkStack2.isEmpty() && itemType.isInstance(checkStack2.getItem())) {
+						if (consumeItem && !player.capabilities.isCreativeMode)
+							checkStack2.shrink(1);
+
+						return checkStack2.getItem();
+					}
+				}
+
+				for (ItemStack checkStack2 : player.inventory.armorInventory) {
+					if (!checkStack2.isEmpty() && itemType.isInstance(checkStack2.getItem())) {
+						if (consumeItem && !player.capabilities.isCreativeMode)
+							checkStack2.shrink(1);
+
+						return checkStack2.getItem();
+					}
+				}
+			}
+
+			return null;
+		}
+		else {
+			ArrayList<ItemStack> matchedStacks = new ArrayList<ItemStack>();
+			int foundCount = 0;
+			ItemStack checkStack;
+
+			if (itemType.isInstance((checkStack = player.getHeldItem(EnumHand.MAIN_HAND)).getItem()) && !checkStack.isEmpty()) {
+				matchedStacks.add(checkStack);
+				foundCount += checkStack.getCount();
+			}
+
+			if (foundCount < amount && itemType.isInstance((checkStack = player.getHeldItem(EnumHand.OFF_HAND)).getItem()) && !checkStack.isEmpty()) {
+				matchedStacks.add(checkStack);
+				foundCount += checkStack.getCount();
+			}
+
+			if (foundCount < amount) {
+				for (ItemStack checkStack2 : player.inventory.mainInventory) {
+					if (!checkStack2.isEmpty() && itemType.isInstance(checkStack2.getItem())) {
+						matchedStacks.add(checkStack2);
+						foundCount += checkStack2.getCount();
+
+						if (foundCount >= amount)
+							break;
+					}
+				}
+			}
+
+			if (foundCount < amount) {
+				for (ItemStack checkStack2 : player.inventory.armorInventory) {
+					if (!checkStack2.isEmpty() && itemType.isInstance(checkStack2.getItem())) {
+						matchedStacks.add(checkStack2);
+						foundCount += checkStack2.getCount();
+
+						if (foundCount >= amount)
+							break;
+					}
+				}
+			}
+
+			if (foundCount < amount)
+				return null;
+
+			Item matchedItem = matchedStacks.get(0).getItem();
+
+			if (!consumeItem || player.capabilities.isCreativeMode)
+				return matchedItem;
+
+			for (ItemStack matchedStack : matchedStacks) {
+				int consumeAmount = Math.min(matchedStack.getCount(), foundCount);
+
+				matchedStack.shrink(consumeAmount);
+				foundCount -= consumeAmount;
+			}
+
+			return matchedItem;
+		}
 	}
 
-	public static boolean consumeMultipleItemsSafely(EntityPlayer player, ItemStack... stacks) {
-		if (stacks != null && stacks.length > 0) {
-			HashSet<ItemStack> foundStacks = new HashSet<ItemStack>();
+	public static boolean findInventoryItem(EntityPlayer player, ItemStack stack, boolean consumeItem, int amount) {
+		if (stack.isEmpty())
+			return false;
 
-			for (ItemStack invStack : player.inventory.mainInventory) {
-				if (!invStack.isEmpty()) {
-					for (int i = 0; i < stacks.length; i++) {
-						if (areStacksFunctionallyEqual(invStack, stacks[i])) {
-							foundStacks.add(invStack);
-							stacks[i] = ItemStack.EMPTY;
-						}
-					}
-				}
+		if (amount <= 0 || player.isCreative())
+			return true;
 
-				if (foundStacks.size() == stacks.length)
-					break;
-			}
+		if (amount == 1) {
+			ItemStack checkStack;
 
-			if (foundStacks.size() == stacks.length) {
-				if (!player.capabilities.isCreativeMode) {
-					for (ItemStack stack : foundStacks) {
-						stack.shrink(1);
-					}
-				}
+			if (areStacksFunctionallyEqual((checkStack = player.getHeldItem(EnumHand.MAIN_HAND)), stack) && !checkStack.isEmpty()) {
+				if (consumeItem && !player.capabilities.isCreativeMode)
+					checkStack.shrink(1);
 
 				return true;
 			}
-		}
+			else if (areStacksFunctionallyEqual((checkStack = player.getHeldItem(EnumHand.OFF_HAND)), stack) && !checkStack.isEmpty()) {
+				if (consumeItem && !player.capabilities.isCreativeMode)
+					checkStack.shrink(1);
 
-		return false;
+				return true;
+			}
+			else {
+				for (ItemStack checkStack2 : player.inventory.mainInventory) {
+					if (!checkStack2.isEmpty() && areStacksFunctionallyEqual(stack, checkStack2)) {
+						if (consumeItem && !player.capabilities.isCreativeMode)
+							checkStack2.shrink(1);
+
+						return true;
+					}
+				}
+
+				for (ItemStack checkStack2 : player.inventory.armorInventory) {
+					if (!checkStack2.isEmpty() && areStacksFunctionallyEqual(stack, checkStack2)) {
+						if (consumeItem && !player.capabilities.isCreativeMode)
+							checkStack2.shrink(1);
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+		else {
+			ArrayList<ItemStack> matchedStacks = new ArrayList<ItemStack>();
+			int foundCount = 0;
+			ItemStack checkStack;
+
+			if (areStacksFunctionallyEqual((checkStack = player.getHeldItem(EnumHand.MAIN_HAND)), stack) && !checkStack.isEmpty()) {
+				matchedStacks.add(checkStack);
+				foundCount += checkStack.getCount();
+			}
+
+			if (foundCount < amount && areStacksFunctionallyEqual((checkStack = player.getHeldItem(EnumHand.OFF_HAND)), stack) && !checkStack.isEmpty()) {
+				matchedStacks.add(checkStack);
+				foundCount += checkStack.getCount();
+			}
+
+			if (foundCount < amount) {
+				for (ItemStack checkStack2 : player.inventory.mainInventory) {
+					if (!checkStack2.isEmpty() && areStacksFunctionallyEqual(stack, checkStack2)) {
+						matchedStacks.add(checkStack2);
+						foundCount += checkStack2.getCount();
+
+						if (foundCount >= amount)
+							break;
+					}
+				}
+			}
+
+			if (foundCount < amount) {
+				for (ItemStack checkStack2 : player.inventory.armorInventory) {
+					if (!checkStack2.isEmpty() && areStacksFunctionallyEqual(stack, checkStack2)) {
+						matchedStacks.add(checkStack2);
+						foundCount += checkStack2.getCount();
+
+						if (foundCount >= amount)
+							break;
+					}
+				}
+			}
+
+			if (foundCount < amount)
+				return false;
+
+			if (!consumeItem || player.capabilities.isCreativeMode)
+				return true;
+
+			for (ItemStack matchedStack : matchedStacks) {
+				int consumeAmount = Math.min(matchedStack.getCount(), Math.min(amount, foundCount));
+
+				matchedStack.shrink(consumeAmount);
+				foundCount -= consumeAmount;
+			}
+
+			return true;
+		}
 	}
 
 	public static boolean areStacksFunctionallyEqual(ItemStack a, ItemStack b) {
 		if (a.getItem() != b.getItem())
 			return false;
 
-		if (a.getItemDamage() != b.getItemDamage())
+		if (a.isItemStackDamageable() ^ b.isItemStackDamageable())
 			return false;
 
-		return a.getTagCompound() == null ? b.getTagCompound() == null : b.getTagCompound() != null && a.getTagCompound().equals(b.getTagCompound());
-	}
+		if (!a.isItemStackDamageable() && a.getItemDamage() != b.getItemDamage())
+			return false;
 
-	public static ItemStack cloneItemStackForComparisons(ItemStack stackToClone) {
-		ItemStack newStack = new ItemStack(stackToClone.getItem(), 1, stackToClone.isItemStackDamageable() ? 0 : stackToClone.getItemDamage(), null);
-
-		if (stackToClone.getTagCompound() != null)
-			newStack.setTagCompound(stackToClone.getTagCompound());
-
-		return newStack;
-	}
-
-	public static ItemStack shallowCloneItemStack(ItemStack stackToClone) {
-		return new ItemStack(stackToClone.getItem(), 1, stackToClone.isItemStackDamageable() ? 0 : stackToClone.getItemDamage(), null);
+		return !a.hasTagCompound() ? !b.hasTagCompound() : b.hasTagCompound() && a.getTagCompound().equals(b.getTagCompound());
 	}
 
 	public static String getFormattedDescriptionText(String langKey, Enums.ItemDescriptionType type, String... args) {
@@ -494,33 +560,6 @@ public class ItemUtil {
 		return -1;
 	}
 
-	public static boolean hasAllItems(EntityPlayer player, Item... items) {
-		HashSet<Item> itemSet = new HashSet<Item>(Arrays.asList(items));
-
-		for (ItemStack stack : player.inventory.mainInventory) {
-			itemSet.removeIf(item -> item == stack.getItem());
-
-			if (itemSet.isEmpty())
-				return true;
-		}
-
-		for (ItemStack stack : player.inventory.armorInventory) {
-			itemSet.removeIf(item -> item == stack.getItem());
-
-			if (itemSet.isEmpty())
-				return true;
-		}
-
-		for (ItemStack stack : player.inventory.offHandInventory) {
-			itemSet.removeIf(item -> item == stack.getItem());
-
-			if (itemSet.isEmpty())
-				return true;
-		}
-
-		return false;
-	}
-
 	@Nullable
 	public static ItemStack getStackFromInventory(EntityPlayer player, Item item) {
 		int i = findItemInInventory(player, item);
@@ -533,5 +572,15 @@ public class ItemUtil {
 
 	public static boolean isHoldingItem(EntityLivingBase entity, Item item) {
 		return entity.getHeldItemMainhand().getItem() == item || entity.getHeldItemOffhand().getItem() == item;
+	}
+
+	public static boolean isPlayerEnvironmentallyProtected(EntityPlayer player) {
+		if (PlayerUtil.isWearingFullSet(player, Enums.ArmourSets.HAZMAT) || player.inventory.armorInventory.get(EntityEquipmentSlot.HEAD.getIndex()).getItem() == ArmourRegister.FACE_MASK)
+			return true;
+
+		if (ThirdPartyInteractions.isIc2Active())
+			return IC2Compat.getCompatTool().isPlayerEnvironmentallyProtected(player);
+
+		return false;
 	}
 }

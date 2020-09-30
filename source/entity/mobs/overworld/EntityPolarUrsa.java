@@ -45,22 +45,22 @@ public class EntityPolarUrsa extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobUrsaLiving;
+		return SoundsRegister.MOB_URSA_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobUrsaDeath;
+		return SoundsRegister.MOB_URSA_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobUrsaHit;
+		return SoundsRegister.MOB_URSA_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable

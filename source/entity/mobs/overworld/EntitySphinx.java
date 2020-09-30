@@ -50,17 +50,17 @@ public class EntitySphinx extends AoAMeleeMob implements SpecialPropertyEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSphinxLiving;
+		return SoundsRegister.MOB_SPHINX_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSphinxDeath;
+		return SoundsRegister.MOB_SPHINX_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSphinxHit;
+		return SoundsRegister.MOB_SPHINX_HIT;
 	}
 
 	@Nullable

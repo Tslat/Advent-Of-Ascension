@@ -64,17 +64,17 @@ public class EntityStoneGiant extends AoAMeleeMob implements SpecialPropertyEnti
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGiantDeath;
+		return SoundsRegister.MOB_GIANT_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGiantHit;
+		return SoundsRegister.MOB_GIANT_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -102,16 +102,6 @@ public class EntityStoneGiant extends AoAMeleeMob implements SpecialPropertyEnti
 	@Override
 	protected Enums.CreatureEvents getEventRequirement() {
 		return Enums.CreatureEvents.BIG_DAY;
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-
-		Entity target = getAttackTarget();
-
-		if (target != null && target.getDistance(this) < 20)
-			this.addVelocity(Math.signum(target.posX - posX) * 0.029, 0.0, Math.signum(target.posZ - posZ) * 0.029);
 	}
 
 	@Override

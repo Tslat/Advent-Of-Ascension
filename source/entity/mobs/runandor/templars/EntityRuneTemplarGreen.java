@@ -21,7 +21,7 @@ public class EntityRuneTemplarGreen extends EntityRuneTemplar {
 
 	@Override
 	protected RuneItem getActivationRune() {
-		return ItemRegister.runePoison;
+		return ItemRegister.POISON_RUNE;
 	}
 
 	@Nullable

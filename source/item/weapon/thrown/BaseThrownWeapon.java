@@ -41,8 +41,13 @@ public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
 		return null;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
 	}
 
 	@SideOnly(Side.CLIENT)

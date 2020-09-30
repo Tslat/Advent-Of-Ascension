@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class JungleLottoHut extends AoAStructure { //StructureSize: 9x11x9
-	private static final IBlockState cycadeLeaves = BlockRegister.leavesCycade.getDefaultState();
-	private static final IBlockState cycadeLog = BlockRegister.logCycade.getDefaultState();
+	private static final IBlockState cycadeLeaves = BlockRegister.CYCADE_LEAVES.getDefaultState();
+	private static final IBlockState cycadeLog = BlockRegister.CYCADE_LOG.getDefaultState();
 
 	public JungleLottoHut() {
 		super("JungleLottoHut");

@@ -98,10 +98,10 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 	@Override
 	public void shoot(Entity shooter, float pitch, float yaw, float p_184547_4_, float velocity, float inaccuracy) {
-		float f = -MathHelper.sin(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
-		float f1 = -MathHelper.sin(pitch * 0.017453292F);
-		float f2 = MathHelper.cos(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
-		shoot((double)f, (double)f1, (double)f2, velocity, inaccuracy);
+		float vecX = -MathHelper.sin(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
+		float vecY = -MathHelper.sin(pitch * 0.017453292F);
+		float vecZ = MathHelper.cos(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
+		shoot(vecX, vecY, vecZ, velocity, inaccuracy);
 		motionX += shooter.motionX;
 		motionZ += shooter.motionZ;
 
@@ -262,22 +262,22 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 			rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2F;
 			rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2F;
-			float f1 = 0.99F;
+			float drag = 0.99F;
 
 			if (isInWater()) {
 				for (int i = 0; i < 4; ++i)	{
 					world.spawnParticle(EnumParticleTypes.WATER_BUBBLE, posX - motionX * 0.25D, posY - motionY * 0.25D, posZ - motionZ * 0.25D, motionX, motionY, motionZ);
 				}
 
-				f1 = 0.6F;
+				drag = 0.6F;
 			}
 
 			if (isWet())
 				extinguish();
 
-			motionX *= (double)f1;
-			motionY *= (double)f1;
-			motionZ *= (double)f1;
+			motionX *= drag;
+			motionY *= drag;
+			motionZ *= drag;
 			motionY -= getGravityVelocity();
 
 			setPosition(posX, posY, posZ);
@@ -509,7 +509,7 @@ public class EntityHollyArrow extends EntityArrow implements HardProjectile {
 
 	@Override
 	protected ItemStack getArrowStack() {
-		return new ItemStack(ItemRegister.hollyArrow);
+		return new ItemStack(ItemRegister.HOLLY_ARROW);
 	}
 
 	public Entity getShooter() {

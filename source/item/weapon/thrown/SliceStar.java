@@ -1,10 +1,13 @@
 package net.tslat.aoa3.item.weapon.thrown;
 
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.thrown.EntitySliceStar;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
@@ -18,7 +21,7 @@ public class SliceStar extends BaseThrownWeapon {
 		super(dmg, 7);
 		setTranslationKey("SliceStar");
 		setRegistryName("aoa3:slice_star");
-		setCreativeTab(CreativeTabsRegister.thrownWeaponsTab);
+		setCreativeTab(CreativeTabsRegister.THROWN_WEAPONS);
 	}
 
 	@Nullable
@@ -28,9 +31,11 @@ public class SliceStar extends BaseThrownWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		if (ItemUtil.findAndConsumeSpecialBullet(player, gun, true, this, player.getHeldItem(hand)) != null)
-			return new EntitySliceStar(player, gun);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack weaponStack, EnumHand hand) {
+		BaseGun item = (BaseGun)weaponStack.getItem();
+
+		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, weaponStack)))
+			return new EntitySliceStar(player, item);
 
 		return null;
 	}

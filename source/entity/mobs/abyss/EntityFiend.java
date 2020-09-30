@@ -49,17 +49,17 @@ public class EntityFiend extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFiendLiving;
+		return SoundsRegister.MOB_FIEND_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFiendDeath;
+		return SoundsRegister.MOB_FIEND_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFiendHit;
+		return SoundsRegister.MOB_FIEND_HIT;
 	}
 
 	@Nullable

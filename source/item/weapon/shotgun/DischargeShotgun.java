@@ -1,10 +1,10 @@
 package net.tslat.aoa3.item.weapon.shotgun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -12,11 +12,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -25,7 +25,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
+public class DischargeShotgun extends BaseShotgun {
 	private int firingDelay;
 
 	public DischargeShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
@@ -38,7 +38,7 @@ public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDischargeGun;
+		return SoundsRegister.DISCHARGE_GUN_FIRE;
 	}
 
 	@Override
@@ -58,11 +58,9 @@ public class DischargeShotgun extends BaseShotgun implements AdventWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.dischargeCapsule, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityDischargeShot(player, gun, hand,4, 0);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.DISCHARGE_CAPSULE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityDischargeShot(player, (BaseGun)gunStack.getItem(), hand,4, 0);
 
 		return null;
 	}

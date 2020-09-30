@@ -19,7 +19,7 @@ public class InvertedShyreStock extends AoAStructure {
 
 		while (y <= 11) {
 			if (world.getBlockState(basePos.add(0, -y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, -y, 0, BlockRegister.plantShyreStock.getDefaultState());
+				addBlock(world, basePos, 0, -y, 0, BlockRegister.SHYRE_STOCK.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class InvertedShyreStock extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, -y, 0, BlockRegister.plantShyreCapDown.getDefaultState());
+		addBlock(world, basePos, 0, -y, 0, BlockRegister.SHYRE_CAP_DOWN.getDefaultState());
 	}
 }

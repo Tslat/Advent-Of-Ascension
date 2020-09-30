@@ -19,7 +19,7 @@ public class CandyTube extends AoAStructure {
 
 		while (y <= 4) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantPlasticStick.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.PLASTIC_STICK.getDefaultState());
 				y++;
 			}
 			else {
@@ -30,6 +30,6 @@ public class CandyTube extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, y, 0, BlockRegister.plantCandyTube.getDefaultState());
+		addBlock(world, basePos, 0, y, 0, BlockRegister.CANDY_TUBE.getDefaultState());
 	}
 }

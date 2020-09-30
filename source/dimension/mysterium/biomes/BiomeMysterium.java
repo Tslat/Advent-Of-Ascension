@@ -57,7 +57,7 @@ public class BiomeMysterium extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.mystite.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreMystite.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.mystite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.mystite.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneMysterium)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 2, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.MYSTITE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.mystite.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.mystite.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.MYSTERIUM_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(20) + 2, rand.nextInt(16)));
 			}
 		}
 
@@ -74,19 +74,19 @@ public class BiomeMysterium extends Biome {
 							if (world.getBlockState(pos.setPos(posX, posY -1, posZ)) == biome.topBlock && world.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
 								switch (rand.nextInt(5)) {
 									case 0:
-										world.setBlockState(pos.up(), BlockRegister.plantMysticBush.getDefaultState());
+										world.setBlockState(pos.up(), BlockRegister.MYSTIC_BUSH.getDefaultState());
 										break;
 									case 1:
-										world.setBlockState(pos.up(), BlockRegister.plantMysticFerns.getDefaultState());
+										world.setBlockState(pos.up(), BlockRegister.MYSTIC_FERNS.getDefaultState());
 										break;
 									case 2:
-										world.setBlockState(pos.up(), BlockRegister.plantRainbowGrass.getDefaultState());
+										world.setBlockState(pos.up(), BlockRegister.RAINBOW_GRASS.getDefaultState());
 										break;
 									case 3:
-										world.setBlockState(pos.up(), BlockRegister.plantRainbowGrass2.getDefaultState());
+										world.setBlockState(pos.up(), BlockRegister.RAINBOW_GRASS2.getDefaultState());
 										break;
 									case 4:
-										world.setBlockState(pos.up(), BlockRegister.plantRainbowGrass3.getDefaultState());
+										world.setBlockState(pos.up(), BlockRegister.RAINBOW_GRASS3.getDefaultState());
 										break;
 								}
 							}

@@ -45,24 +45,24 @@ public class EntityMechachron extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobMechachronLiving;
+        return SoundsRegister.MOB_MECHACHRON_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobMechachronDeath;
+        return SoundsRegister.MOB_MECHACHRON_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobMechachronHit;
+        return SoundsRegister.MOB_MECHACHRON_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.veryHeavyStep;
+        return SoundsRegister.VERY_HEAVY_STEP;
     }
 
     @Nullable

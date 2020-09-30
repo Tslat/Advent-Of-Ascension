@@ -10,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.scheduling.async.ShadowlordSpawnTask;
 import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,16 +21,15 @@ public class ShadowAltar extends BossAltarBlock {
 	@Override
 	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
 		if (!player.world.isRemote) {
-			new ShadowlordSpawnTask(player.world, blockPos).schedule(1, TimeUnit.SECONDS);
-			sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.shadowlord.spawn", player.getDisplayNameString()), blockPos);
+			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.isPotionActive(MobEffects.NIGHT_VISION) && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.realmstoneBlank)))
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneDustopia));
+			if (player.isPotionActive(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.DUSTOPIA_REALMSTONE));
 		}
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.bookOfShadows;
+		return ItemRegister.BOOK_OF_SHADOWS;
 	}
 }

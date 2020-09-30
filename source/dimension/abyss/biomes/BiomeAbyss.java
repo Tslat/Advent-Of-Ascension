@@ -12,6 +12,10 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenBloodtwisterTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenEyeHangerTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenEyebushTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenShadowTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -55,7 +59,7 @@ public class BiomeAbyss extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.bloodstone.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreBloodstone.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.bloodstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.bloodstone.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneAbyss))
+				new WorldGenMinable(BlockRegister.BLOODSTONE_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.bloodstone.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.bloodstone.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.ABYSS_STONE))
 						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(5) + 45, rand.nextInt(16)));
 			}
 		}
@@ -68,7 +72,7 @@ public class BiomeAbyss extends Biome {
 				posY = world.getHeight(posX, posZ);
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock)
-					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantTubeicles.getDefaultState());
+					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.TUBEICLES.getDefaultState());
 			}
 
 			for (int i = 0; i < 4; i++) {
@@ -160,7 +164,7 @@ public class BiomeAbyss extends Biome {
 						posY = world.getHeight(posX + 3, posZ + 3);
 
 						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("AbyssalTree1", world, rand, pos.setPos(posX, posY, posZ));
+							new WorldGenBloodtwisterTree(null).generate(world, rand, pos.add(3, 0, 3));
 						break;
 					case 8:
 						posX = basePos.getX() + rand.nextInt(16);
@@ -168,7 +172,7 @@ public class BiomeAbyss extends Biome {
 						posY = world.getHeight(posX + 5, posZ + 5);
 
 						if (world.getBlockState(pos.setPos(posX + 5, posY - 1, posZ + 5)) == biome.topBlock)
-							StructuresHandler.generateStructure("AbyssalTree2", world, rand, pos.setPos(posX, posY, posZ));
+							new WorldGenShadowTree(null).generate(world, rand, pos.add(5, 0, 5));
 						break;
 					case 9:
 						posX = basePos.getX() + rand.nextInt(16);
@@ -176,7 +180,7 @@ public class BiomeAbyss extends Biome {
 						posY = world.getHeight(posX + 3, posZ + 3);
 
 						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("AbyssalTree3", world, rand, pos.setPos(posX, posY, posZ));
+							new WorldGenEyebushTree(null).generate(world, rand, pos.add(3, 0, 3));
 						break;
 					case 10:
 						posX = basePos.getX() + rand.nextInt(16);
@@ -184,7 +188,7 @@ public class BiomeAbyss extends Biome {
 						posY = world.getHeight(posX + 3, posZ + 3);
 
 						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("AbyssalTree4", world, rand, pos.setPos(posX, posY, posZ));
+							new WorldGenEyeHangerTree(null).generate(world, rand, pos.add(3, 0, 3));
 						break;
 				}
 			}

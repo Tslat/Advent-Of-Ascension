@@ -55,19 +55,19 @@ public class EntityShadowStalker extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDistorterLiving;
+		return SoundsRegister.MOB_DISTORTER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDistorterHit;
+		return SoundsRegister.MOB_DISTORTER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDistorterDeath;
+		return SoundsRegister.MOB_DISTORTER_DEATH;
 	}
 
 	@Nullable

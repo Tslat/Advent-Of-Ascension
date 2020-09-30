@@ -26,7 +26,7 @@ public class VoxStoreCrate extends Block {
 		setHardness(5.0f);
 		setResistance(3f);
 		setSoundType(SoundType.WOOD);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

@@ -52,19 +52,19 @@ public class EntityQuickpocket extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobQuickpocketLiving;
+		return SoundsRegister.MOB_QUICKPOCKET_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobQuickpocketDeath;
+		return SoundsRegister.MOB_QUICKPOCKET_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobQuickpocketHit;
+		return SoundsRegister.MOB_QUICKPOCKET_HIT;
 	}
 
 	@Nullable
@@ -79,11 +79,11 @@ public class EntityQuickpocket extends AoAMeleeMob {
 			EntityPlayer pl = (EntityPlayer)target;
 			
 			for (ItemStack stack : pl.inventory.mainInventory) {
-				if (stack.getItem() instanceof CoinItem || stack.getItem() == ItemRegister.circusCoin || stack.getItem() instanceof DimensionalTokensItem) {
+				if (stack.getItem() instanceof CoinItem || stack.getItem() == ItemRegister.CIRCUS_COIN || stack.getItem() instanceof DimensionalTokensItem) {
 					int dropAmount = rand.nextInt(stack.getCount() + 1);
 
 					entityDropItem(new ItemStack(stack.getItem(), dropAmount), 0);
-					world.playSound(null, target.posX, target.posY, target.posZ, SoundsRegister.mobQuickpocketSteal, SoundCategory.HOSTILE, 1f, 1f);
+					world.playSound(null, target.posX, target.posY, target.posZ, SoundsRegister.MOB_QUICKPOCKET_STEAL, SoundCategory.HOSTILE, 1f, 1f);
 					stack.shrink(dropAmount);
 					pl.inventoryContainer.detectAndSendChanges();
 

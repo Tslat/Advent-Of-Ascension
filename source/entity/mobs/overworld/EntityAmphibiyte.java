@@ -72,17 +72,17 @@ public class EntityAmphibiyte extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAmphibiyteLiving;
+		return SoundsRegister.MOB_AMPHIBIYTE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAmphibiyteDeath;
+		return SoundsRegister.MOB_AMPHIBIYTE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAmphibiyteHit;
+		return SoundsRegister.MOB_AMPHIBIYTE_HIT;
 	}
 
 	@Nullable

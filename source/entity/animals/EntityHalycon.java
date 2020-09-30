@@ -55,10 +55,10 @@ public class EntityHalycon extends AoAAnimal {
 			player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0f, 1.0f);
 
 			if (heldStack.isEmpty()) {
-				player.setHeldItem(hand, new ItemStack(ItemRegister.halyconMilk));
+				player.setHeldItem(hand, new ItemStack(ItemRegister.HALYCON_MILK));
 			}
 			else {
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.halyconMilk));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.HALYCON_MILK));
 			}
 
 			return true;
@@ -76,7 +76,7 @@ public class EntityHalycon extends AoAAnimal {
 	@Nullable
 	@Override
 	protected Item getTemptItem() {
-		return Item.getItemFromBlock(BlockRegister.plantHavenGrass);
+		return Item.getItemFromBlock(BlockRegister.HAVEN_GRASS_PLANT);
 	}
 
 	@Nullable

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class Lollypop2 extends AoAStructure { //StructureSize: 5x10x5
-	private static final IBlockState redCandy = BlockRegister.candyRed.getDefaultState();
-	private static final IBlockState plasticPole = BlockRegister.plastic.getDefaultState();
+	private static final IBlockState redCandy = BlockRegister.RED_CANDY.getDefaultState();
+	private static final IBlockState plasticPole = BlockRegister.PLASTIC.getDefaultState();
 
 	public Lollypop2() {
 		super("Lollypop2");

@@ -24,7 +24,7 @@ public class ExperimentW801 extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.mobArcwormHit;
+		return SoundsRegister.MOB_ARCWORM_HIT;
 	}
 
 	@Override

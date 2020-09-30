@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class SmallBaronRock2 extends AoAStructure { //StructureSize: 2x2x6
-	private static final IBlockState baronStone = BlockRegister.stoneBaron.getDefaultState();
+	private static final IBlockState baronStone = BlockRegister.BARON_STONE.getDefaultState();
 
 	public SmallBaronRock2() {
 		super("SmallBaronRock2");

@@ -29,53 +29,34 @@ import net.tslat.aoa3.dimension.runandor.biomes.BiomeRunandor;
 import net.tslat.aoa3.dimension.shyrelands.biomes.BiomeShyrelands;
 import net.tslat.aoa3.dimension.voxponds.biomes.BiomeVoxPonds;
 
+import javax.annotation.Nonnull;
+
 @SuppressWarnings({"ConstantConditions", "unused"})
 @Mod.EventBusSubscriber
+@GameRegistry.ObjectHolder("aoa3")
 public class BiomeRegister {
-	@GameRegistry.ObjectHolder("aoa3:abyss")
-	public static final BiomeAbyss biomeAbyss = null;
-	@GameRegistry.ObjectHolder("aoa3:ancient_cavern")
-	public static final BiomeAncientCavern biomeAncientCavern = null;
-	@GameRegistry.ObjectHolder("aoa3:barathos")
-	public static final BiomeBarathos biomeBarathos = null;
-	@GameRegistry.ObjectHolder("aoa3:candyland")
-	public static final BiomeCandyland biomeCandyland = null;
-	@GameRegistry.ObjectHolder("aoa3:celeve")
-	public static final BiomeCeleve biomeCeleve = null;
-	@GameRegistry.ObjectHolder("aoa3:creeponia")
-	public static final BiomeCreeponia biomeCreeponia = null;
-	@GameRegistry.ObjectHolder("aoa3:crystevia")
-	public static final BiomeCrystevia biomeCrystevia = null;
-	@GameRegistry.ObjectHolder("aoa3:deeplands")
-	public static final BiomeDeeplands biomeDeeplands = null;
-	@GameRegistry.ObjectHolder("aoa3:dustopia")
-	public static final BiomeDustopia biomeDustopia = null;
-	@GameRegistry.ObjectHolder("aoa3:gardencia")
-	public static final BiomeGardencia biomeGardencia = null;
-	@GameRegistry.ObjectHolder("aoa3:greckon")
-	public static final BiomeGreckon biomeGreckon = null;
-	@GameRegistry.ObjectHolder("aoa3:haven")
-	public static final BiomeHaven biomeHaven = null;
-	@GameRegistry.ObjectHolder("aoa3:immortallis")
-	public static final BiomeImmortallis biomeImmortallis = null;
-	@GameRegistry.ObjectHolder("aoa3:iromine")
-	public static final BiomeIromine biomeIromine = null;
-	@GameRegistry.ObjectHolder("aoa3:lborean")
-	public static final BiomeLBorean biomeLBorean = null;
-	@GameRegistry.ObjectHolder("aoa3:lelyetia")
-	public static final BiomeLelyetia biomeLelyetia = null;
-	@GameRegistry.ObjectHolder("aoa3:lunalus")
-	public static final BiomeLunalus biomeLunalus = null;
-	@GameRegistry.ObjectHolder("aoa3:mysterium")
-	public static final BiomeMysterium biomeMysterium = null;
-	@GameRegistry.ObjectHolder("aoa3:precasia")
-	public static final BiomePrecasia biomePrecasia = null;
-	@GameRegistry.ObjectHolder("aoa3:runandor")
-	public static final BiomeRunandor biomeRunandor = null;
-	@GameRegistry.ObjectHolder("aoa3:shyrelands")
-	public static final BiomeShyrelands biomeShyrelands = null;
-	@GameRegistry.ObjectHolder("aoa3:vox_ponds")
-	public static final BiomeVoxPonds biomeVoxPonds = null;
+	public static final BiomeAbyss ABYSS = ObjectHolder();
+	public static final BiomeAncientCavern ANCIENT_CAVERN = ObjectHolder();
+	public static final BiomeBarathos BARATHOS = ObjectHolder();
+	public static final BiomeCandyland CANDYLAND = ObjectHolder();
+	public static final BiomeCeleve CELEVE = ObjectHolder();
+	public static final BiomeCreeponia CREEPONIA = ObjectHolder();
+	public static final BiomeCrystevia CRYSTEVIA = ObjectHolder();
+	public static final BiomeDeeplands DEEPLANDS = ObjectHolder();
+	public static final BiomeDustopia DUSTOPIA = ObjectHolder();
+	public static final BiomeGardencia GARDENCIA = ObjectHolder();
+	public static final BiomeGreckon GRECKON = ObjectHolder();
+	public static final BiomeHaven HAVEN = ObjectHolder();
+	public static final BiomeImmortallis IMMORTALLIS = ObjectHolder();
+	public static final BiomeIromine IROMINE = ObjectHolder();
+	public static final BiomeLBorean LBOREAN = ObjectHolder();
+	public static final BiomeLelyetia LELYETIA = ObjectHolder();
+	public static final BiomeLunalus LUNALUS = ObjectHolder();
+	public static final BiomeMysterium MYSTERIUM = ObjectHolder();
+	public static final BiomePrecasia PRECASIA = ObjectHolder();
+	public static final BiomeRunandor RUNANDOR = ObjectHolder();
+	public static final BiomeShyrelands SHYRELANDS = ObjectHolder();
+	public static final BiomeVoxPonds VOX_PONDS = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerBiomes(final RegistryEvent.Register<Biome> ev) {
@@ -110,27 +91,33 @@ public class BiomeRegister {
 	public static void init() {
 		AdventOfAscension.logOptionalMessage("Initializing biomes");
 
-		biomeAbyss.biomeInit();
-		biomeAncientCavern.biomeInit();
-		biomeBarathos.biomeInit();
-		biomeCandyland.biomeInit();
-		biomeCeleve.biomeInit();
-		biomeCreeponia.biomeInit();
-		biomeCrystevia.biomeInit();
-		biomeDeeplands.biomeInit();
-		biomeDustopia.biomeInit();
-		biomeGardencia.biomeInit();
-		biomeGreckon.biomeInit();
-		biomeHaven.biomeInit();
-		biomeImmortallis.biomeInit();
-		biomeIromine.biomeInit();
-		biomeLBorean.biomeInit();
-		biomeLelyetia.biomeInit();
-		biomeLunalus.biomeInit();
-		biomeMysterium.biomeInit();
-		biomePrecasia.biomeInit();
-		biomeRunandor.biomeInit();
-		biomeShyrelands.biomeInit();
-		biomeVoxPonds.biomeInit();
+		ABYSS.biomeInit();
+		ANCIENT_CAVERN.biomeInit();
+		BARATHOS.biomeInit();
+		CANDYLAND.biomeInit();
+		CELEVE.biomeInit();
+		CREEPONIA.biomeInit();
+		CRYSTEVIA.biomeInit();
+		DEEPLANDS.biomeInit();
+		DUSTOPIA.biomeInit();
+		GARDENCIA.biomeInit();
+		GRECKON.biomeInit();
+		HAVEN.biomeInit();
+		IMMORTALLIS.biomeInit();
+		IROMINE.biomeInit();
+		LBOREAN.biomeInit();
+		LELYETIA.biomeInit();
+		LUNALUS.biomeInit();
+		MYSTERIUM.biomeInit();
+		PRECASIA.biomeInit();
+		RUNANDOR.biomeInit();
+		SHYRELANDS.biomeInit();
+		VOX_PONDS.biomeInit();
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

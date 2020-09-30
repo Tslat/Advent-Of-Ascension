@@ -149,7 +149,7 @@ public abstract class EntityPixon extends EntityCreature {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.entityPixonLiving;
+        return SoundsRegister.ENTITY_PIXON_LIVING;
     }
 
     @Nullable

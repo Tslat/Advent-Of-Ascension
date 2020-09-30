@@ -1,11 +1,11 @@
 package net.tslat.aoa3.client.model.entities.mobs.overworld;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.client.model.entities.animations.ModelAnimatable;
 
-public class ModelGrunt extends ModelAnimatable {
+public class ModelGrunt extends ModelBase {
 	private ModelRenderer head;
 	private ModelRenderer body;
 	private ModelRenderer rightArm;
@@ -128,7 +128,5 @@ public class ModelGrunt extends ModelAnimatable {
 		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
 		rightLeg.rotateAngleY = 0.0f;
 		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;
-
-		super.setRotationAngles(par1, par2, par3, par4, par5, par6, entity);
 	}
 }

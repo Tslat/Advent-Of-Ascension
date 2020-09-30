@@ -23,11 +23,11 @@ public class DustopiaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalDustopia;
+		return BlockRegister.DUSTOPIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.leavesDawn;
+		return BlockRegister.DAWN_LEAVES;
 	}
 }

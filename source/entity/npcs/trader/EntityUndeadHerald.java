@@ -38,6 +38,11 @@ public class EntityUndeadHerald extends AoATrader {
 	}
 
 	@Override
+	protected int getSpawnChanceFactor() {
+		return 100;
+	}
+
+	@Override
 	protected Enums.ModGuis getTraderGui() {
 		return Enums.ModGuis.TRADER_UNDEAD_HERALD;
 	}
@@ -49,7 +54,7 @@ public class EntityUndeadHerald extends AoATrader {
 
 	@Override
 	protected boolean canDespawn() {
-		return false;
+		return ticksExisted > 72000;
 	}
 
 	@Override
@@ -59,70 +64,70 @@ public class EntityUndeadHerald extends AoATrader {
 		if (dimension != null) {
 			switch (dimension) {
 				case ABYSS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensAbyss, 10), new ItemStack(BlockRegister.bannerShadow, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ABYSS_TOKENS, 10), new ItemStack(BlockRegister.SHADOW_BANNER, 1)));
 					break;
 				case BARATHOS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensBaron, 10), new ItemStack(BlockRegister.bannerBaron, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BARON_TOKENS, 10), new ItemStack(BlockRegister.BARON_BANNER, 1)));
 					break;
 				case CANDYLAND:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCandyland, 10), new ItemStack(BlockRegister.bannerCandy, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CANDYLAND_TOKENS, 10), new ItemStack(BlockRegister.CANDY_BANNER, 1)));
 					break;
 				case CELEVE:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCeleve, 10), new ItemStack(BlockRegister.bannerClown, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CELEVE_TOKENS, 10), new ItemStack(BlockRegister.CLOWN_BANNER, 1)));
 					break;
 				case CREEPONIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 10), new ItemStack(BlockRegister.bannerCreepy, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CREEPONIA_TOKENS, 10), new ItemStack(BlockRegister.CREEPY_BANNER, 1)));
 					break;
 				case CRYSTEVIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCrystevia, 10), new ItemStack(BlockRegister.bannerCrystal, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CRYSTEVIA_TOKENS, 10), new ItemStack(BlockRegister.CRYSTAL_BANNER, 1)));
 					break;
 				case DEEPLANDS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDeeplands, 10), new ItemStack(BlockRegister.bannerDeep, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DEEPLANDS_TOKENS, 10), new ItemStack(BlockRegister.DEEP_BANNER, 1)));
 					break;
 				case DUSTOPIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDustopia, 10), new ItemStack(BlockRegister.bannerDustopian, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUSTOPIA_TOKENS, 10), new ItemStack(BlockRegister.DUSTOPIAN_BANNER, 1)));
 					break;
 				case GARDENCIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGardencia, 10), new ItemStack(BlockRegister.bannerRosidian, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GARDENCIA_TOKENS, 10), new ItemStack(BlockRegister.ROSIDIAN_BANNER, 1)));
 					break;
 				case GRECKON:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensGreckon, 10), new ItemStack(BlockRegister.bannerHaunted, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GRECKON_TOKENS, 10), new ItemStack(BlockRegister.HAUNTED_BANNER, 1)));
 					break;
 				case HAVEN:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensHaven, 10), new ItemStack(BlockRegister.bannerUtopian, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.HAVEN_TOKENS, 10), new ItemStack(BlockRegister.UTOPIAN_BANNER, 1)));
 					break;
 				case IROMINE:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensIromine, 10), new ItemStack(BlockRegister.bannerMecha, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.IROMINE_TOKENS, 10), new ItemStack(BlockRegister.MECHA_BANNER, 1)));
 					break;
 				case LBOREAN:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensBorean, 10), new ItemStack(BlockRegister.bannerBoreic, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BOREAN_TOKENS, 10), new ItemStack(BlockRegister.BOREIC_BANNER, 1)));
 					break;
 				case LELYETIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensLelyetia, 10), new ItemStack(BlockRegister.bannerLelyetian, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LELYETIA_TOKENS, 10), new ItemStack(BlockRegister.LELYETIAN_BANNER, 1)));
 					break;
 				case LUNALUS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensLunar, 10), new ItemStack(BlockRegister.bannerLunar, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LUNAR_TOKENS, 10), new ItemStack(BlockRegister.LUNAR_BANNER, 1)));
 					break;
 				case MYSTERIUM:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensMysterium, 10), new ItemStack(BlockRegister.bannerFungal, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.MYSTERIUM_TOKENS, 10), new ItemStack(BlockRegister.FUNGAL_BANNER, 1)));
 					break;
 				case NETHER:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensNether, 10), new ItemStack(BlockRegister.bannerNether, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.NETHER_TOKENS, 10), new ItemStack(BlockRegister.NETHER_BANNER, 1)));
 					break;
 				case OVERWORLD:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.bannerVoid, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(BlockRegister.VOID_BANNER, 1)));
 					break;
 				case PRECASIA:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensPrecasian, 10), new ItemStack(BlockRegister.bannerAncient, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.PRECASIAN_TOKENS, 10), new ItemStack(BlockRegister.ANCIENT_BANNER, 1)));
 					break;
 				case RUNANDOR:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensRunandor, 10), new ItemStack(BlockRegister.bannerRunic, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.RUNANDOR_TOKENS, 10), new ItemStack(BlockRegister.RUNIC_BANNER, 1)));
 					break;
 				case SHYRELANDS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensShyrelands, 10), new ItemStack(BlockRegister.bannerShyre, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SHYRELANDS_TOKENS, 10), new ItemStack(BlockRegister.SHYRE_BANNER, 1)));
 					break;
 				case VOX_PONDS:
-					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensVoxPonds, 10), new ItemStack(BlockRegister.bannerVox, 1)));
+					newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.VOX_PONDS_TOKENS, 10), new ItemStack(BlockRegister.VOX_BANNER, 1)));
 					break;
 				case ANCIENT_CAVERN:
 				case IMMORTALLIS:
@@ -131,9 +136,9 @@ public class EntityUndeadHerald extends AoATrader {
 			}
 		}
 
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.bannerCreation, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.bannerEnergy, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.bannerSoul, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(BlockRegister.bannerBlood, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(BlockRegister.CREATION_BANNER, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(BlockRegister.ENERGY_BANNER, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(BlockRegister.SOUL_BANNER, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(BlockRegister.BLOOD_BANNER, 1)));
 	}
 }

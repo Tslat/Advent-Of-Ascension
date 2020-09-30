@@ -23,11 +23,11 @@ public class PrecasiaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalPrecasia;
+		return BlockRegister.PRECASIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.skeletalBlock;
+		return BlockRegister.SKELETAL_BLOCK;
 	}
 }

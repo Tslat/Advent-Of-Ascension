@@ -9,14 +9,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BayonetteSR extends BaseSniper implements AdventWeapon {
+public class BayonetteSR extends BaseSniper {
 	public BayonetteSR(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("BayonetteSR");
@@ -26,7 +25,7 @@ public class BayonetteSR extends BaseSniper implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override

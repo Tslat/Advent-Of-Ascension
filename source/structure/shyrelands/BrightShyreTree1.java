@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BrightShyreTree1 extends AoAStructure { //StructureSize: 3x10x3
-	private static final IBlockState brightShyreLeaves = BlockRegister.leavesShyreBright.getDefaultState();
-	private static final IBlockState shyreLog = BlockRegister.logShyre.getDefaultState();
+	private static final IBlockState brightShyreLeaves = BlockRegister.BRIGHT_SHYRE_LEAVES.getDefaultState();
+	private static final IBlockState shyreLog = BlockRegister.SHYRE_LOG.getDefaultState();
 
 	public BrightShyreTree1() {
 		super("BrightShyreTree1");

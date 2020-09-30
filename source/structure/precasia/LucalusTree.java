@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LucalusTree extends AoAStructure { //StructureSize: 12x21x12
-	private static final IBlockState lucalusLeaves = BlockRegister.leavesLucalus.getDefaultState();
-	private static final IBlockState lucalusLog = BlockRegister.logLucalus.getDefaultState();
+	private static final IBlockState lucalusLeaves = BlockRegister.LUCALUS_LEAVES.getDefaultState();
+	private static final IBlockState lucalusLog = BlockRegister.LUCALUS_LOG.getDefaultState();
 
 	public LucalusTree() {
 		super("LucalusTree");

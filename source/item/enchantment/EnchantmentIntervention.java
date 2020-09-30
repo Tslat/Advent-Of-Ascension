@@ -16,6 +16,11 @@ public class EnchantmentIntervention extends BaseEnchantment {
 	}
 
 	@Override
+	public boolean isTreasureEnchantment() {
+		return true;
+	}
+
+	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
 		return 32;
 	}

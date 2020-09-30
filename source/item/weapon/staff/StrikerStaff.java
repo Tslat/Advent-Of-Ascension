@@ -31,12 +31,12 @@ public class StrikerStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeStrike, 2);
+		runes.put(ItemRegister.STRIKE_RUNE, 2);
 	}
 
 	@Override

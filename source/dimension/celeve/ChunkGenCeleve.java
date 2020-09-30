@@ -34,7 +34,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeCeleve;
+	private final Biome biome = BiomeRegister.CELEVE;
 
 	private double[] noiseArray;
 	private double[] surfaceBuffer = new double[256];
@@ -67,8 +67,6 @@ public class ChunkGenCeleve implements IChunkGenerator {
 		islandNoise = new NoiseGeneratorSimplex(rand);
 	}
 
-
-
 	@Override
 	public Chunk generateChunk(int chunkX, int chunkZ) {
 		this.curChunkX = chunkX;
@@ -88,14 +86,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 		}
 
 		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
-
-		if (populatedChunk) {
-			chunk.generateSkylightMap();
-		}
-		else {
-			chunk.setHeightMap(new int[256]);
-			chunk.setLightPopulated(true);
-		}
+		chunk.generateSkylightMap();
 
 		return chunk;
 	}
@@ -189,7 +180,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 								IBlockState blockState = Blocks.AIR.getDefaultState();
 
 								if (d15 > 0.0D) {
-									blockState = BlockRegister.dirtCeleve.getDefaultState();
+									blockState = BlockRegister.CELEVE_DIRT.getDefaultState();
 									emptyChunk = false;
 								}
 
@@ -243,7 +234,7 @@ public class ChunkGenCeleve implements IChunkGenerator {
 			if (iblockstate2.getMaterial() == Material.AIR) {
 				j = -1;
 			}
-			else if (iblockstate2.getBlock() == BlockRegister.dirtCeleve) {
+			else if (iblockstate2.getBlock() == BlockRegister.CELEVE_DIRT) {
 				if (j == -1) {
 					j = k;
 

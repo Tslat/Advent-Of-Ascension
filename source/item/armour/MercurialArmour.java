@@ -1,11 +1,12 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.library.Enums;
@@ -29,27 +30,24 @@ public class MercurialArmour extends AdventArmour {
 	}
 
 	@Override
-	public void onPreAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && !event.getEntity().world.isRemote && event.getSource().isExplosion() && event.getAmount() > 0) {
-			float remainingDamage = event.getAmount() * 0.4f;
-
-			plData.player().inventory.damageArmor(10 + remainingDamage * 2 * itemRand.nextFloat());
-			event.setCanceled(true);
+	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
+		if (!plData.player().world.isRemote && event.getSource().isExplosion() && event.getAmount() > 0) {
+			if (slots == null) {
+				plData.player().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 320, 1, true, true));
+			}
+			else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
+				plData.player().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 80 * slots.size(), 0, true, true));
+			}
 		}
-	}
-
-	@Override
-	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && event.getSource().isExplosion() && event.getAmount() > 0)
-			event.setAmount(event.getAmount() * (1 - 0.15f * slots.size()));
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(pieceEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(setEffectHeader());
+		tooltip.add(pieceEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

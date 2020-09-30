@@ -21,7 +21,7 @@ public class CarvedRunicPortalBlock extends CarvedRunicBlock {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (state.getBlock() == BlockRegister.carvedRunePower) {
+		if (state.getBlock() == BlockRegister.CARVED_RUNE_POWER) {
 			if (!world.isRemote) {
 				if (player.getHeldItem(hand).getItem() instanceof Realmstone) {
 					Realmstone realmstone = (Realmstone)player.getHeldItem(hand).getItem();

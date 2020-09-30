@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LottoSkyFlower extends AoAStructure { //StructureSize: 8x150x8
-	private static final IBlockState yellowPetals = BlockRegister.petalsYellow.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
+	private static final IBlockState yellowPetals = BlockRegister.YELLOW_PETALS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
 
 	public LottoSkyFlower() {
 		super("LottoSkyFlower");

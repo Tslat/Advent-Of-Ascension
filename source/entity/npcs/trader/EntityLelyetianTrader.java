@@ -50,10 +50,10 @@ public class EntityLelyetianTrader extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(ItemRegister.yellowSpores, 5), new ItemStack(WeaponRegister.gunGaugeRifle)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 10), new ItemStack(ItemRegister.orangeSpores, 5), new ItemStack(WeaponRegister.gunGaugeRifle)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.zhinxDust), new ItemStack(ItemRegister.coinCopper, 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(BlockRegister.glassLelyetian, 64)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 10), new ItemStack(BlockRegister.glassLelyetian, 14)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(ItemRegister.YELLOW_SPORES, 5), new ItemStack(WeaponRegister.GAUGE_RIFLE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 10), new ItemStack(ItemRegister.ORANGE_SPORES, 5), new ItemStack(WeaponRegister.GAUGE_RIFLE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ZHINX_DUST), new ItemStack(ItemRegister.COPPER_COIN, 4)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(BlockRegister.LELYETIAN_GLASS, 64)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 10), new ItemStack(BlockRegister.LELYETIAN_GLASS, 14)));
 	}
 }

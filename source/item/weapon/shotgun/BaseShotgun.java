@@ -6,14 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventGunCapability;
-import net.tslat.aoa3.capabilities.providers.AdventGunProvider;
 import net.tslat.aoa3.common.packet.PacketRecoil;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.EnchantmentsRegister;
@@ -22,7 +19,6 @@ import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityMetalSlug;
-import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.Enums;
@@ -44,7 +40,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 		this.pelletCount = pellets;
 		this.knockbackFactor = knockbackFactor;
 
-		setCreativeTab(CreativeTabsRegister.shotgunsTab);
+		setCreativeTab(CreativeTabsRegister.SHOTGUNS);
 	}
 
 	public int getPelletCount() {
@@ -54,7 +50,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunShotgun;
+		return SoundsRegister.SHOTGUN_FIRE;
 	}
 
 	@Override
@@ -67,43 +63,33 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 		if (player.getCooledAttackStrength(0.0f) < 1)
 			return ActionResult.newResult(EnumActionResult.FAIL, stack);
 
-		AdventGunCapability cap = (AdventGunCapability)stack.getCapability(AdventGunProvider.ADVENT_GUN, null);
+		BaseBullet ammo = findAndConsumeAmmo(player, stack, hand);
 
-		if (cap == null)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (ammo != null) {
+			if (!world.isRemote) {
+				float form = 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.FORM, stack);
 
-		if (cap.getNextFireTime() <= GlobalEvents.tick) {
-			BaseBullet ammo = findAndConsumeAmmo(player, this, hand);
-
-			if (ammo != null) {
-				if (!world.isRemote) {
-					float form = 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.form, stack);
-
-					fireShotgun(player, hand, 0.1f * pelletCount * (1 - form), pelletCount);
-				}
-
-				if (getFiringSound() != null)
-					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-				stack.damageItem(1, player);
-				cap.setNextFireTime(getFiringDelay());
-
-				if (player instanceof EntityPlayerMP) {
-					int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.control, stack);
-					float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
-
-					PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
-				}
-
-				return ActionResult.newResult(EnumActionResult.PASS, stack);
+				fireShotgun(player, hand, 0.1f * pelletCount * (1 - form), pelletCount);
 			}
 
-			if (player instanceof EntityPlayerMP)
-				((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+			if (getFiringSound() != null)
+				player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+			stack.damageItem(1, player);
+			player.getCooldownTracker().setCooldown(this, getFiringDelay());
+
+			if (player instanceof EntityPlayerMP) {
+				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, stack);
+				float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
+
+				PacketUtil.network.sendTo(new PacketRecoil(hand == EnumHand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()), (EntityPlayerMP)player);
+			}
+
+			return ActionResult.newResult(EnumActionResult.PASS, stack);
 		}
-		else if (cap.getNextFireTime() > GlobalEvents.tick + getFiringDelay() * 2) {
-			cap.setNextFireTime(0);
-		}
+
+		if (player instanceof EntityPlayerMP)
+			((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 
 		return ActionResult.newResult(EnumActionResult.FAIL, stack);
 	}
@@ -121,10 +107,10 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 			float shellMod = 1;
 
 			if (bullet.getHand() != null)
-				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.shell, shooter.getHeldItem(bullet.getHand()));
+				shellMod += 0.1 * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, shooter.getHeldItem(bullet.getHand()));
 
 			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
-				if (knockbackFactor > 0)
+				if (knockbackFactor > 0 && target instanceof EntityLivingBase)
 					EntityUtil.doScaledKnockback((EntityLivingBase)target, shooter, knockbackFactor, shooter.posX - target.posX, shooter.posZ - target.posZ);
 
 				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
@@ -133,11 +119,9 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.spreadshot, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityMetalSlug(player, gun, hand,4, 0);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.SPREADSHOT), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityMetalSlug(player, (BaseGun)gunStack.getItem(), hand, 4, 0);
 
 		return null;
 	}
@@ -145,7 +129,7 @@ public abstract class BaseShotgun extends BaseGun implements AdventWeapon {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.shotgun", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage()), Integer.toString(pelletCount)));
+		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.shotgun", Enums.ItemDescriptionType.ITEM_DAMAGE, StringUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SHELL, stack))), 2), Integer.toString(pelletCount)));
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.knockback", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
 		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.spreadshot", Enums.ItemDescriptionType.ITEM_AMMO_COST));

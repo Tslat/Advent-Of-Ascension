@@ -7,13 +7,13 @@ import net.tslat.aoa3.fluid.CandiedWater;
 import org.apache.logging.log4j.Level;
 
 public final class FluidsRegister {
-	public static final CandiedWater candiedWater = new CandiedWater();
+	public static final CandiedWater CANDIED_WATER = new CandiedWater();
 
 	public static void registerFluids() {
 		AdventOfAscension.logMessage(Level.INFO, "Beginning fluid registration");
 
 		registerFluids(
-				candiedWater
+				CANDIED_WATER
 		);
 	}
 

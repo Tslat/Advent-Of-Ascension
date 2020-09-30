@@ -18,7 +18,7 @@ public class LelyetianStem extends AoAStructure {
 
 		while (y <= 14) {
 			if (world.getBlockState(basePos.add(0, y, 0)).getBlock() == Blocks.AIR) {
-				addBlock(world, basePos, 0, y, 0, BlockRegister.plantLelyetianStem.getDefaultState());
+				addBlock(world, basePos, 0, y, 0, BlockRegister.LELYETIAN_STEM.getDefaultState());
 				y++;
 			}
 			else {
@@ -29,6 +29,6 @@ public class LelyetianStem extends AoAStructure {
 				break;
 		}
 
-		addBlock(world, basePos, 0, y, 0, BlockRegister.plantLelyetianStemCap.getDefaultState());
+		addBlock(world, basePos, 0, y, 0, BlockRegister.LELYETIAN_STEM_CAP.getDefaultState());
 	}
 }

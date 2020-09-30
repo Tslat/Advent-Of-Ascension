@@ -42,7 +42,6 @@ import net.tslat.aoa3.library.leaderboard.AoALeaderboard;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
 import net.tslat.aoa3.utils.*;
-import net.tslat.aoa3.utils.skills.AuguryUtil;
 import net.tslat.aoa3.utils.skills.ButcheryUtil;
 import net.tslat.aoa3.utils.skills.InnervationUtil;
 import org.apache.logging.log4j.Level;
@@ -72,7 +71,7 @@ public final class PlayerDataManager {
 	private final PlayerBuffs buffs;
 
 	private int nextMessageTime = 0;
-	private TextComponentTranslation lastMessage = new TextComponentTranslation("init");
+	private TextComponentTranslation lastMessage = null;
 
 	private boolean resourcesUpdated = false;
 
@@ -106,7 +105,9 @@ public final class PlayerDataManager {
 		equipment.handleEquipmentCheck(this);
 		equipment.tickEquipment(this);
 
-		stats.regenResources();
+		if (ConfigurationUtil.MainConfig.resourcesEnabled)
+			stats.regenResources();
+
 		stats.doTributeBuffs();
 
 		if (revengeTimer > 0) {
@@ -120,10 +121,9 @@ public final class PlayerDataManager {
 			PacketUtil.network.sendTo(new PacketResourceData(stats.resources.get(Enums.Resources.CREATION), stats.resources.get(Enums.Resources.ENERGY), stats.resources.get(Enums.Resources.RAGE), stats.resources.get(Enums.Resources.SOUL), isRevengeActive()), (EntityPlayerMP)player);
 	}
 
-	public void sendThrottledChatMessage(String langKey, Object... args) {
+	public void sendThrottledChatMessage(String langKey, @Nonnull Object... args) {
 		Style style = null;
-		Object[] arguments = new Object[args.length];
-		int i = 0;
+		int styleArgs = 0;
 
 		for (Object arg : args) {
 			if (arg.getClass() == TextFormatting.class) {
@@ -152,8 +152,16 @@ public final class PlayerDataManager {
 						style.setColor((TextFormatting)arg);
 						break;
 				}
+
+				styleArgs++;
 			}
-			else {
+		}
+
+		Object[] arguments = new Object[args.length - styleArgs];
+		int i = 0;
+
+		for (Object arg : args) {
+			if (arg.getClass() != TextFormatting.class) {
 				arguments[i] = arg;
 				i++;
 			}
@@ -179,9 +187,9 @@ public final class PlayerDataManager {
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 
-			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
+			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.INTERVENTION, stack) > 0) {
 				if (AdventOfAscension.rand.nextInt(5) == 0)
-					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.INTERVENTION);
 
 				interventionData.add(stack);
 				player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
@@ -191,9 +199,9 @@ public final class PlayerDataManager {
 		for (int i = 0; i < 4; i++) {
 			ItemStack stack = player.inventory.armorInventory.get(i);
 
-			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.intervention, stack) > 0) {
+			if (EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.INTERVENTION, stack) > 0) {
 				if (AdventOfAscension.rand.nextInt(5) == 0)
-					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.intervention);
+					stack = ItemUtil.removeEnchantment(stack, EnchantmentsRegister.INTERVENTION);
 
 				interventionData.add(stack);
 				player.inventory.armorInventory.set(i, ItemStack.EMPTY);
@@ -267,9 +275,9 @@ public final class PlayerDataManager {
 		storeInterventionItems();
 
 		if (ConfigurationUtil.MainConfig.funOptions.hardcoreMode) {
-			for (Enums.Skills skill : Enums.Skills.values()) {
-				stats.levels.put(skill, Math.max(1, stats.levels.get(skill) - 1));
-			}
+			Enums.Skills skill = Enums.Skills.values()[AdventOfAscension.rand.nextInt(Enums.Skills.values().length)];
+
+			stats.levels.put(skill, Math.max(1, stats.levels.get(skill) - 1));
 		}
 	}
 
@@ -280,6 +288,10 @@ public final class PlayerDataManager {
 	private void checkAndUpdateLegitimacy() {
 		if (player instanceof EntityPlayerMP) {
 			Advancement adv = ModUtil.getAdvancement("overworld/by_the_books");
+
+			if (adv == null)
+				return;
+
 			boolean legit = ((EntityPlayerMP)player).getAdvancements().getProgress(adv).isDone();
 			PlayerAdvancements plAdv = ((EntityPlayerMP)player).getAdvancements();
 			int opt = stats.optionals.get(Enums.Skills.EXPEDITION);
@@ -354,8 +366,10 @@ public final class PlayerDataManager {
 		equipment.cooldowns = sourcePlayerData.equipment.cooldowns;
 		portalCoordinatesMap = sourcePlayerData.portalCoordinatesMap;
 
-		EntityUtil.applyAttributeModifierSafely(player, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(InnervationUtil.getHealthBuff(stats.getLevel(Enums.Skills.INNERVATION))));
-		player.setHealth(player.getMaxHealth());
+		if (ConfigurationUtil.MainConfig.skillsEnabled) {
+			EntityUtil.applyAttributeModifierSafely(player, SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.innervationHealthBuff(InnervationUtil.getHealthBuff(stats.getLevel(Enums.Skills.INNERVATION))));
+			player.setHealth(player.getMaxHealth());
+		}
 	}
 
 	public NBTTagCompound saveToNBT() {
@@ -738,13 +752,13 @@ public final class PlayerDataManager {
 			if (resources.get(Enums.Resources.ENERGY) < 200 && (nextEnergyRegenTime < GlobalEvents.tick || GlobalEvents.tick + 60 < nextEnergyRegenTime))
 				regenResource(Enums.Resources.ENERGY, 0.32f);
 
-			if (resources.get(Enums.Resources.CREATION) < AuguryUtil.getMaxCreation(levels.get(Enums.Skills.AUGURY)))
+			if (resources.get(Enums.Resources.CREATION) < 200)
 				regenResource(Enums.Resources.CREATION, 0.033f);
 
 			if (resources.get(Enums.Resources.RAGE) < 200 && (nextRageRegenTime < GlobalEvents.tick || GlobalEvents.tick + 120 < nextRageRegenTime))
 				regenResource(Enums.Resources.RAGE, ButcheryUtil.getTickRegen(levels.get(Enums.Skills.BUTCHERY)));
 
-			if (resources.get(Enums.Resources.SOUL) < AuguryUtil.getMaxSoul(levels.get(Enums.Skills.AUGURY)))
+			if (resources.get(Enums.Resources.SOUL) < 200)
 				regenResource(Enums.Resources.SOUL, 0.01f);
 		}
 
@@ -765,7 +779,7 @@ public final class PlayerDataManager {
 		}
 
 		public int getLevel(Enums.Skills skill) {
-			return Math.min(100, levels.get(skill));
+			return ConfigurationUtil.MainConfig.skillsEnabled ? Math.min(100, levels.get(skill)) : 100;
 		}
 
 		public int getLevelForDisplay(Enums.Skills skill) {
@@ -777,11 +791,11 @@ public final class PlayerDataManager {
 		}
 
 		public float getResourceValue(Enums.Resources resource) {
-			return resources.get(resource);
+			return ConfigurationUtil.MainConfig.resourcesEnabled ? resources.get(resource) : 200;
 		}
 
 		public int getTribute(Enums.Deities deity) {
-			return tribute.get(deity);
+			return ConfigurationUtil.MainConfig.resourcesEnabled ? tribute.get(deity) : 200;
 		}
 
 		@Nullable
@@ -790,6 +804,9 @@ public final class PlayerDataManager {
 		}
 
 		public void addXp(Enums.Skills skill, float xp, boolean isUnnatural, boolean ignoreXpBuffs) {
+			if (!ConfigurationUtil.MainConfig.skillsEnabled)
+				return;
+
 			int lvl = levels.get(skill);
 
 			if (lvl >= 1000)
@@ -871,10 +888,10 @@ public final class PlayerDataManager {
 
 		public void levelUp(Enums.Skills skill, int oldLevel, int newLevel, boolean isNaturalLevel) {
 			if (newLevel < 100) {
-				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.levelUp, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.PLAYER_LEVEL_UP, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			}
 			else if (newLevel == 100 || newLevel == 1000) {
-				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.level100, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, SoundsRegister.PLAYER_LEVEL_100, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			}
 
 			levels.put(skill, newLevel);
@@ -902,6 +919,9 @@ public final class PlayerDataManager {
 		}
 
 		public boolean consumeResource(Enums.Resources resource, float value, boolean force) {
+			if (!ConfigurationUtil.MainConfig.resourcesEnabled)
+				return true;
+
 			if (resource != Enums.Resources.RAGE && player.capabilities.isCreativeMode)
 				return true;
 
@@ -930,23 +950,8 @@ public final class PlayerDataManager {
 
 		public void regenResource(Enums.Resources resource, float amount) {
 			float current = resources.get(resource);
-			float max = 0;
+			float max = 200;
 			amount = buffs.applyResourceRegenBuffs(resource, amount);
-
-			switch (resource) {
-				case CREATION:
-					max = AuguryUtil.getMaxCreation(levels.get(Enums.Skills.AUGURY));
-					break;
-				case SOUL:
-					max = AuguryUtil.getMaxSoul(levels.get(Enums.Skills.AUGURY));
-					break;
-				case RAGE:
-				case ENERGY:
-					max = 200;
-					break;
-				default:
-					break;
-			}
 
 			resources.put(resource, Math.min(current + amount, max));
 
@@ -955,7 +960,7 @@ public final class PlayerDataManager {
 		}
 
 		public void addTribute(Enums.Deities deity, int amount) {
-			if (ItemUtil.isHoldingItem(player, WeaponRegister.swordHoly))
+			if (ItemUtil.isHoldingItem(player, WeaponRegister.HOLY_SWORD))
 				amount *= 2;
 
 			tribute.put(deity, MathHelper.clamp(tribute.get(deity) + amount, 0, 200));
@@ -1076,6 +1081,7 @@ public final class PlayerDataManager {
 		}
 
 		private float applyXpBuffs(Enums.Skills skill, float baseXp) {
+			baseXp *= ConfigurationUtil.MainConfig.globalXpModifier;
 			baseXp *= globalXpMod;
 
 			if (xpMods != null && xpMods.containsKey(skill))
@@ -1144,6 +1150,10 @@ public final class PlayerDataManager {
 				if (miscBuffs.get(buffName) == 0)
 					miscBuffs.remove(buffName);
 			}
+		}
+
+		public float getGlobalXpModifier() {
+			return globalXpMod;
 		}
 
 		public void addGlobalXpModifier(float modifier) {

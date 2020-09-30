@@ -50,7 +50,7 @@ public class BattlebornArmour extends AdventArmour {
 			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.BATTLEBORN_ARMOUR_BUFF);
 		}
 		else if (counter > 0 && plData.player().world.getTotalWorldTime() % 10 == 0) {
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.battlebornArmourBuff(counter));
+			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.BATTLEBORN_ARMOUR_BUFF);
 			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.battlebornArmourBuff(Math.min(0.65, counter / 240d)));
 		}
 	}
@@ -60,8 +60,10 @@ public class BattlebornArmour extends AdventArmour {
 		if (slot != null) {
 			int cooldown = plData.equipment().getCooldown(Enums.Counters.BATTLEBORN);
 
-			if (cooldown > 0)
+			if (cooldown > 0) {
+				EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.BATTLEBORN_ARMOUR_BUFF);
 				plData.equipment().setCooldown(Enums.Counters.BATTLEBORN, (int)(cooldown * 0.75f));
+			}
 		}
 	}
 

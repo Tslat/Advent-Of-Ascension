@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderDustopia extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionDustopia;
+		return DimensionRegister.DIM_DUSTOPIA;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = false;
-		this.biomeProvider = DimensionRegister.worldTypeDustopia.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_DUSTOPIA.getBiomeProvider(world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class WorldProviderDustopia extends WorldProvider implements AoAWorldProv
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeDustopia.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_DUSTOPIA.getChunkGenerator(world, null);
 	}
 
 	@Override

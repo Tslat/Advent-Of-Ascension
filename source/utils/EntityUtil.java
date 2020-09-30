@@ -1,9 +1,6 @@
 package net.tslat.aoa3.utils;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MultiPartEntityPart;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
@@ -12,11 +9,14 @@ import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.MobEffects;
+import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumFacing;
@@ -25,6 +25,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.entity.misc.EntityBossItem;
@@ -536,6 +537,11 @@ public class EntityUtil {
 		return null;
 	}
 
+	public static void safelyAddPotionEffect(Entity entity, Potion potion, int duration, int amplifier, boolean isAmbient, boolean displayParticles) {
+		if (entity instanceof EntityLivingBase && (!(entity instanceof EntityPlayer) || (!(entity instanceof FakePlayer) && (!((EntityPlayer)entity).capabilities.isCreativeMode || !potion.isBadEffect()))))
+			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(potion, duration, amplifier, isAmbient, displayParticles));
+	}
+
 	public static void safelyRemovePotionEffects(EntityLivingBase entity, Potion... effects) {
 		for (Potion effect : effects) {
 			if (entity.isPotionActive(effect))
@@ -545,5 +551,9 @@ public class EntityUtil {
 
 	public static boolean isTypeImmune(Entity entity, Enums.MobProperties property) {
 		return !entity.getIsInvulnerable() && entity instanceof SpecialPropertyEntity && ((SpecialPropertyEntity)entity).getMobProperties().contains(property);
+	}
+
+	public static boolean isFlyingCreature(Entity entity) {
+		return entity instanceof EntityLiving && (entity instanceof EntityFlying || entity instanceof net.minecraft.entity.EntityFlying || ((EntityLiving)entity).getNavigator() instanceof PathNavigateFlying);
 	}
 }

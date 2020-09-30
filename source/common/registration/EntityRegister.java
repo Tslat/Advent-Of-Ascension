@@ -7,7 +7,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
-import net.tslat.aoa3.entity.animals.*;
+import net.tslat.aoa3.entity.animals.EntityCoratee;
+import net.tslat.aoa3.entity.animals.EntityCreepCow;
+import net.tslat.aoa3.entity.animals.EntityElkanyne;
+import net.tslat.aoa3.entity.animals.EntityHalycon;
 import net.tslat.aoa3.entity.boss.bane.EntityBane;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneBig;
 import net.tslat.aoa3.entity.boss.bane.EntityBaneClone;
@@ -105,6 +108,7 @@ import net.tslat.aoa3.entity.npcs.banker.*;
 import net.tslat.aoa3.entity.npcs.lottoman.*;
 import net.tslat.aoa3.entity.npcs.skillmaster.*;
 import net.tslat.aoa3.entity.npcs.trader.*;
+import net.tslat.aoa3.entity.passive.*;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityPopShot;
 import net.tslat.aoa3.entity.projectiles.arrow.EntitySpectralHollyArrow;
@@ -150,6 +154,7 @@ public class EntityRegister {
 				newEntry("arkback", EntityArkback.class, 12099007, 8943244),
 				newEntry("arkzyne", EntityArkzyne.class, 789516, 10690061),
 				newEntry("arocknid", EntityArocknid.class, 7235689, 13218830),
+				newEntry("automaton", EntityAutomaton.class, 0, 16777215),
 				newEntry("axiolight", EntityAxiolight.class, 16777215, 5820635),
 				newEntry("bane", EntityBane.class, 7868105, 4619942),
 				newEntry("banshee", EntityBanshee.class, 11572669, 8202406),
@@ -159,7 +164,6 @@ public class EntityRegister {
 				newEntry("black_ursa", EntityBlackUrsa.class, 4341560, 8026227),
 				newEntry("bloodmist", EntityBloodmist.class, 11740453, 14577519),
 				newEntry("bloodsucker", EntityBloodsucker.class, 3673357, 8397860),
-				newEntry("blue_automaton", EntityBlueAutomaton.class, 6652835, 10457021),
 				newEntry("blue_flower", EntityBlueFlower.class, 5086275, 4223129),
 				newEntry("blue_guardian", EntityBlueGuardian.class, 10266029, 8167615),
 				newEntry("blue_rune_templar", EntityRuneTemplarBlue.class, 16744228, 7194313),
@@ -284,7 +288,6 @@ public class EntityRegister {
 				newEntry("goldum", EntityGoldum.class, 9011712, 1711127),
 				newEntry("goldus", EntityGoldus.class, 11373338, 1711127),
 				newEntry("graw", EntityGraw.class, 16738816, 16764928),
-				newEntry("green_automaton", EntityGreenAutomaton.class, 5005352, 6532937),
 				newEntry("green_flower", EntityGreenFlower.class, 2742453, 4435278),
 				newEntry("green_guardian", EntityGreenGuardian.class, 4148291, 2937123),
 				newEntry("green_rune_templar", EntityRuneTemplarGreen.class, 6187108, 1645596),
@@ -386,7 +389,6 @@ public class EntityRegister {
 				newEntry("polytom", EntityPolytom.class, 7491330, 1972754),
 				newEntry("primitive_carrotop", EntityPrimitiveCarrotop.class, 11447170, 2455829),
 				newEntry("proshield", EntityProshield.class, 14146468, 10660420),
-				newEntry("purple_automaton", EntityPurpleAutomaton.class, 4985215, 11630818),
 				newEntry("purple_flower", EntityPurpleFlower.class, 2218771, 6757290),
 				newEntry("quickpocket", EntityQuickpocket.class, 1580567, 4130567),
 				newEntry("rainicorn", EntityRainicorn.class, 15066083, 7836541),
@@ -396,7 +398,6 @@ public class EntityRegister {
 				newEntry("raxxan", EntityRaxxan.class, 5195597, 7023706),
 				newEntry("reaper_twins", EntityReaperTwins.class, 8024365, 1447440),
 				newEntry("reaver", EntityReaver.class, 1443591, 10827318),
-				newEntry("red_automaton", EntityRedAutomaton.class, 11702871, 14864044),
 				newEntry("red_guardian", EntityRedGuardian.class, 7829107, 9646642),
 				newEntry("red_rune_templar", EntityRuneTemplarRed.class, 5328462, 12654873),
 				newEntry("red_runic_lifeform", EntityRunicLifeformRed.class, 730077, 1224933),
@@ -510,7 +511,6 @@ public class EntityRegister {
 				newEntry("wither_wizard", EntityWitherWizard.class, 659209, 4145726),
 				newEntry("wood_giant", EntityWoodGiant.class, 2957061, 731907),
 				newEntry("xxeus", EntityXxeus.class, 9206543, 1432509),
-				newEntry("yellow_automaton", EntityYellowAutomaton.class, 8353035, 14734174),
 				newEntry("yellow_flower", EntityYellowFlower.class, 1168939, 14283790),
 				newEntry("yellow_guardian", EntityYellowGuardian.class, 7105891, 14347529),
 				newEntry("yellow_rune_templar", EntityRuneTemplarYellow.class, 2302754, 986892),
@@ -603,6 +603,7 @@ public class EntityRegister {
 			newEntry("logging_master", EntityLoggingMaster.class, 2879253, 7364669),
 			newEntry("lottoman", EntityLottoman.class, 15723491, 789515),
 			newEntry("lunar_lottoman", EntityLunarLottoman.class, 11034029, 12169914),
+			newEntry("meganeuropsis", EntityMeganeuropsis.class, 16763904, 5986352),
 			newEntry("metalloid", EntityMetalloid.class, 3677189, 7555455),
 			newEntry("mystic_lottoman", EntityMysticLottoman.class, 15722738, 1238360),
 			newEntry("naturalist", EntityNaturalist.class, 4927582, 10193420),
@@ -620,6 +621,7 @@ public class EntityRegister {
 			newEntry("rocky_lottoman", EntityRockyLottoman.class, 15131631, 2763053),
 			newEntry("runation_master", EntityRunationMaster.class, 1108561, 5195834),
 			newEntry("runic_lottoman", EntityRunicLottoman.class, 1007835, 14804717),
+			newEntry("shik", EntityShik.class, 7500402, 3947580),
 			newEntry("shining_pixon", EntityShiningPixon.class, 13868556, 9341827),
 			newEntry("shyre_archer", EntityShyreArcher.class, 14393873, 15397397),
 			newEntry("shyre_banker", EntityShyreBanker.class, 15369239, 1101037),

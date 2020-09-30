@@ -7,6 +7,8 @@ import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -14,8 +16,9 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
+import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingRangedAttack;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAILookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.projectiles.mob.BaseMobProjectile;
@@ -33,6 +36,7 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	public EntityGyro(EntityGyrocopter copter) {
 		this(copter.world);
 
+		moveHelper = new RoamingFlightMoveHelper(this);
 		setLocationAndAngles(copter.posX, copter.posY, copter.posZ, copter.rotationYaw, copter.rotationPitch);
 	}
 
@@ -48,11 +52,16 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	@Override
 	protected void initEntityAI() {
 		this.tasks.addTask(1, new EntityAIRandomFly(this, true));
-		this.tasks.addTask(2, new EntityAIFlyingLookAround(this));
+		this.tasks.addTask(2, new EntityAILookAround(this));
 		this.tasks.addTask(3, new EntityAILookIdle(this));
 		this.tasks.addTask(4, new EntityAIFlyingRangedAttack(this, 10, 20));
 		this.targetTasks.addTask(1, new EntityAIFindEntityNearest(this, AoAMinion.class));
 		this.targetTasks.addTask(2, new EntityAIFindEntityNearestPlayer(this));
+	}
+
+	@Override
+	protected PathNavigate createNavigator(World world) {
+		return new PathNavigateFlying(this, world);
 	}
 
 	@Override
@@ -78,25 +87,25 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGyroLiving;
+		return SoundsRegister.MOB_GYRO_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGyroDeath;
+		return SoundsRegister.MOB_GYRO_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGyroHit;
+		return SoundsRegister.MOB_GYRO_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.gunMinigun;
+		return SoundsRegister.MINIGUN_FIRE;
 	}
 
 	@Nullable
@@ -153,7 +162,7 @@ public class EntityGyro extends AoAFlyingRangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicGyro;
+		return SoundsRegister.GYRO_MUSIC;
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 
 import javax.annotation.Nullable;
 
@@ -60,7 +60,7 @@ public class ColouredTexturedProjectileRenderer extends Render<Entity> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, colour, 5, 1).create();
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, colour, 100, 3, 7);
 		}
 	}
 

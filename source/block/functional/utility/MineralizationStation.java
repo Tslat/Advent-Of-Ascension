@@ -23,7 +23,7 @@ public class MineralizationStation extends Block {
 		setHardness(5.0f);
 		setResistance(10.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -36,80 +36,80 @@ public class MineralizationStation extends Block {
 			switch (stack.getItem().getTranslationKey().substring(5)) {
 				case "Sapphire":
 					baseAmount = 10;
-					tokensItem = ItemRegister.coinCopper;
+					tokensItem = ItemRegister.COPPER_COIN;
 					break;
 				case "Amethyst":
 					baseAmount = 8;
-					tokensItem = ItemRegister.coinCopper;
+					tokensItem = ItemRegister.COPPER_COIN;
 					break;
 				case "LimoniteIngot":
 					baseAmount = 5;
-					tokensItem = ItemRegister.coinCopper;
+					tokensItem = ItemRegister.COPPER_COIN;
 					break;
 				case "RositeIngot":
 					baseAmount = 6;
-					tokensItem = ItemRegister.coinCopper;
+					tokensItem = ItemRegister.COPPER_COIN;
 					break;
 				case "Jade":
 					baseAmount = 7;
-					tokensItem = ItemRegister.coinCopper;
+					tokensItem = ItemRegister.COPPER_COIN;
 					break;
 				case "BaronyteIngot":
 					baseAmount = 7;
-					tokensItem = ItemRegister.tokensBaron;
+					tokensItem = ItemRegister.BARON_TOKENS;
 					break;
 				case "BlaziumIngot":
 				case "VarsiumIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensBaron;
+					tokensItem = ItemRegister.BARON_TOKENS;
 					break;
 				case "EmberstoneIngot":
 					baseAmount = 9;
-					tokensItem = ItemRegister.tokensNether;
+					tokensItem = ItemRegister.NETHER_TOKENS;
 					break;
 				case "GhastlyIngot":
 				case "GhoulishIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensGreckon;
+					tokensItem = ItemRegister.GRECKON_TOKENS;
 					break;
 				case "LunarIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensLunar;
+					tokensItem = ItemRegister.LUNAR_TOKENS;
 					break;
 				case "LyonIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensIromine;
+					tokensItem = ItemRegister.IROMINE_TOKENS;
 					break;
 				case "MystiteIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensMysterium;
+					tokensItem = ItemRegister.MYSTERIUM_TOKENS;
 					break;
 				case "Shyregem":
 				case "ShyrestoneIngot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensShyrelands;
+					tokensItem = ItemRegister.SHYRELANDS_TOKENS;
 					break;
 				case "SkeletalIngot":
 					baseAmount = 7;
-					tokensItem = ItemRegister.tokensPrecasian;
+					tokensItem = ItemRegister.PRECASIAN_TOKENS;
 					break;
 				case "ElecaniumIngot":
 					baseAmount = 9;
-					tokensItem = ItemRegister.tokensRunandor;
+					tokensItem = ItemRegister.RUNANDOR_TOKENS;
 					break;
 				case "Bloodstone":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensAbyss;
+					tokensItem = ItemRegister.ABYSS_TOKENS;
 					break;
 				case "Crystallite":
 					baseAmount = 8;
-					tokensItem = ItemRegister.tokensHaven;
+					tokensItem = ItemRegister.HAVEN_TOKENS;
 					break;
 				case "Gemenyte":
 				case "Jewelyte":
 				case "Ornamyte":
 					baseAmount = 7;
-					tokensItem = ItemRegister.tokensCreeponia;
+					tokensItem = ItemRegister.CREEPONIA_TOKENS;
 					break;
 				case "BlueCrystal":
 				case "GreenCrystal":
@@ -118,10 +118,10 @@ public class MineralizationStation extends Block {
 				case "WhiteCrystal":
 				case "YellowCrystal":
 					baseAmount = 4;
-					tokensItem = ItemRegister.tokensCrystevia;
+					tokensItem = ItemRegister.CRYSTEVIA_TOKENS;
 					break;
 				case "BlankRealmstone":
-					player.setHeldItem(hand, new ItemStack(ItemRegister.realmstoneIromine));
+					player.setHeldItem(hand, new ItemStack(ItemRegister.IROMINE_REALMSTONE));
 					player.inventoryContainer.detectAndSendChanges();
 					return true;
 				default:

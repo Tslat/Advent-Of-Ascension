@@ -49,17 +49,17 @@ public class EntityShadow extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobShadowLiving;
+		return SoundsRegister.MOB_SHADOW_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobShadowHit;
+		return SoundsRegister.MOB_SHADOW_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobShadowHit;
+		return SoundsRegister.MOB_SHADOW_HIT;
 	}
 
 	@Override

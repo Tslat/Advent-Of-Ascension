@@ -12,10 +12,10 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class EyeCane1 extends AoAStructure { //StructureSize: 1x8x3
-	private static final IBlockState bloodLog = BlockRegister.logBlood.getDefaultState();
-	private static final IBlockState bloodLogBark = BlockRegister.logBlood.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-	private static final IBlockState bloodStrands = BlockRegister.plantBloodStrands.getDefaultState();
-	private static final IBlockState eyeBlock = BlockRegister.eyeBlock.getDefaultState();
+	private static final IBlockState bloodLog = BlockRegister.BLOOD_LOG.getDefaultState();
+	private static final IBlockState bloodLogBark = BlockRegister.BLOOD_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState bloodStrands = BlockRegister.BLOOD_STRANDS.getDefaultState();
+	private static final IBlockState eyeBlock = BlockRegister.EYE_BLOCK.getDefaultState();
 
 	public EyeCane1() {
 		super("EyeCane1");

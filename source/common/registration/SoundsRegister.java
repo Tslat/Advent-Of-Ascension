@@ -10,1888 +10,919 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.utils.ModUtil;
 
+import javax.annotation.Nonnull;
+
 @Mod.EventBusSubscriber
 @GameRegistry.ObjectHolder("aoa3")
 public class SoundsRegister {
-	@GameRegistry.ObjectHolder("music_null")
-	public static final SoundEvent nullMusic = null;
+	public static final SoundEvent MUSIC_NULL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ascension_shrine_use")
-	public static final SoundEvent ascensionShrineUse = null;
-	@GameRegistry.ObjectHolder("baron_bomb_priming")
-	public static final SoundEvent baronBombPriming = null;
-	@GameRegistry.ObjectHolder("baron_bomb_spawn")
-	public static final SoundEvent baronBombSpawn = null;
-	@GameRegistry.ObjectHolder("bloodlust_collect")
-	public static final SoundEvent bloodlustCollect = null;
-	@GameRegistry.ObjectHolder("bone_horn_call")
-	public static final SoundEvent boneHornCall = null;
-	@GameRegistry.ObjectHolder("bubble_shot_pop")
-	public static final SoundEvent bubbleShotPop = null;
-	@GameRegistry.ObjectHolder("candy_snail_step")
-	public static final SoundEvent candySnailStep = null;
-	@GameRegistry.ObjectHolder("candy_thump")
-	public static final SoundEvent candyThump = null;
-	@GameRegistry.ObjectHolder("chainsaw_use")
-	public static final SoundEvent chainsawUse = null;
-	@GameRegistry.ObjectHolder("creation_forge_use")
-	public static final SoundEvent creationForgeUse = null;
-	@GameRegistry.ObjectHolder("crystal_creator_use")
-	public static final SoundEvent crystalCreatorUse = null;
-	@GameRegistry.ObjectHolder("crystal_extension_shrine_use")
-	public static final SoundEvent crystalExtensionShrineUse = null;
-	@GameRegistry.ObjectHolder("declogging_table_use")
-	public static final SoundEvent decloggingTableUse = null;
-	@GameRegistry.ObjectHolder("entity_generic_dino_step")
-	public static final SoundEvent dinoStep = null;
-	@GameRegistry.ObjectHolder("player_dodge")
-	public static final SoundEvent dodge = null;
-	@GameRegistry.ObjectHolder("entity_idol_hit")
-	public static final SoundEvent entityIdolHit = null;
-	@GameRegistry.ObjectHolder("entity_idol_living")
-	public static final SoundEvent entityIdolLiving = null;
-	@GameRegistry.ObjectHolder("entity_idol_prize")
-	public static final SoundEvent entityIdolPrize = null;
-	@GameRegistry.ObjectHolder("entity_idol_spawn")
-	public static final SoundEvent entityIdolSpawn = null;
-	@GameRegistry.ObjectHolder("entity_pixon_harvest")
-	public static final SoundEvent entityPixonHarvest = null;
-	@GameRegistry.ObjectHolder("entity_pixon_living")
-	public static final SoundEvent entityPixonLiving = null;
-	@GameRegistry.ObjectHolder("big_day_start")
-	public static final SoundEvent eventBigDayStart = null;
-	@GameRegistry.ObjectHolder("blood_hunt_start")
-	public static final SoundEvent eventBloodHuntStart = null;
-	@GameRegistry.ObjectHolder("creep_day_start")
-	public static final SoundEvent eventCreepDayStart = null;
-	@GameRegistry.ObjectHolder("death_day_start")
-	public static final SoundEvent eventDeathDayStart = null;
-	@GameRegistry.ObjectHolder("lunar_invasion_start")
-	public static final SoundEvent eventLunarInvasionStart = null;
-	@GameRegistry.ObjectHolder("soul_scurry_start")
-	public static final SoundEvent eventSoulScurryStart = null;
-	@GameRegistry.ObjectHolder("extraction_success")
-	public static final SoundEvent extractionDeviceSuccess = null;
-	@GameRegistry.ObjectHolder("filtration_system_activate")
-	public static final SoundEvent filtrationSystemActivate = null;
-	@GameRegistry.ObjectHolder("filtration_system_use")
-	public static final SoundEvent filtrationSystemUse = null;
-	@GameRegistry.ObjectHolder("foraging_loot")
-	public static final SoundEvent foragingLoot = null;
-	@GameRegistry.ObjectHolder("goo_ball_impact")
-	public static final SoundEvent gooBallImpact = null;
-	@GameRegistry.ObjectHolder("goofy_greatblade_fail")
-	public static final SoundEvent greatbladeGoofy = null;
-	@GameRegistry.ObjectHolder("goofy_tool_fail")
-	public static final SoundEvent goofyToolFail = null;
-	@GameRegistry.ObjectHolder("abominator_fire")
-	public static final SoundEvent gunAbominator = null;
-	@GameRegistry.ObjectHolder("archergun_fire")
-	public static final SoundEvent gunArchergun = null;
-	@GameRegistry.ObjectHolder("artifact_fire")
-	public static final SoundEvent gunArtifact = null;
-	@GameRegistry.ObjectHolder("atomizer_fire")
-	public static final SoundEvent gunAtomizer = null;
-	@GameRegistry.ObjectHolder("ball_cannon_fire")
-	public static final SoundEvent gunBallCannon = null;
-	@GameRegistry.ObjectHolder("big_blast_fire")
-	public static final SoundEvent gunBigBlast = null;
-	@GameRegistry.ObjectHolder("blowpipe_fire")
-	public static final SoundEvent gunBlowpipe = null;
-	@GameRegistry.ObjectHolder("boom_cannon_fire")
-	public static final SoundEvent gunBoomCannon = null;
-	@GameRegistry.ObjectHolder("bubble_gun_fire")
-	public static final SoundEvent gunBubbleGun = null;
-	@GameRegistry.ObjectHolder("carrot_cannon_fire")
-	public static final SoundEvent gunCarrotCannon = null;
-	@GameRegistry.ObjectHolder("chaingun_fire")
-	public static final SoundEvent gunChaingun = null;
-	@GameRegistry.ObjectHolder("chugger_fire")
-	public static final SoundEvent gunChugger = null;
-	@GameRegistry.ObjectHolder("clowner_fire")
-	public static final SoundEvent gunClowner = null;
-	@GameRegistry.ObjectHolder("colour_cannon_fire")
-	public static final SoundEvent gunColourCannon = null;
-	@GameRegistry.ObjectHolder("confetti_cannon_fire")
-	public static final SoundEvent gunConfettiCannon = null;
-	@GameRegistry.ObjectHolder("dark_gun_fire")
-	public static final SoundEvent gunDarkGun = null;
-	@GameRegistry.ObjectHolder("discharge_gun_fire")
-	public static final SoundEvent gunDischargeGun = null;
-	@GameRegistry.ObjectHolder("doom_gun_fire")
-	public static final SoundEvent gunDoomGun = null;
-	@GameRegistry.ObjectHolder("drain_gun_fire")
-	public static final SoundEvent gunDrainGun = null;
-	@GameRegistry.ObjectHolder("electro_cannon_1_fire")
-	public static final SoundEvent gunElectroCannon1 = null;
-	@GameRegistry.ObjectHolder("electro_cannon_2_fire")
-	public static final SoundEvent gunElectroCannon2 = null;
-	@GameRegistry.ObjectHolder("electro_cannon_3_fire")
-	public static final SoundEvent gunElectroCannon3 = null;
-	@GameRegistry.ObjectHolder("electro_cannon_4_fire")
-	public static final SoundEvent gunElectroCannon4 = null;
-	@GameRegistry.ObjectHolder("electro_cannon_5_fire")
-	public static final SoundEvent gunElectroCannon5 = null;
-	@GameRegistry.ObjectHolder("energy_cannon_fire")
-	public static final SoundEvent gunEnergyCannon = null;
-	@GameRegistry.ObjectHolder("fast_rifle_fire")
-	public static final SoundEvent gunFastRifle = null;
-	@GameRegistry.ObjectHolder("flinger_fire")
-	public static final SoundEvent gunFlinger = null;
-	@GameRegistry.ObjectHolder("gas_gun_fire")
-	public static final SoundEvent gunGasGun = null;
-	@GameRegistry.ObjectHolder("gauge_rifle_fire")
-	public static final SoundEvent gunGaugeRifle = null;
-	@GameRegistry.ObjectHolder("golem_gun_fire")
-	public static final SoundEvent gunGolemGun = null;
-	@GameRegistry.ObjectHolder("gravity_blaster_fire")
-	public static final SoundEvent gunGravityBlaster = null;
-	@GameRegistry.ObjectHolder("heat_wave_fire")
-	public static final SoundEvent gunHeatWave = null;
-	@GameRegistry.ObjectHolder("high_cannon_fire")
-	public static final SoundEvent gunHighCannon = null;
-	@GameRegistry.ObjectHolder("illusion_revolver_fire")
-	public static final SoundEvent gunIllusionRevolver = null;
-	@GameRegistry.ObjectHolder("illusion_smg_fire")
-	public static final SoundEvent gunIllusionSMG = null;
-	@GameRegistry.ObjectHolder("ion_blaster_fire")
-	public static final SoundEvent gunIonBlaster = null;
-	@GameRegistry.ObjectHolder("jack_rocker_fire")
-	public static final SoundEvent gunJackRocker = null;
-	@GameRegistry.ObjectHolder("krasauns_dawn_fire")
-	public static final SoundEvent gunKrasaunsDawn = null;
-	@GameRegistry.ObjectHolder("light_cannon_fire")
-	public static final SoundEvent gunLightCannon = null;
-	@GameRegistry.ObjectHolder("lower_cannon_fire")
-	public static final SoundEvent gunLowerCannon = null;
-	@GameRegistry.ObjectHolder("magic_gun_fire")
-	public static final SoundEvent gunMagicGun = null;
-	@GameRegistry.ObjectHolder("mech_cannon_fire")
-	public static final SoundEvent gunMechCannon = null;
-	@GameRegistry.ObjectHolder("mind_blaster_fire")
-	public static final SoundEvent gunMindBlaster = null;
-	@GameRegistry.ObjectHolder("minigun_fire")
-	public static final SoundEvent gunMinigun = null;
-	@GameRegistry.ObjectHolder("mini_pistol_fire")
-	public static final SoundEvent gunMiniPistol = null;
-	@GameRegistry.ObjectHolder("missile_maker_fire")
-	public static final SoundEvent gunMissileMaker = null;
-	@GameRegistry.ObjectHolder("monster_fire")
-	public static final SoundEvent gunMonster = null;
-	@GameRegistry.ObjectHolder("moon_shiner_fire")
-	public static final SoundEvent gunMoonShiner = null;
-	@GameRegistry.ObjectHolder("paralyzer_fire")
-	public static final SoundEvent gunParalyzer = null;
-	@GameRegistry.ObjectHolder("party_popper_fire")
-	public static final SoundEvent gunPartyPopper = null;
-	@GameRegistry.ObjectHolder("ray_gun_fire")
-	public static final SoundEvent gunRayGun = null;
-	@GameRegistry.ObjectHolder("reefer_fire")
-	public static final SoundEvent gunReefer = null;
-	@GameRegistry.ObjectHolder("revolution_fire")
-	public static final SoundEvent gunRevolution = null;
-	@GameRegistry.ObjectHolder("revolver_fire")
-	public static final SoundEvent gunRevolver = null;
-	@GameRegistry.ObjectHolder("roulette_fire")
-	public static final SoundEvent gunRoulette = null;
-	@GameRegistry.ObjectHolder("rpg_fire")
-	public static final SoundEvent gunRPG = null;
-	@GameRegistry.ObjectHolder("shadow_blaster_fire")
-	public static final SoundEvent gunShadowBlaster = null;
-	@GameRegistry.ObjectHolder("shotgun_fire")
-	public static final SoundEvent gunShotgun = null;
-	@GameRegistry.ObjectHolder("slugger_fire")
-	public static final SoundEvent gunSlugger = null;
-	@GameRegistry.ObjectHolder("sniper_fire")
-	public static final SoundEvent gunSniper = null;
-	@GameRegistry.ObjectHolder("soul_spark_fire")
-	public static final SoundEvent gunSoulSpark = null;
-	@GameRegistry.ObjectHolder("space_gun_fire")
-	public static final SoundEvent gunSpaceGun = null;
-	@GameRegistry.ObjectHolder("space_revolver_fire")
-	public static final SoundEvent gunSpaceRevolver = null;
-	@GameRegistry.ObjectHolder("spirit_shower_fire")
-	public static final SoundEvent gunSpiritShower = null;
-	@GameRegistry.ObjectHolder("sprayer_fire")
-	public static final SoundEvent gunSprayer = null;
-	@GameRegistry.ObjectHolder("squad_gun_fire")
-	public static final SoundEvent gunSquadGun = null;
-	@GameRegistry.ObjectHolder("stampede_fire")
-	public static final SoundEvent gunStampede = null;
-	@GameRegistry.ObjectHolder("step_cannon_1_fire")
-	public static final SoundEvent gunStepCannon1 = null;
-	@GameRegistry.ObjectHolder("step_cannon_2_fire")
-	public static final SoundEvent gunStepCannon2 = null;
-	@GameRegistry.ObjectHolder("step_cannon_3_fire")
-	public static final SoundEvent gunStepCannon3 = null;
-	@GameRegistry.ObjectHolder("step_cannon_4_fire")
-	public static final SoundEvent gunStepCannon4 = null;
-	@GameRegistry.ObjectHolder("step_cannon_5_fire")
-	public static final SoundEvent gunStepCannon5 = null;
-	@GameRegistry.ObjectHolder("swarmotron_fire")
-	public static final SoundEvent gunSwarmotron = null;
-	@GameRegistry.ObjectHolder("synth_cannon_1_fire")
-	public static final SoundEvent gunSynthCannon1 = null;
-	@GameRegistry.ObjectHolder("synth_cannon_2_fire")
-	public static final SoundEvent gunSynthCannon2 = null;
-	@GameRegistry.ObjectHolder("synth_cannon_3_fire")
-	public static final SoundEvent gunSynthCannon3 = null;
-	@GameRegistry.ObjectHolder("synth_cannon_4_fire")
-	public static final SoundEvent gunSynthCannon4 = null;
-	@GameRegistry.ObjectHolder("synth_cannon_5_fire")
-	public static final SoundEvent gunSynthCannon5 = null;
-	@GameRegistry.ObjectHolder("upper_cannon_fire")
-	public static final SoundEvent gunUpperCannon = null;
-	@GameRegistry.ObjectHolder("vibe_cannon_1_fire")
-	public static final SoundEvent gunVibeCannon1 = null;
-	@GameRegistry.ObjectHolder("vibe_cannon_2_fire")
-	public static final SoundEvent gunVibeCannon2 = null;
-	@GameRegistry.ObjectHolder("vibe_cannon_3_fire")
-	public static final SoundEvent gunVibeCannon3 = null;
-	@GameRegistry.ObjectHolder("vibe_cannon_4_fire")
-	public static final SoundEvent gunVibeCannon4 = null;
-	@GameRegistry.ObjectHolder("vibe_cannon_5_fire")
-	public static final SoundEvent gunVibeCannon5 = null;
-	@GameRegistry.ObjectHolder("whimsy_winder_fire")
-	public static final SoundEvent gunWhimsyWinder = null;
-	@GameRegistry.ObjectHolder("wither_cannon_fire")
-	public static final SoundEvent gunWitherCannon = null;
-	@GameRegistry.ObjectHolder("withers_wrath_fire")
-	public static final SoundEvent gunWithersWrath = null;
-	@GameRegistry.ObjectHolder("wood_rifle_fire")
-	public static final SoundEvent gunWoodRifle = null;
-	@GameRegistry.ObjectHolder("haunting_table_use")
-	public static final SoundEvent hauntingTableUse = null;
-	@GameRegistry.ObjectHolder("heart_stone_use")
-	public static final SoundEvent heartStonePickup = null;
-	@GameRegistry.ObjectHolder("heart_stone_spawn")
-	public static final SoundEvent heartStoneSpawn = null;
-	@GameRegistry.ObjectHolder("entity_generic_heavy_step")
-	public static final SoundEvent heavyStep = null;
-	@GameRegistry.ObjectHolder("hellfire_impact")
-	public static final SoundEvent hellfireImpact = null;
-	@GameRegistry.ObjectHolder("infusion_fail")
-	public static final SoundEvent infusionFail = null;
-	@GameRegistry.ObjectHolder("infusion_success")
-	public static final SoundEvent infusionSuccess = null;
-	@GameRegistry.ObjectHolder("player_level_100")
-	public static final SoundEvent level100 = null;
-	@GameRegistry.ObjectHolder("player_level_up")
-	public static final SoundEvent levelUp = null;
-	@GameRegistry.ObjectHolder("lotto_win")
-	public static final SoundEvent lottoWin = null;
-	@GameRegistry.ObjectHolder("lunar_creation_table_success")
-	public static final SoundEvent lunarCreationTableSuccess = null;
-	@GameRegistry.ObjectHolder("lunar_enrichment_table_use")
-	public static final SoundEvent lunarEnrichmentTableUse = null;
-	@GameRegistry.ObjectHolder("runes_craft")
-	public static final SoundEvent makeRunes = null;
-	@GameRegistry.ObjectHolder("mending_success")
-	public static final SoundEvent mendingSuccess = null;
-	@GameRegistry.ObjectHolder("mob_airhead_death")
-	public static final SoundEvent mobAirheadDeath = null;
-	@GameRegistry.ObjectHolder("mob_airhead_hit")
-	public static final SoundEvent mobAirheadHit = null;
-	@GameRegistry.ObjectHolder("mob_airhead_living")
-	public static final SoundEvent mobAirheadLiving = null;
-	@GameRegistry.ObjectHolder("mob_alarmo_death")
-	public static final SoundEvent mobAlarmoDeath = null;
-	@GameRegistry.ObjectHolder("mob_alarmo_hit")
-	public static final SoundEvent mobAlarmoHit = null;
-	@GameRegistry.ObjectHolder("mob_alarmo_living")
-	public static final SoundEvent mobAlarmoLiving = null;
-	@GameRegistry.ObjectHolder("mob_amphibior_death")
-	public static final SoundEvent mobAmphibiorDeath = null;
-	@GameRegistry.ObjectHolder("mob_amphibior_hit")
-	public static final SoundEvent mobAmphibiorHit = null;
-	@GameRegistry.ObjectHolder("mob_amphibior_living")
-	public static final SoundEvent mobAmphibiorLiving = null;
-	@GameRegistry.ObjectHolder("mob_amphibiyte_death")
-	public static final SoundEvent mobAmphibiyteDeath = null;
-	@GameRegistry.ObjectHolder("mob_amphibiyte_hit")
-	public static final SoundEvent mobAmphibiyteHit = null;
-	@GameRegistry.ObjectHolder("mob_amphibiyte_living")
-	public static final SoundEvent mobAmphibiyteLiving = null;
-	@GameRegistry.ObjectHolder("mob_anemia_death")
-	public static final SoundEvent mobAnemiaDeath = null;
-	@GameRegistry.ObjectHolder("mob_anemia_hit")
-	public static final SoundEvent mobAnemiaHit = null;
-	@GameRegistry.ObjectHolder("mob_anemia_living")
-	public static final SoundEvent mobAnemiaLiving = null;
-	@GameRegistry.ObjectHolder("mob_angelica_death")
-	public static final SoundEvent mobAngelicaDeath = null;
-	@GameRegistry.ObjectHolder("mob_angelica_hit")
-	public static final SoundEvent mobAngelicaHit = null;
-	@GameRegistry.ObjectHolder("mob_angelica_living")
-	public static final SoundEvent mobAngelicaLiving = null;
-	@GameRegistry.ObjectHolder("mob_angler_death")
-	public static final SoundEvent mobAnglerDeath = null;
-	@GameRegistry.ObjectHolder("mob_angler_hit")
-	public static final SoundEvent mobAnglerHit = null;
-	@GameRegistry.ObjectHolder("mob_angler_living")
-	public static final SoundEvent mobAnglerLiving = null;
-	@GameRegistry.ObjectHolder("mob_apparition_death")
-	public static final SoundEvent mobApparitionDeath = null;
-	@GameRegistry.ObjectHolder("mob_apparition_hit")
-	public static final SoundEvent mobApparitionHit = null;
-	@GameRegistry.ObjectHolder("mob_apparition_living")
-	public static final SoundEvent mobApparitionLiving = null;
-	@GameRegistry.ObjectHolder("mob_arcbeast_death")
-	public static final SoundEvent mobArcbeastDeath = null;
-	@GameRegistry.ObjectHolder("mob_arcbeast_hit")
-	public static final SoundEvent mobArcbeastHit = null;
-	@GameRegistry.ObjectHolder("mob_arcbeast_living")
-	public static final SoundEvent mobArcbeastLiving = null;
-	@GameRegistry.ObjectHolder("mob_archvine_death")
-	public static final SoundEvent mobArchvineDeath = null;
-	@GameRegistry.ObjectHolder("mob_archvine_hit")
-	public static final SoundEvent mobArchvineHit = null;
-	@GameRegistry.ObjectHolder("mob_archvine_living")
-	public static final SoundEvent mobArchvineLiving = null;
-	@GameRegistry.ObjectHolder("mob_arc_wizard_death")
-	public static final SoundEvent mobArcWizardDeath = null;
-	@GameRegistry.ObjectHolder("mob_arc_wizard_hit")
-	public static final SoundEvent mobArcWizardHit = null;
-	@GameRegistry.ObjectHolder("mob_arc_wizard_living")
-	public static final SoundEvent mobArcWizardLiving = null;
-	@GameRegistry.ObjectHolder("mob_arcworm_death")
-	public static final SoundEvent mobArcwormDeath = null;
-	@GameRegistry.ObjectHolder("mob_arcworm_hit")
-	public static final SoundEvent mobArcwormHit = null;
-	@GameRegistry.ObjectHolder("mob_arcworm_living")
-	public static final SoundEvent mobArcwormLiving = null;
-	@GameRegistry.ObjectHolder("mob_ariel_death")
-	public static final SoundEvent mobArielDeath = null;
-	@GameRegistry.ObjectHolder("mob_ariel_hit")
-	public static final SoundEvent mobArielHit = null;
-	@GameRegistry.ObjectHolder("mob_ariel_living")
-	public static final SoundEvent mobArielLiving = null;
-	@GameRegistry.ObjectHolder("mob_arkback_death")
-	public static final SoundEvent mobArkbackDeath = null;
-	@GameRegistry.ObjectHolder("mob_arkback_hit")
-	public static final SoundEvent mobArkbackHit = null;
-	@GameRegistry.ObjectHolder("mob_arkback_living")
-	public static final SoundEvent mobArkbackLiving = null;
-	@GameRegistry.ObjectHolder("mob_arkzyne_death")
-	public static final SoundEvent mobArkzyneDeath = null;
-	@GameRegistry.ObjectHolder("mob_arkzyne_hit")
-	public static final SoundEvent mobArkzyneHit = null;
-	@GameRegistry.ObjectHolder("mob_arkzyne_living")
-	public static final SoundEvent mobArkzyneLiving = null;
-	@GameRegistry.ObjectHolder("mob_automaton_death")
-	public static final SoundEvent mobAutomatonDeath = null;
-	@GameRegistry.ObjectHolder("mob_automaton_hit")
-	public static final SoundEvent mobAutomatonHit = null;
-	@GameRegistry.ObjectHolder("mob_automaton_living")
-	public static final SoundEvent mobAutomatonLiving = null;
-	@GameRegistry.ObjectHolder("mob_axiolight_death")
-	public static final SoundEvent mobAxiolightDeath = null;
-	@GameRegistry.ObjectHolder("mob_axiolight_hit")
-	public static final SoundEvent mobAxiolightHit = null;
-	@GameRegistry.ObjectHolder("mob_axiolight_living")
-	public static final SoundEvent mobAxiolightLiving = null;
-	@GameRegistry.ObjectHolder("mob_bane_death")
-	public static final SoundEvent mobBaneDeath = null;
-	@GameRegistry.ObjectHolder("mob_bane_living")
-	public static final SoundEvent mobBaneLiving = null;
-	@GameRegistry.ObjectHolder("mob_banshee_death")
-	public static final SoundEvent mobBansheeDeath = null;
-	@GameRegistry.ObjectHolder("mob_banshee_hit")
-	public static final SoundEvent mobBansheeHit = null;
-	@GameRegistry.ObjectHolder("mob_banshee_living")
-	public static final SoundEvent mobBansheeLiving = null;
-	@GameRegistry.ObjectHolder("mob_basilisk_death")
-	public static final SoundEvent mobBasiliskDeath = null;
-	@GameRegistry.ObjectHolder("mob_basilisk_hit")
-	public static final SoundEvent mobBasiliskHit = null;
-	@GameRegistry.ObjectHolder("mob_basilisk_living")
-	public static final SoundEvent mobBasiliskLiving = null;
-	@GameRegistry.ObjectHolder("mob_baumba_jump")
-	public static final SoundEvent mobBaumbaJump = null;
-	@GameRegistry.ObjectHolder("mob_bloodmist_death")
-	public static final SoundEvent mobBloodmistDeath = null;
-	@GameRegistry.ObjectHolder("mob_bloodmist_hit")
-	public static final SoundEvent mobBloodmistHit = null;
-	@GameRegistry.ObjectHolder("mob_bloodmist_living")
-	public static final SoundEvent mobBloodmistLiving = null;
-	@GameRegistry.ObjectHolder("mob_bloodsucker_death")
-	public static final SoundEvent mobBloodsuckerDeath = null;
-	@GameRegistry.ObjectHolder("mob_bloodsucker_hit")
-	public static final SoundEvent mobBloodsuckerHit = null;
-	@GameRegistry.ObjectHolder("mob_bloodsucker_living")
-	public static final SoundEvent mobBloodsuckerLiving = null;
-	@GameRegistry.ObjectHolder("mob_bomb_carrier_hit")
-	public static final SoundEvent mobBombCarrierHit = null;
-	@GameRegistry.ObjectHolder("mob_bomb_carrier_living")
-	public static final SoundEvent mobBombCarrierLiving = null;
-	@GameRegistry.ObjectHolder("mob_boneback_death")
-	public static final SoundEvent mobBonebackDeath = null;
-	@GameRegistry.ObjectHolder("mob_boneback_hit")
-	public static final SoundEvent mobBonebackHit = null;
-	@GameRegistry.ObjectHolder("mob_boneback_living")
-	public static final SoundEvent mobBonebackLiving = null;
-	@GameRegistry.ObjectHolder("mob_bouncer_death")
-	public static final SoundEvent mobBouncerDeath = null;
-	@GameRegistry.ObjectHolder("mob_bouncer_hit")
-	public static final SoundEvent mobBouncerHit = null;
-	@GameRegistry.ObjectHolder("mob_bouncer_living")
-	public static final SoundEvent mobBouncerLiving = null;
-	@GameRegistry.ObjectHolder("mob_bugeye_death")
-	public static final SoundEvent mobBugeyeDeath = null;
-	@GameRegistry.ObjectHolder("mob_bugeye_hit")
-	public static final SoundEvent mobBugeyeHit = null;
-	@GameRegistry.ObjectHolder("mob_bugeye_living")
-	public static final SoundEvent mobBugeyeLiving = null;
-	@GameRegistry.ObjectHolder("mob_bush_baby_death")
-	public static final SoundEvent mobBushBabyDeath = null;
-	@GameRegistry.ObjectHolder("mob_bush_baby_hit")
-	public static final SoundEvent mobBushBabyHit = null;
-	@GameRegistry.ObjectHolder("mob_bush_baby_living")
-	public static final SoundEvent mobBushBabyLiving = null;
-	@GameRegistry.ObjectHolder("mob_carrotop_death")
-	public static final SoundEvent mobCarrotopDeath = null;
-	@GameRegistry.ObjectHolder("mob_carrotop_hit")
-	public static final SoundEvent mobCarrotopHit = null;
-	@GameRegistry.ObjectHolder("mob_carrotop_living")
-	public static final SoundEvent mobCarrotopLiving = null;
-	@GameRegistry.ObjectHolder("mob_cave_bug_death")
-	public static final SoundEvent mobCaveBugDeath = null;
-	@GameRegistry.ObjectHolder("mob_cave_bug_hit")
-	public static final SoundEvent mobCaveBugHit = null;
-	@GameRegistry.ObjectHolder("mob_cave_bug_living")
-	public static final SoundEvent mobCaveBugLiving = null;
-	@GameRegistry.ObjectHolder("mob_cave_creep_death")
-	public static final SoundEvent mobCaveCreepDeath = null;
-	@GameRegistry.ObjectHolder("mob_cave_creep_hit")
-	public static final SoundEvent mobCaveCreepHit = null;
-	@GameRegistry.ObjectHolder("mob_cave_creep_living")
-	public static final SoundEvent mobCaveCreepLiving = null;
-	@GameRegistry.ObjectHolder("mob_celeve_clown_death")
-	public static final SoundEvent mobCeleveClownDeath = null;
-	@GameRegistry.ObjectHolder("mob_celeve_clown_hit")
-	public static final SoundEvent mobCeleveClownHit = null;
-	@GameRegistry.ObjectHolder("mob_celeve_clown_living")
-	public static final SoundEvent mobCeleveClownLiving = null;
-	@GameRegistry.ObjectHolder("mob_charger_death")
-	public static final SoundEvent mobChargerDeath = null;
-	@GameRegistry.ObjectHolder("mob_charger_hit")
-	public static final SoundEvent mobChargerHit = null;
-	@GameRegistry.ObjectHolder("mob_charger_living")
-	public static final SoundEvent mobChargerLiving = null;
-	@GameRegistry.ObjectHolder("mob_chimera_death")
-	public static final SoundEvent mobChimeraDeath = null;
-	@GameRegistry.ObjectHolder("mob_chimera_hit")
-	public static final SoundEvent mobChimeraHit = null;
-	@GameRegistry.ObjectHolder("mob_chimera_living")
-	public static final SoundEvent mobChimeraLiving = null;
-	@GameRegistry.ObjectHolder("mob_chomper_hit")
-	public static final SoundEvent mobChomperHit = null;
-	@GameRegistry.ObjectHolder("mob_chomper_living")
-	public static final SoundEvent mobChomperLiving = null;
-	@GameRegistry.ObjectHolder("mob_clown_death")
-	public static final SoundEvent mobClownDeath = null;
-	@GameRegistry.ObjectHolder("mob_clown_hit")
-	public static final SoundEvent mobClownHit = null;
-	@GameRegistry.ObjectHolder("mob_clown_living")
-	public static final SoundEvent mobClownLiving = null;
-	@GameRegistry.ObjectHolder("mob_clunkhead_death")
-	public static final SoundEvent mobClunkheadDeath = null;
-	@GameRegistry.ObjectHolder("mob_compeer_death")
-	public static final SoundEvent mobCompeerDeath = null;
-	@GameRegistry.ObjectHolder("mob_compeer_hit")
-	public static final SoundEvent mobCompeerHit = null;
-	@GameRegistry.ObjectHolder("mob_compeer_living")
-	public static final SoundEvent mobCompeerLiving = null;
-	@GameRegistry.ObjectHolder("mob_coniferon_death")
-	public static final SoundEvent mobConiferonDeath = null;
-	@GameRegistry.ObjectHolder("mob_coniferon_hit")
-	public static final SoundEvent mobConiferonHit = null;
-	@GameRegistry.ObjectHolder("mob_coniferon_living")
-	public static final SoundEvent mobConiferonLiving = null;
-	@GameRegistry.ObjectHolder("mob_corallus_death")
-	public static final SoundEvent mobCorallusDeath = null;
-	@GameRegistry.ObjectHolder("mob_corallus_hit")
-	public static final SoundEvent mobCorallusHit = null;
-	@GameRegistry.ObjectHolder("mob_corallus_living")
-	public static final SoundEvent mobCorallusLiving = null;
-	@GameRegistry.ObjectHolder("mob_corallus_taunt")
-	public static final SoundEvent mobCorallusTaunt = null;
-	@GameRegistry.ObjectHolder("mob_coralon_death")
-	public static final SoundEvent mobCoralonDeath = null;
-	@GameRegistry.ObjectHolder("mob_coralon_hit")
-	public static final SoundEvent mobCoralonHit = null;
-	@GameRegistry.ObjectHolder("mob_coralon_living")
-	public static final SoundEvent mobCoralonLiving = null;
-	@GameRegistry.ObjectHolder("mob_coratee_death")
-	public static final SoundEvent mobCorateeDeath = null;
-	@GameRegistry.ObjectHolder("mob_coratee_hit")
-	public static final SoundEvent mobCorateeHit = null;
-	@GameRegistry.ObjectHolder("mob_coratee_living")
-	public static final SoundEvent mobCorateeLiving = null;
-	@GameRegistry.ObjectHolder("mob_cotton_candor_death")
-	public static final SoundEvent mobCottonCandorDeath = null;
-	@GameRegistry.ObjectHolder("mob_cotton_candor_hit")
-	public static final SoundEvent mobCottonCandorHit = null;
-	@GameRegistry.ObjectHolder("mob_cotton_candor_living")
-	public static final SoundEvent mobCottonCandorLiving = null;
-	@GameRegistry.ObjectHolder("mob_craexxeus_charge")
-	public static final SoundEvent mobCraexxeusCharge = null;
-	@GameRegistry.ObjectHolder("mob_craexxeus_death")
-	public static final SoundEvent mobCraexxeusDeath = null;
-	@GameRegistry.ObjectHolder("mob_craexxeus_hit")
-	public static final SoundEvent mobCraexxeusHit = null;
-	@GameRegistry.ObjectHolder("mob_craexxeus_living")
-	public static final SoundEvent mobCraexxeusLiving = null;
-	@GameRegistry.ObjectHolder("mob_creeperlock_teleport")
-	public static final SoundEvent mobCreeperlockTeleport = null;
-	@GameRegistry.ObjectHolder("mob_creepird_death")
-	public static final SoundEvent mobCreepirdDeath = null;
-	@GameRegistry.ObjectHolder("mob_creepird_hit")
-	public static final SoundEvent mobCreepirdHit = null;
-	@GameRegistry.ObjectHolder("mob_creepird_living")
-	public static final SoundEvent mobCreepirdLiving = null;
-	@GameRegistry.ObjectHolder("mob_creepoid_death")
-	public static final SoundEvent mobCreepoidDeath = null;
-	@GameRegistry.ObjectHolder("mob_creepoid_hit")
-	public static final SoundEvent mobCreepoidHit = null;
-	@GameRegistry.ObjectHolder("mob_creepoid_living")
-	public static final SoundEvent mobCreepoidLiving = null;
-	@GameRegistry.ObjectHolder("mob_crusilisk_death")
-	public static final SoundEvent mobCrusiliskDeath = null;
-	@GameRegistry.ObjectHolder("mob_crusilisk_hit")
-	public static final SoundEvent mobCrusiliskHit = null;
-	@GameRegistry.ObjectHolder("mob_crusilisk_living")
-	public static final SoundEvent mobCrusiliskLiving = null;
-	@GameRegistry.ObjectHolder("mob_crusilisk_scream")
-	public static final SoundEvent mobCrusiliskScream = null;
-	@GameRegistry.ObjectHolder("mob_cryptid_death")
-	public static final SoundEvent mobCryptidDeath = null;
-	@GameRegistry.ObjectHolder("mob_cryptid_hit")
-	public static final SoundEvent mobCryptidHit = null;
-	@GameRegistry.ObjectHolder("mob_cryptid_living")
-	public static final SoundEvent mobCryptidLiving = null;
-	@GameRegistry.ObjectHolder("mob_crystal_construct_death")
-	public static final SoundEvent mobCrystalConstructDeath = null;
-	@GameRegistry.ObjectHolder("mob_crystal_construct_hit")
-	public static final SoundEvent mobCrystalConstructHit = null;
-	@GameRegistry.ObjectHolder("mob_crystal_construct_living")
-	public static final SoundEvent mobCrystalConstructLiving = null;
-	@GameRegistry.ObjectHolder("mob_cyclops_death")
-	public static final SoundEvent mobCyclopsDeath = null;
-	@GameRegistry.ObjectHolder("mob_cyclops_hit")
-	public static final SoundEvent mobCyclopsHit = null;
-	@GameRegistry.ObjectHolder("mob_cyclops_living")
-	public static final SoundEvent mobCyclopsLiving = null;
-	@GameRegistry.ObjectHolder("mob_dark_beast_death")
-	public static final SoundEvent mobDarkBeastDeath = null;
-	@GameRegistry.ObjectHolder("mob_dark_beast_hit")
-	public static final SoundEvent mobDarkBeastHit = null;
-	@GameRegistry.ObjectHolder("mob_dark_beast_living")
-	public static final SoundEvent mobDarkBeastLiving = null;
-	@GameRegistry.ObjectHolder("mob_dawnlight_death")
-	public static final SoundEvent mobDawnlightDeath = null;
-	@GameRegistry.ObjectHolder("mob_dawnlight_hit")
-	public static final SoundEvent mobDawnlightHit = null;
-	@GameRegistry.ObjectHolder("mob_dawnlight_living")
-	public static final SoundEvent mobDawnlightLiving = null;
-	@GameRegistry.ObjectHolder("mob_vdeath_hunter_death")
-	public static final SoundEvent mobDeathHunterDeath = null;
-	@GameRegistry.ObjectHolder("mob_death_hunter_hit")
-	public static final SoundEvent mobDeathHunterHit = null;
-	@GameRegistry.ObjectHolder("mob_death_hunter_living")
-	public static final SoundEvent mobDeathHunterLiving = null;
-	@GameRegistry.ObjectHolder("mob_deinotherium_death")
-	public static final SoundEvent mobDeinotheriumDeath = null;
-	@GameRegistry.ObjectHolder("mob_deinotherium_hit")
-	public static final SoundEvent mobDeinotheriumHit = null;
-	@GameRegistry.ObjectHolder("mob_deinotherium_living")
-	public static final SoundEvent mobDeinotheriumLiving = null;
-	@GameRegistry.ObjectHolder("mob_destructor_death")
-	public static final SoundEvent mobDestructorDeath = null;
-	@GameRegistry.ObjectHolder("mob_destructor_hit")
-	public static final SoundEvent mobDestructorHit = null;
-	@GameRegistry.ObjectHolder("mob_destructor_living")
-	public static final SoundEvent mobDestructorLiving = null;
-	@GameRegistry.ObjectHolder("mob_devourer_death")
-	public static final SoundEvent mobDevourerDeath = null;
-	@GameRegistry.ObjectHolder("mob_devourer_hit")
-	public static final SoundEvent mobDevourerHit = null;
-	@GameRegistry.ObjectHolder("mob_devourer_living")
-	public static final SoundEvent mobDevourerLiving = null;
-	@GameRegistry.ObjectHolder("mob_dicer_death")
-	public static final SoundEvent mobDicerDeath = null;
-	@GameRegistry.ObjectHolder("mob_dicer_hit")
-	public static final SoundEvent mobDicerHit = null;
-	@GameRegistry.ObjectHolder("mob_dicer_living")
-	public static final SoundEvent mobDicerLiving = null;
-	@GameRegistry.ObjectHolder("mob_diocus_death")
-	public static final SoundEvent mobDiocusDeath = null;
-	@GameRegistry.ObjectHolder("mob_diocus_hit")
-	public static final SoundEvent mobDiocusHit = null;
-	@GameRegistry.ObjectHolder("mob_diocus_living")
-	public static final SoundEvent mobDiocusLiving = null;
-	@GameRegistry.ObjectHolder("mob_distorter_death")
-	public static final SoundEvent mobDistorterDeath = null;
-	@GameRegistry.ObjectHolder("mob_distorter_hit")
-	public static final SoundEvent mobDistorterHit = null;
-	@GameRegistry.ObjectHolder("mob_distorter_living")
-	public static final SoundEvent mobDistorterLiving = null;
-	@GameRegistry.ObjectHolder("mob_doubler_death")
-	public static final SoundEvent mobDoublerDeath = null;
-	@GameRegistry.ObjectHolder("mob_doubler_hit")
-	public static final SoundEvent mobDoublerHit = null;
-	@GameRegistry.ObjectHolder("mob_doubler_living")
-	public static final SoundEvent mobDoublerLiving = null;
-	@GameRegistry.ObjectHolder("mob_dracyon_death")
-	public static final SoundEvent mobDracyonDeath = null;
-	@GameRegistry.ObjectHolder("mob_dracyon_living")
-	public static final SoundEvent mobDracyonLiving = null;
-	@GameRegistry.ObjectHolder("mob_draggy_death")
-	public static final SoundEvent mobDraggyDeath = null;
-	@GameRegistry.ObjectHolder("mob_draggy_hit")
-	public static final SoundEvent mobDraggyHit = null;
-	@GameRegistry.ObjectHolder("mob_draggy_living")
-	public static final SoundEvent mobDraggyLiving = null;
-	@GameRegistry.ObjectHolder("mob_dusteiva_death")
-	public static final SoundEvent mobDusteivaDeath = null;
-	@GameRegistry.ObjectHolder("mob_dusteiva_hit")
-	public static final SoundEvent mobDusteivaHit = null;
-	@GameRegistry.ObjectHolder("mob_dusteiva_living")
-	public static final SoundEvent mobDusteivaLiving = null;
-	@GameRegistry.ObjectHolder("mob_duston_hit")
-	public static final SoundEvent mobDustonHit = null;
-	@GameRegistry.ObjectHolder("mob_dust_strider_death")
-	public static final SoundEvent mobDustStriderDeath = null;
-	@GameRegistry.ObjectHolder("mob_dust_strider_hit")
-	public static final SoundEvent mobDustStriderHit = null;
-	@GameRegistry.ObjectHolder("mob_dust_strider_living")
-	public static final SoundEvent mobDustStriderLiving = null;
-	@GameRegistry.ObjectHolder("mob_dyrehorn_death")
-	public static final SoundEvent mobDyrehornDeath = null;
-	@GameRegistry.ObjectHolder("mob_dyrehorn_hit")
-	public static final SoundEvent mobDyrehornHit = null;
-	@GameRegistry.ObjectHolder("mob_dyrehorn_living")
-	public static final SoundEvent mobDyrehornLiving = null;
-	@GameRegistry.ObjectHolder("mob_echodar_death")
-	public static final SoundEvent mobEchodarDeath = null;
-	@GameRegistry.ObjectHolder("mob_echodar_hit")
-	public static final SoundEvent mobEchodarHit = null;
-	@GameRegistry.ObjectHolder("mob_echodar_living")
-	public static final SoundEvent mobEchodarLiving = null;
-	@GameRegistry.ObjectHolder("mob_eilosapien_death")
-	public static final SoundEvent mobEilosapienDeath = null;
-	@GameRegistry.ObjectHolder("mob_eilosapien_hit")
-	public static final SoundEvent mobEilosapienHit = null;
-	@GameRegistry.ObjectHolder("mob_eilosapien_living")
-	public static final SoundEvent mobEilosapienLiving = null;
-	@GameRegistry.ObjectHolder("mob_elkanyne_death")
-	public static final SoundEvent mobElkanyneDeath = null;
-	@GameRegistry.ObjectHolder("mob_elkanyne_hit")
-	public static final SoundEvent mobElkanyneHit = null;
-	@GameRegistry.ObjectHolder("mob_elkanyne_living")
-	public static final SoundEvent mobElkanyneLiving = null;
-	@GameRegistry.ObjectHolder("mob_elusive_death")
-	public static final SoundEvent mobElusiveDeath = null;
-	@GameRegistry.ObjectHolder("mob_elusive_hit")
-	public static final SoundEvent mobElusiveHit = null;
-	@GameRegistry.ObjectHolder("mob_elusive_living")
-	public static final SoundEvent mobElusiveLiving = null;
-	@GameRegistry.ObjectHolder("mob_embrake_death")
-	public static final SoundEvent mobEmbrakeDeath = null;
-	@GameRegistry.ObjectHolder("mob_embrake_hit")
-	public static final SoundEvent mobEmbrakeHit = null;
-	@GameRegistry.ObjectHolder("mob_embrake_living")
-	public static final SoundEvent mobEmbrakeLiving = null;
-	@GameRegistry.ObjectHolder("mob_emperor_beast_death")
-	public static final SoundEvent mobEmperorBeastDeath = null;
-	@GameRegistry.ObjectHolder("mob_emperor_beast_hit")
-	public static final SoundEvent mobEmperorBeastHit = null;
-	@GameRegistry.ObjectHolder("mob_emperor_beast_living")
-	public static final SoundEvent mobEmperorBeastLiving = null;
-	@GameRegistry.ObjectHolder("mob_emperor_beast_step")
-	public static final SoundEvent mobEmperorBeastStep = null;
-	@GameRegistry.ObjectHolder("mob_enforcer_death")
-	public static final SoundEvent mobEnforcerDeath = null;
-	@GameRegistry.ObjectHolder("mob_enforcer_hit")
-	public static final SoundEvent mobEnforcerHit = null;
-	@GameRegistry.ObjectHolder("mob_enforcer_living")
-	public static final SoundEvent mobEnforcerLiving = null;
-	@GameRegistry.ObjectHolder("mob_everbeast_hit")
-	public static final SoundEvent mobEverbeastHit = null;
-	@GameRegistry.ObjectHolder("mob_everbeast_living")
-	public static final SoundEvent mobEverbeastLiving = null;
-	@GameRegistry.ObjectHolder("mob_exohead_death")
-	public static final SoundEvent mobExoheadDeath = null;
-	@GameRegistry.ObjectHolder("mob_exohead_hit")
-	public static final SoundEvent mobExoheadHit = null;
-	@GameRegistry.ObjectHolder("mob_exohead_living")
-	public static final SoundEvent mobExoheadLiving = null;
-	@GameRegistry.ObjectHolder("mob_explodot_death")
-	public static final SoundEvent mobExplodotDeath = null;
-	@GameRegistry.ObjectHolder("mob_explodot_hit")
-	public static final SoundEvent mobExplodotHit = null;
-	@GameRegistry.ObjectHolder("mob_explodot_living")
-	public static final SoundEvent mobExplodotLiving = null;
-	@GameRegistry.ObjectHolder("mob_eye_creature_death")
-	public static final SoundEvent mobEyeCreatureDeath = null;
-	@GameRegistry.ObjectHolder("mob_eye_creature_hit")
-	public static final SoundEvent mobEyeCreatureHit = null;
-	@GameRegistry.ObjectHolder("mob_eye_creature_living")
-	public static final SoundEvent mobEyeCreatureLiving = null;
-	@GameRegistry.ObjectHolder("mob_faceless_runner_death")
-	public static final SoundEvent mobFacelessRunnerDeath = null;
-	@GameRegistry.ObjectHolder("mob_faceless_runner_hit")
-	public static final SoundEvent mobFacelessRunnerHit = null;
-	@GameRegistry.ObjectHolder("mob_faceless_runner_living")
-	public static final SoundEvent mobFacelessRunnerLiving = null;
-	@GameRegistry.ObjectHolder("mob_fenix_death")
-	public static final SoundEvent mobFenixDeath = null;
-	@GameRegistry.ObjectHolder("mob_fenix_hit")
-	public static final SoundEvent mobFenixHit = null;
-	@GameRegistry.ObjectHolder("mob_fenix_living")
-	public static final SoundEvent mobFenixLiving = null;
-	@GameRegistry.ObjectHolder("mob_fiend_death")
-	public static final SoundEvent mobFiendDeath = null;
-	@GameRegistry.ObjectHolder("mob_fiend_hit")
-	public static final SoundEvent mobFiendHit = null;
-	@GameRegistry.ObjectHolder("mob_fiend_living")
-	public static final SoundEvent mobFiendLiving = null;
-	@GameRegistry.ObjectHolder("mob_fishix_death")
-	public static final SoundEvent mobFishixDeath = null;
-	@GameRegistry.ObjectHolder("mob_fishix_hit")
-	public static final SoundEvent mobFishixHit = null;
-	@GameRegistry.ObjectHolder("mob_fishix_living")
-	public static final SoundEvent mobFishixLiving = null;
-	@GameRegistry.ObjectHolder("mob_flamewalker_death")
-	public static final SoundEvent mobFlamewalkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_flamewalker_hit")
-	public static final SoundEvent mobFlamewalkerHit = null;
-	@GameRegistry.ObjectHolder("mob_flamewalker_living")
-	public static final SoundEvent mobFlamewalkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_flesh_eater_death")
-	public static final SoundEvent mobFleshEaterDeath = null;
-	@GameRegistry.ObjectHolder("mob_flesh_eater_hit")
-	public static final SoundEvent mobFleshEaterHit = null;
-	@GameRegistry.ObjectHolder("mob_flesh_eater_living")
-	public static final SoundEvent mobFleshEaterLiving = null;
-	@GameRegistry.ObjectHolder("mob_flye_death")
-	public static final SoundEvent mobFlyeDeath = null;
-	@GameRegistry.ObjectHolder("mob_flye_hit")
-	public static final SoundEvent mobFlyeHit = null;
-	@GameRegistry.ObjectHolder("mob_flye_living")
-	public static final SoundEvent mobFlyeLiving = null;
-	@GameRegistry.ObjectHolder("mob_fungi_death")
-	public static final SoundEvent mobFungiDeath = null;
-	@GameRegistry.ObjectHolder("mob_fungi_hit")
-	public static final SoundEvent mobFungiHit = null;
-	@GameRegistry.ObjectHolder("mob_fungi_living")
-	public static final SoundEvent mobFungiLiving = null;
-	@GameRegistry.ObjectHolder("mob_furlion_death")
-	public static final SoundEvent mobFurlionDeath = null;
-	@GameRegistry.ObjectHolder("mob_furlion_hit")
-	public static final SoundEvent mobFurlionHit = null;
-	@GameRegistry.ObjectHolder("mob_furlion_living")
-	public static final SoundEvent mobFurlionLiving = null;
-	@GameRegistry.ObjectHolder("mob_gadgetoid_death")
-	public static final SoundEvent mobGadgetoidDeath = null;
-	@GameRegistry.ObjectHolder("mob_gadgetoid_hit")
-	public static final SoundEvent mobGadgetoidHit = null;
-	@GameRegistry.ObjectHolder("mob_gadgetoid_living")
-	public static final SoundEvent mobGadgetoidLiving = null;
-	@GameRegistry.ObjectHolder("mob_ghost_death")
-	public static final SoundEvent mobGhostDeath = null;
-	@GameRegistry.ObjectHolder("mob_ghost_hit")
-	public static final SoundEvent mobGhostHit = null;
-	@GameRegistry.ObjectHolder("mob_ghostine_death")
-	public static final SoundEvent mobGhostineDeath = null;
-	@GameRegistry.ObjectHolder("mob_ghostine_hit")
-	public static final SoundEvent mobGhostineHit = null;
-	@GameRegistry.ObjectHolder("mob_ghostine_living")
-	public static final SoundEvent mobGhostineLiving = null;
-	@GameRegistry.ObjectHolder("mob_ghost_living")
-	public static final SoundEvent mobGhostLiving = null;
-	@GameRegistry.ObjectHolder("mob_giant_death")
-	public static final SoundEvent mobGiantDeath = null;
-	@GameRegistry.ObjectHolder("mob_giant_hit")
-	public static final SoundEvent mobGiantHit = null;
-	@GameRegistry.ObjectHolder("mob_giant_snail_death")
-	public static final SoundEvent mobGiantSnailDeath = null;
-	@GameRegistry.ObjectHolder("mob_giant_snail_hit")
-	public static final SoundEvent mobGiantSnailHit = null;
-	@GameRegistry.ObjectHolder("mob_giant_snail_living")
-	public static final SoundEvent mobGiantSnailLiving = null;
-	@GameRegistry.ObjectHolder("mob_giant_snail_step")
-	public static final SoundEvent mobGiantSnailStep = null;
-	@GameRegistry.ObjectHolder("mob_goalby_death")
-	public static final SoundEvent mobGoalbyDeath = null;
-	@GameRegistry.ObjectHolder("mob_goalby_hit")
-	public static final SoundEvent mobGoalbyHit = null;
-	@GameRegistry.ObjectHolder("mob_goalby_living")
-	public static final SoundEvent mobGoalbyLiving = null;
-	@GameRegistry.ObjectHolder("mob_goblin_death")
-	public static final SoundEvent mobGoblinDeath = null;
-	@GameRegistry.ObjectHolder("mob_goblin_hit")
-	public static final SoundEvent mobGoblinHit = null;
-	@GameRegistry.ObjectHolder("mob_goblin_living")
-	public static final SoundEvent mobGoblinLiving = null;
-	@GameRegistry.ObjectHolder("mob_goldorth_death")
-	public static final SoundEvent mobGoldorthDeath = null;
-	@GameRegistry.ObjectHolder("mob_goldorth_hit")
-	public static final SoundEvent mobGoldorthHit = null;
-	@GameRegistry.ObjectHolder("mob_goldorth_living")
-	public static final SoundEvent mobGoldorthLiving = null;
-	@GameRegistry.ObjectHolder("mob_golem_step")
-	public static final SoundEvent mobGolemStep = null;
-	@GameRegistry.ObjectHolder("mob_graw_death")
-	public static final SoundEvent mobGrawDeath = null;
-	@GameRegistry.ObjectHolder("mob_graw_hit")
-	public static final SoundEvent mobGrawHit = null;
-	@GameRegistry.ObjectHolder("mob_graw_living")
-	public static final SoundEvent mobGrawLiving = null;
-	@GameRegistry.ObjectHolder("mob_grillface_death")
-	public static final SoundEvent mobGrillfaceDeath = null;
-	@GameRegistry.ObjectHolder("mob_grillface_hit")
-	public static final SoundEvent mobGrillfaceHit = null;
-	@GameRegistry.ObjectHolder("mob_grillface_living")
-	public static final SoundEvent mobGrillfaceLiving = null;
-	@GameRegistry.ObjectHolder("mob_grillface_scare")
-	public static final SoundEvent mobGrillfaceScare = null;
-	@GameRegistry.ObjectHolder("mob_grobbler_death")
-	public static final SoundEvent mobGrobblerDeath = null;
-	@GameRegistry.ObjectHolder("mob_grobbler_hit")
-	public static final SoundEvent mobGrobblerHit = null;
-	@GameRegistry.ObjectHolder("mob_grobbler_living")
-	public static final SoundEvent mobGrobblerLiving = null;
-	@GameRegistry.ObjectHolder("mob_grocculate_death")
-	public static final SoundEvent mobGrocculateDeath = null;
-	@GameRegistry.ObjectHolder("mob_grocculate_hit")
-	public static final SoundEvent mobGrocculateHit = null;
-	@GameRegistry.ObjectHolder("mob_grocculate_living")
-	public static final SoundEvent mobGrocculateLiving = null;
-	@GameRegistry.ObjectHolder("mob_grunt_death")
-	public static final SoundEvent mobGruntDeath = null;
-	@GameRegistry.ObjectHolder("mob_grunt_hit")
-	public static final SoundEvent mobGruntHit = null;
-	@GameRegistry.ObjectHolder("mob_grunt_living")
-	public static final SoundEvent mobGruntLiving = null;
-	@GameRegistry.ObjectHolder("mob_guardian_death")
-	public static final SoundEvent mobGuardianDeath = null;
-	@GameRegistry.ObjectHolder("mob_guardian_hit")
-	public static final SoundEvent mobGuardianHit = null;
-	@GameRegistry.ObjectHolder("mob_gyro_death")
-	public static final SoundEvent mobGyroDeath = null;
-	@GameRegistry.ObjectHolder("mob_gyro_hit")
-	public static final SoundEvent mobGyroHit = null;
-	@GameRegistry.ObjectHolder("mob_gyro_living")
-	public static final SoundEvent mobGyroLiving = null;
-	@GameRegistry.ObjectHolder("mob_hag_death")
-	public static final SoundEvent mobHagDeath = null;
-	@GameRegistry.ObjectHolder("mob_hag_hit")
-	public static final SoundEvent mobHagHit = null;
-	@GameRegistry.ObjectHolder("mob_hag_living")
-	public static final SoundEvent mobHagLiving = null;
-	@GameRegistry.ObjectHolder("mob_hellcat_death")
-	public static final SoundEvent mobHellcatDeath = null;
-	@GameRegistry.ObjectHolder("mob_hellcat_hit")
-	public static final SoundEvent mobHellcatHit = null;
-	@GameRegistry.ObjectHolder("mob_hellcat_living")
-	public static final SoundEvent mobHellcatLiving = null;
-	@GameRegistry.ObjectHolder("mob_hellspot_death")
-	public static final SoundEvent mobHellspotDeath = null;
-	@GameRegistry.ObjectHolder("mob_hellspot_hit")
-	public static final SoundEvent mobHellspotHit = null;
-	@GameRegistry.ObjectHolder("mob_hellspot_living")
-	public static final SoundEvent mobHellspotLiving = null;
-	@GameRegistry.ObjectHolder("mob_hive_king_death")
-	public static final SoundEvent mobHiveKingDeath = null;
-	@GameRegistry.ObjectHolder("mob_hive_king_living")
-	public static final SoundEvent mobHiveKingLiving = null;
-	@GameRegistry.ObjectHolder("mob_horndron_death")
-	public static final SoundEvent mobHorndronDeath = null;
-	@GameRegistry.ObjectHolder("mob_horndron_hit")
-	public static final SoundEvent mobHorndronHit = null;
-	@GameRegistry.ObjectHolder("mob_horndron_living")
-	public static final SoundEvent mobHorndronLiving = null;
-	@GameRegistry.ObjectHolder("mob_horon_death")
-	public static final SoundEvent mobHoronDeath = null;
-	@GameRegistry.ObjectHolder("mob_horon_hit")
-	public static final SoundEvent mobHoronHit = null;
-	@GameRegistry.ObjectHolder("mob_horon_living")
-	public static final SoundEvent mobHoronLiving = null;
-	@GameRegistry.ObjectHolder("mob_host_death")
-	public static final SoundEvent mobHostDeath = null;
-	@GameRegistry.ObjectHolder("mob_host_drop")
-	public static final SoundEvent mobHostDrop = null;
-	@GameRegistry.ObjectHolder("mob_host_living")
-	public static final SoundEvent mobHostLiving = null;
-	@GameRegistry.ObjectHolder("mob_hunch_death")
-	public static final SoundEvent mobHunchDeath = null;
-	@GameRegistry.ObjectHolder("mob_hunch_hit")
-	public static final SoundEvent mobHunchHit = null;
-	@GameRegistry.ObjectHolder("mob_hunch_living")
-	public static final SoundEvent mobHunchLiving = null;
-	@GameRegistry.ObjectHolder("mob_hunter_death")
-	public static final SoundEvent mobHunterDeath = null;
-	@GameRegistry.ObjectHolder("mob_hunter_hit")
-	public static final SoundEvent mobHunterHit = null;
-	@GameRegistry.ObjectHolder("mob_hunter_living")
-	public static final SoundEvent mobHunterLiving = null;
-	@GameRegistry.ObjectHolder("mob_hydrolisk_death")
-	public static final SoundEvent mobHydroliskDeath = null;
-	@GameRegistry.ObjectHolder("mob_hydrolisk_hit")
-	public static final SoundEvent mobHydroliskHit = null;
-	@GameRegistry.ObjectHolder("mob_hydrolisk_living")
-	public static final SoundEvent mobHydroliskLiving = null;
-	@GameRegistry.ObjectHolder("mob_immortal_death")
-	public static final SoundEvent mobImmortalDeath = null;
-	@GameRegistry.ObjectHolder("mob_immortal_living")
-	public static final SoundEvent mobImmortalLiving = null;
-	@GameRegistry.ObjectHolder("mob_infernal_hit")
-	public static final SoundEvent mobInfernalHit = null;
-	@GameRegistry.ObjectHolder("mob_infernal_living")
-	public static final SoundEvent mobInfernalLiving = null;
-	@GameRegistry.ObjectHolder("mob_iosaur_death")
-	public static final SoundEvent mobIosaurDeath = null;
-	@GameRegistry.ObjectHolder("mob_iosaur_hit")
-	public static final SoundEvent mobIosaurHit = null;
-	@GameRegistry.ObjectHolder("mob_iosaur_living")
-	public static final SoundEvent mobIosaurLiving = null;
-	@GameRegistry.ObjectHolder("mob_irkling_death")
-	public static final SoundEvent mobIrklingDeath = null;
-	@GameRegistry.ObjectHolder("mob_irkling_hit")
-	public static final SoundEvent mobIrklingHit = null;
-	@GameRegistry.ObjectHolder("mob_irkling_living")
-	public static final SoundEvent mobIrklingLiving = null;
-	@GameRegistry.ObjectHolder("mob_jawe_death")
-	public static final SoundEvent mobJaweDeath = null;
-	@GameRegistry.ObjectHolder("mob_jawe_hit")
-	public static final SoundEvent mobJaweHit = null;
-	@GameRegistry.ObjectHolder("mob_jawe_living")
-	public static final SoundEvent mobJaweLiving = null;
-	@GameRegistry.ObjectHolder("mob_jumbo_living")
-	public static final SoundEvent mobJumboLiving = null;
-	@GameRegistry.ObjectHolder("mob_kaiyu_death")
-	public static final SoundEvent mobKaiyuDeath = null;
-	@GameRegistry.ObjectHolder("mob_kaiyu_hit")
-	public static final SoundEvent mobKaiyuHit = null;
-	@GameRegistry.ObjectHolder("mob_kaiyu_living")
-	public static final SoundEvent mobKaiyuLiving = null;
-	@GameRegistry.ObjectHolder("mob_keeler_death")
-	public static final SoundEvent mobKeelerDeath = null;
-	@GameRegistry.ObjectHolder("mob_keeler_hit")
-	public static final SoundEvent mobKeelerHit = null;
-	@GameRegistry.ObjectHolder("mob_keeler_living")
-	public static final SoundEvent mobKeelerLiving = null;
-	@GameRegistry.ObjectHolder("mob_keeler_revive")
-	public static final SoundEvent mobKeelerRevive = null;
-	@GameRegistry.ObjectHolder("mob_king_bambambam_death")
-	public static final SoundEvent mobKingBamBamBamDeath = null;
-	@GameRegistry.ObjectHolder("mob_king_bambambam_hit")
-	public static final SoundEvent mobKingBamBamBamHit = null;
-	@GameRegistry.ObjectHolder("mob_king_bambambam_living")
-	public static final SoundEvent mobKingBamBamBamLiving = null;
-	@GameRegistry.ObjectHolder("mob_king_shroomus_death")
-	public static final SoundEvent mobKingShroomusDeath = null;
-	@GameRegistry.ObjectHolder("mob_king_shroomus_heal")
-	public static final SoundEvent mobKingShroomusHeal = null;
-	@GameRegistry.ObjectHolder("mob_kror_death")
-	public static final SoundEvent mobKrorDeath = null;
-	@GameRegistry.ObjectHolder("mob_kror_living")
-	public static final SoundEvent mobKrorLiving = null;
-	@GameRegistry.ObjectHolder("mob_lelyetian_death")
-	public static final SoundEvent mobLelyetianDeath = null;
-	@GameRegistry.ObjectHolder("mob_lelyetian_hit")
-	public static final SoundEvent mobLelyetianHit = null;
-	@GameRegistry.ObjectHolder("mob_lelyetian_living")
-	public static final SoundEvent mobLelyetianLiving = null;
-	@GameRegistry.ObjectHolder("mob_linger_death")
-	public static final SoundEvent mobLingerDeath = null;
-	@GameRegistry.ObjectHolder("mob_linger_hit")
-	public static final SoundEvent mobLingerHit = null;
-	@GameRegistry.ObjectHolder("mob_linger_living")
-	public static final SoundEvent mobLingerLiving = null;
-	@GameRegistry.ObjectHolder("mob_little_bam_spawn")
-	public static final SoundEvent mobLittleBamSpawn = null;
-	@GameRegistry.ObjectHolder("mob_living_fungi_spawn")
-	public static final SoundEvent mobLivingFungiSpawn = null;
-	@GameRegistry.ObjectHolder("mob_lollypopper_death")
-	public static final SoundEvent mobLollypopperDeath = null;
-	@GameRegistry.ObjectHolder("mob_lost_soul_death")
-	public static final SoundEvent mobLostSoulDeath = null;
-	@GameRegistry.ObjectHolder("mob_lost_soul_hit")
-	public static final SoundEvent mobLostSoulHit = null;
-	@GameRegistry.ObjectHolder("mob_lost_soul_living")
-	public static final SoundEvent mobLostSoulLiving = null;
-	@GameRegistry.ObjectHolder("mob_lunarcher_death")
-	public static final SoundEvent mobLunarcherDeath = null;
-	@GameRegistry.ObjectHolder("mob_lunarcher_hit")
-	public static final SoundEvent mobLunarcherHit = null;
-	@GameRegistry.ObjectHolder("mob_lunarcher_living")
-	public static final SoundEvent mobLunarcherLiving = null;
-	@GameRegistry.ObjectHolder("mob_lurker_death")
-	public static final SoundEvent mobLurkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_lurker_hit")
-	public static final SoundEvent mobLurkerHit = null;
-	@GameRegistry.ObjectHolder("mob_lurker_living")
-	public static final SoundEvent mobLurkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_luxocron_death")
-	public static final SoundEvent mobLuxocronDeath = null;
-	@GameRegistry.ObjectHolder("mob_luxocron_hit")
-	public static final SoundEvent mobLuxocronHit = null;
-	@GameRegistry.ObjectHolder("mob_luxocron_living")
-	public static final SoundEvent mobLuxocronLiving = null;
-	@GameRegistry.ObjectHolder("mob_magicke_death")
-	public static final SoundEvent mobMagickeDeath = null;
-	@GameRegistry.ObjectHolder("mob_magicke_hit")
-	public static final SoundEvent mobMagickeHit = null;
-	@GameRegistry.ObjectHolder("mob_magicke_living")
-	public static final SoundEvent mobMagickeLiving = null;
-	@GameRegistry.ObjectHolder("mob_mechachron_death")
-	public static final SoundEvent mobMechachronDeath = null;
-	@GameRegistry.ObjectHolder("mob_mechachron_hit")
-	public static final SoundEvent mobMechachronHit = null;
-	@GameRegistry.ObjectHolder("mob_mechachron_living")
-	public static final SoundEvent mobMechachronLiving = null;
-	@GameRegistry.ObjectHolder("mob_mechbot_jump")
-	public static final SoundEvent mobMechbotJump = null;
-	@GameRegistry.ObjectHolder("mob_mechyon_death")
-	public static final SoundEvent mobMechyonDeath = null;
-	@GameRegistry.ObjectHolder("mob_mechyon_hit")
-	public static final SoundEvent mobMechyonHit = null;
-	@GameRegistry.ObjectHolder("mob_mechyon_living")
-	public static final SoundEvent mobMechyonLiving = null;
-	@GameRegistry.ObjectHolder("mob_merkyre_death")
-	public static final SoundEvent mobMerkyreDeath = null;
-	@GameRegistry.ObjectHolder("mob_merkyre_hit")
-	public static final SoundEvent mobMerkyreHit = null;
-	@GameRegistry.ObjectHolder("mob_merkyre_living")
-	public static final SoundEvent mobMerkyreLiving = null;
-	@GameRegistry.ObjectHolder("mob_mermage_death")
-	public static final SoundEvent mobMermageDeath = null;
-	@GameRegistry.ObjectHolder("mob_mermage_hit")
-	public static final SoundEvent mobMermageHit = null;
-	@GameRegistry.ObjectHolder("mob_mermage_living")
-	public static final SoundEvent mobMermageLiving = null;
-	@GameRegistry.ObjectHolder("mob_mirage_teleport")
-	public static final SoundEvent mobMirageTeleport = null;
-	@GameRegistry.ObjectHolder("mob_modulo_death")
-	public static final SoundEvent mobModuloDeath = null;
-	@GameRegistry.ObjectHolder("mob_modulo_hit")
-	public static final SoundEvent mobModuloHit = null;
-	@GameRegistry.ObjectHolder("mob_modulo_living")
-	public static final SoundEvent mobModuloLiving = null;
-	@GameRegistry.ObjectHolder("mob_mother_void_walker_death")
-	public static final SoundEvent mobMotherVoidWalkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_mother_void_walker_hit")
-	public static final SoundEvent mobMotherVoidWalkerHit = null;
-	@GameRegistry.ObjectHolder("mob_mother_void_walker_living")
-	public static final SoundEvent mobMotherVoidWalkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_muckopede_hit")
-	public static final SoundEvent mobMuckopedeHit = null;
-	@GameRegistry.ObjectHolder("mob_muckopede_living")
-	public static final SoundEvent mobMuckopedeLiving = null;
-	@GameRegistry.ObjectHolder("mob_muncher_death")
-	public static final SoundEvent mobMuncherDeath = null;
-	@GameRegistry.ObjectHolder("mob_muncher_hit")
-	public static final SoundEvent mobMuncherHit = null;
-	@GameRegistry.ObjectHolder("mob_muncher_living")
-	public static final SoundEvent mobMuncherLiving = null;
-	@GameRegistry.ObjectHolder("mob_natura_death")
-	public static final SoundEvent mobNaturaDeath = null;
-	@GameRegistry.ObjectHolder("mob_natura_hit")
-	public static final SoundEvent mobNaturaHit = null;
-	@GameRegistry.ObjectHolder("mob_natura_living")
-	public static final SoundEvent mobNaturaLiving = null;
-	@GameRegistry.ObjectHolder("mob_neptuno_death")
-	public static final SoundEvent mobNeptunoDeath = null;
-	@GameRegistry.ObjectHolder("mob_neptuno_hit")
-	public static final SoundEvent mobNeptunoHit = null;
-	@GameRegistry.ObjectHolder("mob_neptuno_living")
-	public static final SoundEvent mobNeptunoLiving = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_beast_death")
-	public static final SoundEvent mobNethengeicBeastDeath = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_beast_hit")
-	public static final SoundEvent mobNethengeicBeastHit = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_beast_living")
-	public static final SoundEvent mobNethengeicBeastLiving = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_wither_death")
-	public static final SoundEvent mobNethengeicWitherDeath = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_wither_hit")
-	public static final SoundEvent mobNethengeicWitherHit = null;
-	@GameRegistry.ObjectHolder("mob_nethengeic_wither_living")
-	public static final SoundEvent mobNethengeicWitherLiving = null;
-	@GameRegistry.ObjectHolder("mob_nightfly_death")
-	public static final SoundEvent mobNightflyDeath = null;
-	@GameRegistry.ObjectHolder("mob_nightfly_hit")
-	public static final SoundEvent mobNightflyHit = null;
-	@GameRegistry.ObjectHolder("mob_nightfly_living")
-	public static final SoundEvent mobNightflyLiving = null;
-	@GameRegistry.ObjectHolder("mob_nightmare_spider_death")
-	public static final SoundEvent mobNightmareSpiderDeath = null;
-	@GameRegistry.ObjectHolder("mob_nightmare_spider_hit")
-	public static final SoundEvent mobNightmareSpiderHit = null;
-	@GameRegistry.ObjectHolder("mob_nightmare_spider_living")
-	public static final SoundEvent mobNightmareSpiderLiving = null;
-	@GameRegistry.ObjectHolder("night_watcher_hit")
-	public static final SoundEvent mobNightWatcherHit = null;
-	@GameRegistry.ObjectHolder("night_watcher_living")
-	public static final SoundEvent mobNightWatcherLiving = null;
-	@GameRegistry.ObjectHolder("mob_nightwing_death")
-	public static final SoundEvent mobNightwingDeath = null;
-	@GameRegistry.ObjectHolder("mob_nightwing_hit")
-	public static final SoundEvent mobNightwingHit = null;
-	@GameRegistry.ObjectHolder("mob_nightwing_living")
-	public static final SoundEvent mobNightwingLiving = null;
-	@GameRegistry.ObjectHolder("mob_nipper_death")
-	public static final SoundEvent mobNipperDeath = null;
-	@GameRegistry.ObjectHolder("mob_nipper_hit")
-	public static final SoundEvent mobNipperHit = null;
-	@GameRegistry.ObjectHolder("mob_nipper_living")
-	public static final SoundEvent mobNipperLiving = null;
-	@GameRegistry.ObjectHolder("mob_nospike_death")
-	public static final SoundEvent mobNospikeDeath = null;
-	@GameRegistry.ObjectHolder("mob_nospike_hit")
-	public static final SoundEvent mobNospikeHit = null;
-	@GameRegistry.ObjectHolder("mob_nospike_living")
-	public static final SoundEvent mobNospikeLiving = null;
-	@GameRegistry.ObjectHolder("mob_occulent_death")
-	public static final SoundEvent mobOcculentDeath = null;
-	@GameRegistry.ObjectHolder("mob_occulent_hit")
-	public static final SoundEvent mobOcculentHit = null;
-	@GameRegistry.ObjectHolder("mob_occulent_living")
-	public static final SoundEvent mobOcculentLiving = null;
-	@GameRegistry.ObjectHolder("mob_omnilight_death")
-	public static final SoundEvent mobOmnilightDeath = null;
-	@GameRegistry.ObjectHolder("mob_omnilight_hit")
-	public static final SoundEvent mobOmnilightHit = null;
-	@GameRegistry.ObjectHolder("mob_omnilight_living")
-	public static final SoundEvent mobOmnilightLiving = null;
-	@GameRegistry.ObjectHolder("mob_orbiter_death")
-	public static final SoundEvent mobOrbiterDeath = null;
-	@GameRegistry.ObjectHolder("mob_orbiter_hit")
-	public static final SoundEvent mobOrbiterHit = null;
-	@GameRegistry.ObjectHolder("mob_orbiter_living")
-	public static final SoundEvent mobOrbiterLiving = null;
-	@GameRegistry.ObjectHolder("mob_parasect_death")
-	public static final SoundEvent mobParasectDeath = null;
-	@GameRegistry.ObjectHolder("mob_parasect_hit")
-	public static final SoundEvent mobParasectHit = null;
-	@GameRegistry.ObjectHolder("mob_parasect_living")
-	public static final SoundEvent mobParasectLiving = null;
-	@GameRegistry.ObjectHolder("mob_paravite_death")
-	public static final SoundEvent mobParaviteDeath = null;
-	@GameRegistry.ObjectHolder("mob_paravite_hit")
-	public static final SoundEvent mobParaviteHit = null;
-	@GameRegistry.ObjectHolder("mob_paravite_living")
-	public static final SoundEvent mobParaviteLiving = null;
-	@GameRegistry.ObjectHolder("mob_penguin_death")
-	public static final SoundEvent mobPenguinDeath = null;
-	@GameRegistry.ObjectHolder("mob_penguin_hit")
-	public static final SoundEvent mobPenguinHit = null;
-	@GameRegistry.ObjectHolder("mob_penguin_living")
-	public static final SoundEvent mobPenguinLiving = null;
-	@GameRegistry.ObjectHolder("mob_penumbra_death")
-	public static final SoundEvent mobPenumbraDeath = null;
-	@GameRegistry.ObjectHolder("mob_penumbra_hit")
-	public static final SoundEvent mobPenumbraHit = null;
-	@GameRegistry.ObjectHolder("mob_penumbra_living")
-	public static final SoundEvent mobPenumbraLiving = null;
-	@GameRegistry.ObjectHolder("mob_phantom_hit")
-	public static final SoundEvent mobPhantomHit = null;
-	@GameRegistry.ObjectHolder("mob_phantom_living")
-	public static final SoundEvent mobPhantomLiving = null;
-	@GameRegistry.ObjectHolder("mob_pigotron_appear")
-	public static final SoundEvent mobPigotronAppear = null;
-	@GameRegistry.ObjectHolder("mob_pigotron_death")
-	public static final SoundEvent mobPigotronDeath = null;
-	@GameRegistry.ObjectHolder("mob_pigotron_hit")
-	public static final SoundEvent mobPigotronHit = null;
-	@GameRegistry.ObjectHolder("mob_pigotron_living")
-	public static final SoundEvent mobPigotronLiving = null;
-	@GameRegistry.ObjectHolder("mob_pincher_death")
-	public static final SoundEvent mobPincherDeath = null;
-	@GameRegistry.ObjectHolder("mob_pincher_hit")
-	public static final SoundEvent mobPincherHit = null;
-	@GameRegistry.ObjectHolder("mob_pincher_living")
-	public static final SoundEvent mobPincherLiving = null;
-	@GameRegistry.ObjectHolder("mob_pod_plant_death")
-	public static final SoundEvent mobPodPlantDeath = null;
-	@GameRegistry.ObjectHolder("mob_pod_plant_hit")
-	public static final SoundEvent mobPodPlantHit = null;
-	@GameRegistry.ObjectHolder("mob_pod_plant_living")
-	public static final SoundEvent mobPodPlantLiving = null;
-	@GameRegistry.ObjectHolder("mob_polytom_death")
-	public static final SoundEvent mobPolytomDeath = null;
-	@GameRegistry.ObjectHolder("mob_polytom_hit")
-	public static final SoundEvent mobPolytomHit = null;
-	@GameRegistry.ObjectHolder("mob_polytom_living")
-	public static final SoundEvent mobPolytomLiving = null;
-	@GameRegistry.ObjectHolder("mob_primordial_death")
-	public static final SoundEvent mobPrimordialDeath = null;
-	@GameRegistry.ObjectHolder("mob_primordial_living")
-	public static final SoundEvent mobPrimordialLiving = null;
-	@GameRegistry.ObjectHolder("mob_quickpocket_death")
-	public static final SoundEvent mobQuickpocketDeath = null;
-	@GameRegistry.ObjectHolder("mob_quickpocket_hit")
-	public static final SoundEvent mobQuickpocketHit = null;
-	@GameRegistry.ObjectHolder("mob_quickpocket_living")
-	public static final SoundEvent mobQuickpocketLiving = null;
-	@GameRegistry.ObjectHolder("mob_quickpocket_steal")
-	public static final SoundEvent mobQuickpocketSteal = null;
-	@GameRegistry.ObjectHolder("mob_rainicorn_death")
-	public static final SoundEvent mobRainicornDeath = null;
-	@GameRegistry.ObjectHolder("mob_rainicorn_hit")
-	public static final SoundEvent mobRainicornHit = null;
-	@GameRegistry.ObjectHolder("mob_rainicorn_living")
-	public static final SoundEvent mobRainicornLiving = null;
-	@GameRegistry.ObjectHolder("mob_rammerhead_death")
-	public static final SoundEvent mobRammerheadDeath = null;
-	@GameRegistry.ObjectHolder("mob_rammerhead_hit")
-	public static final SoundEvent mobRammerheadHit = null;
-	@GameRegistry.ObjectHolder("mob_rammerhead_living")
-	public static final SoundEvent mobRammerheadLiving = null;
-	@GameRegistry.ObjectHolder("mob_ramradon_death")
-	public static final SoundEvent mobRamradonDeath = null;
-	@GameRegistry.ObjectHolder("mob_ramradon_hit")
-	public static final SoundEvent mobRamradonHit = null;
-	@GameRegistry.ObjectHolder("mob_ramradon_living")
-	public static final SoundEvent mobRamradonLiving = null;
-	@GameRegistry.ObjectHolder("mob_rawbone_death")
-	public static final SoundEvent mobRawboneDeath = null;
-	@GameRegistry.ObjectHolder("mob_rawbone_hit")
-	public static final SoundEvent mobRawboneHit = null;
-	@GameRegistry.ObjectHolder("mob_rawbone_living")
-	public static final SoundEvent mobRawboneLiving = null;
-	@GameRegistry.ObjectHolder("mob_reaper_death")
-	public static final SoundEvent mobReaperDeath = null;
-	@GameRegistry.ObjectHolder("mob_reaper_hit")
-	public static final SoundEvent mobReaperHit = null;
-	@GameRegistry.ObjectHolder("mob_reaper_living")
-	public static final SoundEvent mobReaperLiving = null;
-	@GameRegistry.ObjectHolder("mob_refluct_death")
-	public static final SoundEvent mobRefluctDeath = null;
-	@GameRegistry.ObjectHolder("mob_refluct_hit")
-	public static final SoundEvent mobRefluctHit = null;
-	@GameRegistry.ObjectHolder("mob_refluct_living")
-	public static final SoundEvent mobRefluctLiving = null;
-	@GameRegistry.ObjectHolder("mob_rockbiter_death")
-	public static final SoundEvent mobRockbiterDeath = null;
-	@GameRegistry.ObjectHolder("mob_rockbiter_hit")
-	public static final SoundEvent mobRockbiterHit = null;
-	@GameRegistry.ObjectHolder("mob_rockbiter_living")
-	public static final SoundEvent mobRockbiterLiving = null;
-	@GameRegistry.ObjectHolder("mob_rock_rider_death")
-	public static final SoundEvent mobRockRiderDeath = null;
-	@GameRegistry.ObjectHolder("mob_rock_rider_hit")
-	public static final SoundEvent mobRockRiderHit = null;
-	@GameRegistry.ObjectHolder("mob_rock_rider_switch")
-	public static final SoundEvent mobRockRiderSwitch = null;
-	@GameRegistry.ObjectHolder("mob_roloscope_death")
-	public static final SoundEvent mobRoloscopeDeath = null;
-	@GameRegistry.ObjectHolder("mob_roloscope_hit")
-	public static final SoundEvent mobRoloscopeHit = null;
-	@GameRegistry.ObjectHolder("mob_roloscope_living")
-	public static final SoundEvent mobRoloscopeLiving = null;
-	@GameRegistry.ObjectHolder("mob_runic_golem_change")
-	public static final SoundEvent mobRunicGolemChange = null;
-	@GameRegistry.ObjectHolder("mob_runic_golem_hit")
-	public static final SoundEvent mobRunicGolemHit = null;
-	@GameRegistry.ObjectHolder("mob_sabretooth_death")
-	public static final SoundEvent mobSabretoothDeath = null;
-	@GameRegistry.ObjectHolder("mob_sabretooth_hit")
-	public static final SoundEvent mobSabretoothHit = null;
-	@GameRegistry.ObjectHolder("mob_sabretooth_living")
-	public static final SoundEvent mobSabretoothLiving = null;
-	@GameRegistry.ObjectHolder("mob_sasquatch_living")
-	public static final SoundEvent mobSasquatchLiving = null;
-	@GameRegistry.ObjectHolder("mob_scrubby_hit")
-	public static final SoundEvent mobScrubbyHit = null;
-	@GameRegistry.ObjectHolder("mob_scrubby_living")
-	public static final SoundEvent mobScrubbyLiving = null;
-	@GameRegistry.ObjectHolder("mob_sea_viper_death")
-	public static final SoundEvent mobSeaViperDeath = null;
-	@GameRegistry.ObjectHolder("mob_sea_viper_hit")
-	public static final SoundEvent mobSeaViperHit = null;
-	@GameRegistry.ObjectHolder("mob_sea_viper_living")
-	public static final SoundEvent mobSeaViperLiving = null;
-	@GameRegistry.ObjectHolder("mob_seeker_death")
-	public static final SoundEvent mobSeekerDeath = null;
-	@GameRegistry.ObjectHolder("mob_seeker_hit")
-	public static final SoundEvent mobSeekerHit = null;
-	@GameRegistry.ObjectHolder("mob_seeker_living")
-	public static final SoundEvent mobSeekerLiving = null;
-	@GameRegistry.ObjectHolder("mob_shade_death")
-	public static final SoundEvent mobShadeDeath = null;
-	@GameRegistry.ObjectHolder("mob_shade_hit")
-	public static final SoundEvent mobShadeHit = null;
-	@GameRegistry.ObjectHolder("mob_shade_living")
-	public static final SoundEvent mobShadeLiving = null;
-	@GameRegistry.ObjectHolder("mob_shadow_hit")
-	public static final SoundEvent mobShadowHit = null;
-	@GameRegistry.ObjectHolder("mob_shadow_living")
-	public static final SoundEvent mobShadowLiving = null;
-	@GameRegistry.ObjectHolder("mob_shadowlord_death")
-	public static final SoundEvent mobShadowlordDeath = null;
-	@GameRegistry.ObjectHolder("mob_shadowlord_hit")
-	public static final SoundEvent mobShadowlordHit = null;
-	@GameRegistry.ObjectHolder("mob_shadowlord_living")
-	public static final SoundEvent mobShadowlordLiving = null;
-	@GameRegistry.ObjectHolder("mob_shifter_death")
-	public static final SoundEvent mobShifterDeath = null;
-	@GameRegistry.ObjectHolder("mob_shifter_hit")
-	public static final SoundEvent mobShifterHit = null;
-	@GameRegistry.ObjectHolder("mob_shifter_living")
-	public static final SoundEvent mobShifterLiving = null;
-	@GameRegistry.ObjectHolder("mob_silencer_death")
-	public static final SoundEvent mobSilencerDeath = null;
-	@GameRegistry.ObjectHolder("mob_silencer_hit")
-	public static final SoundEvent mobSilencerHit = null;
-	@GameRegistry.ObjectHolder("mob_silencer_living")
-	public static final SoundEvent mobSilencerLiving = null;
-	@GameRegistry.ObjectHolder("mob_skeletal_cowman_hit")
-	public static final SoundEvent mobSkeletalCowmanHit = null;
-	@GameRegistry.ObjectHolder("mob_skeletal_cowman_living")
-	public static final SoundEvent mobSkeletalCowmanLiving = null;
-	@GameRegistry.ObjectHolder("mob_skeletron_death")
-	public static final SoundEvent mobSkeletronDeath = null;
-	@GameRegistry.ObjectHolder("mob_skeletron_hit")
-	public static final SoundEvent mobSkeletronHit = null;
-	@GameRegistry.ObjectHolder("mob_skeletron_living")
-	public static final SoundEvent mobSkeletronLiving = null;
-	@GameRegistry.ObjectHolder("mob_skellox_death")
-	public static final SoundEvent mobSkelloxDeath = null;
-	@GameRegistry.ObjectHolder("mob_skellox_hit")
-	public static final SoundEvent mobSkelloxHit = null;
-	@GameRegistry.ObjectHolder("mob_skellox_living")
-	public static final SoundEvent mobSkelloxLiving = null;
-	@GameRegistry.ObjectHolder("mob_skipper_death")
-	public static final SoundEvent mobSkipperDeath = null;
-	@GameRegistry.ObjectHolder("mob_skipper_hit")
-	public static final SoundEvent mobSkipperHit = null;
-	@GameRegistry.ObjectHolder("mob_skipper_living")
-	public static final SoundEvent mobSkipperLiving = null;
-	@GameRegistry.ObjectHolder("mob_skull_creature_death")
-	public static final SoundEvent mobSkullCreatureDeath = null;
-	@GameRegistry.ObjectHolder("mob_skull_creature_hit")
-	public static final SoundEvent mobSkullCreatureHit = null;
-	@GameRegistry.ObjectHolder("mob_skull_creature_living")
-	public static final SoundEvent mobSkullCreatureLiving = null;
-	@GameRegistry.ObjectHolder("mob_slimer_death")
-	public static final SoundEvent mobSlimerDeath = null;
-	@GameRegistry.ObjectHolder("mob_slimer_hit")
-	public static final SoundEvent mobSlimerHit = null;
-	@GameRegistry.ObjectHolder("mob_slimer_living")
-	public static final SoundEvent mobSlimerLiving = null;
-	@GameRegistry.ObjectHolder("mob_smash_death")
-	public static final SoundEvent mobSmashDeath = null;
-	@GameRegistry.ObjectHolder("mob_smash_hit")
-	public static final SoundEvent mobSmashHit = null;
-	@GameRegistry.ObjectHolder("mob_smash_living")
-	public static final SoundEvent mobSmashLiving = null;
-	@GameRegistry.ObjectHolder("mob_soulscorne_death")
-	public static final SoundEvent mobSoulscorneDeath = null;
-	@GameRegistry.ObjectHolder("mob_soulscorne_hit")
-	public static final SoundEvent mobSoulscorneHit = null;
-	@GameRegistry.ObjectHolder("mob_soulscorne_living")
-	public static final SoundEvent mobSoulscorneLiving = null;
-	@GameRegistry.ObjectHolder("mob_soulvyre_death")
-	public static final SoundEvent mobSoulvyreDeath = null;
-	@GameRegistry.ObjectHolder("mob_soulvyre_hit")
-	public static final SoundEvent mobSoulvyreHit = null;
-	@GameRegistry.ObjectHolder("mob_soulvyre_living")
-	public static final SoundEvent mobSoulvyreLiving = null;
-	@GameRegistry.ObjectHolder("mob_spectral_wizard_death")
-	public static final SoundEvent mobSpectralWizardDeath = null;
-	@GameRegistry.ObjectHolder("mob_spectral_wizard_hit")
-	public static final SoundEvent mobSpectralWizardHit = null;
-	@GameRegistry.ObjectHolder("mob_spectral_wizard_living")
-	public static final SoundEvent mobSpectralWizardLiving = null;
-	@GameRegistry.ObjectHolder("mob_sphinx_death")
-	public static final SoundEvent mobSphinxDeath = null;
-	@GameRegistry.ObjectHolder("mob_sphinx_hit")
-	public static final SoundEvent mobSphinxHit = null;
-	@GameRegistry.ObjectHolder("mob_sphinx_living")
-	public static final SoundEvent mobSphinxLiving = null;
-	@GameRegistry.ObjectHolder("mob_spinoledon_death")
-	public static final SoundEvent mobSpinoledonDeath = null;
-	@GameRegistry.ObjectHolder("mob_spinoledon_hit")
-	public static final SoundEvent mobSpinoledonHit = null;
-	@GameRegistry.ObjectHolder("mob_spinoledon_living")
-	public static final SoundEvent mobSpinoledonLiving = null;
-	@GameRegistry.ObjectHolder("mob_spinux_death")
-	public static final SoundEvent mobSpinuxDeath = null;
-	@GameRegistry.ObjectHolder("mob_spinux_hit")
-	public static final SoundEvent mobSpinuxHit = null;
-	@GameRegistry.ObjectHolder("mob_spinux_living")
-	public static final SoundEvent mobSpinuxLiving = null;
-	@GameRegistry.ObjectHolder("mob_spirit_death")
-	public static final SoundEvent mobSpiritDeath = null;
-	@GameRegistry.ObjectHolder("mob_spirit_living")
-	public static final SoundEvent mobSpiritLiving = null;
-	@GameRegistry.ObjectHolder("mob_squiggler_death")
-	public static final SoundEvent mobSquigglerDeath = null;
-	@GameRegistry.ObjectHolder("mob_squiggler_hit")
-	public static final SoundEvent mobSquigglerHit = null;
-	@GameRegistry.ObjectHolder("mob_squiggler_living")
-	public static final SoundEvent mobSquigglerLiving = null;
-	@GameRegistry.ObjectHolder("mob_stalker_death")
-	public static final SoundEvent mobStalkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_stalker_hit")
-	public static final SoundEvent mobStalkerHit = null;
-	@GameRegistry.ObjectHolder("mob_stalker_living")
-	public static final SoundEvent mobStalkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_stimulo_death")
-	public static final SoundEvent mobStimuloDeath = null;
-	@GameRegistry.ObjectHolder("mob_stimulo_hit")
-	public static final SoundEvent mobStimuloHit = null;
-	@GameRegistry.ObjectHolder("mob_stimulo_living")
-	public static final SoundEvent mobStimuloLiving = null;
-	@GameRegistry.ObjectHolder("mob_stimulosus_living")
-	public static final SoundEvent mobStimulosusLiving = null;
-	@GameRegistry.ObjectHolder("mob_stinger_hit")
-	public static final SoundEvent mobStingerHit = null;
-	@GameRegistry.ObjectHolder("mob_stinger_living")
-	public static final SoundEvent mobStingerLiving = null;
-	@GameRegistry.ObjectHolder("mob_sugarface_death")
-	public static final SoundEvent mobSugarfaceDeath = null;
-	@GameRegistry.ObjectHolder("mob_sugarface_hit")
-	public static final SoundEvent mobSugarfaceHit = null;
-	@GameRegistry.ObjectHolder("mob_sugarface_living")
-	public static final SoundEvent mobSugarfaceLiving = null;
-	@GameRegistry.ObjectHolder("mob_surveyor_death")
-	public static final SoundEvent mobSurveyorDeath = null;
-	@GameRegistry.ObjectHolder("mob_surveyor_hit")
-	public static final SoundEvent mobSurveyorHit = null;
-	@GameRegistry.ObjectHolder("mob_surveyor_living")
-	public static final SoundEvent mobSurveyorLiving = null;
-	@GameRegistry.ObjectHolder("mob_sysker_death")
-	public static final SoundEvent mobSyskerDeath = null;
-	@GameRegistry.ObjectHolder("mob_sysker_hit")
-	public static final SoundEvent mobSyskerHit = null;
-	@GameRegistry.ObjectHolder("mob_sysker_living")
-	public static final SoundEvent mobSyskerLiving = null;
-	@GameRegistry.ObjectHolder("mob_terradon_death")
-	public static final SoundEvent mobTerradonDeath = null;
-	@GameRegistry.ObjectHolder("mob_terradon_hit")
-	public static final SoundEvent mobTerradonHit = null;
-	@GameRegistry.ObjectHolder("mob_terradon_living")
-	public static final SoundEvent mobTerradonLiving = null;
-	@GameRegistry.ObjectHolder("mob_terrestrial_death")
-	public static final SoundEvent mobTerrestrialDeath = null;
-	@GameRegistry.ObjectHolder("mob_terrestrial_hit")
-	public static final SoundEvent mobTerrestrialHit = null;
-	@GameRegistry.ObjectHolder("mob_terrestrial_living")
-	public static final SoundEvent mobTerrestrialLiving = null;
-	@GameRegistry.ObjectHolder("mob_tharafly_death")
-	public static final SoundEvent mobTharaflyDeath = null;
-	@GameRegistry.ObjectHolder("mob_tharafly_hit")
-	public static final SoundEvent mobTharaflyHit = null;
-	@GameRegistry.ObjectHolder("mob_tharafly_living")
-	public static final SoundEvent mobTharaflyLiving = null;
-	@GameRegistry.ObjectHolder("mob_tortione_death")
-	public static final SoundEvent mobTortioneDeath = null;
-	@GameRegistry.ObjectHolder("mob_tortione_hit")
-	public static final SoundEvent mobTortioneHit = null;
-	@GameRegistry.ObjectHolder("mob_tortione_living")
-	public static final SoundEvent mobTortioneLiving = null;
-	@GameRegistry.ObjectHolder("mob_toxxulous_death")
-	public static final SoundEvent mobToxxulousDeath = null;
-	@GameRegistry.ObjectHolder("mob_toxxulous_hit")
-	public static final SoundEvent mobToxxulousHit = null;
-	@GameRegistry.ObjectHolder("mob_toxxulous_living")
-	public static final SoundEvent mobToxxulousLiving = null;
-	@GameRegistry.ObjectHolder("mob_tracker_death")
-	public static final SoundEvent mobTrackerDeath = null;
-	@GameRegistry.ObjectHolder("mob_tracker_hit")
-	public static final SoundEvent mobTrackerHit = null;
-	@GameRegistry.ObjectHolder("mob_tracker_living")
-	public static final SoundEvent mobTrackerLiving = null;
-	@GameRegistry.ObjectHolder("mob_tree_spirit_death")
-	public static final SoundEvent mobTreeSpiritDeath = null;
-	@GameRegistry.ObjectHolder("mob_tree_spirit_hit")
-	public static final SoundEvent mobTreeSpiritHit = null;
-	@GameRegistry.ObjectHolder("mob_tree_spirit_living")
-	public static final SoundEvent mobTreeSpiritLiving = null;
-	@GameRegistry.ObjectHolder("mob_trickster_hide")
-	public static final SoundEvent mobTricksterHide = null;
-	@GameRegistry.ObjectHolder("mob_trickster_hit")
-	public static final SoundEvent mobTricksterHit = null;
-	@GameRegistry.ObjectHolder("mob_trickster_living")
-	public static final SoundEvent mobTricksterLiving = null;
-	@GameRegistry.ObjectHolder("mob_trotter_death")
-	public static final SoundEvent mobTrotterDeath = null;
-	@GameRegistry.ObjectHolder("mob_trotter_hit")
-	public static final SoundEvent mobTrotterHit = null;
-	@GameRegistry.ObjectHolder("mob_trotter_living")
-	public static final SoundEvent mobTrotterLiving = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_charge")
-	public static final SoundEvent mobTyrosaurCharge = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_death")
-	public static final SoundEvent mobTyrosaurDeath = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_hit")
-	public static final SoundEvent mobTyrosaurHit = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_living")
-	public static final SoundEvent mobTyrosaurLiving = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_ready_stomp")
-	public static final SoundEvent mobTyrosaurReadyStomp = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_step")
-	public static final SoundEvent mobTyrosaurStep = null;
-	@GameRegistry.ObjectHolder("mob_tyrosaur_stomp")
-	public static final SoundEvent mobTyrosaurStomp = null;
-	@GameRegistry.ObjectHolder("mob_urka_death")
-	public static final SoundEvent mobUrkaDeath = null;
-	@GameRegistry.ObjectHolder("mob_urka_hit")
-	public static final SoundEvent mobUrkaHit = null;
-	@GameRegistry.ObjectHolder("mob_urka_living")
-	public static final SoundEvent mobUrkaLiving = null;
-	@GameRegistry.ObjectHolder("mob_ursa_death")
-	public static final SoundEvent mobUrsaDeath = null;
-	@GameRegistry.ObjectHolder("mob_ursa_hit")
-	public static final SoundEvent mobUrsaHit = null;
-	@GameRegistry.ObjectHolder("mob_ursa_living")
-	public static final SoundEvent mobUrsaLiving = null;
-	@GameRegistry.ObjectHolder("mob_valkyrie_death")
-	public static final SoundEvent mobValkyrieDeath = null;
-	@GameRegistry.ObjectHolder("mob_valkyrie_hit")
-	public static final SoundEvent mobValkyrieHit = null;
-	@GameRegistry.ObjectHolder("mob_valkyrie_living")
-	public static final SoundEvent mobValkyrieLiving = null;
-	@GameRegistry.ObjectHolder("mob_vertebron_death")
-	public static final SoundEvent mobVertebronDeath = null;
-	@GameRegistry.ObjectHolder("mob_vertebron_hit")
-	public static final SoundEvent mobVertebronHit = null;
-	@GameRegistry.ObjectHolder("mob_vertebron_living")
-	public static final SoundEvent mobVertebronLiving = null;
-	@GameRegistry.ObjectHolder("mob_visular_death")
-	public static final SoundEvent mobVisularDeath = null;
-	@GameRegistry.ObjectHolder("mob_visular_hit")
-	public static final SoundEvent mobVisularHit = null;
-	@GameRegistry.ObjectHolder("mob_visular_living")
-	public static final SoundEvent mobVisularLiving = null;
-	@GameRegistry.ObjectHolder("mob_visulon_living")
-	public static final SoundEvent mobVisulonLiving = null;
-	@GameRegistry.ObjectHolder("mob_void_walker_death")
-	public static final SoundEvent mobVoidWalkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_void_walker_hit")
-	public static final SoundEvent mobVoidWalkerHit = null;
-	@GameRegistry.ObjectHolder("mob_void_walker_living")
-	public static final SoundEvent mobVoidWalkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_volar_death")
-	public static final SoundEvent mobVolarDeath = null;
-	@GameRegistry.ObjectHolder("mob_volar_hit")
-	public static final SoundEvent mobVolarHit = null;
-	@GameRegistry.ObjectHolder("mob_volar_living")
-	public static final SoundEvent mobVolarLiving = null;
-	@GameRegistry.ObjectHolder("mob_voliant_death")
-	public static final SoundEvent mobVoliantDeath = null;
-	@GameRegistry.ObjectHolder("mob_voliant_hit")
-	public static final SoundEvent mobVoliantHit = null;
-	@GameRegistry.ObjectHolder("mob_voliant_living")
-	public static final SoundEvent mobVoliantLiving = null;
-	@GameRegistry.ObjectHolder("mob_voltron_death")
-	public static final SoundEvent mobVoltronDeath = null;
-	@GameRegistry.ObjectHolder("mob_voltron_hit")
-	public static final SoundEvent mobVoltronHit = null;
-	@GameRegistry.ObjectHolder("mob_voltron_living")
-	public static final SoundEvent mobVoltronLiving = null;
-	@GameRegistry.ObjectHolder("mob_voxxulon_death")
-	public static final SoundEvent mobVoxxulonDeath = null;
-	@GameRegistry.ObjectHolder("mob_voxxulon_hit")
-	public static final SoundEvent mobVoxxulonHit = null;
-	@GameRegistry.ObjectHolder("mob_voxxulon_living")
-	public static final SoundEvent mobVoxxulonLiving = null;
-	@GameRegistry.ObjectHolder("mob_walker_death")
-	public static final SoundEvent mobWalkerDeath = null;
-	@GameRegistry.ObjectHolder("mob_walker_hit")
-	public static final SoundEvent mobWalkerHit = null;
-	@GameRegistry.ObjectHolder("mob_walker_living")
-	public static final SoundEvent mobWalkerLiving = null;
-	@GameRegistry.ObjectHolder("mob_web_reaper_death")
-	public static final SoundEvent mobWebReaperDeath = null;
-	@GameRegistry.ObjectHolder("mob_web_reaper_hit")
-	public static final SoundEvent mobWebReaperHit = null;
-	@GameRegistry.ObjectHolder("mob_web_reaper_living")
-	public static final SoundEvent mobWebReaperLiving = null;
-	@GameRegistry.ObjectHolder("mob_wither_wizard_hit")
-	public static final SoundEvent mobWitherWizardHit = null;
-	@GameRegistry.ObjectHolder("mob_wither_wizard_living")
-	public static final SoundEvent mobWitherWizardLiving = null;
-	@GameRegistry.ObjectHolder("mob_xxeus_dash")
-	public static final SoundEvent mobXxeusDash = null;
-	@GameRegistry.ObjectHolder("mob_xxeus_death")
-	public static final SoundEvent mobXxeusDeath = null;
-	@GameRegistry.ObjectHolder("mob_xxeus_hit")
-	public static final SoundEvent mobXxeusHit = null;
-	@GameRegistry.ObjectHolder("mob_xxeus_living")
-	public static final SoundEvent mobXxeusLiving = null;
-	@GameRegistry.ObjectHolder("mob_yeti_death")
-	public static final SoundEvent mobYetiDeath = null;
-	@GameRegistry.ObjectHolder("mob_yeti_hit")
-	public static final SoundEvent mobYetiHit = null;
-	@GameRegistry.ObjectHolder("mob_yeti_living")
-	public static final SoundEvent mobYetiLiving = null;
-	@GameRegistry.ObjectHolder("mob_zarg_death")
-	public static final SoundEvent mobZargDeath = null;
-	@GameRegistry.ObjectHolder("mob_zarg_hit")
-	public static final SoundEvent mobZargHit = null;
-	@GameRegistry.ObjectHolder("mob_zarg_living")
-	public static final SoundEvent mobZargLiving = null;
-	@GameRegistry.ObjectHolder("mob_zhinx_death")
-	public static final SoundEvent mobZhinxDeath = null;
-	@GameRegistry.ObjectHolder("mob_zhinx_hit")
-	public static final SoundEvent mobZhinxHit = null;
-	@GameRegistry.ObjectHolder("mob_zhinx_living")
-	public static final SoundEvent mobZhinxLiving = null;
-	@GameRegistry.ObjectHolder("mob_zorp_death")
-	public static final SoundEvent mobZorpDeath = null;
-	@GameRegistry.ObjectHolder("mob_zorp_hit")
-	public static final SoundEvent mobZorpHit = null;
-	@GameRegistry.ObjectHolder("mob_zorp_living")
-	public static final SoundEvent mobZorpLiving = null;
-	@GameRegistry.ObjectHolder("bane_music")
-	public static final SoundEvent musicBane = null;
-	@GameRegistry.ObjectHolder("baroness_music")
-	public static final SoundEvent musicBaroness = null;
-	@GameRegistry.ObjectHolder("clunkhead_music")
-	public static final SoundEvent musicClunkhead = null;
-	@GameRegistry.ObjectHolder("coniferon_music")
-	public static final SoundEvent musicConiferon = null;
-	@GameRegistry.ObjectHolder("corallus_music")
-	public static final SoundEvent musicCorallus = null;
-	@GameRegistry.ObjectHolder("cotton_candor_music")
-	public static final SoundEvent musicCottonCandor = null;
-	@GameRegistry.ObjectHolder("craexxeus_music")
-	public static final SoundEvent musicCraexxeus = null;
-	@GameRegistry.ObjectHolder("creep_music")
-	public static final SoundEvent musicCreep = null;
-	@GameRegistry.ObjectHolder("crystocore_music")
-	public static final SoundEvent musicCrystocore = null;
-	@GameRegistry.ObjectHolder("dracyon_music")
-	public static final SoundEvent musicDracyon = null;
-	@GameRegistry.ObjectHolder("elusive_music")
-	public static final SoundEvent musicElusive = null;
-	@GameRegistry.ObjectHolder("four_guardians_music")
-	public static final SoundEvent musicFourGuardians = null;
-	@GameRegistry.ObjectHolder("goldorth_music")
-	public static final SoundEvent musicGoldorth = null;
-	@GameRegistry.ObjectHolder("graw_music")
-	public static final SoundEvent musicGraw = null;
-	@GameRegistry.ObjectHolder("gyro_music")
-	public static final SoundEvent musicGyro = null;
-	@GameRegistry.ObjectHolder("hive_king_music")
-	public static final SoundEvent musicHiveKing = null;
-	@GameRegistry.ObjectHolder("horon_music")
-	public static final SoundEvent musicHoron = null;
-	@GameRegistry.ObjectHolder("hydrolisk_music")
-	public static final SoundEvent musicHydrolisk = null;
-	@GameRegistry.ObjectHolder("king_bambambam_music")
-	public static final SoundEvent musicKingBamBamBam = null;
-	@GameRegistry.ObjectHolder("king_shroomus_music")
-	public static final SoundEvent musicKingShroomus = null;
-	@GameRegistry.ObjectHolder("kror_music")
-	public static final SoundEvent musicKror = null;
-	@GameRegistry.ObjectHolder("mechbot_music")
-	public static final SoundEvent musicMechbot = null;
-	@GameRegistry.ObjectHolder("nethengeic_wither_music")
-	public static final SoundEvent musicNethengeicWither = null;
-	@GameRegistry.ObjectHolder("penumbra_music")
-	public static final SoundEvent musicPenumbra = null;
-	@GameRegistry.ObjectHolder("primordial_five_music")
-	public static final SoundEvent musicPrimordialFive = null;
-	@GameRegistry.ObjectHolder("rock_rider_music")
-	public static final SoundEvent musicRockRider = null;
-	@GameRegistry.ObjectHolder("shadowlord_music")
-	public static final SoundEvent musicShadowlord = null;
-	@GameRegistry.ObjectHolder("silverfoot_music")
-	public static final SoundEvent musicSilverfoot = null;
-	@GameRegistry.ObjectHolder("skeletron_music")
-	public static final SoundEvent musicSkeletron = null;
-	@GameRegistry.ObjectHolder("smash_music")
-	public static final SoundEvent musicSmash = null;
-	@GameRegistry.ObjectHolder("tyrosaur_music")
-	public static final SoundEvent musicTyrosaur = null;
-	@GameRegistry.ObjectHolder("vinocorne_music")
-	public static final SoundEvent musicVinocorne = null;
-	@GameRegistry.ObjectHolder("visualent_music")
-	public static final SoundEvent musicVisualent = null;
-	@GameRegistry.ObjectHolder("voxxulon_music")
-	public static final SoundEvent musicVoxxulon = null;
-	@GameRegistry.ObjectHolder("petal_crafting_station_success")
-	public static final SoundEvent petalCraftingStationSuccess = null;
-	@GameRegistry.ObjectHolder("plant_thump")
-	public static final SoundEvent plantThump = null;
-	@GameRegistry.ObjectHolder("abyss_portal_activate")
-	public static final SoundEvent portalAbyss = null;
-	@GameRegistry.ObjectHolder("ancient_cavern_portal_activate")
-	public static final SoundEvent portalAncientCavern = null;
-	@GameRegistry.ObjectHolder("barren_portal_activate")
-	public static final SoundEvent portalBarren = null;
-	@GameRegistry.ObjectHolder("candyland_portal_activate")
-	public static final SoundEvent portalCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_portal_activate")
-	public static final SoundEvent portalCeleve = null;
-	@GameRegistry.ObjectHolder("creeponia_portal_activate")
-	public static final SoundEvent portalCreeponia = null;
-	@GameRegistry.ObjectHolder("crystevia_portal_activate")
-	public static final SoundEvent portalCrystevia = null;
-	@GameRegistry.ObjectHolder("dark_portal_activate")
-	public static final SoundEvent portalDark = null;
-	@GameRegistry.ObjectHolder("immortallis_portal_activate")
-	public static final SoundEvent portalImmortallis = null;
-	@GameRegistry.ObjectHolder("iromine_portal_activate")
-	public static final SoundEvent portalIromine = null;
-	@GameRegistry.ObjectHolder("light_portal_activate")
-	public static final SoundEvent portalLight = null;
-	@GameRegistry.ObjectHolder("natural_portal_activate")
-	public static final SoundEvent portalNatural = null;
-	@GameRegistry.ObjectHolder("shyrelands_portal_activate")
-	public static final SoundEvent portalShyrelands = null;
-	@GameRegistry.ObjectHolder("rune_randomizer_use")
-	public static final SoundEvent runeRandomizer = null;
-	@GameRegistry.ObjectHolder("arc_wizard_fire")
-	public static final SoundEvent shotArcWizardFire = null;
-	@GameRegistry.ObjectHolder("baroness_fire")
-	public static final SoundEvent shotBaronessFire = null;
-	@GameRegistry.ObjectHolder("baumba_fire")
-	public static final SoundEvent shotBaumbaFire = null;
-	@GameRegistry.ObjectHolder("cherry_blaster_fire")
-	public static final SoundEvent shotCherryBlasterFire = null;
-	@GameRegistry.ObjectHolder("clown_fire")
-	public static final SoundEvent shotClownFire = null;
-	@GameRegistry.ObjectHolder("clunkhead_fire")
-	public static final SoundEvent shotClunkheadFire = null;
-	@GameRegistry.ObjectHolder("cotton_candor_fire")
-	public static final SoundEvent shotCottonCandorFire = null;
-	@GameRegistry.ObjectHolder("craexxeus_fire")
-	public static final SoundEvent shotCraexxeusFire = null;
-	@GameRegistry.ObjectHolder("craexxeus_nuke_fire")
-	public static final SoundEvent shotCraexxeusNukeFire = null;
-	@GameRegistry.ObjectHolder("fungik_fire")
-	public static final SoundEvent shotFungikFire = null;
-	@GameRegistry.ObjectHolder("guardian_fire")
-	public static final SoundEvent shotGuardianFire = null;
-	@GameRegistry.ObjectHolder("hag_fire")
-	public static final SoundEvent shotHagFire = null;
-	@GameRegistry.ObjectHolder("kaiyu_fire")
-	public static final SoundEvent shotKaiyuFire = null;
-	@GameRegistry.ObjectHolder("linger_fire")
-	public static final SoundEvent shotLingerFire = null;
-	@GameRegistry.ObjectHolder("magic_creeper_fire")
-	public static final SoundEvent shotMagicCreeperFire = null;
-	@GameRegistry.ObjectHolder("magicke_fire")
-	public static final SoundEvent shotMagickeFire = null;
-	@GameRegistry.ObjectHolder("mechbot_fire")
-	public static final SoundEvent shotMechbotFire = null;
-	@GameRegistry.ObjectHolder("mermage_fire")
-	public static final SoundEvent shotMermageFire = null;
-	@GameRegistry.ObjectHolder("mirage_fire")
-	public static final SoundEvent shotMirageFire = null;
-	@GameRegistry.ObjectHolder("shyre_troll_fire")
-	public static final SoundEvent shotShyreTrollFire = null;
-	@GameRegistry.ObjectHolder("skeleman_fire")
-	public static final SoundEvent shotSkelemanFire = null;
-	@GameRegistry.ObjectHolder("spirit_protector_fire")
-	public static final SoundEvent shotSpiritProtectorFire = null;
-	@GameRegistry.ObjectHolder("surge_fire")
-	public static final SoundEvent shotSurgeFire = null;
-	@GameRegistry.ObjectHolder("vine_wizard_fire")
-	public static final SoundEvent shotVineWizardFire = null;
-	@GameRegistry.ObjectHolder("web_reaper_fire")
-	public static final SoundEvent shotWebReaperFire = null;
-	@GameRegistry.ObjectHolder("wizard_blast_fire")
-	public static final SoundEvent shotWizardBlast = null;
-	@GameRegistry.ObjectHolder("shyrelands_dizzy")
-	public static final SoundEvent shyrelandsDizzy = null;
-	@GameRegistry.ObjectHolder("shyrelands_shine")
-	public static final SoundEvent shyrelandsShine = null;
-	@GameRegistry.ObjectHolder("shyrelands_weakness")
-	public static final SoundEvent shyrelandsWeakness = null;
-	@GameRegistry.ObjectHolder("shyrelands_wind")
-	public static final SoundEvent shyrelandsWind = null;
-	@GameRegistry.ObjectHolder("atlantic_staff_cast")
-	public static final SoundEvent staffAtlantic = null;
-	@GameRegistry.ObjectHolder("basic_staff_cast")
-	public static final SoundEvent staffBasic = null;
-	@GameRegistry.ObjectHolder("candy_staff_cast")
-	public static final SoundEvent staffCandy = null;
-	@GameRegistry.ObjectHolder("celestial_staff_cast")
-	public static final SoundEvent staffCelestial = null;
-	@GameRegistry.ObjectHolder("concussion_staff_cast")
-	public static final SoundEvent staffConcussion = null;
-	@GameRegistry.ObjectHolder("coral_staff_cast")
-	public static final SoundEvent staffCoral = null;
-	@GameRegistry.ObjectHolder("crystevia_staff_cast")
-	public static final SoundEvent staffCrystevia = null;
-	@GameRegistry.ObjectHolder("ember_staff_cast")
-	public static final SoundEvent staffEmber = null;
-	@GameRegistry.ObjectHolder("ever_staff_cast")
-	public static final SoundEvent staffEver = null;
-	@GameRegistry.ObjectHolder("firefly_staff_cast")
-	public static final SoundEvent staffFirefly = null;
-	@GameRegistry.ObjectHolder("fungal_staff_cast")
-	public static final SoundEvent staffFungal = null;
-	@GameRegistry.ObjectHolder("joker_staff_cast")
-	public static final SoundEvent staffJoker = null;
-	@GameRegistry.ObjectHolder("kaiyu_staff_cast")
-	public static final SoundEvent staffKaiyu = null;
-	@GameRegistry.ObjectHolder("lightshine_staff_cast")
-	public static final SoundEvent staffLightshine = null;
-	@GameRegistry.ObjectHolder("lunar_staff_cast")
-	public static final SoundEvent staffLunar = null;
-	@GameRegistry.ObjectHolder("meteor_staff_cast")
-	public static final SoundEvent staffMeteor = null;
-	@GameRegistry.ObjectHolder("moonlight_staff_cast")
-	public static final SoundEvent staffMoonlight = null;
-	@GameRegistry.ObjectHolder("nature_staff_cast")
-	public static final SoundEvent staffNature = null;
-	@GameRegistry.ObjectHolder("nightmare_staff_cast")
-	public static final SoundEvent staffNightmare = null;
-	@GameRegistry.ObjectHolder("noxious_staff_cast")
-	public static final SoundEvent staffNoxious = null;
-	@GameRegistry.ObjectHolder("phantom_staff_cast")
-	public static final SoundEvent staffPhantom = null;
-	@GameRegistry.ObjectHolder("reef_staff_cast")
-	public static final SoundEvent staffReef = null;
-	@GameRegistry.ObjectHolder("rejuvenation_staff_cast")
-	public static final SoundEvent staffRejuvenation = null;
-	@GameRegistry.ObjectHolder("runic_staff_cast")
-	public static final SoundEvent staffRunic = null;
-	@GameRegistry.ObjectHolder("shadow_staff_cast")
-	public static final SoundEvent staffShadow = null;
-	@GameRegistry.ObjectHolder("show_staff_cast")
-	public static final SoundEvent staffShow = null;
-	@GameRegistry.ObjectHolder("shyre_staff_cast")
-	public static final SoundEvent staffShyre = null;
-	@GameRegistry.ObjectHolder("sky_staff_cast")
-	public static final SoundEvent staffSky = null;
-	@GameRegistry.ObjectHolder("sun_staff_cast")
-	public static final SoundEvent staffSun = null;
-	@GameRegistry.ObjectHolder("surge_staff_cast")
-	public static final SoundEvent staffSurge = null;
-	@GameRegistry.ObjectHolder("tangle_staff_cast")
-	public static final SoundEvent staffTangle = null;
-	@GameRegistry.ObjectHolder("ultimatum_staff_cast")
-	public static final SoundEvent staffUltimatum = null;
-	@GameRegistry.ObjectHolder("web_staff_cast")
-	public static final SoundEvent staffWeb = null;
-	@GameRegistry.ObjectHolder("tea_sink_fill")
-	public static final SoundEvent teaSinkFill = null;
-	@GameRegistry.ObjectHolder("tea_sink_use")
-	public static final SoundEvent teaSinkUse = null;
-	@GameRegistry.ObjectHolder("temple_trap_laugh")
-	public static final SoundEvent templeTrapLaugh = null;
-	@GameRegistry.ObjectHolder("tribute_fail")
-	public static final SoundEvent tributeFail = null;
-	@GameRegistry.ObjectHolder("tribute_success")
-	public static final SoundEvent tributeSuccess = null;
-	@GameRegistry.ObjectHolder("creation_slab_use")
-	public static final SoundEvent useCreationSlab = null;
-	@GameRegistry.ObjectHolder("very_heavy_step")
-	public static final SoundEvent veryHeavyStep = null;
-	@GameRegistry.ObjectHolder("vulcane_use")
-	public static final SoundEvent vulcaneUse = null;
-	@GameRegistry.ObjectHolder("whitewash_use")
-	public static final SoundEvent whitewashUse = null;
+	public static final SoundEvent BARON_BOMB_PRIMING = ObjectHolder();
+	public static final SoundEvent BARON_BOMB_SPAWN = ObjectHolder();
+	public static final SoundEvent BLOODLUST_COLLECT = ObjectHolder();
+	public static final SoundEvent BONE_HORN_CALL = ObjectHolder();
+	public static final SoundEvent BUBBLE_SHOT_POP = ObjectHolder();
+	public static final SoundEvent CANDY_SNAIL_STEP = ObjectHolder();
+	public static final SoundEvent CANDY_THUMP = ObjectHolder();
+	public static final SoundEvent CHAINSAW_USE = ObjectHolder();
+	public static final SoundEvent CREATION_FORGE_USE = ObjectHolder();
+	public static final SoundEvent CRYSTAL_CREATOR_USE = ObjectHolder();
+	public static final SoundEvent DECLOGGING_TABLE_USE = ObjectHolder();
+	public static final SoundEvent ENTITY_GENERIC_DINO_STEP = ObjectHolder();
+	public static final SoundEvent ENTITY_PIXON_HARVEST = ObjectHolder();
+	public static final SoundEvent ENTITY_PIXON_LIVING = ObjectHolder();
+	public static final SoundEvent BIG_DAY_START = ObjectHolder();
+	public static final SoundEvent BLOOD_HUNT_START = ObjectHolder();
+	public static final SoundEvent CREEP_DAY_START = ObjectHolder();
+	public static final SoundEvent DEATH_DAY_START = ObjectHolder();
+	public static final SoundEvent LUNAR_INVASION_START = ObjectHolder();
+	public static final SoundEvent SOUL_SCURRY_START = ObjectHolder();
+	public static final SoundEvent EXTRACTION_SUCCESS = ObjectHolder();
+	public static final SoundEvent FORAGING_LOOT = ObjectHolder();
+	public static final SoundEvent GOO_BALL_IMPACT = ObjectHolder();
+	public static final SoundEvent GOOFY_TOOL_FAIL = ObjectHolder();
+	public static final SoundEvent ABOMINATOR_FIRE = ObjectHolder();
+	public static final SoundEvent ARCHERGUN_FIRE = ObjectHolder();
+	public static final SoundEvent ARTIFACT_FIRE = ObjectHolder();
+	public static final SoundEvent ATOMIZER_FIRE = ObjectHolder();
+	public static final SoundEvent BALL_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent BIG_BLAST_FIRE = ObjectHolder();
+	public static final SoundEvent BLOWPIPE_FIRE = ObjectHolder();
+	public static final SoundEvent BOOM_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent BUBBLE_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent CARROT_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent CHAINGUN_FIRE = ObjectHolder();
+	public static final SoundEvent CHUGGER_FIRE = ObjectHolder();
+	public static final SoundEvent CLOWNER_FIRE = ObjectHolder();
+	public static final SoundEvent COLOUR_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent CONFETTI_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent DARK_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent DISCHARGE_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent DOOM_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent DRAIN_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent ENERGY_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent FAST_RIFLE_FIRE = ObjectHolder();
+	public static final SoundEvent FLINGER_FIRE = ObjectHolder();
+	public static final SoundEvent GAS_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent GAUGE_RIFLE_FIRE = ObjectHolder();
+	public static final SoundEvent GOLEM_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent GRAVITY_BLASTER_FIRE = ObjectHolder();
+	public static final SoundEvent HEAT_WAVE_FIRE = ObjectHolder();
+	public static final SoundEvent HIGH_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent ILLUSION_REVOLVER_FIRE = ObjectHolder();
+	public static final SoundEvent ILLUSION_SMG_FIRE = ObjectHolder();
+	public static final SoundEvent ION_BLASTER_FIRE = ObjectHolder();
+	public static final SoundEvent JACK_ROCKER_FIRE = ObjectHolder();
+	public static final SoundEvent LIGHT_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent LOWER_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent MAGIC_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent MECHA_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent MIND_BLASTER_FIRE = ObjectHolder();
+	public static final SoundEvent MINIGUN_FIRE = ObjectHolder();
+	public static final SoundEvent MINI_PISTOL_FIRE = ObjectHolder();
+	public static final SoundEvent MISSILE_MAKER_FIRE = ObjectHolder();
+	public static final SoundEvent MONSTER_FIRE = ObjectHolder();
+	public static final SoundEvent MOON_SHINER_FIRE = ObjectHolder();
+	public static final SoundEvent PARALYZER_FIRE = ObjectHolder();
+	public static final SoundEvent PARTY_POPPER_FIRE = ObjectHolder();
+	public static final SoundEvent RAY_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent REEFER_FIRE = ObjectHolder();
+	public static final SoundEvent REVOLUTION_FIRE = ObjectHolder();
+	public static final SoundEvent REVOLVER_FIRE = ObjectHolder();
+	public static final SoundEvent ROULETTE_FIRE = ObjectHolder();
+	public static final SoundEvent RPG_FIRE = ObjectHolder();
+	public static final SoundEvent SHADOW_BLASTER_FIRE = ObjectHolder();
+	public static final SoundEvent SHOTGUN_FIRE = ObjectHolder();
+	public static final SoundEvent SLUGGER_FIRE = ObjectHolder();
+	public static final SoundEvent SNIPER_FIRE = ObjectHolder();
+	public static final SoundEvent SOUL_SPARK_FIRE = ObjectHolder();
+	public static final SoundEvent SPACE_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent SPACE_REVOLVER_FIRE = ObjectHolder();
+	public static final SoundEvent SPIRIT_SHOWER_FIRE = ObjectHolder();
+	public static final SoundEvent SPRAYER_FIRE = ObjectHolder();
+	public static final SoundEvent SQUAD_GUN_FIRE = ObjectHolder();
+	public static final SoundEvent STAMPEDE_FIRE = ObjectHolder();
+	public static final SoundEvent SWARMOTRON_FIRE = ObjectHolder();
+	public static final SoundEvent UPPER_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent WHIMSY_WINDER_FIRE = ObjectHolder();
+	public static final SoundEvent WITHER_CANNON_FIRE = ObjectHolder();
+	public static final SoundEvent WITHERS_WRATH_FIRE = ObjectHolder();
+	public static final SoundEvent WOOD_RIFLE_FIRE = ObjectHolder();
+	public static final SoundEvent HAUNTING_TABLE_USE = ObjectHolder();
+	public static final SoundEvent HEART_STONE_USE = ObjectHolder();
+	public static final SoundEvent HEART_STONE_SPAWN = ObjectHolder();
+	public static final SoundEvent ENTITY_GENERIC_HEAVY_STEP = ObjectHolder();
+	public static final SoundEvent HELLFIRE_IMPACT = ObjectHolder();
+	public static final SoundEvent INFUSION_SUCCESS = ObjectHolder();
+	public static final SoundEvent PLAYER_LEVEL_100 = ObjectHolder();
+	public static final SoundEvent PLAYER_LEVEL_UP = ObjectHolder();
+	public static final SoundEvent LOTTO_WIN = ObjectHolder();
+	public static final SoundEvent LUNAR_ENRICHMENT_TABLE_USE = ObjectHolder();
+	public static final SoundEvent RUNES_CRAFT = ObjectHolder();
+
+	public static final SoundEvent ENTITY_CORATEE_DEATH = ObjectHolder();
+	public static final SoundEvent ENTITY_CORATEE_HIT = ObjectHolder();
+	public static final SoundEvent ENTITY_CORATEE_LIVING = ObjectHolder();
+	public static final SoundEvent ENTITY_ELKANYNE_DEATH = ObjectHolder();
+	public static final SoundEvent ENTITY_ELKANYNE_HIT = ObjectHolder();
+	public static final SoundEvent ENTITY_ELKANYNE_LIVING = ObjectHolder();
+	public static final SoundEvent ENTITY_MEGANEUROPSIS_DEATH = ObjectHolder();
+	public static final SoundEvent ENTITY_MEGANEUROPSIS_HIT = ObjectHolder();
+	public static final SoundEvent ENTITY_MEGANEUROPSIS_LIVING = ObjectHolder();
+	public static final SoundEvent ENTITY_SHIK_DEATH = ObjectHolder();
+	public static final SoundEvent ENTITY_SHIK_HIT = ObjectHolder();
+	public static final SoundEvent ENTITY_TROTTER_DEATH = ObjectHolder();
+	public static final SoundEvent ENTITY_TROTTER_HIT = ObjectHolder();
+	public static final SoundEvent ENTITY_TROTTER_LIVING = ObjectHolder();
+
+	public static final SoundEvent MOB_AIRHEAD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_AIRHEAD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_AIRHEAD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ALARMO_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ALARMO_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ALARMO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIOR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIOR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIOR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIYTE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIYTE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_AMPHIBIYTE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ANEMIA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ANEMIA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ANEMIA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ANGELICA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ANGELICA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ANGELICA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ANGLER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ANGLER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ANGLER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_APPARITION_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_APPARITION_HIT = ObjectHolder();
+	public static final SoundEvent MOB_APPARITION_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARCBEAST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARCBEAST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARCBEAST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARCHVINE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARCHVINE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARCHVINE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARCWORM_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARCWORM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARCWORM_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARC_WIZARD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARC_WIZARD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARC_WIZARD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARIEL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARIEL_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARIEL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARKBACK_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARKBACK_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARKBACK_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ARKZYNE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ARKZYNE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ARKZYNE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_AUTOMATON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_AUTOMATON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_AUTOMATON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_AXIOLIGHT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_AXIOLIGHT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_AXIOLIGHT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BANE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BANE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BANSHEE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BANSHEE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BANSHEE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BASILISK_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BASILISK_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BASILISK_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BAUMBA_JUMP = ObjectHolder();
+	public static final SoundEvent MOB_BLOODMIST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BLOODMIST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BLOODMIST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BLOODSUCKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BLOODSUCKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BLOODSUCKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BOMB_CARRIER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BOMB_CARRIER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BONEBACK_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BONEBACK_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BONEBACK_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BOUNCER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BOUNCER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BOUNCER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BUGEYE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BUGEYE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BUGEYE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_BUSH_BABY_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_BUSH_BABY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_BUSH_BABY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CARROTOP_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CARROTOP_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CARROTOP_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_BUG_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_BUG_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_BUG_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_CREEP_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_CREEP_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CAVE_CREEP_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CELEVE_CLOWN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CELEVE_CLOWN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CELEVE_CLOWN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CHARGER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CHARGER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CHARGER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CHIMERA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CHIMERA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CHIMERA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CHOMPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CHOMPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CLOWN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CLOWN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CLOWN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CLUNKHEAD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_COMPEER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_COMPEER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_COMPEER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CONIFERON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CONIFERON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CONIFERON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CORALLUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CORALLUS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CORALLUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CORALLUS_TAUNT = ObjectHolder();
+	public static final SoundEvent MOB_CORALON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CORALON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CORALON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_COTTON_CANDOR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_COTTON_CANDOR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_COTTON_CANDOR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CRAEXXEUS_CHARGE = ObjectHolder();
+	public static final SoundEvent MOB_CRAEXXEUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CRAEXXEUS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CRAEXXEUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CREEPERLOCK_TELEPORT = ObjectHolder();
+	public static final SoundEvent MOB_CREEPIRD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CREEPIRD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CREEPIRD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CREEPOID_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CREEPOID_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CREEPOID_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CRUSILISK_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CRUSILISK_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CRUSILISK_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CRYPTID_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CRYPTID_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CRYPTID_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CRYSTAL_CONSTRUCT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CRYSTAL_CONSTRUCT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CRYSTAL_CONSTRUCT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_CYCLOPS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_CYCLOPS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_CYCLOPS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DARK_BEAST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DARK_BEAST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DARK_BEAST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DAWNLIGHT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DAWNLIGHT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DAWNLIGHT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DEATH_HUNTER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DEATH_HUNTER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DEATH_HUNTER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DEINOTHERIUM_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DEINOTHERIUM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DEINOTHERIUM_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DESTRUCTOR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DESTRUCTOR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DESTRUCTOR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DEVOURER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DEVOURER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DEVOURER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DICER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DICER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DICER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DIOCUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DIOCUS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DIOCUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DISTORTER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DISTORTER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DISTORTER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DOUBLER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DOUBLER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DOUBLER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DRACYON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DRACYON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DRAGGY_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DRAGGY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DRAGGY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DUSTEIVA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DUSTEIVA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DUSTEIVA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DUSTON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DUST_STRIDER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DUST_STRIDER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DUST_STRIDER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_DYREHORN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_DYREHORN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_DYREHORN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ECHODAR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ECHODAR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ECHODAR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EILOSAPIEN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EILOSAPIEN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EILOSAPIEN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ELUSIVE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ELUSIVE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ELUSIVE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EMBRAKE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EMBRAKE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EMBRAKE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EMPEROR_BEAST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EMPEROR_BEAST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EMPEROR_BEAST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EMPEROR_BEAST_STEP = ObjectHolder();
+	public static final SoundEvent MOB_ENFORCER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ENFORCER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ENFORCER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EVERBEAST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EVERBEAST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EXOHEAD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EXOHEAD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EXOHEAD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EXPLODOT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EXPLODOT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EXPLODOT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_EYE_CREATURE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_EYE_CREATURE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_EYE_CREATURE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FACELESS_RUNNER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FACELESS_RUNNER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FACELESS_RUNNER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FENIX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FENIX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FENIX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FIEND_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FIEND_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FIEND_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FISHIX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FISHIX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FISHIX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FLAMEWALKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FLAMEWALKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FLAMEWALKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FLESH_EATER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FLESH_EATER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FLESH_EATER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FLYE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FLYE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FLYE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FUNGI_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FUNGI_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FUNGI_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_FURLION_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_FURLION_HIT = ObjectHolder();
+	public static final SoundEvent MOB_FURLION_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GADGETOID_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GADGETOID_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GADGETOID_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GHOSTINE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GHOSTINE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GHOSTINE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GHOST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GHOST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GHOST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_SNAIL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_SNAIL_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_SNAIL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GIANT_SNAIL_STEP = ObjectHolder();
+	public static final SoundEvent MOB_GOALBY_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GOALBY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GOALBY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GOBLIN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GOBLIN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GOBLIN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GOLDORTH_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GOLDORTH_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GOLDORTH_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GOLEM_STEP = ObjectHolder();
+	public static final SoundEvent MOB_GRAW_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GRAW_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GRAW_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GRILLFACE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GRILLFACE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GRILLFACE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GRILLFACE_SCARE = ObjectHolder();
+	public static final SoundEvent MOB_GROBBLER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GROBBLER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GROBBLER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GROCCULATE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GROCCULATE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GROCCULATE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GRUNT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GRUNT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GRUNT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_GUARDIAN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GUARDIAN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GYRO_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_GYRO_HIT = ObjectHolder();
+	public static final SoundEvent MOB_GYRO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HAG_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HAG_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HAG_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HELLCAT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HELLCAT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HELLCAT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HELLSPOT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HELLSPOT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HELLSPOT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HIVE_KING_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HIVE_KING_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HORNDRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HORNDRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HORNDRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HORON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HORON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HORON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HOST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HOST_DROP = ObjectHolder();
+	public static final SoundEvent MOB_HOST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HUNCH_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HUNCH_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HUNCH_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HUNTER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HUNTER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HUNTER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_HYDROLISK_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_HYDROLISK_HIT = ObjectHolder();
+	public static final SoundEvent MOB_HYDROLISK_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_IMMORTAL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_IMMORTAL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_INFERNAL_HIT = ObjectHolder();
+	public static final SoundEvent MOB_INFERNAL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_IOSAUR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_IOSAUR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_IOSAUR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_IRKLING_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_IRKLING_HIT = ObjectHolder();
+	public static final SoundEvent MOB_IRKLING_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_JAWE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_JAWE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_JAWE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_JUMBO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_KAIYU_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_KAIYU_HIT = ObjectHolder();
+	public static final SoundEvent MOB_KAIYU_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_KEELER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_KEELER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_KEELER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_KEELER_REVIVE = ObjectHolder();
+	public static final SoundEvent MOB_KING_BAMBAMBAM_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_KING_BAMBAMBAM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_KING_BAMBAMBAM_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_KING_SHROOMUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_KING_SHROOMUS_HEAL = ObjectHolder();
+	public static final SoundEvent MOB_KROR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_KROR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LELYETIAN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LELYETIAN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LELYETIAN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LINGER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LINGER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LINGER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LITTLE_BAM_SPAWN = ObjectHolder();
+	public static final SoundEvent MOB_LIVING_FUNGI_SPAWN = ObjectHolder();
+	public static final SoundEvent MOB_LOLLYPOPPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LOST_SOUL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LOST_SOUL_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LOST_SOUL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LUNARCHER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LUNARCHER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LUNARCHER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LURKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LURKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LURKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_LUXOCRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_LUXOCRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_LUXOCRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MAGICKE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MAGICKE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MAGICKE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MECHACHRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MECHACHRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MECHACHRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MECHBOT_JUMP = ObjectHolder();
+	public static final SoundEvent MOB_MECHYON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MECHYON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MECHYON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MERKYRE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MERKYRE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MERKYRE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MERMAGE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MERMAGE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MERMAGE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MIRAGE_TELEPORT = ObjectHolder();
+	public static final SoundEvent MOB_MODULO_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MODULO_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MODULO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MOTHER_VOID_WALKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MOTHER_VOID_WALKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MOTHER_VOID_WALKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MUCKOPEDE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MUCKOPEDE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_MUNCHER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_MUNCHER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_MUNCHER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NATURA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NATURA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NATURA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NEPTUNO_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NEPTUNO_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NEPTUNO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_BEAST_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_BEAST_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_BEAST_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_WITHER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_WITHER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NETHENGEIC_WITHER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTFLY_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTFLY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTFLY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTMARE_SPIDER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTMARE_SPIDER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTMARE_SPIDER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTWING_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTWING_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NIGHTWING_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NIGHT_WATCHER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NIGHT_WATCHER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NIPPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NIPPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NIPPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_NOSPIKE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_NOSPIKE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_NOSPIKE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_OCCULENT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_OCCULENT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_OCCULENT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_OMNILIGHT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_OMNILIGHT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_OMNILIGHT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ORBITER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ORBITER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ORBITER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PARASECT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PARASECT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PARASECT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PARAVITE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PARAVITE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PARAVITE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PENGUIN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PENGUIN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PENGUIN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PENUMBRA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PENUMBRA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PENUMBRA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PHANTOM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PHANTOM_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PIGOTRON_APPEAR = ObjectHolder();
+	public static final SoundEvent MOB_PIGOTRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PIGOTRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PIGOTRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PINCHER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PINCHER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_PINCHER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_POD_PLANT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_POD_PLANT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_POD_PLANT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_POLYTOM_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_POLYTOM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_POLYTOM_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_PRIMORDIAL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_PRIMORDIAL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_QUICKPOCKET_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_QUICKPOCKET_HIT = ObjectHolder();
+	public static final SoundEvent MOB_QUICKPOCKET_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_QUICKPOCKET_STEAL = ObjectHolder();
+	public static final SoundEvent MOB_RAINICORN_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_RAINICORN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_RAINICORN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_RAMMERHEAD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_RAMMERHEAD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_RAMMERHEAD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_RAMRADON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_RAMRADON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_RAMRADON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_RAWBONE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_RAWBONE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_RAWBONE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_REAPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_REAPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_REAPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_REFLUCT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_REFLUCT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_REFLUCT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ROCKBITER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ROCKBITER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ROCKBITER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ROCK_RIDER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ROCK_RIDER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ROCK_RIDER_SWITCH = ObjectHolder();
+	public static final SoundEvent MOB_ROLOSCOPE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ROLOSCOPE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ROLOSCOPE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_RUNIC_GOLEM_CHANGE = ObjectHolder();
+	public static final SoundEvent MOB_RUNIC_GOLEM_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SABRETOOTH_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SABRETOOTH_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SABRETOOTH_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SASQUATCH_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SCRUBBY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SCRUBBY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SEA_VIPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SEA_VIPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SEA_VIPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SEEKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SEEKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SEEKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SHADE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SHADE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SHADE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SHADOWLORD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SHADOWLORD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SHADOWLORD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SHADOW_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SHADOW_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SHIFTER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SHIFTER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SHIFTER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SKELETAL_COWMAN_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SKELETAL_COWMAN_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SKELETRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SKELETRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SKELETRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SKELLOX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SKELLOX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SKELLOX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SKIPPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SKIPPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SKIPPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SKULL_CREATURE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SKULL_CREATURE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SKULL_CREATURE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SLIMER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SLIMER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SLIMER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SMASH_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SMASH_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SMASH_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SOULSCORNE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SOULSCORNE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SOULSCORNE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SOULVYRE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SOULVYRE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SOULVYRE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SPECTRAL_WIZARD_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SPECTRAL_WIZARD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SPECTRAL_WIZARD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SPHINX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SPHINX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SPHINX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SPINOLEDON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SPINOLEDON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SPINOLEDON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SPINUX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SPINUX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SPINUX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SPIRIT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SPIRIT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SQUIGGLER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SQUIGGLER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SQUIGGLER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_STALKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_STALKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_STALKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_STIMULOSUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_STIMULO_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_STIMULO_HIT = ObjectHolder();
+	public static final SoundEvent MOB_STIMULO_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_STINGER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_STINGER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SUGARFACE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SUGARFACE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SUGARFACE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SURVEYOR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SURVEYOR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SURVEYOR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_SYSKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_SYSKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_SYSKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TERRADON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TERRADON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TERRADON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TERRESTRIAL_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TERRESTRIAL_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TERRESTRIAL_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_THARAFLY_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_THARAFLY_HIT = ObjectHolder();
+	public static final SoundEvent MOB_THARAFLY_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TORTIONE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TORTIONE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TORTIONE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TOXXULOUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TOXXULOUS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TOXXULOUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TRACKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TRACKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TRACKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TREE_SPIRIT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TREE_SPIRIT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TREE_SPIRIT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TRICKSTER_HIDE = ObjectHolder();
+	public static final SoundEvent MOB_TRICKSTER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TRICKSTER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_CHARGE = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_READY_STOMP = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_STEP = ObjectHolder();
+	public static final SoundEvent MOB_TYROSAUR_STOMP = ObjectHolder();
+	public static final SoundEvent MOB_URKA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_URKA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_URKA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_URSA_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_URSA_HIT = ObjectHolder();
+	public static final SoundEvent MOB_URSA_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VALKYRIE_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VALKYRIE_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VALKYRIE_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VERTEBRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VERTEBRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VERTEBRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VISULAR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VISULAR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VISULAR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VISULON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VOID_WALKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VOID_WALKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VOID_WALKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VOLAR_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VOLAR_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VOLAR_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VOLIANT_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VOLIANT_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VOLIANT_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VOLTRON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VOLTRON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VOLTRON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_VOXXULON_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_VOXXULON_HIT = ObjectHolder();
+	public static final SoundEvent MOB_VOXXULON_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_WALKER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_WALKER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_WALKER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_WEB_REAPER_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_WEB_REAPER_HIT = ObjectHolder();
+	public static final SoundEvent MOB_WEB_REAPER_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_WITHER_WIZARD_HIT = ObjectHolder();
+	public static final SoundEvent MOB_WITHER_WIZARD_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_XXEUS_DASH = ObjectHolder();
+	public static final SoundEvent MOB_XXEUS_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_XXEUS_HIT = ObjectHolder();
+	public static final SoundEvent MOB_XXEUS_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_YETI_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_YETI_HIT = ObjectHolder();
+	public static final SoundEvent MOB_YETI_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ZARG_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ZARG_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ZARG_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ZHINX_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ZHINX_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ZHINX_LIVING = ObjectHolder();
+	public static final SoundEvent MOB_ZORP_DEATH = ObjectHolder();
+	public static final SoundEvent MOB_ZORP_HIT = ObjectHolder();
+	public static final SoundEvent MOB_ZORP_LIVING = ObjectHolder();
+
+	public static final SoundEvent BANE_MUSIC = ObjectHolder();
+	public static final SoundEvent BARONESS_MUSIC = ObjectHolder();
+	public static final SoundEvent CLUNKHEAD_MUSIC = ObjectHolder();
+	public static final SoundEvent CONIFERON_MUSIC = ObjectHolder();
+	public static final SoundEvent CORALLUS_MUSIC = ObjectHolder();
+	public static final SoundEvent COTTON_CANDOR_MUSIC = ObjectHolder();
+	public static final SoundEvent CRAEXXEUS_MUSIC = ObjectHolder();
+	public static final SoundEvent CREEP_MUSIC = ObjectHolder();
+	public static final SoundEvent CRYSTOCORE_MUSIC = ObjectHolder();
+	public static final SoundEvent DRACYON_MUSIC = ObjectHolder();
+	public static final SoundEvent ELUSIVE_MUSIC = ObjectHolder();
+	public static final SoundEvent FOUR_GUARDIANS_MUSIC = ObjectHolder();
+	public static final SoundEvent GOLDORTH_MUSIC = ObjectHolder();
+	public static final SoundEvent GRAW_MUSIC = ObjectHolder();
+	public static final SoundEvent GYRO_MUSIC = ObjectHolder();
+	public static final SoundEvent HIVE_KING_MUSIC = ObjectHolder();
+	public static final SoundEvent HORON_MUSIC = ObjectHolder();
+	public static final SoundEvent HYDROLISK_MUSIC = ObjectHolder();
+	public static final SoundEvent KING_BAMBAMBAM_MUSIC = ObjectHolder();
+	public static final SoundEvent KING_SHROOMUS_MUSIC = ObjectHolder();
+	public static final SoundEvent KROR_MUSIC = ObjectHolder();
+	public static final SoundEvent MECHBOT_MUSIC = ObjectHolder();
+	public static final SoundEvent NETHENGEIC_WITHER_MUSIC = ObjectHolder();
+	public static final SoundEvent PENUMBRA_MUSIC = ObjectHolder();
+	public static final SoundEvent PRIMORDIAL_FIVE_MUSIC = ObjectHolder();
+	public static final SoundEvent ROCK_RIDER_MUSIC = ObjectHolder();
+	public static final SoundEvent SHADOWLORD_MUSIC = ObjectHolder();
+	public static final SoundEvent SILVERFOOT_MUSIC = ObjectHolder();
+	public static final SoundEvent SKELETRON_MUSIC = ObjectHolder();
+	public static final SoundEvent SMASH_MUSIC = ObjectHolder();
+	public static final SoundEvent TYROSAUR_MUSIC = ObjectHolder();
+	public static final SoundEvent VINOCORNE_MUSIC = ObjectHolder();
+	public static final SoundEvent VISUALENT_MUSIC = ObjectHolder();
+	public static final SoundEvent VOXXULON_MUSIC = ObjectHolder();
+	public static final SoundEvent PETAL_CRAFTING_STATION_SUCCESS = ObjectHolder();
+	public static final SoundEvent PLANT_THUMP = ObjectHolder();
+	public static final SoundEvent ABYSS_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent ANCIENT_CAVERN_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent BARREN_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent CANDYLAND_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent CELEVE_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent CREEPONIA_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent CRYSTEVIA_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent DARK_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent IMMORTALLIS_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent IROMINE_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent LIGHT_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent NATURAL_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent SHYRELANDS_PORTAL_ACTIVATE = ObjectHolder();
+	public static final SoundEvent RUNE_RANDOMIZER_USE = ObjectHolder();
+	public static final SoundEvent ARC_WIZARD_SHOOT = ObjectHolder();
+	public static final SoundEvent BARONESS_SHOOT = ObjectHolder();
+	public static final SoundEvent BAUMBA_SHOOT = ObjectHolder();
+	public static final SoundEvent CHERRY_BLASTER_SHOOT = ObjectHolder();
+	public static final SoundEvent CLOWN_SHOOT = ObjectHolder();
+	public static final SoundEvent CLUNKHEAD_SHOOT = ObjectHolder();
+	public static final SoundEvent COTTON_CANDOR_SHOOT = ObjectHolder();
+	public static final SoundEvent CRAEXXEUS_SHOOT = ObjectHolder();
+	public static final SoundEvent CRAEXXEUS_NUKE_SHOOT = ObjectHolder();
+	public static final SoundEvent FUNGIK_SHOOT = ObjectHolder();
+	public static final SoundEvent GUARDIAN_SHOOT = ObjectHolder();
+	public static final SoundEvent HAG_SHOOT = ObjectHolder();
+	public static final SoundEvent KAIYU_SHOOT = ObjectHolder();
+	public static final SoundEvent LINGER_SHOOT = ObjectHolder();
+	public static final SoundEvent MAGIC_CREEPER_SHOOT = ObjectHolder();
+	public static final SoundEvent MAGICKE_SHOOT = ObjectHolder();
+	public static final SoundEvent MECHBOT_SHOOT = ObjectHolder();
+	public static final SoundEvent MERMAGE_SHOOT = ObjectHolder();
+	public static final SoundEvent MIRAGE_SHOOT = ObjectHolder();
+	public static final SoundEvent SHYRE_TROLL_SHOOT = ObjectHolder();
+	public static final SoundEvent SKELEMAN_SHOOT = ObjectHolder();
+	public static final SoundEvent SPIRIT_PROTECTOR_SHOOT = ObjectHolder();
+	public static final SoundEvent UNDEAD_TROLL_SHOOT = ObjectHolder();
+	public static final SoundEvent VINE_WIZARD_SHOOT = ObjectHolder();
+	public static final SoundEvent WEB_REAPER_SHOOT = ObjectHolder();
+	public static final SoundEvent WIZARD_BLAST_SHOOT = ObjectHolder();
+	public static final SoundEvent SHYRELANDS_WIND = ObjectHolder();
+	public static final SoundEvent ATLANTIC_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent BASIC_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent CANDY_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent CELESTIAL_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent CONCUSSION_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent CORAL_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent CRYSTEVIA_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent EMBER_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent EVER_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent FIREFLY_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent FUNGAL_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent JOKER_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent KAIYU_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent LIGHTSHINE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent LUNAR_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent METEOR_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent MOONLIGHT_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent NATURE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent NIGHTMARE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent NOXIOUS_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent PHANTOM_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent REEF_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent REJUVENATION_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent RUNIC_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SHADOW_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SHOW_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SHYRE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SKY_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SUN_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent SURGE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent TANGLE_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent ULTIMATUM_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent WEB_STAFF_CAST = ObjectHolder();
+	public static final SoundEvent TEA_SINK_FILL = ObjectHolder();
+	public static final SoundEvent TEA_SINK_USE = ObjectHolder();
+	public static final SoundEvent TRIBUTE_FAIL = ObjectHolder();
+	public static final SoundEvent TRIBUTE_SUCCESS = ObjectHolder();
+	public static final SoundEvent CREATION_SLAB_USE = ObjectHolder();
+	public static final SoundEvent VERY_HEAVY_STEP = ObjectHolder();
+	public static final SoundEvent VULCANE_USE = ObjectHolder();
+
+	public static final SoundEvent OUTLAW_DISC = ObjectHolder();
+	public static final SoundEvent CAVERNS_DISC = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerSounds(final RegistryEvent.Register<SoundEvent> ev) {
@@ -1899,40 +930,77 @@ public class SoundsRegister {
 
 		ev.getRegistry().registerAll(
 			createSoundEvent("ambient.music.null", "music_null", true),
-			createSoundEvent("event.ascension_shrine.use", "ascension_shrine_use"),
+			createSoundEvent("blocks.abyss_portal.activate", "abyss_portal_activate"),
+			createSoundEvent("blocks.ancient_cavern_portal.activate", "ancient_cavern_portal_activate"),
+			createSoundEvent("blocks.barren_portal.activate", "barren_portal_activate"),
+			createSoundEvent("blocks.candyland_portal.activate", "candyland_portal_activate"),
+			createSoundEvent("blocks.celeve_portal.activate", "celeve_portal_activate"),
+			createSoundEvent("blocks.creeponia_portal.activate", "creeponia_portal_activate"),
+			createSoundEvent("blocks.crystevia_portal.activate", "crystevia_portal_activate"),
+			createSoundEvent("blocks.dark_portal.activate", "dark_portal_activate"),
+			createSoundEvent("blocks.immortallis_portal.activate", "immortallis_portal_activate"),
+			createSoundEvent("blocks.iromine_portal.activate", "iromine_portal_activate"),
+			createSoundEvent("blocks.light_portal.activate", "light_portal_activate"),
+			createSoundEvent("blocks.natural_portal.activate", "natural_portal_activate"),
+			createSoundEvent("blocks.shyrelands_portal.activate", "shyrelands_portal_activate"),
 			createSoundEvent("entity.baron_bomb.priming", "baron_bomb_priming"),
 			createSoundEvent("entity.baron_bomb.spawn", "baron_bomb_spawn"),
 			createSoundEvent("entity.bloodlust.collect", "bloodlust_collect"),
-			createSoundEvent("item.bone_horn.call", "bone_horn_call"),
 			createSoundEvent("entity.bubble_shot.pop", "bubble_shot_pop"),
+			createSoundEvent("entity.coratee.death", "entity_coratee_death"),
+			createSoundEvent("entity.coratee.hit", "entity_coratee_hit"),
+			createSoundEvent("entity.coratee.living", "entity_coratee_living"),
+			createSoundEvent("entity.elkanyne.death", "entity_elkanyne_death"),
+			createSoundEvent("entity.elkanyne.hit", "entity_elkanyne_hit"),
+			createSoundEvent("entity.elkanyne.living", "entity_elkanyne_living"),
 			createSoundEvent("entity.generic.candy_snail_step", "candy_snail_step"),
 			createSoundEvent("entity.generic.candy_thump", "candy_thump"),
-			createSoundEvent("item.chainsaw.use", "chainsaw_use"),
-			createSoundEvent("event.creation_forge.use", "creation_forge_use"),
-			createSoundEvent("event.crystal_creator.use", "crystal_creator_use"),
-			createSoundEvent("event.crystal_extension_shrine.use", "crystal_extension_shrine_use"),
-			createSoundEvent("event.declogging_table.use", "declogging_table_use"),
 			createSoundEvent("entity.generic.dino_step", "entity_generic_dino_step"),
-			createSoundEvent("entity.player.dodge", "player_dodge"),
-			createSoundEvent("entity.idol.hit", "entity_idol_hit"),
-			createSoundEvent("entity.idol.living", "entity_idol_living"),
-			createSoundEvent("entity.idol.prize", "entity_idol_prize"),
-			createSoundEvent("entity.idol.spawn", "entity_idol_spawn"),
+			createSoundEvent("entity.generic.heavy_step", "entity_generic_heavy_step"),
+			createSoundEvent("entity.generic.plant_thump", "plant_thump"),
+			createSoundEvent("entity.generic.very_heavy_step", "very_heavy_step"),
+			createSoundEvent("entity.meganeuropsis.death", "entity_meganeuropsis_death"),
+			createSoundEvent("entity.meganeuropsis.hit", "entity_meganeuropsis_hit"),
+			createSoundEvent("entity.meganeuropsis.living", "entity_meganeuropsis_living"),
+			createSoundEvent("entity.shik.death", "entity_shik_death"),
+			createSoundEvent("entity.shik.hit", "entity_shik_hit"),
 			createSoundEvent("entity.pixon.harvest", "entity_pixon_harvest"),
 			createSoundEvent("entity.pixon.living", "entity_pixon_living"),
+			createSoundEvent("entity.player.level_100", "player_level_100"),
+			createSoundEvent("entity.player.level_up", "player_level_up"),
+			createSoundEvent("entity.trotter.death", "entity_trotter_death"),
+			createSoundEvent("entity.trotter.hit", "entity_trotter_hit"),
+			createSoundEvent("entity.trotter.living", "entity_trotter_living"),
 			createSoundEvent("event.big_day.start", "big_day_start"),
 			createSoundEvent("event.blood_hunt.start", "blood_hunt_start"),
+			createSoundEvent("event.creation_forge.use", "creation_forge_use"),
 			createSoundEvent("event.creep_day.start", "creep_day_start"),
+			createSoundEvent("event.crystal_creator.use", "crystal_creator_use"),
 			createSoundEvent("event.death_day.start", "death_day_start"),
-			createSoundEvent("event.lunar_invasion.start", "lunar_invasion_start"),
-			createSoundEvent("event.soul_scurry.start", "soul_scurry_start"),
+			createSoundEvent("event.declogging_table.use", "declogging_table_use"),
 			createSoundEvent("event.extraction.success", "extraction_success"),
-			createSoundEvent("event.filtration_system.activate", "filtration_system_activate"),
-			createSoundEvent("event.filtration_system.use", "filtration_system_use"),
 			createSoundEvent("event.foraging.loot", "foraging_loot"),
-			createSoundEvent("item.thrown.goo_ball.impact", "goo_ball_impact"),
-			createSoundEvent("item.greatblade.goofy_greatblade.fail", "goofy_greatblade_fail"),
-			createSoundEvent("item.tool.goofy_tool.fail", "goofy_tool_fail"),
+			createSoundEvent("event.haunting_table.use", "haunting_table_use"),
+			createSoundEvent("event.heart_stone.spawn", "heart_stone_spawn"),
+			createSoundEvent("event.heart_stone.use", "heart_stone_use"),
+			createSoundEvent("event.infusion.success", "infusion_success"),
+			createSoundEvent("event.lotto.win", "lotto_win"),
+			createSoundEvent("event.lunar_enrichment_table.use", "lunar_enrichment_table_use"),
+			createSoundEvent("event.lunar_invasion.start", "lunar_invasion_start"),
+			createSoundEvent("event.petal_crafting_station.success", "petal_crafting_station_success"),
+			createSoundEvent("event.rune_randomizer.use", "rune_randomizer_use"),
+			createSoundEvent("event.runes.craft", "runes_craft"),
+			createSoundEvent("event.shyrelands.wind", "shyrelands_wind"),
+			createSoundEvent("event.soul_scurry.start", "soul_scurry_start"),
+			createSoundEvent("event.tea_sink.fill", "tea_sink_fill"),
+			createSoundEvent("event.tea_sink.use", "tea_sink_use"),
+			createSoundEvent("event.tribute.fail", "tribute_fail"),
+			createSoundEvent("event.tribute.success", "tribute_success"),
+			createSoundEvent("item.bone_horn.call", "bone_horn_call"),
+			createSoundEvent("item.chainsaw.use", "chainsaw_use"),
+			createSoundEvent("item.creation_slab.use", "creation_slab_use"),
+			createSoundEvent("item.disc.outlaw", "outlaw_disc", true),
+			createSoundEvent("item.disc.caverns", "caverns_disc", true),
 			createSoundEvent("item.gun.abominator.fire", "abominator_fire"),
 			createSoundEvent("item.gun.archergun.fire", "archergun_fire"),
 			createSoundEvent("item.gun.artifact.fire", "artifact_fire"),
@@ -1952,11 +1020,6 @@ public class SoundsRegister {
 			createSoundEvent("item.gun.discharge_gun.fire", "discharge_gun_fire"),
 			createSoundEvent("item.gun.doom_gun.fire", "doom_gun_fire"),
 			createSoundEvent("item.gun.drain_gun.fire", "drain_gun_fire"),
-			createSoundEvent("item.gun.electro_cannon_1.fire", "electro_cannon_1_fire"),
-			createSoundEvent("item.gun.electro_cannon_2.fire", "electro_cannon_2_fire"),
-			createSoundEvent("item.gun.electro_cannon_3.fire", "electro_cannon_3_fire"),
-			createSoundEvent("item.gun.electro_cannon_4.fire", "electro_cannon_4_fire"),
-			createSoundEvent("item.gun.electro_cannon_5.fire", "electro_cannon_5_fire"),
 			createSoundEvent("item.gun.energy_cannon.fire", "energy_cannon_fire"),
 			createSoundEvent("item.gun.fast_rifle.fire", "fast_rifle_fire"),
 			createSoundEvent("item.gun.flinger.fire", "flinger_fire"),
@@ -1970,14 +1033,13 @@ public class SoundsRegister {
 			createSoundEvent("item.gun.illusion_smg.fire", "illusion_smg_fire"),
 			createSoundEvent("item.gun.ion_blaster.fire", "ion_blaster_fire"),
 			createSoundEvent("item.gun.jack_rocker.fire", "jack_rocker_fire"),
-			createSoundEvent("item.gun.krasauns_dawn.fire", "krasauns_dawn_fire"),
 			createSoundEvent("item.gun.light_cannon.fire", "light_cannon_fire"),
 			createSoundEvent("item.gun.lower_cannon.fire", "lower_cannon_fire"),
 			createSoundEvent("item.gun.magic_gun.fire", "magic_gun_fire"),
-			createSoundEvent("item.gun.mech_cannon.fire", "mech_cannon_fire"),
+			createSoundEvent("item.gun.mecha_cannon.fire", "mecha_cannon_fire"),
 			createSoundEvent("item.gun.mind_blaster.fire", "mind_blaster_fire"),
-			createSoundEvent("item.gun.minigun.fire", "minigun_fire"),
 			createSoundEvent("item.gun.mini_pistol.fire", "mini_pistol_fire"),
+			createSoundEvent("item.gun.minigun.fire", "minigun_fire"),
 			createSoundEvent("item.gun.missile_maker.fire", "missile_maker_fire"),
 			createSoundEvent("item.gun.monster.fire", "monster_fire"),
 			createSoundEvent("item.gun.moon_shiner.fire", "moon_shiner_fire"),
@@ -2000,41 +1062,49 @@ public class SoundsRegister {
 			createSoundEvent("item.gun.sprayer.fire", "sprayer_fire"),
 			createSoundEvent("item.gun.squad_gun.fire", "squad_gun_fire"),
 			createSoundEvent("item.gun.stampede.fire", "stampede_fire"),
-			createSoundEvent("item.gun.step_cannon_1.fire", "step_cannon_1_fire"),
-			createSoundEvent("item.gun.step_cannon_2.fire", "step_cannon_2_fire"),
-			createSoundEvent("item.gun.step_cannon_3.fire", "step_cannon_3_fire"),
-			createSoundEvent("item.gun.step_cannon_4.fire", "step_cannon_4_fire"),
-			createSoundEvent("item.gun.step_cannon_5.fire", "step_cannon_5_fire"),
 			createSoundEvent("item.gun.swarmotron.fire", "swarmotron_fire"),
-			createSoundEvent("item.gun.synth_cannon_1.fire", "synth_cannon_1_fire"),
-			createSoundEvent("item.gun.synth_cannon_2.fire", "synth_cannon_2_fire"),
-			createSoundEvent("item.gun.synth_cannon_3.fire", "synth_cannon_3_fire"),
-			createSoundEvent("item.gun.synth_cannon_4.fire", "synth_cannon_4_fire"),
-			createSoundEvent("item.gun.synth_cannon_5.fire", "synth_cannon_5_fire"),
 			createSoundEvent("item.gun.upper_cannon.fire", "upper_cannon_fire"),
-			createSoundEvent("item.gun.vibe_cannon_1.fire", "vibe_cannon_1_fire"),
-			createSoundEvent("item.gun.vibe_cannon_2.fire", "vibe_cannon_2_fire"),
-			createSoundEvent("item.gun.vibe_cannon_3.fire", "vibe_cannon_3_fire"),
-			createSoundEvent("item.gun.vibe_cannon_4.fire", "vibe_cannon_4_fire"),
-			createSoundEvent("item.gun.vibe_cannon_5.fire", "vibe_cannon_5_fire"),
 			createSoundEvent("item.gun.whimsy_winder.fire", "whimsy_winder_fire"),
 			createSoundEvent("item.gun.wither_cannon.fire", "wither_cannon_fire"),
 			createSoundEvent("item.gun.withers_wrath.fire", "withers_wrath_fire"),
 			createSoundEvent("item.gun.wood_rifle.fire", "wood_rifle_fire"),
-			createSoundEvent("event.haunting_table.use", "haunting_table_use"),
-			createSoundEvent("event.heart_stone.use", "heart_stone_use"),
-			createSoundEvent("event.heart_stone.spawn", "heart_stone_spawn"),
-			createSoundEvent("entity.generic.heavy_step", "entity_generic_heavy_step"),
+			createSoundEvent("item.staff.atlantic.cast", "atlantic_staff_cast"),
+			createSoundEvent("item.staff.basic.cast", "basic_staff_cast"),
+			createSoundEvent("item.staff.candy.cast", "candy_staff_cast"),
+			createSoundEvent("item.staff.celestial.cast", "celestial_staff_cast"),
+			createSoundEvent("item.staff.concussion.cast", "concussion_staff_cast"),
+			createSoundEvent("item.staff.coral.cast", "coral_staff_cast"),
+			createSoundEvent("item.staff.crystevia.cast", "crystevia_staff_cast"),
+			createSoundEvent("item.staff.ember.cast", "ember_staff_cast"),
+			createSoundEvent("item.staff.ever.cast", "ever_staff_cast"),
+			createSoundEvent("item.staff.firefly.cast", "firefly_staff_cast"),
+			createSoundEvent("item.staff.fungal.cast", "fungal_staff_cast"),
+			createSoundEvent("item.staff.joker.cast", "joker_staff_cast"),
+			createSoundEvent("item.staff.kaiyu.cast", "kaiyu_staff_cast"),
+			createSoundEvent("item.staff.lightshine.cast", "lightshine_staff_cast"),
+			createSoundEvent("item.staff.lunar.cast", "lunar_staff_cast"),
+			createSoundEvent("item.staff.meteor.cast", "meteor_staff_cast"),
+			createSoundEvent("item.staff.moonlight.cast", "moonlight_staff_cast"),
+			createSoundEvent("item.staff.nature.cast", "nature_staff_cast"),
+			createSoundEvent("item.staff.nightmare.cast", "nightmare_staff_cast"),
+			createSoundEvent("item.staff.noxious.cast", "noxious_staff_cast"),
+			createSoundEvent("item.staff.phantom.cast", "phantom_staff_cast"),
+			createSoundEvent("item.staff.reef.cast", "reef_staff_cast"),
+			createSoundEvent("item.staff.rejuvenation.cast", "rejuvenation_staff_cast"),
+			createSoundEvent("item.staff.runic.cast", "runic_staff_cast"),
+			createSoundEvent("item.staff.shadow.cast", "shadow_staff_cast"),
+			createSoundEvent("item.staff.show.cast", "show_staff_cast"),
+			createSoundEvent("item.staff.shyre.cast", "shyre_staff_cast"),
+			createSoundEvent("item.staff.sky.cast", "sky_staff_cast"),
+			createSoundEvent("item.staff.sun.cast", "sun_staff_cast"),
+			createSoundEvent("item.staff.surge.cast", "surge_staff_cast"),
+			createSoundEvent("item.staff.tangle.cast", "tangle_staff_cast"),
+			createSoundEvent("item.staff.ultimatum.cast", "ultimatum_staff_cast"),
+			createSoundEvent("item.staff.web.cast", "web_staff_cast"),
+			createSoundEvent("item.thrown.goo_ball.impact", "goo_ball_impact"),
 			createSoundEvent("item.thrown.hellfire.impact", "hellfire_impact"),
-			createSoundEvent("event.infusion.fail", "infusion_fail"),
-			createSoundEvent("event.infusion.success", "infusion_success"),
-			createSoundEvent("entity.player.level_100", "player_level_100"),
-			createSoundEvent("entity.player.level_up", "player_level_up"),
-			createSoundEvent("event.lotto.win", "lotto_win"),
-			createSoundEvent("event.lunar_creation_table.success", "lunar_creation_table_success"),
-			createSoundEvent("event.lunar_enrichment_table.use", "lunar_enrichment_table_use"),
-			createSoundEvent("event.runes.craft", "runes_craft"),
-			createSoundEvent("event.mending.success", "mending_success"),
+			createSoundEvent("item.tool.goofy_tool.fail", "goofy_tool_fail"),
+			createSoundEvent("item.vulcane.use", "vulcane_use"),
 			createSoundEvent("mob.airhead.death", "mob_airhead_death"),
 			createSoundEvent("mob.airhead.hit", "mob_airhead_hit"),
 			createSoundEvent("mob.airhead.living", "mob_airhead_living"),
@@ -2059,15 +1129,15 @@ public class SoundsRegister {
 			createSoundEvent("mob.apparition.death", "mob_apparition_death"),
 			createSoundEvent("mob.apparition.hit", "mob_apparition_hit"),
 			createSoundEvent("mob.apparition.living", "mob_apparition_living"),
+			createSoundEvent("mob.arc_wizard.death", "mob_arc_wizard_death"),
+			createSoundEvent("mob.arc_wizard.hit", "mob_arc_wizard_hit"),
+			createSoundEvent("mob.arc_wizard.living", "mob_arc_wizard_living"),
 			createSoundEvent("mob.arcbeast.death", "mob_arcbeast_death"),
 			createSoundEvent("mob.arcbeast.hit", "mob_arcbeast_hit"),
 			createSoundEvent("mob.arcbeast.living", "mob_arcbeast_living"),
 			createSoundEvent("mob.archvine.death", "mob_archvine_death"),
 			createSoundEvent("mob.archvine.hit", "mob_archvine_hit"),
 			createSoundEvent("mob.archvine.living", "mob_archvine_living"),
-			createSoundEvent("mob.arc_wizard.death", "mob_arc_wizard_death"),
-			createSoundEvent("mob.arc_wizard.hit", "mob_arc_wizard_hit"),
-			createSoundEvent("mob.arc_wizard.living", "mob_arc_wizard_living"),
 			createSoundEvent("mob.arcworm.death", "mob_arcworm_death"),
 			createSoundEvent("mob.arcworm.hit", "mob_arcworm_hit"),
 			createSoundEvent("mob.arcworm.living", "mob_arcworm_living"),
@@ -2152,9 +1222,6 @@ public class SoundsRegister {
 			createSoundEvent("mob.coralon.death", "mob_coralon_death"),
 			createSoundEvent("mob.coralon.hit", "mob_coralon_hit"),
 			createSoundEvent("mob.coralon.living", "mob_coralon_living"),
-			createSoundEvent("mob.coratee.death", "mob_coratee_death"),
-			createSoundEvent("mob.coratee.hit", "mob_coratee_hit"),
-			createSoundEvent("mob.coratee.living", "mob_coratee_living"),
 			createSoundEvent("mob.cotton_candor.death", "mob_cotton_candor_death"),
 			createSoundEvent("mob.cotton_candor.hit", "mob_cotton_candor_hit"),
 			createSoundEvent("mob.cotton_candor.living", "mob_cotton_candor_living"),
@@ -2172,7 +1239,6 @@ public class SoundsRegister {
 			createSoundEvent("mob.crusilisk.death", "mob_crusilisk_death"),
 			createSoundEvent("mob.crusilisk.hit", "mob_crusilisk_hit"),
 			createSoundEvent("mob.crusilisk.living", "mob_crusilisk_living"),
-			createSoundEvent("mob.crusilisk.scream", "mob_crusilisk_scream"),
 			createSoundEvent("mob.cryptid.death", "mob_cryptid_death"),
 			createSoundEvent("mob.cryptid.hit", "mob_cryptid_hit"),
 			createSoundEvent("mob.cryptid.living", "mob_cryptid_living"),
@@ -2188,7 +1254,7 @@ public class SoundsRegister {
 			createSoundEvent("mob.dawnlight.death", "mob_dawnlight_death"),
 			createSoundEvent("mob.dawnlight.hit", "mob_dawnlight_hit"),
 			createSoundEvent("mob.dawnlight.living", "mob_dawnlight_living"),
-			createSoundEvent("mob.death_hunter.death", "mob_vdeath_hunter_death"),
+			createSoundEvent("mob.death_hunter.death", "mob_death_hunter_death"),
 			createSoundEvent("mob.death_hunter.hit", "mob_death_hunter_hit"),
 			createSoundEvent("mob.death_hunter.living", "mob_death_hunter_living"),
 			createSoundEvent("mob.deinotherium.death", "mob_deinotherium_death"),
@@ -2217,13 +1283,13 @@ public class SoundsRegister {
 			createSoundEvent("mob.draggy.death", "mob_draggy_death"),
 			createSoundEvent("mob.draggy.hit", "mob_draggy_hit"),
 			createSoundEvent("mob.draggy.living", "mob_draggy_living"),
+			createSoundEvent("mob.dust_strider.death", "mob_dust_strider_death"),
+			createSoundEvent("mob.dust_strider.hit", "mob_dust_strider_hit"),
+			createSoundEvent("mob.dust_strider.living", "mob_dust_strider_living"),
 			createSoundEvent("mob.dusteiva.death", "mob_dusteiva_death"),
 			createSoundEvent("mob.dusteiva.hit", "mob_dusteiva_hit"),
 			createSoundEvent("mob.dusteiva.living", "mob_dusteiva_living"),
 			createSoundEvent("mob.duston.hit", "mob_duston_hit"),
-			createSoundEvent("mob.dust_strider.death", "mob_dust_strider_death"),
-			createSoundEvent("mob.dust_strider.hit", "mob_dust_strider_hit"),
-			createSoundEvent("mob.dust_strider.living", "mob_dust_strider_living"),
 			createSoundEvent("mob.dyrehorn.death", "mob_dyrehorn_death"),
 			createSoundEvent("mob.dyrehorn.hit", "mob_dyrehorn_hit"),
 			createSoundEvent("mob.dyrehorn.living", "mob_dyrehorn_living"),
@@ -2233,9 +1299,6 @@ public class SoundsRegister {
 			createSoundEvent("mob.eilosapien.death", "mob_eilosapien_death"),
 			createSoundEvent("mob.eilosapien.hit", "mob_eilosapien_hit"),
 			createSoundEvent("mob.eilosapien.living", "mob_eilosapien_living"),
-			createSoundEvent("mob.elkanyne.death", "mob_elkanyne_death"),
-			createSoundEvent("mob.elkanyne.hit", "mob_elkanyne_hit"),
-			createSoundEvent("mob.elkanyne.living", "mob_elkanyne_living"),
 			createSoundEvent("mob.elusive.death", "mob_elusive_death"),
 			createSoundEvent("mob.elusive.hit", "mob_elusive_hit"),
 			createSoundEvent("mob.elusive.living", "mob_elusive_living"),
@@ -2292,10 +1355,10 @@ public class SoundsRegister {
 			createSoundEvent("mob.gadgetoid.living", "mob_gadgetoid_living"),
 			createSoundEvent("mob.ghost.death", "mob_ghost_death"),
 			createSoundEvent("mob.ghost.hit", "mob_ghost_hit"),
+			createSoundEvent("mob.ghost.living", "mob_ghost_living"),
 			createSoundEvent("mob.ghostine.death", "mob_ghostine_death"),
 			createSoundEvent("mob.ghostine.hit", "mob_ghostine_hit"),
 			createSoundEvent("mob.ghostine.living", "mob_ghostine_living"),
-			createSoundEvent("mob.ghost.living", "mob_ghost_living"),
 			createSoundEvent("mob.giant.death", "mob_giant_death"),
 			createSoundEvent("mob.giant.hit", "mob_giant_hit"),
 			createSoundEvent("mob.giant_snail.death", "mob_giant_snail_death"),
@@ -2451,14 +1514,14 @@ public class SoundsRegister {
 			createSoundEvent("mob.nethengeic_wither.death", "mob_nethengeic_wither_death"),
 			createSoundEvent("mob.nethengeic_wither.hit", "mob_nethengeic_wither_hit"),
 			createSoundEvent("mob.nethengeic_wither.living", "mob_nethengeic_wither_living"),
+			createSoundEvent("mob.night_watcher.hit", "mob_night_watcher_hit"),
+			createSoundEvent("mob.night_watcher.living", "mob_night_watcher_living"),
 			createSoundEvent("mob.nightfly.death", "mob_nightfly_death"),
 			createSoundEvent("mob.nightfly.hit", "mob_nightfly_hit"),
 			createSoundEvent("mob.nightfly.living", "mob_nightfly_living"),
 			createSoundEvent("mob.nightmare_spider.death", "mob_nightmare_spider_death"),
 			createSoundEvent("mob.nightmare_spider.hit", "mob_nightmare_spider_hit"),
 			createSoundEvent("mob.nightmare_spider.living", "mob_nightmare_spider_living"),
-			createSoundEvent("mob.night_watcher.hit", "night_watcher_hit"),
-			createSoundEvent("mob.night_watcher.living", "night_watcher_living"),
 			createSoundEvent("mob.nightwing.death", "mob_nightwing_death"),
 			createSoundEvent("mob.nightwing.hit", "mob_nightwing_hit"),
 			createSoundEvent("mob.nightwing.living", "mob_nightwing_living"),
@@ -2528,12 +1591,12 @@ public class SoundsRegister {
 			createSoundEvent("mob.refluct.death", "mob_refluct_death"),
 			createSoundEvent("mob.refluct.hit", "mob_refluct_hit"),
 			createSoundEvent("mob.refluct.living", "mob_refluct_living"),
-			createSoundEvent("mob.rockbiter.death", "mob_rockbiter_death"),
-			createSoundEvent("mob.rockbiter.hit", "mob_rockbiter_hit"),
-			createSoundEvent("mob.rockbiter.living", "mob_rockbiter_living"),
 			createSoundEvent("mob.rock_rider.death", "mob_rock_rider_death"),
 			createSoundEvent("mob.rock_rider.hit", "mob_rock_rider_hit"),
 			createSoundEvent("mob.rock_rider.switch", "mob_rock_rider_switch"),
+			createSoundEvent("mob.rockbiter.death", "mob_rockbiter_death"),
+			createSoundEvent("mob.rockbiter.hit", "mob_rockbiter_hit"),
+			createSoundEvent("mob.rockbiter.living", "mob_rockbiter_living"),
 			createSoundEvent("mob.roloscope.death", "mob_roloscope_death"),
 			createSoundEvent("mob.roloscope.hit", "mob_roloscope_hit"),
 			createSoundEvent("mob.roloscope.living", "mob_roloscope_living"),
@@ -2562,9 +1625,6 @@ public class SoundsRegister {
 			createSoundEvent("mob.shifter.death", "mob_shifter_death"),
 			createSoundEvent("mob.shifter.hit", "mob_shifter_hit"),
 			createSoundEvent("mob.shifter.living", "mob_shifter_living"),
-			createSoundEvent("mob.silencer.death", "mob_silencer_death"),
-			createSoundEvent("mob.silencer.hit", "mob_silencer_hit"),
-			createSoundEvent("mob.silencer.living", "mob_silencer_living"),
 			createSoundEvent("mob.skeletal_cowman.hit", "mob_skeletal_cowman_hit"),
 			createSoundEvent("mob.skeletal_cowman.living", "mob_skeletal_cowman_living"),
 			createSoundEvent("mob.skeletron.death", "mob_skeletron_death"),
@@ -2650,9 +1710,6 @@ public class SoundsRegister {
 			createSoundEvent("mob.trickster.hide", "mob_trickster_hide"),
 			createSoundEvent("mob.trickster.hit", "mob_trickster_hit"),
 			createSoundEvent("mob.trickster.living", "mob_trickster_living"),
-			createSoundEvent("mob.trotter.death", "mob_trotter_death"),
-			createSoundEvent("mob.trotter.hit", "mob_trotter_hit"),
-			createSoundEvent("mob.trotter.living", "mob_trotter_living"),
 			createSoundEvent("mob.tyrosaur.charge", "mob_tyrosaur_charge"),
 			createSoundEvent("mob.tyrosaur.death", "mob_tyrosaur_death"),
 			createSoundEvent("mob.tyrosaur.hit", "mob_tyrosaur_hit"),
@@ -2749,94 +1806,32 @@ public class SoundsRegister {
 			createSoundEvent("music.vinocorne", "vinocorne_music", true),
 			createSoundEvent("music.visualent", "visualent_music", true),
 			createSoundEvent("music.voxxulon", "voxxulon_music", true),
-			createSoundEvent("event.petal_crafting_station.success", "petal_crafting_station_success"),
-			createSoundEvent("entity.generic.plant_thump", "plant_thump"),
-			createSoundEvent("blocks.abyss_portal.activate", "abyss_portal_activate"),
-			createSoundEvent("blocks.ancient_cavern_portal.activate", "ancient_cavern_portal_activate"),
-			createSoundEvent("blocks.barren_portal.activate", "barren_portal_activate"),
-			createSoundEvent("blocks.candyland_portal.activate", "candyland_portal_activate"),
-			createSoundEvent("blocks.celeve_portal.activate", "celeve_portal_activate"),
-			createSoundEvent("blocks.creeponia_portal.activate", "creeponia_portal_activate"),
-			createSoundEvent("blocks.crystevia_portal.activate", "crystevia_portal_activate"),
-			createSoundEvent("blocks.dark_portal.activate", "dark_portal_activate"),
-			createSoundEvent("blocks.immortallis_portal.activate", "immortallis_portal_activate"),
-			createSoundEvent("blocks.iromine_portal.activate", "iromine_portal_activate"),
-			createSoundEvent("blocks.light_portal.activate", "light_portal_activate"),
-			createSoundEvent("blocks.natural_portal.activate", "natural_portal_activate"),
-			createSoundEvent("blocks.shyrelands_portal.activate", "shyrelands_portal_activate"),
-			createSoundEvent("event.rune_randomizer.use", "rune_randomizer_use"),
-			createSoundEvent("projectile.arc_wizard.fire", "arc_wizard_fire"),
-			createSoundEvent("projectile.baroness.fire", "baroness_fire"),
-			createSoundEvent("projectile.baumba.fire", "baumba_fire"),
-			createSoundEvent("projectile.cherry_blaster.fire", "cherry_blaster_fire"),
-			createSoundEvent("projectile.clown.fire", "clown_fire"),
-			createSoundEvent("projectile.clunkhead.fire", "clunkhead_fire"),
-			createSoundEvent("projectile.cotton_candor.fire", "cotton_candor_fire"),
-			createSoundEvent("projectile.craexxeus.fire", "craexxeus_fire"),
-			createSoundEvent("projectile.craexxeus_nuke.fire", "craexxeus_nuke_fire"),
-			createSoundEvent("projectile.fungik.fire", "fungik_fire"),
-			createSoundEvent("projectile.guardian.fire", "guardian_fire"),
-			createSoundEvent("projectile.hag.fire", "hag_fire"),
-			createSoundEvent("projectile.kaiyu.fire", "kaiyu_fire"),
-			createSoundEvent("projectile.linger.fire", "linger_fire"),
-			createSoundEvent("projectile.magic_creeper.fire", "magic_creeper_fire"),
-			createSoundEvent("projectile.magicke.fire", "magicke_fire"),
-			createSoundEvent("projectile.mechbot.fire", "mechbot_fire"),
-			createSoundEvent("projectile.mermage.fire", "mermage_fire"),
-			createSoundEvent("projectile.mirage.fire", "mirage_fire"),
-			createSoundEvent("projectile.shyre_troll.fire", "shyre_troll_fire"),
-			createSoundEvent("projectile.skeleman.fire", "skeleman_fire"),
-			createSoundEvent("projectile.spirit_protector.fire", "spirit_protector_fire"),
-			createSoundEvent("projectile.surge.fire", "surge_fire"),
-			createSoundEvent("projectile.vine_wizard.fire", "vine_wizard_fire"),
-			createSoundEvent("projectile.web_reaper.fire", "web_reaper_fire"),
-			createSoundEvent("projectile.wizard_blast.fire", "wizard_blast_fire"),
-			createSoundEvent("event.shyrelands.dizzy", "shyrelands_dizzy"),
-			createSoundEvent("event.shyrelands.shine", "shyrelands_shine"),
-			createSoundEvent("event.shyrelands.weakness", "shyrelands_weakness"),
-			createSoundEvent("event.shyrelands.wind", "shyrelands_wind"),
-			createSoundEvent("item.staff.atlantic.cast", "atlantic_staff_cast"),
-			createSoundEvent("item.staff.basic.cast", "basic_staff_cast"),
-			createSoundEvent("item.staff.candy.cast", "candy_staff_cast"),
-			createSoundEvent("item.staff.celestial.cast", "celestial_staff_cast"),
-			createSoundEvent("item.staff.concussion.cast", "concussion_staff_cast"),
-			createSoundEvent("item.staff.coral.cast", "coral_staff_cast"),
-			createSoundEvent("item.staff.crystevia.cast", "crystevia_staff_cast"),
-			createSoundEvent("item.staff.ember.cast", "ember_staff_cast"),
-			createSoundEvent("item.staff.ever.cast", "ever_staff_cast"),
-			createSoundEvent("item.staff.firefly.cast", "firefly_staff_cast"),
-			createSoundEvent("item.staff.fungal.cast", "fungal_staff_cast"),
-			createSoundEvent("item.staff.joker.cast", "joker_staff_cast"),
-			createSoundEvent("item.staff.kaiyu.cast", "kaiyu_staff_cast"),
-			createSoundEvent("item.staff.lightshine.cast", "lightshine_staff_cast"),
-			createSoundEvent("item.staff.lunar.cast", "lunar_staff_cast"),
-			createSoundEvent("item.staff.meteor.cast", "meteor_staff_cast"),
-			createSoundEvent("item.staff.moonlight.cast", "moonlight_staff_cast"),
-			createSoundEvent("item.staff.nature.cast", "nature_staff_cast"),
-			createSoundEvent("item.staff.nightmare.cast", "nightmare_staff_cast"),
-			createSoundEvent("item.staff.noxious.cast", "noxious_staff_cast"),
-			createSoundEvent("item.staff.phantom.cast", "phantom_staff_cast"),
-			createSoundEvent("item.staff.reef.cast", "reef_staff_cast"),
-			createSoundEvent("item.staff.rejuvenation.cast", "rejuvenation_staff_cast"),
-			createSoundEvent("item.staff.runic.cast", "runic_staff_cast"),
-			createSoundEvent("item.staff.shadow.cast", "shadow_staff_cast"),
-			createSoundEvent("item.staff.show.cast", "show_staff_cast"),
-			createSoundEvent("item.staff.shyre.cast", "shyre_staff_cast"),
-			createSoundEvent("item.staff.sky.cast", "sky_staff_cast"),
-			createSoundEvent("item.staff.sun.cast", "sun_staff_cast"),
-			createSoundEvent("item.staff.surge.cast", "surge_staff_cast"),
-			createSoundEvent("item.staff.tangle.cast", "tangle_staff_cast"),
-			createSoundEvent("item.staff.ultimatum.cast", "ultimatum_staff_cast"),
-			createSoundEvent("item.staff.web.cast", "web_staff_cast"),
-			createSoundEvent("event.tea_sink.fill", "tea_sink_fill"),
-			createSoundEvent("event.tea_sink.use", "tea_sink_use"),
-			createSoundEvent("event.temple_trap.laugh", "temple_trap_laugh"),
-			createSoundEvent("event.tribute.fail", "tribute_fail"),
-			createSoundEvent("event.tribute.success", "tribute_success"),
-			createSoundEvent("item.creation_slab.use", "creation_slab_use"),
-			createSoundEvent("entity.generic.very_heavy_step", "very_heavy_step"),
-			createSoundEvent("item.vulcane.use", "vulcane_use"),
-			createSoundEvent("event.whitewash.use", "whitewash_use")
+			createSoundEvent("projectile.arc_wizard.shoot", "arc_wizard_shoot"),
+			createSoundEvent("projectile.baroness.shoot", "baroness_shoot"),
+			createSoundEvent("projectile.baumba.shoot", "baumba_shoot"),
+			createSoundEvent("projectile.cherry_blaster.shoot", "cherry_blaster_shoot"),
+			createSoundEvent("projectile.clown.shoot", "clown_shoot"),
+			createSoundEvent("projectile.clunkhead.shoot", "clunkhead_shoot"),
+			createSoundEvent("projectile.cotton_candor.shoot", "cotton_candor_shoot"),
+			createSoundEvent("projectile.craexxeus.shoot", "craexxeus_shoot"),
+			createSoundEvent("projectile.craexxeus_nuke.shoot", "craexxeus_nuke_shoot"),
+			createSoundEvent("projectile.fungik.shoot", "fungik_shoot"),
+			createSoundEvent("projectile.guardian.shoot", "guardian_shoot"),
+			createSoundEvent("projectile.hag.shoot", "hag_shoot"),
+			createSoundEvent("projectile.kaiyu.shoot", "kaiyu_shoot"),
+			createSoundEvent("projectile.linger.shoot", "linger_shoot"),
+			createSoundEvent("projectile.magic_creeper.shoot", "magic_creeper_shoot"),
+			createSoundEvent("projectile.magicke.shoot", "magicke_shoot"),
+			createSoundEvent("projectile.mechbot.shoot", "mechbot_shoot"),
+			createSoundEvent("projectile.mermage.shoot", "mermage_shoot"),
+			createSoundEvent("projectile.mirage.shoot", "mirage_shoot"),
+			createSoundEvent("projectile.shyre_troll.shoot", "shyre_troll_shoot"),
+			createSoundEvent("projectile.skeleman.shoot", "skeleman_shoot"),
+			createSoundEvent("projectile.spirit_protector.shoot", "spirit_protector_shoot"),
+			createSoundEvent("projectile.undead_troll.shoot", "undead_troll_shoot"),
+			createSoundEvent("projectile.vine_wizard.shoot", "vine_wizard_shoot"),
+			createSoundEvent("projectile.web_reaper.shoot", "web_reaper_shoot"),
+			createSoundEvent("projectile.wizard_blast.shoot", "wizard_blast_shoot")
 		);
 	}
 
@@ -2845,6 +1840,9 @@ public class SoundsRegister {
 	}
 
 	private static SoundEvent createSoundEvent(String key, String name, boolean isMusic) {
+		if (AdventOfAscension.instance().holiday == AdventOfAscension.Holiday.CHRISTMAS && key.endsWith(".fire"))
+			key = "misc.bells";
+
 		SoundEvent soundEvent = new SoundEvent(new ResourceLocation("aoa3", key)).setRegistryName("aoa3:" + name);
 
 		if (isMusic && ModUtil.isClient())
@@ -2855,5 +1853,11 @@ public class SoundsRegister {
 
 	private static void registerMusicType(String name, SoundEvent soundEvent) {
 		EnumHelperClient.addMusicType(name, soundEvent, 0, 0);
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

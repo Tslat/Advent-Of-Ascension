@@ -69,19 +69,19 @@ public class EntitySkeletalCowman extends AoARangedMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSkeletalCowmanLiving;
+        return SoundsRegister.MOB_SKELETAL_COWMAN_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSkeletalCowmanHit;
+        return SoundsRegister.MOB_SKELETAL_COWMAN_HIT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSkeletalCowmanHit;
+        return SoundsRegister.MOB_SKELETAL_COWMAN_HIT;
     }
 
     @Nullable

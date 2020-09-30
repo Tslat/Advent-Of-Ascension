@@ -25,7 +25,7 @@ public class ToxicBlock extends Block {
 		setHardness(1.5f);
 		setResistance(1.0f);
 		setSoundType(SoundType.SLIME);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Nullable

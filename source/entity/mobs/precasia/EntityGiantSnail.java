@@ -51,24 +51,24 @@ public class EntityGiantSnail extends AoAMeleeMob implements SpecialPropertyEnti
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGiantSnailLiving;
+		return SoundsRegister.MOB_GIANT_SNAIL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGiantSnailDeath;
+		return SoundsRegister.MOB_GIANT_SNAIL_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGiantSnailHit;
+		return SoundsRegister.MOB_GIANT_SNAIL_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobGiantSnailStep;
+		return SoundsRegister.MOB_GIANT_SNAIL_STEP;
 	}
 
 	@Nullable
@@ -91,7 +91,7 @@ public class EntityGiantSnail extends AoAMeleeMob implements SpecialPropertyEnti
 
 		if (!world.isRemote && world.getGameRules().getBoolean("mobGriefing")) {
 			if (world.getBlockState(getPosition().down()).isOpaqueCube() && world.getBlockState(getPosition()).getMaterial().isReplaceable())
-				world.setBlockState(getPosition(), BlockRegister.giantSnailAcid.getDefaultState());
+				world.setBlockState(getPosition(), BlockRegister.GIANT_SNAIL_ACID.getDefaultState());
 		}
 	}
 

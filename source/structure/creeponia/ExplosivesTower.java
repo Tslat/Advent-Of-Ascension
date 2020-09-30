@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ExplosivesTower extends AoAStructure { //StructureSize: 8x29x8
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState creeponiaBricks = BlockRegister.bricksCreeponia.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState creeponiaBricks = BlockRegister.CREEPONIA_BRICKS.getDefaultState();
 
 	public ExplosivesTower() {
 		super("ExplosivesTower");

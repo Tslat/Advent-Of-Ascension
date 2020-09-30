@@ -26,7 +26,7 @@ public class CactusBlock extends BlockCactus implements CustomStateMapperBlock {
 		setTickRandomly(false);
 		setDefaultState(blockState.getBaseState());
 		setSoundType(SoundType.CLOTH);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Override

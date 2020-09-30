@@ -53,11 +53,11 @@ public class AncientCavernTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalAncientCavern;
+		return BlockRegister.ANCIENT_CAVERN_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.ancientTileGreen;
+		return BlockRegister.GREEN_ANCIENT_TILE;
 	}
 }

@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IosaurDen extends AoAStructure { //StructureSize: 28x18x30
-	private static final IBlockState skeletalBricks = BlockRegister.bricksSkeletal.getDefaultState();
-	private static final IBlockState iosaurSpawner = BlockRegister.spawnerIosaur.getDefaultState();
+	private static final IBlockState skeletalBricks = BlockRegister.SKELETAL_BRICKS.getDefaultState();
+	private static final IBlockState iosaurSpawner = BlockRegister.IOSAUR_SPAWNER.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public IosaurDen() {

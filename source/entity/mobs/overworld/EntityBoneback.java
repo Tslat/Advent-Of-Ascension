@@ -50,17 +50,17 @@ public class EntityBoneback extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBonebackLiving;
+		return SoundsRegister.MOB_BONEBACK_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBonebackDeath;
+		return SoundsRegister.MOB_BONEBACK_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBonebackHit;
+		return SoundsRegister.MOB_BONEBACK_HIT;
 	}
 
 	@Nullable
@@ -71,7 +71,7 @@ public class EntityBoneback extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Override

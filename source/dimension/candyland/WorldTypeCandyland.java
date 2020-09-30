@@ -14,7 +14,7 @@ public class WorldTypeCandyland extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeCandyland);
+		return new BiomeProviderSingle(BiomeRegister.CANDYLAND);
 	}
 
 	@Override

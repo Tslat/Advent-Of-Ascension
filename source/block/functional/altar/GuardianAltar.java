@@ -13,6 +13,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.BasicBlock;
+import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.boss.fourguardians.EntityBlueGuardian;
 import net.tslat.aoa3.entity.boss.fourguardians.EntityGreenGuardian;
@@ -24,13 +25,15 @@ import net.tslat.aoa3.utils.StringUtil;
 public class GuardianAltar extends BasicBlock {
 	public GuardianAltar() {
 		super("GuardianAltar", "guardian_altar", Material.ROCK, -1f, 999999999f);
+
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.voliantHeart) {
+		if (heldStack.getItem() == ItemRegister.VOLIANT_HEART) {
 			if (!world.isRemote) {
 				for (EnumFacing direction : EnumFacing.HORIZONTALS) {
 					if (world.getRedstonePower(pos.offset(direction), direction) == 0)

@@ -28,7 +28,7 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeLelyetia;
+	private final Biome biome = BiomeRegister.LELYETIA;
 
 	private int x;
 	private int y;
@@ -64,28 +64,28 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 					genLandStrip(0, 55, 15, 15, 59, 15);
 					genLandStrip(15, 55, 0, 15, 59, 15);
 					genLandStrip(0, 55, 0, 0, 59, 15);
-					primer.setBlockState(1, 59, 1, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(14, 59, 14, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(1, 59, 14, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(14, 59, 1, BlockRegister.grassLelyetia.getDefaultState());
+					primer.setBlockState(1, 59, 1, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(14, 59, 14, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(1, 59, 14, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(14, 59, 1, BlockRegister.LELYETIA_GRASS.getDefaultState());
 
 					genLandStrip(1, 55, 1, 14, 58, 1);
 					genLandStrip(1, 55, 14, 14, 58, 14);
 					genLandStrip(14, 55, 1, 14, 58, 14);
 					genLandStrip(1, 55, 1, 1, 58, 14);
-					primer.setBlockState(2, 58, 2, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(13, 58, 13, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(2, 58, 13, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(13, 58, 2, BlockRegister.grassLelyetia.getDefaultState());
+					primer.setBlockState(2, 58, 2, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(13, 58, 13, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(2, 58, 13, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(13, 58, 2, BlockRegister.LELYETIA_GRASS.getDefaultState());
 
 					genLandStrip(2, 55, 2, 13, 57, 2);
 					genLandStrip(2, 55, 13, 13, 57, 13);
 					genLandStrip(13, 55, 2, 13, 57, 13);
 					genLandStrip(2, 55, 2, 2, 57, 13);
-					primer.setBlockState(3, 57, 3, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(12, 57, 12, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(3, 57, 12, BlockRegister.grassLelyetia.getDefaultState());
-					primer.setBlockState(12, 57, 3, BlockRegister.grassLelyetia.getDefaultState());
+					primer.setBlockState(3, 57, 3, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(12, 57, 12, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(3, 57, 12, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					primer.setBlockState(12, 57, 3, BlockRegister.LELYETIA_GRASS.getDefaultState());
 
 					genLandStrip(3, 55, 3, 12, 56, 3);
 					genLandStrip(3, 55, 12, 12, 56, 12);
@@ -154,12 +154,12 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 					genLandStrip(0, 55, 2, 1, 59, 13);
 					genLandStrip(14, 55, 2, 15, 59, 13);
 
-					setAllBlocksInRegion(7, 58, 2, 8, 58, 13, BlockRegister.stoneLelyetia.getDefaultState());
-					setAllBlocksInRegion(2, 58, 7, 6, 58, 8, BlockRegister.stoneLelyetia.getDefaultState());
-					setAllBlocksInRegion(9, 58, 7, 13, 58, 8, BlockRegister.stoneLelyetia.getDefaultState());
-					setAllBlocksInRegion(7, 59, 2, 8, 59, 13, BlockRegister.grassLelyetia.getDefaultState());
-					setAllBlocksInRegion(2, 59, 7, 6, 59, 8, BlockRegister.grassLelyetia.getDefaultState());
-					setAllBlocksInRegion(9, 59, 7, 13, 59, 8, BlockRegister.grassLelyetia.getDefaultState());
+					setAllBlocksInRegion(7, 58, 2, 8, 58, 13, BlockRegister.LELYETIA_STONE.getDefaultState());
+					setAllBlocksInRegion(2, 58, 7, 6, 58, 8, BlockRegister.LELYETIA_STONE.getDefaultState());
+					setAllBlocksInRegion(9, 58, 7, 13, 58, 8, BlockRegister.LELYETIA_STONE.getDefaultState());
+					setAllBlocksInRegion(7, 59, 2, 8, 59, 13, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					setAllBlocksInRegion(2, 59, 7, 6, 59, 8, BlockRegister.LELYETIA_GRASS.getDefaultState());
+					setAllBlocksInRegion(9, 59, 7, 13, 59, 8, BlockRegister.LELYETIA_GRASS.getDefaultState());
 					break;
 				case 6:
 					genLandStrip(0, 55, 0, 15, 59, 0);
@@ -215,9 +215,9 @@ public class ChunkGenLelyetia implements IChunkGenerator {
 	}
 
 	private void genLandStrip(final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ) {
-		setAllBlocksInRegion(lowerX, lowerY, lowerZ, upperX, lowerY, upperZ, BlockRegister.grassLelyetiaDown.getDefaultState());
-		setAllBlocksInRegion(lowerX, lowerY + 1, lowerZ, upperX, upperY - 1, upperZ, BlockRegister.stoneLelyetia.getDefaultState());
-		setAllBlocksInRegion(lowerX, upperY, lowerZ, upperX, upperY, upperZ, BlockRegister.grassLelyetia.getDefaultState());
+		setAllBlocksInRegion(lowerX, lowerY, lowerZ, upperX, lowerY, upperZ, BlockRegister.LELYETIA_DOWN_GRASS.getDefaultState());
+		setAllBlocksInRegion(lowerX, lowerY + 1, lowerZ, upperX, upperY - 1, upperZ, BlockRegister.LELYETIA_STONE.getDefaultState());
+		setAllBlocksInRegion(lowerX, upperY, lowerZ, upperX, upperY, upperZ, BlockRegister.LELYETIA_GRASS.getDefaultState());
 	}
 
 	private void setAllBlocksInRegion(final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ, final IBlockState block) {

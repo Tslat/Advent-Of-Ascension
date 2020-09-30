@@ -13,7 +13,7 @@ import net.tslat.aoa3.utils.PredicateUtil;
 
 import java.util.List;
 
-public class Ultraflame extends BaseSword implements AdventWeapon {
+public class Ultraflame extends BaseSword {
 	public Ultraflame(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("Ultraflame");

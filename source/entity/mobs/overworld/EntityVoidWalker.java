@@ -49,17 +49,17 @@ public class EntityVoidWalker extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVoidWalkerLiving;
+		return SoundsRegister.MOB_VOID_WALKER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVoidWalkerDeath;
+		return SoundsRegister.MOB_VOID_WALKER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVoidWalkerHit;
+		return SoundsRegister.MOB_VOID_WALKER_HIT;
 	}
 
 	@Nullable
@@ -76,7 +76,7 @@ public class EntityVoidWalker extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 200, 4, true, true));
+			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 200, 0, true, true));
 	}
 
 	@Override

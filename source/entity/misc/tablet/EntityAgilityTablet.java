@@ -25,6 +25,6 @@ public class EntityAgilityTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletAgility;
+		return ItemRegister.AGILITY_TABLET;
 	}
 }

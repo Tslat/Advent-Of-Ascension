@@ -14,7 +14,7 @@ public class WorldTypeGardencia extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeGardencia);
+		return new BiomeProviderSingle(BiomeRegister.GARDENCIA);
 	}
 
 	@Override

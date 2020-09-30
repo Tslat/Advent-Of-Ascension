@@ -19,6 +19,6 @@ public class TangleThorns extends GenericPlantBlock {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ItemRegister.seedsHeartFruit;
+		return ItemRegister.HEART_FRUIT_SEEDS;
 	}
 }

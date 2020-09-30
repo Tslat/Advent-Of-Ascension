@@ -21,7 +21,7 @@ public class EntityRuneTemplarYellow extends EntityRuneTemplar {
 
 	@Override
 	protected RuneItem getActivationRune() {
-		return ItemRegister.runeEnergy;
+		return ItemRegister.ENERGY_RUNE;
 	}
 
 	@Nullable

@@ -61,17 +61,17 @@ public class EntityGhost extends AoAMeleeMob implements SpecialPropertyEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGhostLiving;
+		return SoundsRegister.MOB_GHOST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGhostDeath;
+		return SoundsRegister.MOB_GHOST_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGhostHit;
+		return SoundsRegister.MOB_GHOST_HIT;
 	}
 
 	@Nullable

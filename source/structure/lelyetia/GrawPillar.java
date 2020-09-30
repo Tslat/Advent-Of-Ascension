@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GrawPillar extends AoAStructure { //StructureSize: 5x20x5
-	private static final IBlockState lelyetiaBricks = BlockRegister.bricksLelyetia.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState grawAltar = BlockRegister.grawAltar.getDefaultState();
+	private static final IBlockState lelyetiaBricks = BlockRegister.LELYETIA_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState grawAltar = BlockRegister.GRAW_ALTAR.getDefaultState();
 
 	public GrawPillar() {
 		super("GrawPillar");

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class MushroomSpiderCave extends AoAStructure { //StructureSize: 15x9x15
-	private static final IBlockState mysteriumStone = BlockRegister.stoneMysterium.getDefaultState();
-	private static final IBlockState mushroomSpiderSpawner = BlockRegister.spawnerMushroomSpider.getDefaultState();
+	private static final IBlockState mysteriumStone = BlockRegister.MYSTERIUM_STONE.getDefaultState();
+	private static final IBlockState mushroomSpiderSpawner = BlockRegister.MUSHROOM_SPIDER_SPAWNER.getDefaultState();
 
 	public MushroomSpiderCave() {
 		super("MushroomSpiderCave");

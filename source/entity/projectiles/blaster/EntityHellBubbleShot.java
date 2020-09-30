@@ -6,6 +6,9 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
 import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
+import net.tslat.aoa3.utils.PredicateUtil;
+
+import java.util.List;
 
 public class EntityHellBubbleShot extends BaseEnergyShot {
 	public EntityHellBubbleShot(World world) {
@@ -27,10 +30,19 @@ public class EntityHellBubbleShot extends BaseEnergyShot {
 		motionY *= 0.3;
 		motionZ *= 0.3;
 
-		if (getAge() >= 60)
+		if (getAge() >= 100)
 			setDead();
 
-		if (isDead)
-			world.playSound(null, posX, posY, posZ, SoundsRegister.bubbleShotPop, SoundCategory.PLAYERS, 1.0f, 1.0f);
+		if (isDead) {
+			world.playSound(null, posX, posY, posZ, SoundsRegister.BUBBLE_SHOT_POP, SoundCategory.PLAYERS, 1.0f, 1.0f);
+		}
+		else if (!world.isRemote && weapon != null) {
+			List<EntityLivingBase> collidingEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, getEntityBoundingBox(), PredicateUtil.IS_HOSTILE_MOB);
+
+			if (!collidingEntities.isEmpty()) {
+				weapon.doEntityImpact(this, collidingEntities.get(0), thrower);
+				setDead();
+			}
+		}
 	}
 }

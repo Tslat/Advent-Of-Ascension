@@ -57,19 +57,19 @@ public class EntityHellquin extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPenguinLiving;
+		return SoundsRegister.MOB_PENGUIN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobPenguinHit;
+		return SoundsRegister.MOB_PENGUIN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPenguinDeath;
+		return SoundsRegister.MOB_PENGUIN_DEATH;
 	}
 
 	@Nullable

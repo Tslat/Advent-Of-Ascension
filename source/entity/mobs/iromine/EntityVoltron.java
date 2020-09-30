@@ -59,19 +59,19 @@ public class EntityVoltron extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVoltronLiving;
+		return SoundsRegister.MOB_VOLTRON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVoltronDeath;
+		return SoundsRegister.MOB_VOLTRON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVoltronHit;
+		return SoundsRegister.MOB_VOLTRON_HIT;
 	}
 
 	@Nullable

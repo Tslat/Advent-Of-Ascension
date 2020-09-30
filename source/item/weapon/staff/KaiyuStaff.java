@@ -29,13 +29,13 @@ public class KaiyuStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffKaiyu;
+		return SoundsRegister.KAIYU_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeKinetic, 1);
-		runes.put(ItemRegister.runeEnergy, 4);
+		runes.put(ItemRegister.KINETIC_RUNE, 1);
+		runes.put(ItemRegister.ENERGY_RUNE, 4);
 	}
 
 	@Override

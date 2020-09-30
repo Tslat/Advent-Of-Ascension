@@ -53,19 +53,19 @@ public class EntityGhastus extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobApparitionLiving;
+		return SoundsRegister.MOB_APPARITION_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobApparitionDeath;
+		return SoundsRegister.MOB_APPARITION_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobApparitionHit;
+		return SoundsRegister.MOB_APPARITION_HIT;
 	}
 
 	@Nullable

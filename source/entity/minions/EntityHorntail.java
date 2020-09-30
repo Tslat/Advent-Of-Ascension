@@ -44,19 +44,19 @@ public class EntityHorntail extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNospikeLiving;
+		return SoundsRegister.MOB_NOSPIKE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNospikeDeath;
+		return SoundsRegister.MOB_NOSPIKE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNospikeHit;
+		return SoundsRegister.MOB_NOSPIKE_HIT;
 	}
 
 	@Nullable

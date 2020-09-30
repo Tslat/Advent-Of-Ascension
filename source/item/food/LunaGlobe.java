@@ -18,7 +18,7 @@ public class LunaGlobe extends BasicFood {
 	public LunaGlobe() {
 		super("LunaGlobe", "luna_globe", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropLunaGlobes.setCrop(this);
+		BlockRegister.LUNA_GLOBE_CROP.setCrop(this);
 	}
 
 	@Override

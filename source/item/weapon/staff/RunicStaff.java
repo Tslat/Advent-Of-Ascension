@@ -29,12 +29,12 @@ public class RunicStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffRunic;
+		return SoundsRegister.RUNIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeDistortion, 5);
+		runes.put(ItemRegister.DISTORTION_RUNE, 5);
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class WorldTypeHaven extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeHaven);
+		return new BiomeProviderSingle(BiomeRegister.HAVEN);
 	}
 
 	@Override

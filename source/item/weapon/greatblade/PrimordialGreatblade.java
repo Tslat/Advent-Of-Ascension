@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class PrimordialGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class PrimordialGreatblade extends BaseGreatblade {
 	public PrimordialGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("PrimordialGreatblade");

@@ -60,17 +60,17 @@ public class EntityHost extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHostLiving;
+		return SoundsRegister.MOB_HOST_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHostDeath;
+		return SoundsRegister.MOB_HOST_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHostLiving;
+		return SoundsRegister.MOB_HOST_LIVING;
 	}
 
 	@Nullable
@@ -99,7 +99,7 @@ public class EntityHost extends AoAMeleeMob {
 
 			creeper.setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360f, 0.0f);
 			world.spawnEntity(creeper);
-			world.playSound(null, posX, posY, posZ, SoundsRegister.mobHostDrop, SoundCategory.HOSTILE, 1.0f, 1.0f);
+			world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_HOST_DROP, SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
 	}
 

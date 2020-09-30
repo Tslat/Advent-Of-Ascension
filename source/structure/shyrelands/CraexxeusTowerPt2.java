@@ -8,10 +8,10 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class CraexxeusTowerPt2 {
-	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
-	private static final IBlockState shyreGlass = BlockRegister.glassShyre.getDefaultState();
-	private static final IBlockState craexxeusAltar = BlockRegister.craexxeusAltar.getDefaultState();
+	private static final IBlockState whiteShyreBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowShyreBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState shyreGlass = BlockRegister.SHYRE_GLASS.getDefaultState();
+	private static final IBlockState craexxeusAltar = BlockRegister.CRAEXXEUS_ALTAR.getDefaultState();
 
 	protected static void addBlocks(CraexxeusTower instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 7, 33, 38, shyreGlass);

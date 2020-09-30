@@ -10,8 +10,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
-import net.tslat.aoa3.structure.StructuresHandler;
 import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.worldgen.trees.WorldGenHauntedTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -55,11 +55,11 @@ public class BiomeGreckon extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.ghastly.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreGhastly.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghastly.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghastly.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(25) + 3, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.GHASTLY_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghastly.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghastly.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.GRECKON_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(25) + 3, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < ConfigurationUtil.OreConfig.ghoulish.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreGhoulish.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghoulish.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghoulish.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneGreckon)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(30) + 30, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.GHOULISH_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.ghoulish.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.ghoulish.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.GRECKON_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(30) + 30, rand.nextInt(16)));
 			}
 		}
 
@@ -71,46 +71,18 @@ public class BiomeGreckon extends Biome {
 				posY = world.getHeight(posX, posZ);
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock)
-					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantHauntedFlower.getDefaultState());
+					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.HAUNTED_FLOWER.getDefaultState());
 			}
 		}
 
 		@Override
 		protected void doTreeGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
-			switch (rand.nextInt(4)) {
-				case 0:
-					posX = basePos.getX() + rand.nextInt(16);
-					posZ = basePos.getZ() + rand.nextInt(16);
-					posY = world.getHeight(posX + 3, posZ + 3);
+			posX = basePos.getX() + rand.nextInt(16);
+			posZ = basePos.getZ() + rand.nextInt(16);
+			posY = world.getHeight(posX + 7, posZ + 7);
 
-					if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-						StructuresHandler.generateStructure("HauntedTree1", world, rand, pos.setPos(posX, posY, posZ));
-					break;
-				case 1:
-					posX = basePos.getX() + rand.nextInt(16);
-					posZ = basePos.getZ() + rand.nextInt(16);
-					posY = world.getHeight(posX + 4, posZ + 4);
-
-					if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock)
-						StructuresHandler.generateStructure("HauntedTree2", world, rand, pos.setPos(posX, posY, posZ));
-					break;
-				case 2:
-					posX = basePos.getX() + rand.nextInt(16);
-					posZ = basePos.getZ() + rand.nextInt(16);
-					posY = world.getHeight(posX + 4, posZ + 4);
-
-					if (world.getBlockState(pos.setPos(posX + 4, posY - 1, posZ + 4)) == biome.topBlock)
-						StructuresHandler.generateStructure("HauntedTree3", world, rand, pos.setPos(posX, posY, posZ));
-					break;
-				case 3:
-					posX = basePos.getX() + rand.nextInt(15);
-					posZ = basePos.getZ() + rand.nextInt(15);
-					posY = world.getHeight(posX + 7, posZ + 7);
-
-					if (world.getBlockState(pos.setPos(posX + 7, posY - 1, posZ + 7)) == biome.topBlock)
-						StructuresHandler.generateStructure("HauntedTree4", world, rand, pos.setPos(posX, posY, posZ));
-					break;
-			}
+			if (world.getBlockState(pos.setPos(posX + 7, posY - 1, posZ + 7)) == biome.topBlock)
+				new WorldGenHauntedTree(null).generate(world, rand, pos.up());
 		}
 	}
 }

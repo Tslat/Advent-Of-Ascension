@@ -23,11 +23,11 @@ public class VoxPondsTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalVoxPonds;
+		return BlockRegister.VOX_PONDS_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.degradedSteel;
+		return BlockRegister.DEGRADED_STEEL;
 	}
 }

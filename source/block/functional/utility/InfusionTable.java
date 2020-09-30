@@ -29,7 +29,7 @@ public class InfusionTable extends Block {
 		setHardness(10.0f);
 		setResistance(15.0f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class InfusionTable extends Block {
 
 				if (player.capabilities.isCreativeMode || plData.stats().getLevel(Enums.Skills.INFUSION) >= stone.getLvl()) {
 					plData.stats().addXp(Enums.Skills.INFUSION, stone.getXp() * count, false, false);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.infusionSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.INFUSION_SUCCESS, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					int chanceMod = plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.INFUSION ? 33 : 100;
 					int powerStoneCount = 0;

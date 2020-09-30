@@ -18,7 +18,7 @@ public class Lunacrike extends BasicFood {
 	public Lunacrike() {
 		super("Lunacrike", "lunacrike", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropLunacrike.setCrop(this);
+		BlockRegister.LUNACRIKE_CROP.setCrop(this);
 	}
 
 	@Override

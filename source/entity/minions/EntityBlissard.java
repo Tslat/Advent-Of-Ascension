@@ -59,19 +59,19 @@ public class EntityBlissard extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobZhinxLiving;
+		return SoundsRegister.MOB_ZHINX_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobZhinxHit;
+		return SoundsRegister.MOB_ZHINX_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobZhinxDeath;
+		return SoundsRegister.MOB_ZHINX_DEATH;
 	}
 
 	@Nullable

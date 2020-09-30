@@ -45,19 +45,19 @@ public class EntityEchodar extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEchodarLiving;
+		return SoundsRegister.MOB_ECHODAR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEchodarHit;
+		return SoundsRegister.MOB_ECHODAR_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEchodarDeath;
+		return SoundsRegister.MOB_ECHODAR_DEATH;
 	}
 
 	@Nullable

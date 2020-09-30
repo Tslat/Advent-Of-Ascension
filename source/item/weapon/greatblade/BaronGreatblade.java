@@ -10,14 +10,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.WeaponRegister;
 import net.tslat.aoa3.entity.projectiles.thrown.EntityGrenade;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class BaronGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class BaronGreatblade extends BaseGreatblade {
 	public BaronGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("BaronGreatblade");
@@ -29,7 +27,7 @@ public class BaronGreatblade extends BaseGreatblade implements AdventWeapon, Lon
 		if (super.attackEntity(stack, target, attacker, dmg)) {
 			if (!attacker.world.isRemote && attacker instanceof EntityPlayer) {
 				if (((EntityPlayer)attacker).getCooledAttackStrength(0.0f) > 0.75f) {
-					if (((EntityPlayer)attacker).capabilities.isCreativeMode || ItemUtil.findAndConsumeSpecialBullet(attacker, null, true, WeaponRegister.throwableGrenade, ItemStack.EMPTY) != null) {
+					if (((EntityPlayer)attacker).capabilities.isCreativeMode || ItemUtil.findInventoryItem((EntityPlayer)attacker, new ItemStack(WeaponRegister.GRENADE), true, 1 )) {
 						attacker.world.spawnEntity(new EntityGrenade(attacker, null));
 						stack.damageItem(1, attacker);
 					}

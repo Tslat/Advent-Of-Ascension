@@ -59,7 +59,7 @@ public class ModelCrystocore extends ModelBase {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(770, 771);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		shape1.render(par7);
 		Center.render(par7);
 		shape2.render(par7);

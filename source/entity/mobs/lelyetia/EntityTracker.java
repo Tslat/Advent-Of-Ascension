@@ -47,19 +47,19 @@ public class EntityTracker extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTrackerLiving;
+		return SoundsRegister.MOB_TRACKER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTrackerDeath;
+		return SoundsRegister.MOB_TRACKER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTrackerHit;
+		return SoundsRegister.MOB_TRACKER_HIT;
 	}
 
 	@Nullable

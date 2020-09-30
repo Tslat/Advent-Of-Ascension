@@ -19,7 +19,7 @@ import java.util.List;
 public class HeartFruit extends BasicFood {
 	public HeartFruit() {
 		super("HeartFruit", "heart_fruit", 15, 0.3f);
-		BlockRegister.cropHeartFruit.setCrop(this);
+		BlockRegister.HEART_FRUIT_CROP.setCrop(this);
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class HeartFruit extends BasicFood {
 		if (!world.isRemote) {
 			EntityUtil.dealSelfHarmDamage(player, 7.0f);
 
-			if (player.getHealth() > 0 && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.realmstoneBlank)))
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.realmstoneCandyland));
+			if (player.getHealth() > 0 && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CANDYLAND_REALMSTONE));
 		}
 	}
 

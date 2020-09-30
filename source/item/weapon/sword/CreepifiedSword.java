@@ -8,13 +8,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.minions.EntityFriendlyCreeper;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class CreepifiedSword extends BaseSword implements AdventWeapon {
+public class CreepifiedSword extends BaseSword {
 	public CreepifiedSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("CreepifiedSword");

@@ -11,14 +11,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Predator extends BaseGun implements AdventWeapon {
+public class Predator extends BaseGun {
 	public Predator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Predator");
@@ -28,7 +27,7 @@ public class Predator extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSpaceGun;
+		return SoundsRegister.SPACE_GUN_FIRE;
 	}
 
 	@Override

@@ -14,17 +14,17 @@ import static net.minecraft.util.EnumFacing.*;
 public class ImmortallisRoom9 extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState archaicLadderWest = BlockRegister.archaicLadder.getDefaultState().withProperty(BlockHorizontal.FACING, WEST);
-	private static final IBlockState archaicLadderSouth = BlockRegister.archaicLadder.getDefaultState().withProperty(BlockHorizontal.FACING, SOUTH);
-	private static final IBlockState archaicLadderNorth = BlockRegister.archaicLadder.getDefaultState().withProperty(BlockHorizontal.FACING, NORTH);
-	private static final IBlockState archaicLadderEast = BlockRegister.archaicLadder.getDefaultState().withProperty(BlockHorizontal.FACING, EAST);
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
-	private static final IBlockState progressor8 = BlockRegister.immortallisProgressor8.getDefaultState();
-	private static final IBlockState progressor9 = BlockRegister.immortallisProgressor9.getDefaultState();
-	private static final IBlockState spawnerVisage = BlockRegister.spawnerVisage.getDefaultState();
+	private static final IBlockState archaicLadderWest = BlockRegister.ARCHAIC_LADDER.getDefaultState().withProperty(BlockHorizontal.FACING, WEST);
+	private static final IBlockState archaicLadderSouth = BlockRegister.ARCHAIC_LADDER.getDefaultState().withProperty(BlockHorizontal.FACING, SOUTH);
+	private static final IBlockState archaicLadderNorth = BlockRegister.ARCHAIC_LADDER.getDefaultState().withProperty(BlockHorizontal.FACING, NORTH);
+	private static final IBlockState archaicLadderEast = BlockRegister.ARCHAIC_LADDER.getDefaultState().withProperty(BlockHorizontal.FACING, EAST);
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
+	private static final IBlockState progressor8 = BlockRegister.IMMORTALLIS_PROGRESSOR_8.getDefaultState();
+	private static final IBlockState progressor9 = BlockRegister.IMMORTALLIS_PROGRESSOR_9.getDefaultState();
+	private static final IBlockState spawnerVisage = BlockRegister.VISAGE_SPAWNER.getDefaultState();
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

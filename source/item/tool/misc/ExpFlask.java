@@ -31,7 +31,7 @@ public class ExpFlask extends Item {
 	public ExpFlask() {
 		setTranslationKey("ExpFlask");
 		setRegistryName("aoa3:exp_flask");
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+		setCreativeTab(CreativeTabsRegister.TOOLS);
 		setMaxStackSize(1);
 		addPropertyOverride(new ResourceLocation("filled"), new IItemPropertyGetter() {
 			@Override

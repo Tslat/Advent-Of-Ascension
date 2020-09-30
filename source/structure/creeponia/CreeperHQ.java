@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CreeperHQ extends AoAStructure { //StructureSize: 24x56x24
-	private static final IBlockState creeponiaBricks = BlockRegister.bricksCreeponia.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState darkwashBricks = BlockRegister.bricksDarkwash.getDefaultState();
-	private static final IBlockState creepAltar = BlockRegister.creepAltar.getDefaultState();
+	private static final IBlockState creeponiaBricks = BlockRegister.CREEPONIA_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState darkwashBricks = BlockRegister.DARKWASH_BRICKS.getDefaultState();
+	private static final IBlockState creepAltar = BlockRegister.CREEP_ALTAR.getDefaultState();
 
 	public CreeperHQ() {
 		super("CreeperHQ");

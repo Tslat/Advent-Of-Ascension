@@ -50,19 +50,19 @@ public class EntityNeptuno extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNeptunoLiving;
+		return SoundsRegister.MOB_NEPTUNO_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNeptunoDeath;
+		return SoundsRegister.MOB_NEPTUNO_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNeptunoHit;
+		return SoundsRegister.MOB_NEPTUNO_HIT;
 	}
 
 	@Nullable

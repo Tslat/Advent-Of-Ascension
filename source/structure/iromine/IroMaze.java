@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IroMaze extends AoAStructure { //StructureSize: 40x26x47
-	private static final IBlockState cogBlock = BlockRegister.cogBlock.getDefaultState();
-	private static final IBlockState iropole = BlockRegister.iropole.getDefaultState();
-	private static final IBlockState unbreakableBrick = BlockRegister.unbreakableIroBricks.getDefaultState();
-	private static final IBlockState silverfootAltar = BlockRegister.silverfootAltar.getDefaultState();
+	private static final IBlockState cogBlock = BlockRegister.COG_BLOCK.getDefaultState();
+	private static final IBlockState iropole = BlockRegister.IROPOLE.getDefaultState();
+	private static final IBlockState unbreakableBrick = BlockRegister.UNBREAKABLE_IRO_BRICKS.getDefaultState();
+	private static final IBlockState silverfootAltar = BlockRegister.SILVERFOOT_ALTAR.getDefaultState();
 
 	public IroMaze() {
 		super("IroMaze");

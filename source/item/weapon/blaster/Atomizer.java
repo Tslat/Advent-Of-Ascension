@@ -30,7 +30,7 @@ public class Atomizer extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunAtomizer;
+		return SoundsRegister.ATOMIZER_FIRE;
 	}
 
 	@Override

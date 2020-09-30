@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXSwirlyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.cannon.EntityStickyCoolBomb;
 import net.tslat.aoa3.library.Enums;
 
@@ -59,8 +59,8 @@ public class StickyCoolBombRenderer extends Render<EntityStickyCoolBomb> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 8; i++) {
-			new FXSwirlyTrail(entity.world, entity.posX, entity.posY + 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 8, 1).create();
-			new FXSwirlyTrail(entity.world, entity.posX, entity.posY - 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 8, 1).create();
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY + 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 100, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY - 0.25D, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 100, 3, 7);
 		}
 	}
 

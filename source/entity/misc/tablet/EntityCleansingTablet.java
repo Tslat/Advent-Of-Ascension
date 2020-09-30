@@ -35,6 +35,6 @@ public class EntityCleansingTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletCleansing;
+		return ItemRegister.CLEANSING_TABLET;
 	}
 }

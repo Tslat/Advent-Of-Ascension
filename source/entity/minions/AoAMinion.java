@@ -11,16 +11,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.entity.base.AnimatableEntity;
-import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.skills.HunterUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAMinion extends EntityTameable implements AnimatableEntity {
+public abstract class AoAMinion extends EntityTameable {
     private final int lifespan;
     private int animationTicks = 0;
     protected String currentAnimation = null;
@@ -155,40 +152,6 @@ public abstract class AoAMinion extends EntityTameable implements AnimatableEnti
         else {
             return false;
         }
-    }
-
-    @Override
-    public void swingArm(EnumHand hand) {
-        super.swingArm(hand);
-        startAnimation(Enums.EntityAnimations.ATTACK_1);
-    }
-
-    @Override
-    public int getCurrentAnimationTicks() {
-        return animationTicks;
-    }
-
-    @Nullable
-    @Override
-    public String getCurrentAnimation() {
-        return currentAnimation == null ? "IDLE_1" : currentAnimation;
-    }
-
-    @Override
-    public void finishAnimation() {
-        currentAnimation = null;
-        animationTicks = -1;
-    }
-
-    @Override
-    public void startAnimation(String animation) {
-        currentAnimation = animation;
-        animationTicks = 0;
-    }
-
-    @Override
-    public void resetAnimation() {
-        animationTicks = 0;
     }
 
     @Override

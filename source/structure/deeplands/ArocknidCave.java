@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ArocknidCave extends AoAStructure { //StructureSize: 15x9x15
-	private static final IBlockState stone = BlockRegister.stoneDeeplands.getDefaultState();
-	private static final IBlockState arocknidSpawner = BlockRegister.spawnerArocknid.getDefaultState();
+	private static final IBlockState stone = BlockRegister.DEEPLANDS_STONE.getDefaultState();
+	private static final IBlockState arocknidSpawner = BlockRegister.AROCKNID_SPAWNER.getDefaultState();
 
 	public ArocknidCave() {
 		super("ArocknidCave");

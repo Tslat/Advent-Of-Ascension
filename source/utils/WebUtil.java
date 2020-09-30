@@ -3,9 +3,9 @@ package net.tslat.aoa3.utils;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.common.Loader;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.handlers.PlayerCrownHandler;
+import net.tslat.aoa3.common.handlers.PlayerHaloHandler;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.scheduling.async.UpdateCrownsMapTask;
+import net.tslat.aoa3.library.scheduling.async.UpdateHalosMapTask;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
@@ -26,42 +26,40 @@ public class WebUtil {
 		AdventOfAscension.logOptionalMessage("Starting web tasks");
 		ForgeVersion.CheckResult updateCheckResult = ForgeVersion.getResult(Loader.instance().activeModContainer());
 
-		if (updateCheckResult.status != ForgeVersion.Status.FAILED) {
-			if (updateCheckResult.status == ForgeVersion.Status.OUTDATED) {
-				isUpdateAvailable = true;
-				latestVersion = updateCheckResult.target.toString();
-			}
+		if (updateCheckResult.status == ForgeVersion.Status.OUTDATED) {
+			isUpdateAvailable = true;
+			latestVersion = updateCheckResult.target.toString();
 		}
 	}
 
-	public static HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> fillCrownsMap(HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> crownsMap) {
-		AdventOfAscension.logOptionalMessage("Updating player crowns map");
+	public static HashMap<UUID, PlayerHaloHandler.PlayerHaloContainer> fillHalosMap(HashMap<UUID, PlayerHaloHandler.PlayerHaloContainer> halosMap) {
+		AdventOfAscension.logOptionalMessage("Updating player halos map");
 
 		BufferedReader fileReader = null;
 
 		try {
-			HttpURLConnection connection = (HttpURLConnection)new URL("http://tslat.net/Hosting/Tslat-AoA/player_crowns.txt").openConnection();
+			HttpURLConnection connection = (HttpURLConnection)new URL("https://gist.githubusercontent.com/Tslat/2c2eb98dceeff18f05ed068982fb71a7/raw/").openConnection();
 
 			connection.setConnectTimeout(1000);
 			connection.connect();
 
 			if (HttpURLConnection.HTTP_OK != connection.getResponseCode()) {
-				AdventOfAscension.logOptionalMessage("Failed connection to cloud based crowns map, response code " + connection.getResponseMessage());
+				AdventOfAscension.logOptionalMessage("Failed connection to cloud based halos map, response code " + connection.getResponseMessage());
 
-				return crownsMap;
+				return halosMap;
 			}
 
 			fileReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line;
 
-			if (crownsMap != null) {
+			if (halosMap != null) {
 				while ((line = fileReader.readLine()) != null) {
 					if (!line.startsWith(" <!DOCTYPE")) {
 						String[] lineSplit = line.split("\\|");
 						UUID uuid;
 
 						if (lineSplit.length > 2) {
-							HashSet<Enums.PlayerCrownTypes> crownsSet = new HashSet<Enums.PlayerCrownTypes>(lineSplit.length - 1);
+							HashSet<Enums.PlayerHaloTypes> halosSet = new HashSet<Enums.PlayerHaloTypes>(lineSplit.length - 1);
 
 							try {
 								uuid = UUID.fromString(lineSplit[1]);
@@ -75,15 +73,15 @@ public class WebUtil {
 
 							for (int i = 2; i < lineSplit.length; i++) {
 								try {
-									crownsSet.add(Enums.PlayerCrownTypes.valueOf(lineSplit[i]));
+									halosSet.add(Enums.PlayerHaloTypes.valueOf(lineSplit[i]));
 								} catch (IllegalArgumentException ex) {
 									if (ConfigurationUtil.MainConfig.doVerboseDebugging)
-										AdventOfAscension.logMessage(Level.WARN, "Invalid crown type from web: " + lineSplit[i]);
+										AdventOfAscension.logMessage(Level.WARN, "Invalid halo type from web: " + lineSplit[i]);
 								}
 							}
 
-							crownsMap.put(uuid, new PlayerCrownHandler.PlayerCrownContainer(crownsSet));
-							AdventOfAscension.logOptionalMessage("Found player crown for " + uuid.toString());
+							halosMap.put(uuid, new PlayerHaloHandler.PlayerHaloContainer(halosSet));
+							AdventOfAscension.logOptionalMessage("Found player halo for " + uuid.toString());
 						}
 					}
 				}
@@ -101,16 +99,16 @@ public class WebUtil {
 			IOUtils.closeQuietly(fileReader);
 		}
 
-		return crownsMap;
+		return halosMap;
 	}
 
 
-	public static void extractPlayerCrownsFromWeb() {
-		HashMap<UUID, PlayerCrownHandler.PlayerCrownContainer> newMap = PlayerCrownHandler.getCrownMapForPrefill();
+	public static void extraPlayerHalosFromWeb() {
+		HashMap<UUID, PlayerHaloHandler.PlayerHaloContainer> newMap = PlayerHaloHandler.getHaloMapForPrefill();
 
 		if (newMap != null) {
-			fillCrownsMap(newMap);
-			ModUtil.scheduleAsyncTask(new UpdateCrownsMapTask(), 30, TimeUnit.MINUTES);
+			fillHalosMap(newMap);
+			ModUtil.scheduleAsyncTask(new UpdateHalosMapTask(), 60, TimeUnit.MINUTES);
 		}
 	}
 

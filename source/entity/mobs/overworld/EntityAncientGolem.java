@@ -50,22 +50,22 @@ public class EntityAncientGolem extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAutomatonLiving;
+		return SoundsRegister.MOB_AUTOMATON_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAutomatonDeath;
+		return SoundsRegister.MOB_AUTOMATON_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAutomatonHit;
+		return SoundsRegister.MOB_AUTOMATON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.mobGolemStep;
+		return SoundsRegister.MOB_GOLEM_STEP;
 	}
 
 	@Nullable

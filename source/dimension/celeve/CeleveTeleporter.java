@@ -23,11 +23,11 @@ public class CeleveTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalCeleve;
+		return BlockRegister.CELEVE_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.leavesCelevusWhite;
+		return BlockRegister.WHITE_CELEVUS_LEAVES;
 	}
 }

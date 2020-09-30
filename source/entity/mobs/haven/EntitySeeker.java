@@ -56,19 +56,19 @@ public class EntitySeeker extends AoAFlyingMeleeMob implements SpecialPropertyEn
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSeekerLiving;
+		return SoundsRegister.MOB_SEEKER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSeekerDeath;
+		return SoundsRegister.MOB_SEEKER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSeekerHit;
+		return SoundsRegister.MOB_SEEKER_HIT;
 	}
 
 	@Nullable

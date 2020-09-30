@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class EnigmaStation extends AoAStructure { //StructureSize: 12x2x12
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState toxicStone = BlockRegister.stoneToxic.getDefaultState();
-	private static final IBlockState enigmaTable = BlockRegister.enigmaTable.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState toxicStone = BlockRegister.TOXIC_STONE.getDefaultState();
+	private static final IBlockState enigmaTable = BlockRegister.ENIGMA_TABLE.getDefaultState();
 
 	public EnigmaStation() {
 		super("EnigmaStation");

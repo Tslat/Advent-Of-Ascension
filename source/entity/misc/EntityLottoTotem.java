@@ -64,12 +64,12 @@ public class EntityLottoTotem extends Entity {
 						ModUtil.completeAdvancement((EntityPlayerMP)player, "overworld/winner_winner", "lotto_win");
 					}
 
-					EntityItem drop = entityDropItem(new ItemStack(BlockRegister.bannerLotto), 0);
+					EntityItem drop = entityDropItem(new ItemStack(BlockRegister.LOTTO_BANNER), 0);
 
 					if (drop != null)
 						drop.setOwner(player.getName());
 
-					world.playSound(null, getPosition(), SoundsRegister.lottoWin, SoundCategory.PLAYERS, 1.0f, 1.0f);
+					world.playSound(null, getPosition(), SoundsRegister.LOTTO_WIN, SoundCategory.PLAYERS, 1.0f, 1.0f);
 				}
 
 				for (EntityLottoTotem totem : world.getEntitiesWithinAABB(EntityLottoTotem.class, new AxisAlignedBB(getPosition()).grow(2d))) {

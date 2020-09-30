@@ -12,15 +12,15 @@ import java.util.Random;
 public class ImmortallisRoom2 extends WorldGenerator {
 	private World world;
 	
-	private static final IBlockState archaicTile = BlockRegister.archaicTiles.getDefaultState();
-	private static final IBlockState archaicRectangle = BlockRegister.archaicRectangles.getDefaultState();
-	private static final IBlockState archaicSquare = BlockRegister.archaicSquares.getDefaultState();
+	private static final IBlockState archaicTile = BlockRegister.ARCHAIC_TILES.getDefaultState();
+	private static final IBlockState archaicRectangle = BlockRegister.ARCHAIC_RECTANGLES.getDefaultState();
+	private static final IBlockState archaicSquare = BlockRegister.ARCHAIC_SQUARES.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
-	private static final IBlockState goldAccumulator = BlockRegister.goldAccumulator.getDefaultState();
-	private static final IBlockState archaicStreamVertical = BlockRegister.archaicVerticalStream.getDefaultState();
-	private static final IBlockState archaicDirt = BlockRegister.archaicDirt.getDefaultState();
-	private static final IBlockState archaicLamp = BlockRegister.lightArchaic.getDefaultState();
-	private static final IBlockState spawnerGoldum = BlockRegister.spawnerGoldum.getDefaultState();
+	private static final IBlockState goldAccumulator = BlockRegister.GOLD_ACCUMULATOR.getDefaultState();
+	private static final IBlockState archaicStreamVertical = BlockRegister.ARCHAIC_STREAM_VERTICAL.getDefaultState();
+	private static final IBlockState archaicDirt = BlockRegister.ARCHAIC_DIRT.getDefaultState();
+	private static final IBlockState archaicLamp = BlockRegister.ARCHAIC_LIGHT.getDefaultState();
+	private static final IBlockState spawnerGoldum = BlockRegister.GOLDUM_SPAWNER.getDefaultState();
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {

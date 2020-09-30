@@ -35,7 +35,7 @@ public class Lunarade extends BasicFood {
 			player.removePotionEffect(MobEffects.BLINDNESS);
 			player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 40, 1, true, false));
 			player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, 0, true, false));
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.lunaradeMug));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.LUNARADE_MUG));
 		}
 	}
 

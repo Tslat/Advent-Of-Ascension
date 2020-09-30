@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 public class Crystallanium extends BasicBlock {
 	public Crystallanium() {
 		super("Crystallanium", "crystallanium", Material.GLASS, 1.0f, 5.0f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override

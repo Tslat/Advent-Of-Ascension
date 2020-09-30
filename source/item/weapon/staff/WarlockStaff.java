@@ -29,13 +29,13 @@ public class WarlockStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffShadow;
+		return SoundsRegister.SHADOW_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runePower, 3);
-		runes.put(ItemRegister.runeKinetic, 2);
+		runes.put(ItemRegister.POWER_RUNE, 3);
+		runes.put(ItemRegister.KINETIC_RUNE, 2);
 	}
 
 	@Nullable

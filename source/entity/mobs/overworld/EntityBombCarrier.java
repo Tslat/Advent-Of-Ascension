@@ -47,17 +47,17 @@ public class EntityBombCarrier extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBombCarrierLiving;
+		return SoundsRegister.MOB_BOMB_CARRIER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBombCarrierHit;
+		return SoundsRegister.MOB_BOMB_CARRIER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBombCarrierHit;
+		return SoundsRegister.MOB_BOMB_CARRIER_HIT;
 	}
 
 	@Nullable

@@ -44,19 +44,19 @@ public class EntityCorby extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobAmphibiyteLiving;
+		return SoundsRegister.MOB_AMPHIBIYTE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobAmphibiyteHit;
+		return SoundsRegister.MOB_AMPHIBIYTE_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobAmphibiyteDeath;
+		return SoundsRegister.MOB_AMPHIBIYTE_DEATH;
 	}
 
 	@Nullable

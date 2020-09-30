@@ -21,6 +21,6 @@ public class BulbStockCap extends PlantStackable {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ItemRegister.eyeBulb;
+		return ItemRegister.EYE_BULB;
 	}
 }

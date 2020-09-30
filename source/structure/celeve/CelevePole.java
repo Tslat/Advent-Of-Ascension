@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CelevePole extends AoAStructure { //StructureSize: 6x26x6
-	private static final IBlockState redCelevus = BlockRegister.leavesCelevusRed.getDefaultState();
-	private static final IBlockState celevusStem = BlockRegister.celeveStem.getDefaultState();
+	private static final IBlockState redCelevus = BlockRegister.RED_CELEVUS_LEAVES.getDefaultState();
+	private static final IBlockState celevusStem = BlockRegister.CELEVE_STEM.getDefaultState();
 
 	public CelevePole() {
 		super("CelevePole");

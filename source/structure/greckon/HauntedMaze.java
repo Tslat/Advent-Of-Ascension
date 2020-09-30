@@ -9,11 +9,11 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HauntedMaze extends AoAStructure { //StructureSize: 25x12x16
-	private static final IBlockState darkBricks = BlockRegister.bricksDark.getDefaultState();
-	private static final IBlockState darkFaceBricks = BlockRegister.darkFaceBrick.getDefaultState();
-	private static final IBlockState greckonBricks = BlockRegister.bricksGreckon.getDefaultState();
-	private static final IBlockState hauntedLeaves = BlockRegister.leavesHaunted.getDefaultState();
-	private static final IBlockState hauntingTable = BlockRegister.hauntingTable.getDefaultState();
+	private static final IBlockState darkBricks = BlockRegister.DARK_BRICKS.getDefaultState();
+	private static final IBlockState darkFaceBricks = BlockRegister.DARK_FACE_BRICK.getDefaultState();
+	private static final IBlockState greckonBricks = BlockRegister.GRECKON_BRICKS.getDefaultState();
+	private static final IBlockState hauntedLeaves = BlockRegister.HAUNTED_LEAVES.getDefaultState();
+	private static final IBlockState hauntingTable = BlockRegister.HAUNTING_TABLE.getDefaultState();
 
 	public HauntedMaze() {
 		super("HauntedMaze");

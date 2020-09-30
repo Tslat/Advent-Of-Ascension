@@ -16,20 +16,19 @@ import net.tslat.aoa3.common.registration.DimensionRegister;
 import net.tslat.aoa3.dimension.AoATeleporter;
 import net.tslat.aoa3.dimension.AoAWorldProvider;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
 
 import javax.annotation.Nullable;
 
 public class WorldProviderCeleve extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionCeleve;
+		return DimensionRegister.DIM_CELEVE;
 	}
 
 	@Override
 	protected void init() {
-		this.hasSkyLight = !ConfigurationUtil.MainConfig.fasterFloatingDimensions;
-		this.biomeProvider = DimensionRegister.worldTypeCeleve.getBiomeProvider(world);
+		this.hasSkyLight = true;
+		this.biomeProvider = DimensionRegister.WORLD_CELEVE.getBiomeProvider(world);
 	}
 
 	@Override
@@ -39,7 +38,7 @@ public class WorldProviderCeleve extends WorldProvider implements AoAWorldProvid
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeCeleve.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_CELEVE.getChunkGenerator(world, null);
 	}
 
 	@Override

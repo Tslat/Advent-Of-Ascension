@@ -15,10 +15,12 @@ import net.tslat.aoa3.block.BasicBlock;
 import net.tslat.aoa3.common.registration.CreativeTabsRegister;
 import net.tslat.aoa3.utils.EntityUtil;
 
-public class StatueBlock extends BasicBlock {
-	private final SoundEvent sound;
+import java.util.function.Supplier;
 
-	public StatueBlock(String name, String registryName, SoundEvent sound) {
+public class StatueBlock extends BasicBlock {
+	private final Supplier<SoundEvent> sound;
+
+	public StatueBlock(String name, String registryName, Supplier<SoundEvent> sound) {
 		super(name, registryName, Material.ROCK, 25f, 2000f);
 		this.sound = sound;
 		setDefaultState(blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
@@ -27,14 +29,14 @@ public class StatueBlock extends BasicBlock {
 			setCreativeTab(null);
 		}
 		else {
-			setCreativeTab(CreativeTabsRegister.statuesTab);
+			setCreativeTab(CreativeTabsRegister.STATUES);
 		}
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (sound != null)
-			player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
+		if (sound != null && hand == EnumHand.MAIN_HAND)
+			player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), sound.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 		return true;
 	}

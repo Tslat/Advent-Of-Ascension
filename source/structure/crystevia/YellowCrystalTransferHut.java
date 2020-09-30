@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class YellowCrystalTransferHut extends AoAStructure { //StructureSize: 11x12x11
-	private static final IBlockState crystevianBricks = BlockRegister.bricksCrystevia.getDefaultState();
-	private static final IBlockState yellowCrystal = BlockRegister.crystalYellow.getDefaultState();
-	private static final IBlockState yellowCrystalPlant = BlockRegister.plantCrystalYellow.getDefaultState();
-	private static final IBlockState yellowCrystalCreator = BlockRegister.crystalCreatorYellow.getDefaultState();
+	private static final IBlockState crystevianBricks = BlockRegister.CRYSTEVIA_BRICKS.getDefaultState();
+	private static final IBlockState yellowCrystal = BlockRegister.YELLOW_CRYSTAL_BLOCK.getDefaultState();
+	private static final IBlockState yellowCrystalPlant = BlockRegister.YELLOW_CRYSTAL_PLANT.getDefaultState();
+	private static final IBlockState yellowCrystalCreator = BlockRegister.YELLOW_CRYSTAL_CREATOR.getDefaultState();
 
 	public YellowCrystalTransferHut() {
 		super("YellowCrystalTransferHut");

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LunossoTree2 extends AoAStructure { //StructureSize: 5x9x5
-	private static final IBlockState lunossoLeaves = BlockRegister.leavesLunosso.getDefaultState();
-	private static final IBlockState lunideLog = BlockRegister.logLunide.getDefaultState();
+	private static final IBlockState lunossoLeaves = BlockRegister.LUNOSSO_LEAVES.getDefaultState();
+	private static final IBlockState lunideLog = BlockRegister.LUNIDE_LOG.getDefaultState();
 
 	public LunossoTree2() {
 		super("LunossoTree2");

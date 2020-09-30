@@ -19,7 +19,7 @@ public class ColourCannon extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunColourCannon;
+		return SoundsRegister.COLOUR_CANNON_FIRE;
 	}
 
 	@Override

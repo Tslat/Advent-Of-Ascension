@@ -66,24 +66,24 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSkeletronLiving;
+		return SoundsRegister.MOB_SKELETRON_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSkeletronDeath;
+		return SoundsRegister.MOB_SKELETRON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSkeletronHit;
+		return SoundsRegister.MOB_SKELETRON_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -100,7 +100,7 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicSkeletron;
+		return SoundsRegister.SKELETRON_MUSIC;
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class EntitySkeletron extends AoAMeleeMob implements BossEntity {
 			if (killer != null) {
 				StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.skeletalArmy.kill", killer.getDisplayNameString()), this, 50);
 
-				if (killer instanceof EntityPlayerMP && killer.getHeldItemMainhand().getItem() == WeaponRegister.swordSkeletal) {
+				if (killer instanceof EntityPlayerMP && killer.getHeldItemMainhand().getItem() == WeaponRegister.SKELETAL_SWORD) {
 					for (ItemStack stack : killer.getArmorInventoryList()) {
 						if (!(stack.getItem() instanceof AdventArmour) || ((AdventArmour)stack.getItem()).setType() != Enums.ArmourSets.SKELETAL)
 							return;

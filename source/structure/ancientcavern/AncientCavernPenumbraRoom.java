@@ -12,11 +12,11 @@ import java.util.Random;
 public class AncientCavernPenumbraRoom extends WorldGenerator {
 	private World world;
 
-	private static final IBlockState ancientGlass = BlockRegister.glassAncient.getDefaultState();
-	private static final IBlockState ancientLamp = BlockRegister.lightAncient.getDefaultState();
-	private static final IBlockState blackAncientTile = BlockRegister.ancientTileBlack.getDefaultState();
-	private static final IBlockState erebonShrine = BlockRegister.shrineErebon.getDefaultState();
-	private static final IBlockState greenAncientTile = BlockRegister.ancientTileGreen.getDefaultState();
+	private static final IBlockState ancientGlass = BlockRegister.ANCIENT_GLASS.getDefaultState();
+	private static final IBlockState ancientLamp = BlockRegister.ANCIENT_LIGHT.getDefaultState();
+	private static final IBlockState blackAncientTile = BlockRegister.BLACK_ANCIENT_TILE.getDefaultState();
+	private static final IBlockState erebonShrine = BlockRegister.EREBON_SHRINE.getDefaultState();
+	private static final IBlockState greenAncientTile = BlockRegister.GREEN_ANCIENT_TILE.getDefaultState();
 	private static final IBlockState lava = Blocks.LAVA.getDefaultState();
 
 	@Override

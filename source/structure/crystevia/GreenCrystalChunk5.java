@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GreenCrystalChunk5 extends AoAStructure { //StructureSize: 3x6x3
-	private static final IBlockState greenCrystal = BlockRegister.crystalGreen.getDefaultState();
+	private static final IBlockState greenCrystal = BlockRegister.GREEN_CRYSTAL_BLOCK.getDefaultState();
 
 	public GreenCrystalChunk5() {
 		super("GreenCrystalChunk5");

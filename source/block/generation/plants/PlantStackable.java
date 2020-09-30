@@ -38,7 +38,7 @@ public class PlantStackable extends Block implements IShearable {
 		this.stemBlock = this;
 		this.growthMaterials = Arrays.asList(growthMaterial);
 		setTickRandomly(true);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Override

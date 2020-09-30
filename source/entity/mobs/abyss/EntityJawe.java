@@ -40,17 +40,17 @@ public class EntityJawe extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobJaweLiving;
+		return SoundsRegister.MOB_JAWE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobJaweDeath;
+		return SoundsRegister.MOB_JAWE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobJaweHit;
+		return SoundsRegister.MOB_JAWE_HIT;
 	}
 
 	@Nullable

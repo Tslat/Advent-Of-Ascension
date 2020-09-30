@@ -8,11 +8,11 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class KaiyuTemplePt2 {
-	private static final IBlockState plainTempleBlock = BlockRegister.kaiyuTempleBlockPlain.getDefaultState();
-	private static final IBlockState mazeTempleBlock = BlockRegister.kaiyuTempleBlockMaze.getDefaultState();
-	private static final IBlockState trackTempleBlock = BlockRegister.kaiyuTempleBlockTrack.getDefaultState();
-	private static final IBlockState fireTrap = BlockRegister.kaiyuTempleTrapSquares.getDefaultState();
-	private static final IBlockState damageTrap = BlockRegister.kaiyuTempleTrapMaze.getDefaultState();
+	private static final IBlockState plainTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_PLAIN.getDefaultState();
+	private static final IBlockState mazeTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_MAZE.getDefaultState();
+	private static final IBlockState trackTempleBlock = BlockRegister.KAIYU_TEMPLE_BLOCK_TRACK.getDefaultState();
+	private static final IBlockState fireTrap = BlockRegister.KAIYU_TEMPLE_TRAP_SQUARES.getDefaultState();
+	private static final IBlockState damageTrap = BlockRegister.KAIYU_TEMPLE_TRAP_MAZE.getDefaultState();
 
 	protected static void addBlocks(KaiyuTemple instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 33, 1, 30, mazeTempleBlock);

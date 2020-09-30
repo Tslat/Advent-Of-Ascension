@@ -13,13 +13,13 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AquaticCastle extends AoAStructure { //StructureSize: 24x49x25
-	private static final IBlockState coralBricks = BlockRegister.bricksCoral.getDefaultState();
-	private static final IBlockState carpet = BlockRegister.carpetBorean.getDefaultState();
-	private static final IBlockState coralCage = BlockRegister.plantCoralCage.getDefaultState();
-	private static final IBlockState aquaticLamp = BlockRegister.lampAquatic.getDefaultState();
-	private static final IBlockState mermageSpawner = BlockRegister.spawnerMermage.getDefaultState();
-	private static final IBlockState glass = BlockRegister.glassAquatic.getDefaultState();
-	private static final IBlockState decloggingTable = BlockRegister.decloggingTable.getDefaultState();
+	private static final IBlockState coralBricks = BlockRegister.CORAL_BRICKS.getDefaultState();
+	private static final IBlockState carpet = BlockRegister.BOREAN_CARPET.getDefaultState();
+	private static final IBlockState coralCage = BlockRegister.CORAL_CAGE.getDefaultState();
+	private static final IBlockState aquaticLamp = BlockRegister.AQUATIC_LAMP.getDefaultState();
+	private static final IBlockState mermageSpawner = BlockRegister.MERMAGE_SPAWNER.getDefaultState();
+	private static final IBlockState glass = BlockRegister.AQUATIC_GLASS.getDefaultState();
+	private static final IBlockState decloggingTable = BlockRegister.DECLOGGING_TABLE.getDefaultState();
 	private static final IBlockState chestEast = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 
 	public AquaticCastle() {

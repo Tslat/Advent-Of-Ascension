@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.staff.EntityLyonicShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -23,7 +23,7 @@ public class LyonicShotRenderer extends Render<EntityLyonicShot> {
 
 	@Override
 	public void doRender(EntityLyonicShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, AdventOfAscension.rand.nextBoolean() ? Enums.RGBIntegers.DARK_GRAY : Enums.RGBIntegers.GOLD, 3, 1).create();
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, AdventOfAscension.rand.nextBoolean() ? Enums.RGBIntegers.DARK_GRAY : Enums.RGBIntegers.GOLD, 100, 3, 3);
 	}
 
 	@Nullable

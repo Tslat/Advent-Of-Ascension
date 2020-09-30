@@ -11,8 +11,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CrystalTradingPost extends AoAStructure { //StructureSize: 9x3x9
-	private static final IBlockState crystevianBricks = BlockRegister.bricksCrystevia.getDefaultState();
-	private static final IBlockState redCrystal = BlockRegister.crystalRed.getDefaultState();
+	private static final IBlockState crystevianBricks = BlockRegister.CRYSTEVIA_BRICKS.getDefaultState();
+	private static final IBlockState redCrystal = BlockRegister.RED_CRYSTAL_BLOCK.getDefaultState();
 
 	public CrystalTradingPost() {
 		super("CrystalTradingPost");

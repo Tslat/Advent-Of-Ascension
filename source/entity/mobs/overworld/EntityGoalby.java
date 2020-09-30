@@ -49,17 +49,17 @@ public class EntityGoalby extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGoalbyLiving;
+		return SoundsRegister.MOB_GOALBY_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGoalbyDeath;
+		return SoundsRegister.MOB_GOALBY_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGoalbyHit;
+		return SoundsRegister.MOB_GOALBY_HIT;
 	}
 
 	@Nullable

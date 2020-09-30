@@ -1,13 +1,13 @@
 package net.tslat.aoa3.client.model.entities.minions;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.tslat.aoa3.client.model.entities.animations.ModelAnimatable;
 import org.lwjgl.opengl.GL11;
 
-public class ModelConstructOfServility extends ModelAnimatable {
+public class ModelConstructOfServility extends ModelBase {
 	private final ModelRenderer root;
 	private final ModelRenderer head;
 	private final ModelRenderer bone;
@@ -67,7 +67,7 @@ public class ModelConstructOfServility extends ModelAnimatable {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(770, 771);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		root.render(par7);
 		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
@@ -94,6 +94,5 @@ public class ModelConstructOfServility extends ModelAnimatable {
 		rightLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f) * 1.4f * par2;
 		rightLeg.rotateAngleY = 0.0f;
 		leftLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662f + 3.1415927f) * 1.4f * par2;*/
-		super.setRotationAngles(par1, par2, par3, par4, par5, par6, par7Entity);
 	}
 }

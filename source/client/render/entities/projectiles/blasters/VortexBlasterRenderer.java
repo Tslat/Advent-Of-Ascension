@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityVortexBlaster;
 import net.tslat.aoa3.library.Enums;
 
@@ -25,12 +25,12 @@ public class VortexBlasterRenderer extends Render<EntityVortexBlaster> {
 	public void doRender(EntityVortexBlaster entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		if (AdventOfAscension.rand.nextBoolean()) {
 			for (int i = 0; i < 3; i++) {
-				new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 3, 0.25f).create();
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 25, 3, 3);
 			}
 		}
 		else {
 			for (int i = 0; i < 3; i++) {
-				new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 3, 1).create();
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 100, 3, 3);
 			}
 		}
 	}

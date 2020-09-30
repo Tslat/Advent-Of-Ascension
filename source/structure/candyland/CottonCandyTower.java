@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CottonCandyTower extends AoAStructure { //StructureSize: 9x20x9
-	private static final IBlockState aquaCottonCandy = BlockRegister.cottonCandyAqua.getDefaultState();
-	private static final IBlockState pinkCottonCandy = BlockRegister.cottonCandyPink.getDefaultState();
-	private static final IBlockState plasticPole = BlockRegister.plastic.getDefaultState();
+	private static final IBlockState aquaCottonCandy = BlockRegister.AQUA_COTTON_CANDY.getDefaultState();
+	private static final IBlockState pinkCottonCandy = BlockRegister.PINK_COTTON_CANDY.getDefaultState();
+	private static final IBlockState plasticPole = BlockRegister.PLASTIC.getDefaultState();
 
 	public CottonCandyTower() {
 		super("CottonCandyTower");

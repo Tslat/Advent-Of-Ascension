@@ -11,14 +11,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.minions.EntityRosid;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class RosidRifle extends BaseSniper implements AdventWeapon {
+public class RosidRifle extends BaseSniper {
 	public RosidRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("RosidRifle");
@@ -28,7 +27,7 @@ public class RosidRifle extends BaseSniper implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override

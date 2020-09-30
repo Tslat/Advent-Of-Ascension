@@ -54,10 +54,10 @@ public class EntityGorbArmsDealer extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver), new ItemStack(WeaponRegister.throwableGrenade, 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(WeaponRegister.throwableRunicBomb), new ItemStack(ItemRegister.coinCopper, 7)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.hollyArrow), new ItemStack(ItemRegister.coinCopper, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 3), new ItemStack(WeaponRegister.blasterLaserBlaster)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 10), new ItemStack(ItemRegister.weaponParts)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN), new ItemStack(WeaponRegister.GRENADE, 5)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(WeaponRegister.RUNIC_BOMB), new ItemStack(ItemRegister.COPPER_COIN, 7)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.HOLLY_ARROW), new ItemStack(ItemRegister.COPPER_COIN, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 3), new ItemStack(WeaponRegister.LASER_BLASTER)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 10), new ItemStack(ItemRegister.WEAPON_PARTS)));
 	}
 }

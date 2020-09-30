@@ -12,11 +12,11 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class AbyssalTree4 extends AoAStructure { //StructureSize: 8x10x7
-	private static final IBlockState shadowbloodLeaves = BlockRegister.leavesShadowblood.getDefaultState();
-	private static final IBlockState bloodStrands = BlockRegister.plantBloodStrands.getDefaultState();
-	private static final IBlockState shadowLog = BlockRegister.logShadow.getDefaultState();
-	private static final IBlockState shadowLogBark = BlockRegister.logShadow.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-	private static final IBlockState eyeBlock = BlockRegister.eyeBlock.getDefaultState();
+	private static final IBlockState shadowbloodLeaves = BlockRegister.SHADOWBLOOD_LEAVES.getDefaultState();
+	private static final IBlockState bloodStrands = BlockRegister.BLOOD_STRANDS.getDefaultState();
+	private static final IBlockState shadowLog = BlockRegister.SHADOW_LOG.getDefaultState();
+	private static final IBlockState shadowLogBark = BlockRegister.SHADOW_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState eyeBlock = BlockRegister.EYE_BLOCK.getDefaultState();
 
 	public AbyssalTree4() {
 		super("AbyssalTree4");

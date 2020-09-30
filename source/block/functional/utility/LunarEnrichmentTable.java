@@ -24,17 +24,17 @@ public class LunarEnrichmentTable extends Block {
 		setHardness(5f);
 		setResistance(10f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.ingotRosite) {
+		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.ROSITE_INGOT) {
 			if (!player.capabilities.isCreativeMode)
 				player.getHeldItem(hand).shrink(1);
 
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.ingotLunar));
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.lunarEnrichmentTableUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.LUNAR_INGOT));
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.LUNAR_ENRICHMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 			return true;
 		}

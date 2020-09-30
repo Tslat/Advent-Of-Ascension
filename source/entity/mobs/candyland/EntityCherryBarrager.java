@@ -53,13 +53,13 @@ public class EntityCherryBarrager extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.plantThump;
+		return SoundsRegister.PLANT_THUMP;
 	}
 
 	@Nullable
@@ -89,7 +89,7 @@ public class EntityCherryBarrager extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotCherryBlasterFire;
+		return SoundsRegister.CHERRY_BLASTER_SHOOT;
 	}
 
 	@Override

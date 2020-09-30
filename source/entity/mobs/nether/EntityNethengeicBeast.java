@@ -57,24 +57,24 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements SpecialPropert
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobNethengeicBeastLiving;
+        return SoundsRegister.MOB_NETHENGEIC_BEAST_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobNethengeicBeastDeath;
+        return SoundsRegister.MOB_NETHENGEIC_BEAST_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobNethengeicBeastHit;
+        return SoundsRegister.MOB_NETHENGEIC_BEAST_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.heavyStep;
+        return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
     }
 
     @Nullable
@@ -92,9 +92,9 @@ public class EntityNethengeicBeast extends AoAMeleeMob implements SpecialPropert
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack heldStack = player.getHeldItem(hand);
 
-        if (heldStack.getItem() == ItemRegister.flammableDust) {
+        if (heldStack.getItem() == ItemRegister.FLAMMABLE_DUST) {
             if (!world.isRemote) {
-                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.nethengeicCallstone));
+                ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.NETHENGEIC_CALLSTONE));
                 heldStack.shrink(1);
             }
 

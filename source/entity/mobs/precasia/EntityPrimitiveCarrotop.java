@@ -41,12 +41,6 @@ public class EntityPrimitiveCarrotop extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	public String getCurrentAnimation() {
-		return currentAnimation == null ? "IDLE_1" : currentAnimation;
-	}
-
-	@Nullable
-	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
 	}
@@ -54,13 +48,13 @@ public class EntityPrimitiveCarrotop extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCeleveClownHit;
+		return SoundsRegister.MOB_CELEVE_CLOWN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCeleveClownDeath;
+		return SoundsRegister.MOB_CELEVE_CLOWN_DEATH;
 	}
 
 	@Override
@@ -68,6 +62,6 @@ public class EntityPrimitiveCarrotop extends AoAMeleeMob {
 		super.onDeath(cause);
 
 		if (!world.isRemote && world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia)
-			entityDropItem(new ItemStack(ItemRegister.realmstoneGardencia), 0f);
+			entityDropItem(new ItemStack(ItemRegister.GARDENCIA_REALMSTONE), 0f);
 	}
 }

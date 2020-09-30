@@ -12,11 +12,11 @@ import java.util.Random;
 import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 public class HauntedTree4 extends AoAStructure { //StructureSize: 15x25x15
-	private static final IBlockState hauntedLeaves = BlockRegister.leavesHaunted.getDefaultState();
-	private static final IBlockState hauntedLog = BlockRegister.logHaunted.getDefaultState();
-	private static final IBlockState hauntedLogBark = BlockRegister.logHaunted.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-	private static final IBlockState purplingWood = BlockRegister.logHauntedPurpling.getDefaultState();
-	private static final IBlockState purplingWoodBark = BlockRegister.logHauntedPurpling.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState hauntedLeaves = BlockRegister.HAUNTED_LEAVES.getDefaultState();
+	private static final IBlockState hauntedLog = BlockRegister.HAUNTED_LOG.getDefaultState();
+	private static final IBlockState hauntedLogBark = BlockRegister.HAUNTED_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+	private static final IBlockState purplingWood = BlockRegister.HAUNTED_PURPLING_LOG.getDefaultState();
+	private static final IBlockState purplingWoodBark = BlockRegister.HAUNTED_PURPLING_LOG.getDefaultState().withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
 
 	public HauntedTree4() {
 		super("HauntedTree4");

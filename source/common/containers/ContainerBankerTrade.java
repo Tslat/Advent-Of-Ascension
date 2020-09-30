@@ -163,20 +163,20 @@ public class ContainerBankerTrade extends Container {
 		switch (index) {
 			case 0:
 			case 9:
-				return ItemRegister.coinCopper;
+				return ItemRegister.COPPER_COIN;
 			case 1:
 			case 3:
 			case 6:
 			case 10:
-				return ItemRegister.coinSilver;
+				return ItemRegister.SILVER_COIN;
 			case 2:
 			case 4:
 			case 7:
 			case 11:
-				return ItemRegister.coinGold;
+				return ItemRegister.GOLD_COIN;
 			case 5:
 			case 8:
-				return ItemRegister.coinLunaver;
+				return ItemRegister.LUNAVER_COIN;
 			default:
 				return Items.AIR;
 		}

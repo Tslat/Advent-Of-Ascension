@@ -29,7 +29,7 @@ public class Revolution extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolution;
+		return SoundsRegister.REVOLUTION_FIRE;
 	}
 
 	@Override

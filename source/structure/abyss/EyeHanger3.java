@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class EyeHanger3 extends AoAStructure { //StructureSize: 5x7x5
-	private static final IBlockState eyeBlock = BlockRegister.eyeBlock.getDefaultState();
-	private static final IBlockState bloodLog = BlockRegister.logBlood.getDefaultState();
+	private static final IBlockState eyeBlock = BlockRegister.EYE_BLOCK.getDefaultState();
+	private static final IBlockState bloodLog = BlockRegister.BLOOD_LOG.getDefaultState();
 
 	public EyeHanger3() {
 		super("EyeHanger3");

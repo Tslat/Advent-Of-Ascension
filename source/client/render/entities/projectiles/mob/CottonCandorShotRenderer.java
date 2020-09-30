@@ -5,8 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
-import net.tslat.aoa3.client.fx.FXSwirlyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.mob.EntityCottonCandorShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -23,8 +22,8 @@ public class CottonCandorShotRenderer extends Render<EntityCottonCandorShot> {
 
 	@Override
 	public void doRender(EntityCottonCandorShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		new FXSwirlyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 5, 1).create();
-		new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PINK, 25, 1).create();
+		entity.world.spawnParticle(ParticleRegister.SWIRLY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 100, 3, 5);
+		entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PINK, 100, 3, 7);
 	}
 
 	@Nullable

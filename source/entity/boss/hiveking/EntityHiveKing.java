@@ -6,6 +6,7 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -83,19 +84,19 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobHiveKingLiving;
+		return SoundsRegister.MOB_HIVE_KING_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobHiveKingDeath;
+		return SoundsRegister.MOB_HIVE_KING_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobHiveKingLiving;
+		return SoundsRegister.MOB_HIVE_KING_LIVING;
 	}
 
 	@Nullable
@@ -167,6 +168,14 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	}
 
 	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		if (dataManager.get(GROWTH_PERCENT) < 100)
+			setHealth(getMaxHealth());
+
+		super.writeEntityToNBT(compound);
+	}
+
+	@Override
 	public void onDeath(DamageSource cause) {
 		if (growthPercent < 100)
 			return;
@@ -202,7 +211,7 @@ public class EntityHiveKing extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicHiveKing;
+		return SoundsRegister.HIVE_KING_MUSIC;
 	}
 
 	@Override

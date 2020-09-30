@@ -52,19 +52,19 @@ public class EntityGadgetoid extends AoAMeleeMob implements SpecialPropertyEntit
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobGadgetoidLiving;
+        return SoundsRegister.MOB_GADGETOID_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobGadgetoidDeath;
+        return SoundsRegister.MOB_GADGETOID_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobGadgetoidHit;
+        return SoundsRegister.MOB_GADGETOID_HIT;
     }
 
     @Nullable

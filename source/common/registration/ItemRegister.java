@@ -18,11 +18,13 @@ import net.tslat.aoa3.item.lootbox.*;
 import net.tslat.aoa3.item.minionslab.*;
 import net.tslat.aoa3.item.misc.*;
 import net.tslat.aoa3.item.misc.summon.*;
+import net.tslat.aoa3.item.record.RecordItem;
 import net.tslat.aoa3.item.tablet.*;
 import net.tslat.aoa3.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import org.apache.logging.log4j.Level;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
@@ -32,979 +34,507 @@ import java.util.ArrayList;
 public class ItemRegister {
 	private static ArrayList<ItemRegistryWrapper> itemRegistryList = new ArrayList<ItemRegistryWrapper>(750);
 
-	@GameRegistry.ObjectHolder("balloon")
-	public static final AmmoItem balloon = null;
-	@GameRegistry.ObjectHolder("limonite_bullet")
-	public static final ItemTieredBullet bulletLimonite = null;
-	@GameRegistry.ObjectHolder("cannonball")
-	public static final AmmoItem cannonball = null;
-	@GameRegistry.ObjectHolder("chilli")
-	public static final Chilli chilli = null;
-	@GameRegistry.ObjectHolder("discharge_capsule")
-	public static final AmmoItem dischargeCapsule = null;
-	@GameRegistry.ObjectHolder("holly_arrow")
-	public static final HollyArrow hollyArrow = null;
-	@GameRegistry.ObjectHolder("spectral_holly_arrow")
-	public static final SpectralHollyArrow hollyArrowSpectral = null;
-	@GameRegistry.ObjectHolder("tipped_holly_arrow")
-	public static final TippedHollyArrow hollyArrowTipped = null;
-	@GameRegistry.ObjectHolder("metal_slug")
-	public static final AmmoItem metalSlug = null;
-	@GameRegistry.ObjectHolder("pop_shot")
-	public static final PopShot popShot = null;
-	@GameRegistry.ObjectHolder("spreadshot")
-	public static final AmmoItem spreadshot = null;
+	public static final AmmoItem BALLOON = ObjectHolder();
+	public static final ItemTieredBullet LIMONITE_BULLET = ObjectHolder();
+	public static final AmmoItem CANNONBALL = ObjectHolder();
+	public static final Chilli CHILLI = ObjectHolder();
+	public static final AmmoItem DISCHARGE_CAPSULE = ObjectHolder();
+	public static final HollyArrow HOLLY_ARROW = ObjectHolder();
+	public static final SpectralHollyArrow SPECTRAL_HOLLY_ARROW = ObjectHolder();
+	public static final TippedHollyArrow TIPPED_HOLLY_ARROW = ObjectHolder();
+	public static final AmmoItem METAL_SLUG = ObjectHolder();
+	public static final PopShot POP_SHOT = ObjectHolder();
+	public static final AmmoItem SPREADSHOT = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("amethyst")
-	public static final SimpleItem gemAmethyst = null;
-	@GameRegistry.ObjectHolder("bloodstone")
-	public static final SimpleItem gemBloodstone = null;
-	@GameRegistry.ObjectHolder("crystallite")
-	public static final SimpleItem gemCrystallite = null;
-	@GameRegistry.ObjectHolder("gemenyte")
-	public static final SimpleItem gemGemenyte = null;
-	@GameRegistry.ObjectHolder("jade")
-	public static final SimpleItem gemJade = null;
-	@GameRegistry.ObjectHolder("jewelyte")
-	public static final SimpleItem gemJewelyte = null;
-	@GameRegistry.ObjectHolder("ornamyte")
-	public static final SimpleItem gemOrnamyte = null;
-	@GameRegistry.ObjectHolder("sapphire")
-	public static final SimpleItem gemSapphire = null;
-	@GameRegistry.ObjectHolder("shyregem")
-	public static final SimpleItem gemShyregem = null;
-	@GameRegistry.ObjectHolder("baronyte_ingot")
-	public static final SimpleItem ingotBaronyte = null;
-	@GameRegistry.ObjectHolder("blazium_ingot")
-	public static final SimpleItem ingotBlazium = null;
-	@GameRegistry.ObjectHolder("elecanium_ingot")
-	public static final SimpleItem ingotElecanium = null;
-	@GameRegistry.ObjectHolder("emberstone_ingot")
-	public static final SimpleItem ingotEmberstone = null;
-	@GameRegistry.ObjectHolder("ghastly_ingot")
-	public static final SimpleItem ingotGhastly = null;
-	@GameRegistry.ObjectHolder("ghoulish_ingot")
-	public static final SimpleItem ingotGhoulish = null;
-	@GameRegistry.ObjectHolder("limonite_ingot")
-	public static final SimpleItem ingotLimonite = null;
-	@GameRegistry.ObjectHolder("lunar_ingot")
-	public static final SimpleItem ingotLunar = null;
-	@GameRegistry.ObjectHolder("lyon_ingot")
-	public static final SimpleItem ingotLyon = null;
-	@GameRegistry.ObjectHolder("mystite_ingot")
-	public static final SimpleItem ingotMystite = null;
-	@GameRegistry.ObjectHolder("rosite_ingot")
-	public static final SimpleItem ingotRosite = null;
-	@GameRegistry.ObjectHolder("rusted_iron_ingot")
-	public static final SimpleItem ingotRustedIron = null;
-	@GameRegistry.ObjectHolder("shyrestone_ingot")
-	public static final SimpleItem ingotShyrestone = null;
-	@GameRegistry.ObjectHolder("skeletal_ingot")
-	public static final SimpleItem ingotSkeletal = null;
-	@GameRegistry.ObjectHolder("varsium_ingot")
-	public static final SimpleItem ingotVarsium = null;
-	@GameRegistry.ObjectHolder("runium_chunk")
-	public static final SimpleItem runiumChunk = null;
+	public static final SimpleItem AMETHYST = ObjectHolder();
+	public static final SimpleItem BLOODSTONE = ObjectHolder();
+	public static final SimpleItem CRYSTALLITE = ObjectHolder();
+	public static final SimpleItem GEMENYTE = ObjectHolder();
+	public static final SimpleItem JADE = ObjectHolder();
+	public static final SimpleItem JEWELYTE = ObjectHolder();
+	public static final SimpleItem ORNAMYTE = ObjectHolder();
+	public static final SimpleItem SAPPHIRE = ObjectHolder();
+	public static final SimpleItem SHYREGEM = ObjectHolder();
+	public static final SimpleItem BARONYTE_INGOT = ObjectHolder();
+	public static final SimpleItem BLAZIUM_INGOT = ObjectHolder();
+	public static final SimpleItem ELECANIUM_INGOT = ObjectHolder();
+	public static final SimpleItem EMBERSTONE_INGOT = ObjectHolder();
+	public static final SimpleItem GHASTLY_INGOT = ObjectHolder();
+	public static final SimpleItem GHOULISH_INGOT = ObjectHolder();
+	public static final SimpleItem LIMONITE_INGOT = ObjectHolder();
+	public static final SimpleItem LUNAR_INGOT = ObjectHolder();
+	public static final SimpleItem LYON_INGOT = ObjectHolder();
+	public static final SimpleItem MYSTITE_INGOT = ObjectHolder();
+	public static final SimpleItem ROSITE_INGOT = ObjectHolder();
+	public static final SimpleItem RUSTED_IRON_INGOT = ObjectHolder();
+	public static final SimpleItem SHYRESTONE_INGOT = ObjectHolder();
+	public static final SimpleItem SKELETAL_INGOT = ObjectHolder();
+	public static final SimpleItem VARSIUM_INGOT = ObjectHolder();
+	public static final SimpleItem RUNIUM_CHUNK = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("chestbone_fragment")
-	public static final SimpleItem boneFragmentChestbone = null;
-	@GameRegistry.ObjectHolder("footbone_fragment")
-	public static final SimpleItem boneFragmentFootbone = null;
-	@GameRegistry.ObjectHolder("legbone_fragment")
-	public static final SimpleItem boneFragmentLegbone = null;
-	@GameRegistry.ObjectHolder("skullbone_fragment")
-	public static final SimpleItem boneFragmentSkullbone = null;
-	@GameRegistry.ObjectHolder("charged_runium_chunk")
-	public static final SimpleItem chargedRuniumChunk = null;
-	@GameRegistry.ObjectHolder("blue_crystal")
-	public static final SimpleItem crystalBlue = null;
-	@GameRegistry.ObjectHolder("green_crystal")
-	public static final SimpleItem crystalGreen = null;
-	@GameRegistry.ObjectHolder("purple_crystal")
-	public static final SimpleItem crystalPurple = null;
-	@GameRegistry.ObjectHolder("red_crystal")
-	public static final SimpleItem crystalRed = null;
-	@GameRegistry.ObjectHolder("white_crystal")
-	public static final SimpleItem crystalWhite = null;
-	@GameRegistry.ObjectHolder("yellow_crystal")
-	public static final SimpleItem crystalYellow = null;
+	public static final SimpleItem CHESTBONE_FRAGMENT = ObjectHolder();
+	public static final SimpleItem FOOTBONE_FRAGMENT = ObjectHolder();
+	public static final SimpleItem LEGBONE_FRAGMENT = ObjectHolder();
+	public static final SimpleItem SKULLBONE_FRAGMENT = ObjectHolder();
+	public static final SimpleItem CHARGED_RUNIUM_CHUNK = ObjectHolder();
+	public static final SimpleItem BLUE_CRYSTAL = ObjectHolder();
+	public static final SimpleItem GREEN_CRYSTAL = ObjectHolder();
+	public static final SimpleItem PURPLE_CRYSTAL = ObjectHolder();
+	public static final SimpleItem RED_CRYSTAL = ObjectHolder();
+	public static final SimpleItem WHITE_CRYSTAL = ObjectHolder();
+	public static final SimpleItem YELLOW_CRYSTAL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("charged_rune")
-	public static final RuneItem runeCharged = null;
-	@GameRegistry.ObjectHolder("compass_rune")
-	public static final RuneItem runeCompass = null;
-	@GameRegistry.ObjectHolder("distortion_rune")
-	public static final RuneItem runeDistortion = null;
-	@GameRegistry.ObjectHolder("energy_rune")
-	public static final RuneItem runeEnergy = null;
-	@GameRegistry.ObjectHolder("fire_rune")
-	public static final RuneItem runeFire = null;
-	@GameRegistry.ObjectHolder("kinetic_rune")
-	public static final RuneItem runeKinetic = null;
-	@GameRegistry.ObjectHolder("life_rune")
-	public static final RuneItem runeLife = null;
-	@GameRegistry.ObjectHolder("lunar_rune")
-	public static final RuneItem runeLunar = null;
-	@GameRegistry.ObjectHolder("poison_rune")
-	public static final RuneItem runePoison = null;
-	@GameRegistry.ObjectHolder("power_rune")
-	public static final RuneItem runePower = null;
-	@GameRegistry.ObjectHolder("storm_rune")
-	public static final RuneItem runeStorm = null;
-	@GameRegistry.ObjectHolder("strike_rune")
-	public static final RuneItem runeStrike = null;
-	@GameRegistry.ObjectHolder("unpowered_rune")
-	public static final RuneItem runeUnpowered = null;
-	@GameRegistry.ObjectHolder("water_rune")
-	public static final RuneItem runeWater = null;
-	@GameRegistry.ObjectHolder("wind_rune")
-	public static final RuneItem runeWind = null;
-	@GameRegistry.ObjectHolder("wither_rune")
-	public static final RuneItem runeWither = null;
+	public static final RuneItem CHARGED_RUNE = ObjectHolder();
+	public static final RuneItem COMPASS_RUNE = ObjectHolder();
+	public static final RuneItem DISTORTION_RUNE = ObjectHolder();
+	public static final RuneItem ENERGY_RUNE = ObjectHolder();
+	public static final RuneItem FIRE_RUNE = ObjectHolder();
+	public static final RuneItem KINETIC_RUNE = ObjectHolder();
+	public static final RuneItem LIFE_RUNE = ObjectHolder();
+	public static final RuneItem LUNAR_RUNE = ObjectHolder();
+	public static final RuneItem POISON_RUNE = ObjectHolder();
+	public static final RuneItem POWER_RUNE = ObjectHolder();
+	public static final RuneItem STORM_RUNE = ObjectHolder();
+	public static final RuneItem STRIKE_RUNE = ObjectHolder();
+	public static final RuneItem UNPOWERED_RUNE = ObjectHolder();
+	public static final RuneItem WATER_RUNE = ObjectHolder();
+	public static final RuneItem WIND_RUNE = ObjectHolder();
+	public static final RuneItem WITHER_RUNE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("active_rune_stone")
-	public static final SimpleItem activeRuneStone = null;
-	@GameRegistry.ObjectHolder("alien_orb")
-	public static final ReservedItem alienOrb = null;
-	@GameRegistry.ObjectHolder("amphibiyte_lung")
-	public static final AmphibiyteLung amphibiyteLung = null;
-	@GameRegistry.ObjectHolder("apoco_stone")
-	public static final SimpleItem apocoStone = null;
-	@GameRegistry.ObjectHolder("armour_plating")
-	public static final SimpleItem armourPlating = null;
-	@GameRegistry.ObjectHolder("blank_slab")
-	public static final SimpleItem blankSlab = null;
-	@GameRegistry.ObjectHolder("chitin")
-	public static final SimpleItem chitin = null;
-	@GameRegistry.ObjectHolder("circus_coin")
-	public static final SimpleItem circusCoin = null;
-	@GameRegistry.ObjectHolder("copper_coin")
-	public static final CoinItem coinCopper = null;
-	@GameRegistry.ObjectHolder("gold_coin")
-	public static final CoinItem coinGold = null;
-	@GameRegistry.ObjectHolder("lunaver_coin")
-	public static final CoinItem coinLunaver = null;
-	@GameRegistry.ObjectHolder("silver_coin")
-	public static final CoinItem coinSilver = null;
-	@GameRegistry.ObjectHolder("confetti_pile")
-	public static final SimpleItem confettiPile = null;
-	@GameRegistry.ObjectHolder("coral_stone")
-	public static final SimpleItem coralStone = null;
-	@GameRegistry.ObjectHolder("cosmic_dust")
-	public static final SimpleItem cosmicDust = null;
-	@GameRegistry.ObjectHolder("cup")
-	public static final SimpleItem cup = null;
-	@GameRegistry.ObjectHolder("dark_bones")
-	public static final ReservedItem darkBones = null;
-	@GameRegistry.ObjectHolder("darkly_powder")
-	public static final SimpleItem darklyPowder = null;
-	@GameRegistry.ObjectHolder("dense_rock")
-	public static final SimpleItem denseRock = null;
-	@GameRegistry.ObjectHolder("desert_shell")
-	public static final SimpleItem desertShell = null;
-	@GameRegistry.ObjectHolder("distorting_artifact")
-	public static final DistortingArtifact distortingArtifact = null;
-	@GameRegistry.ObjectHolder("doom_stone")
-	public static final SimpleItem doomStone = null;
-	@GameRegistry.ObjectHolder("blue_druse")
-	public static final SimpleItem druseBlue = null;
-	@GameRegistry.ObjectHolder("green_druse")
-	public static final SimpleItem druseGreen = null;
-	@GameRegistry.ObjectHolder("purple_druse")
-	public static final SimpleItem drusePurple = null;
-	@GameRegistry.ObjectHolder("rainbow_druse")
-	public static final SimpleItem druseRainbow = null;
-	@GameRegistry.ObjectHolder("red_druse")
-	public static final SimpleItem druseRed = null;
-	@GameRegistry.ObjectHolder("white_druse")
-	public static final SimpleItem druseWhite = null;
-	@GameRegistry.ObjectHolder("yellow_druse")
-	public static final SimpleItem druseYellow = null;
-	@GameRegistry.ObjectHolder("enchanted_gunpowder")
-	public static final SimpleItem enchantedGunpowder = null;
-	@GameRegistry.ObjectHolder("eye_bulb")
-	public static final EyeBulb eyeBulb = null;
-	@GameRegistry.ObjectHolder("flammable_dust")
-	public static final SimpleItem flammableDust = null;
-	@GameRegistry.ObjectHolder("fleshy_bones")
-	public static final ReservedItem fleshyBones = null;
-	@GameRegistry.ObjectHolder("floating_stone")
-	public static final FloatingStone floatingStone = null;
-	@GameRegistry.ObjectHolder("fragmented_anima_stone")
-	public static final FragmentedAnimaStone fragmentedAnimaStone = null;
-	@GameRegistry.ObjectHolder("blue_gemstones")
-	public static final SimpleItem gemstonesBlue = null;
-	@GameRegistry.ObjectHolder("green_gemstones")
-	public static final SimpleItem gemstonesGreen = null;
-	@GameRegistry.ObjectHolder("purple_gemstones")
-	public static final SimpleItem gemstonesPurple = null;
-	@GameRegistry.ObjectHolder("red_gemstones")
-	public static final SimpleItem gemstonesRed = null;
-	@GameRegistry.ObjectHolder("white_gemstones")
-	public static final SimpleItem gemstonesWhite = null;
-	@GameRegistry.ObjectHolder("yellow_gemstones")
-	public static final SimpleItem gemstonesYellow = null;
-	@GameRegistry.ObjectHolder("ghostly_powder")
-	public static final SimpleItem ghostlyPowder = null;
-	@GameRegistry.ObjectHolder("ghostly_stone")
-	public static final SimpleItem ghostlyStone = null;
-	@GameRegistry.ObjectHolder("ghoulasm")
-	public static final SimpleItem ghoulasm = null;
-	@GameRegistry.ObjectHolder("gravitator")
-	public static final Gravitator gravitator = null;
-	@GameRegistry.ObjectHolder("hardened_confetti_ball")
-	public static final SimpleItem hardenedConfettiBall = null;
-	@GameRegistry.ObjectHolder("hive_chunk")
-	public static final HiveChunk hiveChunk = null;
-	@GameRegistry.ObjectHolder("holly_top_petals")
-	public static final HollyTopPetals hollyTopPetals = null;
-	@GameRegistry.ObjectHolder("hydro_stone")
-	public static final SimpleItem hydroStone = null;
-	@GameRegistry.ObjectHolder("ice_crystal")
-	public static final SimpleItem iceCrystal = null;
-	@GameRegistry.ObjectHolder("impure_gold")
-	public static final SimpleItem impureGold = null;
-	@GameRegistry.ObjectHolder("ivory")
-	public static final SimpleItem ivory = null;
-	@GameRegistry.ObjectHolder("jungle_thorns")
-	public static final SimpleItem jungleThorns = null;
-	@GameRegistry.ObjectHolder("limonite_rod")
-	public static final SimpleItem limoniteRod = null;
-	@GameRegistry.ObjectHolder("lotto_totem")
-	public static final ItemLottoTotem lottoTotem = null;
-	@GameRegistry.ObjectHolder("lunarade_mug")
-	public static final SimpleItem lunaradeMug = null;
-	@GameRegistry.ObjectHolder("metal_tub")
-	public static final SimpleItem metalTub = null;
-	@GameRegistry.ObjectHolder("magic_mending_compound")
-	public static final SimpleItem magicMendingCompound = null;
-	@GameRegistry.ObjectHolder("magic_mending_solution")
-	public static final MagicMendingSolution magicMendingSolution = null;
-	@GameRegistry.ObjectHolder("magic_repair_dust")
-	public static final SimpleItem magicRepairDust = null;
-	@GameRegistry.ObjectHolder("magnet_shard")
-	public static final SimpleItem magnetShard = null;
-	@GameRegistry.ObjectHolder("mecha_gear")
-	public static final SimpleItem mechaGear = null;
-	@GameRegistry.ObjectHolder("mega_rune_fragment_blue")
-	public static final SimpleItem megaRuneFragmentBlue = null;
-	@GameRegistry.ObjectHolder("mega_rune_fragment_green")
-	public static final SimpleItem megaRuneFragmentGreen = null;
-	@GameRegistry.ObjectHolder("mega_rune_fragment_red")
-	public static final SimpleItem megaRuneFragmentRed = null;
-	@GameRegistry.ObjectHolder("mega_rune_fragment_yellow")
-	public static final SimpleItem megaRuneFragmentYellow = null;
-	@GameRegistry.ObjectHolder("millennium_upgrader")
-	public static final ReservedItem millenniumUpgrader = null;
-	@GameRegistry.ObjectHolder("molten_upgrader")
-	public static final ReservedItem moltenUpgrader = null;
-	@GameRegistry.ObjectHolder("moonstone")
-	public static final ReservedItem moonstone = null;
-	@GameRegistry.ObjectHolder("mud_ball")
-	public static final SimpleItem mudBall = null;
-	@GameRegistry.ObjectHolder("mushroom_spores")
-	public static final SimpleItem mushroomSpores = null;
-	@GameRegistry.ObjectHolder("nightmare_flakes")
-	public static final SimpleItem nightmareFlakes = null;
-	@GameRegistry.ObjectHolder("old_boot")
-	public static final SimpleItem oldBoot = null;
-	@GameRegistry.ObjectHolder("opteryx_feather")
-	public static final SimpleItem opteryxFeather = null;
-	@GameRegistry.ObjectHolder("orange_spores")
-	public static final SimpleItem orangeSpores = null;
-	@GameRegistry.ObjectHolder("orbulon")
-	public static final SimpleItem orbulon = null;
-	@GameRegistry.ObjectHolder("padded_cloth")
-	public static final SimpleItem paddedCloth = null;
-	@GameRegistry.ObjectHolder("phantasm")
-	public static final SimpleItem phantasm = null;
-	@GameRegistry.ObjectHolder("power_core")
-	public static final SimpleItem powerCore = null;
-	@GameRegistry.ObjectHolder("primed_ghoulasm")
-	public static final SimpleItem primedGhoulasm = null;
-	@GameRegistry.ObjectHolder("primordial_skull")
-	public static final SimpleItem primordialSkull = null;
-	@GameRegistry.ObjectHolder("pure_coral_stone")
-	public static final SimpleItem pureCoralStone = null;
-	@GameRegistry.ObjectHolder("pure_gold")
-	public static final SimpleItem pureGold = null;
-	@GameRegistry.ObjectHolder("pure_rain_stone")
-	public static final SimpleItem pureRainStone = null;
-	@GameRegistry.ObjectHolder("rammerhead_hide")
-	public static final SimpleItem rammerheadHide = null;
-	@GameRegistry.ObjectHolder("realm_travel_ticket")
-	public static final SimpleItem realmTravelTicket = null;
-	@GameRegistry.ObjectHolder("reinforced_cloth")
-	public static final SimpleItem reinforcedCloth = null;
-	@GameRegistry.ObjectHolder("return_crystal")
-	public static final ReturnCrystal returnCrystal = null;
-	@GameRegistry.ObjectHolder("rock_bones")
-	public static final ReservedItem rockBones = null;
-	@GameRegistry.ObjectHolder("rosid_root")
-	public static final SimpleItem rosidRoot = null;
-	@GameRegistry.ObjectHolder("rune_stone")
-	public static final SimpleItem runeStone = null;
-	@GameRegistry.ObjectHolder("runic_energy")
-	public static final SimpleItem runicEnergy = null;
-	@GameRegistry.ObjectHolder("scrap_metal")
-	public static final SimpleItem scrapMetal = null;
-	@GameRegistry.ObjectHolder("scream_shield")
-	public static final SimpleItem screamShield = null;
-	@GameRegistry.ObjectHolder("sharp_claw")
-	public static final SimpleItem sharpClaw = null;
-	@GameRegistry.ObjectHolder("sludge_parasite")
-	public static final SimpleItem sludgeParasite = null;
-	@GameRegistry.ObjectHolder("small_blue_petal")
-	public static final SimpleItem smallPetalBlue = null;
-	@GameRegistry.ObjectHolder("small_green_petal")
-	public static final SimpleItem smallPetalGreen = null;
-	@GameRegistry.ObjectHolder("small_orange_petal")
-	public static final SimpleItem smallPetalOrange = null;
-	@GameRegistry.ObjectHolder("small_purple_petal")
-	public static final SimpleItem smallPetalPurple = null;
-	@GameRegistry.ObjectHolder("small_red_petal")
-	public static final SimpleItem smallPetalRed = null;
-	@GameRegistry.ObjectHolder("soulbone")
-	public static final ReservedItem soulbone = null;
-	@GameRegistry.ObjectHolder("sticky_slime")
-	public static final SimpleItem stickySlime = null;
-	@GameRegistry.ObjectHolder("blue_strange_stone")
-	public static final SimpleItem strangeStoneBlue = null;
-	@GameRegistry.ObjectHolder("white_strange_stone")
-	public static final SimpleItem strangeStoneWhite = null;
-	@GameRegistry.ObjectHolder("yellow_strange_stone")
-	public static final SimpleItem strangeStoneYellow = null;
-	@GameRegistry.ObjectHolder("tea_shreddings")
-	public static final TeaShreddings teaShreddings = null;
-	@GameRegistry.ObjectHolder("thorny_petals")
-	public static final ThornyPetals thornyPetals = null;
-	@GameRegistry.ObjectHolder("torn_cloth")
-	public static final SimpleItem tornCloth = null;
-	@GameRegistry.ObjectHolder("toxic_lump")
-	public static final SimpleItem toxicLump = null;
-	@GameRegistry.ObjectHolder("troll_skull")
-	public static final SimpleItem trollSkull = null;
-	@GameRegistry.ObjectHolder("uncharged_orb")
-	public static final SimpleItem unchargedOrb = null;
-	@GameRegistry.ObjectHolder("uncharged_stone")
-	public static final SimpleItem unchargedStone = null;
-	@GameRegistry.ObjectHolder("unstable_gunpowder")
-	public static final SimpleItem unstableGunpowder = null;
-	@GameRegistry.ObjectHolder("urka_hide")
-	public static final SimpleItem urkaHide = null;
-	@GameRegistry.ObjectHolder("void_scales")
-	public static final SimpleItem voidScales = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_battle")
-	public static final SimpleItem vulcaneAugmentBattle = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_equality")
-	public static final SimpleItem vulcaneAugmentEquality = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_fire")
-	public static final SimpleItem vulcaneAugmentFire = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_impairment")
-	public static final SimpleItem vulcaneAugmentImpairment = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_poison")
-	public static final SimpleItem vulcaneAugmentPoison = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_power")
-	public static final SimpleItem vulcaneAugmentPower = null;
-	@GameRegistry.ObjectHolder("vulcane_augment_wither")
-	public static final SimpleItem vulcaneAugmentWither = null;
-	@GameRegistry.ObjectHolder("weapon_parts")
-	public static final SimpleItem weaponParts = null;
-	@GameRegistry.ObjectHolder("whitewashing_solution")
-	public static final SimpleItem whitewashingSolution = null;
-	@GameRegistry.ObjectHolder("worn_book")
-	public static final WornBook wornBook = null;
-	@GameRegistry.ObjectHolder("yellow_spores")
-	public static final SimpleItem yellowSpores = null;
-	@GameRegistry.ObjectHolder("zhinx_dust")
-	public static final SimpleItem zhinxDust = null;
+	public static final SimpleItem ACTIVE_RUNE_STONE = ObjectHolder();
+	public static final ReservedItem ALIEN_ORB = ObjectHolder();
+	public static final AmphibiyteLung AMPHIBIYTE_LUNG = ObjectHolder();
+	public static final SimpleItem APOCO_STONE = ObjectHolder();
+	public static final SimpleItem ARMOUR_PLATING = ObjectHolder();
+	public static final SimpleItem BLANK_SLAB = ObjectHolder();
+	public static final SimpleItem CHITIN = ObjectHolder();
+	public static final SimpleItem CIRCUS_COIN = ObjectHolder();
+	public static final CoinItem COPPER_COIN = ObjectHolder();
+	public static final CoinItem GOLD_COIN = ObjectHolder();
+	public static final CoinItem LUNAVER_COIN = ObjectHolder();
+	public static final CoinItem SILVER_COIN = ObjectHolder();
+	public static final SimpleItem CONFETTI_PILE = ObjectHolder();
+	public static final SimpleItem CORAL_STONE = ObjectHolder();
+	public static final SimpleItem COSMIC_DUST = ObjectHolder();
+	public static final SimpleItem CUP = ObjectHolder();
+	public static final ReservedItem DARK_BONES = ObjectHolder();
+	public static final SimpleItem DARKLY_POWDER = ObjectHolder();
+	public static final SimpleItem DENSE_ROCK = ObjectHolder();
+	public static final SimpleItem DESERT_SHELL = ObjectHolder();
+	public static final DistortingArtifact DISTORTING_ARTIFACT = ObjectHolder();
+	public static final SimpleItem DOOM_STONE = ObjectHolder();
+	public static final SimpleItem BLUE_DRUSE = ObjectHolder();
+	public static final SimpleItem GREEN_DRUSE = ObjectHolder();
+	public static final SimpleItem PURPLE_DRUSE = ObjectHolder();
+	public static final SimpleItem RAINBOW_DRUSE = ObjectHolder();
+	public static final SimpleItem RED_DRUSE = ObjectHolder();
+	public static final SimpleItem WHITE_DRUSE = ObjectHolder();
+	public static final SimpleItem YELLOW_DRUSE = ObjectHolder();
+	public static final SimpleItem ENCHANTED_GUNPOWDER = ObjectHolder();
+	public static final EyeBulb EYE_BULB = ObjectHolder();
+	public static final SimpleItem FLAMMABLE_DUST = ObjectHolder();
+	public static final ReservedItem FLESHY_BONES = ObjectHolder();
+	public static final FloatingStone FLOATING_STONE = ObjectHolder();
+	public static final FragmentedAnimaStone FRAGMENTED_ANIMA_STONE = ObjectHolder();
+	public static final SimpleItem BLUE_GEMSTONES = ObjectHolder();
+	public static final SimpleItem GREEN_GEMSTONES = ObjectHolder();
+	public static final SimpleItem PURPLE_GEMSTONES = ObjectHolder();
+	public static final SimpleItem RED_GEMSTONES = ObjectHolder();
+	public static final SimpleItem WHITE_GEMSTONES = ObjectHolder();
+	public static final SimpleItem YELLOW_GEMSTONES = ObjectHolder();
+	public static final SimpleItem GHOSTLY_POWDER = ObjectHolder();
+	public static final SimpleItem GHOSTLY_STONE = ObjectHolder();
+	public static final SimpleItem GHOULASM = ObjectHolder();
+	public static final Gravitator GRAVITATOR = ObjectHolder();
+	public static final SimpleItem HARDENED_CONFETTI_BALL = ObjectHolder();
+	public static final HiveChunk HIVE_CHUNK = ObjectHolder();
+	public static final HollyTopPetals HOLLY_TOP_PETALS = ObjectHolder();
+	public static final SimpleItem HYDRO_STONE = ObjectHolder();
+	public static final SimpleItem ICE_CRYSTAL = ObjectHolder();
+	public static final SimpleItem IMPURE_GOLD = ObjectHolder();
+	public static final SimpleItem IVORY = ObjectHolder();
+	public static final SimpleItem JUNGLE_THORNS = ObjectHolder();
+	public static final SimpleItem LIMONITE_ROD = ObjectHolder();
+	public static final ItemLottoTotem LOTTO_TOTEM = ObjectHolder();
+	public static final SimpleItem LUNARADE_MUG = ObjectHolder();
+	public static final SimpleItem METAL_TUB = ObjectHolder();
+	public static final SimpleItem MAGIC_MENDING_COMPOUND = ObjectHolder();
+	public static final MagicMendingSolution MAGIC_MENDING_SOLUTION = ObjectHolder();
+	public static final SimpleItem MAGIC_REPAIR_DUST = ObjectHolder();
+	public static final SimpleItem MAGNET_SHARD = ObjectHolder();
+	public static final SimpleItem MECHA_GEAR = ObjectHolder();
+	public static final SimpleItem MEGA_RUNE_FRAGMENT_BLUE = ObjectHolder();
+	public static final SimpleItem MEGA_RUNE_FRAGMENT_GREEN = ObjectHolder();
+	public static final SimpleItem MEGA_RUNE_FRAGMENT_RED = ObjectHolder();
+	public static final SimpleItem MEGA_RUNE_FRAGMENT_YELLOW = ObjectHolder();
+	public static final ReservedItem MILLENNIUM_UPGRADER = ObjectHolder();
+	public static final ReservedItem MOLTEN_UPGRADER = ObjectHolder();
+	public static final ReservedItem MOONSTONE = ObjectHolder();
+	public static final SimpleItem MUD_BALL = ObjectHolder();
+	public static final SimpleItem MUSHROOM_SPORES = ObjectHolder();
+	public static final SimpleItem NIGHTMARE_FLAKES = ObjectHolder();
+	public static final SimpleItem OLD_BOOT = ObjectHolder();
+	public static final SimpleItem OPTERYX_FEATHER = ObjectHolder();
+	public static final SimpleItem ORANGE_SPORES = ObjectHolder();
+	public static final SimpleItem ORBULON = ObjectHolder();
+	public static final SimpleItem PADDED_CLOTH = ObjectHolder();
+	public static final SimpleItem PHANTASM = ObjectHolder();
+	public static final SimpleItem POWER_CORE = ObjectHolder();
+	public static final SimpleItem PRIMED_GHOULASM = ObjectHolder();
+	public static final SimpleItem PRIMORDIAL_SKULL = ObjectHolder();
+	public static final SimpleItem PURE_CORAL_STONE = ObjectHolder();
+	public static final SimpleItem PURE_GOLD = ObjectHolder();
+	public static final SimpleItem PURE_RAIN_STONE = ObjectHolder();
+	public static final SimpleItem RAMMERHEAD_HIDE = ObjectHolder();
+	public static final SimpleItem REALM_TRAVEL_TICKET = ObjectHolder();
+	public static final SimpleItem REINFORCED_CLOTH = ObjectHolder();
+	public static final ReturnCrystal RETURN_CRYSTAL = ObjectHolder();
+	public static final ReservedItem ROCK_BONES = ObjectHolder();
+	public static final SimpleItem ROSID_ROOT = ObjectHolder();
+	public static final SimpleItem RUNE_STONE = ObjectHolder();
+	public static final SimpleItem RUNIC_ENERGY = ObjectHolder();
+	public static final SimpleItem SCRAP_METAL = ObjectHolder();
+	public static final SimpleItem SCREAM_SHIELD = ObjectHolder();
+	public static final SimpleItem SHARP_CLAW = ObjectHolder();
+	public static final SimpleItem SLUDGE_PARASITE = ObjectHolder();
+	public static final SimpleItem SMALL_BLUE_PETAL = ObjectHolder();
+	public static final SimpleItem SMALL_GREEN_PETAL = ObjectHolder();
+	public static final SimpleItem SMALL_ORANGE_PETAL = ObjectHolder();
+	public static final SimpleItem SMALL_PURPLE_PETAL = ObjectHolder();
+	public static final SimpleItem SMALL_RED_PETAL = ObjectHolder();
+	public static final ReservedItem SOULBONE = ObjectHolder();
+	public static final SimpleItem STICKY_SLIME = ObjectHolder();
+	public static final SimpleItem BLUE_STRANGE_STONE = ObjectHolder();
+	public static final SimpleItem WHITE_STRANGE_STONE = ObjectHolder();
+	public static final SimpleItem YELLOW_STRANGE_STONE = ObjectHolder();
+	public static final TeaShreddings TEA_SHREDDINGS = ObjectHolder();
+	public static final ThornyPetals THORNY_PETALS = ObjectHolder();
+	public static final SimpleItem TORN_CLOTH = ObjectHolder();
+	public static final SimpleItem TOXIC_LUMP = ObjectHolder();
+	public static final SimpleItem TROLL_SKULL = ObjectHolder();
+	public static final SimpleItem UNCHARGED_ORB = ObjectHolder();
+	public static final SimpleItem UNCHARGED_STONE = ObjectHolder();
+	public static final SimpleItem UNSTABLE_GUNPOWDER = ObjectHolder();
+	public static final SimpleItem URKA_HIDE = ObjectHolder();
+	public static final SimpleItem VOID_SCALES = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_BATTLE = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_EQUALITY = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_FIRE = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_IMPAIRMENT = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_POISON = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_POWER = ObjectHolder();
+	public static final SimpleItem VULCANE_AUGMENT_WITHER = ObjectHolder();
+	public static final SimpleItem WEAPON_PARTS = ObjectHolder();
+	public static final SimpleItem WHITEWASHING_SOLUTION = ObjectHolder();
+	public static final WornBook WORN_BOOK = ObjectHolder();
+	public static final SimpleItem YELLOW_SPORES = ObjectHolder();
+	public static final SimpleItem ZHINX_DUST = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("archergun_frame")
-	public static final FrameItem frameArchergun = null;
-	@GameRegistry.ObjectHolder("blaster_frame")
-	public static final FrameItem frameBlaster = null;
-	@GameRegistry.ObjectHolder("boots_frame")
-	public static final FrameItem frameBoots = null;
-	@GameRegistry.ObjectHolder("leggings_frame")
-	public static final FrameItem frameLeggings = null;
-	@GameRegistry.ObjectHolder("chestplate_frame")
-	public static final FrameItem frameChestplate = null;
-	@GameRegistry.ObjectHolder("helmet_frame")
-	public static final FrameItem frameHelmet = null;
-	@GameRegistry.ObjectHolder("cannon_frame")
-	public static final FrameItem frameCannon = null;
-	@GameRegistry.ObjectHolder("gun_frame")
-	public static final FrameItem frameGun = null;
-	@GameRegistry.ObjectHolder("shotgun_frame")
-	public static final FrameItem frameShotgun = null;
-	@GameRegistry.ObjectHolder("sniper_frame")
-	public static final FrameItem frameSniper = null;
+	public static final FrameItem ARCHERGUN_FRAME = ObjectHolder();
+	public static final FrameItem BLASTER_FRAME = ObjectHolder();
+	public static final FrameItem BOOTS_FRAME = ObjectHolder();
+	public static final FrameItem LEGGINGS_FRAME = ObjectHolder();
+	public static final FrameItem CHESTPLATE_FRAME = ObjectHolder();
+	public static final FrameItem HELMET_FRAME = ObjectHolder();
+	public static final FrameItem CANNON_FRAME = ObjectHolder();
+	public static final FrameItem GUN_FRAME = ObjectHolder();
+	public static final FrameItem SHOTGUN_FRAME = ObjectHolder();
+	public static final FrameItem SNIPER_FRAME = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_orb")
-	public static final SimpleItem ancientOrb = null;
-	@GameRegistry.ObjectHolder("ancient_ring")
-	public static final SimpleItem ancientRing = null;
-	@GameRegistry.ObjectHolder("bone_horn")
-	public static final BoneHorn boneHorn = null;
-	@GameRegistry.ObjectHolder("book_of_shadows")
-	public static final SimpleItem bookOfShadows = null;
-	@GameRegistry.ObjectHolder("boulder_dash")
-	public static final SimpleItem boulderDash = null;
-	@GameRegistry.ObjectHolder("call_of_the_drake")
-	public static final SimpleItem callOfTheDrake = null;
-	@GameRegistry.ObjectHolder("explosive_gems")
-	public static final SimpleItem explosiveGems = null;
-	@GameRegistry.ObjectHolder("explosive_idol")
-	public static final BossSpawningItem explosiveIdol = null;
-	@GameRegistry.ObjectHolder("giant_crystal")
-	public static final SimpleItem giantCrystal = null;
-	@GameRegistry.ObjectHolder("gold_spring")
-	public static final SimpleItem goldSpring = null;
-	@GameRegistry.ObjectHolder("guardians_eye")
-	public static final SimpleItem guardiansEye = null;
-	@GameRegistry.ObjectHolder("haunted_idol")
-	public static final BossSpawningItem hauntedIdol = null;
-	@GameRegistry.ObjectHolder("heavy_boulder")
-	public static final SimpleItem heavyBoulder = null;
-	@GameRegistry.ObjectHolder("hive_egg")
-	public static final SimpleItem hiveEgg = null;
-	@GameRegistry.ObjectHolder("mega_rune_stone")
-	public static final SimpleItem megaRuneStone = null;
-	@GameRegistry.ObjectHolder("nethengeic_callstone")
-	public static final BossSpawningItem nethengeicCallstone = null;
-	@GameRegistry.ObjectHolder("observing_eye")
-	public static final SimpleItem observingEye = null;
-	@GameRegistry.ObjectHolder("petals")
-	public static final SimpleItem petals = null;
-	@GameRegistry.ObjectHolder("primordial_dust")
-	public static final SimpleItem primordialDust = null;
-	@GameRegistry.ObjectHolder("pure_water_stone")
-	public static final SimpleItem pureWaterStone = null;
-	@GameRegistry.ObjectHolder("shroom_stone")
-	public static final BossSpawningItem shroomStone = null;
-	@GameRegistry.ObjectHolder("silvro_coin")
-	public static final SimpleItem silvroCoin = null;
-	@GameRegistry.ObjectHolder("staring_eye")
-	public static final SimpleItem staringEye = null;
-	@GameRegistry.ObjectHolder("toy_gyrocopter")
-	public static final ToyGyrocopter toyGyrocopter = null;
-	@GameRegistry.ObjectHolder("treat_bag")
-	public static final TreatBag treatBag = null;
-	@GameRegistry.ObjectHolder("troll_idol")
-	public static final BossSpawningItem trollIdol = null;
-	@GameRegistry.ObjectHolder("vile_stone")
-	public static final SimpleItem vileStone = null;
-	@GameRegistry.ObjectHolder("voliant_heart")
-	public static final SimpleItem voliantHeart = null;
-	@GameRegistry.ObjectHolder("warlock_gem")
-	public static final SimpleItem warlockGem = null;
+	public static final SimpleItem ANCIENT_ORB = ObjectHolder();
+	public static final SimpleItem ANCIENT_RING = ObjectHolder();
+	public static final BoneHorn BONE_HORN = ObjectHolder();
+	public static final SimpleItem BOOK_OF_SHADOWS = ObjectHolder();
+	public static final SimpleItem BOULDER_DASH = ObjectHolder();
+	public static final SimpleItem CALL_OF_THE_DRAKE = ObjectHolder();
+	public static final SimpleItem EXPLOSIVE_GEMS = ObjectHolder();
+	public static final BossSpawningItem EXPLOSIVE_IDOL = ObjectHolder();
+	public static final SimpleItem GIANT_CRYSTAL = ObjectHolder();
+	public static final SimpleItem GOLD_SPRING = ObjectHolder();
+	public static final SimpleItem GUARDIANS_EYE = ObjectHolder();
+	public static final BossSpawningItem HAUNTED_IDOL = ObjectHolder();
+	public static final SimpleItem HEAVY_BOULDER = ObjectHolder();
+	public static final SimpleItem HIVE_EGG = ObjectHolder();
+	public static final SimpleItem MEGA_RUNE_STONE = ObjectHolder();
+	public static final BossSpawningItem NETHENGEIC_CALLSTONE = ObjectHolder();
+	public static final SimpleItem OBSERVING_EYE = ObjectHolder();
+	public static final SimpleItem PETALS = ObjectHolder();
+	public static final SimpleItem PRIMORDIAL_DUST = ObjectHolder();
+	public static final SimpleItem PURE_WATER_STONE = ObjectHolder();
+	public static final BossSpawningItem SHROOM_STONE = ObjectHolder();
+	public static final SimpleItem SILVRO_COIN = ObjectHolder();
+	public static final SimpleItem STARING_EYE = ObjectHolder();
+	public static final ToyGyrocopter TOY_GYROCOPTER = ObjectHolder();
+	public static final TreatBag TREAT_BAG = ObjectHolder();
+	public static final BossSpawningItem TROLL_IDOL = ObjectHolder();
+	public static final SimpleItem VILE_STONE = ObjectHolder();
+	public static final SimpleItem VOLIANT_HEART = ObjectHolder();
+	public static final SimpleItem WARLOCK_GEM = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyss_tokens")
-	public static final DimensionalTokensItem tokensAbyss = null;
-	@GameRegistry.ObjectHolder("baron_tokens")
-	public static final DimensionalTokensItem tokensBaron = null;
-	@GameRegistry.ObjectHolder("borean_tokens")
-	public static final DimensionalTokensItem tokensBorean = null;
-	@GameRegistry.ObjectHolder("candyland_tokens")
-	public static final DimensionalTokensItem tokensCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_tokens")
-	public static final DimensionalTokensItem tokensCeleve = null;
-	@GameRegistry.ObjectHolder("creeponia_tokens")
-	public static final DimensionalTokensItem tokensCreeponia = null;
-	@GameRegistry.ObjectHolder("crystevia_tokens")
-	public static final DimensionalTokensItem tokensCrystevia = null;
-	@GameRegistry.ObjectHolder("deeplands_tokens")
-	public static final DimensionalTokensItem tokensDeeplands = null;
-	@GameRegistry.ObjectHolder("dungeon_tokens")
-	public static final DimensionalTokensItem tokensDungeon = null;
-	@GameRegistry.ObjectHolder("dustopia_tokens")
-	public static final DimensionalTokensItem tokensDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_tokens")
-	public static final DimensionalTokensItem tokensGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_tokens")
-	public static final DimensionalTokensItem tokensGreckon = null;
-	@GameRegistry.ObjectHolder("haven_tokens")
-	public static final DimensionalTokensItem tokensHaven = null;
-	@GameRegistry.ObjectHolder("iromine_tokens")
-	public static final DimensionalTokensItem tokensIromine = null;
-	@GameRegistry.ObjectHolder("lelyetia_tokens")
-	public static final DimensionalTokensItem tokensLelyetia = null;
-	@GameRegistry.ObjectHolder("lunar_tokens")
-	public static final DimensionalTokensItem tokensLunar = null;
-	@GameRegistry.ObjectHolder("mysterium_tokens")
-	public static final DimensionalTokensItem tokensMysterium = null;
-	@GameRegistry.ObjectHolder("nether_tokens")
-	public static final DimensionalTokensItem tokensNether = null;
-	@GameRegistry.ObjectHolder("precasian_tokens")
-	public static final DimensionalTokensItem tokensPrecasian = null;
-	@GameRegistry.ObjectHolder("runandor_tokens")
-	public static final DimensionalTokensItem tokensRunandor = null;
-	@GameRegistry.ObjectHolder("shyrelands_tokens")
-	public static final DimensionalTokensItem tokensShyrelands = null;
-	@GameRegistry.ObjectHolder("vox_ponds_tokens")
-	public static final DimensionalTokensItem tokensVoxPonds = null;
+	public static final DimensionalTokensItem ABYSS_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem BARON_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem BOREAN_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem CANDYLAND_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem CELEVE_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem CREEPONIA_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem CRYSTEVIA_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem DEEPLANDS_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem DUNGEON_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem DUSTOPIA_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem GARDENCIA_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem GRECKON_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem HAVEN_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem IROMINE_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem LELYETIA_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem LUNAR_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem MYSTERIUM_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem NETHER_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem PRECASIAN_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem RUNANDOR_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem SHYRELANDS_TOKENS = ObjectHolder();
+	public static final DimensionalTokensItem VOX_PONDS_TOKENS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("abyssal_upgrade_kit")
-	public static final SimpleItem upgradeKitAbyssal = null;
-	@GameRegistry.ObjectHolder("ancient_upgrade_kit")
-	public static final SimpleItem upgradeKitAncient = null;
-	@GameRegistry.ObjectHolder("apoco_upgrade_kit")
-	public static final SimpleItem upgradeKitApoco = null;
-	@GameRegistry.ObjectHolder("clown_upgrade_kit")
-	public static final SimpleItem upgradeKitClown = null;
-	@GameRegistry.ObjectHolder("darkly_upgrade_kit")
-	public static final SimpleItem upgradeKitDarkly = null;
-	@GameRegistry.ObjectHolder("floro_upgrade_kit")
-	public static final SimpleItem upgradeKitFloro = null;
-	@GameRegistry.ObjectHolder("golden_upgrade_kit")
-	public static final SimpleItem upgradeKitGolden = null;
-	@GameRegistry.ObjectHolder("haunted_upgrade_kit")
-	public static final SimpleItem upgradeKitHaunted = null;
-	@GameRegistry.ObjectHolder("lelyetian_upgrade_kit")
-	public static final SimpleItem upgradeKitLelyetian = null;
-	@GameRegistry.ObjectHolder("light_upgrade_kit")
-	public static final SimpleItem upgradeKitLight = null;
-	@GameRegistry.ObjectHolder("lunar_upgrade_kit")
-	public static final SimpleItem upgradeKitLunar = null;
-	@GameRegistry.ObjectHolder("nether_upgrade_kit")
-	public static final SimpleItem upgradeKitNether = null;
-	@GameRegistry.ObjectHolder("precasian_upgrade_kit")
-	public static final SimpleItem upgradeKitPrecasian = null;
-	@GameRegistry.ObjectHolder("predator_upgrade_kit")
-	public static final SimpleItem upgradeKitPredator = null;
-	@GameRegistry.ObjectHolder("rocky_upgrade_kit")
-	public static final SimpleItem upgradeKitRocky = null;
-	@GameRegistry.ObjectHolder("runic_upgrade_kit")
-	public static final SimpleItem upgradeKitRunic = null;
-	@GameRegistry.ObjectHolder("seaside_upgrade_kit")
-	public static final SimpleItem upgradeKitSeaside = null;
-	@GameRegistry.ObjectHolder("smiley_upgrade_kit")
-	public static final SimpleItem upgradeKitSmiley = null;
+	public static final SimpleItem ABYSSAL_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem ANCIENT_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem APOCO_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem CLOWN_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem DARKLY_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem FLORO_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem GOLDEN_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem HAUNTED_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem LELYETIAN_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem LIGHT_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem LUNAR_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem NETHER_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem PRECASIAN_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem PREDATOR_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem ROCKY_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem RUNIC_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem SEASIDE_UPGRADE_KIT = ObjectHolder();
+	public static final SimpleItem SMILEY_UPGRADE_KIT = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("waterlogged_aqua_cannon")
-	public static final WaterloggedItem waterloggedAquaCannon = null;
-	@GameRegistry.ObjectHolder("waterlogged_coral_archergun")
-	public static final WaterloggedItem waterloggedCoralArchergun = null;
-	@GameRegistry.ObjectHolder("waterlogged_coral_cannon")
-	public static final WaterloggedItem waterloggedCoralCannon = null;
-	@GameRegistry.ObjectHolder("waterlogged_coral_clogger")
-	public static final WaterloggedItem waterloggedCoralClogger = null;
-	@GameRegistry.ObjectHolder("waterlogged_reefer")
-	public static final WaterloggedItem waterloggedReefer = null;
+	public static final WaterloggedItem WATERLOGGED_AQUA_CANNON = ObjectHolder();
+	public static final WaterloggedItem WATERLOGGED_CORAL_ARCHERGUN = ObjectHolder();
+	public static final WaterloggedItem WATERLOGGED_CORAL_CANNON = ObjectHolder();
+	public static final WaterloggedItem WATERLOGGED_CORAL_CLOGGER = ObjectHolder();
+	public static final WaterloggedItem WATERLOGGED_REEFER = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("incomplete_mecha_archergun")
-	public static final IncompleteMechaItem incompleteMechaArchergun = null;
-	@GameRegistry.ObjectHolder("incomplete_mecha_bow")
-	public static final IncompleteMechaItem incompleteMechaBow = null;
-	@GameRegistry.ObjectHolder("incomplete_mecha_cannon")
-	public static final IncompleteMechaItem incompleteMechaCannon = null;
-	@GameRegistry.ObjectHolder("incomplete_mechanical_assault_rifle")
-	public static final IncompleteMechaItem incompleteMechanicalAssaultRifle = null;
-	@GameRegistry.ObjectHolder("incomplete_mecha_staff")
-	public static final IncompleteMechaItem incompleteMechaStaff = null;
-	@GameRegistry.ObjectHolder("incomplete_mechyro")
-	public static final IncompleteMechaItem incompleteMechyro = null;
+	public static final IncompleteMechaItem INCOMPLETE_MECHA_ARCHERGUN = ObjectHolder();
+	public static final IncompleteMechaItem INCOMPLETE_MECHA_BOW = ObjectHolder();
+	public static final IncompleteMechaItem INCOMPLETE_MECHA_CANNON = ObjectHolder();
+	public static final IncompleteMechaItem INCOMPLETE_MECHANICAL_ASSAULT_RIFLE = ObjectHolder();
+	public static final IncompleteMechaItem INCOMPLETE_MECHA_STAFF = ObjectHolder();
+	public static final IncompleteMechaItem INCOMPLETE_MECHYRO = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("blank_realmstone")
-	public static final BlankRealmstone realmstoneBlank = null;
-	@GameRegistry.ObjectHolder("abyss_realmstone")
-	public static final Realmstone realmstoneAbyss = null;
-	@GameRegistry.ObjectHolder("nether_realmstone")
-	public static final Realmstone realmstoneNether = null;
-	@GameRegistry.ObjectHolder("ancient_cavern_realmstone")
-	public static final Realmstone realmstoneAncientCavern = null;
-	@GameRegistry.ObjectHolder("barathos_realmstone")
-	public static final Realmstone realmstoneBarathos = null;
-	@GameRegistry.ObjectHolder("borean_realmstone")
-	public static final Realmstone realmstoneBorean = null;
-	@GameRegistry.ObjectHolder("candyland_realmstone")
-	public static final Realmstone realmstoneCandyland = null;
-	@GameRegistry.ObjectHolder("celeve_realmstone")
-	public static final Realmstone realmstoneCeleve = null;
-	@GameRegistry.ObjectHolder("creeponia_realmstone")
-	public static final Realmstone realmstoneCreeponia = null;
-	@GameRegistry.ObjectHolder("crystevia_realmstone")
-	public static final Realmstone realmstoneCrystevia = null;
-	@GameRegistry.ObjectHolder("deeplands_realmstone")
-	public static final Realmstone realmstoneDeeplands = null;
-	@GameRegistry.ObjectHolder("dustopia_realmstone")
-	public static final Realmstone realmstoneDustopia = null;
-	@GameRegistry.ObjectHolder("gardencia_realmstone")
-	public static final Realmstone realmstoneGardencia = null;
-	@GameRegistry.ObjectHolder("greckon_realmstone")
-	public static final Realmstone realmstoneGreckon = null;
-	@GameRegistry.ObjectHolder("haven_realmstone")
-	public static final Realmstone realmstoneHaven = null;
-	@GameRegistry.ObjectHolder("immortallis_realmstone")
-	public static final Realmstone realmstoneImmortallis = null;
-	@GameRegistry.ObjectHolder("iromine_realmstone")
-	public static final Realmstone realmstoneIromine = null;
-	@GameRegistry.ObjectHolder("lelyetia_realmstone")
-	public static final Realmstone realmstoneLelyetia = null;
-	@GameRegistry.ObjectHolder("lunalus_realmstone")
-	public static final Realmstone realmstoneLunalus = null;
-	@GameRegistry.ObjectHolder("mysterium_realmstone")
-	public static final Realmstone realmstoneMysterium = null;
-	@GameRegistry.ObjectHolder("precasia_realmstone")
-	public static final Realmstone realmstonePrecasia = null;
-	@GameRegistry.ObjectHolder("runandor_realmstone")
-	public static final Realmstone realmstoneRunandor = null;
-	@GameRegistry.ObjectHolder("shyrelands_realmstone")
-	public static final Realmstone realmstoneShyrelands = null;
-	@GameRegistry.ObjectHolder("vox_ponds_realmstone")
-	public static final Realmstone realmstoneVoxPonds = null;
+	public static final BlankRealmstone BLANK_REALMSTONE = ObjectHolder();
+	public static final Realmstone ABYSS_REALMSTONE = ObjectHolder();
+	public static final Realmstone NETHER_REALMSTONE = ObjectHolder();
+	public static final Realmstone ANCIENT_CAVERN_REALMSTONE = ObjectHolder();
+	public static final Realmstone BARATHOS_REALMSTONE = ObjectHolder();
+	public static final Realmstone BOREAN_REALMSTONE = ObjectHolder();
+	public static final Realmstone CANDYLAND_REALMSTONE = ObjectHolder();
+	public static final Realmstone CELEVE_REALMSTONE = ObjectHolder();
+	public static final Realmstone CREEPONIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone CRYSTEVIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone DEEPLANDS_REALMSTONE = ObjectHolder();
+	public static final Realmstone DUSTOPIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone GARDENCIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone GRECKON_REALMSTONE = ObjectHolder();
+	public static final Realmstone HAVEN_REALMSTONE = ObjectHolder();
+	public static final Realmstone IMMORTALLIS_REALMSTONE = ObjectHolder();
+	public static final Realmstone IROMINE_REALMSTONE = ObjectHolder();
+	public static final Realmstone LELYETIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone LUNALUS_REALMSTONE = ObjectHolder();
+	public static final Realmstone MYSTERIUM_REALMSTONE = ObjectHolder();
+	public static final Realmstone PRECASIA_REALMSTONE = ObjectHolder();
+	public static final Realmstone RUNANDOR_REALMSTONE = ObjectHolder();
+	public static final Realmstone SHYRELANDS_REALMSTONE = ObjectHolder();
+	public static final Realmstone VOX_PONDS_REALMSTONE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ancient_essence")
-	public static final AuguryEssence essenceAncient = null;
-	@GameRegistry.ObjectHolder("charged_essence")
-	public static final AuguryEssence essenceCharged = null;
-	@GameRegistry.ObjectHolder("dark_essence")
-	public static final AuguryEssence essenceDark = null;
-	@GameRegistry.ObjectHolder("divine_essence")
-	public static final AuguryEssence essenceDivine = null;
-	@GameRegistry.ObjectHolder("empowered_essence")
-	public static final AuguryEssence essenceEmpowered = null;
-	@GameRegistry.ObjectHolder("ethereal_essence")
-	public static final AuguryEssence essenceEthereal = null;
-	@GameRegistry.ObjectHolder("luminate_essence")
-	public static final AuguryEssence essenceLuminate = null;
-	@GameRegistry.ObjectHolder("molten_essence")
-	public static final AuguryEssence essenceMolten = null;
-	@GameRegistry.ObjectHolder("ominous_essence")
-	public static final AuguryEssence essenceOminous = null;
-	@GameRegistry.ObjectHolder("weak_essence")
-	public static final AuguryEssence essenceWeak = null;
+	public static final AuguryEssence ANCIENT_ESSENCE = ObjectHolder();
+	public static final AuguryEssence CHARGED_ESSENCE = ObjectHolder();
+	public static final AuguryEssence DARK_ESSENCE = ObjectHolder();
+	public static final AuguryEssence DIVINE_ESSENCE = ObjectHolder();
+	public static final AuguryEssence EMPOWERED_ESSENCE = ObjectHolder();
+	public static final AuguryEssence ETHEREAL_ESSENCE = ObjectHolder();
+	public static final AuguryEssence LUMINATE_ESSENCE = ObjectHolder();
+	public static final AuguryEssence MOLTEN_ESSENCE = ObjectHolder();
+	public static final AuguryEssence OMINOUS_ESSENCE = ObjectHolder();
+	public static final AuguryEssence WEAK_ESSENCE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("agility_tablet")
-	public static final TabletItem tabletAgility = null;
-	@GameRegistry.ObjectHolder("awareness_tablet")
-	public static final TabletItem tabletAwareness = null;
-	@GameRegistry.ObjectHolder("breeding_tablet")
-	public static final TabletItem tabletBreeding = null;
-	@GameRegistry.ObjectHolder("cleansing_tablet")
-	public static final TabletItem tabletCleansing = null;
-	@GameRegistry.ObjectHolder("distortion_tablet")
-	public static final TabletItem tabletDistortion = null;
-	@GameRegistry.ObjectHolder("energy_tablet")
-	public static final TabletItem tabletEnergy = null;
-	@GameRegistry.ObjectHolder("gravity_tablet")
-	public static final TabletItem tabletGravity = null;
-	@GameRegistry.ObjectHolder("oxygen_tablet")
-	public static final TabletItem tabletOxygen = null;
-	@GameRegistry.ObjectHolder("pressure_tablet")
-	public static final TabletItem tabletPressure = null;
-	@GameRegistry.ObjectHolder("proficiency_tablet")
-	public static final TabletItem tabletProficiency = null;
-	@GameRegistry.ObjectHolder("resistance_tablet")
-	public static final TabletItem tabletResistance = null;
-	@GameRegistry.ObjectHolder("sanctity_tablet")
-	public static final TabletItem tabletSanctity = null;
-	@GameRegistry.ObjectHolder("satiation_tablet")
-	public static final TabletItem tabletSatiation = null;
-	@GameRegistry.ObjectHolder("sight_tablet")
-	public static final TabletItem tabletSight = null;
-	@GameRegistry.ObjectHolder("strength_tablet")
-	public static final TabletItem tabletStrength = null;
-	@GameRegistry.ObjectHolder("untiring_tablet")
-	public static final TabletItem tabletUntiring = null;
-	@GameRegistry.ObjectHolder("vitality_tablet")
-	public static final TabletItem tabletVitality = null;
+	public static final TabletItem AGILITY_TABLET = ObjectHolder();
+	public static final TabletItem AWARENESS_TABLET = ObjectHolder();
+	public static final TabletItem BREEDING_TABLET = ObjectHolder();
+	public static final TabletItem CLEANSING_TABLET = ObjectHolder();
+	public static final TabletItem DISTORTION_TABLET = ObjectHolder();
+	public static final TabletItem ENERGY_TABLET = ObjectHolder();
+	public static final TabletItem GRAVITY_TABLET = ObjectHolder();
+	public static final TabletItem OXYGEN_TABLET = ObjectHolder();
+	public static final TabletItem PRESSURE_TABLET = ObjectHolder();
+	public static final TabletItem PROFICIENCY_TABLET = ObjectHolder();
+	public static final TabletItem RESISTANCE_TABLET = ObjectHolder();
+	public static final TabletItem SANCTITY_TABLET = ObjectHolder();
+	public static final TabletItem SATIATION_TABLET = ObjectHolder();
+	public static final TabletItem SIGHT_TABLET = ObjectHolder();
+	public static final TabletItem STRENGTH_TABLET = ObjectHolder();
+	public static final TabletItem UNTIRING_TABLET = ObjectHolder();
+	public static final TabletItem VITALITY_TABLET = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("progress_coin0")
-	public static final SimpleItem progressCoin0 = null;
-	@GameRegistry.ObjectHolder("progress_coin1")
-	public static final SimpleItem progressCoin1 = null;
-	@GameRegistry.ObjectHolder("progress_coin2")
-	public static final SimpleItem progressCoin2 = null;
-	@GameRegistry.ObjectHolder("progress_coin3")
-	public static final SimpleItem progressCoin3 = null;
-	@GameRegistry.ObjectHolder("progress_coin4")
-	public static final SimpleItem progressCoin4 = null;
+	public static final SimpleItem PROGRESS_COIN0 = ObjectHolder();
+	public static final SimpleItem PROGRESS_COIN1 = ObjectHolder();
+	public static final SimpleItem PROGRESS_COIN2 = ObjectHolder();
+	public static final SimpleItem PROGRESS_COIN3 = ObjectHolder();
+	public static final SimpleItem PROGRESS_COIN4 = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ambient_power_stone")
-	public static final SimpleItem powerStoneAmbient = null;
-	@GameRegistry.ObjectHolder("blooming_power_stone")
-	public static final SimpleItem powerStoneBlooming = null;
-	@GameRegistry.ObjectHolder("glaring_power_stone")
-	public static final SimpleItem powerStoneGlaring = null;
-	@GameRegistry.ObjectHolder("gleaming_power_stone")
-	public static final SimpleItem powerStoneGleaming = null;
-	@GameRegistry.ObjectHolder("glistening_power_stone")
-	public static final SimpleItem powerStoneGlistening = null;
-	@GameRegistry.ObjectHolder("glowing_power_stone")
-	public static final SimpleItem powerStoneGlowing = null;
-	@GameRegistry.ObjectHolder("radiant_power_stone")
-	public static final SimpleItem powerStoneRadiant = null;
-	@GameRegistry.ObjectHolder("shining_power_stone")
-	public static final SimpleItem powerStoneShining = null;
+	public static final SimpleItem AMBIENT_POWER_STONE = ObjectHolder();
+	public static final SimpleItem BLOOMING_POWER_STONE = ObjectHolder();
+	public static final SimpleItem GLARING_POWER_STONE = ObjectHolder();
+	public static final SimpleItem GLEAMING_POWER_STONE = ObjectHolder();
+	public static final SimpleItem GLISTENING_POWER_STONE = ObjectHolder();
+	public static final SimpleItem GLOWING_POWER_STONE = ObjectHolder();
+	public static final SimpleItem RADIANT_POWER_STONE = ObjectHolder();
+	public static final SimpleItem SHINING_POWER_STONE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("ambient_infusion_stone")
-	public static final InfusionStone infusionStoneAmbient = null;
-	@GameRegistry.ObjectHolder("blooming_infusion_stone")
-	public static final InfusionStone infusionStoneBlooming = null;
-	@GameRegistry.ObjectHolder("glaring_infusion_stone")
-	public static final InfusionStone infusionStoneGlaring = null;
-	@GameRegistry.ObjectHolder("gleaming_infusion_stone")
-	public static final InfusionStone infusionStoneGleaming = null;
-	@GameRegistry.ObjectHolder("glistening_infusion_stone")
-	public static final InfusionStone infusionStoneGlistening = null;
-	@GameRegistry.ObjectHolder("glowing_infusion_stone")
-	public static final InfusionStone infusionStoneGlowing = null;
-	@GameRegistry.ObjectHolder("radiant_infusion_stone")
-	public static final InfusionStone infusionStoneRadiant = null;
-	@GameRegistry.ObjectHolder("shining_infusion_stone")
-	public static final InfusionStone infusionStoneShining = null;
+	public static final InfusionStone AMBIENT_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone BLOOMING_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone GLARING_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone GLEAMING_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone GLISTENING_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone GLOWING_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone RADIANT_INFUSION_STONE = ObjectHolder();
+	public static final InfusionStone SHINING_INFUSION_STONE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("giant_skill_crystal")
-	public static final SkillCrystal skillCrystalGiant = null;
-	@GameRegistry.ObjectHolder("large_skill_crystal")
-	public static final SkillCrystal skillCrystalLarge = null;
-	@GameRegistry.ObjectHolder("medium_skill_crystal")
-	public static final SkillCrystal skillCrystalMedium = null;
-	@GameRegistry.ObjectHolder("small_skill_crystal")
-	public static final SkillCrystal skillCrystalSmall = null;
+	public static final SkillCrystal GIANT_SKILL_CRYSTAL = ObjectHolder();
+	public static final SkillCrystal LARGE_SKILL_CRYSTAL = ObjectHolder();
+	public static final SkillCrystal MEDIUM_SKILL_CRYSTAL = ObjectHolder();
+	public static final SkillCrystal SMALL_SKILL_CRYSTAL = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("crystal_box")
-	public static final CrystalBox crystalBox = null;
-	@GameRegistry.ObjectHolder("fish_case")
-	public static final FishCase fishCase = null;
-	@GameRegistry.ObjectHolder("gem_bag")
-	public static final GemBag gemBag = null;
-	@GameRegistry.ObjectHolder("rune_box")
-	public static final RuneBox runeBox = null;
-	@GameRegistry.ObjectHolder("shiny_box")
-	public static final ShinyBox shinyBox = null;
-	@GameRegistry.ObjectHolder("treasure_box")
-	public static final TreasureBox treasureBox = null;
-	@GameRegistry.ObjectHolder("weapons_case")
-	public static final WeaponsCase weaponsCase = null;
+	public static final CrystalBox CRYSTAL_BOX = ObjectHolder();
+	public static final FishCase FISH_CASE = ObjectHolder();
+	public static final GemBag GEM_BAG = ObjectHolder();
+	public static final RuneBox RUNE_BOX = ObjectHolder();
+	public static final ShinyBox SHINY_BOX = ObjectHolder();
+	public static final TreasureBox TREASURE_BOX = ObjectHolder();
+	public static final WeaponsCase WEAPONS_CASE = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("raw_candlefish")
-	public static final BasicFood candlefishRaw = null;
-	@GameRegistry.ObjectHolder("raw_crimson_skipper")
-	public static final BasicFood crimsonSkipperRaw = null;
-	@GameRegistry.ObjectHolder("raw_crimson_stripefish")
-	public static final BasicFood crimsonStripefishRaw = null;
-	@GameRegistry.ObjectHolder("raw_dark_hatchetfish")
-	public static final BasicFood darkHatchetfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_fingerfish")
-	public static final BasicFood fingerfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_golden_gullfish")
-	public static final BasicFood goldenGullfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_ironback")
-	public static final BasicFood ironbackRaw = null;
-	@GameRegistry.ObjectHolder("raw_limefish")
-	public static final BasicFood limefishRaw = null;
-	@GameRegistry.ObjectHolder("raw_pearl_stripefish")
-	public static final BasicFood pearlStripefishRaw = null;
-	@GameRegistry.ObjectHolder("raw_rainbowfish")
-	public static final BasicFood rainbowfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_razorfish")
-	public static final BasicFood razorfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_rocketfish")
-	public static final BasicFood rocketfishRaw = null;
-	@GameRegistry.ObjectHolder("raw_sailback")
-	public static final BasicFood sailbackRaw = null;
-	@GameRegistry.ObjectHolder("raw_sapphire_strider")
-	public static final BasicFood sapphireStriderRaw = null;
-	@GameRegistry.ObjectHolder("raw_turquoise_stripefish")
-	public static final BasicFood turquoiseStripefishRaw = null;
-	@GameRegistry.ObjectHolder("raw_violet_skipper")
-	public static final BasicFood violetSkipperRaw = null;
-	@GameRegistry.ObjectHolder("candlefish")
-	public static final HealingFishFood candlefish = null;
-	@GameRegistry.ObjectHolder("crimson_skipper")
-	public static final HealingFishFood crimsonSkipper = null;
-	@GameRegistry.ObjectHolder("crimson_stripefish")
-	public static final HealingFishFood crimsonStripefish = null;
-	@GameRegistry.ObjectHolder("dark_hatchetfish")
-	public static final HealingFishFood darkHatchetfish = null;
-	@GameRegistry.ObjectHolder("fingerfish")
-	public static final HealingFishFood fingerfish = null;
-	@GameRegistry.ObjectHolder("golden_gullfish")
-	public static final HealingFishFood goldenGullfish = null;
-	@GameRegistry.ObjectHolder("ironback")
-	public static final HealingFishFood ironback = null;
-	@GameRegistry.ObjectHolder("limefish")
-	public static final HealingFishFood limefish = null;
-	@GameRegistry.ObjectHolder("pearl_stripefish")
-	public static final HealingFishFood pearlStripefish = null;
-	@GameRegistry.ObjectHolder("rainbowfish")
-	public static final HealingFishFood rainbowfish = null;
-	@GameRegistry.ObjectHolder("razorfish")
-	public static final HealingFishFood razorfish = null;
-	@GameRegistry.ObjectHolder("rocketfish")
-	public static final HealingFishFood rocketfish = null;
-	@GameRegistry.ObjectHolder("sailback")
-	public static final HealingFishFood sailback = null;
-	@GameRegistry.ObjectHolder("sapphire_strider")
-	public static final HealingFishFood sapphireStrider = null;
-	@GameRegistry.ObjectHolder("turquoise_stripefish")
-	public static final HealingFishFood turquoiseStripefish = null;
-	@GameRegistry.ObjectHolder("violet_skipper")
-	public static final HealingFishFood violetSkipper = null;
+	public static final BasicFood RAW_CANDLEFISH = ObjectHolder();
+	public static final BasicFood RAW_CRIMSON_SKIPPER = ObjectHolder();
+	public static final BasicFood RAW_CRIMSON_STRIPEFISH = ObjectHolder();
+	public static final BasicFood RAW_DARK_HATCHETFISH = ObjectHolder();
+	public static final BasicFood RAW_FINGERFISH = ObjectHolder();
+	public static final BasicFood RAW_GOLDEN_GULLFISH = ObjectHolder();
+	public static final BasicFood RAW_IRONBACK = ObjectHolder();
+	public static final BasicFood RAW_LIMEFISH = ObjectHolder();
+	public static final BasicFood RAW_PEARL_STRIPEFISH = ObjectHolder();
+	public static final BasicFood RAW_RAINBOWFISH = ObjectHolder();
+	public static final BasicFood RAW_RAZORFISH = ObjectHolder();
+	public static final BasicFood RAW_ROCKETFISH = ObjectHolder();
+	public static final BasicFood RAW_SAILBACK = ObjectHolder();
+	public static final BasicFood RAW_SAPPHIRE_STRIDER = ObjectHolder();
+	public static final BasicFood RAW_TURQUOISE_STRIPEFISH = ObjectHolder();
+	public static final BasicFood RAW_VIOLET_SKIPPER = ObjectHolder();
+	public static final HealingFishFood CANDLEFISH = ObjectHolder();
+	public static final HealingFishFood CRIMSON_SKIPPER = ObjectHolder();
+	public static final HealingFishFood CRIMSON_STRIPEFISH = ObjectHolder();
+	public static final HealingFishFood DARK_HATCHETFISH = ObjectHolder();
+	public static final HealingFishFood FINGERFISH = ObjectHolder();
+	public static final HealingFishFood GOLDEN_GULLFISH = ObjectHolder();
+	public static final HealingFishFood IRONBACK = ObjectHolder();
+	public static final HealingFishFood LIMEFISH = ObjectHolder();
+	public static final HealingFishFood PEARL_STRIPEFISH = ObjectHolder();
+	public static final HealingFishFood RAINBOWFISH = ObjectHolder();
+	public static final HealingFishFood RAZORFISH = ObjectHolder();
+	public static final HealingFishFood ROCKETFISH = ObjectHolder();
+	public static final HealingFishFood SAILBACK = ObjectHolder();
+	public static final HealingFishFood SAPPHIRE_STRIDER = ObjectHolder();
+	public static final HealingFishFood TURQUOISE_STRIPEFISH = ObjectHolder();
+	public static final HealingFishFood VIOLET_SKIPPER = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("bubble_berries")
-	public static final BubbleBerries bubbleBerries = null;
-	@GameRegistry.ObjectHolder("candy_cane")
-	public static final BasicFood candyCane = null;
-	@GameRegistry.ObjectHolder("candy_corn")
-	public static final BasicFood candyCorn = null;
-	@GameRegistry.ObjectHolder("raw_charger_shank")
-	public static final BasicFood chargerShankRaw = null;
-	@GameRegistry.ObjectHolder("charger_shank")
-	public static final BasicFood chargerShank = null;
-	@GameRegistry.ObjectHolder("raw_chimera_chop")
-	public static final BasicFood chimeraChopRaw = null;
-	@GameRegistry.ObjectHolder("chimera_chop")
-	public static final BasicFood chimeraChop = null;
-	@GameRegistry.ObjectHolder("eye_candy")
-	public static final EyeCandy eyeCandy = null;
-	@GameRegistry.ObjectHolder("fiery_chops")
-	public static final FieryChops fieryChops = null;
-	@GameRegistry.ObjectHolder("floracle_sticks")
-	public static final FloracleSticks floracleSticks = null;
-	@GameRegistry.ObjectHolder("fungal_tea")
-	public static final FungalTea fungalTea = null;
-	@GameRegistry.ObjectHolder("raw_furlion_chop")
-	public static final BasicFood furlionChopRaw = null;
-	@GameRegistry.ObjectHolder("furlion_chop")
-	public static final BasicFood furlionChop = null;
-	@GameRegistry.ObjectHolder("gingerbread_cookie")
-	public static final BasicFood gingerbreadCookie = null;
-	@GameRegistry.ObjectHolder("gingerbread_wing")
-	public static final BasicFood gingerbreadWing = null;
-	@GameRegistry.ObjectHolder("goldicap_petals")
-	public static final GoldicapPetals goldicapPetals = null;
-	@GameRegistry.ObjectHolder("raw_halycon_beef")
-	public static final RawHalyconBeef halyconBeefRaw = null;
-	@GameRegistry.ObjectHolder("halycon_beef")
-	public static final HalyconBeef halyconBeef = null;
-	@GameRegistry.ObjectHolder("halycon_milk")
-	public static final HalyconMilk halyconMilk = null;
-	@GameRegistry.ObjectHolder("heart_fruit")
-	public static final HeartFruit heartFruit = null;
-	@GameRegistry.ObjectHolder("hot_rod")
-	public static final HotRod hotRod = null;
-	@GameRegistry.ObjectHolder("lunacrike")
-	public static final Lunacrike lunacrike = null;
-	@GameRegistry.ObjectHolder("luna_globe")
-	public static final LunaGlobe lunaGlobe = null;
-	@GameRegistry.ObjectHolder("lunalons")
-	public static final Lunalons lunalons = null;
-	@GameRegistry.ObjectHolder("lunarade")
-	public static final Lunarade lunarade = null;
-	@GameRegistry.ObjectHolder("magic_marang")
-	public static final MagicMarang magicMarang = null;
-	@GameRegistry.ObjectHolder("mystic_shrooms")
-	public static final MysticShrooms mysticShrooms = null;
-	@GameRegistry.ObjectHolder("natural_tea")
-	public static final NaturalTea naturalTea = null;
-	@GameRegistry.ObjectHolder("nature_melon_slice")
-	public static final BasicFood natureMelonSlice = null;
-	@GameRegistry.ObjectHolder("peppermint_candy")
-	public static final BasicFood peppermintCandy = null;
-	@GameRegistry.ObjectHolder("rosidons")
-	public static final Rosidons rosidons = null;
-	@GameRegistry.ObjectHolder("sour_candy")
-	public static final BasicFood sourCandy = null;
-	@GameRegistry.ObjectHolder("sour_gummy")
-	public static final BasicFood sourGummy = null;
-	@GameRegistry.ObjectHolder("sour_pop")
-	public static final BasicFood sourPop = null;
-	@GameRegistry.ObjectHolder("spearmint_candy")
-	public static final BasicFood spearmintCandy = null;
-	@GameRegistry.ObjectHolder("tea")
-	public static final Tea tea = null;
-	@GameRegistry.ObjectHolder("trilliad_leaves")
-	public static final TrilliadLeaves trilliadLeaves = null;
-	@GameRegistry.ObjectHolder("raw_ursa_meat")
-	public static final BasicFood ursaMeatRaw = null;
-	@GameRegistry.ObjectHolder("ursa_meat")
-	public static final BasicFood ursaMeat = null;
-	@GameRegistry.ObjectHolder("yeti_fingernails")
-	public static final YetiFingernails yetiFingernails = null;
+	public static final BubbleBerries BUBBLE_BERRIES = ObjectHolder();
+	public static final BasicFood CANDY_CANE = ObjectHolder();
+	public static final BasicFood CANDY_CORN = ObjectHolder();
+	public static final BasicFood RAW_CHARGER_SHANK = ObjectHolder();
+	public static final BasicFood CHARGER_SHANK = ObjectHolder();
+	public static final BasicFood RAW_CHIMERA_CHOP = ObjectHolder();
+	public static final BasicFood CHIMERA_CHOP = ObjectHolder();
+	public static final EyeCandy EYE_CANDY = ObjectHolder();
+	public static final FieryChops FIERY_CHOPS = ObjectHolder();
+	public static final FloracleSticks FLORACLE_STICKS = ObjectHolder();
+	public static final FungalTea FUNGAL_TEA = ObjectHolder();
+	public static final BasicFood RAW_FURLION_CHOP = ObjectHolder();
+	public static final BasicFood FURLION_CHOP = ObjectHolder();
+	public static final BasicFood GINGERBREAD_COOKIE = ObjectHolder();
+	public static final BasicFood GINGERBREAD_WING = ObjectHolder();
+	public static final GoldicapPetals GOLDICAP_PETALS = ObjectHolder();
+	public static final RawHalyconBeef RAW_HALYCON_BEEF = ObjectHolder();
+	public static final HalyconBeef HALYCON_BEEF = ObjectHolder();
+	public static final HalyconMilk HALYCON_MILK = ObjectHolder();
+	public static final HeartFruit HEART_FRUIT = ObjectHolder();
+	public static final HotRod HOT_ROD = ObjectHolder();
+	public static final Lunacrike LUNACRIKE = ObjectHolder();
+	public static final LunaGlobe LUNA_GLOBE = ObjectHolder();
+	public static final Lunalons LUNALONS = ObjectHolder();
+	public static final Lunarade LUNARADE = ObjectHolder();
+	public static final MagicMarang MAGIC_MARANG = ObjectHolder();
+	public static final MysticShrooms MYSTIC_SHROOMS = ObjectHolder();
+	public static final NaturalTea NATURAL_TEA = ObjectHolder();
+	public static final BasicFood NATURE_MELON_SLICE = ObjectHolder();
+	public static final BasicFood PEPPERMINT_CANDY = ObjectHolder();
+	public static final Rosidons ROSIDONS = ObjectHolder();
+	public static final BasicFood SOUR_CANDY = ObjectHolder();
+	public static final BasicFood SOUR_GUMMY = ObjectHolder();
+	public static final BasicFood SOUR_POP = ObjectHolder();
+	public static final BasicFood SPEARMINT_CANDY = ObjectHolder();
+	public static final Tea TEA = ObjectHolder();
+	public static final TrilliadLeaves TRILLIAD_LEAVES = ObjectHolder();
+	public static final BasicFood RAW_URSA_MEAT = ObjectHolder();
+	public static final BasicFood URSA_MEAT = ObjectHolder();
+	public static final YetiFingernails YETI_FINGERNAILS = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("diamond_bowl")
-	public static final InfusionBowl diamondBowl = null;
-	@GameRegistry.ObjectHolder("stone_bowl")
-	public static final InfusionBowl stoneBowl = null;
-	@GameRegistry.ObjectHolder("exp_flask")
-	public static final ExpFlask expFlask = null;
+	public static final InfusionBowl DIAMOND_BOWL = ObjectHolder();
+	public static final InfusionBowl STONE_BOWL = ObjectHolder();
+	public static final ExpFlask EXP_FLASK = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("alluricorn_slab")
-	public static final BaseSlab slabAlluricorn = null;
-	@GameRegistry.ObjectHolder("blissard_slab")
-	public static final BaseSlab slabBlissard = null;
-	@GameRegistry.ObjectHolder("compeer_slab")
-	public static final BaseSlab slabCompeer = null;
-	@GameRegistry.ObjectHolder("construct_of_servility_slab")
-	public static final BaseSlab slabConstructOfServility = null;
-	@GameRegistry.ObjectHolder("corby_slab")
-	public static final BaseSlab slabCorby = null;
-	@GameRegistry.ObjectHolder("craggy_slab")
-	public static final BaseSlab slabCraggy = null;
-	@GameRegistry.ObjectHolder("draggy_slab")
-	public static final BaseSlab slabDraggy = null;
-	@GameRegistry.ObjectHolder("ender_carrier_slab")
-	public static final BaseSlab slabEnderCarrier = null;
-	@GameRegistry.ObjectHolder("gnawer_slab")
-	public static final BaseSlab slabGnawer = null;
-	@GameRegistry.ObjectHolder("goofer_slab")
-	public static final BaseSlab slabGoofer = null;
-	@GameRegistry.ObjectHolder("healing_golem_slab")
-	public static final BaseSlab slabHealingGolem = null;
-	@GameRegistry.ObjectHolder("hellquin_slab")
-	public static final BaseSlab slabHellquin = null;
-	@GameRegistry.ObjectHolder("horntial_slab")
-	public static final BaseSlab slabHorntail = null;
-	@GameRegistry.ObjectHolder("mecha_cyclops_slab")
-	public static final BaseSlab slabMechaCyclops = null;
-	@GameRegistry.ObjectHolder("mecha_skellox_slab")
-	public static final BaseSlab slabMechaSkellox = null;
-	@GameRegistry.ObjectHolder("penguin_slab")
-	public static final BaseSlab slabPenguin = null;
-	@GameRegistry.ObjectHolder("plateosaur_slab")
-	public static final BaseSlab slabPlateosaur = null;
-	@GameRegistry.ObjectHolder("rammerhorn_slab")
-	public static final BaseSlab slabRammerhorn = null;
-	@GameRegistry.ObjectHolder("shaddy_slab")
-	public static final BaseSlab slabShaddy = null;
-	@GameRegistry.ObjectHolder("spikeback_slab")
-	public static final BaseSlab slabSpikeback = null;
-	@GameRegistry.ObjectHolder("spraggy_slab")
-	public static final BaseSlab slabSpraggy = null;
-	@GameRegistry.ObjectHolder("waggy_slab")
-	public static final BaseSlab slabWaggy = null;
+	public static final BaseSlab ALLURICORN_SLAB = ObjectHolder();
+	public static final BaseSlab BLISSARD_SLAB = ObjectHolder();
+	public static final BaseSlab COMPEER_SLAB = ObjectHolder();
+	public static final BaseSlab CONSTRUCT_OF_SERVILITY_SLAB = ObjectHolder();
+	public static final BaseSlab CORBY_SLAB = ObjectHolder();
+	public static final BaseSlab CRAGGY_SLAB = ObjectHolder();
+	public static final BaseSlab DRAGGY_SLAB = ObjectHolder();
+	public static final BaseSlab ENDER_CARRIER_SLAB = ObjectHolder();
+	public static final BaseSlab GNAWER_SLAB = ObjectHolder();
+	public static final BaseSlab GOOFER_SLAB = ObjectHolder();
+	public static final BaseSlab HEALING_GOLEM_SLAB = ObjectHolder();
+	public static final BaseSlab HELLQUIN_SLAB = ObjectHolder();
+	public static final BaseSlab HORNTAIL_SLAB = ObjectHolder();
+	public static final BaseSlab MECHA_CYCLOPS_SLAB = ObjectHolder();
+	public static final BaseSlab MECHA_SKELLOX_SLAB = ObjectHolder();
+	public static final BaseSlab PENGUIN_SLAB = ObjectHolder();
+	public static final BaseSlab PLATEOSAUR_SLAB = ObjectHolder();
+	public static final BaseSlab RAMMERHORN_SLAB = ObjectHolder();
+	public static final BaseSlab SHADDY_SLAB = ObjectHolder();
+	public static final BaseSlab SPIKEBACK_SLAB = ObjectHolder();
+	public static final BaseSlab SPRAGGY_SLAB = ObjectHolder();
+	public static final BaseSlab WAGGY_SLAB = ObjectHolder();
 
-	@GameRegistry.ObjectHolder("bubble_berry_seeds")
-	public static final SeedsItem seedsBubbleBerry = null;
-	@GameRegistry.ObjectHolder("chilli_seeds")
-	public static final SeedsItem seedsChilli = null;
-	@GameRegistry.ObjectHolder("floracle_seeds")
-	public static final SeedsItem seedsFloracle = null;
-	@GameRegistry.ObjectHolder("goldicap_seeds")
-	public static final SeedsItem seedsGoldicap = null;
-	@GameRegistry.ObjectHolder("heart_fruit_seeds")
-	public static final SeedsItem seedsHeartFruit = null;
-	@GameRegistry.ObjectHolder("holly_top_seeds")
-	public static final SeedsItem seedsHollyTop = null;
-	@GameRegistry.ObjectHolder("lunacrike_seeds")
-	public static final SeedsItem seedsLunacrike = null;
-	@GameRegistry.ObjectHolder("luna_globe_seeds")
-	public static final SeedsItem seedsLunaGlobe = null;
-	@GameRegistry.ObjectHolder("lunalon_seeds")
-	public static final SeedsItem seedsLunalon = null;
-	@GameRegistry.ObjectHolder("magic_marang_seeds")
-	public static final SeedsItem seedsMagicMarang = null;
-	@GameRegistry.ObjectHolder("rosidon_seeds")
-	public static final SeedsItem seedsRosidon = null;
-	@GameRegistry.ObjectHolder("tea_seeds")
-	public static final SeedsItem seedsTea = null;
-	@GameRegistry.ObjectHolder("thorny_plant_seeds")
-	public static final SeedsItem seedsThornyPlant = null;
-	@GameRegistry.ObjectHolder("trilliad_seeds")
-	public static final SeedsItem seedsTrilliad = null;
+	public static final SeedsItem BUBBLE_BERRY_SEEDS = ObjectHolder();
+	public static final SeedsItem CHILLI_SEEDS = ObjectHolder();
+	public static final SeedsItem FLORACLE_SEEDS = ObjectHolder();
+	public static final SeedsItem GOLDICAP_SEEDS = ObjectHolder();
+	public static final SeedsItem HEART_FRUIT_SEEDS = ObjectHolder();
+	public static final SeedsItem HOLLY_TOP_SEEDS = ObjectHolder();
+	public static final SeedsItem LUNACRIKE_SEEDS = ObjectHolder();
+	public static final SeedsItem LUNA_GLOBE_SEEDS = ObjectHolder();
+	public static final SeedsItem LUNALON_SEEDS = ObjectHolder();
+	public static final SeedsItem MAGIC_MARANG_SEEDS = ObjectHolder();
+	public static final SeedsItem ROSIDON_SEEDS = ObjectHolder();
+	public static final SeedsItem TEA_SEEDS = ObjectHolder();
+	public static final SeedsItem THORNY_PLANT_SEEDS = ObjectHolder();
+	public static final SeedsItem TRILLIAD_SEEDS = ObjectHolder();
+
+	public static final RecordItem OUTLAW_DISC = ObjectHolder();
+	public static final RecordItem CAVERNS_DISC = ObjectHolder();
 
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> ev) {
@@ -1061,22 +591,36 @@ public class ItemRegister {
 		registerItem(registry, new SimpleItem("WhiteCrystal", "white_crystal"), "misc/misc/");
 		registerItem(registry, new SimpleItem("YellowCrystal", "yellow_crystal"), "misc/misc/");
 
+		registerItem(registry, new SimpleItem("BaronyteNugget", "baronyte_nugget"), "misc/mineral/nugget/", "nuggetBaronyte");
+		registerItem(registry, new SimpleItem("BlaziumNugget", "blazium_nugget"), "misc/mineral/nugget/", "nuggetBlazium");
+		registerItem(registry, new SimpleItem("ElecaniumNugget", "elecanium_nugget"), "misc/mineral/nugget/", "nuggetElecanium");
+		registerItem(registry, new SimpleItem("EmberstoneNugget", "emberstone_nugget"), "misc/mineral/nugget/", "nuggetEmberstone");
+		registerItem(registry, new SimpleItem("GhastlyNugget", "ghastly_nugget"), "misc/mineral/nugget/", "nuggetGhastly");
+		registerItem(registry, new SimpleItem("GhoulishNugget", "ghoulish_nugget"), "misc/mineral/nugget/", "nuggetGhoulish");
+		registerItem(registry, new SimpleItem("LimoniteNugget", "limonite_nugget"), "misc/mineral/nugget/", "nuggetLimonite");
+		registerItem(registry, new SimpleItem("LunarNugget", "lunar_nugget"), "misc/mineral/nugget/", "nuggetLunar");
+		registerItem(registry, new SimpleItem("LyonNugget", "lyon_nugget"), "misc/mineral/nugget/", "nuggetLyon");
+		registerItem(registry, new SimpleItem("MystiteNugget", "mystite_nugget"), "misc/mineral/nugget/", "nuggetMystite");
+		registerItem(registry, new SimpleItem("RositeNugget", "rosite_nugget"), "misc/mineral/nugget/", "nuggetRosite");
+		registerItem(registry, new SimpleItem("ShyrestoneNugget", "shyrestone_nugget"), "misc/mineral/nugget/", "nuggetShyrestone");
+		registerItem(registry, new SimpleItem("VarsiumNugget", "varsium_nugget"), "misc/mineral/nugget/", "nuggetVarsium");
+
 		registerItem(registry, new RuneItem("ChargedRune", "charged_rune", true), "misc/ammo/");
-		registerItem(registry, new RuneItem("CompassRune", "compass_rune", true, BlockRegister.runePostCompass), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("DistortionRune", "distortion_rune", true, BlockRegister.runePostDistortion), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("EnergyRune", "energy_rune", false, BlockRegister.runePostEnergy), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("FireRune", "fire_rune", false, BlockRegister.runePostFire), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("KineticRune", "kinetic_rune", true, BlockRegister.runePostKinetic), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("LifeRune", "life_rune", true, BlockRegister.runePostLife), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("LunarRune", "lunar_rune", true, BlockRegister.runePostLunar), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("PoisonRune", "poison_rune", false, BlockRegister.runePostPoison), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("PowerRune", "power_rune", false, BlockRegister.runePostPower), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("StormRune", "storm_rune", true, BlockRegister.runePostStorm), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("StrikeRune", "strike_rune", false, BlockRegister.runePostStrike), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("CompassRune", "compass_rune", true, BlockRegister.RUNE_POST_COMPASS), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("DistortionRune", "distortion_rune", true, BlockRegister.RUNE_POST_DISTORTION), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("EnergyRune", "energy_rune", false, BlockRegister.RUNE_POST_ENERGY), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("FireRune", "fire_rune", false, BlockRegister.RUNE_POST_FIRE), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("KineticRune", "kinetic_rune", true, BlockRegister.RUNE_POST_KINETIC), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("LifeRune", "life_rune", true, BlockRegister.RUNE_POST_LIFE), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("LunarRune", "lunar_rune", true, BlockRegister.RUNE_POST_LUNAR), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("PoisonRune", "poison_rune", false, BlockRegister.RUNE_POST_POISON), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("PowerRune", "power_rune", false, BlockRegister.RUNE_POST_POWER), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("StormRune", "storm_rune", true, BlockRegister.RUNE_POST_STORM), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("StrikeRune", "strike_rune", false, BlockRegister.RUNE_POST_STRIKE), "misc/ammo/", "aoaRune");
 		registerItem(registry, new RuneItem("UnpoweredRune", "unpowered_rune", false), "misc/ammo/");
-		registerItem(registry, new RuneItem("WaterRune", "water_rune", false, BlockRegister.runePostWater), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("WindRune", "wind_rune", false, BlockRegister.runePostWind), "misc/ammo/", "aoaRune");
-		registerItem(registry, new RuneItem("WitherRune", "wither_rune", false, BlockRegister.runePostWither), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("WaterRune", "water_rune", false, BlockRegister.RUNE_POST_WATER), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("WindRune", "wind_rune", false, BlockRegister.RUNE_POST_WIND), "misc/ammo/", "aoaRune");
+		registerItem(registry, new RuneItem("WitherRune", "wither_rune", false, BlockRegister.RUNE_POST_WITHER), "misc/ammo/", "aoaRune");
 		
 		registerItem(registry, new SimpleItem("ActiveRuneStone", "active_rune_stone"), "misc/misc/");
 		registerItem(registry, new ReservedItem("AlienOrb", "alien_orb", "alien_orb").withTooltip("item.AlienOrb.desc.1"), "misc/misc/");
@@ -1296,37 +840,37 @@ public class ItemRegister {
 		registerItem(registry, new WaterloggedItem("WaterloggedCoralClogger", "waterlogged_coral_clogger", 3), "misc/misc/");
 		registerItem(registry, new WaterloggedItem("WaterloggedReefer", "waterlogged_reefer", 4), "misc/misc/");
 
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechaArchergun", "incomplete_mecha_archergun", WeaponRegister.archergunMecha), "misc/misc/");
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechaBow", "incomplete_mecha_bow", WeaponRegister.bowMecha), "misc/misc/");
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechaCannon", "incomplete_mecha_cannon", WeaponRegister.cannonMechaCannon), "misc/misc/");
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechanicalAssaultRifle", "incomplete_mechanical_assault_rifle", WeaponRegister.gunMechanicalAssaultRifle), "misc/misc/");
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechaStaff", "incomplete_mecha_staff", WeaponRegister.staffMecha), "misc/misc/");
-		registerItem(registry, new IncompleteMechaItem("IncompleteMechyro", "incomplete_mechyro", WeaponRegister.shotgunMechyro), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechaArchergun", "incomplete_mecha_archergun", WeaponRegister.MECHA_ARCHERGUN), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechaBow", "incomplete_mecha_bow", WeaponRegister.MECHA_BOW), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechaCannon", "incomplete_mecha_cannon", WeaponRegister.MECHA_CANNON), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechanicalAssaultRifle", "incomplete_mechanical_assault_rifle", WeaponRegister.MECHANICAL_ASSAULT_RIFLE), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechaStaff", "incomplete_mecha_staff", WeaponRegister.MECHA_STAFF), "misc/misc/");
+		registerItem(registry, new IncompleteMechaItem("IncompleteMechyro", "incomplete_mechyro", WeaponRegister.MECHYRO), "misc/misc/");
 
 		registerItem(registry, new BlankRealmstone(), "misc/realmstone/");
-		registerItem(registry, new Realmstone("AbyssRealmstone", "abyss_realmstone", BlockRegister.portalAbyss, new ResourceLocation("aoa3", "abyss_portal_activate"), "abyss"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("NetherRealmstone", "nether_realmstone", BlockRegister.portalNether, new ResourceLocation("aoa3", "abyss_portal_activate"), "nether"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("AncientCavernRealmstone", "ancient_cavern_realmstone", BlockRegister.portalAncientCavern, new ResourceLocation("aoa3", "ancient_cavern_portal_activate"), "ancientCavern"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("BarathosRealmstone", "barathos_realmstone", BlockRegister.portalBarathos, new ResourceLocation("aoa3", "barren_portal_activate"), "barathos"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("BoreanRealmstone", "borean_realmstone", BlockRegister.portalBorean, new ResourceLocation("aoa3", "natural_portal_activate"), "lborean"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("CandylandRealmstone", "candyland_realmstone", BlockRegister.portalCandyland, new ResourceLocation("aoa3", "candyland_portal_activate"), "candyland"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("CeleveRealmstone", "celeve_realmstone", BlockRegister.portalCeleve, new ResourceLocation("aoa3", "celeve_portal_activate"), "celeve"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("CreeponiaRealmstone", "creeponia_realmstone", BlockRegister.portalCreeponia, new ResourceLocation("aoa3", "creeponia_portal_activate"), "creeponia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("CrysteviaRealmstone", "crystevia_realmstone", BlockRegister.portalCrystevia, new ResourceLocation("aoa3", "crystevia_portal_activate"), "crystevia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("DeeplandsRealmstone", "deeplands_realmstone", BlockRegister.portalDeeplands, new ResourceLocation("aoa3", "barren_portal_activate"), "deeplands"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("DustopiaRealmstone", "dustopia_realmstone", BlockRegister.portalDustopia, new ResourceLocation("aoa3", "dark_portal_activate"), "dustopia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("GardenciaRealmstone", "gardencia_realmstone", BlockRegister.portalGardencia, new ResourceLocation("aoa3", "natural_portal_activate"), "gardencia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("GreckonRealmstone", "greckon_realmstone", BlockRegister.portalGreckon, new ResourceLocation("aoa3", "dark_portal_activate"), "greckon"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("HavenRealmstone", "haven_realmstone", BlockRegister.portalHaven, new ResourceLocation("aoa3", "light_portal_activate"), "haven"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("ImmortallisRealmstone", "immortallis_realmstone", BlockRegister.portalImmortallis, new ResourceLocation("aoa3", "immortallis_portal_activate"), "immortallis"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("IromineRealmstone", "iromine_realmstone", BlockRegister.portalIromine, new ResourceLocation("aoa3", "iromine_portal_activate"), "iromine"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("LelyetiaRealmstone", "lelyetia_realmstone", BlockRegister.portalLelyetia, new ResourceLocation("aoa3", "natural_portal_activate"), "lelyetia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("LunalusRealmstone", "lunalus_realmstone", BlockRegister.portalLunalus, new ResourceLocation("aoa3", "natural_portal_activate"), "lunalus"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("MysteriumRealmstone", "mysterium_realmstone", BlockRegister.portalMysterium, new ResourceLocation("aoa3", "natural_portal_activate"), "mysterium"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("PrecasiaRealmstone", "precasia_realmstone", BlockRegister.portalPrecasia, new ResourceLocation("aoa3", "natural_portal_activate"), "precasia"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("RunandorRealmstone", "runandor_realmstone", BlockRegister.portalRunandor, new ResourceLocation("aoa3", "light_portal_activate"), "runandor"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("ShyrelandsRealmstone", "shyrelands_realmstone", BlockRegister.portalShyrelands, new ResourceLocation("aoa3", "shyrelands_portal_activate"), "shyrelands"), "misc/realmstone/");
-		registerItem(registry, new Realmstone("VoxPondsRealmstone", "vox_ponds_realmstone", BlockRegister.portalVoxPonds, new ResourceLocation("aoa3", "dark_portal_activate"), "voxPonds"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("AbyssRealmstone", "abyss_realmstone", BlockRegister.ABYSS_PORTAL, () -> SoundsRegister.ABYSS_PORTAL_ACTIVATE, "abyss"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("NetherRealmstone", "nether_realmstone", BlockRegister.NETHER_PORTAL, () -> SoundsRegister.ABYSS_PORTAL_ACTIVATE, "nether"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("AncientCavernRealmstone", "ancient_cavern_realmstone", BlockRegister.ANCIENT_CAVERN_PORTAL, () -> SoundsRegister.ANCIENT_CAVERN_PORTAL_ACTIVATE, "ancientCavern"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("BarathosRealmstone", "barathos_realmstone", BlockRegister.BARATHOS_PORTAL, () -> SoundsRegister.BARREN_PORTAL_ACTIVATE, "barathos"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("BoreanRealmstone", "borean_realmstone", BlockRegister.BOREAN_PORTAL, () -> SoundsRegister.NATURAL_PORTAL_ACTIVATE, "lborean"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("CandylandRealmstone", "candyland_realmstone", BlockRegister.CANDYLAND_PORTAL, () -> SoundsRegister.CANDYLAND_PORTAL_ACTIVATE, "candyland"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("CeleveRealmstone", "celeve_realmstone", BlockRegister.CELEVE_PORTAL, () -> SoundsRegister.CELEVE_PORTAL_ACTIVATE, "celeve"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("CreeponiaRealmstone", "creeponia_realmstone", BlockRegister.CREEPONIA_PORTAL, () -> SoundsRegister.CREEPONIA_PORTAL_ACTIVATE, "creeponia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("CrysteviaRealmstone", "crystevia_realmstone", BlockRegister.CRYSTEVIA_PORTAL, () -> SoundsRegister.CRYSTEVIA_PORTAL_ACTIVATE, "crystevia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("DeeplandsRealmstone", "deeplands_realmstone", BlockRegister.DEEPLANDS_PORTAL, () -> SoundsRegister.BARREN_PORTAL_ACTIVATE, "deeplands"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("DustopiaRealmstone", "dustopia_realmstone", BlockRegister.DUSTOPIA_PORTAL, () -> SoundsRegister.DARK_PORTAL_ACTIVATE, "dustopia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("GardenciaRealmstone", "gardencia_realmstone", BlockRegister.GARDENCIA_PORTAL, () -> SoundsRegister.NATURAL_PORTAL_ACTIVATE, "gardencia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("GreckonRealmstone", "greckon_realmstone", BlockRegister.GRECKON_PORTAL, () -> SoundsRegister.DARK_PORTAL_ACTIVATE, "greckon"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("HavenRealmstone", "haven_realmstone", BlockRegister.HAVEN_PORTAL, () -> SoundsRegister.LIGHT_PORTAL_ACTIVATE, "haven"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("ImmortallisRealmstone", "immortallis_realmstone", BlockRegister.IMMORTALLIS_PORTAL, () -> SoundsRegister.IMMORTALLIS_PORTAL_ACTIVATE, "immortallis"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("IromineRealmstone", "iromine_realmstone", BlockRegister.IROMINE_PORTAL, () -> SoundsRegister.IROMINE_PORTAL_ACTIVATE, "iromine"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("LelyetiaRealmstone", "lelyetia_realmstone", BlockRegister.LELYETIA_PORTAL, () -> SoundsRegister.NATURAL_PORTAL_ACTIVATE, "lelyetia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("LunalusRealmstone", "lunalus_realmstone", BlockRegister.LUNALUS_PORTAL, () -> SoundsRegister.MUSIC_NULL, "lunalus"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("MysteriumRealmstone", "mysterium_realmstone", BlockRegister.MYSTERIUM_PORTAL, () -> SoundsRegister.NATURAL_PORTAL_ACTIVATE, "mysterium"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("PrecasiaRealmstone", "precasia_realmstone", BlockRegister.PRECASIA_PORTAL, () -> SoundsRegister.NATURAL_PORTAL_ACTIVATE, "precasia"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("RunandorRealmstone", "runandor_realmstone", BlockRegister.RUNANDOR_PORTAL, () -> SoundsRegister.LIGHT_PORTAL_ACTIVATE, "runandor"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("ShyrelandsRealmstone", "shyrelands_realmstone", BlockRegister.SHYRELANDS_PORTAL, () -> SoundsRegister.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"), "misc/realmstone/");
+		registerItem(registry, new Realmstone("VoxPondsRealmstone", "vox_ponds_realmstone", BlockRegister.VOX_PONDS_PORTAL, () -> SoundsRegister.DARK_PORTAL_ACTIVATE, "voxPonds"), "misc/realmstone/");
 
 		registerItem(registry, new AuguryEssence("AncientEssence", "ancient_essence", 58, 120f), "misc/essence/", "magicEssence");
 		registerItem(registry, new AuguryEssence("ChargedEssence", "charged_essence", 18, 10f), "misc/essence/", "magicEssence");
@@ -1434,17 +978,19 @@ public class ItemRegister {
 		registerItem(registry, new BasicFood("ChargerShank", "charger_shank", 7, 0.3f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new BasicFood("RawChimeraChop", "raw_chimera_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
 		registerItem(registry, new BasicFood("ChimeraChop", "chimera_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new BasicFood("RawUrsaMeat", "raw_ursa_meat", 3, 0.3f, true), "food/meat/raw/", "listAllmeatraw");
+		registerItem(registry, new BasicFood("UrsaMeat", "ursa_meat", 8, 0.8f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new BasicFood("RawFurlionChop", "raw_furlion_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
+		registerItem(registry, new BasicFood("FurlionChop", "furlion_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new RawHalyconBeef(), "food/meat/raw/", "listAllbeefraw", "listAllmeatraw");
+		registerItem(registry, new HalyconBeef(), "food/meat/", "listAllbeef", "listAllmeatcooked");
 		registerItem(registry, new EyeCandy(), "food/misc/", "foodCandy");
 		registerItem(registry, new FieryChops(), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new FloracleSticks(), "food/plants/");
-		registerItem(registry, new FungalTea().setContainerItem(ItemRegister.cup), "food/drinks/");
-		registerItem(registry, new BasicFood("RawFurlionChop", "raw_furlion_chop", 2, 0.2f, true), "food/meat/raw/", "listAllmeatraw");
-		registerItem(registry, new BasicFood("FurlionChop", "furlion_chop", 6, 0.6f, true), "food/meat/", "listAllmeatcooked");
+		registerItem(registry, new FungalTea().setContainerItem(ItemRegister.CUP), "food/drinks/");
 		registerItem(registry, new BasicFood("GingerbreadCookie", "gingerbread_cookie", 2, 0.25f), "food/misc/", "listAllcookie", "foodGingerbread");
 		registerItem(registry, new BasicFood("GingerbreadWing", "gingerbread_wing", 2, 0.2f), "food/misc/", "listAllcookie", "foodGingerbread");
 		registerItem(registry, new GoldicapPetals(), "food/plants/");
-		registerItem(registry, new RawHalyconBeef(), "food/meat/raw/", "listAllbeefraw", "listAllmeatraw");
-		registerItem(registry, new HalyconBeef(), "food/meat/", "listAllbeef", "listAllmeatcooked");
 		registerItem(registry, new HalyconMilk(), "food/drinks/", "listAllmilk");
 		registerItem(registry, new HeartFruit(), "food/plants/", "listAllfruit");
 		registerItem(registry, new HotRod(), "food/meat/", "listAllmeatcooked");
@@ -1454,7 +1000,7 @@ public class ItemRegister {
 		registerItem(registry, new Lunarade(), "food/drinks/", "listAllsoda");
 		registerItem(registry, new MagicMarang(), "food/plants/");
 		registerItem(registry, new MysticShrooms(), "food/plants/", "listAllmushroom");
-		registerItem(registry, new NaturalTea().setContainerItem(ItemRegister.cup), "food/drinks/");
+		registerItem(registry, new NaturalTea().setContainerItem(ItemRegister.CUP), "food/drinks/");
 		registerItem(registry, new BasicFood("NatureMelonSlice", "nature_melon_slice", 1, 0.4f), "food/plants/", "listAllfruit");
 		registerItem(registry, new BasicFood("PeppermintCandy", "peppermint_candy", 1, 0.2f), "food/misc/", "foodMints", "foodCandy");
 		registerItem(registry, new Rosidons(), "food/plants/");
@@ -1462,10 +1008,8 @@ public class ItemRegister {
 		registerItem(registry, new BasicFood("SourGummy", "sour_gummy", 1, 0.3f), "food/misc/", "foodCandy");
 		registerItem(registry, new BasicFood("SourPop", "sour_pop", 1, 0.18f), "food/misc/", "foodCandy");
 		registerItem(registry, new BasicFood("SpearmintCandy", "spearmint_candy", 1, 0.25f), "food/misc/", "foodMints", "foodCandy");
-		registerItem(registry, new Tea().setContainerItem(ItemRegister.cup), "food/drinks/");
+		registerItem(registry, new Tea().setContainerItem(ItemRegister.CUP), "food/drinks/");
 		registerItem(registry, new TrilliadLeaves(), "food/plants/");
-		registerItem(registry, new BasicFood("RawUrsaMeat", "raw_ursa_meat", 3, 0.3f, true), "food/meat/raw/", "listAllmeatraw");
-		registerItem(registry, new BasicFood("UrsaMeat", "ursa_meat", 8, 0.8f, true), "food/meat/", "listAllmeatcooked");
 		registerItem(registry, new YetiFingernails(), "food/misc/");
 
 		registerItem(registry, new InfusionBowl("DiamondBowl", "diamond_bowl", 750, 5, 10), "tools/misc/");
@@ -1495,40 +1039,43 @@ public class ItemRegister {
 		registerItem(registry, new SpraggySlab(), "minionslabs/");
 		registerItem(registry, new WaggySlab(), "minionslabs/");
 
-		registerItem(registry, new SeedsItem("BubbleBerrySeeds", "bubble_berry_seeds", BlockRegister.cropBubbleBerries, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("ChilliSeeds", "chilli_seeds", BlockRegister.cropChilli, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("FloracleSeeds", "floracle_seeds", BlockRegister.cropFloracles, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("GoldicapSeeds", "goldicap_seeds", BlockRegister.cropGoldicaps, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("HeartFruitSeeds", "heart_fruit_seeds", BlockRegister.cropHeartFruit, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("HollyTopSeeds", "holly_top_seeds", BlockRegister.cropHollyTops, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("LunacrikeSeeds", "lunacrike_seeds", BlockRegister.cropLunacrike, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("LunaGlobeSeeds", "luna_globe_seeds", BlockRegister.cropLunaGlobes, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("LunalonSeeds", "lunalon_seeds", BlockRegister.cropLunalons, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("MagicMarangSeeds", "magic_marang_seeds", BlockRegister.cropMagicMarang, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("RosidonSeeds", "rosidon_seeds", BlockRegister.cropRosidons, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("TeaSeeds", "tea_seeds", BlockRegister.cropTea, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("ThornyPlantSeeds", "thorny_plant_seeds", BlockRegister.cropThornyPlant, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
-		registerItem(registry, new SeedsItem("TrilliadSeeds", "trilliad_seeds", BlockRegister.cropTrilliads, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("BubbleBerrySeeds", "bubble_berry_seeds", BlockRegister.BUBBLE_BERRY_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("ChilliSeeds", "chilli_seeds", BlockRegister.CHILLI_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("FloracleSeeds", "floracle_seeds", BlockRegister.FLORACLES_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("GoldicapSeeds", "goldicap_seeds", BlockRegister.GOLDICAPS_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("HeartFruitSeeds", "heart_fruit_seeds", BlockRegister.HEART_FRUIT_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("HollyTopSeeds", "holly_top_seeds", BlockRegister.HOLLY_TOPS_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("LunacrikeSeeds", "lunacrike_seeds", BlockRegister.LUNACRIKE_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("LunaGlobeSeeds", "luna_globe_seeds", BlockRegister.LUNA_GLOBE_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("LunalonSeeds", "lunalon_seeds", BlockRegister.LUNALON_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("MagicMarangSeeds", "magic_marang_seeds", BlockRegister.MAGIC_MARANG_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("RosidonSeeds", "rosidon_seeds", BlockRegister.ROSIDON_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("TeaSeeds", "tea_seeds", BlockRegister.TEA_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("ThornyPlantSeeds", "thorny_plant_seeds", BlockRegister.THORNY_PLANT_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+		registerItem(registry, new SeedsItem("TrilliadSeeds", "trilliad_seeds", BlockRegister.TRILLIAD_CROP, Blocks.FARMLAND), "misc/seeds/", "listAllseed");
+
+		registerItem(registry, new RecordItem("Outlaw", "outlaw_disc", () -> SoundsRegister.OUTLAW_DISC), "records/", "record");
+		registerItem(registry, new RecordItem("Caverns", "caverns_disc", () -> SoundsRegister.CAVERNS_DISC), "records/", "record");
 	}
 
 	@SubscribeEvent
 	public static void remapMissing(final RegistryEvent.MissingMappings<Item> ev) {
-		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getAllMappings()) {
+		for (RegistryEvent.MissingMappings.Mapping<Item> map : ev.getMappings()) {
 			switch (map.key.toString()) {
 				case "aoa3:amethyst_ingot":
-					map.remap(gemAmethyst);
+					map.remap(AMETHYST);
 					break;
 				case "aoa3:jade_ingot":
-					map.remap(gemJade);
+					map.remap(JADE);
 					break;
 				case "aoa3:shyregem_ingot":
-					map.remap(gemShyregem);
+					map.remap(SHYREGEM);
 					break;
 				case "aoa3:sapphire_ingot":
-					map.remap(gemSapphire);
+					map.remap(SAPPHIRE);
 					break;
 				case "aoa3:millenium_upgrader":
-					map.remap(millenniumUpgrader);
+					map.remap(MILLENNIUM_UPGRADER);
 					break;
 				default:
 					break;
@@ -1550,6 +1097,9 @@ public class ItemRegister {
 					OreDictionary.registerOre(entry, wrapper.item);
 				}
 			}
+
+			if (wrapper.item instanceof RecordItem)
+				((RecordItem)wrapper.item).applySound();
 		});
 
 		itemRegistryList = null;
@@ -1589,5 +1139,11 @@ public class ItemRegister {
 			this.modelSubfolder = modelSubfolder;
 			this.oreDictEntries = oreDictEntries == null || oreDictEntries.length == 0 ? null : oreDictEntries;
 		}
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	private static <T> T ObjectHolder() {
+		return null;
 	}
 }

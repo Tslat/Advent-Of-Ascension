@@ -7,14 +7,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class GoofyGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class GoofyGreatblade extends BaseGreatblade {
 	public GoofyGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("GoofyGreatblade");
@@ -23,11 +21,11 @@ public class GoofyGreatblade extends BaseGreatblade implements AdventWeapon, Lon
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return (float)dmg + (float)(itemRand.nextGaussian() * 5f);
+		return (float)getDamage() + (float)(itemRand.nextGaussian() * 5f);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GoofyGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE, String.valueOf(dmg - 5), String.valueOf(dmg + 5)));
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GoofyGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE, String.valueOf(getDamage() - 5), String.valueOf(getDamage() + 5)));
 	}
 }

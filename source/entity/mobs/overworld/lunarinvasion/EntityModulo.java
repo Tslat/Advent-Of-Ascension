@@ -49,25 +49,25 @@ public class EntityModulo extends AoAFlyingRangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobModuloLiving;
+		return SoundsRegister.MOB_MODULO_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobModuloHit;
+		return SoundsRegister.MOB_MODULO_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobModuloDeath;
+		return SoundsRegister.MOB_MODULO_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.gunIllusionSMG;
+		return SoundsRegister.ILLUSION_SMG_FIRE;
 	}
 
 	@Nullable

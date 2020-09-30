@@ -52,17 +52,17 @@ public class EntityReaperTwins extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobReaperLiving;
+		return SoundsRegister.MOB_REAPER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobReaperDeath;
+		return SoundsRegister.MOB_REAPER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobReaperHit;
+		return SoundsRegister.MOB_REAPER_HIT;
 	}
 
 	@Nullable
@@ -85,7 +85,7 @@ public class EntityReaperTwins extends AoAMeleeMob {
 	public boolean attackEntityAsMob(Entity target) {
 		if (super.attackEntityAsMob(target)) {
 			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 7, true, true));
+				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 30, 0, true, true));
 
 			return true;
 		}

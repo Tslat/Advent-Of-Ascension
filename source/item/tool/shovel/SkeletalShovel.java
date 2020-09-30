@@ -26,20 +26,20 @@ public class SkeletalShovel extends BaseShovel implements SpecialHarvestTool {
 			ItemStack drop;
 
 			if (dropChoice == 0) {
-				Item bone = ItemRegister.boneFragmentSkullbone;
+				Item bone = ItemRegister.SKULLBONE_FRAGMENT;
 
 				switch (itemRand.nextInt(4)) {
 					case 0:
-						bone = ItemRegister.boneFragmentSkullbone;
+						bone = ItemRegister.SKULLBONE_FRAGMENT;
 						break;
 					case 1:
-						bone = ItemRegister.boneFragmentChestbone;
+						bone = ItemRegister.CHESTBONE_FRAGMENT;
 						break;
 					case 2:
-						bone = ItemRegister.boneFragmentLegbone;
+						bone = ItemRegister.LEGBONE_FRAGMENT;
 						break;
 					case 3:
-						bone = ItemRegister.boneFragmentFootbone;
+						bone = ItemRegister.FOOTBONE_FRAGMENT;
 						break;
 				}
 

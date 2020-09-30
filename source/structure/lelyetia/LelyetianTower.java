@@ -17,9 +17,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class LelyetianTower extends AoAStructure { // StructureSize: 14x61x14
-	private static final IBlockState lelyetianBricks = BlockRegister.bricksLelyetia.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
-	private static final IBlockState lelyetianGlass = BlockRegister.glassLelyetian.getDefaultState();
+	private static final IBlockState lelyetianBricks = BlockRegister.LELYETIA_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
+	private static final IBlockState lelyetianGlass = BlockRegister.LELYETIAN_GLASS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);

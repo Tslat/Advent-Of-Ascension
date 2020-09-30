@@ -28,14 +28,14 @@ public class SunStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffSun;
+		return SoundsRegister.SUN_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeFire, 2);
-		runes.put(ItemRegister.runeStorm, 1);
-		runes.put(ItemRegister.runeLunar, 3);
+		runes.put(ItemRegister.FIRE_RUNE, 2);
+		runes.put(ItemRegister.STORM_RUNE, 1);
+		runes.put(ItemRegister.LUNAR_RUNE, 3);
 	}
 
 	@Override

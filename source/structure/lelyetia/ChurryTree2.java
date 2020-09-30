@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ChurryTree2 extends AoAStructure { //StructureSize: 9x52x9
-	private static final IBlockState churryLeaves = BlockRegister.leavesChurry.getDefaultState();
-	private static final IBlockState churryLog = BlockRegister.logChurry.getDefaultState();
-	private static final IBlockState lelyetianLeaves = BlockRegister.leavesLelyetian.getDefaultState();
+	private static final IBlockState churryLeaves = BlockRegister.CHURRY_LEAVES.getDefaultState();
+	private static final IBlockState churryLog = BlockRegister.CHURRY_LOG.getDefaultState();
+	private static final IBlockState lelyetianLeaves = BlockRegister.LELYETIAN_LEAVES.getDefaultState();
 
 	public ChurryTree2() {
 		super("ChurryTree2");

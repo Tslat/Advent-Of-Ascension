@@ -66,24 +66,24 @@ public class EntityKingBamBamBam extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobKingBamBamBamLiving;
+		return SoundsRegister.MOB_KING_BAMBAMBAM_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKingBamBamBamDeath;
+		return SoundsRegister.MOB_KING_BAMBAMBAM_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobKingBamBamBamHit;
+		return SoundsRegister.MOB_KING_BAMBAMBAM_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -136,7 +136,7 @@ public class EntityKingBamBamBam extends AoARangedMob implements BossEntity {
 				EntityLittleBam littleBam = new EntityLittleBam(this);
 
 				world.spawnEntity(littleBam);
-				world.playSound(null, posX, posY, posZ, SoundsRegister.mobLittleBamSpawn, SoundCategory.HOSTILE, 1.0f, 1.0f);
+				world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_LITTLE_BAM_SPAWN, SoundCategory.HOSTILE, 1.0f, 1.0f);
 				summons.add(littleBam);
 			}
 		}
@@ -176,7 +176,7 @@ public class EntityKingBamBamBam extends AoARangedMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicKingBamBamBam;
+		return SoundsRegister.KING_BAMBAMBAM_MUSIC;
 	}
 
 	@Override

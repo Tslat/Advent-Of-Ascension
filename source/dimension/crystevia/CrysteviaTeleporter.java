@@ -23,11 +23,11 @@ public class CrysteviaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalCrystevia;
+		return BlockRegister.CRYSTEVIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.crystalGreen;
+		return BlockRegister.GREEN_CRYSTAL_BLOCK;
 	}
 }

@@ -10,9 +10,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FireRuneShrine extends AoAStructure { //StructureSize: 7x4x7
-	private static final IBlockState darkBricks = BlockRegister.bricksDark.getDefaultState();
-	private static final IBlockState darkBrickSlab = BlockRegister.slabDarkBricks.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
-	private static final IBlockState post = BlockRegister.runePostFire.getDefaultState();
+	private static final IBlockState darkBricks = BlockRegister.DARK_BRICKS.getDefaultState();
+	private static final IBlockState darkBrickSlab = BlockRegister.DOUBLE_DARK_BRICKS_SLAB.getHalfBlock().getDefaultState().withProperty(BlockSlab.HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+	private static final IBlockState post = BlockRegister.RUNE_POST_FIRE.getDefaultState();
 
 	public FireRuneShrine() {
 		super("FireRuneShrine");

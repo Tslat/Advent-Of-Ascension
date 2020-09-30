@@ -35,14 +35,14 @@ public class TangleStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffTangle;
+		return SoundsRegister.TANGLE_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeWind, 2);
-		runes.put(ItemRegister.runePoison, 2);
-		runes.put(ItemRegister.runeStorm, 1);
+		runes.put(ItemRegister.WIND_RUNE, 2);
+		runes.put(ItemRegister.POISON_RUNE, 2);
+		runes.put(ItemRegister.STORM_RUNE, 1);
 	}
 
 	@Override

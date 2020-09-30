@@ -29,14 +29,14 @@ public class Lightshine extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffLightshine;
+		return SoundsRegister.LIGHTSHINE_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runePower, 3);
-		runes.put(ItemRegister.runeLife, 3);
-		runes.put(ItemRegister.runeDistortion, 2);
+		runes.put(ItemRegister.POWER_RUNE, 3);
+		runes.put(ItemRegister.LIFE_RUNE, 3);
+		runes.put(ItemRegister.DISTORTION_RUNE, 2);
 	}
 
 	@Override

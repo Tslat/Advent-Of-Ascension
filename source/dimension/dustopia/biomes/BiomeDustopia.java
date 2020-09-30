@@ -9,6 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
+import net.tslat.aoa3.worldgen.trees.WorldGenDawnwoodTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -58,10 +59,10 @@ public class BiomeDustopia extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock) {
 					if (rand.nextBoolean()) {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDawnBush.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAWN_BUSH.getDefaultState());
 					}
 					else {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDawnFlower.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAWN_FLOWER.getDefaultState());
 					}
 				}
 			}
@@ -72,39 +73,19 @@ public class BiomeDustopia extends Biome {
 				posY = world.getHeight(posX, posZ);
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock)
-					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDawnGrass.getDefaultState());
+					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DAWN_GRASS.getDefaultState());
 			}
 		}
 
 		@Override
 		protected void doTreeGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < 5; i++) {
-				switch (rand.nextInt(3)) {
-					case 0:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 1, posZ + 1);
+				posX = basePos.getX() + rand.nextInt(16);
+				posZ = basePos.getZ() + rand.nextInt(16);
+				posY = world.getHeight(posX + 3, posZ + 3);
 
-						if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock)
-							StructuresHandler.generateStructure("DawnTree1", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 1:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 1, posZ + 1);
-
-						if (world.getBlockState(pos.setPos(posX + 1, posY - 1, posZ + 1)) == biome.topBlock)
-							StructuresHandler.generateStructure("DawnTree2", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-					case 2:
-						posX = basePos.getX() + rand.nextInt(16);
-						posZ = basePos.getZ() + rand.nextInt(16);
-						posY = world.getHeight(posX + 3, posZ + 3);
-
-						if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
-							StructuresHandler.generateStructure("DawnTree3", world, rand, pos.setPos(posX, posY, posZ));
-						break;
-				}
+				if (world.getBlockState(pos.setPos(posX + 3, posY - 1, posZ + 3)) == biome.topBlock)
+					new WorldGenDawnwoodTree(null).generate(world, rand, pos.up());
 			}
 		}
 

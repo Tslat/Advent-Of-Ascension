@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.PacketExpeditionToggle;
+import net.tslat.aoa3.entity.passive.EntitySpearmintSnail;
 import net.tslat.aoa3.entity.boss.skeletalarmy.EntityEliteSkelePig;
 import net.tslat.aoa3.entity.mobs.abyss.EntityOcculent;
 import net.tslat.aoa3.entity.mobs.candyland.EntityGingerbreadMan;
-import net.tslat.aoa3.entity.animals.EntitySpearmintSnail;
 import net.tslat.aoa3.entity.mobs.celeve.*;
 import net.tslat.aoa3.entity.mobs.misc.EntitySeaSkeleton;
 import net.tslat.aoa3.entity.mobs.overworld.*;
@@ -23,7 +23,10 @@ import net.tslat.aoa3.entity.mobs.shyrelands.EntityArcworm;
 import net.tslat.aoa3.entity.mobs.shyrelands.EntityShyreTroll;
 import net.tslat.aoa3.entity.mobs.voxponds.EntityAlarmo;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.*;
+import net.tslat.aoa3.utils.ConfigurationUtil;
+import net.tslat.aoa3.utils.PacketUtil;
+import net.tslat.aoa3.utils.RenderUtil;
+import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 import net.tslat.aoa3.utils.skills.AuguryUtil;
 
@@ -109,8 +112,12 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		this.adjustedMouseY = (int)(mouseY * AdventMainGui.scaleInverse);
 
 		drawPlayerBox(AdventMainGui.scaledTabRootX + 50, AdventMainGui.scaledTabRootY + 330, mouseX, mouseY, (int)(30 * AdventMainGui.scaleInverse));
-		renderResources();
-		renderSkills();
+
+		if (ConfigurationUtil.MainConfig.resourcesEnabled)
+			renderResources();
+
+		if (ConfigurationUtil.MainConfig.skillsEnabled)
+			renderSkills();
 	}
 
 	private void renderResources() {
@@ -391,6 +398,7 @@ public class AdventGuiTabPlayer extends GuiScreen {
 
 			RenderUtil.drawCenteredScaledString(mc.fontRenderer, skillName, x + 31, y - 15, 1.5625f, Enums.RGBIntegers.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 			GlStateManager.scale(1.25, 1.25, 1.25);
+
 			mc.fontRenderer.drawString(StringUtil.getLocaleStringWithArguments("gui.aoamain.player.lvl", String.valueOf(lvl)), x * 0.8f, (y + 65) * 0.8f, Enums.RGBIntegers.WHITE, true);
 
 			if (!hitXpCap)
@@ -430,8 +438,8 @@ public class AdventGuiTabPlayer extends GuiScreen {
 		RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
 		entityToRender.renderYawOffset = 0;
 
-		entityToRender.rotationYaw = (float)Math.atan((double)((((AdventMainGui.scaledRootX + 273) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
-		entityToRender.rotationPitch = -((float)Math.atan((double)((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
+		entityToRender.rotationYaw = (float)Math.atan(((((AdventMainGui.scaledRootX + 273) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
+		entityToRender.rotationPitch = -((float)Math.atan(((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
 		entityToRender.rotationYawHead = entityToRender.rotationYaw;
 		entityToRender.prevRotationYawHead = entityToRender.rotationYaw;
 		entityToRender.limbSwingAmount = 0;
@@ -604,6 +612,9 @@ public class AdventGuiTabPlayer extends GuiScreen {
 	}
 
 	public static int getSkillLevel(Enums.Skills skill) {
+		if (!ConfigurationUtil.MainConfig.skillsEnabled)
+			return 100;
+
 		switch (skill) {
 			case ALCHEMY:
 				return levelAlchemy;
@@ -709,6 +720,15 @@ public class AdventGuiTabPlayer extends GuiScreen {
 				return percentCompleteLogging;
 			case RUNATION:
 				return percentCompleteRunation;
+			default:
+				return 0;
+		}
+	}
+
+	public static int getOptionalSkillData(Enums.Skills skill) {
+		switch (skill) {
+			case EXPEDITION:
+				return optExpedition;
 			default:
 				return 0;
 		}

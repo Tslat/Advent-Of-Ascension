@@ -42,7 +42,7 @@ public class KrorSpawnTask implements Runnable {
 			return;
 		}
 
-		if (world.getBlockState(chargingTablePos).getBlock() != BlockRegister.chargingTable)
+		if (world.getBlockState(chargingTablePos).getBlock() != BlockRegister.CHARGING_TABLE)
 			return;
 
 		if (chargedAmount < 200) {
@@ -84,6 +84,6 @@ public class KrorSpawnTask implements Runnable {
 	}
 
 	public void schedule(Integer time, TimeUnit units) {
-		ModUtil.scheduleRequiredAsyncTask(this, time, units);
+		ModUtil.scheduleAsyncTask(this, time, units);
 	}
 }

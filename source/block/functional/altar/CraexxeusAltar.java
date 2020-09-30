@@ -28,6 +28,6 @@ public class CraexxeusAltar extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.ancientRing;
+		return ItemRegister.ANCIENT_RING;
 	}
 }

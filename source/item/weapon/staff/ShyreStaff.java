@@ -35,13 +35,13 @@ public class ShyreStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffShyre;
+		return SoundsRegister.SHYRE_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeEnergy, 3);
-		runes.put(ItemRegister.runeDistortion, 3);
+		runes.put(ItemRegister.ENERGY_RUNE, 3);
+		runes.put(ItemRegister.DISTORTION_RUNE, 3);
 	}
 
 	@Override

@@ -5,8 +5,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFlickeringFluffyTrail;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityEradicatorShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -24,9 +23,9 @@ public class EradicatorShotRenderer extends Render<EntityEradicatorShot> {
 	@Override
 	public void doRender(EntityEradicatorShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 8, 0.5f).create();
-			new FXFlickeringFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_LIME_GREEN, 8, 0.5f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_GRAY, 8, 0.5f).create();
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLACK, 50, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLICKERING_FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_LIME_GREEN, 50, 3, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.DARK_GRAY, 50, 3, 7);
 		}
 	}
 

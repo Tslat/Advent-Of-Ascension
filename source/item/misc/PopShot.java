@@ -15,6 +15,6 @@ public class PopShot extends HollyArrow {
 
 	@Override
 	public EntityHollyArrow createArrow(World world, BaseBow bow, ItemStack ammo, EntityLivingBase shooter, double baseDamage) {
-		return new EntityPopShot(world, bow, shooter, baseDamage, ammo.getItem() == ItemRegister.popShot);
+		return new EntityPopShot(world, bow, shooter, baseDamage, ammo.getItem() == ItemRegister.POP_SHOT);
 	}
 }

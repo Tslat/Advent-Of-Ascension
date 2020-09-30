@@ -37,7 +37,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeCrystevia;
+	private final Biome biome = BiomeRegister.CRYSTEVIA;
 
 	private double[] noiseArray;
 	private double[] depthBuffer = new double[256];
@@ -222,7 +222,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 								IBlockState iblockstate = null;
 
 								if (d15 > 0.0D)
-									iblockstate = BlockRegister.stoneCrystevia.getDefaultState();
+									iblockstate = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
 
 								int l2 = j2 + j1 * 4;
 								int i3 = i2 + l1 * 8;
@@ -256,23 +256,23 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 			for (int k = 0; k < 16; ++k) {
 				int l = (int)(this.depthBuffer[j + k * 16] / 3.0D + 3.0D + this.rand.nextDouble() * 0.25D);
 				int i1 = -1;
-				IBlockState iblockstate = BlockRegister.stoneCrystevia.getDefaultState();
-				IBlockState iblockstate1 = BlockRegister.stoneCrystevia.getDefaultState();
+				IBlockState iblockstate = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
+				IBlockState iblockstate1 = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
 
 				for (int j1 = 127; j1 >= 0; --j1) {
 					if (j1 < 125 && j1 > 2) {
 						IBlockState iblockstate2 = primer.getBlockState(k, j1, j);
 
 						if (iblockstate2.getMaterial() != Material.AIR) {
-							if (iblockstate2.getBlock() == BlockRegister.stoneCrystevia) {
+							if (iblockstate2.getBlock() == BlockRegister.CRYSTEVIA_STONE) {
 								if (i1 == -1) {
 									if (l <= 0) {
 										iblockstate = Blocks.AIR.getDefaultState();
-										iblockstate1 = BlockRegister.stoneCrystevia.getDefaultState();
+										iblockstate1 = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
 									}
 									else if (j1 >= i - 4 && j1 <= i + 1) {
-										iblockstate = BlockRegister.stoneCrystevia.getDefaultState();
-										iblockstate1 = BlockRegister.stoneCrystevia.getDefaultState();
+										iblockstate = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
+										iblockstate1 = BlockRegister.CRYSTEVIA_STONE.getDefaultState();
 									}
 
 									if (j1 < i && iblockstate.getMaterial() == Material.AIR) {
@@ -299,7 +299,7 @@ public class ChunkGenCrystevia implements IChunkGenerator {
 						}
 					}
 					else {
-						primer.setBlockState(k, j1, j, BlockRegister.dimensionalFabric.getDefaultState());
+						primer.setBlockState(k, j1, j, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 					}
 				}
 			}

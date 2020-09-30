@@ -23,11 +23,11 @@ public class CandylandTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalCandyland;
+		return BlockRegister.CANDYLAND_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.candyWhite;
+		return BlockRegister.WHITE_CANDY;
 	}
 }

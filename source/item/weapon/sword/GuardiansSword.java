@@ -18,14 +18,13 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.interfaces.CapabilityBaseMiscStackSerializable;
 import net.tslat.aoa3.capabilities.providers.AdventMiscStackSerializeableProvider;
 import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class GuardiansSword extends BaseSword implements AdventWeapon {
+public class GuardiansSword extends BaseSword {
 	public GuardiansSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("GuardiansSword");
@@ -37,7 +36,7 @@ public class GuardiansSword extends BaseSword implements AdventWeapon {
 		ItemStack heldStack = player.getHeldItem(hand);
 		CapabilityBaseMiscStackSerializable cap = heldStack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, null);
 
-		if (cap != null && cap.getValue() <= 0 && ItemUtil.consumeItem(player, new ItemStack(ItemRegister.gemCrystallite))) {
+		if (cap != null && cap.getValue() <= 0 && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CRYSTALLITE), true, 1)) {
 			cap.setValue(world.getTotalWorldTime());
 
 			if (world instanceof WorldServer) {
@@ -94,7 +93,7 @@ public class GuardiansSword extends BaseSword implements AdventWeapon {
 			if (cap != null && cap.getValue() > 0)
 				buff = 5;
 
-			ItemUtil.setAttribute(attributeMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg + buff);
+			ItemUtil.setAttribute(attributeMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() + buff);
 		}
 
 		return attributeMap;

@@ -40,19 +40,19 @@ public class EntityNipper extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobNipperLiving;
+        return SoundsRegister.MOB_NIPPER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobNipperDeath;
+        return SoundsRegister.MOB_NIPPER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobNipperHit;
+        return SoundsRegister.MOB_NIPPER_HIT;
     }
 
     @Nullable

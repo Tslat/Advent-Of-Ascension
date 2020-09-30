@@ -24,7 +24,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingFindNearestAttackableTargetHunter;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAILookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingMeleeAttack;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
@@ -48,13 +48,13 @@ public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
         moveHelper = new RoamingFlightMoveHelper(this);
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
     }
 
     @Override
     protected void initEntityAI() {
         tasks.addTask(1, new EntityAIRandomFly(this, true));
-        tasks.addTask(2, new EntityAIFlyingLookAround(this));
+        tasks.addTask(2, new EntityAILookAround(this));
         tasks.addTask(3, new EntityAILookIdle(this));
         tasks.addTask(4, new EntityAIFlyingMeleeAttack(this, 0.6f, false));
         targetTasks.addTask(1, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, AoAMinion.class, EntityTameable::isTamed));
@@ -66,12 +66,17 @@ public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
         super.applyEntityAttributes();
 
         getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage());
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f));
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(36);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
+    }
+
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        return new PathNavigateFlying(this, world);
     }
 
     protected abstract double getBaseKnockbackResistance();

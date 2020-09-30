@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class HiveNest extends AoAStructure { //StructureSize: 19x12x19
-	private static final IBlockState hiveWall = BlockRegister.hiveWall.getDefaultState();
-	private static final IBlockState hiveLight = BlockRegister.lightHiveLight.getDefaultState();
-	private static final IBlockState hiveSpawner = BlockRegister.hiveSpawner.getDefaultState();
+	private static final IBlockState hiveWall = BlockRegister.HIVE_WALL.getDefaultState();
+	private static final IBlockState hiveLight = BlockRegister.HIVE_LIGHT.getDefaultState();
+	private static final IBlockState hiveSpawner = BlockRegister.HIVE_SPAWNER.getDefaultState();
 
 	public HiveNest() {
 		super("HiveNest");

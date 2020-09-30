@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ShyreDecoration3 extends AoAStructure { //StructureSize: 14x4x14
-	private static final IBlockState whiteShyreBricks = BlockRegister.bricksShyreWhite.getDefaultState();
-	private static final IBlockState yellowShyreBricks = BlockRegister.bricksShyreYellow.getDefaultState();
+	private static final IBlockState whiteShyreBricks = BlockRegister.WHITE_SHYRE_BRICKS.getDefaultState();
+	private static final IBlockState yellowShyreBricks = BlockRegister.YELLOW_SHYRE_BRICKS.getDefaultState();
 
 	public ShyreDecoration3() {
 		super("ShyreDecoration3");

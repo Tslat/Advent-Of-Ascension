@@ -77,19 +77,19 @@ public class EntityDestructor extends AoARangedMob implements SpecialPropertyEnt
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDestructorLiving;
+		return SoundsRegister.MOB_DESTRUCTOR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDestructorDeath;
+		return SoundsRegister.MOB_DESTRUCTOR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDestructorHit;
+		return SoundsRegister.MOB_DESTRUCTOR_HIT;
 	}
 
 	@Nullable
@@ -111,7 +111,7 @@ public class EntityDestructor extends AoARangedMob implements SpecialPropertyEnt
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.mobDestructorLiving;
+		return SoundsRegister.MOB_DESTRUCTOR_LIVING;
 	}
 
 	@Override

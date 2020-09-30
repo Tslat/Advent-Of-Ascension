@@ -30,7 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingFindNearestAttackableTargetHunter;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingLookAround;
+import net.tslat.aoa3.entity.base.ai.mob.EntityAILookAround;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingRangedAttack;
 import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
 import net.tslat.aoa3.entity.minions.AoAMinion;
@@ -57,7 +57,7 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
         moveHelper = new RoamingFlightMoveHelper(this);
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseProjectileDamage() * 2) / 10f));
     }
 
     @Override
@@ -70,7 +70,7 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     @Override
     protected void initEntityAI() {
         tasks.addTask(1, new EntityAIRandomFly(this, true));
-        tasks.addTask(2, new EntityAIFlyingLookAround(this));
+        tasks.addTask(2, new EntityAILookAround(this));
         tasks.addTask(3, new EntityAILookIdle(this));
         tasks.addTask(4, new EntityAIFlyingRangedAttack(this, 40, 80));
         targetTasks.addTask(1, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, AoAMinion.class, EntityTameable::isTamed));
@@ -83,9 +83,14 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
 
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(42);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
+    }
+
+    @Override
+    protected PathNavigate createNavigator(World world) {
+        return new PathNavigateFlying(this, world);
     }
 
     protected abstract double getBaseKnockbackResistance();
@@ -265,20 +270,21 @@ public abstract class AoAFlyingRangedMob extends EntityFlying implements IMob, I
     @Override
     public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
         boolean success;
+        float mod = ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f;
 
         switch (projectile.getProjectileType()) {
             case MAGIC:
-                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage(), false);
+                success = EntityUtil.dealMagicDamage(projectile, this, target, (float)getBaseProjectileDamage() * mod, false);
                 break;
             case GUN:
-                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealGunDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case PHYSICAL:
-                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage());
+                success = EntityUtil.dealRangedDamage(target, this, projectile, (float)getBaseProjectileDamage() * mod);
                 break;
             case OTHER:
             default:
-                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage());
+                success = target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), (float)getBaseProjectileDamage() * mod);
                 break;
         }
 

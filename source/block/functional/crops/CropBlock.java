@@ -54,6 +54,10 @@ public class CropBlock extends BlockCrops {
 		return GROWTH_AABB[state.getValue(AGE)];
 	}
 
+	public IPlantable getSeeds() {
+		return seeds;
+	}
+
 	public void setSeeds(IPlantable seeds) {
 		this.seeds = seeds;
 	}
@@ -120,6 +124,10 @@ public class CropBlock extends BlockCrops {
 	@Override
 	public Item getCrop() {
 		return crop;
+	}
+
+	public boolean dropsSeeds() {
+		return dropsSeeds;
 	}
 
 	@Override

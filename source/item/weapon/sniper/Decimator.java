@@ -8,14 +8,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Decimator extends BaseSniper implements AdventWeapon {
+public class Decimator extends BaseSniper {
 	public Decimator(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("Decimator");
@@ -25,7 +24,7 @@ public class Decimator extends BaseSniper implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override

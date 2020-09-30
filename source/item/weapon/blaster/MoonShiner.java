@@ -18,7 +18,7 @@ public class MoonShiner extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMoonShiner;
+		return SoundsRegister.MOON_SHINER_FIRE;
 	}
 
 	@Override

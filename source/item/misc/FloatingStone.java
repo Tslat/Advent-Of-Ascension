@@ -10,14 +10,14 @@ public class FloatingStone extends Item {
 	public FloatingStone() {
 		setTranslationKey("FloatingStone");
 		setRegistryName("aoa3:floating_stone");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if (entityItem.posY < -10) {
 			entityItem.setPositionAndUpdate(entityItem.posX, 257, entityItem.posZ);
-			entityItem.setItem(new ItemStack(ItemRegister.heavyBoulder, 1));
+			entityItem.setItem(new ItemStack(ItemRegister.HEAVY_BOULDER, 1));
 		}
 
 		return super.onEntityItemUpdate(entityItem);

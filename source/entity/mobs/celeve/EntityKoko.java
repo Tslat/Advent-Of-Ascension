@@ -49,19 +49,19 @@ public class EntityKoko extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCeleveClownLiving;
+		return SoundsRegister.MOB_CELEVE_CLOWN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCeleveClownDeath;
+		return SoundsRegister.MOB_CELEVE_CLOWN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCeleveClownHit;
+		return SoundsRegister.MOB_CELEVE_CLOWN_HIT;
 	}
 
 	@Nullable
@@ -73,6 +73,6 @@ public class EntityKoko extends AoAMeleeMob {
 	@Override
 	protected void doMeleeEffect(Entity target) {
 		if (target instanceof EntityLivingBase)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 35, true, false));
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, false));
 	}
 }

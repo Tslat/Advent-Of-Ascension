@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class HorizonMaul extends BaseMaul implements AdventWeapon {
+public class HorizonMaul extends BaseMaul {
 	public HorizonMaul(Float dmg, Double speed, double knockback, int durability) {
 		super(dmg, speed, knockback, durability);
 		setTranslationKey("HorizonMaul");

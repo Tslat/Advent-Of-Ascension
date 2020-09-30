@@ -38,7 +38,7 @@ public class CrystallisArmour extends AdventArmour {
 				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
 			}
 			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && EntityUtil.isMeleeDamage(event.getSource())) {
-				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount() / (5 - slots.size()));
+				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount() * slots.size() / 4f);
 				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
 			}
 		}

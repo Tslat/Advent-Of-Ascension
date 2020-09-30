@@ -52,19 +52,19 @@ public class EntitySkullCreature extends AoAMeleeMob implements SpecialPropertyE
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobSkullCreatureLiving;
+        return SoundsRegister.MOB_SKULL_CREATURE_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobSkullCreatureDeath;
+        return SoundsRegister.MOB_SKULL_CREATURE_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobSkullCreatureHit;
+        return SoundsRegister.MOB_SKULL_CREATURE_HIT;
     }
 
     @Nullable

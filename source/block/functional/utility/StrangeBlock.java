@@ -23,7 +23,7 @@ public class StrangeBlock extends Block {
 		setHardness(-1f);
 		setResistance(999999999f);
 		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 	}
 
 	@Override
@@ -31,25 +31,25 @@ public class StrangeBlock extends Block {
 		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
 			ItemStack stack = player.getHeldItem(hand);
 
-			if (stack.getItem() == ItemRegister.strangeStoneBlue) {
+			if (stack.getItem() == ItemRegister.BLUE_STRANGE_STONE) {
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.cannonShyreBlaster));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.SHYRE_BLASTER));
 				return true;
 			}
-			else if (stack.getItem() == ItemRegister.strangeStoneYellow) {
+			else if (stack.getItem() == ItemRegister.YELLOW_STRANGE_STONE) {
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.shotgunAmplifier));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.AMPLIFIER));
 				return true;
 			}
-			else if (stack.getItem() == ItemRegister.strangeStoneWhite) {
+			else if (stack.getItem() == ItemRegister.WHITE_STRANGE_STONE) {
 				if (!player.capabilities.isCreativeMode)
 					player.getHeldItem(hand).shrink(1);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.gunSublimus));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(WeaponRegister.SUBLIMUS));
 				return true;
 			}
 		}

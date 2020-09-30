@@ -23,11 +23,6 @@ public class UriohRenderer extends RenderLiving<EntityUrioh> {
 	}
 
 	@Override
-	public void doRender(EntityUrioh entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-	}
-
-	@Override
 	protected void preRenderCallback(EntityUrioh entity, float partialTickTime) {
 		float scale = Math.max(0.1f, entity.getHealth() / entity.getMaxHealth());
 

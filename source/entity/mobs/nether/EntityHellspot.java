@@ -52,19 +52,19 @@ public class EntityHellspot extends AoAMeleeMob implements SpecialPropertyEntity
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobHellspotLiving;
+        return SoundsRegister.MOB_HELLSPOT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobHellspotDeath;
+        return SoundsRegister.MOB_HELLSPOT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobHellspotHit;
+        return SoundsRegister.MOB_HELLSPOT_HIT;
     }
 
     @Nullable

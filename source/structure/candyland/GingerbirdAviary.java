@@ -9,9 +9,9 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class GingerbirdAviary extends AoAStructure { //StructureSize: 10x12x10
-	private static final IBlockState whiteCandy = BlockRegister.candyWhite.getDefaultState();
-	private static final IBlockState gingerbread = BlockRegister.gingerbread.getDefaultState();
-	private static final IBlockState gingerbirdSpawner = BlockRegister.spawnerGingerbird.getDefaultState();
+	private static final IBlockState whiteCandy = BlockRegister.WHITE_CANDY.getDefaultState();
+	private static final IBlockState gingerbread = BlockRegister.GINGERBREAD.getDefaultState();
+	private static final IBlockState gingerbirdSpawner = BlockRegister.GINGERBIRD_SPAWNER.getDefaultState();
 
 	public GingerbirdAviary() {
 		super("GingerbirdAviary");

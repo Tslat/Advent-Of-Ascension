@@ -41,6 +41,6 @@ public class EntityPopShot extends EntityHollyArrow {
 	protected void arrowHit(EntityLivingBase target) {}
 
 	protected ItemStack getArrowStack() {
-		return new ItemStack(ItemRegister.popShot);
+		return new ItemStack(ItemRegister.POP_SHOT);
 	}
 }

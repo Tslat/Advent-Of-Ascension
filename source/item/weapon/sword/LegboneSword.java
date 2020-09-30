@@ -14,7 +14,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class LegboneSword extends BaseSword implements AdventWeapon {
+public class LegboneSword extends BaseSword {
 	public LegboneSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("LegboneSword");

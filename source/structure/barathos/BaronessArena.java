@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BaronessArena extends AoAStructure { //StructureSize: 31x29x31
-	private static final IBlockState baronWall = BlockRegister.baronCastleWall.getDefaultState();
-	private static final IBlockState iroGlass = BlockRegister.glassIro.getDefaultState();
-	private static final IBlockState hellstone = BlockRegister.stoneBarathos.getDefaultState();
-	private static final IBlockState baronessAltar = BlockRegister.baronessAltar.getDefaultState();
+	private static final IBlockState baronWall = BlockRegister.BARON_CASTLE_WALL.getDefaultState();
+	private static final IBlockState iroGlass = BlockRegister.IRO_GLASS.getDefaultState();
+	private static final IBlockState hellstone = BlockRegister.BARATHOS_HELLSTONE.getDefaultState();
+	private static final IBlockState baronessAltar = BlockRegister.BARONESS_ALTAR.getDefaultState();
 
 	public BaronessArena() {
 		super("BaronessArena");

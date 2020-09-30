@@ -1,24 +1,23 @@
-Elements a l'ecran (GUI)
+Éléments à l'écran (GUI)
 
 Advent of Ascension installe plusieurs éléments à l'écran pendant que tu joues. Ces éléments sont cruciaux pour progresser dans le mod, car ils montrent des informations vitales que tu auras besoin de savoir en jouant.
 Tu peux désactiver cet affichage avec le bouton assigné ('o' par défaut). Si tu n'est pas sûr de ton bouton assigné, regarde dans tes paramètres de contrôles.
 
 L'icône du poing:
-  L'icône de poing orange/rouge est appelée rage de combat. La rage de combat se régénère passivement au fur et à mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros dégâts, faisant bien plus mal. Tu peux augmenter les dégâts de ce coup en montant ton skill boucherie.
+  L'icône de poing orange/rouge est appelée rage de combat. La rage de combat se régénère passivement au fur et à mesure que le temps passe, et lorsque tu en as assez, tes attaques ont une petite chance de faire de gros dégâts, faisant bien plus mal. Tu peux augmenter les dégâts de ce coup en montant ta compétence boucherie.
 
 L'éclair:
   L'icône d'éclair est appelée énergie. Çela représente une ressource renouvelable et consommable qui est utilisée comme munition par les blasters. Elle se régénère passivement lorsqu'inactive, mais est rapidement drainée par les blasters.
 
 L'icône de créature à cornes:
-  Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent passivement pendant que tu joues. Les modèles de création du skill création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
-  Tu peux augmenter ton maximum de points de création en montant ton skill augure.
+  Cette icône est appelée création. C'est une représentation des points de création qui se régénèrent passivement pendant que tu joues. Les modèles de création de la compétence création coûtent des points de création à utiliser, donc si tu invoques des sbires tu devras garder un œil à combien tu en as.
 
 L'icône alien bleu:
-  Cette icône est appelée pouvoir des âmes. Elle représente la quantité de pouvoir des âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Ils sont actuellement inutilisés, donc pas besoin de s'en préoccuper pour l'instant.
+  Cette icône est appelée pouvoir des âmes. Elle représente la quantité de pouvoir des âmes en ta possession. Ces points se régénèrent lentement pendant que tu joues. Le pouvoir des âmes est utilisé pour activer et alimenter les tablettes, qui offrent des bonus dans la zone autour d'elles une fois placées.
 
 Les quatres lignes:
   Logée entre la rage de combat et l'énergie est l'icône de tribut. Cette icône est divisée en quatre lignes individuelles, chacune représentant une divinité spécifique. Il y a quatre principales divinités dans Advent of Ascension: Erebon, Luxon, Pluton, et Selyan. Chacune aime et déteste différentes choses, et il peut donc être difficile de toutes les combler.
   Lorsque tu accomplis certaines tâches pendant la journée en revanche, tu verras ces barres se remplir. Si tu réussis à remplir une barre en entier, alors quand le soleil se couchera, tu recevras une faveur de la part de la divinité que tu as apaisée. Ces faveurs peuvent être très utiles, alors au travail!
 
-L'icône de crâne:
+L'icône du sceptre:
   Cette icône n'apparaît pas toujours, elle n'apparaît que pendant un court instant parfois après avoir pris des dégâts. Quand cette icône apparaît, le mob qui t'a attaqué voit son âme être liée à la tienne. Tu peux alors utiliser un sceptre pour infliger des dégâts instantanés en revanche. Essaie d'obtenir vite un sceptre, car cela peut façilement faire beaucoup de dégâts!

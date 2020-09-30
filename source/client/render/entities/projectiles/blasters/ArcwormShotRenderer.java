@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXLastingFluffyTrail;
 import net.tslat.aoa3.client.model.entities.mobs.shyrelands.ModelArcworm;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityArcwormShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -52,13 +52,13 @@ public class ArcwormShotRenderer extends Render<EntityArcwormShot> {
 		GlStateManager.popMatrix();
 
 		for (int i = 0; i < 3; i++) {
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY + 0.45, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY + 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY + 0.15, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY - 0.15, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY - 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 8, 0.75f).create();
-			new FXLastingFluffyTrail(entity.world, entity.posX, entity.posY - 0.45, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 8, 0.75f).create();
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.45, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY + 0.15, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.15, entity.posZ, 0, 0, 0, Enums.RGBIntegers.CYAN, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.3, entity.posZ, 0, 0, 0, Enums.RGBIntegers.BLUE, 75, 20, 7);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY - 0.45, entity.posZ, 0, 0, 0, Enums.RGBIntegers.PURPLE, 75, 20, 7);
 		}
 
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);

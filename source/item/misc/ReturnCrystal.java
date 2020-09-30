@@ -23,7 +23,7 @@ public class ReturnCrystal extends BasicFood {
 	public ReturnCrystal() {
 		super("ReturnCrystal", "return_crystal", 0, 0);
 		setAlwaysEdible();
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class ReturnCrystal extends BasicFood {
 			if (eater instanceof EntityPlayer) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer(((EntityPlayer)eater));
 
-				if (world.provider.getDimension() == DimensionRegister.dimensionImmortallis.getId()) {
+				if (world.provider.getDimension() == DimensionRegister.DIM_IMMORTALLIS.getId()) {
 					plData.stats().resetAllTribute();
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin1));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin2));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin3));
-					ItemUtil.consumeItem((EntityPlayer)eater, new ItemStack(ItemRegister.progressCoin4));
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN1), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN2), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN3), true, 1);
+					ItemUtil.findInventoryItem((EntityPlayer)eater, new ItemStack(ItemRegister.PROGRESS_COIN4), true, 1);
 
 					if (!((EntityPlayer)eater).capabilities.isCreativeMode)
 						stack.shrink(1);

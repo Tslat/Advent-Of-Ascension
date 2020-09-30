@@ -34,7 +34,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeDeeplands;
+	private final Biome biome = BiomeRegister.DEEPLANDS;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -282,7 +282,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 
 		for (int j1 = 255; j1 >= 0; --j1) {
 			if (j1 <= 2 || (j1 <= 130 && 130 - j1 <= 2)) {
-				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.dimensionalFabric.getDefaultState());
+				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 			}
 			else {
 				IBlockState iblockstate2 = chunkPrimerIn.getBlockState(i1, j1, l);
@@ -290,7 +290,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 				if (iblockstate2.getMaterial() == Material.AIR) {
 					j = -1;
 				}
-				else if (iblockstate2.getBlock() == BlockRegister.stoneDeeplands) {
+				else if (iblockstate2.getBlock() == BlockRegister.DEEPLANDS_STONE) {
 					if (j == -1) {
 						if (k <= 0) {
 							topBlock = Blocks.AIR.getDefaultState();
@@ -302,7 +302,7 @@ public class ChunkGenDeeplands implements IChunkGenerator {
 						}
 
 						if (j1 < seaLevel && (topBlock == null || topBlock.getMaterial() == Material.AIR)) {
-							topBlock = BlockRegister.stoneDeeplands.getDefaultState();
+							topBlock = BlockRegister.DEEPLANDS_STONE.getDefaultState();
 						}
 
 						j = k;

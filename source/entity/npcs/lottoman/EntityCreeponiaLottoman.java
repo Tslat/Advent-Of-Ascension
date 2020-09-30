@@ -33,7 +33,7 @@ public class EntityCreeponiaLottoman extends EntityLottoman {
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {
 		ItemStack heldStack = player.getHeldItem(hand);
 
-		if (heldStack.getItem() == ItemRegister.realmstoneBlank && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
+		if (heldStack.getItem() == ItemRegister.BLANK_REALMSTONE && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
 			return true;
 
 		return super.processInteract(player, hand);
@@ -41,9 +41,9 @@ public class EntityCreeponiaLottoman extends EntityLottoman {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 28), new ItemStack(ItemRegister.lottoTotem)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 15), new ItemStack(ItemRegister.weaponsCase)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 10), new ItemStack(ItemRegister.runeBox)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensCreeponia, 21), new ItemStack(ItemRegister.treasureBox)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CREEPONIA_TOKENS, 28), new ItemStack(ItemRegister.LOTTO_TOTEM)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CREEPONIA_TOKENS, 15), new ItemStack(ItemRegister.WEAPONS_CASE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CREEPONIA_TOKENS, 10), new ItemStack(ItemRegister.RUNE_BOX)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.CREEPONIA_TOKENS, 21), new ItemStack(ItemRegister.TREASURE_BOX)));
 	}
 }

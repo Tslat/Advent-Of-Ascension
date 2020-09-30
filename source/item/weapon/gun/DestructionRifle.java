@@ -10,7 +10,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.WorldUtil;
@@ -18,7 +17,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DestructionRifle extends BaseGun implements AdventWeapon {
+public class DestructionRifle extends BaseGun {
 	public DestructionRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("DestructionRifle");
@@ -28,7 +27,7 @@ public class DestructionRifle extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolver;
+		return SoundsRegister.REVOLVER_FIRE;
 	}
 
 	@Override

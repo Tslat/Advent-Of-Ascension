@@ -34,7 +34,7 @@ public class GenericPlantBlock extends Block implements IShearable {
 		this.growthMaterials = Arrays.asList(growthMaterials);
 		setSoundType(SoundType.PLANT);
 		setTickRandomly(true);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Override

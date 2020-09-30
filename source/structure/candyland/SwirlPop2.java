@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class SwirlPop2 extends AoAStructure { //StructureSize: 1x13x9
 	//private static final IBlockState candy = BlockRegister.candyRed.getDefaultState();
-	private static final IBlockState whiteCandy = BlockRegister.candyWhite.getDefaultState();
-	private static final IBlockState plasticPole = BlockRegister.plastic.getDefaultState();
+	private static final IBlockState whiteCandy = BlockRegister.WHITE_CANDY.getDefaultState();
+	private static final IBlockState plasticPole = BlockRegister.PLASTIC.getDefaultState();
 
 	public SwirlPop2() {
 		super("SwirlPop2");
@@ -19,7 +19,7 @@ public class SwirlPop2 extends AoAStructure { //StructureSize: 1x13x9
 
 	@Override
 	protected void build(World world, Random rand, BlockPos basePos) {
-		IBlockState candy = rand.nextBoolean() ? BlockRegister.candyRed.getDefaultState() : BlockRegister.candyGreen.getDefaultState();
+		IBlockState candy = rand.nextBoolean() ? BlockRegister.RED_CANDY.getDefaultState() : BlockRegister.GREEN_CANDY.getDefaultState();
 
 		addBlock(world, basePos, 0, 0, 4, plasticPole);
 		addBlock(world, basePos, 0, 1, 4, plasticPole);

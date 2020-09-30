@@ -53,19 +53,19 @@ public class EntityVisualent extends AoAFlyingMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVisularLiving;
+		return SoundsRegister.MOB_VISULAR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVisularDeath;
+		return SoundsRegister.MOB_VISULAR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVisularHit;
+		return SoundsRegister.MOB_VISULAR_HIT;
 	}
 
 	@Nullable
@@ -129,7 +129,7 @@ public class EntityVisualent extends AoAFlyingMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicVisualent;
+		return SoundsRegister.VISUALENT_MUSIC;
 	}
 
 	@Override

@@ -53,10 +53,10 @@ public class EntityStoreKeeper extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.toxicLump, 1), new ItemStack(ItemRegister.tokensVoxPonds, 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.POISONOUS_POTATO, 1), new ItemStack(ItemRegister.coinCopper, 16)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(BlockRegister.glassVox, 32)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 4), poisonPotionStack()));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.TOXIC_LUMP, 1), new ItemStack(ItemRegister.VOX_PONDS_TOKENS, 10)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.POISONOUS_POTATO, 1), new ItemStack(ItemRegister.COPPER_COIN, 16)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 1), new ItemStack(BlockRegister.VOX_GLASS, 32)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 4), poisonPotionStack()));
 	}
 
 	private ItemStack poisonPotionStack() {

@@ -51,17 +51,17 @@ public class EntityBloodsucker extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBloodsuckerLiving;
+		return SoundsRegister.MOB_BLOODSUCKER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBloodsuckerDeath;
+		return SoundsRegister.MOB_BLOODSUCKER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBloodsuckerHit;
+		return SoundsRegister.MOB_BLOODSUCKER_HIT;
 	}
 
 	@Nullable

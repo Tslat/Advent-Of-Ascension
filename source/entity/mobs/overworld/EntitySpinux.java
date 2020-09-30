@@ -19,11 +19,6 @@ public class EntitySpinux extends AoAMeleeMob {
 		super(world, entityWidth, 2f);
 	}
 
-	public EntitySpinux(World world, double posX, double posY, double posZ) {
-		this(world);
-		setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360, 1.0f);
-	}
-
 	@Override
 	public float getEyeHeight() {
 		return 1.875f;
@@ -57,17 +52,17 @@ public class EntitySpinux extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSpinuxLiving;
+		return SoundsRegister.MOB_SPINUX_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSpinuxDeath;
+		return SoundsRegister.MOB_SPINUX_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSpinuxHit;
+		return SoundsRegister.MOB_SPINUX_HIT;
 	}
 
 	@Nullable
@@ -83,7 +78,7 @@ public class EntitySpinux extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

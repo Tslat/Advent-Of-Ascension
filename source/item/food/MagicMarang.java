@@ -17,7 +17,7 @@ import java.util.List;
 public class MagicMarang extends BasicFood {
 	public MagicMarang() {
 		super("MagicMarang", "magic_marang", 5, 0.7f);
-		BlockRegister.cropMagicMarang.setCrop(this);
+		BlockRegister.MAGIC_MARANG_CROP.setCrop(this);
 	}
 
 	@Override

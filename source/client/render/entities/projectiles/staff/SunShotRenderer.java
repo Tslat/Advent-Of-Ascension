@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.staff.EntitySunShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -25,8 +25,8 @@ public class SunShotRenderer extends Render<EntitySunShot> {
 
 	@Override
 	public void doRender(EntitySunShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 3, 2).create();
-		new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 3, 2).create();
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 200, 3, 3);
+		entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.RED, 200, 3, 3);
 
 		double posX = entity.posX + AdventOfAscension.rand.nextGaussian() * 0.5;
 		double posY = entity.posY + AdventOfAscension.rand.nextGaussian() * 0.5;

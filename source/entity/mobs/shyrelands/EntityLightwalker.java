@@ -53,19 +53,19 @@ public class EntityLightwalker extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobVoidWalkerLiving;
+        return SoundsRegister.MOB_VOID_WALKER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobVoidWalkerDeath;
+        return SoundsRegister.MOB_VOID_WALKER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobVoidWalkerHit;
+        return SoundsRegister.MOB_VOID_WALKER_HIT;
     }
 
     @Nullable
@@ -82,7 +82,7 @@ public class EntityLightwalker extends AoAMeleeMob {
     @Override
     protected void doMeleeEffect(Entity target) {
         if (target instanceof EntityLivingBase) {
-            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 120, 4, true, false));
+            ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 120, 0, true, false));
 
             if (target instanceof EntityPlayerMP)
                 PacketUtil.network.sendTo(new PacketScreenOverlay(120, Enums.ScreenOverlays.LIGHTWALKER), (EntityPlayerMP)target);

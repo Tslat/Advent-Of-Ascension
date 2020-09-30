@@ -49,19 +49,19 @@ public class EntityStinger extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobStingerLiving;
+		return SoundsRegister.MOB_STINGER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobStingerHit;
+		return SoundsRegister.MOB_STINGER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobStingerHit;
+		return SoundsRegister.MOB_STINGER_HIT;
 	}
 
 	@Nullable

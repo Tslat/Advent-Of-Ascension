@@ -58,19 +58,19 @@ public class EntityBane extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBaneLiving;
+		return SoundsRegister.MOB_BANE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBaneDeath;
+		return SoundsRegister.MOB_BANE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBaneLiving;
+		return SoundsRegister.MOB_BANE_LIVING;
 	}
 
 	@Nullable
@@ -154,7 +154,7 @@ public class EntityBane extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicBane;
+		return SoundsRegister.BANE_MUSIC;
 	}
 
 	@Override

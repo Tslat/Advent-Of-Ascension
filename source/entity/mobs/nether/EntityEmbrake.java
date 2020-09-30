@@ -53,22 +53,22 @@ public class EntityEmbrake extends AoAMeleeMob implements SpecialPropertyEntity 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobEmbrakeLiving;
+		return SoundsRegister.MOB_EMBRAKE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobEmbrakeDeath;
+		return SoundsRegister.MOB_EMBRAKE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobEmbrakeHit;
+		return SoundsRegister.MOB_EMBRAKE_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.dinoStep;
+		return SoundsRegister.ENTITY_GENERIC_DINO_STEP;
 	}
 
 	@Nullable

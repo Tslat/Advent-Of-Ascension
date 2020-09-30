@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.projectiles.blaster.EntityFlowerShot;
 import net.tslat.aoa3.library.Enums;
 
@@ -25,12 +25,12 @@ public class FlowerShotRenderer extends Render<EntityFlowerShot> {
 	public void doRender(EntityFlowerShot entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		if (AdventOfAscension.rand.nextBoolean()) {
 			for (int i = 0; i < 3; i++) {
-				new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 8, 1).create();
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.GREEN, 100, 3, 7);
 			}
 		}
 		else {
 			for (int i = 0; i < 3; i++) {
-				new FXFluffyTrail(entity.world, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 8, 1).create();
+				entity.world.spawnParticle(ParticleRegister.FLUFFY, true, entity.posX, entity.posY, entity.posZ, 0, 0, 0, Enums.RGBIntegers.YELLOW, 100, 3, 7);
 			}
 		}
 	}

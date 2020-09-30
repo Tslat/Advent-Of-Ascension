@@ -14,12 +14,12 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class LunarBank extends AoAStructure { //StructureSize: 22x8x20
-	private static final IBlockState lunarLamp = BlockRegister.lampLunar.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState whitewashBricks = BlockRegister.bricksWhitewash.getDefaultState();
+	private static final IBlockState lunarLamp = BlockRegister.LUNAR_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState whitewashBricks = BlockRegister.WHITEWASH_BRICKS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
-	private static final IBlockState lunarCarpet = BlockRegister.carpetLunar.getDefaultState();
-	private static final IBlockState lunarPillar = BlockRegister.lunarPillar.getDefaultState();
+	private static final IBlockState lunarCarpet = BlockRegister.LUNAR_CARPET.getDefaultState();
+	private static final IBlockState lunarPillar = BlockRegister.LUNAR_PILLAR.getDefaultState();
 
 	public LunarBank() {
 		super("LunarBank");

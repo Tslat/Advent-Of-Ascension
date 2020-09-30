@@ -8,9 +8,9 @@ import net.tslat.aoa3.common.registration.BlockRegister;
 import java.util.Random;
 
 public class IroMazePt2 {
-	private static final IBlockState cogBlock = BlockRegister.cogBlock.getDefaultState();
-	private static final IBlockState iropole = BlockRegister.iropole.getDefaultState();
-	private static final IBlockState unbreakableBrick = BlockRegister.unbreakableIroBricks.getDefaultState();
+	private static final IBlockState cogBlock = BlockRegister.COG_BLOCK.getDefaultState();
+	private static final IBlockState iropole = BlockRegister.IROPOLE.getDefaultState();
+	private static final IBlockState unbreakableBrick = BlockRegister.UNBREAKABLE_IRO_BRICKS.getDefaultState();
 
 	protected static void addBlocks(IroMaze instance, World world, Random rand, BlockPos basePos) {
 		instance.addBlock(world, basePos, 32, 22, 34, unbreakableBrick);

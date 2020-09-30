@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -45,7 +46,7 @@ public class ExtractionDevice extends Block {
 		setTickRandomly(true);
 
 		if (!full) {
-			setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+			setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 		}
 		else {
 			setCreativeTab(null);
@@ -57,8 +58,8 @@ public class ExtractionDevice extends Block {
 		if (!world.isRemote) {
 			IBlockState topBlock = world.getBlockState(pos.up());
 
-			if (!full && (topBlock.getBlock() == Blocks.LAVA || (topBlock.getBlock() == Blocks.FLOWING_LAVA && topBlock.getBlock().getMetaFromState(topBlock) == 0))) {
-				world.setBlockState(pos, BlockRegister.extractionDeviceOn.getDefaultState());
+			if (!full && ((topBlock.getBlock() == Blocks.LAVA || topBlock.getBlock() == Blocks.FLOWING_LAVA) && topBlock.getBlock().getMetaFromState(topBlock) == 0)) {
+				world.setBlockState(pos, BlockRegister.EXTRACTION_DEVICE_ON.getDefaultState());
 				world.setBlockToAir(pos.up());
 			}
 		}
@@ -81,7 +82,12 @@ public class ExtractionDevice extends Block {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(BlockRegister.extractionDevice);
+		return Item.getItemFromBlock(BlockRegister.EXTRACTION_DEVICE);
+	}
+
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return false;
 	}
 
 	@Override
@@ -89,8 +95,8 @@ public class ExtractionDevice extends Block {
 		if (!world.isRemote) {
 			IBlockState topBlock = world.getBlockState(pos.up());
 
-			if (!full && (topBlock.getBlock() == Blocks.LAVA || (topBlock.getBlock() == Blocks.FLOWING_LAVA && topBlock.getBlock().getMetaFromState(topBlock) == 0))) {
-				world.setBlockState(pos, BlockRegister.extractionDeviceOn.getDefaultState());
+			if (!full && ((topBlock.getBlock() == Blocks.LAVA || topBlock.getBlock() == Blocks.FLOWING_LAVA) && topBlock.getBlock().getMetaFromState(topBlock) == 0)) {
+				world.setBlockState(pos, BlockRegister.EXTRACTION_DEVICE_ON.getDefaultState());
 				world.setBlockToAir(pos.up());
 			}
 		}
@@ -103,16 +109,19 @@ public class ExtractionDevice extends Block {
 
 		if (!world.isRemote && player.getHeldItem(hand).getItem() instanceof InfusionBowl) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+			ItemStack heldStack = player.getHeldItem(hand);
 
-			if (world.getBlockState(pos.down()).getMaterial().isReplaceable()) {
+			if (world.getBlockState(pos.down()).getMaterial().isReplaceable() || world.isOutsideBuildHeight(pos.down())) {
 				int lvl = plData.stats().getLevel(Enums.Skills.EXTRACTION);
+
+				world.setBlockState(pos, BlockRegister.EXTRACTION_DEVICE.getDefaultState());
 
 				if (plData.equipment().getCurrentFullArmourSet() != Enums.ArmourSets.EXTRACTION)
 					world.setBlockState(pos.down(), Blocks.OBSIDIAN.getDefaultState());
 
 				if (ExtractionUtil.shouldGetLoot(lvl)) {
 					if (!player.capabilities.isCreativeMode)
-						player.getHeldItem(hand).damageItem(1, player);
+						heldStack.damageItem(1, player);
 
 					List<ItemStack> loot = ExtractionUtil.getLoot(player);
 
@@ -121,15 +130,15 @@ public class ExtractionDevice extends Block {
 							player.sendMessage(StringUtil.getLocale("message.feedback.extraction").appendSibling(new TextComponentTranslation(stack.getTranslationKey() + ".name")));
 						}
 						else {
-							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.empty"));
+							player.sendMessage(StringUtil.getLocale("message.feedback.extraction.nothing"));
 						}
 
 						ItemHandlerHelper.giveItemToPlayer(player, stack);
 					}
 
+					player.addStat(StatList.getObjectUseStats(heldStack.getItem()));
 					plData.stats().addXp(Enums.Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false, false);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.extractionDeviceSuccess, SoundCategory.BLOCKS, 1.0f, 1.0f);
-					world.setBlockState(pos, BlockRegister.extractionDevice.getDefaultState());
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.EXTRACTION_SUCCESS, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					if (player.dimension == 0)
 						plData.stats().addTribute(Enums.Deities.PLUTON, 4);

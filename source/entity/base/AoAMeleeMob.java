@@ -12,7 +12,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -36,11 +35,10 @@ import net.tslat.aoa3.utils.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.TreeSet;
 
-public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity {
+public abstract class AoAMeleeMob extends EntityMob {
     protected final TreeSet<Enums.MobProperties> mobProperties;
     private boolean isSlipperyMob = false;
     private int animationTicks = 0;
-    protected String currentAnimation = null;
 
     public AoAMeleeMob(World world, float entityWidth, float entityHeight) {
         super(world);
@@ -48,7 +46,7 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
         mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
 
         setSize(entityWidth, entityHeight);
-        setXpValue((int)getBaseMaxHealth() / 10);
+        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
     }
 
     @Override
@@ -68,12 +66,12 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
 
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage());
+        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f));
         getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
         getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
         getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour());
+        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
     }
 
     protected abstract double getBaseKnockbackResistance();
@@ -102,7 +100,7 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
 
     @Nullable
     protected SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_PIG_STEP;
+        return null;
     }
 
     protected void setXpValue(int amount) {
@@ -210,14 +208,16 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
     }
 
     protected void playStepSound(BlockPos pos, Block block) {
-        if (getStepSound() != null)
+        if (getStepSound() != null) {
             playSound(getStepSound(), 0.55f, 1.0F);
+        }
+        else {
+            super.playStepSound(pos, block);
+        }
     }
 
     @Override
     public boolean attackEntityAsMob(Entity target) {
-        startAnimation(Enums.EntityAnimations.ATTACK_1);
-
         if (super.attackEntityAsMob(target)) {
             doMeleeEffect(target);
 
@@ -254,34 +254,6 @@ public abstract class AoAMeleeMob extends EntityMob implements AnimatableEntity 
 
         if (animationTicks >= 0)
             animationTicks++;
-    }
-
-    @Override
-    public int getCurrentAnimationTicks() {
-        return animationTicks;
-    }
-
-    @Nullable
-    @Override
-    public String getCurrentAnimation() {
-        return currentAnimation;
-    }
-
-    @Override
-    public void finishAnimation() {
-        currentAnimation = null;
-        animationTicks = -1;
-    }
-
-    @Override
-    public void startAnimation(String animation) {
-        currentAnimation = animation;
-        animationTicks = 0;
-    }
-
-    @Override
-    public void resetAnimation() {
-        animationTicks = 0;
     }
 
     protected void doMeleeEffect(Entity target) {}

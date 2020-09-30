@@ -49,17 +49,17 @@ public class EntityTricksterClone extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTricksterLiving;
+		return SoundsRegister.MOB_TRICKSTER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTricksterHit;
+		return SoundsRegister.MOB_TRICKSTER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTricksterHit;
+		return SoundsRegister.MOB_TRICKSTER_HIT;
 	}
 
 	@Override

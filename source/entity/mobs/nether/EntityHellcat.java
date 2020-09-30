@@ -1,8 +1,5 @@
 package net.tslat.aoa3.entity.mobs.nether;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -55,24 +52,24 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobHellcatLiving;
+        return SoundsRegister.MOB_HELLCAT_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobHellcatDeath;
+        return SoundsRegister.MOB_HELLCAT_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobHellcatHit;
+        return SoundsRegister.MOB_HELLCAT_HIT;
     }
 
     @Override
     protected SoundEvent getStepSound() {
-        return SoundsRegister.dinoStep;
+        return SoundsRegister.ENTITY_GENERIC_DINO_STEP;
     }
 
     @Nullable
@@ -84,11 +81,6 @@ public class EntityHellcat extends AoAMeleeMob implements SpecialPropertyEntity 
     @Override
     protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
         return source.isFireDamage();
-    }
-
-    @Override
-    protected void doMeleeEffect(Entity target) {
-        addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 0, 0, true, true));
     }
 
     @Override

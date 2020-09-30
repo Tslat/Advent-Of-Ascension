@@ -44,19 +44,19 @@ public class EntityRammerhorn extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobKeelerLiving;
+		return SoundsRegister.MOB_KEELER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobKeelerHit;
+		return SoundsRegister.MOB_KEELER_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobKeelerDeath;
+		return SoundsRegister.MOB_KEELER_DEATH;
 	}
 
 	@Nullable

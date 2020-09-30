@@ -46,7 +46,7 @@ public class EntityZalCitizen extends AoAAmbientNPC {
 	@Nullable
 	@Override
 	protected String getInteractMessage(ItemStack heldItem) {
-		if (heldItem.getItem() == ItemRegister.alienOrb) {
+		if (heldItem.getItem() == ItemRegister.ALIEN_ORB) {
 			return "message.dialogue.zal_citizen.alienOrb";
 		}
 		else {

@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 public interface AoAWorldProvider {
 	AoATeleporter getTeleporter(WorldServer fromWorld);
 
-	default boolean canPlaceBlock(EntityPlayer player, BlockPos pos, IBlockState block) {return true;}
+	default boolean canPlaceBlock(@Nullable EntityPlayer player, BlockPos pos, IBlockState block) {return true;}
 
 	default boolean canInteractWith(EntityPlayer player, @Nullable BlockPos pos, @Nullable Entity interactedEntity, ItemStack heldStack) {return true;}
 }

@@ -34,7 +34,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeHaven;
+	private final Biome biome = BiomeRegister.HAVEN;
 
 	private double[] noiseArray;
 	private double[] surfaceBuffer = new double[256];
@@ -79,14 +79,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 		}
 
 		Arrays.fill(chunk.getBiomeArray(), (byte)Biome.getIdForBiome(biome));
-
-		if (populatedChunk) {
-			chunk.generateSkylightMap();
-		}
-		else {
-			chunk.setHeightMap(new int[256]);
-			chunk.setLightPopulated(true);
-		}
+		chunk.generateSkylightMap();
 
 		return chunk;
 	}
@@ -175,7 +168,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 								IBlockState iblockstate = Blocks.AIR.getDefaultState();
 
 								if (d15 > 0.0D) {
-									iblockstate = BlockRegister.stoneHaven.getDefaultState();
+									iblockstate = BlockRegister.HAVEN_STONE.getDefaultState();
 									emptyChunk = false;
 								}
 
@@ -231,7 +224,7 @@ public class ChunkGenHaven implements IChunkGenerator {
 			if (iblockstate2.getMaterial() == Material.AIR) {
 				j = -1;
 			}
-			else if (iblockstate2.getBlock() == BlockRegister.stoneHaven) {
+			else if (iblockstate2.getBlock() == BlockRegister.HAVEN_STONE) {
 				if (j == -1) {
 					j = k;
 

@@ -24,7 +24,7 @@ public class EntityClown extends AoARangedMob {
 
 	public EntityClown(World world) {
 		super(world, entityWidth, 2f);
-		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.blasterConfettiCannon));
+		setHeldItem(EnumHand.MAIN_HAND, new ItemStack(WeaponRegister.CONFETTI_CANNON));
 	}
 
 	@Override
@@ -55,25 +55,25 @@ public class EntityClown extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobClownLiving;
+		return SoundsRegister.MOB_CLOWN_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobClownDeath;
+		return SoundsRegister.MOB_CLOWN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobClownHit;
+		return SoundsRegister.MOB_CLOWN_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotClownFire;
+		return SoundsRegister.CLOWN_SHOOT;
 	}
 
 	@Nullable
@@ -107,8 +107,8 @@ public class EntityClown extends AoARangedMob {
 		if (!world.isRemote && cause.getTrueSource() instanceof EntityPlayer) {
 			EntityPlayer pl = (EntityPlayer)cause.getTrueSource();
 
-			if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == WeaponRegister.greatbladeLelyetian && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneCeleve));
+			if (pl.getHeldItem(EnumHand.MAIN_HAND).getItem() == WeaponRegister.LELYETIAN_GREATBLADE && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.CELEVE_REALMSTONE));
 		}
 	}
 }

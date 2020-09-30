@@ -50,24 +50,24 @@ public class EntityJumbo extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobJumboLiving;
+		return SoundsRegister.MOB_JUMBO_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCeleveClownDeath;
+		return SoundsRegister.MOB_CELEVE_CLOWN_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCeleveClownHit;
+		return SoundsRegister.MOB_CELEVE_CLOWN_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

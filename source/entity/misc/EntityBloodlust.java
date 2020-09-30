@@ -64,7 +64,7 @@ public class EntityBloodlust extends EntityCreature {
             int lvl = plData.stats().getLevelForDisplay(Enums.Skills.BUTCHERY);
 
             plData.stats().addXp(Enums.Skills.BUTCHERY, PlayerUtil.getXpRequiredForNextLevel(lvl) / ButcheryUtil.getExpDenominator(lvl), false, false);
-            world.playSound(null, posX, posY, posZ, SoundsRegister.bloodlustCollect, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            world.playSound(null, posX, posY, posZ, SoundsRegister.BLOODLUST_COLLECT, SoundCategory.NEUTRAL, 1.0f, 1.0f);
             setDead();
         }
     }

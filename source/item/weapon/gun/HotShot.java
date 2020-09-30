@@ -1,11 +1,11 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -13,11 +13,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityHotShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.PredicateUtil;
@@ -26,7 +26,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HotShot extends BaseGun implements AdventWeapon {
+public class HotShot extends BaseGun {
 	private final int firingDelay;
 	private final double dmg;
 
@@ -41,15 +41,12 @@ public class HotShot extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMiniPistol;
+		return SoundsRegister.MINI_PISTOL_FIRE;
 	}
 
-	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.metalSlug, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityHotShot(player, gun, hand, 120, 0);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.METAL_SLUG), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityHotShot(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
 	}

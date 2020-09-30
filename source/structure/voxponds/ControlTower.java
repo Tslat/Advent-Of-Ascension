@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ControlTower extends AoAStructure { //StructureSize: 11x55x11
-	private static final IBlockState degradedSteel = BlockRegister.degradedSteel.getDefaultState();
-	private static final IBlockState steelLight = BlockRegister.lightSteel.getDefaultState();
+	private static final IBlockState degradedSteel = BlockRegister.DEGRADED_STEEL.getDefaultState();
+	private static final IBlockState steelLight = BlockRegister.STEEL_LIGHT.getDefaultState();
 
 	public ControlTower() {
 		super("ControlTower");

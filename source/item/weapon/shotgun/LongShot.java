@@ -9,14 +9,13 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityLimoniteBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LongShot extends BaseShotgun implements AdventWeapon {
+public class LongShot extends BaseShotgun {
 	public LongShot(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
 		setTranslationKey("LongShot");
@@ -26,7 +25,7 @@ public class LongShot extends BaseShotgun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRevolver;
+		return SoundsRegister.REVOLVER_FIRE;
 	}
 
 	@Override

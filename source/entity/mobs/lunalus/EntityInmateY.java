@@ -45,19 +45,19 @@ public class EntityInmateY extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCyclopsLiving;
+		return SoundsRegister.MOB_CYCLOPS_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCyclopsDeath;
+		return SoundsRegister.MOB_CYCLOPS_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCyclopsHit;
+		return SoundsRegister.MOB_CYCLOPS_HIT;
 	}
 
 	@Nullable

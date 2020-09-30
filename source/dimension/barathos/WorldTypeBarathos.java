@@ -14,7 +14,7 @@ public class WorldTypeBarathos extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeBarathos);
+		return new BiomeProviderSingle(BiomeRegister.BARATHOS);
 	}
 
 	@Override

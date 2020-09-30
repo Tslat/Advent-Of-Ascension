@@ -10,7 +10,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
@@ -18,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Crystaneer extends BaseSniper implements AdventWeapon {
+public class Crystaneer extends BaseSniper {
 	private static final ArrayList<ItemStack> gemDrops = new ArrayList<ItemStack>(5);
 	private static boolean populated = false;
 
@@ -31,7 +30,7 @@ public class Crystaneer extends BaseSniper implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override
@@ -52,9 +51,9 @@ public class Crystaneer extends BaseSniper implements AdventWeapon {
 	private static void populateGemDrops() {
 		gemDrops.add(new ItemStack(Items.DIAMOND));
 		gemDrops.add(new ItemStack(Items.EMERALD));
-		gemDrops.add(new ItemStack(ItemRegister.gemSapphire));
-		gemDrops.add(new ItemStack(ItemRegister.gemJade));
-		gemDrops.add(new ItemStack(ItemRegister.gemAmethyst));
+		gemDrops.add(new ItemStack(ItemRegister.SAPPHIRE));
+		gemDrops.add(new ItemStack(ItemRegister.JADE));
+		gemDrops.add(new ItemStack(ItemRegister.AMETHYST));
 
 		populated = true;
 	}

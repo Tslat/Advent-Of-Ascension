@@ -26,7 +26,7 @@ public class SpawnerBlock extends BlockMobSpawner {
 		super();
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 
 		this.mob = new ResourceLocation("aoa3", mobName);
 

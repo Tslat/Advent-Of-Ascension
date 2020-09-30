@@ -11,14 +11,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class NoxiousGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class NoxiousGreatblade extends BaseGreatblade {
 	public NoxiousGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("NoxiousGreatblade");
@@ -50,6 +48,5 @@ public class NoxiousGreatblade extends BaseGreatblade implements AdventWeapon, L
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NoxiousGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NoxiousGreatblade.desc.2", Enums.ItemDescriptionType.POSITIVE));
-		super.addInformation(stack, world, tooltip, flag);
 	}
 }

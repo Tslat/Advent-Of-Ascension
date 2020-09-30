@@ -35,19 +35,14 @@ public class FungalArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
 		if (EntityUtil.isMeleeDamage(event.getSource())) {
-			if (slots == null) {
-				if (itemRand.nextFloat() < 0.2f) {
-					for (EntityLivingBase mob : plData.player().world.getEntitiesWithinAABB(EntityLivingBase.class, plData.player().getEntityBoundingBox().grow(3), PredicateUtil.IS_HOSTILE_MOB)) {
-						mob.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 50, true, false));
-						mob.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 20, 50, true, false));
-						mob.addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 1, true, true));
+			if (itemRand.nextFloat() < (slots == null ? 0.8f : 0.2f * slots.size())) {
+				if (event.getSource().getTrueSource() instanceof EntityLivingBase)
+					((EntityLivingBase)event.getSource().getTrueSource()).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 1, true, true));
+
+				if (slots == null && itemRand.nextFloat() < 0.25f) {
+					for (EntityLivingBase mob : plData.player().world.getEntitiesWithinAABB(EntityLivingBase.class, plData.player().getEntityBoundingBox().grow(5), PredicateUtil.IS_HOSTILE_MOB)) {
+						mob.addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 0, true, true));
 					}
-				}
-			}
-			else if (plData.equipment().getCurrentFullArmourSet() != setType() && itemRand.nextFloat() < 0.2f * slots.size()) {
-				for (EntityLivingBase mob : plData.player().world.getEntitiesWithinAABB(EntityLivingBase.class, plData.player().getEntityBoundingBox().grow(3d), PredicateUtil.IS_HOSTILE_MOB)) {
-					mob.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 50, true, false));
-					mob.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 20, 50, true, false));
 				}
 			}
 		}
@@ -56,9 +51,10 @@ public class FungalArmour extends AdventArmour {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(pieceEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FungalArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(setEffectHeader());
+		tooltip.add(pieceEffectHeader());
 		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FungalArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(setEffectHeader());
+		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FungalArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
 	}
 }

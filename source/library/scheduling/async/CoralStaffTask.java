@@ -14,7 +14,7 @@ public class CoralStaffTask implements Runnable {
     private World world;
     private ArrayList<BlockPos> coralPositions;
 
-    private static final Block coralBlock = BlockRegister.coralPink;
+    private static final Block coralBlock = BlockRegister.PINK_CORAL;
 
     public CoralStaffTask(World world, ArrayList<BlockPos> coralPositions) {
         this.world = world;

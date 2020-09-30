@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RoseStarflower2 extends AoAStructure { //StructureSize: 1x17x11
-	private static final IBlockState rosePetals = BlockRegister.petalsRose.getDefaultState();
-	private static final IBlockState redPetals = BlockRegister.petalsRed.getDefaultState();
-	private static final IBlockState stem = BlockRegister.plantStem.getDefaultState();
-	private static final IBlockState flowerCore = BlockRegister.flowerCore.getDefaultState();
+	private static final IBlockState rosePetals = BlockRegister.ROSE_PETALS.getDefaultState();
+	private static final IBlockState redPetals = BlockRegister.RED_PETALS.getDefaultState();
+	private static final IBlockState stem = BlockRegister.PLANT_STEM.getDefaultState();
+	private static final IBlockState flowerCore = BlockRegister.FLOWER_CORE.getDefaultState();
 
 	public RoseStarflower2() {
 		super("RoseStarflower2");

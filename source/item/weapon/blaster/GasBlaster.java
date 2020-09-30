@@ -32,7 +32,7 @@ public class GasBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunGasGun;
+		return SoundsRegister.GAS_GUN_FIRE;
 	}
 
 	@Override
@@ -43,13 +43,12 @@ public class GasBlaster extends BaseBlaster {
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
 		if (target instanceof EntityLivingBase && !EntityUtil.isTypeImmune(target, Enums.MobProperties.BLASTER_IMMUNE)) {
-			if (target instanceof EntityPlayer || (target instanceof EntityTameable && ((EntityTameable)target).getOwnerId().equals(shooter.getUniqueID()))) {
+			if (target instanceof EntityPlayer || (target instanceof EntityTameable && shooter.getUniqueID().equals(((EntityTameable)target).getOwnerId()))) {
 				EntityUtil.healEntity((EntityLivingBase)target, 0.05f);
 
 				return true;
 			}
 		}
-
 
 		return super.doEntityImpact(shot, target, shooter);
 	}

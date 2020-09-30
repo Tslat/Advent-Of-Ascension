@@ -20,7 +20,7 @@ public class EntityBugeye extends AoAMeleeMob {
 	public static final float entityWidth = 0.95f;
 
 	public EntityBugeye(World world) {
-		super(world, entityWidth, 1.1f);
+		super(world, entityWidth, 1.125f);
 	}
 
 	@Override
@@ -51,17 +51,17 @@ public class EntityBugeye extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobBugeyeLiving;
+		return SoundsRegister.MOB_BUGEYE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobBugeyeDeath;
+		return SoundsRegister.MOB_BUGEYE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobBugeyeHit;
+		return SoundsRegister.MOB_BUGEYE_HIT;
 	}
 
 	@Nullable

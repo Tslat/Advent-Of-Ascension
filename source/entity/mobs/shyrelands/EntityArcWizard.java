@@ -49,25 +49,25 @@ public class EntityArcWizard extends AoARangedMob implements SpecialPropertyEnti
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobArcWizardLiving;
+        return SoundsRegister.MOB_ARC_WIZARD_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobArcWizardDeath;
+        return SoundsRegister.MOB_ARC_WIZARD_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobArcWizardHit;
+        return SoundsRegister.MOB_ARC_WIZARD_HIT;
     }
 
     @Nullable
     @Override
     protected SoundEvent getShootSound() {
-        return SoundsRegister.shotArcWizardFire;
+        return SoundsRegister.ARC_WIZARD_SHOOT;
     }
 
     @Nullable

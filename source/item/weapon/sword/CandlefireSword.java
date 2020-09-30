@@ -12,7 +12,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class CandlefireSword extends BaseSword implements AdventWeapon {
+public class CandlefireSword extends BaseSword {
 	public CandlefireSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("CandlefireSword");

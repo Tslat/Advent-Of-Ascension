@@ -100,7 +100,7 @@ public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -172,7 +172,7 @@ public class EntitySilverfoot extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicSilverfoot;
+		return SoundsRegister.SILVERFOOT_MUSIC;
 	}
 
 	@Override

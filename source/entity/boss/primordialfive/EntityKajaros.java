@@ -51,13 +51,13 @@ public class EntityKajaros extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobPrimordialLiving;
+		return SoundsRegister.MOB_PRIMORDIAL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobPrimordialDeath;
+		return SoundsRegister.MOB_PRIMORDIAL_DEATH;
 	}
 
 	@Nullable
@@ -110,7 +110,7 @@ public class EntityKajaros extends AoAMeleeMob implements BossEntity {
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicPrimordialFive;
+		return SoundsRegister.PRIMORDIAL_FIVE_MUSIC;
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public class WorldTypeDustopia extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeDustopia);
+		return new BiomeProviderSingle(BiomeRegister.DUSTOPIA);
 	}
 
 	@Override

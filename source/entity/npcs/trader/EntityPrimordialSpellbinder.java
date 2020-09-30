@@ -57,13 +57,13 @@ public class EntityPrimordialSpellbinder extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runeStorm)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runePower)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runeWither)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper), new ItemStack(ItemRegister.runeCompass)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinLunaver), ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantments.SILK_TOUCH, 1))));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 8), new ItemStack(ToolRegister.axeEnergistic)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 10), new ItemStack(ToolRegister.pickaxeEnergistic)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 9), new ItemStack(ToolRegister.shovelEnergistic)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN), new ItemStack(ItemRegister.STORM_RUNE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN), new ItemStack(ItemRegister.POWER_RUNE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN), new ItemStack(ItemRegister.WITHER_RUNE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN), new ItemStack(ItemRegister.COMPASS_RUNE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LUNAVER_COIN), ItemEnchantedBook.getEnchantedItemStack(new EnchantmentData(Enchantments.SILK_TOUCH, 1))));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 8), new ItemStack(ToolRegister.ENERGISTIC_AXE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 10), new ItemStack(ToolRegister.ENERGISTIC_PICKAXE)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 9), new ItemStack(ToolRegister.ENERGISTIC_SHOVEL)));
 	}
 }

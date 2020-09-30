@@ -30,14 +30,14 @@ public class TeaSink extends BasicNonCubeBlock {
 
 	public TeaSink() {
 		super("TeaSink", "tea_sink", Material.WOOD, 5.0f, 3.0f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
 		fullState = new TeaSink(true);
 	}
 
 	private TeaSink(boolean full) {
 		super("TeaSinkFull", "tea_sink_full", Material.WOOD, 5.0f, 3.0f);
-		setCreativeTab(CreativeTabsRegister.functionalBlocksTab);
+		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
 		fullState = this;
 	}
@@ -50,23 +50,23 @@ public class TeaSink extends BasicNonCubeBlock {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			if (state.getBlock() == fullState) {
-				if (player.getHeldItem(hand).getItem() == ItemRegister.cup && player.inventory.hasItemStack(new ItemStack(ItemRegister.teaShreddings))) {
+				if (player.getHeldItem(hand).getItem() == ItemRegister.CUP && player.inventory.hasItemStack(new ItemStack(ItemRegister.TEA_SHREDDINGS))) {
 					boolean success = false;
 
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.mysticShrooms))) {
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.teaShreddings));
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.fungalTea));
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.MYSTIC_SHROOMS), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.FUNGAL_TEA));
 
 						success = true;
 					}
-					else if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.natureMelonSlice))) {
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.teaShreddings));
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.naturalTea));
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.NATURE_MELON_SLICE), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.NATURAL_TEA));
 
 						success = true;
 					}
-					else if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.teaShreddings))) {
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.tea));
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1)) {
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.TEA));
 
 						success = true;
 					}
@@ -75,10 +75,10 @@ public class TeaSink extends BasicNonCubeBlock {
 						if (!player.capabilities.isCreativeMode)
 							player.getHeldItem(hand).shrink(1);
 
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.teaSinkUse, SoundCategory.BLOCKS, 1.0f, 1.0f);
+						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.TEA_SINK_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 						if (AdventOfAscension.rand.nextInt(7) == 0)
-							world.setBlockState(pos, BlockRegister.teaSink.getDefaultState().withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)));
+							world.setBlockState(pos, BlockRegister.TEA_SINK.getDefaultState().withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)));
 
 						return true;
 					}
@@ -92,7 +92,7 @@ public class TeaSink extends BasicNonCubeBlock {
 					}
 
 					world.setBlockState(pos, fullState.getDefaultState().withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)));
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.teaSinkFill, SoundCategory.BLOCKS, 1.0f, 1.0f);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.TEA_SINK_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 					return true;
 				}
@@ -109,7 +109,17 @@ public class TeaSink extends BasicNonCubeBlock {
 
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(Item.getItemFromBlock(BlockRegister.teaSink));
+		return new ItemStack(Item.getItemFromBlock(BlockRegister.TEA_SINK));
+	}
+
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(BlockRegister.TEA_SINK);
+	}
+
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return false;
 	}
 
 	@Override

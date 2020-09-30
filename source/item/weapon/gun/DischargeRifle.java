@@ -1,19 +1,19 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.common.registration.EnchantmentsRegister;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.StringUtil;
@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.StringUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DischargeRifle extends BaseGun implements AdventWeapon {
+public class DischargeRifle extends BaseGun {
 	private final int firingDelay;
 
 	public DischargeRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
@@ -34,15 +34,13 @@ public class DischargeRifle extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunDischargeGun;
+		return SoundsRegister.DISCHARGE_GUN_FIRE;
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, BaseGun gun, EnumHand hand) {
-		Item ammo = ItemUtil.findAndConsumeSpecialBullet(player, gun, true, ItemRegister.dischargeCapsule, player.getHeldItem(hand));
-
-		if (ammo != null)
-			return new EntityDischargeShot(player, gun, hand, 120, 0);
+	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.DISCHARGE_CAPSULE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
+			return new EntityDischargeShot(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
 	}

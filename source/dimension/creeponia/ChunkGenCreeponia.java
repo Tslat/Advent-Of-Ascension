@@ -36,7 +36,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 	private int curChunkX;
 	private int curChunkZ;
 
-	private final Biome biome = BiomeRegister.biomeCreeponia;
+	private final Biome biome = BiomeRegister.CREEPONIA;
 
 	private double[] heightMap = new double[825];
 	private float[] biomeWeights = new float[25];
@@ -248,19 +248,19 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 								int z = l * 4 + l2;
 
 								if (y < 50 && rand.nextInt(100) == 0) {
-									primer.setBlockState(x, y, z, BlockRegister.lightCreepCrystal.getDefaultState());
+									primer.setBlockState(x, y, z, BlockRegister.CREEP_CRYSTAL.getDefaultState());
 								}
 								else if (y < 20 + rand.nextInt(3)) {
-									primer.setBlockState(x, y, z, BlockRegister.stonePrimed.getDefaultState());
+									primer.setBlockState(x, y, z, BlockRegister.PRIMED_STONE.getDefaultState());
 								}
 								else if (y < 40 + rand.nextInt(3)) {
-									primer.setBlockState(x, y, z, BlockRegister.stoneUnstable.getDefaultState());
+									primer.setBlockState(x, y, z, BlockRegister.UNSTABLE_STONE.getDefaultState());
 								}
 								else if ((lvt_45_1_ += d16) > 0.0D) {
-									primer.setBlockState(x, y, z, BlockRegister.stoneCreep.getDefaultState());
+									primer.setBlockState(x, y, z, BlockRegister.CREEP_STONE.getDefaultState());
 								}
 								else if (y < this.world.getSeaLevel()) {
-									primer.setBlockState(x, y, z, BlockRegister.stoneCreep.getDefaultState());
+									primer.setBlockState(x, y, z, BlockRegister.CREEP_STONE.getDefaultState());
 								}
 							}
 
@@ -302,8 +302,8 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 		int i1 = z & 15;
 
 		for (int j1 = 255; j1 >= 0; --j1) {
-			if (j1 <= 2) {
-				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.dimensionalFabric.getDefaultState());
+			if (j1 <= 0) {
+				chunkPrimerIn.setBlockState(i1, j1, l, BlockRegister.DIMENSIONAL_FABRIC.getDefaultState());
 			}
 			else {
 				IBlockState checkBlock = chunkPrimerIn.getBlockState(i1, j1, l);
@@ -327,7 +327,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 								topBlock = Blocks.WATER.getDefaultState();
 							}
 							else {
-								topBlock = BlockRegister.stoneCreep.getDefaultState();
+								topBlock = BlockRegister.CREEP_STONE.getDefaultState();
 							}
 						}
 
@@ -355,7 +355,7 @@ public class ChunkGenCreeponia implements IChunkGenerator {
 	}
 
 	private boolean isStoneFill(Block block) {
-		return block == BlockRegister.stonePrimed || block == BlockRegister.stoneUnstable || block == BlockRegister.stoneCreep;
+		return block == BlockRegister.PRIMED_STONE || block == BlockRegister.UNSTABLE_STONE || block == BlockRegister.CREEP_STONE;
 	}
 
 	@Override

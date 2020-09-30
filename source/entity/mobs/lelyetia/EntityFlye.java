@@ -84,19 +84,19 @@ public class EntityFlye extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobFlyeLiving;
+		return SoundsRegister.MOB_FLYE_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobFlyeDeath;
+		return SoundsRegister.MOB_FLYE_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobFlyeHit;
+		return SoundsRegister.MOB_FLYE_HIT;
 	}
 
 	@Nullable
@@ -159,12 +159,12 @@ public class EntityFlye extends AoAFlyingMeleeMob {
 			if (world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.lelyetia && EntityUtil.isMeleeDamage(cause) && cause.getTrueSource() instanceof EntityPlayer) {
 				EntityPlayer pl = (EntityPlayer)cause.getTrueSource();
 
-				if (pl.posY >= 100 && ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneHaven));
+				if (pl.posY >= 80 && ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.HAVEN_REALMSTONE));
 			}
 
 			if (altarPos != null && recentlyHit > 0)
-				entityDropItem(new ItemStack(ItemRegister.guardiansEye), 0);
+				entityDropItem(new ItemStack(ItemRegister.GUARDIANS_EYE), 0);
 		}
 	}
 }

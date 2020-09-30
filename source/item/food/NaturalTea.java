@@ -34,7 +34,7 @@ public class NaturalTea extends BasicFood {
 		if (!world.isRemote) {
 			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 0, true, false));
 			player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 150, 1, true, false));
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.cup));
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CUP));
 		}
 	}
 

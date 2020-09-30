@@ -67,7 +67,7 @@ public class EntitySkipper extends AoAMeleeMob {
 
 	@Override
 	protected double getBaseMovementSpeed() {
-		return 0.32857;
+		return 0.329;
 	}
 
 	@Override
@@ -83,17 +83,17 @@ public class EntitySkipper extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSkipperLiving;
+		return SoundsRegister.MOB_SKIPPER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSkipperDeath;
+		return SoundsRegister.MOB_SKIPPER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSkipperHit;
+		return SoundsRegister.MOB_SKIPPER_HIT;
 	}
 
 	@Nullable
@@ -114,7 +114,7 @@ public class EntitySkipper extends AoAMeleeMob {
 
 	@Override
 	protected boolean canSpawnOnBlock(IBlockState block) {
-		return super.canSpawnOnBlock(block) && block.getBlock() == Blocks.WATER;
+		return super.canSpawnOnBlock(block) || block.getBlock() == Blocks.WATER;
 	}
 
 	@Override

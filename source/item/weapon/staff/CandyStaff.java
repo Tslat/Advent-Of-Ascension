@@ -29,13 +29,13 @@ public class CandyStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffCandy;
+		return SoundsRegister.CANDY_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeKinetic, 3);
-		runes.put(ItemRegister.runeStorm, 2);
+		runes.put(ItemRegister.KINETIC_RUNE, 3);
+		runes.put(ItemRegister.STORM_RUNE, 2);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public class MechaBlaster extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunMechCannon;
+		return SoundsRegister.MECHA_CANNON_FIRE;
 	}
 
 	@Override

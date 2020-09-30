@@ -55,10 +55,10 @@ public class EntityZalVendor extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 5), new ItemStack(ItemRegister.lunarade, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.lunaradeMug, 1), new ItemStack(ItemRegister.coinCopper, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 1), new ItemStack(WeaponRegister.bowSlingshot, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 6), new ItemStack(ItemRegister.popShot, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinSilver, 2), new ItemStack(BlockRegister.lunarOrbDusk, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 5), new ItemStack(ItemRegister.LUNARADE, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LUNARADE_MUG, 1), new ItemStack(ItemRegister.COPPER_COIN, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GOLD_COIN, 1), new ItemStack(WeaponRegister.SLINGSHOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 6), new ItemStack(ItemRegister.POP_SHOT, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 2), new ItemStack(BlockRegister.DUSK_ORB, 1)));
 	}
 }

@@ -45,19 +45,19 @@ public class EntityTharafly extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobTharaflyLiving;
+		return SoundsRegister.MOB_THARAFLY_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobTharaflyHit;
+		return SoundsRegister.MOB_THARAFLY_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobTharaflyDeath;
+		return SoundsRegister.MOB_THARAFLY_DEATH;
 	}
 
 	@Nullable

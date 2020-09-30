@@ -60,19 +60,19 @@ public class EntityVoliant extends AoAFlyingRangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobVoliantLiving;
+		return SoundsRegister.MOB_VOLIANT_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobVoliantDeath;
+		return SoundsRegister.MOB_VOLIANT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobVoliantHit;
+		return SoundsRegister.MOB_VOLIANT_HIT;
 	}
 
 	@Nullable

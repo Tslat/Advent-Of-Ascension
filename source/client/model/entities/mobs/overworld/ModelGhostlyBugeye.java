@@ -1,6 +1,7 @@
 package net.tslat.aoa3.client.model.entities.mobs.overworld;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -8,80 +9,73 @@ import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelGhostlyBugeye extends ModelBase {
-	private ModelRenderer head;
-	private ModelRenderer body;
-	private ModelRenderer leg1;
-	private ModelRenderer leg2;
-	private ModelRenderer leg3;
-	private ModelRenderer leg4;
-	private ModelRenderer leg5;
-	private ModelRenderer leg6;
-	private ModelRenderer body2;
+	private final ModelRenderer root;
+	private final ModelRenderer leg1;
+	private final ModelRenderer leg2;
+	private final ModelRenderer leg3;
+	private final ModelRenderer leg4;
+	private final ModelRenderer leg5;
+	private final ModelRenderer leg6;
+	private final ModelRenderer body;
+	private final ModelRenderer head;
 
 	public ModelGhostlyBugeye() {
 		textureWidth = 64;
 		textureHeight = 64;
-		(head = new ModelRenderer(this, 0, 0)).addBox(-5.0f, -5.0f, -3.0f, 10, 10, 3);
-		head.setRotationPoint(-1.0f, 13.0f, -8.0f);
-		head.setTextureSize(64, 64);
-		head.mirror = true;
-		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(body = new ModelRenderer(this, 35, 11)).addBox(-5.0f, -10.0f, 2.0f, 10, 18, 3);
-		body.setRotationPoint(0.0f, 11.0f, 2.0f);
-		body.setTextureSize(64, 64);
-		body.mirror = true;
-		setRotation(body, 1.570796f, 0.0f, 0.0f);
-		(leg1 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -2.0f, 4, 12, 4);
-		leg1.setRotationPoint(-7.0f, 12.0f, 7.0f);
-		leg1.setTextureSize(64, 64);
-		leg1.mirror = true;
-		setRotation(leg1, 0.0f, 0.0f, 0.0f);
-		(leg2 = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -2.0f, 4, 12, 4);
-		leg2.setRotationPoint(7.0f, 12.0f, 7.0f);
-		leg2.setTextureSize(64, 64);
-		leg2.mirror = true;
-		setRotation(leg2, 0.0f, 0.0f, 0.0f);
-		(leg3 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg3.setRotationPoint(-7.0f, 12.0f, 1.0f);
-		leg3.setTextureSize(64, 64);
-		leg3.mirror = true;
-		setRotation(leg3, 0.0f, 0.0f, 0.0f);
-		(leg4 = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg4.setRotationPoint(7.0f, 12.0f, 1.0f);
-		leg4.setTextureSize(64, 64);
-		leg4.mirror = true;
-		setRotation(leg4, 0.0f, 0.0f, 0.0f);
-		(leg5 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg5.setRotationPoint(-7.0f, 12.0f, -5.0f);
-		leg5.setTextureSize(64, 64);
-		leg5.mirror = true;
-		setRotation(leg5, 0.0f, 0.0f, 0.0f);
-		(leg6 = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg6.setRotationPoint(7.0f, 12.0f, -5.0f);
-		leg6.setTextureSize(64, 64);
-		leg6.mirror = true;
-		setRotation(leg6, 0.0f, 0.0f, 0.0f);
-		(body2 = new ModelRenderer(this, 1, 35)).addBox(-8.0f, -10.0f, -7.0f, 16, 18, 9);
-		body2.setRotationPoint(0.0f, 11.0f, 2.0f);
-		body2.setTextureSize(64, 64);
-		body2.mirror = true;
-		setRotation(body2, 1.570796f, 0.0f, 0.0f);
+
+		root = new ModelRenderer(this);
+		root.setRotationPoint(0.0F, 24.0F, 0.0F);
+
+		leg1 = new ModelRenderer(this);
+		leg1.setRotationPoint(8.0F, -12.0F, 7.5F);
+		root.addChild(leg1);
+		leg1.cubeList.add(new ModelBox(leg1, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false));
+
+		leg2 = new ModelRenderer(this);
+		leg2.setRotationPoint(-8.0F, -12.0F, 7.5F);
+		root.addChild(leg2);
+		leg2.cubeList.add(new ModelBox(leg2, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, true));
+
+		leg3 = new ModelRenderer(this);
+		leg3.setRotationPoint(8.0F, -12.0F, 1.0F);
+		root.addChild(leg3);
+		leg3.cubeList.add(new ModelBox(leg3, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false));
+
+		leg4 = new ModelRenderer(this);
+		leg4.setRotationPoint(-8.0F, -12.0F, 1.0F);
+		root.addChild(leg4);
+		leg4.cubeList.add(new ModelBox(leg4, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, true));
+
+		leg5 = new ModelRenderer(this);
+		leg5.setRotationPoint(8.0F, -12.0F, -5.5F);
+		root.addChild(leg5);
+		leg5.cubeList.add(new ModelBox(leg5, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, false));
+
+		leg6 = new ModelRenderer(this);
+		leg6.setRotationPoint(-8.0F, -12.0F, -5.5F);
+		root.addChild(leg6);
+		leg6.cubeList.add(new ModelBox(leg6, 0, 16, -2.0F, 0.0F, -2.0F, 4, 12, 4, 0.0F, true));
+
+		body = new ModelRenderer(this);
+		body.setRotationPoint(0.0F, -13.0F, 2.0F);
+		setRotation(body, 1.5708F, 0.0F, 0.0F);
+		root.addChild(body);
+		body.cubeList.add(new ModelBox(body, 1, 35, -8.0F, -10.0F, -7.0F, 16, 18, 9, 0.0F, true));
+		body.cubeList.add(new ModelBox(body, 35, 11, -5.0F, -10.0F, 2.0F, 10, 18, 3, 0.0F, true));
+
+		head = new ModelRenderer(this);
+		head.setRotationPoint(1.0F, 2.0F, -10.0F);
+		setRotation(head, -1.5708F, 0.0F, 0.0F);
+		body.addChild(head);
+		head.cubeList.add(new ModelBox(head, 0, 0, -6.0F, -13.0F, -15.0F, 10, 10, 3, 0.0F, true));
 	}
 
 	public void render(final Entity par1Entity, final float par2, final float par3, final float par4, final float par5, final float par6, final float par7) {
 		setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(770, 771);
-		head.render(par7);
-		body.render(par7);
-		leg1.render(par7);
-		leg2.render(par7);
-		leg3.render(par7);
-		leg4.render(par7);
-		leg5.render(par7);
-		leg6.render(par7);
-		body2.render(par7);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		root.render(par7);
 		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 	}

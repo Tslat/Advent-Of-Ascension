@@ -21,7 +21,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 
 import java.util.List;
 
-public class RosidianGreatblade extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class RosidianGreatblade extends BaseGreatblade {
 	public RosidianGreatblade(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("RosidianGreatblade");

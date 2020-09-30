@@ -52,22 +52,22 @@ public class EntityRammerhead extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobRammerheadLiving;
+		return SoundsRegister.MOB_RAMMERHEAD_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRammerheadDeath;
+		return SoundsRegister.MOB_RAMMERHEAD_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRammerheadHit;
+		return SoundsRegister.MOB_RAMMERHEAD_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

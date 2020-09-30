@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AbyssalArch2 extends AoAStructure { //StructureSize: 6x13x34
-	private static final IBlockState stone = BlockRegister.stoneAbyss.getDefaultState();
+	private static final IBlockState stone = BlockRegister.ABYSS_STONE.getDefaultState();
 
 	public AbyssalArch2() {
 		super("AbyssalArch2");

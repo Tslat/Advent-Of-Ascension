@@ -94,25 +94,25 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobArielLiving;
+		return SoundsRegister.MOB_ARIEL_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobArielDeath;
+		return SoundsRegister.MOB_ARIEL_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobArielHit;
+		return SoundsRegister.MOB_ARIEL_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotBaronessFire;
+		return SoundsRegister.BARONESS_SHOOT;
 	}
 
 	@Nullable
@@ -164,7 +164,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (isAIDisabled())
+		if (isAIDisabled() || isDead)
 			return;
 
 		if (invulnerableTicks > 0) {
@@ -188,7 +188,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 					EntityBaronBomb bomb = new EntityBaronBomb(this);
 
 					world.spawnEntity(bomb);
-					world.playSound(null, posX, posY, posZ, SoundsRegister.baronBombSpawn, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.BARON_BOMB_SPAWN, SoundCategory.HOSTILE, 1.0f, 1.0f);
 				}
 			}
 		}
@@ -218,7 +218,7 @@ public class EntityBaroness extends AoARangedMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicBaroness;
+		return SoundsRegister.BARONESS_MUSIC;
 	}
 
 	@Override

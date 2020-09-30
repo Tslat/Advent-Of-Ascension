@@ -5,13 +5,15 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.EnumHelperClient;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 
 public final class Enums {
 	@SideOnly(Side.CLIENT)
-	public static final MusicTicker.MusicType NULL_MUSIC = EnumHelperClient.addMusicType("null", SoundsRegister.nullMusic, 0, 1);
+	public static final MusicTicker.MusicType NULL_MUSIC = EnumHelperClient.addMusicType("null", SoundsRegister.MUSIC_NULL, 0, 1);
 
 	public enum Skills {
 		ALCHEMY(0),
@@ -71,6 +73,22 @@ public final class Enums {
 				default:
 					return null;
 			}
+		};
+
+		@Nullable
+		public static Skills fromString(String skillName) {
+			Skills skill;
+
+			try {
+				skill = valueOf(skillName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find skill with name: \"" + skillName + "\"", ex);
+
+				return null;
+			}
+
+			return skill;
 		}
 	}
 
@@ -79,6 +97,22 @@ public final class Enums {
 		LUXON,
 		PLUTON,
 		SELYAN;
+
+		@Nullable
+		public static Deities fromString(String deityName) {
+			Deities deity;
+
+			try {
+				deity = valueOf(deityName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find deity with name: \"" + deityName + "\"", ex);
+
+				return null;
+			}
+
+			return deity;
+		}
 	}
 
 	public enum ArmourSets {
@@ -182,7 +216,23 @@ public final class Enums {
 		CREATION,
 		ENERGY,
 		RAGE,
-		SOUL
+		SOUL;
+
+		@Nullable
+		public static Resources fromString(String resourceName) {
+			Resources resource;
+
+			try {
+				resource = valueOf(resourceName.toUpperCase().replace(" ", "_"));
+			}
+			catch (IllegalArgumentException ex) {
+				AdventOfAscension.logMessage(Level.WARN, "Unable to find resource with name: \"" + resourceName + "\"", ex);
+
+				return null;
+			}
+
+			return resource;
+		}
 	}
 
 	public enum Counters {
@@ -579,52 +629,32 @@ public final class Enums {
 		}
 	}
 
-	public enum MainWindowThemes {
-		Default,
-		Jungle,
-		Ancient_Ruins,
-		Hell,
-		Crystals
-	}
-
-	public enum PlayerCrownTypes {
+	public enum PlayerHaloTypes {
 		Donator,
 		Super_Donator,
 		Crazy_Donator,
 		Wiki_Editor,
 		Tslat,
-		Ursun;
+		Staff;
 
-		public enum ChooseableCrownTypes {
+		public enum ChoosableHaloTypes {
 			Donator,
 			Super_Donator,
 			Wiki_Editor;
 
-			public PlayerCrownTypes toBaseType() {
+			public PlayerHaloTypes toBaseType() {
 				switch (this) {
 					case Donator:
-						return PlayerCrownTypes.Donator;
+						return PlayerHaloTypes.Donator;
 					case Super_Donator:
-						return PlayerCrownTypes.Super_Donator;
+						return PlayerHaloTypes.Super_Donator;
 					case Wiki_Editor:
-						return PlayerCrownTypes.Wiki_Editor;
+						return PlayerHaloTypes.Wiki_Editor;
 					default:
 						return null;
 				}
 			}
 		}
-	}
-
-	public enum ArmourListenerTypes {
-		AFTER_ATTACK,
-		ATTACK_RECEIVED,
-		DAMAGE_DEALT,
-		DEATH,
-		EQUIP,
-		FALL,
-		INCOMING_ATTACK,
-		TICK,
-		UNEQUIP
 	}
 
 	public enum BlockUpdateFlags {
@@ -657,15 +687,41 @@ public final class Enums {
 		}
 	}
 
-	public static final class EntityAnimations {
-		public static final String ATTACK_1 = "ATTACK_1";
-		public static final String ATTACK_2 = "ATTACK_2";
-		public static final String HURT_1 = "HURT_1";
-		public static final String HURT_2 = "HURT_2";
-		public static final String DEATH = "DEATH";
-		public static final String IDLE_1 = "IDLE_1";
-		public static final String IDLE_2 = "IDLE_2";
-		public static final String IDLE_3 = "IDLE_3";
-		public static final String INTERACT = "INTERACT";
+	public enum Particles {
+		STAR_TRAIL(0),
+		FLUFFY_TRAIL(1),
+		FLICKERING_FLUFFY_TRAIL(2),
+		SWIRLY_TRAIL(3),
+		LINGERING_FLUFFY_TRAIL(4),
+		FLUFFY_RAINBOW_TRAIL(5),
+		PORTAL_FLOATER(6);
+
+		public final int id;
+
+		Particles(int id) {
+			this.id = id;
+		}
+
+		@Nullable
+		public static Particles byId(int id) {
+			switch (id) {
+				case 0:
+					return STAR_TRAIL;
+				case 1:
+					return FLUFFY_TRAIL;
+				case 2:
+					return FLICKERING_FLUFFY_TRAIL;
+				case 3:
+					return SWIRLY_TRAIL;
+				case 4:
+					return LINGERING_FLUFFY_TRAIL;
+				case 5:
+					return FLUFFY_RAINBOW_TRAIL;
+				case 6:
+					return PORTAL_FLOATER;
+				default:
+					return null;
+			}
+		}
 	}
 }

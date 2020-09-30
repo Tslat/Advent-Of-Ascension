@@ -25,6 +25,6 @@ public class PowerStation extends BossAltarBlock {
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.giantCrystal;
+		return ItemRegister.GIANT_CRYSTAL;
 	}
 }

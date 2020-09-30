@@ -29,7 +29,7 @@ public class Seaocron extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunShadowBlaster;
+		return SoundsRegister.SHADOW_BLASTER_FIRE;
 	}
 
 	@Override

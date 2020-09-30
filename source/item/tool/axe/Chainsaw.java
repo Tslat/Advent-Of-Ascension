@@ -25,7 +25,7 @@ public class Chainsaw extends BaseAxe {
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer pl) {
 		if (!pl.world.isRemote) {
-			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.chainsawUse, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.CHAINSAW_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 			if (pl.world.getBlockState(pos).getBlock() instanceof BlockLog)
 				pl.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10, 30, true, false));
@@ -37,7 +37,7 @@ public class Chainsaw extends BaseAxe {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (!attacker.world.isRemote) {
-			attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ, SoundsRegister.chainsawUse, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ, SoundsRegister.CHAINSAW_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			stack.damageItem(1, attacker);
 		}
 

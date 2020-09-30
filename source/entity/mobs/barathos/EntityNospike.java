@@ -42,17 +42,17 @@ public class EntityNospike extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobNospikeLiving;
+		return SoundsRegister.MOB_NOSPIKE_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobNospikeDeath;
+		return SoundsRegister.MOB_NOSPIKE_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobNospikeHit;
+		return SoundsRegister.MOB_NOSPIKE_HIT;
 	}
 
 	@Nullable

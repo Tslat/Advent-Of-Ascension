@@ -14,7 +14,7 @@ public class HiveChunk extends SimpleItem {
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		if (target instanceof EntityTharafly) {
-			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.hiveEgg, stack.getCount()));
+			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.HIVE_EGG, stack.getCount()));
 
 			return true;
 		}

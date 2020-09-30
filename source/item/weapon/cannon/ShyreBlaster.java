@@ -2,11 +2,10 @@ package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class ShyreBlaster extends BaseCannon implements AdventWeapon {
+public class ShyreBlaster extends BaseCannon {
 	public ShyreBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("ShyreBlaster");
@@ -16,6 +15,6 @@ public class ShyreBlaster extends BaseCannon implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunBigBlast;
+		return SoundsRegister.BIG_BLAST_FIRE;
 	}
 }

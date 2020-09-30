@@ -26,6 +26,7 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
 import net.tslat.aoa3.item.misc.HollyArrow;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.StringUtil;
 
 import javax.annotation.Nullable;
@@ -41,8 +42,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
-		setCreativeTab(CreativeTabsRegister.bowsTab);
+		setCreativeTab(CreativeTabsRegister.BOWS);
 
 		addPropertyOverride(new ResourceLocation("pull"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -65,7 +65,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 	}
 
 	public double getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase shooter, int timeLeft) {
@@ -83,7 +83,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 
 		if (!ammoStack.isEmpty() || infiniteAmmo) {
 			if (ammoStack.isEmpty())
-				ammoStack = new ItemStack(ItemRegister.hollyArrow);
+				ammoStack = new ItemStack(ItemRegister.HOLLY_ARROW);
 
 			float velocity = getArrowVelocity(charge);
 
@@ -101,8 +101,8 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 	}
 
 	protected EntityHollyArrow makeArrow(EntityLivingBase shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		HollyArrow arrowItem = (HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.hollyArrow);
-		EntityHollyArrow arrowEntity = arrowItem.createArrow(shooter.world, this, ammoStack, shooter, dmg);
+		HollyArrow arrowItem = (HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.HOLLY_ARROW);
+		EntityHollyArrow arrowEntity = arrowItem.createArrow(shooter.world, this, ammoStack, shooter, getDamage());
 		arrowEntity.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
 
 		int powerEnchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bowStack);
@@ -175,7 +175,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
+		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false) || super.getIsRepairable(stack, repairMaterial);
 	}
 
 	public void doArrowMods(EntityHollyArrow arrow, EntityLivingBase shooter, int useTicksRemaining) {}
@@ -198,7 +198,7 @@ public abstract class BaseBow extends ItemBow implements AdventWeapon {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.arrows", TextFormatting.DARK_RED, Double.toString(dmg)));
+		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.arrows", TextFormatting.DARK_RED, Double.toString(getDamage())));
 		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.bow.drawSpeed", Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100)));
 		tooltip.add(StringUtil.getColourLocaleString("items.description.ammo.arrows", TextFormatting.LIGHT_PURPLE));
 	}

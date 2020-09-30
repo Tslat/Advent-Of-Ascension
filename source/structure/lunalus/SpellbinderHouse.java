@@ -17,10 +17,10 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class SpellbinderHouse extends AoAStructure { //StructureSize: 19x10x15
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState lunarLamp = BlockRegister.lampLunar.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState lunarLamp = BlockRegister.LUNAR_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
-	private static final IBlockState lunarCarpet = BlockRegister.carpetLunar.getDefaultState();
+	private static final IBlockState lunarCarpet = BlockRegister.LUNAR_CARPET.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState();
 	private static final IBlockState chestSouth = chest.withProperty(BlockChest.FACING, EnumFacing.SOUTH);
 	private static final IBlockState chestWest = chest.withProperty(BlockChest.FACING, EnumFacing.WEST);

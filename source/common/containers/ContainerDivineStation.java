@@ -54,7 +54,7 @@ public class ContainerDivineStation extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		if (world.getBlockState(pos).getBlock() != BlockRegister.divineStation)
+		if (world.getBlockState(pos).getBlock() != BlockRegister.DIVINE_STATION)
 			return false;
 
 		return player.getDistanceSq(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d) <= 64;
@@ -90,8 +90,8 @@ public class ContainerDivineStation extends Container {
 
 				slot.onSlotChange(slotStack, stack);
 			}
-			else if (index != 1) {
-				if (index < 39 && !mergeItemStack(slotStack, 1, 2, false))
+			else if (index > 2) {
+				if (index < 39 && !mergeItemStack(slotStack, 1, 3, false))
 					return ItemStack.EMPTY;
 			}
 			else if (!mergeItemStack(slotStack, 3, 39, false)) {

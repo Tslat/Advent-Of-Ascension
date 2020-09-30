@@ -80,18 +80,18 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobRockRiderDeath;
+		return SoundsRegister.MOB_ROCK_RIDER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobRockRiderHit;
+		return SoundsRegister.MOB_ROCK_RIDER_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.heavyStep;
+		return SoundsRegister.ENTITY_GENERIC_HEAVY_STEP;
 	}
 
 	@Nullable
@@ -150,7 +150,7 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 				changeForm(false);
 
 				if (!world.isRemote)
-					world.playSound(null, posX, posY, posZ, SoundsRegister.mobRockRiderSwitch, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_ROCK_RIDER_SWITCH, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 			else {
 				alternateForm = true;
@@ -158,7 +158,7 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 				changeForm(true);
 
 				if (!world.isRemote)
-					world.playSound(null, posX, posY, posZ, SoundsRegister.mobRockRiderSwitch, SoundCategory.HOSTILE, 1.0f, 1.0f);
+					world.playSound(null, posX, posY, posZ, SoundsRegister.MOB_ROCK_RIDER_SWITCH, SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 		}
 	}
@@ -223,7 +223,7 @@ public class EntityRockRider extends AoAMeleeMob implements BossEntity, SpecialP
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicRockRider;
+		return SoundsRegister.ROCK_RIDER_MUSIC;
 	}
 
 	@Nonnull

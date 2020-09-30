@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -44,13 +43,13 @@ public class ImmortallisProgressor extends Block {
 
 			switch (place) {
 				case 1:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin0))) {
-						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.returnCrystal))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN0), true, 1)) {
+						if (!player.addItemStackToInventory(new ItemStack(ItemRegister.RETURN_CRYSTAL))) {
 							plData = PlayerUtil.getAdventPlayer(player);
 
 							plData.sendThrottledChatMessage("message.feedback.item.returnCrystal.noSpace");
 							plData.stats().resetAllTribute();
-							player.entityDropItem(new ItemStack(ItemRegister.progressCoin0), 0.5f);
+							player.entityDropItem(new ItemStack(ItemRegister.PROGRESS_COIN0), 0.5f);
 						}
 						else {
 							player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.goldStart.0", TextFormatting.GOLD));
@@ -63,13 +62,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 2:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) >= 100) {
-						if (world.getEntitiesWithinAABB(EntityKlobber.class, new AxisAlignedBB(52, 16, -13, 82, 26, 17)).size() == 0) {
-							EntityKlobber klobber = new EntityKlobber(world);
+						EntityKlobber klobber = new EntityKlobber(world);
 
-							klobber.setPositionAndUpdate(69, 21, 4);
-							world.spawnEntity(klobber);
-						}
-
+						klobber.setPositionAndUpdate(69, 21, 4);
+						world.spawnEntity(klobber);
 						player.setPositionAndUpdate(67, 21, 2);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.klobberStart", TextFormatting.DARK_AQUA));
 
@@ -77,7 +73,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 3:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin1))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN1), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.skeletalSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(81, 21, 2);
 
@@ -86,13 +82,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 4:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) >= 100) {
-						if (world.getEntitiesWithinAABB(EntityProshield.class, new AxisAlignedBB(107, 16, -13, 137, 26, 17)).size() == 0) {
-							EntityProshield proshield = new EntityProshield(world);
+						EntityProshield proshield = new EntityProshield(world);
 
-							proshield.setPositionAndUpdate(123, 21, 6);
-							world.spawnEntity(proshield);
-						}
-
+						proshield.setPositionAndUpdate(123, 21, 6);
+						world.spawnEntity(proshield);
 						player.setPositionAndUpdate(122, 21, 2);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.proshieldStart", TextFormatting.DARK_AQUA));
 
@@ -100,7 +93,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 5:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin2))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN2), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.0", TextFormatting.GOLD));
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.pureGoldStart.1", TextFormatting.GOLD));
 						player.setPositionAndUpdate(141, 24, 2);
@@ -110,13 +103,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 6:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.PLUTON) == 200) {
-						if (world.getEntitiesWithinAABB(EntityMirage.class, new AxisAlignedBB(153, 19, -8, 183, 29, 22)).size() == 0) {
-							EntityMirage mirage = new EntityMirage(world);
+						EntityMirage mirage = new EntityMirage(world);
 
-							mirage.setPositionAndUpdate(177, 24, -2);
-							world.spawnEntity(mirage);
-						}
-
+						mirage.setPositionAndUpdate(177, 24, -2);
+						world.spawnEntity(mirage);
 						player.setPositionAndUpdate(168, 24, 7);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.mirageStart", TextFormatting.DARK_AQUA));
 
@@ -124,7 +114,7 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 7:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin3))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN3), true, 1)) {
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.evilSpiritsStart", TextFormatting.RED));
 						player.setPositionAndUpdate(189, 20, 2);
 
@@ -133,13 +123,10 @@ public class ImmortallisProgressor extends Block {
 					break;
 				case 8:
 					if (PlayerUtil.getAdventPlayer(player).stats().getTribute(Enums.Deities.EREBON) == 200) {
-						if (world.getEntitiesWithinAABB(EntityFlash.class, new AxisAlignedBB(218, 16, -12, 248, 26, 18)).size() == 0) {
-							EntityFlash flash = new EntityFlash(world);
+						EntityFlash flash = new EntityFlash(world);
 
-							flash.setPositionAndUpdate(235, 22, 10);
-							world.spawnEntity(flash);
-						}
-
+						flash.setPositionAndUpdate(235, 22, 10);
+						world.spawnEntity(flash);
 						player.setPositionAndUpdate(233, 21, 3);
 						player.sendMessage(StringUtil.getColourLocale("message.feedback.immortallisProgression.flashStart", TextFormatting.DARK_AQUA));
 
@@ -147,9 +134,9 @@ public class ImmortallisProgressor extends Block {
 					}
 					break;
 				case 9:
-					if (ItemUtil.consumeItem(player, new ItemStack(ItemRegister.progressCoin4))) {
+					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.PROGRESS_COIN4), true, 1)) {
 						player.setPositionAndUpdate(0, 20, 0);
-						ItemUtil.consumeItem(player, new ItemStack(ItemRegister.returnCrystal));
+						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.RETURN_CRYSTAL), true, 1);
 						PlayerUtil.getAdventPlayer(player).stats().resetAllTribute();
 
 						return true;

@@ -29,7 +29,7 @@ public class WhimsyWinder extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunWhimsyWinder;
+		return SoundsRegister.WHIMSY_WINDER_FIRE;
 	}
 
 	@Override

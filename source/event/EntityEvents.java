@@ -25,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
 import net.tslat.aoa3.entity.misc.EntityHeartStone;
 import net.tslat.aoa3.library.Enums;
@@ -32,6 +33,7 @@ import net.tslat.aoa3.utils.ConfigurationUtil;
 import net.tslat.aoa3.utils.ItemUtil;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 import net.tslat.aoa3.utils.skills.HunterUtil;
+import net.tslat.aoa3.utils.skills.InnervationUtil;
 
 import java.util.Random;
 
@@ -57,15 +59,15 @@ public class EntityEvents {
 				}
 
 				if (killerPlayer != null) {
-					if (entity.getMaxHealth() > 1 && AdventOfAscension.rand.nextInt(8 * (entity instanceof IMob ? 1 : 3)) == 0) {
+					if (entity.getMaxHealth() > 1 && AdventOfAscension.rand.nextInt(8 * (entity instanceof IMob ? 1 : 3)) == 0 && InnervationUtil.canEntitySpawnHeartstone(entity)) {
 						EntityHeartStone heartStone = new EntityHeartStone(entity.world, entity.getPosition());
 
-						entity.world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundsRegister.heartStoneSpawn, SoundCategory.MASTER, 1.0f, 1.0f);
+						entity.world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundsRegister.HEART_STONE_SPAWN, SoundCategory.MASTER, 1.0f, 1.0f);
 						entity.world.spawnEntity(heartStone);
 					}
 
 					if (entity.world.provider.getDimension() == -1 && ev.getSource().damageType.contains("explosion") && AdventOfAscension.rand.nextInt(4) == 0)
-						entity.entityDropItem(new ItemStack(ItemRegister.explosiveIdol), 0);
+						entity.entityDropItem(new ItemStack(ItemRegister.EXPLOSIVE_IDOL), 0);
 
 					float hunterXp = HunterUtil.getHunterXp(entity);
 
@@ -86,7 +88,7 @@ public class EntityEvents {
 			Random rand = AdventOfAscension.rand;
 
 			for (int i = 0; i < 3 + (10 * width * depth * height); i++) {
-				AdventOfAscension.proxy.spawnParticle(4, ev.getEntity().world, boundingBox.minX + rand.nextDouble() * width, boundingBox.minY + rand.nextDouble() * height, boundingBox.minZ + rand.nextDouble() * depth, rand.nextGaussian() * 0.05, 0, rand.nextGaussian() * 0.05, 3, 0.3f);
+				ev.getEntityLiving().world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, boundingBox.minX + rand.nextDouble() * width, boundingBox.minY + rand.nextDouble() * height, boundingBox.minZ + rand.nextDouble() * depth, rand.nextGaussian() * 0.05, 0, rand.nextGaussian() * 0.05, 3, 30);
 			}
 		}
 	}
@@ -151,8 +153,8 @@ public class EntityEvents {
 			else if (ev.getEntity() instanceof EntityWither) {
 				if (ev.getWorld().provider.getDimension() == -1) {
 					for (EntityPlayer pl : ev.getWorld().getEntitiesWithinAABB(EntityPlayer.class, ev.getEntity().getEntityBoundingBox().grow(50))) {
-						if (ItemUtil.consumeItem(pl, new ItemStack(ItemRegister.realmstoneBlank)))
-							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.realmstoneAbyss));
+						if (ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
+							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.ABYSS_REALMSTONE));
 					}
 				}
 			}

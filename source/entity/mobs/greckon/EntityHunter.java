@@ -47,19 +47,19 @@ public class EntityHunter extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobHunterLiving;
+        return SoundsRegister.MOB_HUNTER_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobHunterDeath;
+        return SoundsRegister.MOB_HUNTER_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobHunterHit;
+        return SoundsRegister.MOB_HUNTER_HIT;
     }
 
     @Nullable

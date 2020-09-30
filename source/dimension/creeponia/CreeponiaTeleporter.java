@@ -23,11 +23,11 @@ public class CreeponiaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalCreeponia;
+		return BlockRegister.CREEPONIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.bricksCreeponia;
+		return BlockRegister.CREEPONIA_BRICKS;
 	}
 }

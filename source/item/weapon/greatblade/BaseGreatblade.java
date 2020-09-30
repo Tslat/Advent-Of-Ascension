@@ -36,19 +36,22 @@ import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.misc.AoAAttributes;
+import net.tslat.aoa3.utils.ConfigurationUtil;
+
+import java.util.UUID;
 
 public abstract class BaseGreatblade extends Item implements AdventWeapon, LongReachWeapon {
 	protected double dmg;
 	protected double speed;
+	protected final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", getReach() - 3.5f, 0);
 
 	public BaseGreatblade(final double dmg, final double speed, final int durability) {
-		setCreativeTab(CreativeTabsRegister.greatbladesTab);
+		setCreativeTab(CreativeTabsRegister.GREATBLADES);
 		this.dmg = dmg;
 		this.speed = speed == 0 ? -3.2400001287460327D : speed;
 		setMaxDamage(durability);
 		setMaxStackSize(1);
 		setFull3D();
-		setNoRepair();
 	}
 
 	@Override
@@ -73,11 +76,11 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 	@Override
 	public float getReach() {
-		return 5.5F;
+		return 5f;
 	}
 
 	public double getDamage() {
-		return dmg;
+		return dmg * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f);
 	}
 
 	public double getAttackSpeed() {
@@ -113,11 +116,15 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 	}
 
 	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return this.dmg;
+		return getDamage();
 	}
 
+	@Override
 	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
 		float damageDealt = 0;
+
+		if (dmg < 0)
+			dmg = (float)getDamageForAttack(stack, target, attacker, getDamage()) + 1;
 
 		if (attacker instanceof EntityPlayer) {
 			if (target instanceof EntityFireball) {
@@ -125,10 +132,6 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 					damageDealt = dmg;
 			}
 			else {
-
-				if (dmg < 0)
-					dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg) + 1;
-
 				PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 				PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
 				float targetHealth = 0;
@@ -143,7 +146,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 					dmg -= (weak.getAmplifier() + 1) * 4;
 
 				float cooldownMultiplier = (((EntityPlayer)attacker).getCooledAttackStrength(0f));
-				final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
+				final int severModifier = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SEVER, stack);
 				final float finalDmg = (dmg + severModifier * 1.5f) * (cooldownMultiplier + 0.01f);
 
 				if (target instanceof EntityDragon ? ((EntityDragon)target).attackEntityFromPart((MultiPartEntityPart)(target.getParts())[0], DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg) : target.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer)attacker), finalDmg)) {
@@ -176,7 +179,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		}
 		else {
 			if (dmg < 0)
-				dmg = (float)getDamageForAttack(stack, target, attacker, this.dmg);
+				dmg = (float)getDamageForAttack(stack, target, attacker, getDamage());
 
 			PotionEffect str = attacker.getActivePotionEffect(MobEffects.STRENGTH);
 			PotionEffect weak = attacker.getActivePotionEffect(MobEffects.WEAKNESS);
@@ -188,7 +191,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 			if (weak != null)
 				dmg -= (weak.getAmplifier() + 1) * 4;
 
-			dmg += EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.sever, stack);
+			dmg += EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.SEVER, stack);
 
 			if (target.attackEntityFrom(DamageSource.causeMobDamage(attacker), dmg)) {
 				if (health > 0)
@@ -209,7 +212,7 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false);
+		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -222,8 +225,9 @@ public abstract class BaseGreatblade extends Item implements AdventWeapon, LongR
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(dmg));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
+			multimap.put(EntityPlayer.REACH_DISTANCE.getName(), REACH_MODIFIER);
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), AoAAttributes.vanillaWeaponDamageModifier(getDamage()));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(getAttackSpeed()));
 		}
 
 		return multimap;

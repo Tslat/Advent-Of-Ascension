@@ -46,19 +46,19 @@ public class EntityNightwing extends AoAFlyingMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobNightwingLiving;
+        return SoundsRegister.MOB_NIGHTWING_LIVING;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobNightwingDeath;
+        return SoundsRegister.MOB_NIGHTWING_DEATH;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundsRegister.mobNightwingHit;
+        return SoundsRegister.MOB_NIGHTWING_HIT;
     }
 
     @Nullable

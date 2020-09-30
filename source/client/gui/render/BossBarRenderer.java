@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -51,7 +52,7 @@ public class BossBarRenderer {
 		final GuiIngame gui = mc.ingameGUI;
 		final short xOffset = 182;
 		final int x = res.getScaledWidth() / 2 - xOffset / 2;
-		final int percentHealth = (int)(bossEntity.getHealth() / bossEntity.getMaxHealth() * (xOffset + 1));
+		final int percentHealth = (int)(MathHelper.clamp(bossEntity.getHealth() / bossEntity.getMaxHealth(), 0, 1) * (xOffset + 1));
 
 		mc.getTextureManager().bindTexture(boss.getBossBarTexture());
 		gui.drawTexturedModalRect(x, 5, 0, 0, xOffset + 1, 20);

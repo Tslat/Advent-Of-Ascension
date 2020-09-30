@@ -21,7 +21,7 @@ public class ChunkGenImmortallis implements IChunkGenerator {
 
 	private ChunkPrimer primer;
 
-	private final Biome biome = BiomeRegister.biomeImmortallis;
+	private final Biome biome = BiomeRegister.IMMORTALLIS;
 
 	protected ChunkGenImmortallis(World world) {
 		this.world = world;

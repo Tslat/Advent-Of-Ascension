@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class AquaCottonCandyTree2 extends AoAStructure { //StructureSize: 5x13x5
-	private static final IBlockState blueCottonCandy = BlockRegister.cottonCandyAqua.getDefaultState();
-	private static final IBlockState plasticPole = BlockRegister.plastic.getDefaultState();
+	private static final IBlockState blueCottonCandy = BlockRegister.AQUA_COTTON_CANDY.getDefaultState();
+	private static final IBlockState plasticPole = BlockRegister.PLASTIC.getDefaultState();
 
 	public AquaCottonCandyTree2() {
 		super("AquaCottonCandyTree2");

@@ -10,7 +10,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RedHavenTree extends AoAStructure { //StructureSize: 11x12x11
-	private static final IBlockState redLeaves = BlockRegister.leavesHavenRed.getDefaultState();
+	private static final IBlockState redLeaves = BlockRegister.RED_HAVEN_LEAVES.getDefaultState();
 	private static final IBlockState log = Blocks.LOG.getDefaultState();
 
 	public RedHavenTree() {

@@ -19,9 +19,9 @@ public class MagicMendingSolution extends Item {
 	public MagicMendingSolution() {
 		setTranslationKey("MagicMendingSolution");
 		setRegistryName("aoa3:magic_mending_solution");
-		setCreativeTab(CreativeTabsRegister.miscTab);
+		setCreativeTab(CreativeTabsRegister.MISC);
 		setMaxStackSize(1);
-		setContainerItem(ItemRegister.metalTub);
+		setContainerItem(ItemRegister.METAL_TUB);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class MagicMendingSolution extends Item {
 				stack.shrink(1);
 
 				if (entity instanceof EntityPlayer)
-					ItemUtil.givePlayerMultipleItems((EntityPlayer)entity, new ItemStack(ItemRegister.metalTub), new ItemStack(ItemRegister.magicMendingCompound));
+					ItemUtil.givePlayerMultipleItems((EntityPlayer)entity, new ItemStack(ItemRegister.METAL_TUB), new ItemStack(ItemRegister.MAGIC_MENDING_COMPOUND));
 			}
 		}
 		else {

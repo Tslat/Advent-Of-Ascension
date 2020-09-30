@@ -52,19 +52,19 @@ public class EntityDusteiva extends AoAMeleeMob implements SpecialPropertyEntity
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDusteivaLiving;
+		return SoundsRegister.MOB_DUSTEIVA_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDusteivaDeath;
+		return SoundsRegister.MOB_DUSTEIVA_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDusteivaHit;
+		return SoundsRegister.MOB_DUSTEIVA_HIT;
 	}
 
 	@Nullable

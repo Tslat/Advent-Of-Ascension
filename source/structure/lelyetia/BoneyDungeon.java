@@ -10,10 +10,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class BoneyDungeon extends AoAStructure { //StructureSize: 10x48x10
-	private static final IBlockState spikeyPillar = BlockRegister.spikeyPillar.getDefaultState();
-	private static final IBlockState boneyBlock = BlockRegister.boneyBlock.getDefaultState();
-	private static final IBlockState exoheadSpawner = BlockRegister.spawnerExohead.getDefaultState();
-	private static final IBlockState rawboneSpawner = BlockRegister.spawnerRawbone.getDefaultState();
+	private static final IBlockState spikeyPillar = BlockRegister.SPIKEY_PILLAR.getDefaultState();
+	private static final IBlockState boneyBlock = BlockRegister.BONEY_BLOCK.getDefaultState();
+	private static final IBlockState exoheadSpawner = BlockRegister.EXOHEAD_SPAWNER.getDefaultState();
+	private static final IBlockState rawboneSpawner = BlockRegister.RAWBONE_SPAWNER.getDefaultState();
 	private static final IBlockState ironBars = Blocks.IRON_BARS.getDefaultState();
 
 	public BoneyDungeon() {

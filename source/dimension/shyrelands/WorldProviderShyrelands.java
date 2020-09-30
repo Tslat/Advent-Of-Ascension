@@ -22,13 +22,13 @@ import javax.annotation.Nullable;
 public class WorldProviderShyrelands extends WorldProvider implements AoAWorldProvider {
 	@Override
 	public DimensionType getDimensionType() {
-		return DimensionRegister.dimensionShyrelands;
+		return DimensionRegister.DIM_SHYRELANDS;
 	}
 
 	@Override
 	protected void init() {
 		this.hasSkyLight = true;
-		this.biomeProvider = DimensionRegister.worldTypeShyrelands.getBiomeProvider(world);
+		this.biomeProvider = DimensionRegister.WORLD_SHYRELANDS.getBiomeProvider(world);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class WorldProviderShyrelands extends WorldProvider implements AoAWorldPr
 
 	@Override
 	public IChunkGenerator createChunkGenerator() {
-		return DimensionRegister.worldTypeShyrelands.getChunkGenerator(world, null);
+		return DimensionRegister.WORLD_SHYRELANDS.getChunkGenerator(world, null);
 	}
 
 	@Override

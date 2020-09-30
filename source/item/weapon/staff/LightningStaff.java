@@ -31,14 +31,14 @@ public class LightningStaff extends BaseStaff {
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.staffBasic;
+		return SoundsRegister.BASIC_STAFF_CAST;
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.runeCompass, 1);
-		runes.put(ItemRegister.runeStrike, 4);
-		runes.put(ItemRegister.runeStorm, 4);
+		runes.put(ItemRegister.COMPASS_RUNE, 1);
+		runes.put(ItemRegister.STRIKE_RUNE, 4);
+		runes.put(ItemRegister.STORM_RUNE, 4);
 	}
 
 	@Override

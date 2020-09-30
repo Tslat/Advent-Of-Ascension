@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class FossilisedRibs1 extends AoAStructure { //StructureSize: 10x6x13
-	private static final IBlockState skeletalBlock = BlockRegister.skeletalBlock.getDefaultState();
+	private static final IBlockState skeletalBlock = BlockRegister.SKELETAL_BLOCK.getDefaultState();
 
 	public FossilisedRibs1() {
 		super("FossilisedRibs1");

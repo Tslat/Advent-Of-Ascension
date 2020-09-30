@@ -20,7 +20,7 @@ public class BoneyBlock extends Block {
 		setRegistryName("aoa3:boney_block");
 		setHardness(3.0f);
 		setResistance(3.0f);
-		setCreativeTab(CreativeTabsRegister.generationBlocksTab);
+		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
 	}
 
 	@Nonnull

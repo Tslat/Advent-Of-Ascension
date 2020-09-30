@@ -11,14 +11,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.tslat.aoa3.capabilities.handlers.AdventMiscStackCapability;
 import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.utils.ItemUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PrimalSword extends BaseSword implements AdventWeapon {
+public class PrimalSword extends BaseSword {
 	public PrimalSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("PrimalSword");
@@ -27,15 +26,24 @@ public class PrimalSword extends BaseSword implements AdventWeapon {
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (world.getWorldTime() % 10 == 0) {
+		if (world.getWorldTime() % 10 == 0 && entity instanceof EntityLivingBase) {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null) {
-				float currentDamageMod = cap.getValue();
-				float currentCalcBuff = getCurrentDamageBuff(entity);
+				if (isSelected) {
+					float currentDamageMod = cap.getValue();
+					float currentCalcBuff = getCurrentDamageBuff(entity);
 
-				if (currentDamageMod != currentCalcBuff)
-					cap.setValue(currentCalcBuff);
+					if (currentDamageMod != currentCalcBuff) {
+						((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+						cap.setValue(currentCalcBuff);
+						((EntityLivingBase)entity).getAttributeMap().applyAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+					}
+				}
+				else if (cap.getValue() != 0) {
+					((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
+					cap.setValue(0);
+				}
 			}
 		}
 	}
@@ -63,7 +71,7 @@ public class PrimalSword extends BaseSword implements AdventWeapon {
 			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
 
 			if (cap != null)
-				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, dmg * (cap.getValue() == 0 ? 1 : cap.getValue()));
+				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
 		}
 
 		return modifierMap;

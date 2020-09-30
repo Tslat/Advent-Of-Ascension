@@ -49,19 +49,19 @@ public class EntitySeaViper extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobSeaViperLiving;
+		return SoundsRegister.MOB_SEA_VIPER_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobSeaViperDeath;
+		return SoundsRegister.MOB_SEA_VIPER_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobSeaViperHit;
+		return SoundsRegister.MOB_SEA_VIPER_HIT;
 	}
 
 	@Nullable

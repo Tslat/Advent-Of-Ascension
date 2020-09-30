@@ -13,8 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.library.Enums;
 import net.tslat.aoa3.library.misc.AoAAttributes;
 import net.tslat.aoa3.utils.ItemUtil;
@@ -23,7 +21,7 @@ import net.tslat.aoa3.utils.player.PlayerUtil;
 
 import java.util.List;
 
-public class PlutonScythe extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class PlutonScythe extends BaseGreatblade {
 	public PlutonScythe(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("PlutonScythe");
@@ -32,16 +30,18 @@ public class PlutonScythe extends BaseGreatblade implements AdventWeapon, LongRe
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		float damagePercent = (float)dmg / dmgDealt;
-		PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
-		float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
+		if (!attacker.world.isRemote) {
+			float damagePercent = dmgDealt / (float)getDamage();
+			PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
+			float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
 
-		if (soulAmount > 0) {
-			if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
-				return;
+			if (soulAmount > 0) {
+				if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
+					return;
 
-			if (attacker instanceof EntityPlayerMP)
-				PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+				if (attacker instanceof EntityPlayerMP)
+					PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+			}
 		}
 	}
 

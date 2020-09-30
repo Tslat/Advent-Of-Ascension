@@ -23,11 +23,11 @@ public class LelyetiaTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return BlockRegister.portalLelyetia;
+		return BlockRegister.LELYETIA_PORTAL;
 	}
 
 	@Override
 	public Block getBorderBlock() {
-		return BlockRegister.bricksLelyetia;
+		return BlockRegister.LELYETIA_BRICKS;
 	}
 }

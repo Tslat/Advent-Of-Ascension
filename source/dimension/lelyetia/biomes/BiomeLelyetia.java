@@ -10,6 +10,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.common.registration.BlockRegister;
 import net.tslat.aoa3.dimension.AoABiomeDecorator;
 import net.tslat.aoa3.structure.StructuresHandler;
+import net.tslat.aoa3.worldgen.trees.WorldGenAchonyTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenChurryTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenInvertedAchonyTree;
+import net.tslat.aoa3.worldgen.trees.WorldGenInvertedChurryTree;
 
 import java.awt.*;
 import java.util.Random;
@@ -57,8 +61,8 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = 54;
 
-				if (world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.grassLelyetiaDown)
-					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantLelyetianGrassDown.getDefaultState());
+				if (world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.LELYETIA_DOWN_GRASS)
+					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.LELYETIAN_GRASS_DOWN.getDefaultState());
 			}
 
 			for (int i = 0; i < 51; i++) {
@@ -67,7 +71,7 @@ public class BiomeLelyetia extends Biome {
 				posY = world.getHeight(posX, posZ);
 
 				if (world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR && world.getBlockState(pos.down()) == biome.topBlock)
-					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantLelyetianGrass.getDefaultState());
+					world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.LELYETIAN_GRASS.getDefaultState());
 			}
 
 			for (int i = 0; i < 11; i++) {
@@ -90,7 +94,7 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = 54;
 
-				if (world.getBlockState(pos.setPos(posX, posY + 1, posZ)).getBlock() == BlockRegister.grassLelyetiaDown) {
+				if (world.getBlockState(pos.setPos(posX, posY + 1, posZ)).getBlock() == BlockRegister.LELYETIA_DOWN_GRASS) {
 					if (rand.nextBoolean()) {
 						StructuresHandler.generateStructure("InvertedLelyetianWiggler", world, rand, pos.setPos(posX, posY, posZ));
 					}
@@ -108,14 +112,8 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX + 4, posZ + 4);
 
-				if (world.getBlockState(pos.setPos(posX + 4, posY, posZ + 4)).getBlock() == Blocks.AIR && world.getBlockState(pos.down()) == biome.topBlock) {
-					if (rand.nextBoolean()) {
-						StructuresHandler.generateStructure("ChurryTree1", world, rand, pos.setPos(posX, posY, posZ));
-					}
-					else {
-						StructuresHandler.generateStructure("ChurryTree2", world, rand, pos.setPos(posX, posY, posZ));
-					}
-				}
+				if (world.getBlockState(pos.setPos(posX + 4, posY, posZ + 4)).getBlock() == Blocks.AIR && world.getBlockState(pos.down()) == biome.topBlock)
+					new WorldGenChurryTree(null).generate(world, rand, pos);
 			}
 
 			for (int i = 0; i < 2; i++) {
@@ -123,14 +121,8 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = world.getHeight(posX + 3, posZ + 3);
 
-				if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR && world.getBlockState(pos.down()) == biome.topBlock) {
-					if (rand.nextBoolean()) {
-						StructuresHandler.generateStructure("AchonyTree1", world, rand, pos.setPos(posX, posY, posZ));
-					}
-					else {
-						StructuresHandler.generateStructure("AchonyTree2", world, rand, pos.setPos(posX, posY, posZ));
-					}
-				}
+				if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR && world.getBlockState(pos.down()) == biome.topBlock)
+					new WorldGenAchonyTree(null).generate(world, rand, pos);
 			}
 
 			for (int i = 0; i < 2; i++) {
@@ -138,14 +130,8 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = 54;
 
-				if (world.getBlockState(pos.setPos(posX + 4, posY, posZ + 4)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.grassLelyetiaDown) {
-					if (rand.nextBoolean()) {
-						StructuresHandler.generateStructure("InvertedChurryTree1", world, rand, pos.setPos(posX, posY - 39, posZ));
-					}
-					else {
-						StructuresHandler.generateStructure("InvertedChurryTree2", world, rand, pos.setPos(posX, posY - 51, posZ));
-					}
-				}
+				if (world.getBlockState(pos.setPos(posX + 4, posY, posZ + 4)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.LELYETIA_DOWN_GRASS)
+					new WorldGenInvertedChurryTree(null).generate(world, rand, pos);
 			}
 
 			for (int i = 0; i < 2; i++) {
@@ -153,14 +139,8 @@ public class BiomeLelyetia extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = 54;
 
-				if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.grassLelyetiaDown) {
-					if (rand.nextBoolean()) {
-						StructuresHandler.generateStructure("InvertedAchonyTree1", world, rand, pos.setPos(posX, posY - 24, posZ));
-					}
-					else {
-						StructuresHandler.generateStructure("InvertedAchonyTree2", world, rand, pos.setPos(posX, posY - 31, posZ));
-					}
-				}
+				if (world.getBlockState(pos.setPos(posX + 3, posY, posZ + 3)).getBlock() == Blocks.AIR && world.getBlockState(pos.up()).getBlock() == BlockRegister.LELYETIA_DOWN_GRASS)
+					new WorldGenInvertedAchonyTree(null).generate(world, rand, pos);
 			}
 		}
 	}

@@ -45,17 +45,17 @@ public class EntityDicer extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDicerLiving;
+		return SoundsRegister.MOB_DICER_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDicerDeath;
+		return SoundsRegister.MOB_DICER_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDicerHit;
+		return SoundsRegister.MOB_DICER_HIT;
 	}
 
 	@Nullable

@@ -11,7 +11,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
 import net.tslat.aoa3.utils.player.PlayerDataManager;
 import net.tslat.aoa3.utils.player.PlayerUtil;
 
@@ -28,7 +27,7 @@ public class PureGoldAccumulator extends Block {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.pureGold) {
+		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.PURE_GOLD) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			if (!player.capabilities.isCreativeMode)

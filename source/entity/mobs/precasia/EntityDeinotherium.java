@@ -52,24 +52,24 @@ public class EntityDeinotherium extends AoAMeleeMob implements SpecialPropertyEn
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobDeinotheriumLiving;
+		return SoundsRegister.MOB_DEINOTHERIUM_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobDeinotheriumDeath;
+		return SoundsRegister.MOB_DEINOTHERIUM_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDeinotheriumHit;
+		return SoundsRegister.MOB_DEINOTHERIUM_HIT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound() {
-		return SoundsRegister.veryHeavyStep;
+		return SoundsRegister.VERY_HEAVY_STEP;
 	}
 
 	@Nullable

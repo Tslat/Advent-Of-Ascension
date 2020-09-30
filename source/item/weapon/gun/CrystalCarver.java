@@ -6,11 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
 
 import javax.annotation.Nullable;
 
-public class CrystalCarver extends BaseGun implements AdventWeapon {
+public class CrystalCarver extends BaseGun {
 	public CrystalCarver(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		setTranslationKey("CrystalCarver");
@@ -20,17 +19,17 @@ public class CrystalCarver extends BaseGun implements AdventWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunSniper;
+		return SoundsRegister.SNIPER_FIRE;
 	}
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
 		Item item = repairMaterial.getItem();
 
-		if (item == Items.DIAMOND || item == Items.EMERALD || item == ItemRegister.gemGemenyte || item == ItemRegister.gemJewelyte || item == ItemRegister.gemAmethyst ||
-		item == ItemRegister.gemBloodstone || item == ItemRegister.gemstonesBlue || item == ItemRegister.gemstonesGreen || item == ItemRegister.gemstonesPurple ||
-		 item == ItemRegister.gemstonesRed || item == ItemRegister.gemstonesWhite || item == ItemRegister.gemstonesYellow || item == ItemRegister.gemCrystallite ||
-		item == ItemRegister.gemOrnamyte || item == ItemRegister.gemJade || item == ItemRegister.gemSapphire || item == ItemRegister.gemShyregem)
+		if (item == Items.DIAMOND || item == Items.EMERALD || item == ItemRegister.GEMENYTE || item == ItemRegister.JEWELYTE || item == ItemRegister.AMETHYST ||
+		item == ItemRegister.BLOODSTONE || item == ItemRegister.BLUE_GEMSTONES || item == ItemRegister.GREEN_GEMSTONES || item == ItemRegister.PURPLE_GEMSTONES ||
+		 item == ItemRegister.RED_GEMSTONES || item == ItemRegister.WHITE_GEMSTONES || item == ItemRegister.YELLOW_GEMSTONES || item == ItemRegister.CRYSTALLITE ||
+		item == ItemRegister.ORNAMYTE || item == ItemRegister.JADE || item == ItemRegister.SAPPHIRE || item == ItemRegister.SHYREGEM)
 			return true;
 
 		return super.getIsRepairable(stack, repairMaterial);

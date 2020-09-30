@@ -14,7 +14,7 @@ public class WorldTypeLunalus extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeLunalus);
+		return new BiomeProviderSingle(BiomeRegister.LUNALUS);
 	}
 
 	@Override

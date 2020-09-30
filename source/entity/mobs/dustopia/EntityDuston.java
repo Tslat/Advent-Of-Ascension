@@ -49,7 +49,7 @@ public class EntityDuston extends AoAFlyingMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobDustonHit;
+		return SoundsRegister.MOB_DUSTON_HIT;
 	}
 
 	@Nullable

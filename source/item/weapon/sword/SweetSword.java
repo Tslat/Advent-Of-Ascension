@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.ItemUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SweetSword extends BaseSword implements AdventWeapon {
+public class SweetSword extends BaseSword {
 	private static final ArrayList<ItemStack> candyList = new ArrayList<ItemStack>();
 	private static boolean populated = false;
 

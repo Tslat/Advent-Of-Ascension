@@ -15,7 +15,7 @@ import net.tslat.aoa3.utils.WorldUtil;
 
 import java.util.List;
 
-public class ShyreSword extends BaseGreatblade implements AdventWeapon, LongReachWeapon {
+public class ShyreSword extends BaseGreatblade {
 	public ShyreSword(double dmg, double speed, int durability) {
 		super(dmg, speed, durability);
 		setTranslationKey("ShyreSword");

@@ -16,9 +16,9 @@ import java.util.Random;
 import static net.tslat.aoa3.block.functional.lamps.LampBlock.FIXED_LAMP;
 
 public class LunaradeStand extends AoAStructure { //StructureSize: 7x6x7
-	private static final IBlockState lunarLamp = BlockRegister.lampLunar.getDefaultState().withProperty(FIXED_LAMP, true);
-	private static final IBlockState lunarBricks = BlockRegister.bricksLunar.getDefaultState();
-	private static final IBlockState lunidePlanks = BlockRegister.planksLunide.getDefaultState();
+	private static final IBlockState lunarLamp = BlockRegister.LUNAR_LAMP.getDefaultState().withProperty(FIXED_LAMP, true);
+	private static final IBlockState lunarBricks = BlockRegister.LUNAR_BRICKS.getDefaultState();
+	private static final IBlockState lunidePlanks = BlockRegister.LUNIDE_PLANKS.getDefaultState();
 	private static final IBlockState stainedGlass = Blocks.STAINED_GLASS.getDefaultState();
 	private static final IBlockState chest = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.EAST);
 

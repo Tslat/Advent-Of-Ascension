@@ -4,8 +4,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.ItemRegister;
 import net.tslat.aoa3.common.registration.LootSystemRegister;
 import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.entity.mobs.nether.EntitySkeletalCowman;
 
 import javax.annotation.Nullable;
 
@@ -46,22 +48,30 @@ public class EntityKingCreeper extends EntityCreeponiaCreeper {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundsRegister.mobCreepoidLiving;
+        return SoundsRegister.MOB_CREEPOID_LIVING;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundsRegister.mobCreepoidDeath;
+        return SoundsRegister.MOB_CREEPOID_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundsRegister.mobCreepoidHit;
+        return SoundsRegister.MOB_CREEPOID_HIT;
     }
 
     @Nullable
     @Override
     protected ResourceLocation getLootTable() {
         return LootSystemRegister.entityKingCreeper;
+    }
+
+    @Override
+    public void onDeath(DamageSource cause) {
+        super.onDeath(cause);
+
+        if (world.getGameRules().getBoolean("doMobLoot") && cause.getTrueSource() instanceof EntitySkeletalCowman)
+            dropItem(ItemRegister.OUTLAW_DISC, 1);
     }
 }

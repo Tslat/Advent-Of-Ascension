@@ -25,6 +25,6 @@ public class EntityDistortionTablet extends EntitySoulTablet {
 
 	@Override
 	public TabletItem getRelevantItem() {
-		return ItemRegister.tabletDistortion;
+		return ItemRegister.DISTORTION_TABLET;
 	}
 }

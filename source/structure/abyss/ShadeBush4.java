@@ -9,7 +9,7 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class ShadeBush4 extends AoAStructure { //StructureSize: 4x3x1
-	private static final IBlockState shadowLeaves = BlockRegister.leavesShadow.getDefaultState();
+	private static final IBlockState shadowLeaves = BlockRegister.SHADOW_LEAVES.getDefaultState();
 
 	public ShadeBush4() {
 		super("ShadeBush4");

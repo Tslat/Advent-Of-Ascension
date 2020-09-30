@@ -55,11 +55,11 @@ public class BiomeDeeplands extends Biome {
 		@Override
 		protected void doOreGen(final World world, final Biome biome, final Random rand, final BlockPos basePos, final BlockPos.MutableBlockPos pos, int posX, int posY, int posZ) {
 			for (int i = 0; i < ConfigurationUtil.OreConfig.chargedRunium.veinsPerChunk; i++) {
-				new WorldGenMinable(BlockRegister.oreChargedRunium.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chargedRunium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chargedRunium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+				new WorldGenMinable(BlockRegister.CHARGED_RUNIUM_ORE.getDefaultState(), Math.max(ConfigurationUtil.OreConfig.chargedRunium.minOresPerVein, rand.nextInt(ConfigurationUtil.OreConfig.chargedRunium.maxOresPerVein) + 1), BlockMatcher.forBlock(BlockRegister.DEEPLANDS_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 			}
 
 			for (int i = 0; i < 4; i++) {
-				new WorldGenMinable(BlockRegister.deepCase.getDefaultState(), 5, BlockMatcher.forBlock(BlockRegister.stoneDeeplands))
+				new WorldGenMinable(BlockRegister.DEEP_CASE.getDefaultState(), 5, BlockMatcher.forBlock(BlockRegister.DEEPLANDS_STONE))
 						.generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 			}
 		}
@@ -73,10 +73,10 @@ public class BiomeDeeplands extends Biome {
 
 				if (world.getBlockState(pos.setPos(posX, posY, posZ)).getBlock() == Blocks.AIR) {
 					if (rand.nextBoolean()) {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDeepGrass.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DEEP_GRASS.getDefaultState());
 					}
 					else {
-						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.plantDeepBlooms.getDefaultState());
+						world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DEEP_BLOOMS.getDefaultState());
 					}
 				}
 			}
@@ -106,18 +106,18 @@ public class BiomeDeeplands extends Biome {
 			posZ = basePos.getZ() + rand.nextInt(16);
 			posY = 19;
 
-			world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.lightDeepCrystal.getDefaultState());
+			world.setBlockState(pos.setPos(posX, posY, posZ), BlockRegister.DEEP_CRYSTAL.getDefaultState());
 
 			for (int i = 0; i < 25; i++) {
 				switch (rand.nextInt(3)) {
 					case 0:
-						new WorldGenMinable(BlockRegister.deeplandsTrapExplosion.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+						new WorldGenMinable(BlockRegister.DEEPLANDS_TRAP_EXPLOSION.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.DEEPLANDS_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 						break;
 					case 1:
-						new WorldGenMinable(BlockRegister.deeplandsTrapLava.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+						new WorldGenMinable(BlockRegister.DEEPLANDS_TRAP_LAVA.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.DEEPLANDS_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 						break;
 					case 2:
-						new WorldGenMinable(BlockRegister.deeplandsTrapNipper.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.stoneDeeplands)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
+						new WorldGenMinable(BlockRegister.DEEPLANDS_TRAP_NIPPER.getDefaultState(), 20, BlockMatcher.forBlock(BlockRegister.DEEPLANDS_STONE)).generate(world, rand, basePos.add(rand.nextInt(16), rand.nextInt(45) + 70, rand.nextInt(16)));
 						break;
 				}
 			}

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class ShroomusSword extends BaseSword implements AdventWeapon {
+public class ShroomusSword extends BaseSword {
 	public ShroomusSword(final ToolMaterial material, final double speed) {
 		super(material, speed);
 		setTranslationKey("ShroomusSword");

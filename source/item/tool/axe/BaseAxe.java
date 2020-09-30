@@ -12,7 +12,7 @@ public class BaseAxe extends ItemAxe {
 
 		setTranslationKey(name);
 		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.toolsTab);
+		setCreativeTab(CreativeTabsRegister.TOOLS);
 	}
 
 	public BaseAxe(String name, String registryName, ToolMaterial material) {
@@ -21,6 +21,6 @@ public class BaseAxe extends ItemAxe {
 
 	@Override
 	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.magicRepairDust), false) || super.getIsRepairable(stack, repairMaterial);
+		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false) || super.getIsRepairable(stack, repairMaterial);
 	}
 }

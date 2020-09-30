@@ -67,19 +67,19 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobGrawLiving;
+		return SoundsRegister.MOB_GRAW_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobGrawDeath;
+		return SoundsRegister.MOB_GRAW_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobGrawHit;
+		return SoundsRegister.MOB_GRAW_HIT;
 	}
 
 	@Nullable
@@ -195,7 +195,7 @@ public class EntityGraw extends AoAFlyingRangedMob implements BossEntity, Specia
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicGraw;
+		return SoundsRegister.GRAW_MUSIC;
 	}
 
 	@Nonnull

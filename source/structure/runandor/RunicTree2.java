@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RunicTree2 extends AoAStructure { //StructureSize: 4x10x4
-	private static final IBlockState runicLeaves = BlockRegister.leavesRunic.getDefaultState();
-	private static final IBlockState runicLog = BlockRegister.logRunic.getDefaultState();
+	private static final IBlockState runicLeaves = BlockRegister.RUNIC_LEAVES.getDefaultState();
+	private static final IBlockState runicLog = BlockRegister.RUNIC_LOG.getDefaultState();
 
 	public RunicTree2() {
 		super("RunicTree2");

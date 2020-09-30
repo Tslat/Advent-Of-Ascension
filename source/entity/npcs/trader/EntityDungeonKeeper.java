@@ -46,15 +46,15 @@ public class EntityDungeonKeeper extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinGold, 10), new ItemStack(ItemRegister.progressCoin0, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicTilesBreakable, 16)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicSquaresBreakable, 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicRectanglesBreakable, 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicHorizontalStreamBreakaable, 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicVerticalStreamBreakable, 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicDirtBreakable, 16)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.archaicLadderBreakable, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.glassArchaicBreakable, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.tokensDungeon, 1), new ItemStack(BlockRegister.lightArchaicBreakable, 4)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SILVER_COIN, 5), new ItemStack(ItemRegister.PROGRESS_COIN0, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_TILES_BREAKABLE, 16)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_SQUARES_BREAKABLE, 12)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_RECTANGLES_BREAKABLE, 12)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_STREAM_HORIZONTAL_BREAKABLE, 12)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_STREAM_VERTICAL_BREAKABLE, 12)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_DIRT_BREAKABLE, 16)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_LADDER_BREAKABLE, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_GLASS_BREAKABLE, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.DUNGEON_TOKENS, 1), new ItemStack(BlockRegister.ARCHAIC_LIGHT_BREAKABLE, 4)));
 	}
 }

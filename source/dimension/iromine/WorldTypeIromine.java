@@ -14,7 +14,7 @@ public class WorldTypeIromine extends WorldType {
 
 	@Override
 	public BiomeProvider getBiomeProvider(World world) {
-		return new BiomeProviderSingle(BiomeRegister.biomeIromine);
+		return new BiomeProviderSingle(BiomeRegister.IROMINE);
 	}
 
 	@Override

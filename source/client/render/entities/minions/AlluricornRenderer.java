@@ -4,9 +4,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.fx.FXFluffyTrail;
 import net.tslat.aoa3.client.model.entities.mobs.haven.ModelRainicorn;
-import net.tslat.aoa3.client.render.AoAMinionRenderer;
+import net.tslat.aoa3.client.render.entities.AoAMinionRenderer;
+import net.tslat.aoa3.common.registration.ParticleRegister;
 import net.tslat.aoa3.entity.minions.AoAMinion;
 import net.tslat.aoa3.entity.minions.EntityAlluricorn;
 import net.tslat.aoa3.library.Enums;
@@ -22,12 +22,12 @@ public class AlluricornRenderer extends AoAMinionRenderer {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
 		if (entity.motionX > 0 || entity.motionZ > 0 || entity.motionY > 0) {
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 5, 0.75f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 0.75f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 1.05, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 5, 0.75f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 0.95, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 0.75f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 0.75, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 5, 0.75f).create();
-			new FXFluffyTrail(entity.world, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 5, 0.75f).create();
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 1.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 75, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 1.25, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 75, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 1.05, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 75, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.95, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 75, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.75, entity.posZ, 0, 0, 0, Enums.RGBIntegers.ORANGE, 75, 3, 5);
+			entity.world.spawnParticle(ParticleRegister.FLUFFY, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0, Enums.RGBIntegers.WHITE, 75, 3, 5);
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class GoldicapPetals extends BasicFood {
 	public GoldicapPetals() {
 		super("GoldicapPetals", "goldicap_petals", 0, 0);
 		setAlwaysEdible();
-		BlockRegister.cropGoldicaps.setCrop(this);
+		BlockRegister.GOLDICAPS_CROP.setCrop(this);
 	}
 
 	@Override

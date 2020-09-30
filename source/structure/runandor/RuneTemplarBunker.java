@@ -11,8 +11,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class RuneTemplarBunker extends AoAStructure { //StructureSize: 15x9x15
-	private static final IBlockState unbreakableRunicBricks = BlockRegister.unbreakableRunicBricks.getDefaultState();
-	private static final IBlockState unbreakableRunicGlass = BlockRegister.glassRunicUnbreakable.getDefaultState();
+	private static final IBlockState unbreakableRunicBricks = BlockRegister.UNBREAKABLE_RUNIC_BRICKS.getDefaultState();
+	private static final IBlockState unbreakableRunicGlass = BlockRegister.UNBREAKABLE_RUNIC_GLASS.getDefaultState();
 	private static final IBlockState air = Blocks.AIR.getDefaultState();
 
 	public RuneTemplarBunker() {

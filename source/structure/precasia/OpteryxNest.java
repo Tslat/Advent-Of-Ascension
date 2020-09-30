@@ -9,10 +9,10 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class OpteryxNest extends AoAStructure { //StructureSize: 9x2x9
-	private static final IBlockState stranglewoodLog = BlockRegister.logStranglewood.getDefaultState();
-	private static final IBlockState cycadeLog = BlockRegister.logCycade.getDefaultState();
-	private static final IBlockState lucalusLog = BlockRegister.logLucalus.getDefaultState();
-	private static final IBlockState opteryxSpawner = BlockRegister.spawnerOpteryx.getDefaultState();
+	private static final IBlockState stranglewoodLog = BlockRegister.STRANGLEWOOD_LOG.getDefaultState();
+	private static final IBlockState cycadeLog = BlockRegister.CYCADE_LOG.getDefaultState();
+	private static final IBlockState lucalusLog = BlockRegister.LUCALUS_LOG.getDefaultState();
+	private static final IBlockState opteryxSpawner = BlockRegister.OPTERYX_SPAWNER.getDefaultState();
 
 	public OpteryxNest() {
 		super("OpteryxNest");

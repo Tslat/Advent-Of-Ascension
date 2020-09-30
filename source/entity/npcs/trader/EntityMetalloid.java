@@ -42,30 +42,30 @@ public class EntityMetalloid extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 15), new ItemStack(ItemRegister.ingotLimonite, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 20), new ItemStack(ItemRegister.ingotRosite, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 30), new ItemStack(ItemRegister.gemJade, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 40), new ItemStack(ItemRegister.gemAmethyst, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 60), new ItemStack(ItemRegister.gemSapphire, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 45), new ItemStack(ItemRegister.ingotBaronyte, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 50), new ItemStack(ItemRegister.ingotBlazium, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 47), new ItemStack(ItemRegister.ingotVarsium, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.coinCopper, 59), new ItemStack(ItemRegister.ingotLyon, 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotLimonite, 1), new ItemStack(ItemRegister.coinCopper, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotRosite, 1), new ItemStack(ItemRegister.coinCopper, 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemJade, 1), new ItemStack(ItemRegister.coinCopper, 6)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemAmethyst, 1), new ItemStack(ItemRegister.coinCopper, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.gemSapphire, 1), new ItemStack(ItemRegister.coinCopper, 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotBaronyte, 1), new ItemStack(ItemRegister.coinCopper, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotBlazium, 1), new ItemStack(ItemRegister.coinCopper, 9)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotElecanium, 1), new ItemStack(ItemRegister.coinCopper, 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotEmberstone, 1), new ItemStack(ItemRegister.coinCopper, 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotGhastly, 1), new ItemStack(ItemRegister.coinCopper, 9)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotGhoulish, 1), new ItemStack(ItemRegister.coinCopper, 9)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotLunar, 1), new ItemStack(ItemRegister.coinCopper, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotLyon, 1), new ItemStack(ItemRegister.coinCopper, 9)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotShyrestone, 1), new ItemStack(ItemRegister.coinCopper, 13)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotSkeletal, 1), new ItemStack(ItemRegister.coinCopper, 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ingotVarsium, 1), new ItemStack(ItemRegister.coinCopper, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 15), new ItemStack(ItemRegister.LIMONITE_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 20), new ItemStack(ItemRegister.ROSITE_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 30), new ItemStack(ItemRegister.JADE, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 40), new ItemStack(ItemRegister.AMETHYST, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 60), new ItemStack(ItemRegister.SAPPHIRE, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 45), new ItemStack(ItemRegister.BARONYTE_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 50), new ItemStack(ItemRegister.BLAZIUM_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 47), new ItemStack(ItemRegister.VARSIUM_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.COPPER_COIN, 59), new ItemStack(ItemRegister.LYON_INGOT, 1)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LIMONITE_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 2)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ROSITE_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 4)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.JADE, 1), new ItemStack(ItemRegister.COPPER_COIN, 6)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.AMETHYST, 1), new ItemStack(ItemRegister.COPPER_COIN, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SAPPHIRE, 1), new ItemStack(ItemRegister.COPPER_COIN, 10)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BARONYTE_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.BLAZIUM_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 9)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.ELECANIUM_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 12)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.EMBERSTONE_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 10)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GHASTLY_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 9)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.GHOULISH_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 9)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LUNAR_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.LYON_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 9)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SHYRESTONE_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 13)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.SKELETAL_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 8)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(ItemRegister.VARSIUM_INGOT, 1), new ItemStack(ItemRegister.COPPER_COIN, 8)));
 	}
 }

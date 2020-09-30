@@ -29,7 +29,7 @@ public class PowerRay extends BaseBlaster {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.gunRayGun;
+		return SoundsRegister.RAY_GUN_FIRE;
 	}
 
 	@Override

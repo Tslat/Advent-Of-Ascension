@@ -56,7 +56,7 @@ public class BiomeVoxPonds extends Biome {
 			for (int x = 0; x < 16; x++) {
 				for (int z = 0; z < 16; z++) {
 					if (rand.nextBoolean() && world.getBlockState(pos.setPos(basePos.getX() + x, 38, basePos.getZ() + z)) == biome.topBlock)
-						world.setBlockState(pos.up(), BlockRegister.plantDeadGrass.getDefaultState());
+						world.setBlockState(pos.up(), BlockRegister.DEAD_GRASS.getDefaultState());
 				}
 			}
 
@@ -66,7 +66,7 @@ public class BiomeVoxPonds extends Biome {
 				posY = 39;
 
 				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)) == biome.topBlock && world.getBlockState(pos.up()).getBlock() == Blocks.AIR)
-					world.setBlockState(pos.up(), BlockRegister.shroomVox.getDefaultState());
+					world.setBlockState(pos.up(), BlockRegister.VOX_SHROOM.getDefaultState());
 			}
 		}
 
@@ -164,7 +164,7 @@ public class BiomeVoxPonds extends Biome {
 				posZ = basePos.getZ() + rand.nextInt(16);
 				posY = 38;
 
-				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)).getBlock() == BlockRegister.toxicWaste)
+				if (world.getBlockState(pos.setPos(posX, posY - 1, posZ)).getBlock() == BlockRegister.TOXIC_WASTE)
 					StructuresHandler.generateStructure("MiniTentacles", world, rand, pos.up());
 			}
 

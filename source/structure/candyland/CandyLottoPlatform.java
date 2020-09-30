@@ -10,8 +10,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class CandyLottoPlatform extends AoAStructure { //StructureSize: 13x12x13
-	private static final IBlockState redCandy = BlockRegister.candyRed.getDefaultState();
-	private static final IBlockState whiteCandy = BlockRegister.candyWhite.getDefaultState();
+	private static final IBlockState redCandy = BlockRegister.RED_CANDY.getDefaultState();
+	private static final IBlockState whiteCandy = BlockRegister.WHITE_CANDY.getDefaultState();
 
 	public CandyLottoPlatform() {
 		super("CandyLottoPlatform");

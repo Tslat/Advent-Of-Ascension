@@ -95,19 +95,19 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundsRegister.mobCottonCandorLiving;
+		return SoundsRegister.MOB_COTTON_CANDOR_LIVING;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundsRegister.mobCottonCandorDeath;
+		return SoundsRegister.MOB_COTTON_CANDOR_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundsRegister.mobCottonCandorHit;
+		return SoundsRegister.MOB_COTTON_CANDOR_HIT;
 	}
 
 	@Nullable
@@ -158,7 +158,7 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundsRegister.shotCottonCandorFire;
+		return SoundsRegister.COTTON_CANDOR_SHOOT;
 	}
 
 	@Override
@@ -217,7 +217,7 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 					killer = (EntityPlayer)source;
 
 					if (source instanceof EntityPlayerMP && cause.getImmediateSource() instanceof EntityPrimordialShot) {
-						if (killer.getHeldItemMainhand().getItem() == WeaponRegister.staffWind || killer.getHeldItemOffhand().getItem() == WeaponRegister.staffWind)
+						if (killer.getHeldItemMainhand().getItem() == WeaponRegister.WIND_STAFF || killer.getHeldItemOffhand().getItem() == WeaponRegister.WIND_STAFF)
 							ModUtil.completeAdvancement((EntityPlayerMP)killer, "candyland/when_push_comes_to_shove", "wind_staff_kill");
 					}
 				}
@@ -245,7 +245,7 @@ public class EntityCottonCandor extends AoAFlyingRangedMob implements SpecialPro
 	@Nullable
 	@Override
 	public SoundEvent getBossMusic() {
-		return SoundsRegister.musicCottonCandor;
+		return SoundsRegister.COTTON_CANDOR_MUSIC;
 	}
 
 	@Override

@@ -9,8 +9,8 @@ import net.tslat.aoa3.structure.AoAStructure;
 import java.util.Random;
 
 public class IrodustTree1 extends AoAStructure { //StructureSize: 7x10x7
-	private static final IBlockState irodustLeaves = BlockRegister.leavesIrodust.getDefaultState();
-	private static final IBlockState log = BlockRegister.logIro.getDefaultState();
+	private static final IBlockState irodustLeaves = BlockRegister.IRODUST_LEAVES.getDefaultState();
+	private static final IBlockState log = BlockRegister.IRO_LOG.getDefaultState();
 
 	public IrodustTree1() {
 		super("IrodustTree1");
