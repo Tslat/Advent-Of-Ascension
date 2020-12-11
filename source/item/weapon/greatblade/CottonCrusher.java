@@ -2,43 +2,31 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CottonCrusher extends BaseGreatblade {
-	private double dmg;
-
-	public CottonCrusher(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		this.dmg = dmg;
-		setTranslationKey("CottonCrusher");
-		setRegistryName("aoa3:cotton_crusher");
+	public CottonCrusher() {
+		super(24.0f, AttackSpeed.GREATBLADE, 1600);
 	}
 
 	@Override
-	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		if (super.attackEntity(stack, target, attacker, dmg)) {
-			if (attacker instanceof EntityPlayer && ((EntityPlayer)attacker).getCooledAttackStrength(0) > 0.95f)
-				((EntityPlayer)attacker).getFoodStats().addStats(1, 0);
-
-			return true;
-		}
-
-		return false;
+	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
+		if (attacker instanceof PlayerEntity && EntityUtil.getAttackCooldown(attacker) > 0.95f)
+			((PlayerEntity)attacker).getFoodStats().addStats(1, 0);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.CottonCrusher.desc.1", TextFormatting.DARK_GREEN));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -2,30 +2,28 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoofyGreatblade extends BaseGreatblade {
-	public GoofyGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("GoofyGreatblade");
-		setRegistryName("aoa3:goofy_greatblade");
+	public GoofyGreatblade() {
+		super(22.0f, AttackSpeed.GREATBLADE, 1300);
 	}
 
 	@Override
-	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return (float)getDamage() + (float)(itemRand.nextGaussian() * 5f);
+	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
+		return (float)getAttackDamage() + (float)(random.nextGaussian() * 5f);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GoofyGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE, String.valueOf(getDamage() - 5), String.valueOf(getDamage() + 5)));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.BENEFICIAL, String.valueOf(getAttackDamage() - 5), String.valueOf(getAttackDamage() + 5)));
 	}
 }

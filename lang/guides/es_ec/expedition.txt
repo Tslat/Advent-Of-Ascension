@@ -1,0 +1,18 @@
+Expedicion (Habilidad)
+
+¿A quién no le gusta explorar? La habilidad de Expedicion se basa en la exploracion y el movimiento.
+No importa que vayas corriendo o explorando a través de los mundos, iras ganando XP de Expedicion, no tienes que hacer nada en especial!
+
+Mientras mas subas tu nivel de Expedicion, obtendras resistencia a las caidas de grandes alturas!
+
+La habilidad también tiene un efecto secundario. De vez en cuando al correr o estar nadando obtendras buffs que te ayudaran. El efecto de este buff depende de cual hayas escogido en el menu. Da click en el icono de Expedicion para cambiar los efectos.
+El pdoer y frecuencia de este efecto depende de tu nivel de Expedicion
+
+Velocidad:
+  Selecciona el icono de viento para este buff. Al correr obtendras ocasionalmente la bendicion del viento, permitidiendote correr a grandes velocidades.
+
+Saciedad:
+  Selecciona el icono de comida para este buff. Al correr obtendras ocasionalmente unas menores ganas de comer, permitidiendote seguir corriendo por mas tiempo sin detenerte a comer.
+
+Respiracion Acuatica:
+  Selecciona el icono de burbujas para este buff. Al nadar obtendras ocasionalmente mas oxigeno, permitiendo que puedas estar sumergido por mas tiempo.

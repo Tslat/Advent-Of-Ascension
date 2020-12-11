@@ -2,42 +2,33 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SubterraneanGreatblade extends BaseGreatblade {
-	public SubterraneanGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("SubterraneanGreatblade");
-		setRegistryName("aoa3:subterranean_greatblade");
+	public SubterraneanGreatblade() {
+		super(21.5f, AttackSpeed.GREATBLADE, 1160);
 	}
 
 	@Override
-	public boolean attackEntity(ItemStack stack, Entity target, EntityLivingBase attacker, float dmg) {
-		if (super.attackEntity(stack, target, attacker, dmg)) {
-			if (target instanceof EntityLivingBase && ItemUtil.checkCooledItemProc(attacker, 0.20f))
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 30, 50, true, false));
-
-			return true;
-		}
-		else {
-			return false;
-		}
+	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
+		if (target instanceof LivingEntity && RandomUtil.percentChance(EntityUtil.getAttackCooldown(attacker) * 0.2f))
+			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 30, 50, true, false));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SubterraneanGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

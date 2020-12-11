@@ -1,0 +1,67 @@
+package net.tslat.aoa3.entity.mob.celeve;
+
+import net.minecraft.entity.*;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.DamageUtil;
+
+import javax.annotation.Nullable;
+
+public class BoboEntity extends AoAMeleeMob {
+	public BoboEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+		super(entityType, world);
+	}
+
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+		return 1.90625f;
+	}
+
+	@Override
+	protected double getBaseKnockbackResistance() {
+		return 0.05;
+	}
+
+	@Override
+	protected double getBaseMaxHealth() {
+		return 95;
+	}
+
+	@Override
+	protected double getBaseMeleeDamage() {
+		return 9;
+	}
+
+	@Override
+	protected double getBaseMovementSpeed() {
+		return 0.26;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return AoASounds.ENTITY_CELEVE_CLOWN_AMBIENT.get();
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return AoASounds.ENTITY_CELEVE_CLOWN_DEATH.get();
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return AoASounds.ENTITY_CELEVE_CLOWN_HURT.get();
+	}
+
+	@Override
+	protected void onAttack(Entity target) {
+		if (target instanceof LivingEntity)
+			DamageUtil.doBodySlamKnockback((LivingEntity)target, this, 1, 1, 1);
+	}
+}

@@ -1,54 +1,54 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.minionslab.BaseSlab;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class CreationForge extends Block {
 	public CreationForge() {
-		super(Material.ROCK);
-		setTranslationKey("CreationForge");
-		setRegistryName("aoa3:creation_forge");
-		setHardness(10.0f);
-		setResistance(15.0f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 10, 15, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() instanceof BaseSlab) {
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
-			BaseSlab slab = (BaseSlab)player.getHeldItem(hand).getItem();
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getHeldItem(hand).getItem() instanceof BaseSlab) {
+			if (player instanceof ServerPlayerEntity) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
+				BaseSlab slab = (BaseSlab)player.getHeldItem(hand).getItem();
 
-			if (plData.stats().getLevel(Enums.Skills.CREATION) >= slab.sacrificeLvl) {
-				if (!player.capabilities.isCreativeMode)
-					player.getHeldItem(hand).shrink(1);
+				if (plData.stats().getLevel(Skills.CREATION) >= slab.sacrificeLvl) {
+					if (!player.isCreative())
+						player.getHeldItem(hand).shrink(1);
 
-				plData.stats().addXp(Enums.Skills.CREATION, slab.sacrificeXp, false, false);
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.CREATION_FORGE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
-				player.inventoryContainer.detectAndSendChanges();
+					plData.stats().addXp(Skills.CREATION, slab.sacrificeXp, false, false);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_CREATION_FORGE_SACRIFICE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					player.container.detectAndSendChanges();
+				}
+				else {
+					if (player instanceof ServerPlayerEntity)
+						PlayerUtil.notifyPlayerOfInsufficientLevel((ServerPlayerEntity)player, Skills.CREATION, slab.sacrificeLvl);
+				}
 			}
-			else {
-				if (player instanceof EntityPlayerMP)
-					PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.CREATION, slab.sacrificeLvl);
-			}
+
+			return ActionResultType.SUCCESS;
 		}
 
-		return true;
+		return ActionResultType.FAIL;
 	}
 }

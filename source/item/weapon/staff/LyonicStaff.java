@@ -2,74 +2,72 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityLyonicShot;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.LyonicShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class LyonicStaff extends BaseStaff {
+public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	public LyonicStaff(int durability) {
 		super(durability);
-		setTranslationKey("LyonicStaff");
-		setRegistryName("aoa3:lyonic_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.BASIC_STAFF_CAST;
+		return AoASounds.ITEM_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.ENERGY_RUNE, 1);
-		runes.put(ItemRegister.WIND_RUNE, 1);
-		runes.put(ItemRegister.WITHER_RUNE, 2);
-		runes.put(ItemRegister.STRIKE_RUNE, 1);
+		runes.put(AoAItems.ENERGY_RUNE.get(), 1);
+		runes.put(AoAItems.WIND_RUNE.get(), 1);
+		runes.put(AoAItems.WITHER_RUNE.get(), 2);
+		runes.put(AoAItems.STRIKE_RUNE.get(), 1);
 	}
 
 	@Nullable
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> targets = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10, 1, 10), entity -> entity instanceof IMob && entity.isEntityAlive());
+	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> targets = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10, 1, 10), entity -> entity instanceof IMob && entity.isAlive());
 
 		return targets.isEmpty() ? null : targets;
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (float x = -1; x <= 1; x += 0.125f) {
 			for (float z = -1; z <= 1; z += 0.125f) {
-				world.spawnEntity(new EntityLyonicShot(caster, this, 1, x, 0, z));
+				world.addEntity(new LyonicShotEntity(caster, this, 1, x, 0, z));
 			}
 		}
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (target instanceof IMob) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER, 100, 1, false, true));
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (EntityUtil.isHostileMob(target) && target.world instanceof ServerWorld) {
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WITHER, 100).level(2));
 
-			if (itemRand.nextInt(150) == 0)
-				target.world.addWeatherEffect(new EntityLightningBolt(target.world, target.posX, target.posY, target.posZ, false));
+			if (RandomUtil.oneInNChance(150))
+				((ServerWorld)target.world).addLightningBolt(new LightningBoltEntity(target.world, target.getPosX(), target.getPosY(), target.getPosZ(), false));
 
 			return true;
 		}
@@ -77,12 +75,11 @@ public class LyonicStaff extends BaseStaff {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicStaff.desc.2", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicStaff.desc.3", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.WITHERS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

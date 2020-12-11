@@ -2,52 +2,48 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityWitherShot;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.WitherShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class UnderworldStaff extends BaseStaff {
+public class UnderworldStaff extends BaseStaff<Object> {
 	public UnderworldStaff(int durability) {
 		super(durability);
-		setTranslationKey("UnderworldStaff");
-		setRegistryName("aoa3:underworld_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.BASIC_STAFF_CAST;
+		return AoASounds.ITEM_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.COMPASS_RUNE, 1);
-		runes.put(ItemRegister.KINETIC_RUNE, 3);
+		runes.put(AoAItems.COMPASS_RUNE.get(), 1);
+		runes.put(AoAItems.KINETIC_RUNE.get(), 3);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		world.spawnEntity(new EntityWitherShot(caster, this, 60));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+		world.addEntity(new WitherShotEntity(caster, this, 60));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (EntityUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
 			target.addVelocity(0, -3.0f, 0);
 
 			return true;
@@ -61,10 +57,9 @@ public class UnderworldStaff extends BaseStaff {
 		return 5;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.UnderworldStaff.desc.1", TextFormatting.DARK_GREEN));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

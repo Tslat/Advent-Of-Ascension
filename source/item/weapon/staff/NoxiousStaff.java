@@ -1,66 +1,60 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAreaEffectCloud;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
-import net.minecraft.init.PotionTypes;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityNoxiousShot;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.NoxiousShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class NoxiousStaff extends BaseStaff {
+public class NoxiousStaff extends BaseStaff<Object> {
 	public NoxiousStaff(int durability) {
 		super(durability);
-		setTranslationKey("NoxiousStaff");
-		setRegistryName("aoa3:noxious_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.NOXIOUS_STAFF_CAST;
+		return AoASounds.ITEM_NOXIOUS_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WIND_RUNE, 2);
-		runes.put(ItemRegister.POISON_RUNE, 2);
-		runes.put(ItemRegister.STORM_RUNE, 2);
+		runes.put(AoAItems.WIND_RUNE.get(), 2);
+		runes.put(AoAItems.POISON_RUNE.get(), 2);
+		runes.put(AoAItems.STORM_RUNE.get(), 2);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, 0, 0, 0));
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, 0.075f, 0.075f, 0));
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, -0.075f, 0, 0.075f));
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, 0, -0.075f, -0.075f));
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, -0.075f, 0.075f, -0.075f));
-		world.spawnEntity(new EntityNoxiousShot(caster, this, 60, -0.075f, -0.075f, 0.075f));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0, 0, 0));
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0.075f, 0.075f, 0));
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0, 0.075f));
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0, -0.075f, -0.075f));
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0.075f, -0.075f));
+		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, -0.075f, 0.075f));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (EntityUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 2, true, true));
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 100).level(3));
 
 			return true;
 		}
@@ -69,17 +63,17 @@ public class NoxiousStaff extends BaseStaff {
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, BlockPos pos, EntityLivingBase shooter) {
-		EntityAreaEffectCloud cloud = new EntityAreaEffectCloud(shot.world, shot.posX, shot.posY, shot.posZ);
+	public void doBlockImpact(BaseEnergyShot shot, BlockPos pos, LivingEntity shooter) {
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.world, shot.getPosX(), shot.getPosY(), shot.getPosZ());
 
 		cloud.setRadius(3);
-		cloud.setPotion(PotionTypes.STRONG_POISON);
-		cloud.addEffect(new PotionEffect(MobEffects.POISON, 100, 2, true, true));
+		cloud.setPotion(Potions.STRONG_POISON);
+		cloud.addEffect(new EffectInstance(Effects.POISON, 100, 2, true, true));
 		cloud.setDuration(3);
-		cloud.setColor(Enums.RGBIntegers.TOXIC_GREEN);
+		cloud.setColor(NumberUtil.RGB(51, 102, 0));
 		cloud.setOwner(shooter);
 
-		shot.world.spawnEntity(cloud);
+		shot.world.addEntity(cloud);
 	}
 
 	@Override
@@ -87,10 +81,9 @@ public class NoxiousStaff extends BaseStaff {
 		return 3.5f;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NoxiousStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

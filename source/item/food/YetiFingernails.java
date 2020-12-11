@@ -1,40 +1,40 @@
 package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class YetiFingernails extends BasicFood {
+public class YetiFingernails extends Item {
 	public YetiFingernails() {
-		super("YetiFingernails", "yeti_fingernails", 1, 0.1f);
-		setAlwaysEdible();
-		setCreativeTab(null);
+		super(new Item.Properties().group(null).rarity(Rarity.RARE).food(new Food.Builder().hunger(0).saturation(0).setAlwaysEdible().build()));
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 100;
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
-		if (!world.isRemote && entity instanceof EntityPlayer)
-			entity.sendMessage(StringUtil.getLocale("message.feedback.yetiFingernails.eat"));
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
+		if (entity instanceof ServerPlayerEntity)
+			PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.yetiFingernails.eat");
 
-		return super.onItemUseFinish(stack, world, entity);
+		return super.onItemUseFinish(stack, worldIn, entity);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.YetiFingernails.desc.1"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

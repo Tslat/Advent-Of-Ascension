@@ -1,57 +1,54 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAreaEffectCloud;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class VileVanquisher extends BaseGun {
 	public VileVanquisher(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("VileVanquisher");
-		setRegistryName("aoa3:vile_vanquisher");
+		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.FAST_RIFLE_FIRE;
+		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target.isDead || (target instanceof EntityLivingBase && ((EntityLivingBase)target).getHealth() <= 0)) {
-			EntityAreaEffectCloud cloud = new EntityAreaEffectCloud(bullet.world, (target.posX + bullet.posX) / 2d, (target.posY + bullet.posY) / 2d, (target.posZ + bullet.posZ) / 2d);
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (!target.isAlive() || (target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0)) {
+			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.world, (target.getPosX() + bullet.getPosX()) / 2d, (target.getPosY() + bullet.getPosY()) / 2d, (target.getPosZ() + bullet.getPosZ()) / 2d);
 
 			cloud.setRadius(0.5f);
 			cloud.setDuration(10);
 			cloud.setRadiusPerTick(0.45f);
 			cloud.setWaitTime(0);
-			cloud.setColor(Enums.RGBIntegers.TOXIC_GREEN);
-			cloud.addEffect(new PotionEffect(MobEffects.POISON, 150, 0, false, true));
+			cloud.setColor(NumberUtil.RGB(51, 102, 0));
+			cloud.addEffect(new EffectInstance(Effects.POISON, 150, 0, false, true));
 
-			bullet.world.spawnEntity(cloud);
+			bullet.world.addEntity(cloud);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.VileVanquisher.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

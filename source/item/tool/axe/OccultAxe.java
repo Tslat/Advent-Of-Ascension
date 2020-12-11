@@ -1,42 +1,45 @@
 package net.tslat.aoa3.item.tool.axe;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class OccultAxe extends BaseAxe {
 	public OccultAxe() {
-		super("OccultAxe", "occult_axe", MaterialsRegister.TOOL_OCCULT);
+		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null));
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState state, BlockPos pos, EntityLivingBase entity) {
-		if (entity instanceof EntityPlayer) {
+	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+		if (entity instanceof PlayerEntity && state.isIn(BlockTags.LOGS)) {
 			BlockPos breakPos = pos;
+			Block originBlock = state.getBlock();
+			ItemStack toolStack = entity.getHeldItem(Hand.MAIN_HAND);
 
-			while (world.getBlockState(breakPos = breakPos.up()).getBlock().isWood(world, breakPos)) {
-				WorldUtil.harvestAdditionalBlock(world, (EntityPlayer)entity, stack, pos, breakPos);
+			while (world.getBlockState(breakPos = breakPos.up()).getBlock() == originBlock && !toolStack.isEmpty()) {
+				WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, true);
 			}
 		}
 
 		return super.onBlockDestroyed(stack, world, state, pos, entity);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OccultAxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

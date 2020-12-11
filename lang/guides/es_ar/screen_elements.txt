@@ -1,0 +1,23 @@
+Elementos del HUD
+
+Advent of Ascension añade nuevos elementos en tu HUD que representan ciertos aspectos del gameplay. Es importante que les prestes atencion!
+Puedes apagar este display con la tecla que elijas (por defecto la "o").
+
+El Puño Rojo:
+  El puño rojo representa tu Furia. Tu furia se carga de forma pasiva, hasta el punto en que esté completamente cargada. Una vez esté cargada tus golpes haran gran cantidad de daño. Este daño aumenta de forma progresiva a medida que tu nivel de Berserk aumenta.
+
+El Rayo:
+  El rayo representa tu Energia. Tu energia se carga de forma pasiva y constante. Es la municion de los Lasers, sin embargo si la usas de forma indiscriminada se agotara rapidamente.
+
+La Criatura con Cuernos:
+  Este icono representa la Creacion, especificamente tus Puntos de Creacion. Las Tabletas de Minions requieren de Puntos de Creacion, asi que debes estar atento de cuantos puntos debes gastar si deseas invocar minions.
+
+El icono de Alien Azul:
+  Este icono representa tu Alma, especificamente tus Puntos de Alma. Los puntos de alma se regeneran lentamente con el tiempo, y se utiliza para darles poder a las tabletas, las cuales otorgan grandes efectos.
+
+Las Cuatro Lineas:
+  Estas cuatro lineas representan tu favor con los Dioses, los cuales en orden son: Selyan, Luxon, Erebon y Pluton. Cada uno de los dioses admiran y aborrecen ciertas actitudes.
+  Si logras satisfacer a uno de los dioses antes del ocaso te otorgara un efecto que durara toda la noche, asi que busca complacerlos!
+  
+Icono de Vulcano:
+  Este icono no es muy comun, pero cuando lo veas significa que el alma de quien te ataco esta unida a ti. Este es tu momento para usar un Vulcano y desatar tu venganza sobre quien te ataco!

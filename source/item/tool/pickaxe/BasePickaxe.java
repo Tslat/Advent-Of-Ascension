@@ -1,22 +1,12 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
+import net.minecraft.item.PickaxeItem;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 
-public class BasePickaxe extends ItemPickaxe {
-	public BasePickaxe(String name, String registryName, ToolMaterial material) {
-		super(material);
-
-		setTranslationKey(name);
-		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.TOOLS);
-	}
-
-	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false) || super.getIsRepairable(stack, repairMaterial);
+public class BasePickaxe extends PickaxeItem {
+	public BasePickaxe(IItemTier stats) {
+		super(stats, 1, -2.8F, new Item.Properties().maxDamage(stats.getMaxUses()).group(AoAItemGroups.TOOLS));
 	}
 }

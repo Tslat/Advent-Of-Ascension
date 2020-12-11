@@ -2,16 +2,18 @@ package net.tslat.aoa3.item.weapon.sniper;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -23,37 +25,35 @@ public class Crystaneer extends BaseSniper {
 
 	public Crystaneer(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("Crystaneer");
-		setRegistryName("aoa3:crystaneer");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SNIPER_FIRE;
+		return AoASounds.ITEM_SNIPER_FIRE.get();
 	}
 
 	@Override
-	public Enums.ScopeScreens getScreen() {
-		return Enums.ScopeScreens.CRYSTAL;
+	public ScopeOverlayRenderer.Type getScopeType() {
+		return ScopeOverlayRenderer.Type.CRYSTAL;
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof EntityLivingBase && ((EntityLivingBase)target).getHealth() <= 0 && itemRand.nextInt(5) == 0) {
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0 && RandomUtil.oneInNChance(5)) {
 			if (!populated)
 				populateGemDrops();
 
-			target.entityDropItem(gemDrops.get(gemDrops.size() - 1), 0f);
+			target.entityDropItem(RandomUtil.getRandomSelection(gemDrops), 0f);
 		}
 	}
 
 	private static void populateGemDrops() {
 		gemDrops.add(new ItemStack(Items.DIAMOND));
 		gemDrops.add(new ItemStack(Items.EMERALD));
-		gemDrops.add(new ItemStack(ItemRegister.SAPPHIRE));
-		gemDrops.add(new ItemStack(ItemRegister.JADE));
-		gemDrops.add(new ItemStack(ItemRegister.AMETHYST));
+		gemDrops.add(new ItemStack(AoAItems.SAPPHIRE.get()));
+		gemDrops.add(new ItemStack(AoAItems.JADE.get()));
+		gemDrops.add(new ItemStack(AoAItems.AMETHYST.get()));
 
 		populated = true;
 	}
@@ -66,8 +66,8 @@ public class Crystaneer extends BaseSniper {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Crystaneer.desc.1", Enums.ItemDescriptionType.UNIQUE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,65 +1,57 @@
 package net.tslat.aoa3.entity.base;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.generation.stone.StoneBlock;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
-import net.tslat.aoa3.library.Enums;
+import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
+import java.util.Random;
 
-public abstract class AoAAnimal extends EntityAnimal {
-	protected final TreeSet<Enums.MobProperties> mobProperties;
+public abstract class AoAAnimal extends AnimalEntity {
+	public AoAAnimal(EntityType<? extends AnimalEntity> entityType, World world) {
+		super(entityType, world);
 
-	public AoAAnimal(World world, float entityWidth, float entityHeight) {
-		super(world);
-
-		mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
 		experienceValue = ((int)getBaseMaxHealth() / 25);
-
-		setSize(entityWidth, entityHeight);
 	}
 
-	@Override
-	protected void initEntityAI() {
-		tasks.addTask(0, new EntityAISwimming(this));
-		tasks.addTask(1, new EntityAIPanic(this, 1.5d));
-		tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D));
-		tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		tasks.addTask(7, new EntityAILookIdle(this));
+	protected void registerGoals() {
+		goalSelector.addGoal(0, new SwimGoal(this));
+		goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
+		goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
+		goalSelector.addGoal(7, new LookRandomlyGoal(this));
 
 		if (isBreedable()) {
-			tasks.addTask(2, new EntityAIMate(this, 1.0D));
-			tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
+			goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+			goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
 
 			if (getTemptItem() != null)
-				tasks.addTask(3, new EntityAITempt(this, 1.25D, getTemptItem(), false));
+				goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.fromItems(getTemptItem()), false));
 		}
 	}
 
 	@Override
-	protected void applyEntityAttributes() {
-		super.applyEntityAttributes();
+	protected void registerAttributes() {
+		super.registerAttributes();
 
-		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-		getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-		getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmor());
+		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
+		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
+		getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmor());
 	}
 
 	protected abstract double getBaseMaxHealth();
@@ -86,16 +78,23 @@ public abstract class AoAAnimal extends EntityAnimal {
 		return null;
 	}
 
-	protected SoundEvent getStepSound() {
+	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
 		return SoundEvents.ENTITY_COW_STEP;
 	}
 
-	@Override
-	public boolean getCanSpawnHere() {
-		BlockPos checkPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
-		IBlockState spawnBlock = world.getBlockState(checkPos.down());
+	public static boolean meetsSpawnConditions(EntityType<? extends MobEntity> type, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+		return true;
+	}
 
-		return checkSpawnChance() && (spawnBlock.getBlock() instanceof BlockGrass || spawnBlock.getBlock() instanceof BlockStone || spawnBlock.getBlock() instanceof StoneBlock) && spawnBlock.canEntitySpawn(this) && checkSpawningLightConditions() && getBlockPathWeight(checkPos) >= 0.0F;
+	@Override
+	public boolean canSpawn(IWorld world, SpawnReason reason) {
+		if (!EntityUtil.isNaturalSpawnReason(reason))
+			return true;
+
+		BlockPos checkPos = new BlockPos(this);
+		BlockState spawnBlock = world.getBlockState(checkPos.down());
+
+		return (spawnBlock.isIn(Tags.Blocks.DIRT) || spawnBlock.isIn(Tags.Blocks.STONE) || spawnBlock.isIn(AoATags.Blocks.GRASS)) && checkSpawningLightConditions();
 	}
 
 	protected int getSpawnChanceFactor() {
@@ -107,7 +106,7 @@ public abstract class AoAAnimal extends EntityAnimal {
 	}
 
 	protected boolean checkSpawningLightConditions() {
-		return world.getLight(getPosition()) > 8;
+		return world.getBrightness(getPosition()) > 0.5f;
 	}
 
 	@Override
@@ -125,14 +124,14 @@ public abstract class AoAAnimal extends EntityAnimal {
 	}
 
 	@Override
-	protected void playStepSound(BlockPos pos, Block block) {
-		if (getStepSound() != null)
-			playSound(getStepSound(), 0.55f, 1.0F);
+	protected void playStepSound(BlockPos pos, BlockState block) {
+		if (getStepSound(pos, block) != null)
+			playSound(getStepSound(pos, block), 0.55f, 1.0F);
 	}
 
 	@Nullable
 	@Override
-	public EntityAgeable createChild(EntityAgeable mate) {
+	public AgeableEntity createChild(AgeableEntity partner) {
 		return null;
 	}
 }

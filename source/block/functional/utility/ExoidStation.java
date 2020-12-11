@@ -1,43 +1,41 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.mobs.voxponds.EntityExoid;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.mob.voxponds.ExoidEntity;
+import net.tslat.aoa3.util.BlockUtil;
 
 public class ExoidStation extends Block {
 	public ExoidStation() {
-		super(Material.ROCK);
-		setTranslationKey("ExoidStation");
-		setRegistryName("aoa3:exoid_station");
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GREEN_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.APOCO_STONE) {
-			if (!player.capabilities.isCreativeMode)
-				player.getHeldItem(hand).shrink(1);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getHeldItem(hand).getItem() == AoAItems.APOCO_STONE.get()) {
+			if (!world.isRemote()) {
+				if (!player.isCreative())
+					player.getHeldItem(hand).shrink(1);
 
-			EntityExoid exoid = new EntityExoid(world, 0);
+				ExoidEntity exoid = new ExoidEntity(world, 0);
 
-			exoid.setLocationAndAngles(pos.getX(), pos.getY() + 3, pos.getZ(), 0, 0);
-			world.spawnEntity(exoid);
+				exoid.setLocationAndAngles(pos.getX(), pos.getY() + 3, pos.getZ(), 0, 0);
+				world.addEntity(exoid);
+			}
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return true;
+		return ActionResultType.FAIL;
 	}
 }

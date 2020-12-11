@@ -1,60 +1,65 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.clunkhead.EntityClunkhead;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.ClunkheadEntity;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
 	public ClunkheadAltar() {
-		super("ClunkheadAltar", "clunkhead_altar");
+		super(MaterialColor.LIGHT_BLUE);
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
-			return false;
+			return ActionResultType.PASS;
 
-		if (!world.isRemote) {
+		if (player instanceof ServerPlayerEntity) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
-				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-					PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
-					return false;
+				if (world.getDifficulty() == Difficulty.PEACEFUL) {
+					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail");
+					return ActionResultType.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {
-					if (!player.capabilities.isCreativeMode)
-						heldItem.damageItem(1, player);
+					if (!player.isCreative())
+						ItemUtil.damageItem(heldItem, player, hand);
 
 					doActivationEffect(player, hand, state, pos);
 				}
 			}
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityClunkhead clunkhead = new EntityClunkhead(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		ClunkheadEntity clunkhead = new ClunkheadEntity(AoAEntities.Mobs.CLUNKHEAD.get(), player.world);
 
 		clunkhead.setPositionAndUpdate(blockPos.getX() - 4, blockPos.up().getY(), blockPos.getZ() + 5);
-		player.world.spawnEntity(clunkhead);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.clunkhead.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(clunkhead);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.MEGA_RUNE_STONE;
+		return AoAItems.MEGA_RUNE_STONE.get();
 	}
 }

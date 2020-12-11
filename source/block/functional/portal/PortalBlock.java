@@ -1,110 +1,126 @@
 package net.tslat.aoa3.block.functional.portal;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.block.UnbreakableBlock;
-import net.tslat.aoa3.block.functional.misc.CarvedRunicPortalBlock;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ParticleRegister;
-import net.tslat.aoa3.dimension.AoAWorldProvider;
-import net.tslat.aoa3.dimension.nether.NetherTeleporter;
+import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.library.misc.CustomisableParticleType;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.worldgen.worlds.abyss.AbyssTeleporter;
+import net.tslat.aoa3.worldgen.worlds.ancientcavern.AncientCavernTeleporter;
+import net.tslat.aoa3.worldgen.worlds.barathos.BarathosTeleporter;
+import net.tslat.aoa3.worldgen.worlds.candyland.CandylandTeleporter;
+import net.tslat.aoa3.worldgen.worlds.celeve.CeleveTeleporter;
+import net.tslat.aoa3.worldgen.worlds.creeponia.CreeponiaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.crystevia.CrysteviaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.deeplands.DeeplandsTeleporter;
+import net.tslat.aoa3.worldgen.worlds.dustopia.DustopiaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.gardencia.GardenciaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.greckon.GreckonTeleporter;
+import net.tslat.aoa3.worldgen.worlds.haven.HavenTeleporter;
+import net.tslat.aoa3.worldgen.worlds.immortallis.ImmortallisTeleporter;
+import net.tslat.aoa3.worldgen.worlds.iromine.IromineTeleporter;
+import net.tslat.aoa3.worldgen.worlds.lborean.LBoreanTeleporter;
+import net.tslat.aoa3.worldgen.worlds.lelyetia.LelyetiaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.lunalus.LunalusTeleporter;
+import net.tslat.aoa3.worldgen.worlds.mysterium.MysteriumTeleporter;
+import net.tslat.aoa3.worldgen.worlds.nether.NetherTeleporter;
+import net.tslat.aoa3.worldgen.worlds.precasia.PrecasiaTeleporter;
+import net.tslat.aoa3.worldgen.worlds.runandor.RunandorTeleporter;
+import net.tslat.aoa3.worldgen.worlds.shyrelands.ShyrelandsTeleporter;
+import net.tslat.aoa3.worldgen.worlds.voxponds.VoxPondsTeleporter;
 
 import javax.annotation.Nullable;
 import java.util.Random;
+import java.util.function.Supplier;
 
-public class PortalBlock extends UnbreakableBlock {
-	private static final AxisAlignedBB latAABB = new AxisAlignedBB(0.375, 0, 0, 0.625, 1, 1);
-	private static final AxisAlignedBB longAABB = new AxisAlignedBB(0, 0, 0.375, 1, 1, 0.625);
-	private final int dimId;
+public class PortalBlock extends Block {
+	private static final VoxelShape X_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.375, 0, 0, 0.625, 1, 1));
+	private static final VoxelShape Z_SHAPE = VoxelShapes.create(new AxisAlignedBB(0, 0, 0.375, 1, 1, 0.625));
+
 	private final int particleColour;
+	private final Supplier<DimensionType> dimension;
 
-	public PortalBlock(String name, String registryName, int dimId, int particleColour) {
-		super(name, registryName, Material.PORTAL);
-		this.dimId = dimId;
+	public PortalBlock(Supplier<DimensionType> dimType, MaterialColor mapColour, int particleColour) {
+		super(BlockUtil.generateBlockProperties(Material.PORTAL, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 11).sound(SoundType.GLASS).doesNotBlockMovement());
+
+		setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
+
 		this.particleColour = particleColour;
-		setCreativeTab(null);
-		setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
+		this.dimension = dimType;
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		switch(state.getValue(BlockHorizontal.FACING)) {
-			case NORTH:
-			case SOUTH:
-				return longAABB;
-			case EAST:
-			case WEST:
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		switch(state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+			case Z:
+				return Z_SHAPE;
+			case X:
 			default:
-				return latAABB;
+				return X_SHAPE;
 		}
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	@Nullable
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return NULL_AABB;
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		return getDefaultState().with(BlockStateProperties.HORIZONTAL_AXIS, EntityUtil.getDirectionFacing(context.getPlayer(), true).getAxis());
 	}
 
-	@SideOnly(Side.CLIENT)
+	private boolean isCompatibleNeighbour(World world, BlockPos pos) {
+		BlockState block = world.getBlockState(pos);
+
+		return block.getBlock() == this || block.isOpaqueCube(world, pos);
+	}
+
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess access, BlockPos pos, EnumFacing side) {
-		IBlockState adjacent = access.getBlockState(pos.offset(side));
-
+	public boolean isSideInvisible(BlockState state, BlockState adjacent, Direction side) {
 		if (adjacent.getBlock() == this) {
-			EnumFacing direction;
+			Direction.Axis axis;
 
-			switch (state.getValue(BlockHorizontal.FACING)) {
-				case NORTH:
-				case SOUTH:
-					direction = adjacent.getValue(BlockHorizontal.FACING);
+			switch (state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+				case X:
+					axis = adjacent.get(BlockStateProperties.HORIZONTAL_AXIS);
 
-					if (direction == EnumFacing.SOUTH || direction == EnumFacing.NORTH)
-						return false;
+					if (axis == Direction.Axis.X)
+						return true;
 
 					break;
-				case EAST:
-				case WEST:
-					direction = adjacent.getValue(BlockHorizontal.FACING);
+				case Z:
+					axis = adjacent.get(BlockStateProperties.HORIZONTAL_AXIS);
 
-					if (direction == EnumFacing.EAST || direction == EnumFacing.WEST)
-						return false;
+					if (axis == Direction.Axis.Z)
+						return true;
 
 					break;
 				default:
@@ -112,162 +128,12 @@ public class PortalBlock extends UnbreakableBlock {
 			}
 		}
 
-		return true;
+		return false;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-
-	@Override
-	public boolean getUseNeighborBrightness(IBlockState state) {
-		return true;
-	}
-
-	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block changedBlock, BlockPos changedPos) {
-		if (isCompatibleNeighbour(changedBlock.getDefaultState())) {
-			EnumFacing facing = state.getValue(BlockHorizontal.FACING);
-
-			switch (facing) {
-				case NORTH:
-				case SOUTH:
-					if (!isCompatibleNeighbour(world.getBlockState(pos.up())) || !isCompatibleNeighbour(world.getBlockState(pos.down()))
-							|| !isCompatibleNeighbour(world.getBlockState(pos.east())) || !isCompatibleNeighbour(world.getBlockState(pos.west()))) {
-						world.setBlockToAir(pos);
-					}
-					break;
-				case EAST:
-				case WEST:
-					if (!isCompatibleNeighbour(world.getBlockState(pos.up())) || !isCompatibleNeighbour(world.getBlockState(pos.down()))
-							|| !isCompatibleNeighbour(world.getBlockState(pos.north())) || !isCompatibleNeighbour(world.getBlockState(pos.south()))) {
-						world.setBlockToAir(pos);
-					}
-					break;
-			}
-		}
-	}
-
-	@Override
-	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
-		if (world.isAirBlock(pos.up()) || world.isAirBlock(pos.down())) {
-			world.setBlockToAir(pos);
-
-			return;
-		}
-
-		switch (world.getBlockState(pos).getValue(BlockHorizontal.FACING)) {
-			case NORTH:
-			case SOUTH:
-				if (world.isAirBlock(pos.east()) || world.isAirBlock(pos.west()))
-					world.setBlockToAir(pos);
-				break;
-			case EAST:
-			case WEST:
-				if (world.isAirBlock(pos.north()) || world.isAirBlock(pos.south()))
-					world.setBlockToAir(pos);
-				break;
-		}
-	}
-
-	private boolean isCompatibleNeighbour(IBlockState state) {
-		Block bl = state.getBlock();
-
-		return bl == BlockRegister.ANCIENT_ROCK || bl instanceof CarvedRunicPortalBlock || bl == this;
-	}
-
-	@Override
-	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		WorldProvider provider;
-		ITeleporter teleporter;
-
-		if (!world.isRemote && !entity.isRiding() && !entity.isBeingRidden()) {
-			if (!ConfigurationUtil.MainConfig.allowNonPlayerPortalTravel & !(entity instanceof EntityPlayer))
-				return;
-
-			if (entity.timeUntilPortal > 0) {
-				entity.timeUntilPortal = 30;
-
-				return;
-			}
-
-			provider = FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dimId).provider;
-			teleporter = provider instanceof AoAWorldProvider ? ((AoAWorldProvider)provider).getTeleporter((WorldServer)world) : dimId == -1 ? new NetherTeleporter((WorldServer)world) : ((WorldServer)world).getDefaultTeleporter();
-			PortalCoordinatesContainer portalLoc = null;
-
-			if (entity instanceof EntityPlayer) {
-				PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayerMP)entity);
-				portalLoc = plData.getPortalReturnLocation(world.provider.getDimension());
-
-				((EntityPlayerMP)entity).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
-			}
-			else {
-				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
-			}
-
-			if (portalLoc == null) {
-				if (world.provider.getDimension() == dimId) {
-					entity = entity.changeDimension(0, teleporter);
-				}
-				else {
-					entity = entity.changeDimension(dimId, teleporter);
-				}
-			}
-			else if (world.provider.getDimension() != dimId) {
-				entity = entity.changeDimension(dimId, teleporter);
-			}
-			else {
-				entity = entity.changeDimension(portalLoc.fromDim, teleporter);
-			}
-
-			if (entity != null)
-				entity.timeUntilPortal = 100;
-		}
-	}
-
-	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(BlockHorizontal.FACING, EntityUtil.getDirectionFacing(placer, true));
-	}
-
-	@Override
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public int quantityDropped(Random random) {
-		return 0;
-	}
-
-	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess p_193383_1_, IBlockState p_193383_2_, BlockPos p_193383_3_, EnumFacing p_193383_4_) {
-		return BlockFaceShape.UNDEFINED;
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, BlockHorizontal.FACING);
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
-	}
-
-	public int getParticleColour() {
-		return particleColour;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void randomDisplayTick(IBlockState blockState, World world, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 		for (int i = 0; i < 4; ++i) {
 			double posXStart = (float)pos.getX() + rand.nextFloat();
 			double posYStart = (float)pos.getY() + rand.nextFloat();
@@ -286,7 +152,171 @@ public class PortalBlock extends UnbreakableBlock {
 				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.spawnParticle(ParticleRegister.PORTAL_FLOATER, posXStart, posYStart, posZStart, motionX, motionY, motionZ, getParticleColour(), 100);
+			world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.PORTAL_FLOATER.get(), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+		}
+	}
+
+	@Override
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (!world.isRemote() && entity.getRidingEntity() == null && !entity.isBeingRidden()) {
+			if (!AoAConfig.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof PlayerEntity))
+				return;
+
+			if (entity.timeUntilPortal > 0) {
+				entity.timeUntilPortal = 30;
+
+				return;
+			}
+
+			if (dimension.get() == null)
+				return;
+
+			ITeleporter teleporter = dimension.get() == DimensionType.THE_NETHER ? new NetherTeleporter() : getTeleporterForWorld(world.getServer().getWorld(dimension.get()));
+			PortalCoordinatesContainer portalLoc = null;
+
+			if (entity instanceof PlayerEntity) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
+				portalLoc = plData.getPortalReturnLocation(world.getDimension().getType());
+
+				((ServerPlayerEntity)entity).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+			}
+			else {
+				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+			}
+
+			if (portalLoc == null) {
+				if (world.getDimension().getType() == dimension.get()) {
+					entity = entity.changeDimension(DimensionType.OVERWORLD, teleporter);
+				}
+				else {
+					entity = entity.changeDimension(dimension.get(), teleporter);
+				}
+			}
+			else if (world.getDimension().getType() != dimension.get()) {
+				entity = entity.changeDimension(dimension.get(), teleporter);
+			}
+			else {
+				entity = entity.changeDimension(portalLoc.fromDim, teleporter);
+			}
+
+			if (entity != null)
+				entity.timeUntilPortal = 100;
+		}
+	}
+
+	@Override
+	public BlockState rotate(BlockState state, Rotation rot) {
+		switch(rot) {
+			case COUNTERCLOCKWISE_90:
+			case CLOCKWISE_90:
+				switch(state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+					case Z:
+						return state.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
+					case X:
+						return state.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z);
+					default:
+						return state;
+				}
+			default:
+				return state;
+		}
+	}
+
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(BlockStateProperties.HORIZONTAL_AXIS);
+	}
+
+	@Override
+	public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+		if (world.isAirBlock(pos.up()) || world.isAirBlock(pos.down())) {
+			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+
+			return;
+		}
+
+		switch (world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_AXIS)) {
+			case Z:
+				if (world.isAirBlock(pos.east()) || world.isAirBlock(pos.west()))
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				break;
+			case X:
+				if (world.isAirBlock(pos.north()) || world.isAirBlock(pos.south()))
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				break;
+		}
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+		Direction.Axis facing = state.get(BlockStateProperties.HORIZONTAL_AXIS);
+
+		switch (facing) {
+			case Z:
+				if (!isCompatibleNeighbour(world, pos.up()) || !isCompatibleNeighbour(world, pos.down()) || !isCompatibleNeighbour(world, pos.east()) || !isCompatibleNeighbour(world, pos.west()))
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				break;
+			case X:
+				if (!isCompatibleNeighbour(world, pos.up()) || !isCompatibleNeighbour(world, pos.down()) || !isCompatibleNeighbour(world, pos.north()) || !isCompatibleNeighbour(world, pos.south()))
+					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				break;
+		}
+	}
+
+	public static ITeleporter getTeleporterForWorld(ServerWorld world) {
+		DimensionType dimType = world.dimension.getType();
+		AoADimensions.AoADimension aoaDim = AoADimensions.AoADimension.fromDimType(dimType);
+
+		if (dimType.isVanilla() || aoaDim == AoADimensions.AoADimension.NONE || aoaDim == null)
+			return world.getDefaultTeleporter();
+
+		switch (aoaDim) {
+			case ABYSS:
+				return new AbyssTeleporter();
+			case ANCIENT_CAVERN:
+				return new AncientCavernTeleporter();
+			case BARATHOS:
+				return new BarathosTeleporter();
+			case CANDYLAND:
+				return new CandylandTeleporter();
+			case CELEVE:
+				return new CeleveTeleporter();
+			case CREEPONIA:
+				return new CreeponiaTeleporter();
+			case CRYSTEVIA:
+				return new CrysteviaTeleporter();
+			case DEEPLANDS:
+				return new DeeplandsTeleporter();
+			case DUSTOPIA:
+				return new DustopiaTeleporter();
+			case GARDENCIA:
+				return new GardenciaTeleporter();
+			case GRECKON:
+				return new GreckonTeleporter();
+			case HAVEN:
+				return new HavenTeleporter();
+			case IMMORTALLIS:
+				return new ImmortallisTeleporter();
+			case IROMINE:
+				return new IromineTeleporter();
+			case LBOREAN:
+				return new LBoreanTeleporter();
+			case LELYETIA:
+				return new LelyetiaTeleporter();
+			case LUNALUS:
+				return new LunalusTeleporter();
+			case MYSTERIUM:
+				return new MysteriumTeleporter();
+			case PRECASIA:
+				return new PrecasiaTeleporter();
+			case RUNANDOR:
+				return new RunandorTeleporter();
+			case SHYRELANDS:
+				return new ShyrelandsTeleporter();
+			case VOX_PONDS:
+				return new VoxPondsTeleporter();
+			default:
+				return world.getDefaultTeleporter();
 		}
 	}
 }

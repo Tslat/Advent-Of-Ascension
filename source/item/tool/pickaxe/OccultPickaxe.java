@@ -1,35 +1,38 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.entity.misc.EntityOccultBlock;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.entity.misc.OccultBlockEntity;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.SidedUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class OccultPickaxe extends BasePickaxe {
 	public OccultPickaxe() {
-		super("OccultPickaxe", "occult_pickaxe", MaterialsRegister.TOOL_OCCULT);
+		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		if (world.isRemote) {
-			for (int i = (int)(player.posX - 4.0); i < (int)(player.posX + 4.0); ++i) {
-				for (int j = (int)(player.posY - 4.0); j < (int)(player.posY + 4.0); ++j) {
-					for (int k = (int)(player.posZ - 4.0); k < (int)(player.posZ + 4.0); ++k) {
-						if (WorldUtil.isOreBlock(world.getBlockState(new BlockPos(i, j, k))))
-							world.spawnEntity(new EntityOccultBlock(world, new BlockPos(i, j, k)));
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		if (world.isRemote()) {
+			for (int i = (int)(player.getPosX() - 4.0); i < (int)(player.getPosX() + 4.0); ++i) {
+				for (int j = (int)(player.getPosY() - 4.0); j < (int)(player.getPosY() + 4.0); ++j) {
+					for (int k = (int)(player.getPosZ() - 4.0); k < (int)(player.getPosZ() + 4.0); ++k) {
+						if (world.getBlockState(new BlockPos(i, j, k)).isIn(Tags.Blocks.ORES)) {
+							OccultBlockEntity entity = new OccultBlockEntity(world, new BlockPos(i, j, k));
+
+							SidedUtil.spawnClientOnlyEntity(entity);
+						}
 					}
 				}
 			}
@@ -38,9 +41,8 @@ public class OccultPickaxe extends BasePickaxe {
 		return super.onItemRightClick(world, player, hand);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OccultPickaxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

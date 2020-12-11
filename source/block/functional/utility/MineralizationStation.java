@@ -1,141 +1,137 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class MineralizationStation extends Block {
 	public MineralizationStation() {
-		super(Material.ROCK);
-		setTranslationKey("MineralizationStation");
-		setRegistryName("aoa3:mineralization_station");
-		setHardness(5.0f);
-		setResistance(10.0f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BROWN, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
 			ItemStack stack = player.getHeldItem(hand);
 			Item tokensItem = null;
 			int baseAmount = 5;
 
-			switch (stack.getItem().getTranslationKey().substring(5)) {
-				case "Sapphire":
+			switch (stack.getItem().getRegistryName().getPath()) {
+				case "sapphire":
 					baseAmount = 10;
-					tokensItem = ItemRegister.COPPER_COIN;
+					tokensItem = AoAItems.COPPER_COIN.get();
 					break;
-				case "Amethyst":
+				case "amethyst":
 					baseAmount = 8;
-					tokensItem = ItemRegister.COPPER_COIN;
+					tokensItem = AoAItems.COPPER_COIN.get();
 					break;
-				case "LimoniteIngot":
+				case "limonite_ingot":
 					baseAmount = 5;
-					tokensItem = ItemRegister.COPPER_COIN;
+					tokensItem = AoAItems.COPPER_COIN.get();
 					break;
-				case "RositeIngot":
+				case "rosite_ingot":
 					baseAmount = 6;
-					tokensItem = ItemRegister.COPPER_COIN;
+					tokensItem = AoAItems.COPPER_COIN.get();
 					break;
-				case "Jade":
+				case "jade":
 					baseAmount = 7;
-					tokensItem = ItemRegister.COPPER_COIN;
+					tokensItem = AoAItems.COPPER_COIN.get();
 					break;
-				case "BaronyteIngot":
+				case "baronyte_ingot":
 					baseAmount = 7;
-					tokensItem = ItemRegister.BARON_TOKENS;
+					tokensItem = AoAItems.BARON_TOKENS.get();
 					break;
-				case "BlaziumIngot":
-				case "VarsiumIngot":
+				case "blazium_ingot":
+				case "varsium_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.BARON_TOKENS;
+					tokensItem = AoAItems.BARON_TOKENS.get();
 					break;
-				case "EmberstoneIngot":
+				case "emberstone_ingot":
 					baseAmount = 9;
-					tokensItem = ItemRegister.NETHER_TOKENS;
+					tokensItem = AoAItems.NETHER_TOKENS.get();
 					break;
-				case "GhastlyIngot":
-				case "GhoulishIngot":
+				case "ghastly_ingot":
+				case "ghoulish_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.GRECKON_TOKENS;
+					tokensItem = AoAItems.GRECKON_TOKENS.get();
 					break;
-				case "LunarIngot":
+				case "lunar_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.LUNAR_TOKENS;
+					tokensItem = AoAItems.LUNAR_TOKENS.get();
 					break;
-				case "LyonIngot":
+				case "lyon_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.IROMINE_TOKENS;
+					tokensItem = AoAItems.IROMINE_TOKENS.get();
 					break;
-				case "MystiteIngot":
+				case "mystite_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.MYSTERIUM_TOKENS;
+					tokensItem = AoAItems.MYSTERIUM_TOKENS.get();
 					break;
-				case "Shyregem":
-				case "ShyrestoneIngot":
+				case "shyregem":
+				case "shyrestone_ingot":
 					baseAmount = 8;
-					tokensItem = ItemRegister.SHYRELANDS_TOKENS;
+					tokensItem = AoAItems.SHYRELANDS_TOKENS.get();
 					break;
-				case "SkeletalIngot":
+				case "skeletal_ingot":
 					baseAmount = 7;
-					tokensItem = ItemRegister.PRECASIAN_TOKENS;
+					tokensItem = AoAItems.PRECASIAN_TOKENS.get();
 					break;
-				case "ElecaniumIngot":
+				case "elecanium_ingot":
 					baseAmount = 9;
-					tokensItem = ItemRegister.RUNANDOR_TOKENS;
+					tokensItem = AoAItems.RUNANDOR_TOKENS.get();
 					break;
-				case "Bloodstone":
+				case "bloodstone":
 					baseAmount = 8;
-					tokensItem = ItemRegister.ABYSS_TOKENS;
+					tokensItem = AoAItems.ABYSS_TOKENS.get();
 					break;
-				case "Crystallite":
+				case "crystallite":
 					baseAmount = 8;
-					tokensItem = ItemRegister.HAVEN_TOKENS;
+					tokensItem = AoAItems.HAVEN_TOKENS.get();
 					break;
-				case "Gemenyte":
-				case "Jewelyte":
-				case "Ornamyte":
+				case "gemenyte":
+				case "jewelyte":
+				case "ornamyte":
 					baseAmount = 7;
-					tokensItem = ItemRegister.CREEPONIA_TOKENS;
+					tokensItem = AoAItems.CREEPONIA_TOKENS.get();
 					break;
-				case "BlueCrystal":
-				case "GreenCrystal":
-				case "PurpleCrystal":
-				case "RedCrystal":
-				case "WhiteCrystal":
-				case "YellowCrystal":
+				case "blue_crystal":
+				case "green_crystal":
+				case "purple_crystal":
+				case "red_crystal":
+				case "white_crystal":
+				case "yellow_crystal":
 					baseAmount = 4;
-					tokensItem = ItemRegister.CRYSTEVIA_TOKENS;
+					tokensItem = AoAItems.CRYSTEVIA_TOKENS.get();
 					break;
-				case "BlankRealmstone":
-					player.setHeldItem(hand, new ItemStack(ItemRegister.IROMINE_REALMSTONE));
-					player.inventoryContainer.detectAndSendChanges();
-					return true;
+				case "blank_realmstone":
+					player.setHeldItem(hand, new ItemStack(AoAItems.IROMINE_REALMSTONE.get()));
+					player.container.detectAndSendChanges();
+					return ActionResultType.SUCCESS;
 				default:
 					break;
 			}
 
 			if (tokensItem != null) {
-				if (!player.capabilities.isCreativeMode)
+				if (!player.isCreative())
 					stack.shrink(1);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(tokensItem, baseAmount + player.getRNG().nextInt(baseAmount)));
 			}
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 }

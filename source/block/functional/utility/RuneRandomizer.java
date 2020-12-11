@@ -1,69 +1,66 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.LootSystemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.LootUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LootUtil;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class RuneRandomizer extends Block {
 	public RuneRandomizer() {
-		super(Material.ROCK);
-		setTranslationKey("RuneRandomizer");
-		setRegistryName("aoa3:rune_randomizer");
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.CYAN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.isSneaking())
-			return false;
-
-		if (world.isRemote)
-			return true;
-
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem.getItem() != ItemRegister.UNPOWERED_RUNE && heldItem.getItem() != ItemRegister.CHARGED_RUNE)
-			return true;
+		if (heldItem.getItem() == AoAItems.UNPOWERED_RUNE.get() || heldItem.getItem() == AoAItems.CHARGED_RUNE.get()) {
+			if (player instanceof ServerPlayerEntity) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
-		PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+				if (!player.isCreative() && plData.stats().getLevel(Skills.RUNATION) < 20) {
+					PlayerUtil.notifyPlayerOfInsufficientLevel(plData.player(), Skills.RUNATION, 20);
 
-		if (!player.capabilities.isCreativeMode && plData.stats().getLevel(Enums.Skills.RUNATION) < 20) {
-			if (player instanceof EntityPlayerMP)
-				PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.RUNATION, 20);
+					return ActionResultType.FAIL;
+				}
 
-			return false;
+				if (!player.isCreative())
+					heldItem.shrink(1);
+
+				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, pos, player)));
+
+				if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.RUNATION)
+					ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, pos, player)));
+
+				plData.stats().addXp(Skills.RUNATION, 5, false, false);
+				player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_RUNE_RANDOMIZER_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+			}
+
+			return ActionResultType.SUCCESS;
 		}
 
-		if (!player.capabilities.isCreativeMode)
-			heldItem.shrink(1);
-
-		LootUtil.generateAndProvideLootDirectly((EntityPlayerMP)player, LootSystemRegister.blockRuneRandomizer);
-
-		if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.RUNATION)
-			LootUtil.generateAndProvideLootDirectly((EntityPlayerMP)player, LootSystemRegister.blockRuneRandomizer);
-
-		plData.stats().addXp(Enums.Skills.RUNATION, 5, false, false);
-		player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.RUNE_RANDOMIZER_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
-		return true;
+		return ActionResultType.PASS;
 	}
 }

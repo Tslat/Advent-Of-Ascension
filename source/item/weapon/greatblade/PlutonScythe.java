@@ -3,60 +3,59 @@ package net.tslat.aoa3.item.weapon.greatblade;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class PlutonScythe extends BaseGreatblade {
-	public PlutonScythe(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("PlutonScythe");
-		setRegistryName("aoa3:pluton_scythe");
+	private static final AttributeModifier LUCK_BUFF = new AttributeModifier(UUID.fromString("e446949b-1792-4a66-8f83-5037d6dcce9b"), "AoALuxonScytheLuckBuff", 2, AttributeModifier.Operation.ADDITION);
+
+	public PlutonScythe() {
+		super(19.0f, -3D, 175);
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
 		if (!attacker.world.isRemote) {
-			float damagePercent = dmgDealt / (float)getDamage();
-			PlayerDataManager.PlayerStats targetStats = target instanceof EntityPlayerMP ? PlayerUtil.getAdventPlayer((EntityPlayer)target).stats() : null;
-			float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Enums.Resources.SOUL)) : 5) * damagePercent;
+			float damagePercent = dmgDealt / (float)getAttackDamage();
+			PlayerDataManager.PlayerStats targetStats = target instanceof ServerPlayerEntity ? PlayerUtil.getAdventPlayer((ServerPlayerEntity)target).stats() : null;
+			float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Resources.SOUL)) : 5) * damagePercent;
 
 			if (soulAmount > 0) {
-				if (targetStats != null && !targetStats.consumeResource(Enums.Resources.SOUL, soulAmount, true))
+				if (targetStats != null && !targetStats.consumeResource(Resources.SOUL, soulAmount, true))
 					return;
 
-				if (attacker instanceof EntityPlayerMP)
-					PlayerUtil.addResourceToPlayer((EntityPlayer)attacker, Enums.Resources.SOUL, soulAmount);
+				if (attacker instanceof ServerPlayerEntity)
+					PlayerUtil.addResourceToPlayer((ServerPlayerEntity)attacker, Resources.SOUL, soulAmount);
 			}
 		}
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		Multimap<String, AttributeModifier> multimap =  super.getAttributeModifiers(equipmentSlot, stack);
 
-		if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
-			multimap.put(SharedMonsterAttributes.LUCK.getName(), AoAAttributes.LUXON_SCYTHE_LUCK);
+		if (equipmentSlot == EquipmentSlotType.MAINHAND)
+			multimap.put(SharedMonsterAttributes.LUCK.getName(), LUCK_BUFF);
 
 		return multimap;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.scythe", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.scythe", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

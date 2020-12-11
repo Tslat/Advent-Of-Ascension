@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityConstructOfServility;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.ConstructOfServilityEntity;
 
 public class ConstructOfServilitySlab extends BaseSlab {
 	public ConstructOfServilitySlab() {
-		super("ConstructOfServilitySlab", "construct_of_servility_slab", 83, 180, 83, 3000);
+		super(83, 180, 83, 3000);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityConstructOfServility constructOfServility = new EntityConstructOfServility(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		ConstructOfServilityEntity constructOfServility = new ConstructOfServilityEntity(AoAEntities.Minions.CONSTRUCT_OF_SERVILITY.get(), pl.world);
 
-		constructOfServility.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		constructOfServility.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		constructOfServility.setTamedBy(pl);
-		pl.world.spawnEntity(constructOfServility);
+		pl.world.addEntity(constructOfServility);
 
 		return constructOfServility;
 	}

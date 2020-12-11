@@ -1,18 +1,18 @@
 package net.tslat.aoa3.client.gui.lib;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
-@SideOnly(Side.CLIENT)
+
+@OnlyIn(Dist.CLIENT)
 public abstract class ScrollablePane {
 	private Minecraft mc;
 	protected int top;
@@ -27,6 +27,7 @@ public abstract class ScrollablePane {
 	protected int mouseX;
 	protected int mouseY;
 	private boolean mouseFocussed;
+	protected boolean isDragging = false;
 
 	private float mouseYPosState = -2f;
 	protected float distanceScrolled;
@@ -45,7 +46,7 @@ public abstract class ScrollablePane {
 			currentRenderScale = renderingScale[0];
 	}
 
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void render(int mouseX, int mouseY, float partialTicks) {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 		int scrollBarWidth = 6;
@@ -58,7 +59,7 @@ public abstract class ScrollablePane {
 		if (paneViewDiff > 0)
 			scrollBarHeight = (int)MathHelper.clamp(((float)(viewHeight * viewHeight) / (float)paneHeight), 32, viewHeight);
 
-		if (Mouse.isButtonDown(0)) {
+		if (isDragging) {
 			if (mouseYPosState == -1) {
 				if (mouseFocussed) {
 					if (mouseX >= right - scrollBarWidth && mouseX <= right) {
@@ -88,22 +89,22 @@ public abstract class ScrollablePane {
 		distanceScrolled = MathHelper.clamp(distanceScrolled, 0, paneHeight - viewHeight);
 		GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
-		ScaledResolution res = new ScaledResolution(mc);
-		float windowWidthScale = currentRenderScale * (mc.displayWidth / (float)res.getScaledWidth_double());
-		float windowHeightScale = currentRenderScale * (mc.displayHeight / (float)res.getScaledHeight_double());
+		MainWindow mcWindow = mc.getMainWindow();
+		float windowWidthScale = currentRenderScale * (mcWindow.getWidth() / (float)mcWindow.getScaledWidth());
+		float windowHeightScale = currentRenderScale * (mcWindow.getHeight() / (float)mcWindow.getScaledHeight());
 
-		GL11.glScissor((int)((left - 1.5) * windowWidthScale), (int)((mc.displayHeight / windowHeightScale - bottom) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale));
+		GL11.glScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getHeight() / windowHeightScale - bottom) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale));
 		drawBackground();
 		GuiUtils.drawGradientRect(0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
 		int newTop = top - Math.max(0, (int)distanceScrolled);
-		drawPaneContents(newTop, left, right, bottom, distanceScrolled);
-		GlStateManager.disableDepth();
+		drawPaneContents(newTop, left, right, bottom, distanceScrolled, partialTicks);
+		RenderSystem.disableDepthTest();
 
 		if (paneViewDiff > 0) {
 			int barTop = Math.max((int)distanceScrolled * (viewHeight - scrollBarHeight) / paneViewDiff + top, top);
 			int barLeft = right - 6;
 
-			GlStateManager.disableTexture2D();
+			RenderSystem.disableTexture();
 			buff.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 			buff.pos(barLeft, bottom, 0).tex(0, 1).color(0, 0, 0, 255).endVertex();
 			buff.pos(right + 1, bottom, 0).tex(1, 1).color(0, 0, 0, 255).endVertex();
@@ -124,10 +125,10 @@ public abstract class ScrollablePane {
 			tess.draw();
 		}
 
-		GlStateManager.enableTexture2D();
-		GlStateManager.shadeModel(GL11.GL_FLAT);
-		GlStateManager.enableAlpha();
-		GlStateManager.disableBlend();
+		RenderSystem.enableTexture();
+		RenderSystem.shadeModel(GL11.GL_FLAT);
+		RenderSystem.enableAlphaTest();
+		RenderSystem.disableBlend();
 		GL11.glDisable(GL11.GL_SCISSOR_TEST);
 	}
 
@@ -141,14 +142,26 @@ public abstract class ScrollablePane {
 		this.right = left + viewWidth;
 	}
 
-	public void handleMouseInput(int mouseX, int mouseY) {
-		if (!mouseFocussed)
-			return;
+	public boolean handleMouseClick(double mouseX, double mouseY, int button) {
+		isDragging = true;
 
-		int scrollAmount = Mouse.getEventDWheel();
+		return true;
+	}
+
+	public boolean handleMouseReleased(double mouseX, double mouseY, int button) {
+		isDragging = false;
+
+		return true;
+	}
+
+	public boolean handleMouseScroll(double mouseX, double mouseY, double scrollAmount) {
+		if (!mouseFocussed)
+			return false;
 
 		if (scrollAmount != 0)
-			distanceScrolled += -1 * scrollAmount / 10f;
+			distanceScrolled += -20 * scrollAmount;
+
+		return true;
 	}
 
 	private boolean isMouseHovering() {
@@ -157,7 +170,7 @@ public abstract class ScrollablePane {
 
 	public abstract int getFullPaneHeight();
 
-	public abstract void drawPaneContents(int top, int left, int right, int bottom, float scrollDistance);
+	public abstract void drawPaneContents(int top, int left, int right, int bottom, float scrollDistance, float partialTicks);
 
 	public abstract void drawBackground();
 }

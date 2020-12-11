@@ -1,36 +1,37 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.hiveking.EntityHiveKing;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.HiveKingEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class HiveSpawner extends BossAltarBlock {
 	public HiveSpawner() {
-		super("HiveSpawner", "hive_spawner");
+		super(MaterialColor.RED_TERRACOTTA);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityHiveKing hiveKing = new EntityHiveKing(player.world, 0);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		HiveKingEntity hiveKing = new HiveKingEntity(player.world, 0);
 
 		hiveKing.setLocationAndAngles(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
-		player.world.spawnEntity(hiveKing);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.hiveKing.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(hiveKing);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.hiveKing.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
-	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
-		return player.world.getEntitiesWithinAABB(EntityHiveKing.class, new AxisAlignedBB(pos).grow(20)).isEmpty();
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return player.world.getEntitiesWithinAABB(HiveKingEntity.class, new AxisAlignedBB(pos).grow(20)).isEmpty();
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.HIVE_EGG;
+		return AoAItems.HIVE_EGG.get();
 	}
 }

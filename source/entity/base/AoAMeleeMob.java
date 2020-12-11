@@ -1,465 +1,335 @@
 package net.tslat.aoa3.entity.base;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.minecraft.world.dimension.DimensionType;
+import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.TreeSet;
-
-public abstract class AoAMeleeMob extends EntityMob {
-    protected final TreeSet<Enums.MobProperties> mobProperties;
-    private boolean isSlipperyMob = false;
-    private int animationTicks = 0;
-
-    public AoAMeleeMob(World world, float entityWidth, float entityHeight) {
-        super(world);
-
-        mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
-
-        setSize(entityWidth, entityHeight);
-        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
-    }
-
-    @Override
-    protected void initEntityAI() {
-        tasks.addTask(1, new EntityAISwimming(this));
-        tasks.addTask(2, new EntityAIAttackMelee(this, 1.0d, false));
-        tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0d));
-        tasks.addTask(4, new EntityAIWanderAvoidWater(this, 1.0d));
-        tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0f));
-        tasks.addTask(5, new EntityAILookIdle(this));
-        targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, AoAMinion.class, 10, true, false, EntityTameable::isTamed));
-        targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-        targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-    }
-
-    @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
-
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f));
-        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
-        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
-    }
-
-    protected abstract double getBaseKnockbackResistance();
-
-    protected abstract double getBaseMaxHealth();
-
-    protected abstract double getBaseMeleeDamage();
-
-    protected abstract double getBaseMovementSpeed();
-
-    protected double getBaseArmour() {
-        return 0;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return null;
-    }
-
-    @Nullable
-    protected SoundEvent getStepSound() {
-        return null;
-    }
-
-    protected void setXpValue(int amount) {
-        experienceValue = amount;
-    }
-
-    protected void setSlipperyMovement() {
-        isSlipperyMob = true;
-    }
-
-    @Override
-    public boolean getCanSpawnHere() {
-       return world.getDifficulty() != EnumDifficulty.PEACEFUL && checkWorldRequirements() && checkSpawnChance() && isValidLightLevel() && canSpawnOnBlock(world.getBlockState(getPosition().down()));
-    }
-
-    protected boolean isOverworldMob() {
-        return false;
-    }
-
-    @Override
-    protected boolean isValidLightLevel() {
-        if (isDaylightMob() || !isOverworldMob()) {
-            if (!world.isDaytime() && isDaylightMob())
-                return false;
-
-            return WorldUtil.getLightLevel(world, getPosition(), true, false) <= rand.nextInt(8);
-        }
-
-        BlockPos blockPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
-
-        if (world.getLightFor(EnumSkyBlock.SKY, blockPos) > rand.nextInt(32)) {
-            return false;
-        }
-        else {
-            int light;
-
-            if (world.isThundering()) {
-                int skylightSubtracted = world.getSkylightSubtracted();
-
-                world.setSkylightSubtracted(10);
-                light = world.getLightFromNeighbors(blockPos);
-                world.setSkylightSubtracted(skylightSubtracted);
-            }
-            else {
-                light = world.getLightFromNeighbors(blockPos);
-            }
-
-            return light <= rand.nextInt(8);
-        }
-    }
-
-    @Override
-    public int getMaxSpawnedInChunk() {
-        return 1;
-    }
-
-    protected boolean isDaylightMob() {
-        return false;
-    }
-
-    private boolean checkSpawnChance() {
-        if (isOverworldMob()) {
-            if (isDaylightMob()) {
-                return !(rand.nextDouble() > getSpawnChanceFactor());
-            }
-            else {
-                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
-            }
-        }
-        else {
-            return !(rand.nextDouble() > getSpawnChanceFactor());
-        }
-    }
-
-    protected double getSpawnChanceFactor() {
-        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
-    }
-
-    protected boolean canSpawnOnBlock(IBlockState block) {
-        return block.canEntitySpawn(this);
-    }
-
-    private boolean checkWorldRequirements() {
-        if (isOverworldMob()) {
-            if (world.provider.getDimension() != 0) {
-                EntityRegistry.removeSpawn(getClass(), EnumCreatureType.MONSTER, world.getBiome(getPosition()));
-
-                return false;
-            }
-        }
-
-        Enums.CreatureEvents eventReq = getEventRequirement();
-
-        return eventReq == null || OverworldEvents.isEventActive(eventReq);
-    }
-
-    @Nullable
-    protected Enums.CreatureEvents getEventRequirement() {
-        return null;
-    }
-
-    @Override
-    public boolean isNotColliding() {
-        return !canBreatheUnderwater() ? super.isNotColliding() : this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
-    }
-
-    protected void playStepSound(BlockPos pos, Block block) {
-        if (getStepSound() != null) {
-            playSound(getStepSound(), 0.55f, 1.0F);
-        }
-        else {
-            super.playStepSound(pos, block);
-        }
-    }
-
-    @Override
-    public boolean attackEntityAsMob(Entity target) {
-        if (super.attackEntityAsMob(target)) {
-            doMeleeEffect(target);
-
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        if (getLootTable() != null) {
-            LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(getLootTable());
-
-            LootContext.Builder lootBuilder = (new LootContext.Builder((WorldServer)world)).withLootedEntity(this).withDamageSource(source);
-
-            if (wasRecentlyHit && attackingPlayer != null)
-                lootBuilder.withPlayer(attackingPlayer).withLuck(attackingPlayer.getLuck() + lootingModifier);
-
-            for (ItemStack stack : lootTable.generateLootForPools(rand, lootBuilder.build())) {
-                entityDropItem(stack, 0);
-            }
-
-            dropEquipment(wasRecentlyHit, lootingModifier);
-        }
-        else {
-            super.dropLoot(wasRecentlyHit, lootingModifier, source);
-        }
-    }
-
-    @Override
-    public void onUpdate() {
-        super.onUpdate();
-
-        if (animationTicks >= 0)
-            animationTicks++;
-    }
-
-    protected void doMeleeEffect(Entity target) {}
-
-    @Override
-    public boolean isEntityInvulnerable(DamageSource source) {
-        if (source == DamageSource.OUT_OF_WORLD)
-            return false;
-
-        if (getIsInvulnerable())
-            return true;
-
-        return isSpecialImmuneTo(source, 1);
-    }
-
-    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
-        return false;
-    }
-
-    @Override
-    public void travel(float strafe, float vertical, float forward) {
-        if (isServerWorld() || canPassengerSteer()) {
-            if (!isInWater()) {
-                if (!isInLava()) {
-                    if (isElytraFlying()) {
-                        if (motionY > -0.5D)
-                            fallDistance = 1.0F;
-
-                        Vec3d lookVec = getLookVec();
-                        float lookPitch = rotationPitch * 0.017453292F;
-                        double lookVecHypot = Math.sqrt(lookVec.x * lookVec.x + lookVec.z * lookVec.z);
-                        double motion = Math.sqrt(motionX * motionX + motionZ * motionZ);
-                        float pitchAngle = MathHelper.cos(lookPitch);
-                        pitchAngle = (float)((double)pitchAngle * (double)pitchAngle * Math.min(1.0D, lookVec.length() / 0.4D));
-                        motionY += -0.08D + (double)pitchAngle * 0.06D;
-
-                        if (motionY < 0.0D && lookVecHypot > 0.0D) {
-                            double motionYMod = motionY * -0.1D * (double)pitchAngle;
-                            motionY += motionYMod;
-                            motionX += lookVec.x * motionYMod / lookVecHypot;
-                            motionZ += lookVec.z * motionYMod / lookVecHypot;
-                        }
-
-                        if (lookPitch < 0.0F) {
-                            double inverseMotionMod = motion * (double)(-MathHelper.sin(lookPitch)) * 0.04D;
-                            motionY += inverseMotionMod * 3.2D;
-                            motionX -= lookVec.x * inverseMotionMod / lookVecHypot;
-                            motionZ -= lookVec.z * inverseMotionMod / lookVecHypot;
-                        }
-
-                        if (lookVecHypot > 0.0D) {
-                            motionX += (lookVec.x / lookVecHypot * motion - motionX) * 0.1D;
-                            motionZ += (lookVec.z / lookVecHypot * motion - motionZ) * 0.1D;
-                        }
-
-                        motionX *= 0.9900000095367432D;
-                        motionY *= 0.9800000190734863D;
-                        motionZ *= 0.9900000095367432D;
-                        move(MoverType.SELF, motionX, motionY, motionZ);
-
-                        if (collidedHorizontally && !world.isRemote) {
-                            double newMotion = Math.sqrt(motionX * motionX + motionZ * motionZ);
-                            float impactVelocity = (float)((motion - newMotion) * 10.0D - 3.0D);
-
-                            if (impactVelocity > 0.0F) {
-                                playSound(getFallSound((int)impactVelocity), 1.0F, 1.0F);
-                                attackEntityFrom(DamageSource.FLY_INTO_WALL, impactVelocity);
-                            }
-                        }
-
-                        if (!world.isRemote && onGround) {
-                            setFlag(7, false);
-                        }
-                    }
-                    else {
-                        float friction = 0.91F;
-                        BlockPos.PooledMutableBlockPos checkPos = BlockPos.PooledMutableBlockPos.retain(posX, getEntityBoundingBox().minY - 1.0D, posZ);
-
-                        if (onGround) {
-                            IBlockState underState = world.getBlockState(checkPos);
-                            friction = underState.getBlock().getSlipperiness(underState, world, checkPos, this) * 0.91F;
-
-                            if (isSlipperyMob)
-                                friction *= 0.9;
-                        }
-
-                        friction = 0.16277136F / (friction * friction * friction);
-                        float frictionMod;
-
-                        if (onGround) {
-                            frictionMod = getAIMoveSpeed() * friction;
-                        }
-                        else {
-                            frictionMod = jumpMovementFactor;
-                        }
-
-                        moveRelative(strafe, vertical, forward, frictionMod);
-
-                        friction = 0.91F;
-
-                        if (onGround) {
-                            IBlockState underState = world.getBlockState(checkPos.setPos(posX, getEntityBoundingBox().minY - 1.0D, posZ));
-                            friction = underState.getBlock().getSlipperiness(underState, world, checkPos, this) * 0.91F;
-
-                            if (isSlipperyMob)
-                                friction *= 0.9;
-                        }
-
-                        if (isOnLadder()) {
-                            motionX = MathHelper.clamp(motionX, -0.15000000596046448D, 0.15000000596046448D);
-                            motionZ = MathHelper.clamp(motionZ, -0.15000000596046448D, 0.15000000596046448D);
-                            fallDistance = 0.0F;
-
-                            if (motionY < -0.15D)
-                                motionY = -0.15D;
-
-                            if (isSneaking() && motionY < 0.0D)
-                                motionY = 0.0D;
-                        }
-
-                        move(MoverType.SELF, motionX, motionY, motionZ);
-
-                        if (collidedHorizontally && isOnLadder())
-                            motionY = 0.2D;
-
-                        if (isPotionActive(MobEffects.LEVITATION)) {
-                            motionY += (0.05D * (double)(getActivePotionEffect(MobEffects.LEVITATION).getAmplifier() + 1) - motionY) * 0.2D;
-                        }
-                        else {
-                            checkPos.setPos(posX, 0.0D, posZ);
-
-                            if (!world.isRemote || world.isBlockLoaded(checkPos) && world.getChunk(checkPos).isLoaded()) {
-                                if (!hasNoGravity())
-                                    motionY -= 0.08D;
-                            }
-                            else if (posY > 0.0D) {
-                                motionY = -0.1D;
-                            }
-                            else {
-                                motionY = 0.0D;
-                            }
-                        }
-
-                        motionY *= 0.9800000190734863D;
-                        motionX *= (double)friction;
-                        motionZ *= (double)friction;
-
-                        checkPos.release();
-                    }
-                }
-                else {
-                    moveRelative(strafe, vertical, forward, 0.02F);
-                    move(MoverType.SELF, motionX, motionY, motionZ);
-
-                    motionX *= 0.5D;
-                    motionY *= 0.5D;
-                    motionZ *= 0.5D;
-
-                    if (!hasNoGravity())
-                        motionY -= 0.02D;
-
-                    if (collidedHorizontally && isOffsetPositionInLiquid(motionX, motionY + 0.6000000238418579D, motionZ))
-                        motionY = 0.30000001192092896D;
-                }
-            }
-            else {
-                float waterDrag = getWaterSlowDown();
-                float friction = 0.02F;
-                float depthStriderMod = (float)EnchantmentHelper.getDepthStriderModifier(this);
-
-                if (depthStriderMod > 3.0F)
-                    depthStriderMod = 3.0F;
-
-                if (!onGround)
-                    depthStriderMod *= 0.5F;
-
-                if (depthStriderMod > 0.0F) {
-                    waterDrag += (0.54600006F - waterDrag) * depthStriderMod / 3.0F;
-                    friction += (getAIMoveSpeed() - friction) * depthStriderMod / 3.0F;
-                }
-
-                moveRelative(strafe, vertical, forward, friction);
-                move(MoverType.SELF, motionX, motionY, motionZ);
-
-                motionX *= (double)waterDrag;
-                motionY *= 0.800000011920929D;
-                motionZ *= (double)waterDrag;
-
-                if (!hasNoGravity())
-                    motionY -= 0.02D;
-
-                if (collidedHorizontally && isOffsetPositionInLiquid(motionX, motionY + 0.6000000238418579D, motionZ))
-                    motionY = 0.30000001192092896D;
-            }
-        }
-
-        prevLimbSwingAmount = limbSwingAmount;
-        double movedX = posX - prevPosX;
-        double movedZ = posZ - prevPosZ;
-        double movedY = this instanceof net.minecraft.entity.passive.EntityFlying ? posY - prevPosY : 0.0D;
-        float moveDistance = MathHelper.sqrt(movedX * movedX + movedY * movedY + movedZ * movedZ) * 4.0F;
-
-        if (moveDistance > 1.0F)
-            moveDistance = 1.0F;
-
-        limbSwingAmount += (moveDistance - limbSwingAmount) * 0.4F;
-        limbSwing += limbSwingAmount;
-    }
+import java.util.Random;
+
+public abstract class AoAMeleeMob extends MonsterEntity {
+	protected boolean isSlipperyMovement = false;
+
+	protected AoAMeleeMob(EntityType<? extends MonsterEntity> entityType, World world) {
+		super(entityType, world);
+		
+		experienceValue = (int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f);
+	}
+
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false));
+		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
+		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
+		targetSelector.addGoal(2, new HurtByTargetGoal(this));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+	}
+
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
+
+		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (AoAConfig.COMMON.hardcoreMode.get() ? 1.5f : 1f));
+		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
+		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
+		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (AoAConfig.COMMON.hardcoreMode.get() ? 2f : 1f));
+		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+		getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f));
+	}
+
+	@Override
+	protected abstract float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn);
+
+	protected abstract double getBaseKnockbackResistance();
+
+	protected abstract double getBaseMaxHealth();
+
+	protected abstract double getBaseMeleeDamage();
+
+	protected abstract double getBaseMovementSpeed();
+
+	protected double getBaseArmour() {
+		return 0;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return null;
+	}
+
+	@Nullable
+	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
+		if (!blockState.getMaterial().isLiquid()) {
+			BlockState state = this.world.getBlockState(pos.up());
+			SoundType blockSound = state.getBlock() == Blocks.SNOW ? state.getSoundType(world, pos, this) : blockState.getSoundType(world, pos, this);
+			return blockSound.getStepSound();
+		}
+
+		return null;
+	}
+
+	protected boolean isOverworldMob() {
+		return false;
+	}
+
+	protected boolean isDaylightMob() {
+		return false;
+	}
+
+	protected int getMinSpawnHeight() {
+		return 0;
+	}
+
+	protected int getMaxSpawnHeight() {
+		return 255;
+	}
+
+	@Nullable
+	protected OverworldEvents.Event getEventRequirement() {
+		return null;
+	}
+
+	protected void onAttack(Entity target) {}
+
+	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public boolean attackEntityAsMob(Entity target) {
+		if (super.attackEntityAsMob(target)) {
+			onAttack(target);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (super.attackEntityFrom(source, amount)) {
+			onHit(source, amount);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void travel(Vec3d motionVec) {
+		if (isServerWorld() || canPassengerSteer()) {
+			double gravityValue;
+			IAttributeInstance gravity = getAttribute(ENTITY_GRAVITY);
+			boolean falling = getMotion().y <= 0;
+			Vec3d currentMotion;
+
+			if (falling && isPotionActive(Effects.SLOW_FALLING)) {
+				if (!gravity.hasModifier(EntityUtil.SLOW_FALLING))
+					gravity.applyModifier(EntityUtil.SLOW_FALLING);
+
+				fallDistance = 0;
+			}
+			else if (gravity.hasModifier(EntityUtil.SLOW_FALLING)) {
+				gravity.removeModifier(EntityUtil.SLOW_FALLING);
+			}
+
+			gravityValue = gravity.getValue();
+
+			if (!isInWater()) {
+				if (!isInLava()) {
+					BlockPos feetPos = getPositionUnderneath();
+					float blockSlip = world.getBlockState(feetPos).getSlipperiness(world, feetPos, this);
+					float friction = onGround ? blockSlip * 0.91F : 0.91F;
+					float moveFactor = onGround ? getAIMoveSpeed() * (0.21600002F / (blockSlip * blockSlip * blockSlip)) : jumpMovementFactor;
+
+					if (isSlipperyMovement)
+						friction *= 0.9;
+
+					moveRelative(moveFactor, motionVec);
+
+					currentMotion = getMotion();
+
+					if (isOnLadder()) {
+						fallDistance = 0.0F;
+						currentMotion = new Vec3d(MathHelper.clamp(currentMotion.x, -0.15F, 0.15F), Math.max(currentMotion.y, -0.15F), MathHelper.clamp(currentMotion.z, -0.15F, 0.15F));
+					}
+
+					setMotion(currentMotion);
+					move(MoverType.SELF, getMotion());
+
+					currentMotion = getMotion();
+
+					if ((collidedHorizontally || isJumping) && isOnLadder())
+						currentMotion = new Vec3d(currentMotion.x, 0.2D, currentMotion.z);
+
+					double yVelocity = currentMotion.y;
+
+					if (isPotionActive(Effects.LEVITATION)) {
+						yVelocity += (0.05D * (double)(getActivePotionEffect(Effects.LEVITATION).getAmplifier() + 1) - currentMotion.y) * 0.2D;
+						fallDistance = 0.0F;
+					}
+					else if (world.isRemote && !world.isBlockLoaded(feetPos)) {
+						yVelocity = getPosY() > 0 ? -0.1 : 0;
+					}
+					else if (!hasNoGravity()) {
+						yVelocity -= gravityValue;
+					}
+
+					setMotion(currentMotion.x * (double)friction, yVelocity * (double)0.98F, currentMotion.z * (double)friction);
+				}
+				else {
+					moveRelative(0.02F, motionVec);
+					move(MoverType.SELF, getMotion());
+					setMotion(getMotion().scale(0.5D));
+
+					if (!hasNoGravity())
+						setMotion(getMotion().add(0.0D, -gravityValue / 4.0D, 0.0D));
+
+					currentMotion = getMotion();
+
+					if (collidedHorizontally && isOffsetPositionInLiquid(currentMotion.x, currentMotion.y + (double)0.6F - getPosY() + getPosY(), currentMotion.z))
+						setMotion(currentMotion.x, 0.3F, currentMotion.z);
+				}
+			}
+			else {
+				float drag = isSprinting() ? 0.9F : getWaterSlowDown();
+				float swimSpeed = 0.02F;
+				float depthStrider = (float)EnchantmentHelper.getDepthStriderModifier(this);
+
+				if (depthStrider > 3.0F)
+					depthStrider = 3.0F;
+
+				if (!onGround)
+					depthStrider *= 0.5F;
+
+				if (depthStrider > 0.0F) {
+					drag += (0.54600006F - drag) * depthStrider / 3.0F;
+					swimSpeed += (getAIMoveSpeed() - swimSpeed) * depthStrider / 3.0F;
+				}
+
+				if (isPotionActive(Effects.DOLPHINS_GRACE))
+					drag = 0.96F;
+
+				swimSpeed *= (float)getAttribute(SWIM_SPEED).getValue();
+
+				moveRelative(swimSpeed, motionVec);
+				move(MoverType.SELF, getMotion());
+
+				currentMotion = getMotion();
+
+				if (collidedHorizontally && isOnLadder())
+					currentMotion = new Vec3d(currentMotion.x, 0.2D, currentMotion.z);
+
+				setMotion(currentMotion.mul(drag, 0.8F, drag));
+
+				if (!hasNoGravity() && !isSprinting()) {
+					currentMotion = getMotion();
+					double motionY;
+
+					if (falling && Math.abs(currentMotion.y - 0.005D) >= 0.003D && Math.abs(currentMotion.y - gravityValue / 16.0D) < 0.003D) {
+						motionY = -0.003D;
+					}
+					else {
+						motionY = currentMotion.y - gravityValue / 16.0D;
+					}
+
+					setMotion(currentMotion.x, motionY, currentMotion.z);
+				}
+
+				currentMotion = getMotion();
+
+				if (collidedHorizontally && isOffsetPositionInLiquid(currentMotion.x, currentMotion.y + (double)0.6F - getPosY() + getPosY(), currentMotion.z))
+					setMotion(currentMotion.x, 0.3F, currentMotion.z);
+			}
+		}
+
+		prevLimbSwingAmount = limbSwingAmount;
+		double travelledX = getPosX() - prevPosX;
+		double travelledZ = getPosZ() - prevPosZ;
+		float travel = MathHelper.sqrt(travelledX * travelledX + travelledZ * travelledZ) * 4.0F;
+
+		if (travel > 1.0F)
+			travel = 1.0F;
+
+		limbSwingAmount += (travel - limbSwingAmount) * 0.4F;
+		limbSwing += limbSwingAmount;
+	}
+
+	public static boolean meetsSpawnConditions(EntityType<? extends MonsterEntity> type, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+		return world.getDifficulty() != Difficulty.PEACEFUL;
+	}
+
+	@Override
+	public boolean canSpawn(IWorld world, SpawnReason reason) {
+		return checkWorldRequirements(reason) && isValidLightLevel(reason) && canSpawnAt(reason, world.getBlockState(getPosition().down()));
+	}
+
+	protected boolean canSpawnAt(SpawnReason reason, BlockState blockState) {
+		if (EntityUtil.isNaturalSpawnReason(reason) && (getPosY() > getMaxSpawnHeight() || getPosY() < getMinSpawnHeight()))
+			return false;
+
+		return reason == SpawnReason.SPAWNER || blockState.canEntitySpawn(world, getPosition(), getType());
+	}
+
+	private boolean isValidLightLevel(SpawnReason reason) {
+		if (isDaylightMob() && !world.isDaytime())
+			return false;
+
+		if (isDaylightMob() || !isOverworldMob())
+			return WorldUtil.getLightLevel(world, getPosition(), true, false) <= RandomUtil.randomNumberUpTo(8);
+
+		return isValidLightLevel(world, getPosition(), rand);
+	}
+
+	private boolean checkWorldRequirements(SpawnReason reason) {
+		if (!EntityUtil.isNaturalSpawnReason(reason))
+			return true;
+
+		if (isOverworldMob() && world.getDimension().getType() != DimensionType.OVERWORLD)
+			return false;
+
+		OverworldEvents.Event eventReq = getEventRequirement();
+
+		return eventReq == null || OverworldEvents.isEventActive(eventReq);
+	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+		SoundEvent stepSound = getStepSound(pos, blockIn);
+
+		if (stepSound != null)
+			playSound(stepSound, 0.15F, 1.0F);
+	}
 }

@@ -1,28 +1,26 @@
 package net.tslat.aoa3.item.weapon.blaster;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityIonShot;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.IonShotEntity;
 
 import javax.annotation.Nullable;
 
 public class IonBlaster extends BaseBlaster {
 	public IonBlaster(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("IonBlaster");
-		setRegistryName("aoa3:ion_blaster");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.ION_BLASTER_FIRE;
+		return AoASounds.ITEM_ION_BLASTER_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityIonShot(shooter, this, 60));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new IonShotEntity(shooter, this, 60));
 	}
 }

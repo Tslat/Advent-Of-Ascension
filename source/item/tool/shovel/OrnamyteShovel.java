@@ -1,32 +1,30 @@
 package net.tslat.aoa3.item.tool.shovel;
 
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class OrnamyteShovel extends BaseShovel {
 	public OrnamyteShovel() {
-		super("OrnamyteShovel", "ornamyte_shovel", MaterialsRegister.TOOL_ORNAMYTE);
+		super(ItemUtil.customItemTier(2750, 10.0f, 6.0f, 5, 14, null));
 	}
 
 	@Override
-	public float getDestroySpeed(ItemStack stack, IBlockState state) {
-		return state.getMaterial() == Material.GRASS || state.getBlock() instanceof BlockGrass ? super.getDestroySpeed(stack, state) * 10 : super.getDestroySpeed(stack, state);
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
+		return state.isIn(AoATags.Blocks.GRASS) || state.getBlock() instanceof GrassBlock ? super.getDestroySpeed(stack, state) * 10 : super.getDestroySpeed(stack, state);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OrnamyteShovel.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

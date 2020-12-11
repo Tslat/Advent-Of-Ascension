@@ -1,17 +1,16 @@
 package net.tslat.aoa3.item.armour;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.tslat.aoa3.library.Enums;
-
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_AMETHIND;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.SoundEvents;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class AmethindArmour extends AdventArmour {
-	public AmethindArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_AMETHIND, name, registryName, slot);
+	public AmethindArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:amethind", 25, new int[] {3, 6, 7, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.AMETHIND;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.AMETHIND;
 	}
 }

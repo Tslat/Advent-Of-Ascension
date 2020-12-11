@@ -1,43 +1,40 @@
 package net.tslat.aoa3.item.weapon.bow;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.item.Items;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SpectralBow extends BaseBow {
 	public SpectralBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
-		setTranslationKey("SpectralBow");
-		setRegistryName("aoa3:spectral_bow");
 	}
 
 	@Override
-	protected ItemStack findAmmo(EntityPlayer player) {
-		return new ItemStack(ItemRegister.HOLLY_ARROW);
+	protected ItemStack findAmmo(PlayerEntity shooter, ItemStack bowStack, boolean infiniteAmmo) {
+		return new ItemStack(Items.ARROW);
 	}
 
 	@Override
-	protected EntityHollyArrow makeArrow(EntityLivingBase shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		return super.makeArrow(shooter, bowStack, ammoStack, velocity, false);
+	public CustomArrowEntity doArrowMods(CustomArrowEntity arrow, LivingEntity shooter, ItemStack ammoStack, int useTicksRemaining) {
+		arrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+
+		return arrow;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SpectralBow.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.arrows", TextFormatting.DARK_RED, Double.toString(getDamage())));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.bow.drawSpeed", Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100)));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.bow.drawSpeed", LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100)));
 	}
 }

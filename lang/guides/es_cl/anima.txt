@@ -1,0 +1,9 @@
+Anima (Habilidad)
+
+La habilidad de Anima gira en torno a la naturaleza.
+
+Puedes aumentar tu nivel de Anima recolectando vegetales y flores, rompiendo hojas y plantando vegetales. Al hacer esto, existe una probabilidad de que una Piedra Azul de Anima caiga. Recogela y recibiras XP de Anima. Sumado a esto existe una posibilidad de encontrar una Piedra Fragmentada de Anima.
+Adicionalmente puedes subir tu nivel activando Piedras Fragmentadas de Anima. Estas piedras pueden ser obtenidas comerciando con ciertos mercaderes o como recopempensa de otras actividades. Al usarla en el pasto, las plantas a su alrededor comenzaran a crecer y seras otorgado XP de Anima
+
+Sumado a eso las Piedras Fragmentadas de Anima sirven para crear tabletas poderosas, que te serviran para distintas situaciones. Tan solo coloca la tableta en el piso y si tienes el suficiente poder de Alma, la tableta seguira funcionando, dando un efecto en un determinado radio.
+Mientras mas alto sea tu nivel de Anima, mas tabletas podras crear!

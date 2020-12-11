@@ -1,40 +1,43 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.elusive.EntityElusive;
-import net.tslat.aoa3.entity.boss.elusive.EntityElusiveClone;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraft.world.gen.Heightmap;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.ElusiveEntity;
+import net.tslat.aoa3.entity.mob.misc.ElusiveCloneEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class IllusionAltar extends BossAltarBlock {
 	public IllusionAltar() {
-		super("IllusionAltar", "illusion_altar");
+		super(MaterialColor.PURPLE);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityElusive elusive = new EntityElusive(player.world);
-		EntityElusiveClone clone = new EntityElusiveClone(elusive);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		ElusiveEntity elusive = new ElusiveEntity(AoAEntities.Mobs.ELUSIVE.get(), player.world);
+		ElusiveCloneEntity clone = new ElusiveCloneEntity(elusive);
 		double posX = (int)(blockPos.getX() + player.getLookVec().x * -10);
 		double posZ = (int)(blockPos.getZ() + player.getLookVec().z * -10);
 
-		clone.setLocationAndAngles(posX, player.world.getHeight((int)posX, (int)posZ), posZ, player.rotationYawHead, 0);
+		clone.setLocationAndAngles(posX, player.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, player.rotationYawHead, 0);
 
 		posX += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
 		posZ += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
 
-		elusive.setLocationAndAngles(posX, player.world.getHeight((int)posX, (int)posZ), posZ, 0, 0);
-		player.world.spawnEntity(elusive);
-		player.world.spawnEntity(clone);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.elusive.spawn", player.getDisplayNameString()), blockPos);
+		elusive.setLocationAndAngles(posX, player.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, 0, 0);
+		player.world.addEntity(elusive);
+		player.world.addEntity(clone);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.elusive.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.STARING_EYE;
+		return AoAItems.STARING_EYE.get();
 	}
 }

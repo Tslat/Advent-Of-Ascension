@@ -1,55 +1,54 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.minions.EntityOrbling;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.OrblingEntity;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_SPACEKING;
-
 public class SpacekingArmour extends AdventArmour {
-	public SpacekingArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_SPACEKING, name, registryName, slot);
+	public SpacekingArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:spaceking", 62, new int[] {4, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.SPACEKING;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.SPACEKING;
 	}
 
 	@Override
-	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
-		if (slots == null && !EntityUtil.isEnvironmentalDamage(event.getSource()) && !EntityUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
-			EntityPlayer pl = plData.player();
+	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
+		if (slots == null && !DamageUtil.isEnvironmentalDamage(event.getSource()) && !DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
+			PlayerEntity pl = plData.player();
 
-			if (!pl.world.isRemote && pl.getHealth() > 0 && itemRand.nextInt(3) == 0) {
-				EntityOrbling orbling = new EntityOrbling(pl.world);
+			if (!pl.world.isRemote && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
+				OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.world);
 
-				orbling.setPosition(pl.posX, pl.posY + 1.5, pl.posZ);
+				orbling.setPosition(pl.getPosX(), pl.getPosY() + 1.5, pl.getPosZ());
 				orbling.setTamedBy(pl);
-				pl.world.spawnEntity(orbling);
+				pl.world.addEntity(orbling);
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SpacekingArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SpacekingArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.spaceking_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.spaceking_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

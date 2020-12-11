@@ -1,0 +1,10 @@
+Caceria de Sangre (Evento)
+
+"La Caceria de Sangre ha comenzado!"
+Aventureros, cuidado, la caza de sangre esta sobre nosotros.
+La caza de sangre es un evento nocturno que puede ocurrir algunas noches en el mundo. Cuando comience, recibiras el mensaje anterior: ¡esta es la senal para ponerse a cubierto!
+
+Durante la Caceria de Sangre, las criaturas hostiles que se originan en el Abismo salen de su dimensión y entran en la nuestra, buscando esparcir la sangre de los aventureros.
+Pero no te preocupes, no quieren beber tu sangre; solo buscan esparcirla sobre la hierba sobre la que caminas y celebrar tu desaparicion.
+
+Estas criaturas abisales prefieren permanecer en la oscuridad, por lo que una vez que salga el sol dejaran de llegar al mundo, terminando la caceria hasta que vuelvan a abrirse paso.

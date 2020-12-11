@@ -2,19 +2,16 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntitySeaocron;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.SeaocronEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,33 +19,30 @@ import java.util.List;
 public class Seaocron extends BaseBlaster {
 	public Seaocron(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("Seaocron");
-		setRegistryName("aoa3:seaocron");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SHADOW_BLASTER_FIRE;
+		return AoASounds.ITEM_SHADOW_BLASTER_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntitySeaocron(shooter, this, 60));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new SeaocronEntity(shooter, this, 60));
 	}
 
 	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		for (EntityLivingBase e : shot.world.getEntitiesWithinAABB(EntityLivingBase.class, shot.getEntityBoundingBox().grow(15), PredicateUtil.IS_HOSTILE_MOB)) {
-			if (!EntityUtil.isSpecExempt(e, shooter) && !EntityUtil.isTypeImmune(e, Enums.MobProperties.BLASTER_IMMUNE))
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		for (LivingEntity e : shot.world.getEntitiesWithinAABB(LivingEntity.class, shot.getBoundingBox().grow(15), EntityUtil.Predicates.HOSTILE_MOB)) {
+			if (!EntityUtil.isImmuneToSpecialAttacks(e, shooter))
 				EntityUtil.pullEntityIn(target, e, 0.5f);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Orbocron.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

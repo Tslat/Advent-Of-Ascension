@@ -1,44 +1,44 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class Pickmax extends BasePickaxe {
 	public Pickmax() {
-		super("Pickmax", "pickmax", MaterialsRegister.TOOL_PICKMAX);
+		super(ItemUtil.customItemTier(3000, 8.0f, 6.0f, 6, 10, null));
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, IBlockState blockState, BlockPos pos, EntityLivingBase entity) {
-		super.onBlockDestroyed(stack, world, blockState, pos, entity);
+	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+		super.onBlockDestroyed(stack, world, state, pos, entity);
 
-		if (!world.isRemote && entity instanceof EntityPlayer && !(entity instanceof FakePlayer) && blockState.getMaterial() == Material.ROCK && blockState.isOpaqueCube()) {
+		if (!world.isRemote && entity instanceof PlayerEntity && !(entity instanceof FakePlayer) && state.isIn(Tags.Blocks.STONE)) {
 			for (int i = pos.getX() - 1; i < pos.getX() + 2; i++) {
 				for (int j = pos.getY() - 1; j < pos.getY() + 2; j++) {
 					for (int k = pos.getZ() - 1; k < pos.getZ() + 2; k++) {
 						if (pos.getX() == i && pos.getY() == j && pos.getZ() == k)
 							continue;
 
+						PlayerEntity pl = (PlayerEntity)entity;
 						BlockPos breakPos = new BlockPos(i, j, k);
-						IBlockState state = world.getBlockState(breakPos);
+						BlockState extraBlock = world.getBlockState(breakPos);
 
-						if (state.getMaterial() == Material.ROCK && state.isOpaqueCube())
-							WorldUtil.harvestAdditionalBlock(world, (EntityPlayer)entity, stack, pos, breakPos);
+						if (extraBlock.isIn(Tags.Blocks.STONE) && world.getBlockState(pos).getPlayerRelativeBlockHardness(pl, world, pos) / extraBlock.getPlayerRelativeBlockHardness(pl, world, breakPos) < 10f)
+							WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, true);
 					}
 				}
 			}
@@ -47,9 +47,8 @@ public class Pickmax extends BasePickaxe {
 		return true;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Pickmax.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

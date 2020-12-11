@@ -1,43 +1,45 @@
 package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class TrilliadLeaves extends BasicFood {
+public class TrilliadLeaves extends Item {
 	public TrilliadLeaves() {
-		super("TrilliadLeaves", "trilliad_leaves", 0, 0);
-		setAlwaysEdible();
-		BlockRegister.TRILLIAD_CROP.setCrop(this);
+		super(new Item.Properties().group(AoAItemGroups.FOOD).food(
+				new Food.Builder()
+						.hunger(0)
+						.saturation(0)
+						.setAlwaysEdible()
+						.effect(new PotionUtil.EffectBuilder(Effects.BLINDNESS, 130).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.SLOWNESS, 100).level(11).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.REGENERATION, 100).level(3).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.POISON, 100).level(8).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 100).level(129).build(), 1)
+						.build()));
 	}
 
 	@Override
-	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-		super.onFoodEaten(stack, world, player);
+	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+		if (!world.isRemote)
+			entity.removePotionEffect(Effects.NAUSEA);
 
-		if (!world.isRemote) {
-			player.removePotionEffect(MobEffects.NAUSEA);
-			player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 130, 0, true, false));
-			player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 10, true, true));
-			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 100, 2, true, false));
-			player.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 7, true, true));
-			player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 128, true, false));
-		}
+		return super.onItemUseFinish(stack, world, entity);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.TrilliadLeaves.desc.1"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

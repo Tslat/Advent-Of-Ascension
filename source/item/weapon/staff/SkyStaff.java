@@ -1,71 +1,67 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class SkyStaff extends BaseStaff {
+public class SkyStaff extends BaseStaff<Boolean> {
 	public SkyStaff(int durability) {
 		super(durability);
-		setTranslationKey("SkyStaff");
-		setRegistryName("aoa3:sky_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.SKY_STAFF_CAST;
+		return AoASounds.ITEM_SKY_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WIND_RUNE, 2);
-		runes.put(ItemRegister.KINETIC_RUNE, 2);
-		runes.put(ItemRegister.ENERGY_RUNE, 1);
+		runes.put(AoAItems.WIND_RUNE.get(), 2);
+		runes.put(AoAItems.KINETIC_RUNE.get(), 2);
+		runes.put(AoAItems.ENERGY_RUNE.get(), 1);
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		return caster.onGround ? new Object() : null;
+	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return caster.onGround ? true : null;
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, Boolean args) {
 		caster.setSprinting(true);
 		double xMotion = -MathHelper.sin(caster.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(caster.rotationPitch / 180.0F * (float)Math.PI) * 2f;
 		double zMotion = MathHelper.cos(caster.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(caster.rotationPitch / 180.0F * (float)Math.PI) * 2f;
+		double yMotion = caster.getMotion().getY();
 
 		if (Math.abs(xMotion) < 0.4 && Math.abs(zMotion) < 0.4) {
-			caster.motionY += 2f;
+			yMotion += 2f;
 		}
 		else {
-			caster.motionY += 0.75F;
+			yMotion += 0.75F;
 		}
 
-		caster.motionX = xMotion;
-		caster.motionZ = zMotion;
+		caster.setMotion(new Vec3d(xMotion, yMotion, zMotion));
 		caster.velocityChanged = true;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SkyStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SkyStaff.desc.2", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

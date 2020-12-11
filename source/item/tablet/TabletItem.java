@@ -1,28 +1,27 @@
 package net.tslat.aoa3.item.tablet;
 
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.gui.mainwindow.AdventGuiTabPlayer;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.entity.misc.tablet.EntitySoulTablet;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.entity.tablet.SoulTabletEntity;
+import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,11 +32,8 @@ public abstract class TabletItem extends Item {
 	private final int animaLevelReq;
 	private final int effectRadius;
 
-	public TabletItem(String name, String registryName, float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
-		setTranslationKey(name);
-		setRegistryName("aoa3:" + registryName);
-		setCreativeTab(CreativeTabsRegister.TABLETS);
-		setMaxStackSize(1);
+	public TabletItem(float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
+		super(new Item.Properties().group(AoAItemGroups.TABLETS).maxStackSize(1));
 
 		this.initialSoulCost = placementCost;
 		this.perTickSoulCost = tickSoulDrain;
@@ -54,49 +50,52 @@ public abstract class TabletItem extends Item {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		IBlockState targetBlockState = world.getBlockState(pos).getActualState(world, pos);
+	public ActionResultType onItemUse(ItemUseContext context) {
+		BlockPos pos = context.getPos();
+		World world = context.getWorld();
 
-		if (facing != EnumFacing.UP || targetBlockState.getBlockFaceShape(world, pos, EnumFacing.UP) != BlockFaceShape.SOLID)
-			return EnumActionResult.FAIL;
+		BlockState targetBlockState = context.getWorld().getBlockState(pos);
 
-		if (!world.isRemote) {
+		if (context.getFace() != Direction.UP || !targetBlockState.isSolidSide(world, pos, Direction.UP))
+			return ActionResultType.FAIL;
+
+		if (context.getPlayer() instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity)context.getPlayer();
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-			if (player.isCreative() || plData.stats().getLevel(Enums.Skills.ANIMA) >= animaLevelReq) {
-				float soulCost = initialSoulCost * (1 - ((plData.stats().getLevel(Enums.Skills.ANIMA) - 1) / 200f)) * (PlayerUtil.isWearingFullSet(player, Enums.ArmourSets.ANIMA) ? 0.5f : 1f);
-				EntitySoulTablet tabletEntity = getTabletEntity(world, player);
-				AxisAlignedBB blockBoundingBox = targetBlockState.getCollisionBoundingBox(world, pos);
+			if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
+				float soulCost = initialSoulCost * (1 - ((plData.stats().getLevel(Skills.ANIMA) - 1) / 200f)) * (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.ANIMA) ? 0.5f : 1f);
+				SoulTabletEntity tabletEntity = getTabletEntity(world, player);
+				VoxelShape blockBoundingBox = targetBlockState.getCollisionShape(world, pos);
 
-				tabletEntity.setPositionAndRotation(pos.getX() + hitX, pos.getY() + (blockBoundingBox == null ? 0 : blockBoundingBox.maxY), pos.getZ() + hitZ, player.rotationYaw, player.rotationPitch);
+				tabletEntity.setPositionAndRotation(context.getHitVec().getX(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.getEnd(Direction.Axis.Y)), context.getHitVec().getZ(), player.rotationYaw, 0);
 
-				if (world.checkNoEntityCollision(tabletEntity.getEntityBoundingBox(), tabletEntity)) {
-					if (plData.stats().consumeResource(Enums.Resources.SOUL, soulCost, false)) {
-						world.spawnEntity(tabletEntity);
+				if (world.checkNoEntityCollision(tabletEntity, VoxelShapes.create(tabletEntity.getBoundingBox()))) {
+					if (plData.stats().consumeResource(Resources.SOUL, soulCost, false)) {
+						world.addEntity(tabletEntity);
 
-						if (!player.capabilities.isCreativeMode)
-							player.getHeldItem(hand).shrink(1);
+						if (!player.isCreative())
+							player.getHeldItem(context.getHand()).shrink(1);
 
-						return EnumActionResult.SUCCESS;
+						return ActionResultType.SUCCESS;
 					}
 				}
 			}
 			else {
-				PlayerUtil.notifyPlayerOfInsufficientLevel((EntityPlayerMP)player, Enums.Skills.ANIMA, animaLevelReq);
+				PlayerUtil.notifyPlayerOfInsufficientLevel(player, Skills.ANIMA, animaLevelReq);
 			}
 		}
 
-		return EnumActionResult.PASS;
+		return ActionResultType.PASS;
 	}
 
-	protected abstract EntitySoulTablet getTabletEntity(World world, EntityPlayer placer);
+	protected abstract SoulTabletEntity getTabletEntity(World world, ServerPlayerEntity placer);
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.skillRequirement", AdventGuiTabPlayer.getSkillLevel(Enums.Skills.ANIMA) < animaLevelReq ? TextFormatting.RED : TextFormatting.GREEN, String.valueOf(animaLevelReq), StringUtil.getLocaleString("skills.anima.name")));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.placementCost", TextFormatting.AQUA, String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Enums.Skills.ANIMA)) - 1) / 200f)))));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.usageCost", TextFormatting.AQUA, String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f)));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.tablet.radius", TextFormatting.AQUA, String.valueOf(effectRadius)));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f)))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(effectRadius)));
 	}
 }

@@ -1,55 +1,54 @@
 package net.tslat.aoa3.client.event;
 
-import com.google.common.base.Predicates;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.client.gui.render.HelmetScreenRenderer;
-import net.tslat.aoa3.client.gui.render.ScreenOverlayRenderer;
-import net.tslat.aoa3.client.gui.render.SniperGuiRenderer;
-import net.tslat.aoa3.client.sound.MusicSound;
-import net.tslat.aoa3.common.packet.PacketChangedHalo;
-import net.tslat.aoa3.common.packet.PacketLongReachWeaponHit;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.Keybinds;
+import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
+import net.tslat.aoa3.client.gui.overlay.HelmetScreenRenderer;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
+import net.tslat.aoa3.common.packet.packets.LongReachItemHitPacket;
+import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.PacketUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import org.lwjgl.input.Keyboard;
+import net.tslat.aoa3.util.LocaleUtil;
+import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
+import javax.annotation.Nullable;
 
-@SideOnly(Side.CLIENT)
+@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class ClientEventHandler {
 	public static int tick;
-	public static int recoilTicks;
-	public static int recoilTicksRemaining;
-	public static float recoilAngle;
 
 	@SubscribeEvent
-	public void clientTick(final TickEvent.ClientTickEvent ev) {
+	public static void clientTick(final TickEvent.ClientTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
 			tick++;
 
@@ -59,169 +58,126 @@ public class ClientEventHandler {
 			if (ScreenOverlayRenderer.overlayTicks > 0)
 				--ScreenOverlayRenderer.overlayTicks;
 
-			if (recoilTicksRemaining > 0) {
-				--recoilTicksRemaining;
-				doRecoil();
-			}
+			if (RecoilRenderer.recoilTicksRemaining > 0)
+				--RecoilRenderer.recoilTicksRemaining;
 
-			EntityPlayerSP player = Minecraft.getMinecraft().player;
+			ClientPlayerEntity player = Minecraft.getInstance().player;
 
 			if (player == null)
 				return;
 
 			if (player.isSneaking() && player.onGround) {
-				Item sniper = player.getHeldItem(EnumHand.MAIN_HAND).getItem();
+				Item sniper = player.getHeldItem(Hand.MAIN_HAND).getItem();
 
 				if (sniper instanceof BaseSniper) {
-					SniperGuiRenderer.isSniping = true;
-					SniperGuiRenderer.screen = ((BaseSniper)sniper).getScreen();
+					ScopeOverlayRenderer.isScoped = true;
+					ScopeOverlayRenderer.scope = ((BaseSniper)sniper).getScopeType();
 				}
 				else {
-					SniperGuiRenderer.isSniping = false;
+					ScopeOverlayRenderer.isScoped = false;
 				}
 			}
 			else {
-				SniperGuiRenderer.isSniping = false;
+				ScopeOverlayRenderer.isScoped = false;
 
-				if (SniperGuiRenderer.screen != null) {
-					recoilTicks = 5;
-					recoilTicksRemaining = 5;
-					recoilAngle = 1.0f;
-					SniperGuiRenderer.screen = null;
+				if (ScopeOverlayRenderer.scope != null) {
+					RecoilRenderer.recoilTicks = 5;
+					RecoilRenderer.recoilTicksRemaining = 5;
+					RecoilRenderer.recoilAngle = 1.0f;
+					ScopeOverlayRenderer.scope = null;
 				}
 			}
 
 			HelmetScreenRenderer.active = false;
 			Item helmetItem = player.inventory.armorInventory.get(3).getItem();
 
-			if (!SniperGuiRenderer.isSniping && helmetItem instanceof ScreenOverlayArmour) {
-				HelmetScreenRenderer.screen = ((ScreenOverlayArmour)helmetItem).getOverlay();
+			if (!ScopeOverlayRenderer.isScoped && helmetItem instanceof ScreenOverlayArmour) {
+				HelmetScreenRenderer.type = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
 			}
 		}
 	}
 
-	@SubscribeEvent
-	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent ev) {
-		if (ev.getModID().equals("aoa3")) {
-			ConfigManager.sync("aoa3", Config.Type.INSTANCE);
-			PacketUtil.network.sendToServer(new PacketChangedHalo(ConfigurationUtil.MainConfig.personalHaloPreference));
-		}
-	}
-
 	@SubscribeEvent(receiveCanceled = true)
-	public void onLongReachSwing(MouseEvent ev) {
-		if (ev.isButtonstate() && ev.getButton() != -1 && ev.getButton() == -100 - Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode()) {
-			Minecraft mc = Minecraft.getMinecraft();
-			EntityPlayer player = mc.player;
+	public static void onLongReachSwing(InputEvent.MouseInputEvent ev) {
+		if (ev.getAction() == GLFW.GLFW_PRESS && ev.getButton() == GLFW.GLFW_MOUSE_BUTTON_1 && Minecraft.getInstance().currentScreen == null) {
+			Minecraft mc = Minecraft.getInstance();
+			PlayerEntity player = mc.player;
 
-			if (player != null) {
+			if (player != null && player.world != null) {
 				if (player.isSpectator())
 					return;
 
-				ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+				ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 
-				if (stack.getItem() instanceof LongReachWeapon && !player.isHandActive()) {
-					RayTraceResult ray = getExtendedReachRayTrace(((LongReachWeapon)stack.getItem()).getReach());
+				if (stack.getItem() instanceof LongReachItem && !player.isHandActive()) {
+					RayTraceResult ray = getExtendedReachRayTrace(((LongReachItem)stack.getItem()).getReach());
 
-					if (ray != null)
-						PacketUtil.network.sendToServer(new PacketLongReachWeaponHit(ray.entityHit.getEntityId()));
+					if (ray instanceof EntityRayTraceResult)
+						AoAPackets.messageServer(new LongReachItemHitPacket((((EntityRayTraceResult)ray).getEntity().getEntityId())));
 				}
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
-		if (ConfigurationUtil.MainConfig.showWelcomeMessage) {
-			int adventGuiKeyCode = KeyBinder.keyAdventGui.getKeyCode();
-
-			if (adventGuiKeyCode == 0) {
-				ev.player.sendMessage(StringUtil.getColourLocale("message.login.welcome.alt", TextFormatting.GRAY));
+	public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
+		if (AoAConfig.CLIENT.showWelcomeMessage.get()) {
+			if (Keybinds.keyAdventGui.getKey().getKeyCode() == GLFW.GLFW_KEY_UNKNOWN) {
+				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", TextFormatting.GRAY));
 			}
-			else if (adventGuiKeyCode > 0) {
-				ev.player.sendMessage(StringUtil.getColourLocaleWithArguments("message.login.welcome", TextFormatting.GRAY, Keyboard.getKeyName(adventGuiKeyCode)));
+			else {
+				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome", TextFormatting.GRAY, Keybinds.keyAdventGui.getLocalizedName()));
 			}
 		}
 
-		PacketUtil.network.sendToServer(new PacketChangedHalo(ConfigurationUtil.MainConfig.personalHaloPreference));
+		if (ev.getPlayer().world.isRemote())
+			AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfig.CLIENT.personalHaloPreference.get()), ((ClientPlayerEntity)ev.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_SERVER);
 	}
 
 	@SubscribeEvent
-	public void onPlayerDeath(LivingDeathEvent ev) {
-		if (ev.getEntity() instanceof EntityPlayer)
+	public static void onPlayerDeath(LivingDeathEvent ev) {
+		if (ev.getEntity() instanceof PlayerEntity)
 			ScreenOverlayRenderer.overlayTicks = 0;
 	}
 
-	private static RayTraceResult getExtendedReachRayTrace(float distance) {
-		Minecraft mc = Minecraft.getMinecraft();
+	@Nullable
+	private static RayTraceResult getExtendedReachRayTrace(float reach) {
+		Minecraft mc = Minecraft.getInstance();
 		Entity player = mc.getRenderViewEntity();
 
 		if (player != null && player.world != null) {
-			Vec3d lookVec = player.getLook(mc.getRenderPartialTicks());
-			Vec3d eyesVec = player.getPositionEyes(mc.getRenderPartialTicks());
-			Vec3d extendedEyesVec = eyesVec.add(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance);
-			List<Entity> collisionList = mc.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().expand(lookVec.x * distance, lookVec.y * distance, lookVec.z * distance).grow(0.5D, 0.5D, 0.5D), Predicates.and(EntitySelectors.NOT_SPECTATING, entity -> !entity.isDead));
+			float partialTicks = mc.getRenderPartialTicks();
+			mc.pointedEntity = null;
+			mc.objectMouseOver = player.pick(reach, partialTicks, false);
+			Vec3d eyePos = player.getEyePosition(partialTicks);
+			double squareDistance = reach;
 
-			Entity closestTarget = null;
-			double closestDistance = distance + 1;
-			Vec3d closestHitVec = null;
+			squareDistance = squareDistance * squareDistance;
 
-			for (int i = collisionList.size() - 1; i >= 0; i--) {
-				Entity collided = collisionList.get(i);
-				AxisAlignedBB axis = collided.getEntityBoundingBox().grow(collided.getCollisionBorderSize());
-				RayTraceResult collisionRay = axis.calculateIntercept(eyesVec, extendedEyesVec);
+			if (mc.objectMouseOver != null)
+				squareDistance = mc.objectMouseOver.getHitVec().squareDistanceTo(eyePos);
 
-				if (axis.contains(eyesVec)) {
-					if (closestDistance > 0) {
-						closestTarget = collided;
-						closestHitVec = collisionRay == null ? eyesVec : collisionRay.hitVec;
-						closestDistance = 0;
-					}
-				}
-				else if (collisionRay != null) {
-					double collidedDistance = eyesVec.distanceTo(collisionRay.hitVec);
+			Vec3d lookVec = player.getLook(1.0F);
+			Vec3d reachVec = eyePos.add(lookVec.x * (double)reach, lookVec.y * (double)reach, lookVec.z * (double)reach);
+			AxisAlignedBB boundingBox = player.getBoundingBox().expand(lookVec.scale(reach)).grow(1.0D, 1.0D, 1.0D);
+			EntityRayTraceResult trace = ProjectileHelper.rayTraceEntities(player, eyePos, reachVec, boundingBox, (entity) -> !entity.isSpectator() && entity.canBeCollidedWith(), squareDistance);
 
-					if (collidedDistance < closestDistance || closestDistance == 0) {
-						if (collided.getLowestRidingEntity() == player.getLowestRidingEntity() && !collided.canRiderInteract()) {
-							if (closestDistance == 0) {
-								closestTarget = collided;
-								closestHitVec = collisionRay.hitVec;
-							}
-						}
-						else {
-							closestTarget = collided;
-							closestHitVec = collisionRay.hitVec;
-							closestDistance = collidedDistance;
-						}
-					}
+			if (trace != null) {
+				Entity entity = trace.getEntity();
+
+				if (eyePos.squareDistanceTo(trace.getHitVec()) < squareDistance || mc.objectMouseOver == null) {
+					mc.objectMouseOver = trace;
+
+					if (entity instanceof LivingEntity || entity instanceof ItemFrameEntity)
+						mc.pointedEntity = entity;
 				}
 			}
 
-			if (closestTarget != null && eyesVec.distanceTo(closestHitVec) <= distance && (mc.objectMouseOver == null || mc.objectMouseOver.typeOfHit != RayTraceResult.Type.BLOCK))
-				return new RayTraceResult(closestTarget, closestHitVec);
+			if (mc.objectMouseOver.getType() == RayTraceResult.Type.ENTITY)
+				return mc.objectMouseOver;
 		}
 
 		return null;
-	}
-
-	private void doRecoil() {
-		final EntityPlayerSP player = Minecraft.getMinecraft().player;
-
-		if (player == null)
-			return;
-
-		if (recoilTicksRemaining >= recoilTicks - 5) {
-			player.rotationPitch -= recoilAngle / (4.0f * (SniperGuiRenderer.isSniping ? 4 : 1));
-		}
-		else {
-			player.rotationPitch += recoilAngle / (35.0f  * (SniperGuiRenderer.isSniping ? 2 : 1));
-		}
-	}
-
-	@SubscribeEvent
-	public void onMusicPlay(PlaySoundEvent ev) {
-		if (ev.getSound() != null && ev.getSound().getCategory() == SoundCategory.MUSIC && !(ev.getSound() instanceof MusicSound) && MusicSound.currentlyBlockingMusic())
-			ev.setResultSound(null);
 	}
 }

@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityAlluricorn;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AlluricornEntity;
+import net.tslat.aoa3.entity.minion.AoAMinion;
 
 public class AlluricornSlab extends BaseSlab {
 	public AlluricornSlab() {
-		super("AlluricornSlab", "alluricorn_slab", 80, 180, 80, 4000);
+		super(80, 180, 80, 4000);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityAlluricorn alluricorn = new EntityAlluricorn(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		AlluricornEntity alluricorn = new AlluricornEntity(AoAEntities.Minions.ALLURICORN.get(), pl.world);
 
-		alluricorn.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		alluricorn.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		alluricorn.setTamedBy(pl);
-		pl.world.spawnEntity(alluricorn);
+		pl.world.addEntity(alluricorn);
 
 		return alluricorn;
 	}

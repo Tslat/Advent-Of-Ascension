@@ -2,159 +2,145 @@ package net.tslat.aoa3.event;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.projectile.EntityFireball;
-import net.minecraft.entity.projectile.EntityFishHook;
-import net.minecraft.item.ItemFishingRod;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.boss.WitherEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.LootSystemRegister;
-import net.tslat.aoa3.common.registration.ParticleRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.misc.EntityHeartStone;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
-import net.tslat.aoa3.utils.skills.HunterUtil;
-import net.tslat.aoa3.utils.skills.InnervationUtil;
+import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.entity.misc.HeartStoneEntity;
+import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.skill.HunterUtil;
+import net.tslat.aoa3.util.skill.InnervationUtil;
 
-import java.util.Random;
-
+@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
 public class EntityEvents {
 	@SubscribeEvent
-	public void onEntityDeath(LivingDeathEvent ev) {
-		EntityLivingBase entity = ev.getEntityLiving();
+	public static void onEntityDeath(LivingDeathEvent ev) {
+		LivingEntity entity = ev.getEntityLiving();
 
-		if (!entity.world.isRemote && !(entity instanceof EntityPlayer)) {
+		if (!entity.world.isRemote && !(entity instanceof PlayerEntity)) {
 			Entity killer = ev.getSource().getTrueSource();
 
 			if (killer != null) {
-				EntityPlayer killerPlayer = null;
+				PlayerEntity killerPlayer = null;
 
-				if (killer instanceof EntityTameable) {
-					EntityLivingBase owner = ((EntityTameable)killer).getOwner();
+				if (killer instanceof TameableEntity) {
+					LivingEntity owner = ((TameableEntity)killer).getOwner();
 
-					if (owner instanceof EntityPlayer)
-						killerPlayer = (EntityPlayer)owner;
+					if (owner instanceof PlayerEntity)
+						killerPlayer = (PlayerEntity)owner;
 				}
-				else if (killer instanceof EntityPlayer) {
-					killerPlayer = (EntityPlayer)killer;
+				else if (killer instanceof PlayerEntity) {
+					killerPlayer = (PlayerEntity)killer;
 				}
 
-				if (killerPlayer != null) {
-					if (entity.getMaxHealth() > 1 && AdventOfAscension.rand.nextInt(8 * (entity instanceof IMob ? 1 : 3)) == 0 && InnervationUtil.canEntitySpawnHeartstone(entity)) {
-						EntityHeartStone heartStone = new EntityHeartStone(entity.world, entity.getPosition());
+				if (killerPlayer instanceof ServerPlayerEntity) {
+					if (entity.getMaxHealth() > 1 && RandomUtil.oneInNChance(EntityUtil.isHostileMob(entity) ? 8 : 24) && InnervationUtil.canEntitySpawnHeartstone(entity)) {
+						HeartStoneEntity heartStone = new HeartStoneEntity(entity.world, entity.getPosition());
 
-						entity.world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundsRegister.HEART_STONE_SPAWN, SoundCategory.MASTER, 1.0f, 1.0f);
-						entity.world.spawnEntity(heartStone);
+						entity.world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), AoASounds.HEART_STONE_SPAWN.get(), SoundCategory.MASTER, 1.0f, 1.0f);
+						entity.world.addEntity(heartStone);
 					}
 
-					if (entity.world.provider.getDimension() == -1 && ev.getSource().damageType.contains("explosion") && AdventOfAscension.rand.nextInt(4) == 0)
-						entity.entityDropItem(new ItemStack(ItemRegister.EXPLOSIVE_IDOL), 0);
+					if (entity.world.getDimension().getType() == DimensionType.THE_NETHER && ev.getSource().damageType.contains("explosion") && RandomUtil.oneInNChance(4))
+						entity.entityDropItem(new ItemStack(AoAItems.EXPLOSIVE_IDOL.get()), 0);
 
 					float hunterXp = HunterUtil.getHunterXp(entity);
 
 					if (hunterXp > 0)
-						PlayerUtil.giveXpToPlayer(killerPlayer, Enums.Skills.HUNTER, hunterXp);
+						PlayerUtil.giveXpToPlayer((ServerPlayerEntity)killerPlayer, Skills.HUNTER, hunterXp);
 				}
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onEntityUpdate(LivingEvent.LivingUpdateEvent ev) {
-		if (ev.getEntityLiving().world.isRemote && ConfigurationUtil.MainConfig.funOptions.partyDeaths && ev.getEntityLiving().deathTime >= 19) {
-			AxisAlignedBB boundingBox = ev.getEntity().getEntityBoundingBox();
+	public static void onEntityUpdate(LivingEvent.LivingUpdateEvent ev) {
+		if (ev.getEntityLiving().world.isRemote && AoAConfig.CLIENT.partyDeaths.get() && ev.getEntityLiving().deathTime >= 19) {
+			AxisAlignedBB boundingBox = ev.getEntity().getBoundingBox();
 			double width = boundingBox.maxX - boundingBox.minX;
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
-			Random rand = AdventOfAscension.rand;
 
 			for (int i = 0; i < 3 + (10 * width * depth * height); i++) {
-				ev.getEntityLiving().world.spawnParticle(ParticleRegister.RAINBOW_FLUFFY, boundingBox.minX + rand.nextDouble() * width, boundingBox.minY + rand.nextDouble() * height, boundingBox.minZ + rand.nextDouble() * depth, rand.nextGaussian() * 0.05, 0, rand.nextGaussian() * 0.05, 3, 30);
+				ev.getEntityLiving().world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.03f, 3, 0), boundingBox.minX + RandomUtil.randomValueUpTo(width), boundingBox.minY + RandomUtil.randomValueUpTo(height), boundingBox.minZ + RandomUtil.randomValueUpTo(depth), RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d));
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onSpawnerSpawn(LivingSpawnEvent.SpecialSpawn ev) {
+	public static void onSpawnerSpawn(LivingSpawnEvent.SpecialSpawn ev) {
 		if (ev.getSpawner() != null && HunterUtil.isHunterCreature(ev.getEntityLiving()))
-			ev.getEntityLiving().getEntityData().setBoolean("IsHunterSpawnerMob", true);
+			ev.getEntityLiving().getPersistentData().putBoolean("IsHunterSpawnerMob", true);
 	}
 
 	@SubscribeEvent
-	public void onLivingTarget(LivingSetAttackTargetEvent ev) {
-		if (!ev.getEntityLiving().world.isRemote && ev.getEntityLiving() instanceof EntityLiving && (ev.getTarget() instanceof EntityPlayer || ev.getTarget() instanceof EntityTameable)) {
+	public static void onLivingTarget(LivingSetAttackTargetEvent ev) {
+		if (!ev.getEntityLiving().world.isRemote && ev.getEntityLiving() instanceof MobEntity && (ev.getTarget() instanceof PlayerEntity || ev.getTarget() instanceof TameableEntity)) {
 			int hunterLvl = HunterUtil.getHunterLevel(ev.getEntityLiving());
-			EntityPlayer pl;
+			PlayerEntity pl;
 
-			if (hunterLvl > 1 && !ev.getEntityLiving().getEntityData().getBoolean("IsHunterSpawnerMob")) {
+			if (hunterLvl > 1 && !ev.getEntityLiving().getPersistentData().getBoolean("IsHunterSpawnerMob")) {
 				pl = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getTarget());
 
-				if (pl != null && PlayerUtil.getAdventPlayer(pl).stats().getLevel(Enums.Skills.HUNTER) < hunterLvl) {
-					((EntityLiving)ev.getEntityLiving()).setAttackTarget(null);
-				}
+				if (pl instanceof ServerPlayerEntity && !PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)pl, Skills.HUNTER, hunterLvl))
+					((MobEntity)ev.getEntityLiving()).setAttackTarget(null);
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public void onEntityAttacked(LivingAttackEvent ev) {
+	public static void onEntityAttacked(LivingAttackEvent ev) {
 		if (!HunterUtil.canAttackTarget(ev.getEntityLiving(), ev.getSource().getTrueSource(), true))
 			ev.setCanceled(true);
 	}
 
-	// Patch in block protection for Wither & EnderDragon to fix vanilla shortfalls
 	@SubscribeEvent
-	public void onEntityDestroyBlock(LivingDestroyBlockEvent ev) {
-		if (ev.getEntity() instanceof EntityFireball) {
-			if (ev.getState().getBlock().getExplosionResistance(ev.getEntity()) >= 1000000)
-				ev.setCanceled(true);
-		}
-		else if (ev.getState().getBlockHardness(ev.getEntity().getEntityWorld(), ev.getPos()) < 0) {
-			ev.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent
-	public void onEntityJoinWorld(EntityJoinWorldEvent ev) {
+	public static void onEntityJoinWorld(EntityJoinWorldEvent ev) {
 		if (!ev.getWorld().isRemote) {
-			if (ev.getEntity() instanceof EntityFishHook) {
-				EntityFishHook hook = (EntityFishHook)ev.getEntity();
-				EntityPlayerMP fisher = (EntityPlayerMP)hook.getAngler();
+			if (ev.getEntity() instanceof FishingBobberEntity) {
+				FishingBobberEntity hook = (FishingBobberEntity)ev.getEntity();
+				ServerPlayerEntity fisher = (ServerPlayerEntity)hook.getAngler();
 
-				if (fisher != null && PlayerUtil.isWearingFullSet(fisher, Enums.ArmourSets.HAULING)) {
-					ItemStack stack = fisher.getHeldItem(EnumHand.MAIN_HAND);
+				if (fisher != null && PlayerUtil.isWearingFullSet(fisher, AdventArmour.Type.HAULING)) {
+					ItemStack stack = fisher.getHeldItem(Hand.MAIN_HAND);
 
-					if (!(stack.getItem() instanceof ItemFishingRod))
-						stack = fisher.getHeldItem(EnumHand.OFF_HAND);
+					if (!(stack.getItem() instanceof FishingRodItem))
+						stack = fisher.getHeldItem(Hand.OFF_HAND);
 
-					if (stack.getItem() instanceof ItemFishingRod)
-						hook.setLureSpeed(Math.min(5, 2 + EnchantmentHelper.getFishingSpeedBonus(stack)));
+					if (stack.getItem() instanceof FishingRodItem)
+						hook.lureSpeed = Math.min(5, 2 + EnchantmentHelper.getFishingSpeedBonus(stack));
 				}
 			}
-			else if (ev.getEntity() instanceof EntityWither) {
-				if (ev.getWorld().provider.getDimension() == -1) {
-					for (EntityPlayer pl : ev.getWorld().getEntitiesWithinAABB(EntityPlayer.class, ev.getEntity().getEntityBoundingBox().grow(50))) {
-						if (ItemUtil.findInventoryItem(pl, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
-							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(ItemRegister.ABYSS_REALMSTONE));
+			else if (ev.getEntity() instanceof WitherEntity) {
+				if (ev.getWorld().getDimension().getType() == DimensionType.THE_NETHER) {
+					for (PlayerEntity pl : ev.getWorld().getEntitiesWithinAABB(PlayerEntity.class, ev.getEntity().getBoundingBox().grow(50))) {
+						if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.ABYSS_REALMSTONE.get()));
 					}
 				}
 			}
@@ -163,30 +149,17 @@ public class EntityEvents {
 	}
 
 	@SubscribeEvent
-	public void onLootDrops(LivingDropsEvent ev) {
+	public static void onLootDrops(LivingDropsEvent ev) {
 		if (!ev.getEntityLiving().world.isRemote) {
-			if (ev.getEntityLiving().world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.ancientCavern && ev.getEntityLiving().isNonBoss()) {
+			if (ev.getEntityLiving().world.getDimension().getType() == AoADimensions.ANCIENT_CAVERN.type() && ev.getEntityLiving().isNonBoss()) {
 				ev.getDrops().clear();
 				ev.setCanceled(true);
 
 				return;
 			}
 
-			if (ev.getEntityLiving() instanceof EntityWither) { // Patch in a loot table for Wither to fix vanilla shortfalls
-				EntityWither wither = (EntityWither)ev.getEntityLiving();
-				LootTable lootTable = wither.world.getLootTableManager().getLootTableFromLocation(LootSystemRegister.entityWither);
-				LootContext.Builder builder = (new LootContext.Builder((WorldServer)wither.world)).withLootedEntity(wither).withDamageSource(ev.getSource());
-
-				if (ev.isRecentlyHit() && wither.getAttackingEntity() instanceof EntityPlayer)
-					builder = builder.withPlayer((EntityPlayer)wither.getAttackingEntity()).withLuck(((EntityPlayer)wither.getAttackingEntity()).getLuck());
-
-				for (ItemStack stack : lootTable.generateLootForPools(wither.getRNG(), builder.build())) {
-					wither.entityDropItem(stack, 0);
-				}
-			}
-
 			if (HunterUtil.isHunterCreature(ev.getEntityLiving())) {
-				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof EntityPlayer) || (!((EntityPlayer)ev.getSource().getTrueSource()).capabilities.isCreativeMode && !HunterUtil.doesPlayerMeetHunterReq(ev.getEntityLiving(), (EntityPlayer)ev.getSource().getTrueSource()))) {
+				if (!ev.isRecentlyHit() || !(ev.getSource().getTrueSource() instanceof PlayerEntity) || (!HunterUtil.canAttackTarget(ev.getEntityLiving(), ev.getSource().getTrueSource(), false))) {
 					ev.getDrops().clear();
 					ev.setCanceled(true);
 				}

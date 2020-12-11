@@ -1,33 +1,31 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
-import net.minecraft.block.BlockObsidian;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class OrnamytePickaxe extends BasePickaxe {
 	public OrnamytePickaxe() {
-		super("OrnamytePickaxe", "ornamyte_pickaxe", MaterialsRegister.TOOL_ORNAMYTE);
+		super(ItemUtil.customItemTier(2750, 10.0f, 6.0f, 5, 14, null));
 	}
 
 	@Override
-	public float getDestroySpeed(ItemStack stack, IBlockState state) {
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		float efficiency = super.getDestroySpeed(stack, state);
 
-		return state.getBlock() instanceof BlockObsidian ? efficiency * 10f : efficiency;
+		return state.getBlock() == Blocks.OBSIDIAN ? efficiency * 10f : efficiency;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.OrnamytePickaxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,30 +1,30 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.gyro.EntityGyro;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class ToyBox extends BossAltarBlock {
 	public ToyBox() {
-		super("ToyBox", "toy_box");
+		super(MaterialColor.BLUE);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityGyro gyro = new EntityGyro(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		/*GyroEntity gyro = new GyroEntity(player.world);
 
 		gyro.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.spawnEntity(gyro);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.gyro.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(gyro);*/
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.gyro.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.TOY_GYROCOPTER;
+		return AoAItems.TOY_GYROCOPTER.get();
 	}
 }

@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntitySpikeback;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.SpikebackEntity;
 
 public class SpikebackSlab extends BaseSlab {
 	public SpikebackSlab() {
-		super("SpikebackSlab", "spikeback_slab", 16, 140, 16, 220);
+		super(16, 140, 16, 220);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntitySpikeback spikeback = new EntitySpikeback(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		SpikebackEntity spikeback = new SpikebackEntity(AoAEntities.Minions.SPIKEBACK.get(), pl.world);
 
-		spikeback.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		spikeback.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		spikeback.setTamedBy(pl);
-		pl.world.spawnEntity(spikeback);
+		pl.world.addEntity(spikeback);
 
 		return spikeback;
 	}

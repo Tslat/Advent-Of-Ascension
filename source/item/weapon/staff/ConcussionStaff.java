@@ -1,43 +1,38 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class ConcussionStaff extends BaseStaff {
+public class ConcussionStaff extends BaseStaff<List<LivingEntity>> {
 	public ConcussionStaff(int durability) {
 		super(durability);
-		setTranslationKey("ConcussionStaff");
-		setRegistryName("aoa3:concussion_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.CONCUSSION_STAFF_CAST;
+		return AoASounds.ITEM_CONCUSSION_STAFF_CAST.get();
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(8), PredicateUtil.IS_HOSTILE_MOB);
+	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(8), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -47,23 +42,22 @@ public class ConcussionStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.POWER_RUNE, 4);
-		runes.put(ItemRegister.STORM_RUNE, 4);
+		runes.put(AoAItems.POWER_RUNE.get(), 4);
+		runes.put(AoAItems.STORM_RUNE.get(), 4);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (EntityLivingBase e : (List<EntityLivingBase>)args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
+		for (LivingEntity e : args) {
 			EntityUtil.pushEntityAway(caster, e, 3f);
-			WorldUtil.createExplosion(caster, e.world, e.posX, e.posY + e.height + 0.5, e.posZ, 2.3f);
-			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 25, 10, true, true));
+			WorldUtil.createExplosion(caster, e.world, e.getPosX(), e.getPosY() + e.getHeight() + 0.5, e.getPosZ(), 2.3f);
+			EntityUtil.applyPotions(e, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 25).level(10));
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ConcussionStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,65 +1,69 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.entity.boss.skeletalarmy.*;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.boss.SkeletronEntity;
+import net.tslat.aoa3.entity.mob.precasia.*;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.Random;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {
-		super("ArmyBlock", "army_block");
-
-		setTickRandomly(true);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GREEN_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE).tickRandomly());
 	}
 
 	@Override
-	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
-		if (!player.world.isRemote && player.world.getEntitiesWithinAABB(EntityMob.class, new AxisAlignedBB(pos).grow(100), entity -> entity instanceof EntitySkeleElder || entity instanceof EntitySkeletron).size() == 0) {
-			EntitySkeleElder skeleElder = new EntitySkeleElder(player.world, pos, 0);
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		if (!player.world.isRemote && player.world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(pos).grow(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
+			SkeleElderEntity skeleElder = new SkeleElderEntity(player.world, pos, 0);
 
 			skeleElder.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
 
-			player.world.spawnEntity(skeleElder);
+			player.world.addEntity(skeleElder);
 		}
 
 		return false;
 	}
 
 	@Override
-	public void randomTick(World world, BlockPos pos, IBlockState state, Random random) {
-		if (!world.isRemote && random.nextBoolean() && world.getEntitiesWithinAABB(EntitySkeleElder.class, new AxisAlignedBB(pos).grow(100)).isEmpty())
-			world.spawnEntity(new EntitySkeleElder(world, pos, 0));
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		if (!world.isRemote && rand.nextBoolean() && world.getEntitiesWithinAABB(SkeleElderEntity.class, new AxisAlignedBB(pos).grow(100)).isEmpty())
+			world.addEntity(new SkeleElderEntity(world, pos, 0));
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		spawnWave(player.world, blockPos, 1);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.skeletalArmy.spawn", player.getDisplayNameString()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	private static void spawnWaveEntities(World world, BlockPos armyBlockPos, Entity... entities) {
 		for (Entity entity : entities) {
-			int posX = armyBlockPos.getX() - 17 + AdventOfAscension.rand.nextInt(23);
-			int posZ = armyBlockPos.getZ() - 11 + AdventOfAscension.rand.nextInt(19);
-			BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(posX, armyBlockPos.getY(), posZ);
+			int posX = armyBlockPos.getX() - 17 + RandomUtil.randomNumberUpTo(23);
+			int posZ = armyBlockPos.getZ() - 11 + RandomUtil.randomNumberUpTo(19);
+			BlockPos.Mutable checkPos = new BlockPos.Mutable(posX, armyBlockPos.getY(), posZ);
 
-			while (checkPos.getY() < world.getHeight() && !world.isAirBlock(checkPos.move(EnumFacing.UP))) {
+			while (checkPos.getY() < world.getHeight() && !world.isAirBlock(checkPos.move(Direction.UP))) {
 				;
 			}
 
 			entity.setPosition(posX, checkPos.getY(), posZ);
-			world.spawnEntity(entity);
+			world.addEntity(entity);
 		}
 	}
 
@@ -69,400 +73,400 @@ public class ArmyBlock extends BossAltarBlock {
 			switch (wave) {
 				case 1:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 2:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 3:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkeleHopper(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 4:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 5:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 6:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 7:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 8:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 9:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 10:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 11:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 12:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 13:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 14:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 15:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 16:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 17:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 18:
 					spawnWaveEntities(world, blockPos,
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 19:
 					spawnWaveEntities(world, blockPos,
-							new EntitySkelePig(world),
-							new EntitySkelePig(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleHopper(world),
-							new EntitySkeleman(world),
-							new EntitySkeleman(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkelePigEntity(AoAEntities.Mobs.SKELE_PIG.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkeleHopperEntity(AoAEntities.Mobs.SKELE_HOPPER.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new SkelemanEntity(AoAEntities.Mobs.SKELEMAN.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 20:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 21:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 22:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 23:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 24:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 25:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 26:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 27:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 28:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 29:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 30:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 31:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 32:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 33:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkelePig(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 34:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleHopper(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 35:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 36:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world),  
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkelePig(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleHopper(world),
-							new EntityStrongSkeleman(world),
-							new EntityStrongSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),  
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkelePigEntity(AoAEntities.Mobs.STRONG_SKELE_PIG.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkeleHopperEntity(AoAEntities.Mobs.STRONG_SKELE_HOPPER.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new StrongSkelemanEntity(AoAEntities.Mobs.STRONG_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 37:
 					spawnWaveEntities(world, blockPos,
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 38:
 					spawnWaveEntities(world, blockPos, 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world), 
-							new EntityEliteSkelePig(world),
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world), 
-							new EntityEliteSkeleHopper(world),
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world), 
-							new EntityEliteSkeleman(world),
-							new EntitySkeleElder(world, blockPos, wave));
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world), 
+							new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), world),
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world), 
+							new EliteSkeleHopperEntity(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), world),
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world), 
+							new EliteSkelemanEntity(AoAEntities.Mobs.ELITE_SKELEMAN.get(), world),
+							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 39:
-					world.spawnEntity(new EntitySkeletron(world, blockPos));
+					world.addEntity(new SkeletronEntity(world, blockPos));
 					break;
 				default:
 					break;

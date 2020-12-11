@@ -1,61 +1,60 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.container.InfusionTableContainer;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.item.misc.InfusionStone;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class InfusionTable extends Block {
 	public InfusionTable() {
-		super(Material.ROCK);
-		setTranslationKey("InfusionTable");
-		setRegistryName("aoa3:infusion_table");
-		setHardness(10.0f);
-		setResistance(15.0f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 10, 15, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player instanceof ServerPlayerEntity) {
 			ItemStack stack = player.getHeldItem(hand);
 			Item item = stack.getItem();
 
 			if (item instanceof InfusionStone) {
-				PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 				InfusionStone stone = (InfusionStone)item;
 				int count = stack.getCount();
 
-				if (player.capabilities.isCreativeMode || plData.stats().getLevel(Enums.Skills.INFUSION) >= stone.getLvl()) {
-					plData.stats().addXp(Enums.Skills.INFUSION, stone.getXp() * count, false, false);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.INFUSION_SUCCESS, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				if (player.isCreative() || plData.stats().getLevel(Skills.INFUSION) >= stone.getLvl()) {
+					plData.stats().addXp(Skills.INFUSION, stone.getXp() * count, false, false);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_INFUSION_TABLE_CONVERT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
-					int chanceMod = plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.INFUSION ? 33 : 100;
+					int chanceMod = plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.INFUSION ? 33 : 100;
 					int powerStoneCount = 0;
 
 					for (int i = 0; i < count; i++) {
-						if (AdventOfAscension.rand.nextInt(chanceMod) == 0)
+						if (RandomUtil.oneInNChance(chanceMod))
 							powerStoneCount++;
 					}
 
-					if (!player.capabilities.isCreativeMode) {
+					if (!player.isCreative()) {
 						if (powerStoneCount > 0) {
 							player.setHeldItem(hand, new ItemStack(stone.getPowerStone(), powerStoneCount));
 						}
@@ -69,10 +68,10 @@ public class InfusionTable extends Block {
 				}
 			}
 			else {
-				player.openGui(AdventOfAscension.instance(), Enums.ModGuis.INFUSION_TABLE.guiId, world, pos.getX(), pos.getY(), pos.getZ());
+				InfusionTableContainer.openContainer((ServerPlayerEntity)player, pos);
 			}
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 }

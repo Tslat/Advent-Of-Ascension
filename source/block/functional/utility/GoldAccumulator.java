@@ -1,44 +1,46 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.constant.Deities;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class GoldAccumulator extends Block {
 	public GoldAccumulator() {
-		super(Material.ROCK);
-		setTranslationKey("GoldAccumulator");
-		setRegistryName("aoa3:gold_accumulator");
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(null);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GOLD, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() == ItemRegister.IMPURE_GOLD) {
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getHeldItem(hand).getItem() == AoAItems.IMPURE_GOLD.get()) {
+			if (player instanceof ServerPlayerEntity) {
+				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
-			if (!player.capabilities.isCreativeMode)
-				player.getHeldItem(hand).shrink(1);
+				if (!player.isCreative())
+					player.getHeldItem(hand).shrink(1);
 
-			plData.stats().addTribute(Enums.Deities.PLUTON, Math.min(100 - plData.stats().getTribute(Enums.Deities.PLUTON), 20));
+				plData.stats().addTribute(Deities.PLUTON, Math.min(100 - plData.stats().getTribute(Deities.PLUTON), 20));
 
-			if (plData.stats().getTribute(Enums.Deities.PLUTON) >= 100)
-				plData.sendThrottledChatMessage("message.feedback.immortallisProgression.goldEnd",  player.getDisplayNameString());
+				if (plData.stats().getTribute(Deities.PLUTON) >= 100)
+					plData.sendThrottledChatMessage("message.feedback.immortallisProgression.goldEnd", player.getDisplayName().getFormattedText());
+			}
+
+			return ActionResultType.SUCCESS;
 		}
 
-		return true;
+		return ActionResultType.PASS;
 	}
 }

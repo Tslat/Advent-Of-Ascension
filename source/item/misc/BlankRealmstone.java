@@ -1,74 +1,67 @@
 package net.tslat.aoa3.item.misc;
 
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityHusk;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.monster.HuskEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.capabilities.interfaces.CapabilityBaseMiscStack;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.minecraftforge.fml.DistExecutor;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityHandles;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.mobs.precasia.EntityPrimitiveCarrotop;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.entity.mob.precasia.PrimitiveCarrotopEntity;
+import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-import static net.tslat.aoa3.advent.AdventOfAscension.rand;
-
 public class BlankRealmstone extends Item {
 	public BlankRealmstone() {
-		setTranslationKey("BlankRealmstone");
-		setRegistryName("aoa3:blank_realmstone");
-		setMaxStackSize(1);
-		setCreativeTab(CreativeTabsRegister.MISC);
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		if (world.isRemote)
-			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.REALMSTONE_MENU.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> SidedUtil::displayBlankRealmstoneGui);
 
-		return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+		return ActionResult.resultSuccess(player.getHeldItem(hand));
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(EntityItem entityItem) {
-		if (!entityItem.world.isRemote) {
-			if (entityItem.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.precasia) {
-				BlockPos pos = entityItem.getPosition();
-				IBlockState state = entityItem.world.getBlockState(pos);
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+		if (!entity.world.isRemote) {
+			if (entity.world.getDimension().getType() == AoADimensions.PRECASIA.type()) {
+				BlockPos pos = entity.getPosition();
+				BlockState state = entity.world.getBlockState(pos);
 
-				if (state.getBlock() == Blocks.CARROTS && ((BlockCrops)state.getBlock()).isMaxAge(state)) {
-					EntityPrimitiveCarrotop carrotop = new EntityPrimitiveCarrotop(entityItem.world);
+				if (state.getBlock() == Blocks.CARROTS && ((CropsBlock)state.getBlock()).isMaxAge(state)) {
+					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAEntities.Mobs.PRIMITIVE_CARROTOP.get(), entity.world);
 
 					carrotop.setPosition(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
-					entityItem.world.spawnEntity(carrotop);
-					entityItem.setDead();
-					entityItem.world.setBlockToAir(entityItem.getPosition());
+					entity.world.addEntity(carrotop);
+					entity.remove();
+					entity.world.setBlockState(entity.getPosition(), Blocks.AIR.getDefaultState());
 				}
 			}
 		}
@@ -77,12 +70,12 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
-		if (player.world.provider.getDimension() == ConfigurationUtil.MainConfig.dimensionIds.creeponia && target instanceof AoATrader) {
-			if (!player.world.isRemote && ItemUtil.isPlayerEnvironmentallyProtected(player) && player.getHeldItem(hand).getItem() == ItemRegister.BLANK_REALMSTONE) {
+	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+		if (player.world.getDimension().getType() == AoADimensions.CREEPONIA.type() && target instanceof AoATrader) {
+			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getHeldItem(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setHeldItem(hand, ItemStack.EMPTY);
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.VOX_PONDS_REALMSTONE));
-				PlayerUtil.notifyPlayer((EntityPlayerMP)player, StringUtil.getLocaleString("message.dialogue.creeponiaBlankRealmstone." + rand.nextInt(3)));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, LocaleUtil.getLocaleString("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
 			}
 
 			return true;
@@ -92,50 +85,46 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		if (!attacker.world.isRemote && target.getHealth() <= 0 && target instanceof EntityHusk && attacker instanceof EntityPlayer)
-			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.BARATHOS_REALMSTONE));
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (!attacker.world.isRemote && target.getHealth() <= 0 && target instanceof HuskEntity && attacker instanceof PlayerEntity)
+			attacker.setHeldItem(Hand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
 
 		return super.hitEntity(stack, target, attacker);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new AdventMiscStackProvider();
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		return new VolatileStackCapabilityProvider();
 	}
 
-	public static void handleAncientCavernTask(ItemStack stack, EntityLivingBase construct, EntityPlayer player) {
-		CapabilityBaseMiscStack cap = stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
+	public static void handleAncientCavernTask(ItemStack stack, LivingEntity construct, PlayerEntity player) {
+		VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
+		HashMap<Class<? extends LivingEntity>, Long> constructKillMap;
+		long currentWorldTime = construct.world.getGameTime();
 
-		if (cap != null) {
-			HashMap<Class<? extends EntityLivingBase>, Long> constructKillMap;
-			long currentWorldTime = construct.world.getTotalWorldTime();
+		if (cap.getObject() == null) {
+			constructKillMap = new HashMap<Class<? extends LivingEntity>, Long>(5);
+		}
+		else {
+			constructKillMap = (HashMap<Class<? extends LivingEntity>, Long>)cap.getObject();
+		}
 
-			if (cap.getObject() == null) {
-				constructKillMap = new HashMap<Class<? extends EntityLivingBase>, Long>(5);
-			}
-			else {
-				constructKillMap = (HashMap<Class<? extends EntityLivingBase>, Long>)cap.getObject();
-			}
+		constructKillMap.entrySet().removeIf(entry -> entry.getValue() < currentWorldTime - 600);
+		constructKillMap.put(construct.getClass(), currentWorldTime);
 
-			constructKillMap.entrySet().removeIf(entry -> entry.getValue() < currentWorldTime - 600);
-			constructKillMap.put(construct.getClass(), currentWorldTime);
-
-			if (constructKillMap.size() >= 5) {
-				stack.shrink(1);
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.ANCIENT_CAVERN_REALMSTONE));
-			}
-			else {
-				cap.setObject(constructKillMap);
-			}
+		if (constructKillMap.size() >= 5) {
+			stack.shrink(1);
+			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.ANCIENT_CAVERN_REALMSTONE.get()));
+		}
+		else {
+			cap.setObject(constructKillMap);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.BlankRealmstone.desc.1"));
-		tooltip.add(StringUtil.getLocaleString("item.BlankRealmstone.desc.2"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}
 }

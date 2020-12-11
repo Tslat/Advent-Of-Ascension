@@ -1,32 +1,31 @@
 package net.tslat.aoa3.item.tablet;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.misc.tablet.EntityAgilityTablet;
-import net.tslat.aoa3.entity.misc.tablet.EntitySoulTablet;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.tablet.AgilityTabletEntity;
+import net.tslat.aoa3.entity.tablet.SoulTabletEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class AgilityTablet extends TabletItem {
-	public AgilityTablet(String name, String registryName, float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
-		super(name, registryName, placementCost, tickSoulDrain, levelReq, effectRadius);
+	public AgilityTablet() {
+		super(15f, 0.168f, 17, 15);
 	}
 
 	@Override
-	protected EntitySoulTablet getTabletEntity(World world, EntityPlayer placer) {
-		return new EntityAgilityTablet(world, placer);
+	protected SoulTabletEntity getTabletEntity(World world, ServerPlayerEntity placer) {
+		return new AgilityTabletEntity(AoAEntities.Misc.AGILITY_TABLET.get(), world, placer);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.AgilityTablet.desc.1"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

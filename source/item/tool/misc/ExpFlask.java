@@ -1,46 +1,37 @@
 package net.tslat.aoa3.item.tool.misc;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.UseAction;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.interfaces.CapabilityBaseMiscStackSerializable;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackSerializeableProvider;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
+import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class ExpFlask extends Item {
 	public ExpFlask() {
-		setTranslationKey("ExpFlask");
-		setRegistryName("aoa3:exp_flask");
-		setCreativeTab(CreativeTabsRegister.TOOLS);
-		setMaxStackSize(1);
-		addPropertyOverride(new ResourceLocation("filled"), new IItemPropertyGetter() {
-			@Override
-			@SideOnly(Side.CLIENT)
-			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-				CapabilityBaseMiscStackSerializable cap = getCapability(stack);
+		super(new Item.Properties().group(AoAItemGroups.TOOLS).maxStackSize(1));
 
-				return cap == null || cap.getValue() <= 0 ? 0 : 1;
-			}
+		addPropertyOverride(new ResourceLocation("filled"), (stack, world, entity) -> {
+			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
+
+			return cap.getValue() <= 0 ? 0 : 1;
 		});
 	}
 
@@ -50,41 +41,41 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.DRINK;
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 100;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 
 		if (!world.isRemote) {
-			CapabilityBaseMiscStackSerializable cap = getCapability(stack);
+			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-			if (cap == null || cap.getValue() <= 0)
-				return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			if (cap.getValue() <= 0)
+				return ActionResult.resultFail(stack);
 
 			player.setActiveHand(hand);
 		}
 
-		return ActionResult.newResult(EnumActionResult.PASS, stack);
+		return ActionResult.resultPass(stack);
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, EntityLivingBase entity, int count) {
-		if (!entity.world.isRemote && entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer)entity;
-			CapabilityBaseMiscStackSerializable cap = getCapability(stack);
+	public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
+		if (entity instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity)entity;
+			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() > 0) {
 				int xpChange = (int)Math.min(1 + ((int)(player.experienceLevel / 15f)), cap.getValue());
 
-				player.addExperience(xpChange);
+				player.giveExperiencePoints(xpChange);
 				cap.setValue(cap.getValue() - xpChange);
 
 				if (cap.getValue() == 0)
@@ -95,54 +86,45 @@ public class ExpFlask extends Item {
 
 	@Nullable
 	@Override
-	public NBTTagCompound getNBTShareTag(ItemStack stack) {
-		NBTTagCompound tag = super.getNBTShareTag(stack);
+	public CompoundNBT getShareTag(ItemStack stack) {
+		CompoundNBT tag = super.getShareTag(stack);
 
 		if (tag == null)
-			tag = new NBTTagCompound();
+			tag = new CompoundNBT();
 
-		tag.setFloat("AdventMiscStackCapability", getCapability(stack).getValue());
+		tag.putFloat("AdventMiscStackCapability", PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue());
 
 		return tag;
 	}
 
 	@Override
-	public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		if (nbt != null && nbt.hasKey("AdventMiscStackCapability"))
-			getCapability(stack).setValue(nbt.getFloat("AdventMiscStackCapability"));
+	public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+		if (nbt != null && nbt.contains("AdventMiscStackCapability"))
+			PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(nbt.getFloat("AdventMiscStackCapability"));
 
-		super.readNBTShareTag(stack, nbt);
+		super.readShareTag(stack, nbt);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new AdventMiscStackSerializeableProvider();
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		return new PersistentStackCapabilityProvider(null);
 	}
 
-	public static CapabilityBaseMiscStackSerializable getCapability(ItemStack stack) {
-		return stack.getCapability(AdventMiscStackSerializeableProvider.MISC_STACK, null);
-	}
+	public static void addExp(ItemStack stack, int xp) {
+		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-	public static void addExp(EntityPlayerMP player, int slot, ItemStack stack, int xp) {
-		CapabilityBaseMiscStackSerializable cap = getCapability(stack);
-
-		if (cap != null) {
-			cap.setValue(cap.getValue() + xp);
-		}
+		cap.setValue(cap.getValue() + xp);
 	}
 
 	public static void setExp(ItemStack stack, int xp) {
-		CapabilityBaseMiscStackSerializable cap = getCapability(stack);
-
-		if (cap != null)
-			cap.setValue(xp);
+		PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(xp);
 	}
 
 	public static boolean consumeExp(ItemStack stack, int xp) {
-		CapabilityBaseMiscStackSerializable cap = getCapability(stack);
+		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-		if (cap != null && cap.getValue() >= xp) {
+		if (cap.getValue() >= xp) {
 			cap.setValue(cap.getValue() - xp);
 
 			return true;
@@ -151,15 +133,14 @@ public class ExpFlask extends Item {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-		int storedValue = (int)getCapability(stack).getValue();
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		int storedValue = (int)PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue();
 
 		if (storedValue > 0)
-			tooltip.add(StringUtil.getColourLocaleStringWithArguments("item.ExpFlask.desc.1", TextFormatting.GOLD, StringUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : "")));
+			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : "")));
 
-		tooltip.add(StringUtil.getLocaleString("item.ExpFlask.desc.2"));
-		tooltip.add(StringUtil.getLocaleString("item.ExpFlask.desc.3"));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 3));
 	}
 }

@@ -1,20 +1,23 @@
 package net.tslat.aoa3.library.scheduling.sync;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ModUtil;
+import net.tslat.aoa3.library.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.PotionUtil;
+
+import java.util.Arrays;
 
 public class UltimatumStaffTask implements Runnable {
 	private final int startingTick;
-	private final EntityLivingBase shooter;
-	private final EntityLivingBase target;
+	private final LivingEntity shooter;
+	private final LivingEntity target;
 	private final BlockPos shooterPos;
 	private final BlockPos targetPos;
 	private final float shooterStartHealth;
@@ -22,7 +25,7 @@ public class UltimatumStaffTask implements Runnable {
 
 	private boolean targetTurn = true;
 
-	public UltimatumStaffTask(EntityLivingBase shooter, EntityLivingBase target) {
+	public UltimatumStaffTask(LivingEntity shooter, LivingEntity target) {
 		this.startingTick = GlobalEvents.tick;
 		this.shooter = shooter;
 		this.target = target;
@@ -31,27 +34,18 @@ public class UltimatumStaffTask implements Runnable {
 		this.shooterStartHealth = shooter.getHealth();
 		this.targetStartHealth = target.getHealth();
 
-		target.motionX = 0;
-		target.motionY = 0;
-		target.motionZ = 0;
-		shooter.motionX = 0;
-		shooter.motionY = 0;
-		shooter.motionZ = 0;
+		target.setMotion(0, 0, 0);
+		shooter.setMotion(0, 0, 0);
 
-		EntityUtil.safelyRemovePotionEffects(target, MobEffects.REGENERATION);
-		target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 210, 100, true, false));
-		target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 210, 50, true, false));
-		target.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 210, 5, true, false));
-		target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 210, 0, true, false));
-		target.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 510, 0, true, false));
-		target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 210, -1, true, false));
-		EntityUtil.safelyRemovePotionEffects(target, MobEffects.REGENERATION);
-		shooter.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 210, 100, true, false));
-		shooter.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 210, 50, true, false));
-		shooter.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 210, 5, true, false));
-		shooter.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 510, 5, true, false));
-		shooter.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 210, 0, true, false));
-		shooter.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 210, -1, true, false));
+		EntityUtil.removePotions(target, Effects.REGENERATION);
+		EntityUtil.removePotions(shooter, Effects.REGENERATION);
+		EntityUtil.applyPotions(Arrays.asList(target, shooter),
+				new PotionUtil.EffectBuilder(Effects.SLOWNESS, 210).level(100).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.WEAKNESS, 210).level(50).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.RESISTANCE, 210).level(5).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 510).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.BLINDNESS, 210).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.LEVITATION, 210).level(-1).hideParticles());
 	}
 
 	@Override
@@ -75,42 +69,40 @@ public class UltimatumStaffTask implements Runnable {
 
 			if (targetPostHealth <= 0) {
 				resetStates();
-				EntityUtil.dealMagicDamage(null, shooter, target, target.getHealth() - targetPostHealth, true);
+				DamageUtil.dealMagicDamage(null, shooter, target, target.getHealth() - targetPostHealth, true);
 
-				target.motionX = 0;
-				target.motionY = 0;
-				target.motionZ = 0;
+				target.setMotion(0, 0, 0);
 			}
 			else {
 				target.setHealth(targetPostHealth);
 			}
 
-			((WorldServer)shooter.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, target.posX, target.posY + target.height, target.posZ, (int)Math.ceil(10 * healthPercent), 0, 0, 0, (double)0);
+			((ServerWorld)shooter.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, target.getPosX(), target.getPosY() + target.getHeight(), target.getPosZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 		}
 		else {
-			if (!(shooter instanceof EntityPlayer) || !((EntityPlayer)shooter).capabilities.isCreativeMode) {
+			if (!(shooter instanceof PlayerEntity) || !((PlayerEntity)shooter).isCreative()) {
 				if (shooterPostHealth <= 0) {
 					resetStates();
-					EntityUtil.dealSelfHarmDamage(shooter, shooter.getHealth() - shooterPostHealth);
+					DamageUtil.dealSelfHarmDamage(shooter, shooter.getHealth() - shooterPostHealth);
 				}
 				else {
 					shooter.setHealth(shooterPostHealth);
 				}
 
-				((WorldServer)shooter.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, shooter.posX, shooter.posY + shooter.height, shooter.posZ, (int)Math.ceil(10 * healthPercent), 0, 0, 0, (double)0);
+				((ServerWorld)shooter.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, shooter.getPosX(), shooter.getPosY() + shooter.getHeight(), shooter.getPosZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 			}
 		}
 
 		targetTurn = !targetTurn;
 
-		ModUtil.scheduleSyncronisedTask(this, 1);
+		AoAScheduler.scheduleSyncronisedTask(this, 1);
 	}
 
 	private void resetStates() {
 		if (target.getHealth() > 0)
-			EntityUtil.safelyRemovePotionEffects(target, MobEffects.BLINDNESS, MobEffects.RESISTANCE, MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.LEVITATION, MobEffects.NIGHT_VISION);
+			EntityUtil.removePotions(target, Effects.BLINDNESS, Effects.RESISTANCE, Effects.WEAKNESS, Effects.SLOWNESS, Effects.LEVITATION, Effects.NIGHT_VISION);
 
 		if (shooter.getHealth() > 0)
-			EntityUtil.safelyRemovePotionEffects(shooter, MobEffects.BLINDNESS, MobEffects.RESISTANCE, MobEffects.WEAKNESS, MobEffects.SLOWNESS, MobEffects.LEVITATION, MobEffects.NIGHT_VISION);
+			EntityUtil.removePotions(shooter, Effects.BLINDNESS, Effects.RESISTANCE, Effects.WEAKNESS, Effects.SLOWNESS, Effects.LEVITATION, Effects.NIGHT_VISION);
 	}
 }

@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityBlissard;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.BlissardEntity;
 
 public class BlissardSlab extends BaseSlab {
 	public BlissardSlab() {
-		super("BlissardSlab", "blissard_slab", 70, 180, 70, 2500);
+		super(70, 180, 70, 2500);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityBlissard blissard = new EntityBlissard(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		BlissardEntity blissard = new BlissardEntity(AoAEntities.Minions.BLISSARD.get(), pl.world);
 
-		blissard.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		blissard.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		blissard.setTamedBy(pl);
-		pl.world.spawnEntity(blissard);
+		pl.world.addEntity(blissard);
 
 		return blissard;
 	}

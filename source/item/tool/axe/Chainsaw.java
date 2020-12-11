@@ -1,56 +1,63 @@
 package net.tslat.aoa3.item.tool.axe;
 
-import net.minecraft.block.BlockLog;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumAction;
+import net.minecraft.block.Block;
+import net.minecraft.block.LogBlock;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.UseAction;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.ItemUtil;
 
-public class Chainsaw extends BaseAxe {
+public class Chainsaw extends AxeItem {
 	public Chainsaw() {
-		super("Chainsaw", "chainsaw", MaterialsRegister.TOOL_CHAINSAW, -2f);
+		super(ItemUtil.customItemTier(2500, 18.0f, 4.0f, 2, 0, null), 4.0f, -2F, new Properties().maxDamage(2500).group(AoAItemGroups.TOOLS));
 	}
 
 	@Override
-	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
+	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
 		return true;
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer pl) {
-		if (!pl.world.isRemote) {
-			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.CHAINSAW_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
+		if (!player.world.isRemote) {
+			player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-			if (pl.world.getBlockState(pos).getBlock() instanceof BlockLog)
-				pl.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10, 30, true, false));
+			Block block = player.world.getBlockState(pos).getBlock();
+
+			if (block instanceof LogBlock || block.isIn(BlockTags.LOGS))
+				player.addPotionEffect(new EffectInstance(Effects.HASTE, 10, 30, true, false));
 		}
 
 		return false;
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (!attacker.world.isRemote) {
-			attacker.world.playSound(null, attacker.posX, attacker.posY, attacker.posZ, SoundsRegister.CHAINSAW_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-			stack.damageItem(1, attacker);
+			attacker.world.playSound(null, attacker.getPosX(), attacker.getPosY(), attacker.getPosZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
 		}
 
 		return true;
 	}
 
 	@Override
-	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
+	public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker) {
 		return false;
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.NONE;
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.NONE;
 	}
 }

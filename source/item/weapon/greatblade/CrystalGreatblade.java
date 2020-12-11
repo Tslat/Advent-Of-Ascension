@@ -2,34 +2,32 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CrystalGreatblade extends BaseGreatblade {
-	public CrystalGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("CrystalGreatblade");
-		setRegistryName("aoa3:crystal_greatblade");
+	public CrystalGreatblade() {
+		super(22.0f, AttackSpeed.GREATBLADE, 1480);
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		for (EntityLivingBase entity : target.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(2.0f), PredicateUtil.IS_HOSTILE_MOB)) {
-			EntityUtil.dealAoeDamage(null, attacker, entity, itemRand.nextFloat() * 1.5f * (dmgDealt / (float)getDamage()), false);
+	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
+		for (LivingEntity entity : target.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(2.0f), EntityUtil.Predicates.HOSTILE_MOB)) {
+			DamageUtil.dealAoeDamage(null, attacker, entity, random.nextFloat() * 1.5f * (dmgDealt / (float)getAttackDamage()), false);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystalGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -2,70 +2,70 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityLyonicShot;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.LyonicShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
-public class MechaStaff extends BaseStaff {
+public class MechaStaff extends BaseStaff<Object> {
+	private static final AttributeModifier DEBUFF = new AttributeModifier(UUID.fromString("3a1413c7-055b-405c-8d89-d3270c94f133"), "AoAMechaStaffDebuff", -0.5, AttributeModifier.Operation.MULTIPLY_BASE);
+
 	public MechaStaff(int durability) {
 		super(durability);
-		setTranslationKey("MechaStaff");
-		setRegistryName("aoa3:mecha_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.BASIC_STAFF_CAST;
+		return AoASounds.ITEM_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WIND_RUNE, 2);
-		runes.put(ItemRegister.DISTORTION_RUNE, 1);
-		runes.put(ItemRegister.POWER_RUNE, 1);
+		runes.put(AoAItems.WIND_RUNE.get(), 2);
+		runes.put(AoAItems.DISTORTION_RUNE.get(), 1);
+		runes.put(AoAItems.POWER_RUNE.get(), 1);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		world.spawnEntity(new EntityLyonicShot(caster, this, 60));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+		world.addEntity(new LyonicShotEntity(caster, this, 60));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (target instanceof EntityLivingBase) {
-			EntityLivingBase entity = (EntityLivingBase)target;
-			IAttributeInstance armour = entity.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (target instanceof LivingEntity) {
+			LivingEntity entity = (LivingEntity)target;
+			IAttributeInstance armour = entity.getAttribute(SharedMonsterAttributes.ARMOR);
 
-			if (armour != null && armour.getAttributeValue() > 0 && !armour.hasModifier(AoAAttributes.MECHA_STAFF_DEBUFF)) {
-				EntityUtil.applyAttributeModifierSafely(entity, SharedMonsterAttributes.ARMOR, AoAAttributes.MECHA_STAFF_DEBUFF);
+			if (armour != null && armour.getValue() > 0 && !armour.hasModifier(DEBUFF)) {
+				EntityUtil.applyAttributeModifierSafely(entity, SharedMonsterAttributes.ARMOR, DEBUFF);
 
 				if (!entity.world.isRemote) {
-					AxisAlignedBB bounds = entity.getEntityBoundingBox();
+					AxisAlignedBB bounds = entity.getBoundingBox();
 
 					for (int i = 0; i < 8; i++) {
-						((WorldServer)entity.world).spawnParticle(EnumParticleTypes.TOTEM, bounds.minX + itemRand.nextDouble() * entity.width, bounds.maxY + 0.1d, bounds.minZ + itemRand.nextDouble() * entity.width, 1, 0, 0, 0, (double)0);
+						((ServerWorld)entity.world).spawnParticle(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getWidth()), 1, 0, 0, 0, 0);
 					}
 				}
 			}
@@ -76,10 +76,9 @@ public class MechaStaff extends BaseStaff {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MechaStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

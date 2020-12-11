@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityMechaSkellox;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.MechaSkelloxEntity;
 
 public class MechaSkelloxSlab extends BaseSlab {
 	public MechaSkelloxSlab() {
-		super("MechaSkelloxSlab", "mecha_skellox_slab", 92, 200, 92, 8000);
+		super(92, 200, 92, 8000);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityMechaSkellox mechaSkellox = new EntityMechaSkellox(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		MechaSkelloxEntity mechaSkellox = new MechaSkelloxEntity(AoAEntities.Minions.MECHA_SKELLOX.get(), pl.world);
 
-		mechaSkellox.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		mechaSkellox.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		mechaSkellox.setTamedBy(pl);
-		pl.world.spawnEntity(mechaSkellox);
+		pl.world.addEntity(mechaSkellox);
 
 		return mechaSkellox;
 	}

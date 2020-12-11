@@ -1,25 +1,25 @@
 package net.tslat.aoa3.library.misc;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.functional.misc.CarvedRunicPortalBlock;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.common.registration.BlockRegister;
+import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoATags;
 
 import java.util.ArrayList;
 
 import static net.tslat.aoa3.library.misc.AoAPortalFrame.PortalDirection.*;
 
 public class AoAPortalFrame {
-    private static ArrayList<Vec3i> northSouthPattern = new ArrayList<Vec3i>();
-    private static ArrayList<Vec3i> eastWestPattern = new ArrayList<Vec3i>();
+    private static final ArrayList<Vec3i> northSouthPattern = new ArrayList<Vec3i>();
+    private static final ArrayList<Vec3i> eastWestPattern = new ArrayList<Vec3i>();
 
-    public static PortalDirection testFrameForActivation(World world, BlockPos activationPos, EnumFacing sideClicked, PortalBlock portalBlock) {
+    public static PortalDirection testFrameForActivation(World world, BlockPos activationPos, Direction sideClicked, PortalBlock portalBlock) {
         switch (sideClicked) {
             case NORTH:
             case SOUTH:
@@ -49,29 +49,29 @@ public class AoAPortalFrame {
         for (Vec3i pos : northSouthPattern) {
             Block testBlock = world.getBlockState(basePos.add(pos)).getBlock();
 
-            if (testBlock == BlockRegister.ANCIENT_ROCK) {
+            if (testBlock == AoABlocks.ANCIENT_ROCK.get()) {
                 ancientRockCount++;
             }
-            else if (testBlock instanceof CarvedRunicPortalBlock) {
-                if (testBlock == BlockRegister.CARVED_RUNE_TRAVEL) {
+            else if (testBlock.isIn(AoATags.Blocks.CARVED_RUNE)) {
+                if (testBlock == AoABlocks.CARVED_RUNE_OF_TRAVEL.get()) {
                     if (carvedRuneTravel != null)
                         return INVALID;
 
                     carvedRuneTravel = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_REALITY) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_REALITY.get()) {
                     if (carvedRuneReality != null)
                         return INVALID;
 
                     carvedRuneReality = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_SPACE) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_SPACE.get()) {
                     if (carvedRuneSpace != null)
                         return INVALID;
 
                     carvedRuneSpace = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_DIRECTION) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_DIRECTION.get()) {
                     if (carvedRuneDirection != null)
                         return INVALID;
 
@@ -83,7 +83,7 @@ public class AoAPortalFrame {
         if (ancientRockCount == 13 && carvedRuneDirection != null && carvedRuneReality != null && carvedRuneSpace != null && carvedRuneTravel != null) {
             for (int x = -1; x < 2; x++) {
                 for (int y = 1; y < 5; y++) {
-					IBlockState state = world.getBlockState(basePos.add(x, y, 0));
+					BlockState state = world.getBlockState(basePos.add(x, y, 0));
 
 					if (state.getBlock() instanceof PortalBlock) {
 						if (state.getBlock() == portalBlock)
@@ -111,29 +111,29 @@ public class AoAPortalFrame {
         for (Vec3i pos : eastWestPattern) {
             Block testBlock = world.getBlockState(basePos.add(pos)).getBlock();
 
-            if (testBlock == BlockRegister.ANCIENT_ROCK) {
+            if (testBlock == AoABlocks.ANCIENT_ROCK.get()) {
                 ancientRockCount++;
             }
-            else if (testBlock instanceof CarvedRunicPortalBlock) {
-                if (testBlock == BlockRegister.CARVED_RUNE_TRAVEL) {
+            else if (testBlock.isIn(AoATags.Blocks.CARVED_RUNE)) {
+                if (testBlock == AoABlocks.CARVED_RUNE_OF_TRAVEL.get()) {
                     if (carvedRuneTravel != null)
                         return INVALID;
 
                     carvedRuneTravel = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_REALITY) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_REALITY.get()) {
                     if (carvedRuneReality != null)
                         return INVALID;
 
                     carvedRuneReality = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_SPACE) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_SPACE.get()) {
                     if (carvedRuneSpace != null)
                         return INVALID;
 
                     carvedRuneSpace = testBlock;
                 }
-                else if (testBlock == BlockRegister.CARVED_RUNE_DIRECTION) {
+                else if (testBlock == AoABlocks.CARVED_RUNE_OF_DIRECTION.get()) {
                     if (carvedRuneDirection != null)
                         return INVALID;
 
@@ -145,7 +145,7 @@ public class AoAPortalFrame {
         if (ancientRockCount == 13 && carvedRuneDirection != null && carvedRuneReality != null && carvedRuneSpace != null && carvedRuneTravel != null) {
             for (int z = -1; z < 2; z++) {
                 for (int y = 1; y < 5; y++) {
-					IBlockState state = world.getBlockState(basePos.add(0, y, z));
+					BlockState state = world.getBlockState(basePos.add(0, y, z));
 
 					if (state.getBlock() instanceof PortalBlock) {
 						if (state.getBlock() == portalBlock)
@@ -168,14 +168,14 @@ public class AoAPortalFrame {
             case NORTH_SOUTH:
                 for (int x = -1; x < 2; x++) {
                     for (int y = 1; y < 5; y++) {
-                        world.setBlockState(basePos.add(x, y, 0), portalBlock.getDefaultState());
+                        world.setBlockState(basePos.add(x, y, 0), portalBlock.getDefaultState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z), 2);
                     }
                 }
                 break;
             case EAST_WEST:
                 for (int z = -1; z < 2; z++) {
                     for (int y = 1; y < 5; y++) {
-                        world.setBlockState(basePos.add(0, y, z), portalBlock.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST));
+                        world.setBlockState(basePos.add(0, y, z), portalBlock.getDefaultState(), 2);
                     }
                 }
                 break;

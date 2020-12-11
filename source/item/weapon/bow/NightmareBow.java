@@ -1,64 +1,46 @@
 package net.tslat.aoa3.item.weapon.bow;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
-import net.tslat.aoa3.item.misc.HollyArrow;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class NightmareBow extends BaseBow {
 	public NightmareBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
-		setTranslationKey("NightmareBow");
-		setRegistryName("aoa3:nightmare_bow");
 	}
 
 	@Override
-	protected EntityHollyArrow makeArrow(EntityLivingBase shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
+	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		double xOffset = MathHelper.cos(shooter.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 		double zOffset = MathHelper.sin(shooter.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 
-		EntityHollyArrow centralArrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
-		EntityHollyArrow leftArrow = copyArrow(shooter, bowStack, centralArrow, velocity, ammoStack);
-		EntityHollyArrow rightArrow = copyArrow(shooter, bowStack, centralArrow, velocity, ammoStack);
+		CustomArrowEntity centralArrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
+		CustomArrowEntity leftArrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, getDamage());
+		CustomArrowEntity rightArrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, getDamage());
 
-		leftArrow.setPositionAndUpdate(leftArrow.posX + xOffset, leftArrow.posY, leftArrow.posZ + zOffset);
-		rightArrow.setPositionAndUpdate(rightArrow.posX - xOffset, rightArrow.posY, rightArrow.posZ - zOffset);
-		shooter.world.spawnEntity(leftArrow);
-		shooter.world.spawnEntity(rightArrow);
+		leftArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+		rightArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+
+		leftArrow.setPositionAndUpdate(leftArrow.getPosX() + xOffset, leftArrow.getPosY(), leftArrow.getPosZ() + zOffset);
+		rightArrow.setPositionAndUpdate(rightArrow.getPosX() - xOffset, rightArrow.getPosY(), rightArrow.getPosZ() - zOffset);
+		shooter.world.addEntity(leftArrow);
+		shooter.world.addEntity(rightArrow);
 
 		return centralArrow;
 	}
 
-	private EntityHollyArrow copyArrow(EntityLivingBase shooter, ItemStack bowStack, EntityHollyArrow arrow, float velocity, ItemStack ammoStack) {
-		EntityHollyArrow newArrow = ((HollyArrow)(ammoStack.getItem() instanceof HollyArrow ? ammoStack.getItem() : ItemRegister.HOLLY_ARROW)).createArrow(arrow.world, this, ammoStack, shooter, getDamage());
-		newArrow.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
-
-		newArrow.setIsCritical(arrow.getIsCritical());
-		newArrow.setDamage(arrow.getDamage());
-		newArrow.setKnockbackStrength(arrow.getKnockbackStrength());
-		newArrow.setFire(EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, bowStack) * 100);
-		newArrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
-
-		return newArrow;
-	}
-
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NightmareBow.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

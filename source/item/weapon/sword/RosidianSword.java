@@ -2,47 +2,47 @@ package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RosidianSword extends BaseSword {
-	public RosidianSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("RosidianSword");
-		setRegistryName("aoa3:rosidian_sword");
+	public RosidianSword() {
+		super(ItemUtil.customItemTier(2000, AttackSpeed.NORMAL, 15.5f, 4, 10, null));
 	}
 
 	@Override
-	public boolean onLeftClickEntity(final ItemStack stack, final EntityPlayer player, final Entity target) {
-		stack.getCapability(AdventMiscStackProvider.MISC_STACK, EnumFacing.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity target) {
+		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getCooledAttackStrength(0.0f));
 
 		if (player.getHealth() < player.getMaxHealth()) {
-			float motionX = (float)(player.posX - target.posX) * 0.1f;
-			float motionY = (float)(player.posY - target.posY) * 0.1f;
-			float motionZ = (float)(player.posZ - target.posZ) * 0.1f;
+			float motionX = (float)(player.getPosX() - target.getPosX()) * 0.1f;
+			float motionY = (float)(player.getPosY() - target.getPosY()) * 0.1f;
+			float motionZ = (float)(player.getPosZ() - target.getPosZ()) * 0.1f;
 
-			player.world.spawnParticle(EnumParticleTypes.END_ROD, target.posX + itemRand.nextGaussian() * 0.2, target.posY + target.height / 2f, target.posZ + itemRand.nextGaussian() * 0.2, motionX, motionY, motionZ);
+			player.world.addParticle(ParticleTypes.END_ROD, true, target.getPosX() + random.nextGaussian() * 0.2, target.getPosY() + target.getHeight() / 2f, target.getPosZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 
-			for (EntityLivingBase swipeTarget : player.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(1, 0.25, 1))) {
+			for (LivingEntity swipeTarget : player.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(1, 0.25, 1))) {
 				if (swipeTarget != target && swipeTarget != player && !player.isOnSameTeam(swipeTarget) && player.getDistanceSq(swipeTarget) < 9) {
-					motionX = (float)(player.posX - swipeTarget.posX) * 0.1f;
-					motionY = (float)(player.posY - swipeTarget.posY) * 0.1f;
-					motionZ = (float)(player.posZ - swipeTarget.posZ) * 0.1f;
+					motionX = (float)(player.getPosX() - swipeTarget.getPosX()) * 0.1f;
+					motionY = (float)(player.getPosY() - swipeTarget.getPosY()) * 0.1f;
+					motionZ = (float)(player.getPosZ() - swipeTarget.getPosZ()) * 0.1f;
 
-					player.world.spawnParticle(EnumParticleTypes.END_ROD, swipeTarget.posX + itemRand.nextGaussian() * 0.2, swipeTarget.posY + target.height / 2f, swipeTarget.posZ + itemRand.nextGaussian() * 0.2, motionX, motionY, motionZ);
+					player.world.addParticle(ParticleTypes.END_ROD, true, swipeTarget.getPosX() + random.nextGaussian() * 0.2, swipeTarget.getPosY() + target.getHeight() / 2f, swipeTarget.getPosZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 				}
 			}
 		}
@@ -51,12 +51,12 @@ public class RosidianSword extends BaseSword {
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (attacker.getHealth() < attacker.getMaxHealth() && attackCooldown == 1) {
 			EntityUtil.healEntity(attacker, 1);
 
-			if (attacker instanceof EntityPlayer) {
-				for (EntityLivingBase swipeTarget : attacker.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(1, 0.25, 1))) {
+			if (attacker instanceof PlayerEntity) {
+				for (LivingEntity swipeTarget : attacker.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(1, 0.25, 1))) {
 					if (swipeTarget != target && swipeTarget != attacker && swipeTarget.getHealth() < swipeTarget.getMaxHealth() && !attacker.isOnSameTeam(swipeTarget) && attacker.getDistanceSq(swipeTarget) < 9)
 						EntityUtil.healEntity(attacker, 0.4f);
 				}
@@ -64,8 +64,9 @@ public class RosidianSword extends BaseSword {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.RosidianSword.desc.1", TextFormatting.DARK_GREEN));
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

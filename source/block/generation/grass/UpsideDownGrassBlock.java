@@ -1,42 +1,54 @@
 package net.tslat.aoa3.block.generation.grass;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.lighting.LightEngine;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class UpsideDownGrassBlock extends GrassBlock {
-	public UpsideDownGrassBlock(String name, String registryName, Block dirtBlock, float hardness, float resistance) {
-		super(name, registryName, dirtBlock, hardness, resistance);
-	}
-
-	public UpsideDownGrassBlock(String name, String registryName, Block dirtBlock) {
-		this(name, registryName, dirtBlock, 0.6f, 0.0f);
+	public UpsideDownGrassBlock(MaterialColor mapColour, Supplier<Block> dirtBlock, boolean growsInDark) {
+		super(mapColour, dirtBlock, growsInDark);
 	}
 
 	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		if (!world.isRemote) {
+	public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {}
+
+	public boolean hasSufficientLight(BlockState grassState, IWorldReader world, BlockPos grassPos) {
+		BlockPos bottomPos = grassPos.down();
+		BlockState bottomBlock = world.getBlockState(bottomPos);
+
+		return LightEngine.func_215613_a(world, grassState, grassPos, bottomBlock, bottomPos, Direction.DOWN, bottomBlock.getOpacity(world, bottomPos)) < world.getMaxLightLevel();
+	}
+
+	public boolean canStayGrass(BlockState grassState, IWorldReader world, BlockPos grassPos) {
+		return hasSufficientLight(grassState, world, grassPos) && !world.getFluidState(grassPos.down()).isTagged(FluidTags.WATER);
+	}
+
+	@Override
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		if (!hasSufficientLight(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return;
 
-			if (world.getLightFromNeighbors(pos.down()) < 4 && world.getBlockState(pos.down()).getBlock().getLightOpacity(world.getBlockState(pos.down()), world, pos.down()) > 2) {
-				world.setBlockState(pos, dirtBlock.getDefaultState());
-			}
-			else {
-				for (int i = 0; i < 4; i++) {
-					BlockPos newPos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+			world.setBlockState(pos, soilBlock.get().getDefaultState());
+		}
+		else if (growsInDark == (world.getLight(pos.down()) < 9)) {
+			BlockState grassState = this.getDefaultState();
 
-					if (newPos.getY() <= 0 || newPos.getY() >= 256 || !world.isBlockLoaded(newPos))
-						return;
+			for (int i = 0; i < 4; i++) {
+				BlockPos growPos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
 
-					IBlockState targetBlockState = world.getBlockState(newPos);
-
-					if (targetBlockState.getBlock() == dirtBlock && world.getLightFromNeighbors(newPos.down()) >= 4 && world.getBlockState(newPos.down()).getLightOpacity(world, pos.down()) <= 2)
-						world.setBlockState(newPos, getDefaultState());
-				}
+				if (world.getBlockState(growPos).getBlock() == soilBlock.get() && canStayGrass(grassState, world, growPos))
+					world.setBlockState(growPos, grassState.with(SNOWY, world.getBlockState(growPos.down()).getBlock() == Blocks.SNOW));
 			}
 		}
 	}

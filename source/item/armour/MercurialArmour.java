@@ -1,53 +1,50 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_MERCURIAL;
-
 public class MercurialArmour extends AdventArmour {
-	public MercurialArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_MERCURIAL, name, registryName, slot);
+	public MercurialArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:mercurial", 42, new int[] {3, 8, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.MERCURIAL;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.MERCURIAL;
 	}
 
 	@Override
-	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingDamageEvent event) {
+	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (!plData.player().world.isRemote && event.getSource().isExplosion() && event.getAmount() > 0) {
 			if (slots == null) {
-				plData.player().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 320, 1, true, true));
+				plData.player().addPotionEffect(new EffectInstance(Effects.RESISTANCE, 320, 1, true, true));
 			}
 			else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
-				plData.player().addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 80 * slots.size(), 0, true, true));
+				plData.player().addPotionEffect(new EffectInstance(Effects.RESISTANCE, 80 * slots.size(), 0, true, true));
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.mercurial_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.mercurial_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.MercurialArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.mercurial_armour.desc.3", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

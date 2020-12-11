@@ -1,34 +1,30 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.common.container.WhitewashingTableContainer;
+import net.tslat.aoa3.util.BlockUtil;
 
 public class WhitewashingTable extends Block {
 	public WhitewashingTable() {
-		super(Material.ROCK);
-		setTranslationKey("WhitewashingTable");
-		setRegistryName("aoa3:whitewashing_table");
-		setHardness(5.0f);
-		setResistance(10.0f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.WHITE_TERRACOTTA, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote)
-			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.WHITEWASHING_TABLE.guiId, world, pos.getX(), pos.getY(), pos.getZ());
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player instanceof ServerPlayerEntity)
+			WhitewashingTableContainer.openContainer((ServerPlayerEntity)player, pos);
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 }

@@ -2,63 +2,60 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityFireflyShot;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.FireflyShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class FireflyStaff extends BaseStaff {
+public class FireflyStaff extends BaseStaff<Object> {
 	public FireflyStaff(int durability) {
 		super(durability);
-		setTranslationKey("FireflyStaff");
-		setRegistryName("aoa3:firefly_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.FIREFLY_STAFF_CAST;
+		return AoASounds.ITEM_FIREFLY_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WIND_RUNE, 2);
-		runes.put(ItemRegister.STRIKE_RUNE, 2);
-		runes.put(ItemRegister.FIRE_RUNE, 1);
+		runes.put(AoAItems.WIND_RUNE.get(), 2);
+		runes.put(AoAItems.STRIKE_RUNE.get(), 2);
+		runes.put(AoAItems.FIRE_RUNE.get(), 1);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		world.spawnEntity(new EntityFireflyShot(caster, this, 60));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+		world.addEntity(new FireflyShotEntity(caster, this, 60));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (EntityUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
 			target.setFire(5);
 
 			UUID targetUUID = target.getUniqueID();
 
-			if (targetUUID.equals(((EntityFireflyShot)shot).lastTargetUUID))
+			if (targetUUID.equals(((FireflyShotEntity)shot).lastTargetUUID))
 				return true;
 
-			for (int i = 0; i < itemRand.nextInt(7) + 1; i++) {
-				shot.world.spawnEntity(new EntityFireflyShot(shooter, this, (EntityFireflyShot)shot, targetUUID, itemRand.nextGaussian() * 0.35, 1.4f, itemRand.nextGaussian() * 0.35));
+			for (int i = 0; i < RandomUtil.randomNumberBetween(1, 7); i++) {
+				shot.world.addEntity(new FireflyShotEntity(shooter, this, (FireflyShotEntity)shot, targetUUID, random.nextGaussian() * 0.35, 1.4f, random.nextGaussian() * 0.35));
 			}
 
 			return true;
@@ -72,10 +69,9 @@ public class FireflyStaff extends BaseStaff {
 		return 11;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FireflyStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

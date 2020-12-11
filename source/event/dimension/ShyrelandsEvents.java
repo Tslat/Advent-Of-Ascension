@@ -1,23 +1,22 @@
 package net.tslat.aoa3.event.dimension;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.SoundCategory;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.gen.Heightmap;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class ShyrelandsEvents {
-    public static void doPlayerTick(EntityPlayer pl) {
-        PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+    public static void doPlayerTick(PlayerEntity pl) {
 
-        if (PlayerUtil.shouldPlayerBeAffected(pl) && pl.ticksExisted % 80 == 0 && AdventOfAscension.rand.nextInt(3) == 0) {
-            if (pl.posY >= 55 && pl.world.getHeight((int)pl.posX, (int)pl.posZ) <= pl.posY) {
-                float gustX = AdventOfAscension.rand.nextFloat();
-                float gustZ = AdventOfAscension.rand.nextFloat();
+        if (PlayerUtil.shouldPlayerBeAffected(pl) && pl.ticksExisted % 80 == 0 && RandomUtil.oneInNChance(3)) {
+            if (pl.getPosY() >= 55 && pl.world.getHeight(Heightmap.Type.MOTION_BLOCKING, pl.getPosition()).getY() <= pl.getPosY()) {
+                float gustX = RandomUtil.randomValueUpTo(1f);
+                float gustZ = RandomUtil.randomValueUpTo(1f);
 
-                plData.sendThrottledChatMessage("message.event.shyrelandsWind");
-                pl.world.playSound(pl.posX, pl.posY, pl.posZ, SoundsRegister.SHYRELANDS_WIND, SoundCategory.AMBIENT, 1.0f, 1.0f, false);
+                pl.sendMessage(new TranslationTextComponent("message.event.shyrelandsWind"));
+                pl.playSound(AoASounds.SHYRELANDS_WIND.get(), 1.0f, 1.0f);
                 pl.addVelocity(gustX, 0.05f, gustZ);
                 pl.velocityChanged = true;
             }
