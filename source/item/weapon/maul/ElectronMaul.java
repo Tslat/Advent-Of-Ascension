@@ -3,44 +3,49 @@ package net.tslat.aoa3.item.weapon.maul;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ElectronMaul extends BaseMaul {
-	public ElectronMaul(Float dmg, Double speed, double knockback, int durability) {
-		super(dmg, speed, knockback, durability);
-		setTranslationKey("ElectronMaul");
-		setRegistryName("aoa3:electron_maul");
+	public ElectronMaul() {
+		super(25.0f, AttackSpeed.THIRD, 3.5D, 1500);
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {
-		final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CRUSH, stack);
-		PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer(attacker).stats();
-		final float energyMultiplier = 1 + (plStats.getResourceValue(Enums.Resources.ENERGY) / 100f);
+	protected void doMeleeEffect(ItemStack stack, PlayerEntity attacker, Entity target, float finalDmg, float attackCooldown) {
+		if (attacker instanceof ServerPlayerEntity) {
+			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.CRUSH.get(), stack);
+			PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer((ServerPlayerEntity)attacker).stats();
+			final float energyMultiplier = 1 + (plStats.getResourceValue(Resources.ENERGY) / 100f);
 
-		if (plStats.consumeResource(Enums.Resources.ENERGY, plStats.getResourceValue(Enums.Resources.ENERGY), false)) {
-			EntityUtil.doScaledKnockback((EntityLivingBase)target, attacker, (float)knockback * crushMod * attackCooldown * energyMultiplier, attacker.posX - target.posX, attacker.posZ - target.posZ);
+			if (plStats.consumeResource(Resources.ENERGY, plStats.getResourceValue(Resources.ENERGY), false)) {
+				DamageUtil.doScaledKnockback((LivingEntity)target, attacker, (float)knockback * crushMod * attackCooldown * energyMultiplier, attacker.getPosX() - target.getPosX(), attacker.getPosZ() - target.getPosZ());
 
-			if (energyMultiplier >= 2.33)
-				attacker.world.addWeatherEffect(new EntityLightningBolt(attacker.world, target.posX, target.posY, target.posZ, true));
+				if (energyMultiplier >= 2.33)
+					WorldUtil.spawnLightning((ServerWorld)attacker.world, (ServerPlayerEntity)attacker, target.getPosX(), target.getPosY(), target.getPosZ(), false);
+			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ElectronMaul.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		super.addInformation(stack, world, tooltip, flag);
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

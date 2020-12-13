@@ -1,73 +1,81 @@
 package net.tslat.aoa3.item.misc;
 
 import net.minecraft.block.*;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
-import net.tslat.aoa3.utils.skills.AnimaUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.skill.AnimaUtil;
 
-public class FragmentedAnimaStone extends SimpleItem {
+public class FragmentedAnimaStone extends Item {
 	public FragmentedAnimaStone() {
-		super("FragmentedAnimaStone", "fragmented_anima_stone");
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType onItemUse(ItemUseContext context) {
+		PlayerEntity player = context.getPlayer();
+		World world = context.getWorld();
+		BlockPos pos = context.getPos();
+		ItemStack stack = context.getItem();
 
-		if (!player.canPlayerEdit(pos.offset(facing), facing, stack))
-			return EnumActionResult.FAIL;
+		if (player != null && !player.canPlayerEdit(pos.offset(context.getFace()), context.getFace(), stack))
+			return ActionResultType.FAIL;
 
-		IBlockState state = world.getBlockState(pos);
-		int bonemealEvent = ForgeEventFactory.onApplyBonemeal(player, world, pos, state, stack, hand);
+		BlockState state = world.getBlockState(pos);
 
-		if (bonemealEvent != 0)
-			return bonemealEvent > 0 ? EnumActionResult.PASS : EnumActionResult.FAIL;
+		if (player != null) {
+			int bonemealEvent = ForgeEventFactory.onApplyBonemeal(player, world, pos, state, stack);
+
+			if (bonemealEvent != 0)
+				return bonemealEvent > 0 ? ActionResultType.PASS : ActionResultType.FAIL;
+		}
 
 		if (state.getBlock() instanceof IGrowable) {
 			IGrowable growable = (IGrowable)state.getBlock();
 
-			if (growable.canGrow(world, pos, state, world.isRemote) && !world.isRemote) {
-				PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer(player).stats();
+			if (growable.canGrow(world, pos, state, world.isRemote) && world instanceof ServerWorld) {
+				PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).stats();
 				Block block = state.getBlock();
 
-				if (block instanceof BlockSapling) {
-					((BlockSapling)block).generateTree(world, pos, state, world.rand);
+				if (block instanceof SaplingBlock) {
+					((SaplingBlock)block).placeTree((ServerWorld)world, pos, state, world.rand);
 				}
-				else if (block instanceof BlockCrops) {
-					world.setBlockState(pos, ((BlockCrops)block).withAge(((BlockCrops)block).getMaxAge()), 2);
+				else if (block instanceof CropsBlock) {
+					world.setBlockState(pos, ((CropsBlock)block).withAge(((CropsBlock)block).getMaxAge()), 2);
 				}
-				else if (block instanceof BlockCocoa) {
-					world.setBlockState(pos, state.withProperty(BlockCocoa.AGE, 2), 2);
+				else if (block instanceof CocoaBlock) {
+					world.setBlockState(pos, state.with(CocoaBlock.AGE, 2), 2);
 				}
 				else {
-					int backupCounter = (block instanceof BlockGrass || block instanceof BlockDoublePlant) ? 1 : 10;
+					int backupCounter = block instanceof GrassBlock ? 1 : 10;
 
 					while (world.getBlockState(pos).equals(state) && backupCounter > 0) {
 						backupCounter--;
-						growable.grow(world, world.rand, pos, state);
+						growable.grow((ServerWorld)world, world.rand, pos, state);
 					}
 				}
 
-				plStats.addXp(Enums.Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(plStats.getLevel(Enums.Skills.ANIMA)) / AnimaUtil.getExpDenominator(plStats.getLevel(Enums.Skills.ANIMA)), false, false);
+				plStats.addXp(Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(plStats.getLevel(Skills.ANIMA)) / AnimaUtil.getExpDenominator(plStats.getLevel(Skills.ANIMA)), false, false);
 				world.playEvent(2005, pos, 0);
 
-				if (!player.capabilities.isCreativeMode)
+				if (!player.isCreative())
 					stack.shrink(1);
 			}
 
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}
 
-		return EnumActionResult.PASS;
+		return ActionResultType.PASS;
 	}
 }

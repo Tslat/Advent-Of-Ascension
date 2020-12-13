@@ -1,94 +1,80 @@
 package net.tslat.aoa3.block.functional.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.BasicBlock;
-import net.tslat.aoa3.utils.EntityUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
-public class AcidBlock extends BasicBlock {
-	private static final AxisAlignedBB bounds = new AxisAlignedBB(0, 0, 0, 1, 0.125, 1);
+public class AcidBlock extends Block {
+	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 2, 16);
 
-	public AcidBlock(String name, String registryName) {
-		super(name, registryName, Material.SNOW, 0, 0);
-		setTickRandomly(true);
-		setCreativeTab(null);
-	}
-
-	@Nullable
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return bounds;
+	public AcidBlock() {
+		super(BlockUtil.generateBlockProperties(Material.SNOW, MaterialColor.ORANGE_TERRACOTTA, 0, 0, SoundType.WET_GRASS).noDrops().tickRandomly());
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return bounds;
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
 	}
 
 	@Override
-	public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-		return bounds;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean canPlaceBlockAt(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos.down());
-
-		return state.isFullCube() && state.getMaterial().blocksMovement() && state.getBlock() != Blocks.ICE && state.getBlock() != Blocks.PACKED_ICE && state.getBlock() != Blocks.FROSTED_ICE;
-	}
-
-	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block block, BlockPos fromPos) {
-		if (!canPlaceBlockAt(world, pos))
-			world.setBlockToAir(pos);
-	}
-
-	@Override
-	public int tickRate(World worldIn) {
+	public int tickRate(IWorldReader worldIn) {
 		return 20;
 	}
 
 	@Override
-	public int quantityDropped(Random random) {
-		return 0;
-	}
-
-	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		if (!world.isRemote)
-			world.setBlockToAir(pos);
-	}
-
-	@Override
-	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (EntityUtil.isHostileMob(entity) || (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode)) {
-			entity.attackEntityFrom(new DamageSource("acid"), 8.0f);
-			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3));
+	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+		if (entity instanceof MonsterEntity || (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative())) {
+			entity.attackEntityFrom(new DamageSource("acid"), 4);
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 40).level(4));
 		}
+	}
+
+	@Override
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		if (!world.isRemote)
+			world.removeBlock(pos, false);
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!state.isValidPosition(world, pos))
+			world.removeBlock(pos, false);
+	}
+
+	@Override
+	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+		return !state.isValidPosition(world, pos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
+	}
+
+	@Override
+	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return false;
+	}
+
+	@Override
+	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+		return Block.hasSolidSideOnTop(world, pos);
 	}
 }

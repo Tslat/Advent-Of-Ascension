@@ -1,46 +1,44 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_LYONIC;
-
 public class LyonicArmour extends AdventArmour {
-	public LyonicArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_LYONIC, name, registryName, slot);
+	public LyonicArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:lyonic", 56, new int[] {4, 7, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.LYONIC;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.LYONIC;
 	}
 
 	@Override
-	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
+	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots != null) {
-			EntityPlayer pl = plData.player();
+			PlayerEntity pl = plData.player();
 			int pulledCount = 0;
 			float range = 1.5f * (float)slots.size();
-			EntityItem item;
-			Iterator<EntityItem> iterator = plData.player().world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(pl.posX - range, pl.posY - range, pl.posZ - range, pl.posX + range, pl.posY + range, pl.posZ + range)).iterator();
+			ItemEntity item;
+			Iterator<ItemEntity> iterator = plData.player().world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pl.getPosX() - range, pl.getPosY() - range, pl.getPosZ() - range, pl.getPosX() + range, pl.getPosY() + range, pl.getPosZ() + range)).iterator();
 
 			while (iterator.hasNext() && pulledCount <= 200 && canPullItem(item = iterator.next())) {
 				EntityUtil.pullEntityIn(pl, item, 0.1f);
@@ -48,9 +46,9 @@ public class LyonicArmour extends AdventArmour {
 			}
 		}
 		else {
-			EntityPlayer pl = plData.player();
+			PlayerEntity pl = plData.player();
 			int pulledCount = 0;
-			Iterator<EntityXPOrb> iterator = plData.player().world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(pl.posX - 6, pl.posY - 6, pl.posZ - 6, pl.posX + 6, pl.posY + 6, pl.posZ + 6)).iterator();
+			Iterator<ExperienceOrbEntity> iterator = plData.player().world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(pl.getPosX() - 6, pl.getPosY() - 6, pl.getPosZ() - 6, pl.getPosX() + 6, pl.getPosY() + 6, pl.getPosZ() + 6)).iterator();
 
 			while (iterator.hasNext() && pulledCount <= 200) {
 				EntityUtil.pullEntityIn(pl, iterator.next(), 0.1f);
@@ -59,17 +57,16 @@ public class LyonicArmour extends AdventArmour {
 		}
 	}
 
-	private boolean canPullItem(EntityItem item) {
-		return !item.isDead && !item.getItem().isEmpty() && !item.cannotPickup();
+	private boolean canPullItem(ItemEntity item) {
+		return item.isAlive() && !item.getItem().isEmpty() && !item.cannotPickup();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyonic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyonic_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LyonicArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyonic_armour.desc.3", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

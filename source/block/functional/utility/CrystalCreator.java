@@ -1,55 +1,51 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
+
+import java.util.function.Supplier;
 
 public class CrystalCreator extends Block {
-	private Item gemstone;
-	private Item crystal;
+	private final Supplier<Item> gemstone;
+	private final Supplier<Item> crystal;
 
-	public CrystalCreator(String name, String registryName) {
-		super(Material.ROCK);
-		setTranslationKey(name);
-		setRegistryName("aoa3:" + registryName);
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.GLASS);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+	public CrystalCreator(MaterialColor mapColour, Supplier<Item> gemstone, Supplier<Item> crystal) {
+		super(BlockUtil.generateBlockProperties(Material.ROCK, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
+
+		this.gemstone = gemstone;
+		this.crystal = crystal;
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
-			ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack stack = player.getHeldItem(hand);
 
-			if (stack.getItem() == gemstone) {
+		if (stack.getItem() == gemstone.get()) {
+			if (!world.isRemote()) {
 				player.setHeldItem(hand, ItemStack.EMPTY);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal, stack.getCount()));
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.CRYSTAL_CREATOR_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal.get(), stack.getCount()));
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_CRYSTAL_CREATOR_CONVERT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
+
+			return ActionResultType.SUCCESS;
 		}
 
-		return true;
-	}
-
-	public void setConversionItems(Item gemstone, Item crystal) {
-		if (this.gemstone == null) {
-			this.gemstone = gemstone;
-			this.crystal = crystal;
-		}
+		return ActionResultType.FAIL;
 	}
 }

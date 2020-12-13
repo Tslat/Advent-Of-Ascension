@@ -1,51 +1,47 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFireworkRocket;
-import net.minecraft.init.Items;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShowStaff extends BaseStaff {
+public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 	public ShowStaff(int durability) {
 		super(durability);
-		setTranslationKey("ShowStaff");
-		setRegistryName("aoa3:show_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.SHOW_STAFF_CAST;
+		return AoASounds.ITEM_SHOW_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.COMPASS_RUNE, 3);
-		runes.put(ItemRegister.POWER_RUNE, 3);
+		runes.put(AoAItems.COMPASS_RUNE.get(), 3);
+		runes.put(AoAItems.POWER_RUNE.get(), 3);
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(30), PredicateUtil.IS_HOSTILE_MOB);
+	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(30), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -54,39 +50,38 @@ public class ShowStaff extends BaseStaff {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (EntityLivingBase entity : (List<EntityLivingBase>)args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
+		for (LivingEntity entity : args) {
 			entity.setFire(5);
-			entity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 100, 0, true, true));
-			world.spawnEntity(new EntityFireworkRocket(world, entity.posX, entity.getEntityBoundingBox().maxY, entity.posZ, makeFireworksStack()));
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.GLOWING, 100));
+			world.addEntity(new FireworkRocketEntity(world, entity.getPosX(), entity.getBoundingBox().maxY, entity.getPosZ(), makeFireworksStack()));
 		}
 	}
 
 	private ItemStack makeFireworksStack() {
-		ItemStack fireworks = new ItemStack(Items.FIREWORKS, 1);
-		NBTTagCompound explosionTag = new NBTTagCompound();
-		NBTTagCompound fireworksTag = new NBTTagCompound();
-		NBTTagCompound finalTag = new NBTTagCompound();
-		NBTTagCompound wrapperTag = new NBTTagCompound();
-		NBTTagList finalTagList = new NBTTagList();
+		ItemStack fireworks = new ItemStack(Items.FIREWORK_ROCKET, 1);
+		CompoundNBT explosionTag = new CompoundNBT();
+		CompoundNBT fireworksTag = new CompoundNBT();
+		CompoundNBT finalTag = new CompoundNBT();
+		CompoundNBT wrapperTag = new CompoundNBT();
+		ListNBT finalTagList = new ListNBT();
 
-		explosionTag.setBoolean("Trail", true);
-		explosionTag.setIntArray("Colors", new int[] {0});
-		explosionTag.setByte("Type", (byte)4);
-		fireworksTag.setTag("Explosion", explosionTag);
-		finalTagList.appendTag(fireworksTag);
-		finalTag.setTag("Explosions", finalTagList);
-		finalTag.setByte("Flight", (byte)3);
-		wrapperTag.setTag("Fireworks", finalTag);
-		fireworks.setTagCompound(wrapperTag);
+		explosionTag.putBoolean("Trail", true);
+		explosionTag.putIntArray("Colors", new int[] {0});
+		explosionTag.putByte("Type", (byte)4);
+		fireworksTag.put("Explosion", explosionTag);
+		finalTagList.add(fireworksTag);
+		finalTag.put("Explosions", finalTagList);
+		finalTag.putByte("Flight", (byte)3);
+		wrapperTag.put("Fireworks", finalTag);
+		fireworks.setTag(wrapperTag);
 
 		return fireworks;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ShowStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

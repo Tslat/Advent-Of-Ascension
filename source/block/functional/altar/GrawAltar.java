@@ -1,53 +1,56 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.graw.EntityGraw;
-import net.tslat.aoa3.entity.mobs.lelyetia.EntityFlye;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.GrawEntity;
+import net.tslat.aoa3.entity.mob.lelyetia.FlyeEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class GrawAltar extends BossAltarBlock {
 	public GrawAltar() {
-		super("GrawAltar", "graw_altar");
+		super(MaterialColor.ORANGE_TERRACOTTA);
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
-		if (heldItem.getItem() == ItemRegister.ORANGE_SPORES || heldItem.getItem() == ItemRegister.YELLOW_SPORES) {
+		if (heldItem.getItem() == AoAItems.ORANGE_SPORES.get() || heldItem.getItem() == AoAItems.YELLOW_SPORES.get()) {
 			if (!world.isRemote) {
-				world.spawnEntity(new EntityFlye(world, pos));
+				world.addEntity(new FlyeEntity(world, pos));
 
-				if (!player.capabilities.isCreativeMode)
+				if (!player.isCreative())
 					heldItem.shrink(1);
 			}
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 		else {
-			return super.onBlockActivated(world, pos, state, player, hand, facing, hitX, hitY, hitZ);
+			return super.onBlockActivated(state, world, pos, player, hand, hit);
 		}
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityGraw graw = new EntityGraw(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		GrawEntity graw = new GrawEntity(AoAEntities.Mobs.GRAW.get(), player.world);
 
 		graw.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.spawnEntity(graw);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.graw.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(graw);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.graw.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.GUARDIANS_EYE;
+		return AoAItems.GUARDIANS_EYE.get();
 	}
 }

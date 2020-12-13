@@ -1,30 +1,32 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.mechbot.EntityMechbot;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.MechbotEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class MechBotAltar extends BossAltarBlock {
 	public MechBotAltar() {
-		super("MechbotAltar", "mechbot_altar");
+		super(MaterialColor.YELLOW);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityMechbot mechbot = new EntityMechbot(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		MechbotEntity mechbot = new MechbotEntity(AoAEntities.Mobs.MECHBOT.get(), player.world);
 
 		mechbot.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.spawnEntity(mechbot);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.mechbot.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(mechbot);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.mechbot.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.GOLD_SPRING;
+		return AoAItems.GOLD_SPRING.get();
 	}
 }

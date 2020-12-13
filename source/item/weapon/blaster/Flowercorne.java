@@ -2,19 +2,18 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityFlowerShot;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.FlowerShotEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,32 +21,30 @@ import java.util.List;
 public class Flowercorne extends BaseBlaster {
 	public Flowercorne(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("Flowercorne");
-		setRegistryName("aoa3:flowercorne");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SPRAYER_FIRE;
+		return AoASounds.ITEM_SPRAYER_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityFlowerShot(shooter, this, 60, 0, 0.25f, 0));
-		shooter.world.spawnEntity(new EntityFlowerShot(shooter, this, 60, 0, 0f, 0));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new FlowerShotEntity(shooter, this, 60, 0, 0.25f, 0));
+		shooter.world.addEntity(new FlowerShotEntity(shooter, this, 60, 0, 0f, 0));
 	}
 
 	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 100, 0, false, true));
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (target instanceof LivingEntity)
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 100));
 	}
 
-	@SideOnly(Side.CLIENT)
+
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.weak", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.WEAKENS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

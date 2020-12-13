@@ -1,44 +1,41 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_LUNAR;
-
 public class LunarArmour extends AdventArmour {
-	public LunarArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_LUNAR, name, registryName, slot);
+	public LunarArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:lunar", 63, new int[] {4, 7, 10, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.LUNAR;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.LUNAR;
 	}
 
 	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots != null)
-			plData.player().addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, -1, slots.size() - 1, true, false));
+			plData.player().addPotionEffect(new EffectInstance(Effects.JUMP_BOOST, -1, slots.size() - 1, true, false));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LunarArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LunarArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lunar_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lunar_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

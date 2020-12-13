@@ -1,33 +1,37 @@
 package net.tslat.aoa3.item.misc;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.util.SoundEvent;
-import net.tslat.aoa3.block.functional.portal.PortalBlock;
+import net.minecraftforge.fml.RegistryObject;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 
-import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
-public class Realmstone extends SimpleItem {
-	private final PortalBlock portalBlock;
-	private final Supplier<SoundEvent> portalSound;
-	private final String msgSuffix;
+public class Realmstone extends Item {
+	private final RegistryObject<Block> portalBlock;
+	@Nullable
+	private final RegistryObject<SoundEvent> activationSound;
+	private final String portalMessageSuffix;
 
-	public Realmstone(String name, String registryName, PortalBlock portalBlock, Supplier<SoundEvent> activationSound, String dimensionSuffix) {
-		super(name, registryName);
+	public Realmstone(RegistryObject<Block> portalBlock, @Nullable RegistryObject<SoundEvent> activationSound, String portalMessageSuffix) {
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
+
 		this.portalBlock = portalBlock;
-		this.portalSound = activationSound;
-		this.msgSuffix = dimensionSuffix;
-
-		setMaxStackSize(1);
+		this.activationSound = activationSound;
+		this.portalMessageSuffix = portalMessageSuffix;
 	}
 
-	public PortalBlock getPortalBlock() {
+	public RegistryObject<Block> getPortalBlock() {
 		return portalBlock;
 	}
 
-	public SoundEvent getPortalSound() {
-		return portalSound.get();
+	@Nullable
+	public RegistryObject<SoundEvent> getActivationSound() {
+		return activationSound;
 	}
 
-	public String getMsgSuffix() {
-		return msgSuffix;
+	public String getPortalMessageSuffix() {
+		return portalMessageSuffix;
 	}
 }

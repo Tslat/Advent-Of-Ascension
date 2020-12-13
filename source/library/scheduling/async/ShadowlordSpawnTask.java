@@ -1,24 +1,26 @@
 package net.tslat.aoa3.library.scheduling.async;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.block.functional.lamps.LampBlock;
-import net.tslat.aoa3.entity.boss.shadowlord.EntityShadowlord;
-import net.tslat.aoa3.utils.ModUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.block.functional.light.LampBlock;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.boss.ShadowlordEntity;
+import net.tslat.aoa3.library.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
 
 public class ShadowlordSpawnTask implements Runnable {
-    private final EntityPlayer player;
+    private final PlayerEntity player;
     private final BlockPos altarPosition;
     private boolean spawning = false;
     private boolean spawned = false;
 
-    public ShadowlordSpawnTask(EntityPlayer player, BlockPos altarPosition) {
+    public ShadowlordSpawnTask(PlayerEntity player, BlockPos altarPosition) {
         this.player = player;
         this.altarPosition = altarPosition;
     }
@@ -32,17 +34,17 @@ public class ShadowlordSpawnTask implements Runnable {
                     Block block = player.world.getBlockState(pos).getBlock();
 
                     if (block instanceof LampBlock)
-                        player.world.setBlockState(pos, ((LampBlock)block).getOnLamp().getDefaultState().withProperty(LampBlock.FIXED_LAMP, true));
+                        player.world.setBlockState(pos, block.getDefaultState().with(LampBlock.LIT, true).with(LampBlock.TOGGLEABLE, false));
                 }
             }
         }
         else if (spawning) {
             spawned = true;
-            EntityShadowlord shadowlord = new EntityShadowlord(player.world);
+            ShadowlordEntity shadowlord = new ShadowlordEntity(AoAEntities.Mobs.SHADOWLORD.get(), player.world);
 
             shadowlord.setLocationAndAngles(altarPosition.getX(), altarPosition.getY() + 3, altarPosition.getZ(), 0, 0);
-            player.world.spawnEntity(shadowlord);
-            StringUtil.sendMessageWithinRadius(StringUtil.getLocaleWithArguments("message.mob.shadowlord.spawn", player.getDisplayNameString()), player, 50);
+            player.world.addEntity(shadowlord);
+            PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.shadowlord.spawn", player.getDisplayName().getFormattedText()), player.world, player.getPosition(), 50);
             schedule(5, TimeUnit.SECONDS);
         }
         else {
@@ -50,13 +52,13 @@ public class ShadowlordSpawnTask implements Runnable {
                 for (int y = 0; y <= 1; y++) {
                     for (int z = -2; z <= 2; z++) {
                         BlockPos pos = altarPosition.add(x, y, z);
-                        IBlockState state = player.world.getBlockState(pos);
+                        BlockState state = player.world.getBlockState(pos);
                         Block block = state.getBlock();
 
-                        if (block instanceof LampBlock && block != ((LampBlock)block).getOffLamp()) {
-                            player.world.setBlockState(pos, ((LampBlock)block).getOffLamp().getDefaultState(), 2);
+                        if (block instanceof LampBlock && state.get(LampBlock.LIT)) {
+                            player.world.setBlockState(pos, state.with(LampBlock.LIT, false), 2);
                             schedule(2, TimeUnit.SECONDS);
-                            player.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+                            player.world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
 
                             return;
                         }
@@ -70,6 +72,6 @@ public class ShadowlordSpawnTask implements Runnable {
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        ModUtil.scheduleAsyncTask(this, time, units);
+        AoAScheduler.scheduleAsyncTask(this, time, units);
     }
 }

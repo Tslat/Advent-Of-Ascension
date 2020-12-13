@@ -1,43 +1,42 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.WaterloggedItem;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class DecloggingTable extends Block {
 	public DecloggingTable() {
-		super(Material.ROCK);
-		setTranslationKey("DecloggingTable");
-		setRegistryName("aoa3:declogging_Table");
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.ICE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote && player.getHeldItem(hand).getItem() instanceof WaterloggedItem) {
-			ItemStack stack = player.getHeldItem(hand);
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(((WaterloggedItem)stack.getItem()).getFixedItem()));
-			stack.shrink(1);
-			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.DECLOGGING_TABLE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getHeldItem(hand).getItem() instanceof WaterloggedItem) {
+			if (!world.isRemote()) {
+				ItemStack stack = player.getHeldItem(hand);
 
-			return true;
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(((WaterloggedItem)stack.getItem()).getDecloggedItem()));
+				stack.shrink(1);
+				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_DECLOGGING_TABLE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+			}
+
+			return ActionResultType.SUCCESS;
 		}
 
-		return true;
+		return ActionResultType.PASS;
 	}
 }

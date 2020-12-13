@@ -1,55 +1,55 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_NIGHT_VISION_GOGGLES;
-
 public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArmour {
-	public NightVisionGoggles(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_NIGHT_VISION_GOGGLES, name, registryName, slot);
+	private static final ResourceLocation overlayTexture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/helmet/night_vision_goggles.png");
+	public NightVisionGoggles() {
+		super(ItemUtil.customArmourMaterial("aoa3:night_vision_goggles", 27, new int[] {2, 2, 2, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1), EquipmentSlotType.HEAD);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.ALL;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.ALL;
 	}
 
 	@Override
-	public Enums.HelmetScreens getOverlay() {
-		return Enums.HelmetScreens.NIGHT_VISION_GOGGLES;
+	public AdventArmour.Overlay getOverlay() {
+		return Overlay.NIGHT_VISION_GOGGLES;
 	}
 
 	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		plData.player().addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 300, 0, true, false));
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+		plData.player().addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
 	}
 
 	@Override
-	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
-		PotionEffect nightVision = plData.player().getActivePotionEffect(MobEffects.NIGHT_VISION);
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+		EffectInstance nightVision = plData.player().getActivePotionEffect(Effects.NIGHT_VISION);
 
 		if (nightVision != null && nightVision.getDuration() < 300)
-			plData.player().removePotionEffect(MobEffects.NIGHT_VISION);
+			plData.player().removePotionEffect(Effects.NIGHT_VISION);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NightVisionGoggles.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}
 }

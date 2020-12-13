@@ -1,33 +1,35 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.craexxeus.EntityCraexxeus;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.CraexxeusEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class CraexxeusAltar extends BossAltarBlock {
 	public CraexxeusAltar() {
-		super("CraexxeusAltar", "craexxeus_altar");
+		super(MaterialColor.CYAN);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityCraexxeus craexxeus = new EntityCraexxeus(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		CraexxeusEntity craexxeus = new CraexxeusEntity(AoAEntities.Mobs.CRAEXXEUS.get(), player.world);
 
 		int offsetX = player.getRNG().nextBoolean() ? -11 : 11;
 		int offsetZ = player.getRNG().nextBoolean() ? -11 : 11;
 
 		craexxeus.setLocationAndAngles(blockPos.getX() + offsetX, blockPos.getY(), blockPos.getZ() + offsetZ, 0, 0);
-		player.world.spawnEntity(craexxeus);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.craexxeus.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(craexxeus);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.craexxeus.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.ANCIENT_RING;
+		return AoAItems.ANCIENT_RING.get();
 	}
 }

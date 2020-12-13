@@ -1,45 +1,42 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 public class EnigmaTable extends Block {
 	public EnigmaTable() {
-		super(Material.ROCK);
-		setTranslationKey("EnigmaTable");
-		setRegistryName("aoa3:enigma_table");
-		setHardness(-1f);
-		setResistance(999999999f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLACK_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (!world.isRemote) {
 			for (int i = 0; i < 4; i++) {
-				EntityItem unchargedStone = new EntityItem(world, pos.getX(), pos.getY() + 0.2, pos.getZ(), new ItemStack(ItemRegister.UNCHARGED_STONE));
+				ItemEntity unchargedStone = new ItemEntity(world, pos.getX(), pos.getY() + 0.2, pos.getZ(), new ItemStack(AoAItems.UNCHARGED_STONE.get()));
 
 				unchargedStone.setPickupDelay(10);
-				unchargedStone.addVelocity(AdventOfAscension.rand.nextGaussian(), 1 + AdventOfAscension.rand.nextDouble(), AdventOfAscension.rand.nextGaussian());
-				world.spawnEntity(unchargedStone);
+				unchargedStone.addVelocity(RandomUtil.randomGaussianValue(), 1 + RandomUtil.randomValueUpTo(1d), RandomUtil.randomGaussianValue());
+				world.addEntity(unchargedStone);
 			}
 
-			world.setBlockToAir(pos);
+			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 }

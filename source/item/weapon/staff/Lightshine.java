@@ -1,47 +1,43 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class Lightshine extends BaseStaff {
+public class Lightshine extends BaseStaff<List<LivingEntity>> {
 	public Lightshine(int durability) {
 		super(durability);
-		setTranslationKey("Lightshine");
-		setRegistryName("aoa3:lightshine");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.LIGHTSHINE_STAFF_CAST;
+		return AoASounds.ITEM_LIGHTSHINE_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.POWER_RUNE, 3);
-		runes.put(ItemRegister.LIFE_RUNE, 3);
-		runes.put(ItemRegister.DISTORTION_RUNE, 2);
+		runes.put(AoAItems.POWER_RUNE.get(), 3);
+		runes.put(AoAItems.LIFE_RUNE.get(), 3);
+		runes.put(AoAItems.DISTORTION_RUNE.get(), 2);
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), PredicateUtil.IS_HOSTILE_MOB);
+	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -50,15 +46,14 @@ public class Lightshine extends BaseStaff {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		((List<EntityLivingBase>)args).removeIf(entityLivingBase -> !EntityUtil.dealMagicDamage(null, caster, entityLivingBase, 1.0f, true));
-		EntityUtil.healEntity(caster, Math.min(15, ((List<EntityLivingBase>)args).size()));
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
+		args.removeIf(entity -> !DamageUtil.dealMagicDamage(null, caster, entity, 1.0f, true));
+		EntityUtil.healEntity(caster, Math.min(15, args.size()));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Lightshine.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

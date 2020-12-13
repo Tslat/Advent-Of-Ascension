@@ -1,37 +1,39 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.baroness.EntityBaroness;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.BaronessEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class BaronessAltar extends BossAltarBlock {
 	public BaronessAltar() {
-		super("BaronessAltar", "baroness_altar");
+		super(MaterialColor.PURPLE);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityBaroness baroness = new EntityBaroness(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		BaronessEntity baroness = new BaronessEntity(AoAEntities.Mobs.BARONESS.get(), player.world);
 
-		for (EntityPlayer pl : player.world.getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(blockPos).grow(5), entity -> entity != null && entity.isEntityAlive())) {
+		for (PlayerEntity pl : player.world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(blockPos).grow(5), entity -> entity != null && entity.isAlive())) {
 
-			pl.addVelocity(Math.signum(pl.posX - ((double)blockPos.getX() + 0.5d)) * 10, 0.1, Math.signum(pl.posZ - ((double)blockPos.getZ() + 0.5d)) * 10);
+			pl.addVelocity(Math.signum(pl.getPosX() - ((double)blockPos.getX() + 0.5d)) * 10, 0.1, Math.signum(pl.getPosZ() - ((double)blockPos.getZ() + 0.5d)) * 10);
 			pl.velocityChanged = true;
 		}
 
 		baroness.setPositionAndUpdate(blockPos.getX() + 0.5, blockPos.up().getY(), blockPos.getZ() + 0.5);
-		player.world.spawnEntity(baroness);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.baroness.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(baroness);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.baroness.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.WARLOCK_GEM;
+		return AoAItems.WARLOCK_GEM.get();
 	}
 }

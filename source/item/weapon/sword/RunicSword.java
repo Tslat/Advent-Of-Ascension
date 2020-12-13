@@ -1,70 +1,72 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class RunicSword extends BaseSword {
-	public RunicSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("RunicSword");
-		setRegistryName("aoa3:runic_sword");
+	public RunicSword() {
+		super(ItemUtil.customItemTier(2450, AttackSpeed.NORMAL, 17.5f, 4, 10, null));
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
-		if (!attacker.world.isRemote && attackCooldown > 0.75 && attacker instanceof EntityPlayer) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (!attacker.world.isRemote && attackCooldown > 0.75 && attacker instanceof PlayerEntity) {
 			ItemStack offhandStack = attacker.getHeldItemOffhand();
 
 			if (offhandStack.getItem() instanceof RuneItem && offhandStack.getCount() >= 5) {
 				RuneItem rune = (RuneItem)offhandStack.getItem();
 
-				if (rune == ItemRegister.POISON_RUNE) {
-					target.addPotionEffect(new PotionEffect(MobEffects.POISON, 72, 1, false, true));
+				if (rune == AoAItems.POISON_RUNE.get()) {
+					target.addPotionEffect(new EffectInstance(Effects.POISON, 72, 1, false, true));
 				}
-				else if (rune == ItemRegister.WITHER_RUNE) {
-					target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 40, 2, false, true));
+				else if (rune == AoAItems.WITHER_RUNE.get()) {
+					target.addPotionEffect(new EffectInstance(Effects.WITHER, 40, 2, false, true));
 				}
-				else if (rune == ItemRegister.FIRE_RUNE) {
+				else if (rune == AoAItems.FIRE_RUNE.get()) {
 					target.setFire(5);
 				}
-				else if (rune == ItemRegister.WIND_RUNE) {
-					EntityUtil.doScaledKnockback(target, attacker, 0.5f, attacker.posX - target.posX, attacker.posZ - target.posZ);
+				else if (rune == AoAItems.WIND_RUNE.get()) {
+					DamageUtil.doScaledKnockback(target, attacker, 0.5f, attacker.getPosX() - target.getPosX(), attacker.getPosZ() - target.getPosZ());
 				}
-				else if (rune == ItemRegister.WATER_RUNE) {
-					target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 0, false, true));
+				else if (rune == AoAItems.WATER_RUNE.get()) {
+					target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 60, 0, false, true));
 				}
-				else if (rune == ItemRegister.CHARGED_RUNE) {
-					((WorldServer)target.world).spawnParticle(EnumParticleTypes.VILLAGER_ANGRY, target.posX + (itemRand.nextFloat() * target.width * 2f) - target.width, target.posY + 1 + (itemRand.nextFloat() * target.height), target.posZ + (itemRand.nextFloat() * target.width * 2f) - target.width, 3, 0, 0, 0, (double)0);
+				else if (rune == AoAItems.CHARGED_RUNE.get()) {
+					((ServerWorld)target.world).spawnParticle(ParticleTypes.ANGRY_VILLAGER, target.getPosX() + (random.nextFloat() * target.getWidth() * 2f) - target.getWidth(), target.getPosY() + 1 + (random.nextFloat() * target.getHeight()), target.getPosZ() + (random.nextFloat() * target.getWidth() * 2f) - target.getWidth(), 3, 0, 0, 0, (double)0);
 				}
 				else {
 					return;
 				}
 
-				offhandStack.shrink(5);
-				stack.damageItem(1, attacker);
+				if (!((PlayerEntity)attacker).isCreative()) {
+					offhandStack.shrink(5);
+					ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
+				}
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RunicSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RunicSword.desc.2", Enums.ItemDescriptionType.NEGATIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.HARMFUL, 2));
 	}
 }

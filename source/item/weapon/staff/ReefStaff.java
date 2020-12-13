@@ -1,64 +1,58 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class ReefStaff extends BaseStaff {
+public class ReefStaff extends BaseStaff<Boolean> {
 	public ReefStaff(int durability) {
 		super(durability);
-		setTranslationKey("ReefStaff");
-		setRegistryName("aoa3:reef_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.REEF_STAFF_CAST;
+		return AoASounds.ITEM_REEF_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.ENERGY_RUNE, 2);
-		runes.put(ItemRegister.WATER_RUNE, 1);
+		runes.put(AoAItems.ENERGY_RUNE.get(), 2);
+		runes.put(AoAItems.WATER_RUNE.get(), 1);
 	}
 
 	@Nullable
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
+	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
 		return caster.isInWater() ? true : null;
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, Boolean args) {
 		float velocityX = -MathHelper.sin(caster.rotationYaw * (float)Math.PI / 180f) * MathHelper.cos(caster.rotationPitch * (float)Math.PI / 180f);
 		float velocityY = -MathHelper.sin(caster.rotationPitch * (float)Math.PI / 180f);
 		float velocityZ = MathHelper.cos(caster.rotationYaw * (float)Math.PI / 180f) * MathHelper.cos(caster.rotationPitch * (float)Math.PI / 180f);
 
-		caster.motionX = velocityX * 3;
-		caster.motionY = velocityY * 3;
-		caster.motionZ = velocityZ * 3;
+		caster.setMotion(new Vec3d(velocityX * 3, velocityY * 3, velocityZ * 3));
 		caster.velocityChanged = true;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ReefStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

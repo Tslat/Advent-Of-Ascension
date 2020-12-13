@@ -3,54 +3,52 @@ package net.tslat.aoa3.item.weapon.sword;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.handlers.AdventMiscStackCapability;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityHandles;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class PrimalSword extends BaseSword {
-	public PrimalSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("PrimalSword");
-		setRegistryName("aoa3:primal_sword");
+	public PrimalSword() {
+		super(ItemUtil.customItemTier(1960, AttackSpeed.NORMAL, 13.0f, 4, 10, null));
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (world.getWorldTime() % 10 == 0 && entity instanceof EntityLivingBase) {
-			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity) {
+			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
-			if (cap != null) {
-				if (isSelected) {
-					float currentDamageMod = cap.getValue();
-					float currentCalcBuff = getCurrentDamageBuff(entity);
+			if (isSelected) {
+				float currentDamageMod = cap.getValue();
+				float currentCalcBuff = getCurrentDamageBuff(entity);
 
-					if (currentDamageMod != currentCalcBuff) {
-						((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
-						cap.setValue(currentCalcBuff);
-						((EntityLivingBase)entity).getAttributeMap().applyAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
-					}
+				if (currentDamageMod != currentCalcBuff) {
+					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+					cap.setValue(currentCalcBuff);
+					((LivingEntity)entity).getAttributes().applyAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
 				}
-				else if (cap.getValue() != 0) {
-					((EntityLivingBase)entity).getAttributeMap().removeAttributeModifiers(getAttributeModifiers(EntityEquipmentSlot.MAINHAND, stack));
-					cap.setValue(0);
-				}
+			}
+			else if (cap.getValue() != 0) {
+				((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+				cap.setValue(0);
 			}
 		}
 	}
 
 	private float getCurrentDamageBuff(Entity holder) {
-		if (holder instanceof EntityLivingBase) {
-			float armour = (float)((EntityLivingBase)holder).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
+		if (holder instanceof LivingEntity) {
+			float armour = (float)((LivingEntity)holder).getAttribute(SharedMonsterAttributes.ARMOR).getValue();
 
 			if (armour > 15) {
 				return 15 / armour;
@@ -64,21 +62,20 @@ public class PrimalSword extends BaseSword {
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
-		Multimap<String, AttributeModifier> modifierMap =  super.getItemAttributeModifiers(slot);
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		Multimap<String, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot);
 
-		if (slot == EntityEquipmentSlot.MAINHAND) {
-			AdventMiscStackCapability cap = (AdventMiscStackCapability)stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
+		if (slot == EquipmentSlotType.MAINHAND) {
+			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
-			if (cap != null)
-				ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
+			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getAttackDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
 		}
 
 		return modifierMap;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.PrimalSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

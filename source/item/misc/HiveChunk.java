@@ -1,20 +1,24 @@
 package net.tslat.aoa3.item.misc;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.mobs.barathos.EntityTharafly;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.ItemUtil;
 
-public class HiveChunk extends SimpleItem {
+public class HiveChunk extends Item {
 	public HiveChunk() {
-		super("HiveChunk", "hive_chunk");
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		if (target instanceof EntityTharafly) {
-			attacker.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ItemRegister.HIVE_EGG, stack.getCount()));
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (target.getType() == AoAEntities.Mobs.THARAFLY.get() && attacker instanceof PlayerEntity) {
+			stack.shrink(1);
+			ItemUtil.givePlayerItemOrDrop((PlayerEntity)attacker, new ItemStack(AoAItems.HIVE_EGG.get()));
 
 			return true;
 		}

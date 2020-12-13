@@ -1,48 +1,44 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class AtlanticStaff extends BaseStaff {
+public class AtlanticStaff extends BaseStaff<List<LivingEntity>> {
 	public AtlanticStaff(int durability) {
 		super(durability);
-		setTranslationKey("AtlanticStaff");
-		setRegistryName("aoa3:atlantic_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.ATLANTIC_STAFF_CAST;
+		return AoASounds.ITEM_ATLANTIC_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.DISTORTION_RUNE, 1);
-		runes.put(ItemRegister.ENERGY_RUNE, 2);
-		runes.put(ItemRegister.STORM_RUNE, 2);
+		runes.put(AoAItems.DISTORTION_RUNE.get(), 1);
+		runes.put(AoAItems.ENERGY_RUNE.get(), 2);
+		runes.put(AoAItems.STORM_RUNE.get(), 2);
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityLivingBase> list = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), PredicateUtil.IS_HOSTILE_MOB);
+	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -51,16 +47,13 @@ public class AtlanticStaff extends BaseStaff {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		for (EntityLivingBase e : (List<EntityLivingBase>)args) {
-			e.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 1));
-		}
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
+		EntityUtil.applyPotions(args, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 100).level(2));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.AtlanticStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

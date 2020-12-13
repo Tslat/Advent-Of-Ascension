@@ -1,40 +1,41 @@
 package net.tslat.aoa3.item.tool.axe;
 
-import net.minecraft.block.BlockLog;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BlockEvent;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.tool.SpecialHarvestTool;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class EmberstoneAxe extends BaseAxe implements SpecialHarvestTool {
 	public EmberstoneAxe() {
-		super("EmberstoneAxe", "emberstone_axe", MaterialsRegister.TOOL_EMBERSTONE);
+		super(ItemUtil.customItemTier(2000, 10.0f, 5.5f, 5, 10, AoAItems.EMBERSTONE_INGOT));
 	}
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
-		if (e.getState().getBlock() instanceof BlockLog) {
+		if (e.getState().getBlock().isIn(BlockTags.LOGS)) {
 			if (e.getDrops().isEmpty())
 				return;
 
-			World world = e.getWorld();
+			World world = (World)e.getWorld();
 			BlockPos pos = e.getPos();
 
-			if (!world.isRemote) {
-				e.getState().getBlock().dropXpOnBlockBreak(world, pos, 1 + itemRand.nextInt(3));
+			if (!world.isRemote()) {
+				e.getState().getBlock().dropXpOnBlockBreak(world, pos, 1 + random.nextInt(3));
 
 				for (int i = 0; i < 5; i++) {
-					((WorldServer)world).spawnParticle(EnumParticleTypes.FLAME, pos.getX() + itemRand.nextFloat(), pos.getY() + itemRand.nextFloat(), pos.getZ() + itemRand.nextFloat(), 1, 0, 0, 0, (double)0);
+					((ServerWorld)world).spawnParticle(ParticleTypes.FLAME, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(), pos.getZ() + random.nextFloat(), 1, 0, 0, 0, (double)0);
 				}
 			}
 
@@ -44,7 +45,7 @@ public class EmberstoneAxe extends BaseAxe implements SpecialHarvestTool {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.EmberstoneAxe.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

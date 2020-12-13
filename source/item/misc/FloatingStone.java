@@ -1,25 +1,25 @@
 package net.tslat.aoa3.item.misc;
 
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
 
 public class FloatingStone extends Item {
 	public FloatingStone() {
-		setTranslationKey("FloatingStone");
-		setRegistryName("aoa3:floating_stone");
-		setCreativeTab(CreativeTabsRegister.MISC);
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(EntityItem entityItem) {
-		if (entityItem.posY < -10) {
-			entityItem.setPositionAndUpdate(entityItem.posX, 257, entityItem.posZ);
-			entityItem.setItem(new ItemStack(ItemRegister.HEAVY_BOULDER, 1));
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
+		if (entity.getPosY() < -10) {
+			entity.setPositionAndUpdate(entity.getPosX(), 257, entity.getPosZ());
+			entity.setItem(new ItemStack(AoAItems.HEAVY_BOULDER.get(), 1));
+
+			return true;
 		}
 
-		return super.onEntityItemUpdate(entityItem);
+		return false;
 	}
 }

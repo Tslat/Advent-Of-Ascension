@@ -1,44 +1,42 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class NethengeicSword extends BaseSword {
-	public NethengeicSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("NethengeicSword");
-		setRegistryName("aoa3:nethengeic_sword");
+	public NethengeicSword() {
+		super(ItemUtil.customItemTier(2040, AttackSpeed.NORMAL, 14.0f, 4, 10, null));
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (!attacker.world.isRemote) {
-			if (target.isImmuneToFire() || target.isEntityInvulnerable(DamageSource.ON_FIRE)) {
+			if (target.isImmuneToFire() || target.isInvulnerableTo(DamageSource.ON_FIRE)) {
 
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER, (int)(80 * attackCooldown), 2, false, true));
+				target.addPotionEffect(new EffectInstance(Effects.WITHER, (int)(80 * attackCooldown), 2, false, true));
 			}
 			else {
-				target.setFire((int)(4 * (attacker instanceof EntityPlayer ? attackCooldown : 1)));
+				target.setFire((int)(4 * (attacker instanceof PlayerEntity ? attackCooldown : 1)));
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NethengeicSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NethengeicSword.desc.2", Enums.ItemDescriptionType.POSITIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.BURNS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,30 +1,32 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.crystocore.EntityCrystocore;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.CrystocoreEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class PowerStation extends BossAltarBlock {
 	public PowerStation() {
-		super("PowerStation", "power_station");
+		super(MaterialColor.YELLOW);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityCrystocore crystocore = new EntityCrystocore(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		CrystocoreEntity crystocore = new CrystocoreEntity(AoAEntities.Mobs.CRYSTOCORE.get(), player.world);
 
 		crystocore.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.spawnEntity(crystocore);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.crystocore.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(crystocore);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.crystocore.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.GIANT_CRYSTAL;
+		return AoAItems.GIANT_CRYSTAL.get();
 	}
 }

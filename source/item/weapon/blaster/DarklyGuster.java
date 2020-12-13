@@ -2,19 +2,17 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityWinderShot;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.WinderShotEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,42 +20,39 @@ import java.util.List;
 public class DarklyGuster extends BaseBlaster {
 	public DarklyGuster(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("DarklyGuster");
-		setRegistryName("aoa3:darkly_guster");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.DARK_GUN_FIRE;
+		return AoASounds.ITEM_DARK_GUN_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityWinderShot(shooter, this, 60));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new WinderShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		List<Entity> nearbyTargets = shot.world.getEntitiesWithinAABBExcludingEntity(target, target.getEntityBoundingBox().grow(3, 1, 3));
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		List<Entity> nearbyTargets = shot.world.getEntitiesWithinAABBExcludingEntity(target, target.getBoundingBox().grow(3, 1, 3));
 
-		nearbyTargets.removeIf(entity -> !(entity instanceof EntityLivingBase) || !PredicateUtil.IS_HOSTILE_MOB.apply((EntityLivingBase)entity));
+		nearbyTargets.removeIf(entity -> !(entity instanceof LivingEntity) || !EntityUtil.Predicates.HOSTILE_MOB.test((LivingEntity)entity));
 		nearbyTargets.add(target);
 
 		float splitDmg = (float)(baseDmg / nearbyTargets.size() * (Math.pow(1.05, nearbyTargets.size())));
 		boolean success = false;
 
 		for (Entity entity : nearbyTargets) {
-			success |= EntityUtil.dealBlasterDamage(shooter, entity, shot, splitDmg, false);
+			success |= DamageUtil.dealBlasterDamage(shooter, entity, shot, splitDmg, false);
 		}
 
 		return success;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.WhimsyWinder.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

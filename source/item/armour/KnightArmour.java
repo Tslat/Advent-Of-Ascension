@@ -2,87 +2,90 @@ package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
-
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_KNIGHT;
+import java.util.UUID;
 
 public class KnightArmour extends AdventArmour {
-	public KnightArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_KNIGHT, name, registryName, slot);
+	public static final AttributeModifier KNIGHT_BOOTS_BUFF = new AttributeModifier(UUID.fromString("9283b669-bc04-4055-a165-73e3a2b5ab7e"), "AoAKnightArmourBoots", 1.5d, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier KNIGHT_LEGS_BUFF = new AttributeModifier(UUID.fromString("e60b8cda-a196-4922-b867-01d2422a9e8c"), "AoAKnightArmourLegs", 1.5d, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier KNIGHT_CHESTPLATE_BUFF = new AttributeModifier(UUID.fromString("8ecbc122-563a-4de5-8f27-3f461ad2fb5c"), "AoAKnightArmourBody", 1.5d, AttributeModifier.Operation.ADDITION);
+	public static final AttributeModifier KNIGHT_HELMET_BUFF = new AttributeModifier(UUID.fromString("673ef5d8-9df5-4dbb-84f0-1da677d59f05"), "AoAKnightArmourHelmet", 1.5d, AttributeModifier.Operation.ADDITION);
+
+	public KnightArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:knight", 70, new int[] {4, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.KNIGHT;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.KNIGHT;
 	}
 
 	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null && EntityUtil.checkBelowHealthPercentThreshold(plData.player(), 0.2f))
-			plData.player().addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 1, false, true));
+			plData.player().addPotionEffect(new EffectInstance(Effects.STRENGTH, -1, 1, false, true));
 	}
 
 	@Override
-	public void onEquip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_BOOTS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
 					break;
 				case LEGS:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_LEGS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
 					break;
 				case CHEST:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_BODY);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
 					break;
 				case HEAD:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_HELMET);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
 					break;
 			}
 		}
 	}
 
 	@Override
-	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_BOOTS);
+					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
 					break;
 				case LEGS:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_LEGS);
+					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
 					break;
 				case CHEST:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_BODY);
+					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
 					break;
 				case HEAD:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, AoAAttributes.KNIGHT_ARMOUR_HELMET);
+					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
 					break;
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.KnightArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.knight_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.KnightArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.knight_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

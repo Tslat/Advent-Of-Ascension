@@ -1,39 +1,36 @@
 package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityArcwormShot;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.ArcwormShotEntity;
 
 import javax.annotation.Nullable;
 
 public class ExperimentW801 extends BaseBlaster {
 	public ExperimentW801(double dmg, int durability, int fireDelayTicks, float energyCost) {
-		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("ExperimentW801");
-		setRegistryName("aoa3:experiment_w801");
-
-		setCreativeTab(null);
+		super(new Item.Properties().group(null).maxDamage(durability), dmg, fireDelayTicks, energyCost);
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.MOB_ARCWORM_HIT;
+		return AoASounds.ENTITY_ARCWORM_HURT.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityArcwormShot(shooter, this, 120));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new ArcwormShotEntity(shooter, this, 120));
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!verifyStack(stack)) {
 			stack.setCount(0);
 			entityIn.replaceItemInInventory(itemSlot, ItemStack.EMPTY);
@@ -41,10 +38,10 @@ public class ExperimentW801 extends BaseBlaster {
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(EntityItem entity) {
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		if (!verifyStack(entity.getItem())) {
 			entity.setItem(ItemStack.EMPTY);
-			entity.setDead();
+			entity.remove();
 		}
 
 		return false;
@@ -54,12 +51,12 @@ public class ExperimentW801 extends BaseBlaster {
 		if (stack.isEmpty())
 			return false;
 
-		if (!stack.hasTagCompound())
+		if (!stack.hasTag())
 			return false;
 
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundNBT tag = stack.getTag();
 
-		if (!tag.hasKey("alien_orb"))
+		if (!tag.contains("alien_orb"))
 			return false;
 
 		return tag.getBoolean("alien_orb");
@@ -67,10 +64,9 @@ public class ExperimentW801 extends BaseBlaster {
 
 	public ItemStack newValidStack() {
 		ItemStack stack = new ItemStack(this);
-		NBTTagCompound tag = new NBTTagCompound();
+		CompoundNBT tag = stack.getOrCreateTag();
 
-		tag.setBoolean("alien_orb", true);
-		stack.setTagCompound(tag);
+		tag.putBoolean("alien_orb", true);
 
 		return stack;
 	}

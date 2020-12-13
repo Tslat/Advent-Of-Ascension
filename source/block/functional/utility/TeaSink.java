@@ -1,144 +1,126 @@
 package net.tslat.aoa3.block.functional.utility;
 
-import net.minecraft.block.BlockHorizontal;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.Items;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.block.BasicNonCubeBlock;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
-import java.util.Random;
+import javax.annotation.Nullable;
 
-public class TeaSink extends BasicNonCubeBlock {
-	public final TeaSink fullState;
+public class TeaSink extends Block {
+	public static final BooleanProperty FILLED = BooleanProperty.create("filled");
+	private static final VoxelShape BOTTOM_SHAPE = makeCuboidShape(0, 0, 0, 16, 7, 16);
+	private static final VoxelShape TOP_SHAPE = makeCuboidShape(6, 7, 0, 10, 16, 10);
+	private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, TOP_SHAPE);
 
 	public TeaSink() {
-		super("TeaSink", "tea_sink", Material.WOOD, 5.0f, 3.0f);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
-		fullState = new TeaSink(true);
-	}
+		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.LIGHT_GRAY, 5, 3, SoundType.WOOD));
 
-	private TeaSink(boolean full) {
-		super("TeaSinkFull", "tea_sink_full", Material.WOOD, 5.0f, 3.0f);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
-		fullState = this;
-	}
-
-	public TeaSink getFullSink() {
-		return fullState;
+		setDefaultState(getDefaultState().with(FILLED, false).with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			if (state.getBlock() == fullState) {
-				if (player.getHeldItem(hand).getItem() == ItemRegister.CUP && player.inventory.hasItemStack(new ItemStack(ItemRegister.TEA_SHREDDINGS))) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
+	}
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (state.get(FILLED)) {
+			if (player.getHeldItem(hand).getItem() == AoAItems.CUP.get() && player.inventory.hasItemStack(new ItemStack(AoAItems.TEA_SHREDDINGS.get()))) {
+				if (!world.isRemote()) {
 					boolean success = false;
 
-					if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.MYSTIC_SHROOMS), true, 1)) {
-						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.FUNGAL_TEA));
+					if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.MYSTIC_SHROOMS.get()), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1);
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.FUNGAL_TEA.get()));
 
 						success = true;
 					}
-					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.NATURE_MELON_SLICE), true, 1)) {
-						ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1);
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.NATURAL_TEA));
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.NATURE_MELON_SLICE.get()), true, 1)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1);
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NATURAL_TEA.get()));
 
 						success = true;
 					}
-					else if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.TEA_SHREDDINGS), true, 1)) {
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.TEA));
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1)) {
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.TEA.get()));
 
 						success = true;
 					}
 
 					if (success) {
-						if (!player.capabilities.isCreativeMode)
+						if (!player.isCreative())
 							player.getHeldItem(hand).shrink(1);
 
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.TEA_SINK_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
-						if (AdventOfAscension.rand.nextInt(7) == 0)
-							world.setBlockState(pos, BlockRegister.TEA_SINK.getDefaultState().withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)));
-
-						return true;
+						if (RandomUtil.oneInNChance(7))
+							world.setBlockState(pos, AoABlocks.TEA_SINK.get().getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)));
 					}
 				}
 			}
-			else {
-				if (player.getHeldItem(hand).getItem() == Items.WATER_BUCKET) {
-					if (!player.capabilities.isCreativeMode) {
+
+			return ActionResultType.SUCCESS;
+		}
+		else {
+			if (player.getHeldItem(hand).getItem() == Items.WATER_BUCKET) {
+				if (!world.isRemote()) {
+					if (!player.isCreative()) {
 						player.getHeldItem(hand).shrink(1);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(Items.BUCKET));
 					}
 
-					world.setBlockState(pos, fullState.getDefaultState().withProperty(BlockHorizontal.FACING, state.getValue(BlockHorizontal.FACING)));
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), SoundsRegister.TEA_SINK_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-
-					return true;
+					world.setBlockState(pos, getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)).with(FILLED, true));
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_FILL.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 				}
+
+				return ActionResultType.SUCCESS;
 			}
 		}
 
-		return true;
+		return ActionResultType.PASS;
+	}
+
+	@Nullable
+	@Override
+	public BlockState getStateForPlacement(BlockItemUseContext context) {
+		return getDefaultState().with(FILLED, false).with(HorizontalBlock.HORIZONTAL_FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true));
 	}
 
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getDefaultState().withProperty(BlockHorizontal.FACING, EntityUtil.getDirectionFacing(placer, true));
-	}
-
-	@Override
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(Item.getItemFromBlock(BlockRegister.TEA_SINK));
-	}
-
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(BlockRegister.TEA_SINK);
-	}
-
-	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return false;
 	}
 
 	@Override
-	public int quantityDropped(Random random) {
-		return 1;
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, BlockHorizontal.FACING);
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
-	}
-
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(FILLED, HorizontalBlock.HORIZONTAL_FACING);
 	}
 }

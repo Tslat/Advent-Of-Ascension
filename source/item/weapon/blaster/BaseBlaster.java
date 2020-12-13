@@ -4,53 +4,58 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.*;
+import net.minecraft.item.UseAction;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.EnergyProjectileWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.item.EnergyProjectileWeapon;
+import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon, AdventWeapon {
+public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon {
 	protected final double baseDmg;
 	protected final int firingDelay;
 	protected final float energyCost;
 
-	public BaseBlaster(final double dmg, final int durability, final int fireDelayTicks, final float energyCost) {
+	public BaseBlaster(Item.Properties properties, final double dmg, final int fireDelayTicks, final float energyCost) {
+		super(properties);
+
 		this.baseDmg = dmg;
 		this.firingDelay = fireDelayTicks;
 		this.energyCost = energyCost;
-		setMaxDamage(durability);
-		setCreativeTab(CreativeTabsRegister.BLASTERS);
-		setMaxStackSize(1);
-		setFull3D();
+	}
+
+	public BaseBlaster(final double dmg, final int durability, final int fireDelayTicks, final float energyCost) {
+		this(new Item.Properties().group(AoAItemGroups.BLASTERS).maxDamage(durability), dmg, fireDelayTicks, energyCost);
 	}
 
 	public double getDamage() {
@@ -81,65 +86,66 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.NONE;
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.NONE;
 	}
 
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack) {
 		return 72000;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (hand != getWeaponHand())
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (hand != getWeaponHand(player))
+			return ActionResult.resultFail(stack);
 
 		if (player.getCooledAttackStrength(0.0f) < 1)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			return ActionResult.resultFail(stack);
 
-		if (!world.isRemote) {
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
-			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack);
-			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack);
+		if (player instanceof ServerPlayerEntity) {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
+			int recharge = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.RECHARGE.get(), stack);
+			int greed = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), stack);
 			float energyConsumption = (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
 
-			if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.GHOULISH)
+			if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.GHOULISH)
 				energyConsumption *= 0.7f;
 
-			if (plData.stats().getResourceValue(Enums.Resources.ENERGY) < energyConsumption)
-				return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			if (plData.stats().getResourceValue(Resources.ENERGY) < energyConsumption)
+				return ActionResult.resultFail(stack);
 
 			player.setActiveHand(hand);
 		}
 
-		return ActionResult.newResult(EnumActionResult.PASS, stack);
+		return ActionResult.resultPass(stack);
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
-		if (!player.world.isRemote) {
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer((EntityPlayer)player);
-			int recharge = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack);
-			int greed = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack);
-			float energyConsumption = ((EntityPlayer)player).capabilities.isCreativeMode ? 0 : (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
+	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+		if (player instanceof ServerPlayerEntity) {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
+			int recharge = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.RECHARGE.get(), stack);
+			int greed = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), stack);
+			float energyConsumption = ((PlayerEntity)player).isCreative() ? 0 : (1 + (0.3f * greed)) * energyCost * Math.max(0, (1 - 0.07f * recharge));
 
-			if (plData.equipment().getCurrentFullArmourSet() == Enums.ArmourSets.GHOULISH)
+			if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.GHOULISH)
 				energyConsumption *= 0.7f;
 
-			if (plData.stats().getResourceValue(Enums.Resources.ENERGY) >= energyConsumption) {
+			if (plData.stats().getResourceValue(Resources.ENERGY) >= energyConsumption) {
 				if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 					if (consumeEnergy(plData, stack, energyConsumption)) {
 						if (getFiringSound() != null)
-							player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+							player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 						fire(stack, player);
-						((EntityPlayer)player).addStat(StatList.getObjectUseStats(this));
+						((PlayerEntity)player).addStat(Stats.ITEM_USED.get(this));
 
-						if ((72000 - count) / firingDelay >= getMaxDamage(stack) - stack.getItemDamage())
-							stack.damageItem((72000 - count) / firingDelay, player);
+						if ((72000 - count) / firingDelay >= getMaxDamage(stack) - stack.getDamage())
+							ItemUtil.damageItem(stack, player, (72000 - count) / firingDelay, EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.BRACE.get(), stack) > 0 ? EquipmentSlotType.OFFHAND : EquipmentSlotType.MAINHAND);
+
 					}
 					else {
 						player.stopActiveHand();
@@ -147,41 +153,34 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 				}
 			}
 			else {
-				if (player instanceof EntityPlayerMP)
-					PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.ENERGY, energyConsumption);
-
+				PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, energyConsumption);
 				player.stopActiveHand();
 			}
 		}
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase player, int useTicksRemaining) {
-		stack.damageItem((72000 - useTicksRemaining - 1) / firingDelay, player);
+	public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity player, int useTicksRemaining) {
+		ItemUtil.damageItem(stack, player, (72000 - useTicksRemaining - 1) / firingDelay, EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.BRACE.get(), stack) > 0 ? EquipmentSlotType.OFFHAND : EquipmentSlotType.MAINHAND);
 	}
 
-	public abstract void fire(ItemStack blaster, EntityLivingBase shooter);
+	public abstract void fire(ItemStack blaster, LivingEntity shooter);
 
 	public boolean consumeEnergy(PlayerDataManager plData, ItemStack stack, float cost) {
-		return plData.stats().consumeResource(Enums.Resources.ENERGY, cost, false);
+		return plData.stats().consumeResource(Resources.ENERGY, cost, false);
 	}
 
 	@Override
-	public boolean isFull3D() {
-		return true;
+	public Hand getWeaponHand(LivingEntity holder) {
+		return Hand.MAIN_HAND;
 	}
 
 	@Override
-	public EnumHand getWeaponHand() {
-		return EnumHand.MAIN_HAND;
-	}
+	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, LivingEntity shooter) {}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, EntityLivingBase shooter) {}
-
-	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (EntityUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg, false)) {
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (DamageUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg, false)) {
 			doImpactEffect(shot, target, shooter);
 
 			return true;
@@ -190,22 +189,21 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		return false;
 	}
 
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {}
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (baseDmg > 0)
-			tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.blaster", TextFormatting.DARK_RED, StringUtil.roundToNthDecimalPlace((float)baseDmg, 1)));
+			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.blaster", TextFormatting.DARK_RED, NumberUtil.roundToNthDecimalPlace((float)baseDmg, 1)));
 
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.fire", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.slowing", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.effect", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / 100d)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.slowing", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.effect", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / 100d)));
 
-		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, stack))) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.RECHARGE, stack)));
+		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), stack))) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.RECHARGE.get(), stack)));
 
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, StringUtil.roundToNthDecimalPlace(energyConsumption, 2), StringUtil.getLocaleString("resources.energy.name")));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, NumberUtil.roundToNthDecimalPlace(energyConsumption, 2), LocaleUtil.getLocaleString(LocaleUtil.Constants.ENERGY_RESOURCE)));
 	}
 
 	@Override
@@ -214,21 +212,21 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	}
 
 	@Nullable
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		if (!stack.hasTagCompound())
-			stack.setTagCompound(new NBTTagCompound());
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		CompoundNBT tag = stack.getOrCreateTag();
 
-		stack.getTagCompound().setByte("HideFlags", (byte)2);
+		tag.putByte("HideFlags", (byte)2);
 
-		return super.initCapabilities(stack, nbt);
+		return null;
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
 
-		if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(firingDelay < 20 ? Enums.WeaponSpeed.THIRD.value : Enums.WeaponSpeed.QUARTER.value));
+		if (slot == EquipmentSlotType.MAINHAND)
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", firingDelay < 20 ? AttackSpeed.THIRD : AttackSpeed.QUARTER, AttributeModifier.Operation.ADDITION));
 
 		return multimap;
 	}

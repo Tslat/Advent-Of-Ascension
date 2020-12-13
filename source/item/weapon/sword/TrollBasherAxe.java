@@ -1,38 +1,42 @@
 package net.tslat.aoa3.item.weapon.sword;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraftforge.common.ToolType;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class TrollBasherAxe extends BaseSword {
-	final ToolMaterial material;
-
-	public TrollBasherAxe(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		this.material = material;
-		setTranslationKey("TrollBasherAxe");
-		setRegistryName("aoa3:troll_basher_axe");
-		setHarvestLevel("axe", 3);
+	public TrollBasherAxe() {
+		super(ItemUtil.customItemTier(1800, AttackSpeed.NORMAL, 12.0f, 4, 10, null));
 	}
 
 	@Override
-	public float getDestroySpeed(ItemStack stack, IBlockState state) {
-		Material material = state.getMaterial();
+	public int getHarvestLevel(ItemStack stack, ToolType tool, @Nullable PlayerEntity player, @Nullable BlockState blockState) {
+		if (tool == ToolType.AXE)
+			return 3;
 
-		return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : 4.0f;
+		return super.getHarvestLevel(stack, tool, player, blockState);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getColourLocaleString("item.TrollBasherAxe.desc.1", TextFormatting.DARK_GREEN));
+	@Override
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
+		Material material = state.getMaterial();
+
+		return material != Material.WOOD && material != Material.PLANTS && material != Material.TALL_PLANTS ? super.getDestroySpeed(stack, state) : 4.0f;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -3,24 +3,24 @@ package net.tslat.aoa3.item.weapon.cannon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumHand;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.cannon.EntityVoxCannon;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.cannon.VoxCannonEntity;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,34 +33,31 @@ public class VoxCannon extends BaseCannon {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
-		setTranslationKey("VoxCannon");
-		setRegistryName("aoa3:vox_cannon");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.BALL_CANNON_FIRE;
+		return AoASounds.ITEM_BALL_CANNON_FIRE.get();
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CANNONBALL), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
-			return new EntityVoxCannon(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+			return new VoxCannonEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0, false, true));
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (target instanceof LivingEntity)
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 100));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.poison", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.POISONS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

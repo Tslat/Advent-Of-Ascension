@@ -1,16 +1,14 @@
 package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntitySwarmShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.SwarmShotEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -18,29 +16,26 @@ import java.util.List;
 public class Swarmotron extends BaseBlaster {
 	public Swarmotron(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("Swarmotron");
-		setRegistryName("aoa3:swarmotron");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SWARMOTRON_FIRE;
+		return AoASounds.ITEM_SWARMOTRON_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntitySwarmShot(shooter, this, 60, 0, 0, 0));
-		shooter.world.spawnEntity(new EntitySwarmShot(shooter, this, 60, -0.125f, 0f, -0.125f));
-		shooter.world.spawnEntity(new EntitySwarmShot(shooter, this, 60, -0.125f, 0, 0));
-		shooter.world.spawnEntity(new EntitySwarmShot(shooter, this, 60, 0.125f, -0.125f, 0.125f));
-		shooter.world.spawnEntity(new EntitySwarmShot(shooter, this, 60, 0.125f, 0.125f, 0.125f));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0, 0, 0));
+		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0f, -0.125f));
+		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0, 0));
+		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, -0.125f, 0.125f));
+		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, 0.125f, 0.125f));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.Swarmotron.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

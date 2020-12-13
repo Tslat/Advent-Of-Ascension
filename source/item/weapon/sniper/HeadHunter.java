@@ -2,23 +2,24 @@ package net.tslat.aoa3.item.weapon.sniper;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -26,43 +27,41 @@ import java.util.List;
 public class HeadHunter extends BaseSniper {
 	public HeadHunter(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("HeadHunter");
-		setRegistryName("aoa3:head_hunter");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SNIPER_FIRE;
+		return AoASounds.ITEM_SNIPER_FIRE.get();
 	}
 
 	@Override
-	public Enums.ScopeScreens getScreen() {
-		return Enums.ScopeScreens.DOTTED;
+	public ScopeOverlayRenderer.Type getScopeType() {
+		return ScopeOverlayRenderer.Type.DOTTED;
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof EntityLivingBase) {
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (target instanceof LivingEntity && target.world instanceof ServerWorld) {
 			Vec3d preciseImpactSpot = EntityUtil.preciseEntityInterceptCalculation(target, bullet, 20);
 
 			if (preciseImpactSpot != null) {
-				double headMinRange = (target.getEntityBoundingBox().minY + target.getEyeHeight()) - target.height * 0.105f;
-				double headMaxRange = headMinRange + target.height * 0.225f;
+				double headMinRange = (target.getBoundingBox().minY + target.getEyeHeight()) - target.getHeight() * 0.105f;
+				double headMaxRange = headMinRange + target.getHeight() * 0.225f;
 
 				if (preciseImpactSpot.y > headMinRange && preciseImpactSpot.y < headMaxRange) {
 					for (int i = 0; i < 5; i++) {
-						((WorldServer)target.world).spawnParticle(EnumParticleTypes.DAMAGE_INDICATOR, true, preciseImpactSpot.x + itemRand.nextDouble() - 0.5, preciseImpactSpot.y + itemRand.nextDouble() - 0.5, preciseImpactSpot.z + itemRand.nextDouble() - 0.5, 3, 0, 0, 0, (double)0);
+						((ServerWorld)target.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, preciseImpactSpot.x + random.nextDouble() - 0.5d, preciseImpactSpot.y + random.nextDouble() - 0.5d, preciseImpactSpot.z + random.nextDouble() - 0.5d, 3, 0, 0, 0, 0);
 					}
 
-					if (shooter.getHeldItem(EnumHand.MAIN_HAND).getItem() != this && shooter.getHeldItem(EnumHand.OFF_HAND).getItem() != this)
+					if (shooter.getHeldItem(Hand.MAIN_HAND).getItem() != this && shooter.getHeldItem(Hand.OFF_HAND).getItem() != this)
 						return;
 
-					if (shooter instanceof EntityPlayer) {
-						if (shooter instanceof EntityPlayerMP)
-							PlayerUtil.playSoundForPlayer((EntityPlayerMP)shooter, SoundsRegister.FORAGING_LOOT, SoundCategory.PLAYERS, shooter.posX, shooter.posY, shooter.posZ, 0.3f, 1.0f);
+					if (shooter instanceof PlayerEntity) {
+						if (shooter instanceof ServerPlayerEntity)
+							PlayerUtil.playSoundForPlayer((ServerPlayerEntity)shooter, AoASounds.SKILL_LOOT.get(), SoundCategory.PLAYERS, shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), 0.3f, 1.0f);
 
-						((EntityPlayer)shooter).getCooldownTracker().setCooldown(this, (int)(getFiringDelay() / 2f));
+						((PlayerEntity)shooter).getCooldownTracker().setCooldown(this, (int)(getFiringDelay() / 2f));
 					}
 				}
 			}
@@ -70,8 +69,8 @@ public class HeadHunter extends BaseSniper {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HeadHunter.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,32 +1,30 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_NIGHTMARE;
-
 public class NightmareArmour extends AdventArmour {
-	public NightmareArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_NIGHTMARE, name, registryName, slot);
+	public NightmareArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:nightmare", 63, new int[] {4, 9, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.NIGHTMARE;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.NIGHTMARE;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.NightmareArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.nightmare_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

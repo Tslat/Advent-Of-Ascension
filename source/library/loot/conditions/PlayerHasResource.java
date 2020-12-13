@@ -1,46 +1,67 @@
 package net.tslat.aoa3.library.loot.conditions;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.minecraft.world.storage.loot.LootParameter;
+import net.minecraft.world.storage.loot.LootParameters;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
-import java.util.Random;
+import java.util.Set;
 
-public class PlayerHasResource implements LootCondition {
-	private final Enums.Resources resource;
+public class PlayerHasResource implements ILootCondition {
+	private final Resources resource;
 	private final float amount;
+	private boolean consume;
 
-	public PlayerHasResource(Enums.Resources resource, float amount) {
+	public PlayerHasResource(Resources resource, float amount, boolean consume) {
 		this.resource = resource;
 		this.amount = amount;
+		this.consume = consume;
 	}
 
 	@Override
-	public boolean testCondition(Random rand, LootContext context) {
-		return context.getKillerPlayer() != null && PlayerUtil.getAdventPlayer((EntityPlayer)context.getKillerPlayer()).stats().getResourceValue(resource) >= amount;
+	public Set<LootParameter<?>> getRequiredParameters() {
+		return ImmutableSet.of(LootParameters.KILLER_ENTITY);
 	}
 
-	public static class Serializer extends LootCondition.Serializer<PlayerHasResource> {
+	@Override
+	public boolean test(LootContext lootContext) {
+		Entity entity = lootContext.get(LootParameters.KILLER_ENTITY);
+
+		if (entity == null)
+			entity = lootContext.get(LootParameters.THIS_ENTITY);
+
+		if (entity instanceof ServerPlayerEntity)
+			return consume ? PlayerUtil.consumeResource((ServerPlayerEntity)entity, resource, amount, false) : PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().getResourceValue(resource) >= amount;
+
+		return false;
+	}
+
+	public static class Serializer extends AbstractSerializer<PlayerHasResource> {
 		public Serializer() {
-			super(new ResourceLocation("aoa3", "player_has_resource"), PlayerHasResource.class);
+			super(new ResourceLocation(AdventOfAscension.MOD_ID, "player_has_resource"), PlayerHasResource.class);
 		}
 
 		@Override
-		public void serialize(JsonObject json, PlayerHasResource value, JsonSerializationContext context) {
-			json.addProperty("resource", value.resource.toString().toLowerCase());
-			json.addProperty("amount", value.amount);
+		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {
+			json.addProperty("resource", playerHasResource.resource.toString().toLowerCase());
+			json.addProperty("amount", playerHasResource.amount);
+			json.addProperty("consume", playerHasResource.consume);
 		}
 
 		@Override
-		public PlayerHasResource deserialize(JsonObject json, JsonDeserializationContext context) {
-			return new PlayerHasResource(Enums.Resources.valueOf(JsonUtils.getString(json, "resource").toUpperCase()), JsonUtils.getFloat(json, "amount"));
+		public PlayerHasResource deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
+			return new PlayerHasResource(Resources.valueOf(JSONUtils.getString(json, "resource").toUpperCase()), JSONUtils.getFloat(json, "amount"), JSONUtils.hasField(json, "consume") && JSONUtils.getBoolean(json, "consume"));
 		}
 	}
 }

@@ -2,24 +2,25 @@ package net.tslat.aoa3.item.misc;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class DistortingArtifact extends SimpleItem {
+public class DistortingArtifact extends Item {
 	public DistortingArtifact() {
-		super("DistortingArtifact", "distorting_artifact");
-
-		setMaxDamage(10);
-		setMaxStackSize(1);
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxDamage(10));
 	}
 
 	@Override
@@ -28,28 +29,25 @@ public class DistortingArtifact extends SimpleItem {
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && itemSlot < 9 && entity.posY < -3) {
-			entity.posY = 257;
-			entity.setPositionAndUpdate(entity.posX, 257, entity.posZ);
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+		if (!world.isRemote && itemSlot < 9 && entity.getPosY() < -3) {
+			entity.setPositionAndUpdate(entity.getPosX(), 257, entity.getPosZ());
 			entity.fallDistance = -255;
 
-			if (entity instanceof EntityLivingBase) {
-				((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 40, 0, true, false));
+			if (entity instanceof LivingEntity) {
+				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).isAmbient().hideParticles());
 
-				if (entity instanceof EntityPlayer && !((EntityPlayer)entity).isCreative()) {
-					stack.damageItem(1, (EntityLivingBase)entity);
-					((EntityPlayer)entity).inventoryContainer.detectAndSendChanges();
+				if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
+					ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
+					((PlayerEntity)entity).container.detectAndSendChanges();
 				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.DistortingArtifact.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.DistortingArtifact.desc.2", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}
 }

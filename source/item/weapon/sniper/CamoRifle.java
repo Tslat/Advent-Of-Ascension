@@ -2,17 +2,17 @@ package net.tslat.aoa3.item.weapon.sniper;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,31 +20,28 @@ import java.util.List;
 public class CamoRifle extends BaseSniper {
 	public CamoRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("CamoRifle");
-		setRegistryName("aoa3:camo_rifle");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SNIPER_FIRE;
+		return AoASounds.ITEM_SNIPER_FIRE.get();
 	}
 
 	@Override
-	public Enums.ScopeScreens getScreen() {
-		return Enums.ScopeScreens.DOTTED;
+	public ScopeOverlayRenderer.Type getScopeType() {
+		return ScopeOverlayRenderer.Type.DOTTED;
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity holder, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && isSelected && holder.isSneaking() && holder instanceof EntityLivingBase)
-			((EntityLivingBase)holder).addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 5, 0, false, false));
+	public void inventoryTick(ItemStack stack, World world, Entity holder, int itemSlot, boolean isSelected) {
+		if (!world.isRemote && isSelected && holder.isSneaking() && holder instanceof LivingEntity)
+			EntityUtil.applyPotions(holder, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 5));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CamoRifle.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

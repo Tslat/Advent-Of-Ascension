@@ -1,30 +1,32 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.boss.cottoncandor.EntityCottonCandor;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.boss.CottonCandorEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 
 public class CandyBlock extends BossAltarBlock {
 	public CandyBlock() {
-		super("CandyBlock", "candy_block");
+		super(MaterialColor.PINK);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		EntityCottonCandor cottonCandor = new EntityCottonCandor(player.world);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAEntities.Mobs.COTTON_CANDOR.get(), player.world);
 
 		cottonCandor.setPositionAndUpdate(blockPos.getX() + 0.5, blockPos.up().getY(), blockPos.getZ() + 0.5);
-		player.world.spawnEntity(cottonCandor);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.cottonCandor.spawn", player.getDisplayNameString()), blockPos);
+		player.world.addEntity(cottonCandor);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.cottonCandor.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.TREAT_BAG;
+		return AoAItems.TREAT_BAG.get();
 	}
 }

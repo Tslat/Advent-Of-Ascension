@@ -1,46 +1,40 @@
 package net.tslat.aoa3.item.weapon.vulcane;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class BaseVulcane extends Item implements AdventWeapon {
+public abstract class BaseVulcane extends Item {
 	protected double baseDmg;
 
 	public BaseVulcane(double dmg, int durability) {
-		setCreativeTab(CreativeTabsRegister.VULCANES);
+		super(new Item.Properties().group(AoAItemGroups.VULCANES).maxDamage(durability));
+
 		this.baseDmg = dmg;
-		setMaxDamage(durability);
-		setFull3D();
-		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.BOW;
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.BOW;
 	}
 
 	public double getDamage() {
@@ -48,40 +42,36 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem() != Items.ENCHANTED_BOOK && OreDictionary.itemMatches(repairMaterial, new ItemStack(ItemRegister.MAGIC_REPAIR_DUST), false);
-	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (world.isRemote)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (!(player instanceof ServerPlayerEntity))
+			return ActionResult.resultFail(stack);
 
-		PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+		PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
 		if (!plData.isRevengeActive())
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			return ActionResult.resultFail(stack);
 
-		return activate(plData, stack);
+		return activate(plData, stack, hand);
 	}
 
-	public ActionResult<ItemStack> activate(PlayerDataManager plData, ItemStack vulcane) {
-		EntityPlayer pl = plData.player();
+	public ActionResult<ItemStack> activate(PlayerDataManager plData, ItemStack vulcane, Hand hand) {
+		PlayerEntity pl = plData.player();
 
-		if (EntityUtil.dealVulcaneDamage(plData.getRevengeTarget(), pl, (float)baseDmg)) {
+		if (DamageUtil.dealVulcaneDamage(plData.getRevengeTarget(), pl, (float)baseDmg)) {
 			doAdditionalEffect(plData.getRevengeTarget(), pl);
-			pl.world.playSound(null, pl.posX, pl.posY, pl.posZ, SoundsRegister.VULCANE_USE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-			vulcane.damageItem(1, pl);
+			pl.world.playSound(null, pl.getPosX(), pl.getPosY(), pl.getPosZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			ItemUtil.damageItem(vulcane, pl, hand);
 			plData.disableRevenge();
-			return ActionResult.newResult(EnumActionResult.SUCCESS, vulcane);
+
+			return ActionResult.resultSuccess(vulcane);
 		}
 
-		return ActionResult.newResult(EnumActionResult.FAIL, vulcane);
+		return ActionResult.resultFail(vulcane);
 	}
 
-	public void doAdditionalEffect(EntityLivingBase target, EntityPlayer player) {}
+	public void doAdditionalEffect(LivingEntity target, PlayerEntity player) {}
 
 	@Override
 	public int getItemEnchantability() {
@@ -89,14 +79,8 @@ public abstract class BaseVulcane extends Item implements AdventWeapon {
 	}
 
 	@Override
-	public boolean isFull3D() {
-		return true;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.true", TextFormatting.DARK_RED, Double.toString(baseDmg)));
-		tooltip.add(StringUtil.getColourLocaleString("items.description.vulcane.use", TextFormatting.AQUA));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.true", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(baseDmg)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.vulcane.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

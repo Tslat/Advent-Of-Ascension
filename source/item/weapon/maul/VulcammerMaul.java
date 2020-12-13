@@ -2,33 +2,35 @@ package net.tslat.aoa3.item.weapon.maul;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class VulcammerMaul extends BaseMaul {
-	public VulcammerMaul(Float dmg, Double speed, double knockback, int durability) {
-		super(dmg, speed, knockback, durability);
-		setTranslationKey("VulcammerMaul");
-		setRegistryName("aoa3:vulcammer_maul");
+	public VulcammerMaul() {
+		super(28.0f, AttackSpeed.THIRD, 3.5D, 1750);
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityPlayer attacker, Entity target, float finalDmg, float attackCooldown) {
+	protected void doMeleeEffect(ItemStack stack, PlayerEntity attacker, Entity target, float finalDmg, float attackCooldown) {
 		if (attackCooldown > 0.85f) {
-			boolean doWorldDamage = WorldUtil.checkGameRule(attacker.world, "destructiveWeaponPhysics");
+			boolean doWorldDamage = WorldUtil.checkGameRule(attacker.world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS);
 
-			WorldUtil.createExplosion(attacker, attacker.world, (attacker.posX + target.posX) / 2d, (attacker.posY + target.posY) / 2d, (attacker.posZ + target.posZ) / 2d, 2f, doWorldDamage, doWorldDamage);
+			WorldUtil.createExplosion(attacker, attacker.world, (attacker.getPosX() + target.getPosX()) / 2d, (attacker.getPosY() + target.getPosY()) / 2d, (attacker.getPosZ() + target.getPosZ()) / 2d, 2f, doWorldDamage ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, doWorldDamage);
 
 			if (!doWorldDamage) {
-				for (EntityLivingBase entity : attacker.world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(2), PredicateUtil.IS_HOSTILE_MOB)) {
+				for (LivingEntity entity : attacker.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(2), EntityUtil.Predicates.HOSTILE_MOB)) {
 					entity.setFire(3);
 				}
 			}
@@ -36,8 +38,8 @@ public class VulcammerMaul extends BaseMaul {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.VulcammerMaul.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		super.addInformation(stack, world, tooltip, flag);
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

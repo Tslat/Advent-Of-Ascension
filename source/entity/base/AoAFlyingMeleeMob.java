@@ -1,308 +1,202 @@
 package net.tslat.aoa3.entity.base;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathNavigate;
-import net.minecraft.pathfinding.PathNavigateFlying;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.pathfinding.FlyingPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.tslat.aoa3.entity.base.ai.RoamingFlightMoveHelper;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingFindNearestAttackableTargetHunter;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAILookAround;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIFlyingMeleeAttack;
-import net.tslat.aoa3.entity.base.ai.mob.EntityAIRandomFly;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.properties.SpecialPropertyEntity;
+import net.minecraft.world.dimension.DimensionType;
+import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
+import net.tslat.aoa3.entity.ai.mob.FlyingMeleeAttackGoal;
+import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
+import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMoveHelper;
+import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.event.dimension.OverworldEvents;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ConfigurationUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.TreeSet;
+import java.util.Random;
 
-public abstract class AoAFlyingMeleeMob extends EntityFlying implements IMob {
-    protected final TreeSet<Enums.MobProperties> mobProperties;
+public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob {
+	protected boolean isSlipperyMovement = false;
 
-    public AoAFlyingMeleeMob(World world, float entityWidth, float entityHeight) {
-        super(world);
+	protected AoAFlyingMeleeMob(EntityType<? extends FlyingEntity> entityType, World world) {
+		super(entityType, world);
 
-        mobProperties = this instanceof SpecialPropertyEntity ? new TreeSet<Enums.MobProperties>() : null;
-        moveHelper = new RoamingFlightMoveHelper(this);
+		moveController = new RoamingFlightMoveHelper(this);
+		experienceValue = (int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f);
+	}
 
-        setSize(entityWidth, entityHeight);
-        setXpValue((int)(5 + (getBaseMaxHealth() + getBaseArmour() * 1.75f + getBaseMeleeDamage() * 2) / 10f));
-    }
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
+		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
+		goalSelector.addGoal(3, new FlyingMeleeAttackGoal(this, 0.6f, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> entity instanceof AoAMinion && ((AoAMinion)entity).isTamed()));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+	}
 
-    @Override
-    protected void initEntityAI() {
-        tasks.addTask(1, new EntityAIRandomFly(this, true));
-        tasks.addTask(2, new EntityAILookAround(this));
-        tasks.addTask(3, new EntityAILookIdle(this));
-        tasks.addTask(4, new EntityAIFlyingMeleeAttack(this, 0.6f, false));
-        targetTasks.addTask(1, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, AoAMinion.class, EntityTameable::isTamed));
-        targetTasks.addTask(2, new EntityAIFlyingFindNearestAttackableTargetHunter<>(this, EntityPlayer.class));
-    }
+	@Override
+	protected void registerAttributes() {
+		super.registerAttributes();
 
-    @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
+		getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (AoAConfig.COMMON.hardcoreMode.get() ? 1.5f : 1f));
+		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(36);
+		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
+		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (AoAConfig.COMMON.hardcoreMode.get() ? 2f : 1f));
+		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+		getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f));
+	}
 
-        getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.5f : 1f));
-        getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(36);
-        getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-        getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 2f : 1f));
-        getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-        getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmour() * (ConfigurationUtil.MainConfig.funOptions.hardcoreMode ? 1.25f : 1f));
-    }
+	@Override
+	protected PathNavigator createNavigator(World world) {
+		return new FlyingPathNavigator(this, world);
+	}
 
-    @Override
-    protected PathNavigate createNavigator(World world) {
-        return new PathNavigateFlying(this, world);
-    }
+	@Override
+	protected abstract float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn);
 
-    protected abstract double getBaseKnockbackResistance();
+	protected abstract double getBaseKnockbackResistance();
 
-    protected abstract double getBaseMaxHealth();
+	protected abstract double getBaseMaxHealth();
 
-    protected abstract double getBaseMeleeDamage();
+	protected abstract double getBaseMeleeDamage();
 
-    protected abstract double getBaseMovementSpeed();
+	protected abstract double getBaseMovementSpeed();
 
-    protected double getBaseArmour() {
-        return 0;
-    }
+	protected double getBaseArmour() {
+		return 0;
+	}
 
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return null;
-    }
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return null;
+	}
 
-    @Nullable
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return null;
-    }
+	@Nullable
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return null;
+	}
 
-    @Override
-    @Nonnull
-    public PathNavigate getNavigator() {
-        return new PathNavigateFlying(this, world);
-    }
+	protected boolean isOverworldMob() {
+		return false;
+	}
 
-    protected void setXpValue(int amount) {
-        experienceValue = amount;
-    }
+	protected boolean isDaylightMob() {
+		return false;
+	}
 
-    @Override
-    public boolean getCanSpawnHere() {
-        return world.getDifficulty() != EnumDifficulty.PEACEFUL && checkWorldRequirements() && checkSpawnChance() && isValidLightLevel() && canSpawnOnBlock(world.getBlockState(getPosition().down()));
-    }
+	protected int getMinSpawnHeight() {
+		return 0;
+	}
 
-    protected boolean isOverworldMob() {
-        return false;
-    }
+	protected int getMaxSpawnHeight() {
+		return 255;
+	}
 
-    protected boolean isValidLightLevel() {
-        if (isDaylightMob() || !isOverworldMob()) {
-            if (!world.isDaytime() && isDaylightMob())
-                return false;
+	@Nullable
+	protected OverworldEvents.Event getEventRequirement() {
+		return null;
+	}
 
-            return WorldUtil.getLightLevel(world, getPosition(), true, false) <= rand.nextInt(8);
-        }
+	protected void onAttack(Entity target) {}
 
-        BlockPos blockPos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+	protected void onHit(DamageSource source, float amount) {}
 
-        if (world.getLightFor(EnumSkyBlock.SKY, blockPos) > rand.nextInt(32)) {
-            return false;
-        }
-        else {
-            int light;
+	@Override
+	public boolean attackEntityAsMob(Entity target) {
+		if (super.attackEntityAsMob(target)) {
+			onAttack(target);
 
-            if (world.isThundering()) {
-                int skylightSubtracted = world.getSkylightSubtracted();
+			return true;
+		}
 
-                world.setSkylightSubtracted(10);
-                light = world.getLightFromNeighbors(blockPos);
-                world.setSkylightSubtracted(skylightSubtracted);
-            }
-            else {
-                light = world.getLightFromNeighbors(blockPos);
-            }
+		return false;
+	}
 
-            return light <= rand.nextInt(8);
-        }
-    }
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (super.attackEntityFrom(source, amount)) {
+			onHit(source, amount);
 
-    protected boolean isDaylightMob() {
-        return false;
-    }
+			return true;
+		}
 
-    private boolean checkSpawnChance() {
-        if (isOverworldMob()) {
-            if (isDaylightMob()) {
-                return !(rand.nextDouble() > getSpawnChanceFactor());
-            }
-            else {
-                return !(rand.nextDouble() > getSpawnChanceFactor() * 4);
-            }
-        }
-        else {
-            return !(rand.nextDouble() > getSpawnChanceFactor());
-        }
-    }
+		return false;
+	}
 
-    protected double getSpawnChanceFactor() {
-        return ConfigurationUtil.EntityConfig.mobSpawnFrequencyModifier;
-    }
+	@Override
+	public boolean doesEntityNotTriggerPressurePlate() {
+		return true;
+	}
 
-    @Override
-    public int getMaxSpawnedInChunk() {
-        return 1;
-    }
+	@Override
+	protected boolean canTriggerWalking() {
+		return false;
+	}
 
-    protected boolean canSpawnOnBlock(IBlockState block) {
-        return block.canEntitySpawn(this);
-    }
+	public static boolean meetsSpawnConditions(EntityType<? extends MonsterEntity> type, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
+		return world.getDifficulty() != Difficulty.PEACEFUL;
+	}
 
-    private boolean checkWorldRequirements() {
-        if (isOverworldMob()) {
-            if (world.provider.getDimension() != 0) {
-                EntityRegistry.removeSpawn(getClass(), EnumCreatureType.MONSTER, world.getBiome(getPosition()));
+	@Override
+	public boolean canSpawn(IWorld world, SpawnReason reason) {
+		return checkWorldRequirements(reason) && isValidLightLevel(reason) && canSpawnAt(reason, world.getBlockState(getPosition().down()));
+	}
 
-                return false;
-            }
-        }
+	protected boolean canSpawnAt(SpawnReason reason, BlockState blockState) {
+		if (EntityUtil.isNaturalSpawnReason(reason) && (getPosY() > getMaxSpawnHeight() || getPosY() < getMinSpawnHeight()))
+			return false;
 
-        Enums.CreatureEvents eventReq = getEventRequirement();
+		return blockState.canEntitySpawn(world, getPosition(), getType());
+	}
 
-        return eventReq == null || OverworldEvents.isEventActive(eventReq);
-    }
+	private boolean isValidLightLevel(SpawnReason reason) {
+		if (isDaylightMob() && !world.isDaytime())
+			return false;
 
-    @Nullable
-    protected Enums.CreatureEvents getEventRequirement() {
-        return null;
-    }
+		if (isDaylightMob() || !isOverworldMob())
+			return WorldUtil.getLightLevel(world, getPosition(), true, false) <= RandomUtil.randomNumberUpTo(8);
 
-    @Override
-    public boolean doesEntityNotTriggerPressurePlate() {
-        return true;
-    }
+		if (world.getLightFor(LightType.SKY, getPosition()) > rand.nextInt(32))
+			return false;
 
-    @Override
-    protected boolean canTriggerWalking() {
-        return false;
-    }
+		int light = world.isThundering() ? world.getNeighborAwareLightSubtracted(getPosition(), 10) : (int)world.getBrightness(getPosition()) * 15;
 
-    protected void playStepSound(BlockPos pos, Block block) {}
+		return light <= rand.nextInt(8);
+	}
 
-    public boolean attackEntityAsMob(Entity target) {
-        float baseDamage = (float)getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
-        int knockbackValue = 0;
+	private boolean checkWorldRequirements(SpawnReason reason) {
+		if (isOverworldMob() && world.getDimension().getType() != DimensionType.OVERWORLD)
+			return false;
 
-        if (target instanceof EntityLivingBase) {
-            baseDamage += EnchantmentHelper.getModifierForCreature(getHeldItemMainhand(), ((EntityLivingBase)target).getCreatureAttribute());
-            knockbackValue += EnchantmentHelper.getKnockbackModifier(this);
-        }
+		OverworldEvents.Event eventReq = getEventRequirement();
 
-        boolean attackSuccess = target.attackEntityFrom(DamageSource.causeMobDamage(this), baseDamage);
+		return eventReq == null || OverworldEvents.isEventActive(eventReq);
+	}
 
-        if (attackSuccess) {
-            if (knockbackValue > 0) {
-                ((EntityLivingBase)target).knockBack(this, (float)knockbackValue * 0.5F, (double)MathHelper.sin(rotationYaw * 0.017453292F), (double)(-MathHelper.cos(rotationYaw * 0.017453292F)));
-                motionX *= 0.6D;
-                motionZ *= 0.6D;
-            }
+	@Override
+	protected boolean isDespawnPeaceful() {
+		return true;
+	}
 
-            int fireAspectMod = EnchantmentHelper.getFireAspectModifier(this);
-
-            if (fireAspectMod > 0)
-                target.setFire(fireAspectMod * 4);
-
-            if (target instanceof EntityPlayer) {
-                EntityPlayer playerTarget = (EntityPlayer)target;
-                ItemStack mainHandStack = getHeldItemMainhand();
-                ItemStack activeHeldStack = playerTarget.isHandActive() ? playerTarget.getActiveItemStack() : ItemStack.EMPTY;
-
-                if (!mainHandStack.isEmpty() && !activeHeldStack.isEmpty() && mainHandStack.getItem().canDisableShield(mainHandStack, activeHeldStack, playerTarget, this) && activeHeldStack.getItem().isShield(activeHeldStack, playerTarget)) {
-                    float hasteMod = 0.25F + (float)EnchantmentHelper.getEfficiencyModifier(this) * 0.05F;
-
-                    if (rand.nextFloat() < hasteMod) {
-                        playerTarget.getCooldownTracker().setCooldown(activeHeldStack.getItem(), 100);
-                        world.setEntityState(playerTarget, (byte)30);
-                    }
-                }
-            }
-
-            applyEnchantments(this, target);
-            doMeleeEffect(target);
-        }
-
-        return attackSuccess;
-    }
-
-    protected void doMeleeEffect(Entity target) {}
-
-    @Override
-    public boolean isEntityInvulnerable(DamageSource source) {
-        if (source == DamageSource.OUT_OF_WORLD)
-            return false;
-
-        if (getIsInvulnerable())
-            return true;
-
-        return isSpecialImmuneTo(source, 1);
-    }
-
-    protected boolean isSpecialImmuneTo(DamageSource source, int damage) {
-        return false;
-    }
-
-    @Override
-    protected void dropLoot(boolean wasRecentlyHit, int lootingModifier, DamageSource source) {
-        if (getLootTable() != null) {
-            LootTable lootTable = world.getLootTableManager().getLootTableFromLocation(getLootTable());
-
-            LootContext.Builder lootBuilder = (new LootContext.Builder((WorldServer)world)).withLootedEntity(this).withDamageSource(source);
-
-            if (wasRecentlyHit && attackingPlayer != null)
-                lootBuilder.withPlayer(attackingPlayer).withLuck(attackingPlayer.getLuck() + lootingModifier);
-
-            for (ItemStack stack : lootTable.generateLootForPools(rand, lootBuilder.build())) {
-                entityDropItem(stack, 0);
-            }
-
-            dropEquipment(wasRecentlyHit, lootingModifier);
-        }
-        else {
-            super.dropLoot(wasRecentlyHit, lootingModifier, source);
-        }
-    }
-
-    @Override
-    public void onUpdate() {
-        super.onUpdate();
-
-        if (!world.isRemote && world.getDifficulty() == EnumDifficulty.PEACEFUL)
-            setDead();
-    }
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
 }

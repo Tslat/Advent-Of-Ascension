@@ -1,35 +1,34 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class RockbasherSword extends BaseSword {
-	public RockbasherSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("RockbasherSword");
-		setRegistryName("aoa3:rockbasher_sword");
+	public RockbasherSword() {
+		super(ItemUtil.customItemTier(2020, AttackSpeed.NORMAL, 16.0f, 4, 10, null));
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
-		double armour = target.getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		double armour = target.getAttribute(SharedMonsterAttributes.ARMOR).getValue();
 
 		if (armour > 0)
-			WorldUtil.createExplosion(attacker, attacker.world, target.posX, target.posY + target.height / 1.5, target.posZ, 0.5f + (float)(3 * armour / 30f));
+			WorldUtil.createExplosion(attacker, attacker.world, target.getPosX(), target.getPosY() + target.getHeight() / 1.5, target.getPosZ(), 0.5f + (float)(3 * armour / 30f));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RockbasherSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,52 +1,52 @@
 package net.tslat.aoa3.item.lootbox;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.LootSystemRegister;
-import net.tslat.aoa3.utils.LootUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.LootUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class GemBag extends Item {
 	public GemBag() {
-		setTranslationKey("GemBag");
-		setRegistryName("aoa3:gem_bag");
-		setCreativeTab(CreativeTabsRegister.MISC);
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			LootUtil.generateAndProvideLootDirectly((EntityPlayerMP)player, LootSystemRegister.itemGemBag);
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getHeldItem(hand);
 
-			if (!player.capabilities.isCreativeMode)
-				player.getHeldItem(hand).shrink(1);
+		if (player instanceof ServerPlayerEntity) {
+			ServerPlayerEntity pl = (ServerPlayerEntity)player;
 
-			player.inventoryContainer.detectAndSendChanges();
+			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.world, new ResourceLocation(AdventOfAscension.MOD_ID, "items/gem_bag"), LootUtil.getGiftContext((ServerWorld)pl.world, pl.getPosition(), pl)));
 
-			return EnumActionResult.SUCCESS;
+			if (!pl.isCreative())
+				heldStack.shrink(1);
+
+			pl.container.detectAndSendChanges();
+
+			return ActionResult.resultSuccess(heldStack);
 		}
 
-		return EnumActionResult.PASS;
+		return ActionResult.resultPass(heldStack);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.GemBag.desc.1", TextFormatting.GOLD));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -2,22 +2,20 @@ package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.cannon.EntityHeavyCannonball;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.cannon.HeavyCannonballEntity;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,32 +23,29 @@ import java.util.List;
 public class BoulderBomber extends BaseCannon {
 	public BoulderBomber(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("BoulderBomber");
-		setRegistryName("aoa3:boulder_bomber");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.BIG_BLAST_FIRE;
+		return AoASounds.ITEM_BIG_BLAST_FIRE.get();
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.CANNONBALL), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack))) {
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
 			if (!player.world.isRemote)
-				player.world.spawnEntity(new EntityHeavyCannonball(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0.325f, 0));
+				player.world.addEntity(new HeavyCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0.325f, 0));
 
-			return new EntityHeavyCannonball(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0, 0);
+			return new HeavyCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0, 0);
 		}
 
 		return null;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.BoulderBomber.desc.1", TextFormatting.DARK_GREEN));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

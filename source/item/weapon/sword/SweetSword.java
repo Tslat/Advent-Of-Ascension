@@ -1,17 +1,18 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,26 +20,24 @@ public class SweetSword extends BaseSword {
 	private static final ArrayList<ItemStack> candyList = new ArrayList<ItemStack>();
 	private static boolean populated = false;
 
-	public SweetSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("SweetSword");
-		setRegistryName("aoa3:sweet_sword");
+	public SweetSword() {
+		super(ItemUtil.customItemTier(1850, AttackSpeed.NORMAL, 15.0f, 4, 10, null));
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
-		if (itemRand.nextFloat() < 0.2 * attackCooldown) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (RandomUtil.percentChance(0.2f * attackCooldown)) {
 			if (!populated)
 				populateCandyList();
 
-			target.entityDropItem(candyList.get(itemRand.nextInt(candyList.size())), target.height / 2f);
+			target.entityDropItem(candyList.get(random.nextInt(candyList.size())), target.getHeight() / 2f);
 		}
 	}
 
 	private static void populateCandyList() {
 		candyList.add(new ItemStack(Items.SUGAR, 3));
-		OreDictionary.getOres("listAllSugar").forEach(stack -> candyList.add(stack));
-		OreDictionary.getOres("foodCandy").forEach(stack -> candyList.add(stack));
+
+		AoATags.Items.CANDY.getAllElements().forEach(item -> candyList.add(new ItemStack(item)));
 
 		populated = true;
 	}
@@ -50,8 +49,8 @@ public class SweetSword extends BaseSword {
 		candyList.add(stack);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SweetSword.desc.1", Enums.ItemDescriptionType.UNIQUE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

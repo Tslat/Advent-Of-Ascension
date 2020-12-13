@@ -2,18 +2,16 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityBloodDrainer;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.BloodDrainerEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -21,30 +19,27 @@ import java.util.List;
 public class BloodDrainer extends BaseBlaster {
 	public BloodDrainer(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("BloodDrainer");
-		setRegistryName("aoa3:blood_drainer");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.DRAIN_GUN_FIRE;
+		return AoASounds.ITEM_DRAIN_GUN_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityBloodDrainer(shooter, this, 1));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new BloodDrainerEntity(shooter, this, 1));
 	}
 
 	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		EntityUtil.healEntity(shooter, 0.25f);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.leech", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.LEECHES_HEALTH, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

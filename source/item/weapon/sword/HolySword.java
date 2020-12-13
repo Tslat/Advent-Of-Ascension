@@ -1,47 +1,40 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.interfaces.CapabilityBaseMiscStack;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class HolySword extends BaseSword {
-	public HolySword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("HolySword");
-		setRegistryName("aoa3:holy_sword");
+	public HolySword() {
+		super(ItemUtil.customItemTier(1000, AttackSpeed.TRIPLE, 0.0f, 4, 10, null));
+	}
+
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		if (!world.isRemote)
+			WorldUtil.spawnLightning((ServerWorld)world, (ServerPlayerEntity)player, player.getPosX(), player.getPosY(), player.getPosZ(), false);
+
+		player.getCooldownTracker().setCooldown(this, 100);
+
+		return ActionResult.resultSuccess(player.getHeldItem(hand));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		CapabilityBaseMiscStack cap = stack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
-
-		if (cap != null && cap.getValue() < world.getTotalWorldTime()) {
-			world.addWeatherEffect(new EntityLightningBolt(world, player.posX, player.posY, player.posZ, true));
-			cap.setValue(world.getTotalWorldTime() + 100);
-
-			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
-		}
-
-		return super.onItemRightClick(world, player, hand);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HolySword.desc.1", Enums.ItemDescriptionType.UNIQUE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

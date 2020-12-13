@@ -1,42 +1,49 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.LocaleUtil;
+
+import javax.annotation.Nullable;
 
 public class VinocorneShrine extends BossAltarBlock {
 	public VinocorneShrine() {
-		super("VinocorneShrine", "vinocorne_shrine");
+		super(MaterialColor.GREEN);
 	}
 
 	@Override
-	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
-		return player.world.getBlockState(pos.up()).getBlock().isReplaceable(player.world, pos.up());
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return player.world.getBlockState(pos.up()).getMaterial().isReplaceable();
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
-		player.world.setBlockState(blockPos.up(), BlockRegister.LIVING_GROWTH.getDefaultState());
-		player.world.scheduleUpdate(blockPos.up(), BlockRegister.LIVING_GROWTH, 40);
-		sendSpawnMessage(player, StringUtil.getLocaleWithArguments("message.mob.vinocorne.spawn", player.getDisplayNameString()), blockPos);
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+		player.world.setBlockState(blockPos.up(), AoABlocks.LIVING_GROWTH.get().getDefaultState());
+		player.world.getPendingBlockTicks().scheduleTick(blockPos.up(), AoABlocks.LIVING_GROWTH.get(), 40);
+
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.vinocorne.spawn", player.getDisplayName().getFormattedText()), blockPos);
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		super.breakBlock(world, pos, state);
+	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		super.harvestBlock(world, player, pos, state, te, stack);
 
-		if (world.getBlockState(pos.up()).getBlock() == BlockRegister.LIVING_GROWTH)
-			world.setBlockToAir(pos.up());
+		if (world.getBlockState(pos.up()).getBlock() == AoABlocks.LIVING_GROWTH.get())
+			world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.PETALS;
+		return AoAItems.PETALS.get();
 	}
 }

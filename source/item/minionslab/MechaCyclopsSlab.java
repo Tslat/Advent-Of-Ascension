@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityMechaCyclops;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.MechaCyclopsEntity;
 
 public class MechaCyclopsSlab extends BaseSlab {
 	public MechaCyclopsSlab() {
-		super("MechaCyclopsSlab", "mecha_cyclops_slab", 78, 160, 78, 4500);
+		super(78, 160, 78, 4500);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityMechaCyclops mechaCyclops = new EntityMechaCyclops(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		MechaCyclopsEntity mechaCyclops = new MechaCyclopsEntity(AoAEntities.Minions.MECHA_CYCLOPS.get(), pl.world);
 
-		mechaCyclops.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		mechaCyclops.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		mechaCyclops.setTamedBy(pl);
-		pl.world.spawnEntity(mechaCyclops);
+		pl.world.addEntity(mechaCyclops);
 
 		return mechaCyclops;
 	}

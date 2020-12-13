@@ -2,34 +2,35 @@ package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CoralstormSword extends BaseSword {
-	public CoralstormSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("CoralstormSword");
-		setRegistryName("aoa3:coralstorm_sword");
+	public CoralstormSword() {
+		super(ItemUtil.customItemTier(1700, AttackSpeed.NORMAL, 8.0f, 4, 10, null));
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (entity.isInWater() && isSelected && entity instanceof EntityLivingBase)
-			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.STRENGTH, -1, 0, true, false));
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+		if (entity.isInWater() && isSelected && entity instanceof LivingEntity)
+			((LivingEntity)entity).addPotionEffect(new EffectInstance(Effects.STRENGTH, -1, 0, true, false));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CoralstormSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

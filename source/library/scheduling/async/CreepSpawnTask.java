@@ -1,9 +1,12 @@
 package net.tslat.aoa3.library.scheduling.async;
 
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import net.tslat.aoa3.entity.boss.creep.EntityCreep;
-import net.tslat.aoa3.utils.ModUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.entity.boss.CreepEntity;
+import net.tslat.aoa3.library.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,15 +50,15 @@ public class CreepSpawnTask implements Runnable {
                 break;
         }
 
-        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, WorldUtil.checkGameRule(world, "doStrongerMobGriefing"));
+        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
 
         count++;
 
         if (count >= 4) {
-            EntityCreep creep = new EntityCreep(world);
+            CreepEntity creep = new CreepEntity(AoAEntities.Mobs.CREEP.get(), world);
 
             creep.setPosition(x, centerY, z);
-            world.spawnEntity(creep);
+            world.addEntity(creep);
 
             return;
         }
@@ -69,6 +72,6 @@ public class CreepSpawnTask implements Runnable {
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        ModUtil.scheduleAsyncTask(this, time, units);
+        AoAScheduler.scheduleAsyncTask(this, time, units);
     }
 }

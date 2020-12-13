@@ -4,53 +4,51 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class LunarGreatblade extends BaseGreatblade {
 	private final double baseDmg;
 	private final double maxDmg;
 
-	public LunarGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("LunarGreatblade");
-		setRegistryName("aoa3:lunar_greatblade");
+	public LunarGreatblade() {
+		super(25.0f, AttackSpeed.GREATBLADE, 1850);
 
-		this.baseDmg = getDamage() - (getDamage() / 2d);
-		this.maxDmg = getDamage() + (getDamage() / 2d);
+		this.baseDmg = getAttackDamage() - (getAttackDamage() / 2d);
+		this.maxDmg = getAttackDamage() + (getAttackDamage() / 2d);
 	}
 
 	@Override
-	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		return (float)(itemRand.nextFloat() * (maxDmg - baseDmg) + baseDmg);
+	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
+		return (float)(random.nextFloat() * (maxDmg - baseDmg) + baseDmg);
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = HashMultimap.<String, AttributeModifier>create();
 
-		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(EntityPlayer.REACH_DISTANCE.getName(), REACH_MODIFIER);
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), AoAAttributes.vanillaWeaponSpeedModifier(speed));
+		if (equipmentSlot == EquipmentSlotType.MAINHAND) {
+			multimap.put(PlayerEntity.REACH_DISTANCE.getName(), ATTACK_REACH_MODIFIER);
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 0, AttributeModifier.Operation.MULTIPLY_TOTAL));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));
 		}
 
 		return multimap;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.random", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(baseDmg), Double.toString(maxDmg)));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(baseDmg), Double.toString(maxDmg)));
 	}
 }

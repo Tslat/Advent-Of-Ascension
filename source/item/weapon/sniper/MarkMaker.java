@@ -1,26 +1,24 @@
 package net.tslat.aoa3.item.weapon.sniper;
 
 import net.minecraft.util.SoundEvent;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.library.Enums;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 
 public class MarkMaker extends BaseSniper {
 	public MarkMaker(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("MarkMaker");
-		setRegistryName("aoa3:mark_maker");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SNIPER_FIRE;
+		return AoASounds.ITEM_SNIPER_FIRE.get();
 	}
 
 	@Override
-	public Enums.ScopeScreens getScreen() {
-		return Enums.ScopeScreens.MARKER;
+	public ScopeOverlayRenderer.Type getScopeType() {
+		return ScopeOverlayRenderer.Type.MARKER;
 	}
 }

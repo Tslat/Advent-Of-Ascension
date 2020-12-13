@@ -1,47 +1,42 @@
 package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.utils.ModUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraft.world.dimension.DimensionType;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.AdvancementUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Chilli extends BasicFood {
+public class Chilli extends Item {
 	public Chilli() {
-		super("Chilli", "chilli", 0, 0, false);
-		setAlwaysEdible();
-		BlockRegister.CHILLI_CROP.setCrop(this);
+		super(new Item.Properties().group(AoAItemGroups.FOOD).food(new Food.Builder().hunger(0).saturation(0).setAlwaysEdible().build()));
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.EAT;
-	}
+	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+		if (!world.isRemote()) {
+			entity.setFire(3);
 
-	@Override
-	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-		super.onFoodEaten(stack, world, player);
-
-		if (!world.isRemote) {
-			player.setFire(3);
-
-			if (player instanceof EntityPlayerMP && player.world.provider.getDimension() == -1 && player.isInLava())
-				ModUtil.completeAdvancement((EntityPlayerMP)player, "nether/overheat", "lava_chilli_consume");
+			if (entity instanceof ServerPlayerEntity && entity.world.getDimension().getType() == DimensionType.THE_NETHER && entity.isInLava())
+				AdvancementUtil.completeAdvancement((ServerPlayerEntity)entity, new ResourceLocation(AdventOfAscension.MOD_ID, "nether/overheat"), "lava_chilli_consume");
 		}
+
+		return super.onItemUseFinish(stack, world, entity);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.Chilli.desc.1"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

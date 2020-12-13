@@ -3,48 +3,48 @@ package net.tslat.aoa3.item.weapon.sniper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.packet.PacketRecoil;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.entity.projectiles.gun.EntitySniperSlug;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.entity.projectile.gun.SniperSlugEntity;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PacketUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class BaseSniper extends BaseGun implements AdventWeapon {
+public abstract class BaseSniper extends BaseGun {
 	public BaseSniper(double dmg, int durability, int fireDelayTicks, float recoil) {
-		super(dmg, durability, fireDelayTicks, recoil);
-		setCreativeTab(CreativeTabsRegister.SNIPERS);
+		super(AoAItemGroups.SNIPERS, dmg, durability, fireDelayTicks, recoil);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (hand != EnumHand.MAIN_HAND)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		if (hand != Hand.MAIN_HAND)
+			return ActionResult.resultFail(stack);
 
 		if (player.getCooledAttackStrength(0.0f) < 1)
-			return ActionResult.newResult(EnumActionResult.FAIL, stack);
+			return ActionResult.resultFail(stack);
 
 		BaseBullet bullet = findAndConsumeAmmo(player, stack, hand);
 
@@ -53,64 +53,64 @@ public abstract class BaseSniper extends BaseGun implements AdventWeapon {
 				fireSniper(player, hand, bullet);
 
 			if (getFiringSound() != null)
-				player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-			stack.damageItem(1, player);
-			player.addStat(StatList.getObjectUseStats(this));
+			ItemUtil.damageItem(stack, player, hand);
+			player.addStat(Stats.ITEM_USED.get(this));
 			player.getCooldownTracker().setCooldown(this, getFiringDelay());
 
 
-			return ActionResult.newResult(EnumActionResult.PASS, stack);
+			return ActionResult.resultPass(stack);
 		}
 
-		if (player instanceof EntityPlayerMP)
-			((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+		if (player instanceof ServerPlayerEntity)
+			((ServerPlayerEntity)player).sendContainerToPlayer(player.container);
 
-		return ActionResult.newResult(EnumActionResult.FAIL, stack);
+		return ActionResult.resultFail(stack);
 	}
 
-	public void fireSniper(EntityLivingBase shooter, EnumHand hand, BaseBullet bullet) {
+	public void fireSniper(LivingEntity shooter, Hand hand, BaseBullet bullet) {
 		if (shooter.isSneaking() && shooter.onGround) {
-			if (shooter instanceof EntityPlayerMP) {
-				int control = EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.CONTROL, shooter.getHeldItem(hand));
+			if (shooter instanceof ServerPlayerEntity) {
+				int control = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.CONTROL.get(), shooter.getHeldItem(hand));
 				float recoiling = getRecoilForShot(shooter.getHeldItem(hand), shooter) * (1 - control * 0.15f);
 
-				PacketUtil.network.sendTo(new PacketRecoil(recoiling, getFiringDelay()), (EntityPlayerMP)shooter);
+				AoAPackets.messagePlayer((ServerPlayerEntity)shooter, new GunRecoilPacket(recoiling, getFiringDelay()));
 			}
 		}
 		else {
 			bullet.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0f, 20.0f, 50.0f);
 
-			if (shooter instanceof EntityPlayerMP)
-				PacketUtil.network.sendTo(new PacketRecoil(getRecoil() * 2f, getFiringDelay()), (EntityPlayerMP)shooter);
+			if (shooter instanceof ServerPlayerEntity)
+				AoAPackets.messagePlayer((ServerPlayerEntity)shooter, new GunRecoilPacket(getRecoil() * 2f, getFiringDelay()));
 		}
 
-		shooter.world.spawnEntity(bullet);
+		shooter.world.addEntity(bullet);
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bullet.getAge() <= 1 ? bulletDmgMultiplier * 0.5f : bulletDmgMultiplier);
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		super.doImpactDamage(target, shooter, bullet, bullet.getAge() <= 0 ? bulletDmgMultiplier * 0.5f : bulletDmgMultiplier);
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.METAL_SLUG), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
-			return new EntitySniperSlug(player, (BaseGun)gunStack.getItem(), 0);
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.METAL_SLUG.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+			return new SniperSlugEntity(player, (BaseGun)gunStack.getItem(), 0);
 
 		return null;
 	}
 
-	public Enums.ScopeScreens getScreen() {
-		return Enums.ScopeScreens.BASIC;
+	@OnlyIn(Dist.CLIENT)
+	public ScopeOverlayRenderer.Type getScopeType() {
+		return ScopeOverlayRenderer.Type.BASIC;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.gun", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.sniper.use", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / getFiringDelay()) / (double)100)));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.metalSlugs", Enums.ItemDescriptionType.ITEM_AMMO_COST));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, NumberUtil.roundToNthDecimalPlace((float)getDamage(), 2)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.sniper.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / getFiringDelay()) / (double)100)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(AoAItems.METAL_SLUG.get())));
 	}
 }

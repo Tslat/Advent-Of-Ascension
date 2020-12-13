@@ -1,41 +1,47 @@
 package net.tslat.aoa3.item.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Rarity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.BlockRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
-import net.tslat.aoa3.entity.mobs.overworld.fullmoon.*;
-import net.tslat.aoa3.entity.mobs.shyrelands.EntityArcworm;
+import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.entity.mob.shyrelands.ArcwormEntity;
 import net.tslat.aoa3.item.weapon.blaster.ExperimentW801;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
-public class ReservedItem extends SimpleItem {
+import javax.annotation.Nullable;
+import java.util.List;
+
+public class ReservedItem extends Item {
 	private final String sequenceId;
 
-	public ReservedItem(String name, String registryName, String sequenceName) {
-		super(name, registryName);
-
-		setCreativeTab(null);
+	public ReservedItem(String sequenceName) {
+		super(new Item.Properties().rarity(Rarity.EPIC));
 
 		this.sequenceId = sequenceName;
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!verifyStack(stack)) {
 			stack.setCount(0);
 			entityIn.replaceItemInInventory(itemSlot, ItemStack.EMPTY);
@@ -43,63 +49,58 @@ public class ReservedItem extends SimpleItem {
 	}
 
 	@Override
-	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-		Block block = world.getBlockState(pos).getBlock();
+	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
+		if (context.getPlayer() == null)
+			return super.onItemUseFirst(stack, context);
 
-		/*if (block == BlockRegister.logShyre) {
-			if (!world.isRemote) {
-				world.setBlockToAir(pos);
-				Block.spawnAsEntity(world, pos, ItemRegister.soulbone.newValidStack());
-				player.setHeldItem(hand, ItemStack.EMPTY);
+		Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
 
-				for (int i = 0; i < 5; i++) {
-					((WorldServer)world).spawnParticle(EnumParticleTypes.FLAME, pos.getX() + itemRand.nextFloat(), pos.getY() + itemRand.nextFloat(), pos.getZ() + itemRand.nextFloat(), 1, 0, 0, 0, (double)0);
-				}
-			}
-
-			return EnumActionResult.SUCCESS;
-		}
-		else */if (block == BlockRegister.CHARGING_TABLE) {
-			if (this == ItemRegister.FLESHY_BONES) {
-				player.setHeldItem(hand, ItemRegister.DARK_BONES.newValidStack());
+		if (block == AoABlocks.CHARGING_TABLE.get()) {
+			if (this == AoAItems.FLESHY_BONES.get()) {
+				context.getPlayer().setHeldItem(context.getHand(), ((ReservedItem)AoAItems.DARK_BONES.get()).newValidStack());
 
 
-				return EnumActionResult.SUCCESS;
+				return ActionResultType.SUCCESS;
 			}
 		}
-		else if (block == BlockRegister.MINERALIZATION_STATION) {
-			if (this == ItemRegister.DARK_BONES) {
-				player.setHeldItem(hand, ItemRegister.ROCK_BONES.newValidStack());
+		else if (block == AoABlocks.MINERALIZATION_STATION.get()) {
+			if (this == AoAItems.DARK_BONES.get()) {
+				context.getPlayer().setHeldItem(context.getHand(), ((ReservedItem)AoAItems.ROCK_BONES.get()).newValidStack());
 
 
-				return EnumActionResult.SUCCESS;
+				return ActionResultType.SUCCESS;
 			}
 		}
 
-		return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+		return super.onItemUseFirst(stack, context);
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (!target.world.isRemote) {
-			if (stack.getItem() == ItemRegister.MILLENNIUM_UPGRADER) {
+			if (stack.getItem() == AoAItems.MILLENNIUM_UPGRADER.get()) {
 				if (target.isInLava() && attacker.isInLava()) {
-					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemRegister.MOLTEN_UPGRADER.newValidStack());
+					attacker.setHeldItem(Hand.MAIN_HAND, ((ReservedItem)AoAItems.MOLTEN_UPGRADER.get()).newValidStack());
 
 					return true;
 				}
 			}
-			else if (stack.getItem() == ItemRegister.MOLTEN_UPGRADER) {
-				if (target.world.getCurrentMoonPhaseFactor() == 1 && target.getHealth() <= 0 && (target instanceof EntityDarkBeast || target instanceof EntityIrkling || target instanceof EntityNightWatcher || target instanceof EntityScrubby || target instanceof EntitySkellox)) {
-					attacker.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-					target.entityDropItem(ItemRegister.MOONSTONE.newValidStack(), 0);
+			else if (stack.getItem() == AoAItems.MOLTEN_UPGRADER.get()) {
+				if (target.world.getCurrentMoonPhaseFactor() == 1 && target.getHealth() <= 0 &&
+						(target.getType() == AoAEntities.Mobs.DARK_BEAST.get() ||
+						target.getType() == AoAEntities.Mobs.IRKLING.get() ||
+						target.getType() == AoAEntities.Mobs.NIGHT_WATCHER.get() ||
+						target.getType() == AoAEntities.Mobs.SCRUBBY.get() ||
+						target.getType() == AoAEntities.Mobs.SKELLOX.get())) {
+					attacker.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
+					target.entityDropItem(((ReservedItem)AoAItems.MOONSTONE.get()).newValidStack(), 0);
 
 					return true;
 				}
 			}
-			else if (stack.getItem() == ItemRegister.MOONSTONE) {
-				if (target instanceof EntityArcworm)
-					target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200, 10, true, false));
+			else if (stack.getItem() == AoAItems.MOONSTONE.get()) {
+				if (target instanceof ArcwormEntity)
+					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.LEVITATION, 200).level(11).hideParticles());
 
 				return true;
 			}
@@ -109,10 +110,10 @@ public class ReservedItem extends SimpleItem {
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(EntityItem entity) {
+	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
 		if (!verifyStack(entity.getItem())) {
 			entity.setItem(ItemStack.EMPTY);
-			entity.setDead();
+			entity.remove();
 		}
 
 		return false;
@@ -120,10 +121,10 @@ public class ReservedItem extends SimpleItem {
 
 	public ItemStack newValidStack() {
 		ItemStack stack = new ItemStack(this);
-		NBTTagCompound tag = new NBTTagCompound();
+		CompoundNBT tag = new CompoundNBT();
 
-		tag.setBoolean(sequenceId, true);
-		stack.setTagCompound(tag);
+		tag.putBoolean(sequenceId, true);
+		stack.setTag(tag);
 
 		return stack;
 	}
@@ -132,29 +133,29 @@ public class ReservedItem extends SimpleItem {
 		if (stack.isEmpty())
 			return false;
 
-		if (!stack.hasTagCompound())
+		if (!stack.hasTag())
 			return false;
 
-		NBTTagCompound tag = stack.getTagCompound();
+		CompoundNBT tag = stack.getTag();
 
-		if (!tag.hasKey(sequenceId))
+		if (!tag.contains(sequenceId))
 			return false;
 
 		return tag.getBoolean(sequenceId);
 	}
 
-	public static void handleArcworm(EntityArcworm arcworm) {
-		if (arcworm.posY > 275 && arcworm.getAttackingEntity() instanceof EntityPlayer) {
-			if (arcworm.getAttackingEntity().getHeldItemMainhand().getItem() == ItemRegister.MOONSTONE) {
-				arcworm.entityDropItem(((ExperimentW801)WeaponRegister.EXPERIMENT_W801).newValidStack(), 0);
-				arcworm.getAttackingEntity().setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-				arcworm.setDead();
+	public static void handleArcworm(ArcwormEntity arcworm) {
+		if (arcworm.getPosY() > 275 && arcworm.getAttackingEntity() instanceof PlayerEntity) {
+			if (arcworm.getAttackingEntity().getHeldItemMainhand().getItem() == AoAItems.MOONSTONE.get()) {
+				arcworm.entityDropItem(((ExperimentW801)AoAWeapons.EXPERIMENT_W_801.get()).newValidStack(), 0);
+				arcworm.getAttackingEntity().setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
+				arcworm.remove();
 			}
 		}
 	}
 
-	public static void handlePlayerDeath(EntityPlayer pl) {
-		if (pl.getHealth() > 0 && !pl.world.getWorldInfo().isHardcoreModeEnabled())
+	public static void handlePlayerDeath(PlayerEntity pl) {
+		if (pl.getHealth() > 0 && !pl.world.getWorldInfo().isHardcore())
 			return;
 
 		if (!pl.getHeldItemMainhand().getItem().getRegistryName().getPath().toLowerCase().startsWith("a"))
@@ -174,9 +175,15 @@ public class ReservedItem extends SimpleItem {
 		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase().startsWith("n"))
 			return;
 
-		if (ItemUtil.findItemInInventory(pl, ItemRegister.ALIEN_ORB) != -1)
+		if (!ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))
 			return;
 
-		pl.entityDropItem(ItemRegister.ALIEN_ORB.newValidStack(), 0);
+		pl.entityDropItem(((ReservedItem)AoAItems.ALIEN_ORB.get()).newValidStack(), 0);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if (stack.getItem() == AoAItems.ALIEN_ORB.get())
+			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

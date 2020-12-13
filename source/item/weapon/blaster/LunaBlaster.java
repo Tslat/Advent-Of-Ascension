@@ -2,17 +2,18 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityLunaShot;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.LunaShotEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,30 +21,28 @@ import java.util.List;
 public class LunaBlaster extends BaseBlaster {
 	public LunaBlaster(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("LunaBlaster");
-		setRegistryName("aoa3:luna_blaster");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SPACE_REVOLVER_FIRE;
+		return AoASounds.ITEM_SPACE_REVOLVER_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityLunaShot(shooter, this, 60));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new LunaShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.GLOWING, 100, 0, true, false));
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (target instanceof LivingEntity)
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.GLOWING, 100));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.LunaBlaster.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

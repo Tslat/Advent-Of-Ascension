@@ -1,32 +1,30 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_FACE_MASK;
-
 public class FaceMask extends AdventArmour {
-	public FaceMask(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_FACE_MASK, name, registryName, slot);
+	public FaceMask() {
+		super(ItemUtil.customArmourMaterial("aoa3:face_mask", 36, new int[] {4, 7, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), EquipmentSlotType.HEAD);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.ALL;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.ALL;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FaceMask.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}
 }

@@ -2,57 +2,57 @@ package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
-
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_SUBTERRANEAN;
+import java.util.UUID;
 
 public class SubterraneanArmour extends AdventArmour {
-	public SubterraneanArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_SUBTERRANEAN, name, registryName, slot);
+	private static final AttributeModifier ATTACK_SPEED_DEBUFF = new AttributeModifier(UUID.fromString("d4631555-8ceb-490d-9066-fb4188560b15"), "AoASubterraneanAttackSpeedDebuff", -0.16666667, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+	public SubterraneanArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:subterranean", 47, new int[] {3, 7, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.SUBTERRANEAN;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.SUBTERRANEAN;
 	}
 
 	@Override
-	public void onEquip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SUBTERRANEAN_ARMOUR_ATTACK_SPEED_DEBUFF);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
 	}
 
 	@Override
-	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SUBTERRANEAN_ARMOUR_ATTACK_SPEED_DEBUFF);
+			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
 	}
 
 	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null)
-			plData.player().addPotionEffect(new PotionEffect(MobEffects.HASTE, -1, 1, true, false));
+			plData.player().addPotionEffect(new EffectInstance(Effects.HASTE, -1, 1, true, false));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SubterraneanArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.subterranean_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

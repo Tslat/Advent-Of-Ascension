@@ -1,51 +1,46 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.minions.EntityShadowStalker;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.minion.ShadowStalkerEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShadowlordStaff extends BaseStaff {
+public class ShadowlordStaff extends BaseStaff<Object> {
 	public ShadowlordStaff(int durability) {
 		super(durability);
-		setTranslationKey("ShadowlordStaff");
-		setRegistryName("aoa3:shadowlord_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.SHADOW_STAFF_CAST;
+		return AoASounds.ITEM_SHADOW_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WITHER_RUNE, 10);
-		runes.put(ItemRegister.LIFE_RUNE, 2);
+		runes.put(AoAItems.WITHER_RUNE.get(), 10);
+		runes.put(AoAItems.LIFE_RUNE.get(), 2);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		caster.world.spawnEntity(new EntityShadowStalker(world, caster));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+		caster.world.addEntity(new ShadowStalkerEntity(world, caster));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ShadowlordStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

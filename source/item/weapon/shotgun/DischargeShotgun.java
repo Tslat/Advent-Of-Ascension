@@ -3,24 +3,22 @@ package net.tslat.aoa3.item.weapon.shotgun;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.entity.projectiles.gun.EntityDischargeShot;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.entity.projectile.gun.DischargeShotEntity;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.WorldUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,18 +29,16 @@ public class DischargeShotgun extends BaseShotgun {
 	public DischargeShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
 		firingDelay = fireDelayTicks;
-		setTranslationKey("DischargeShotgun");
-		setRegistryName("aoa3:discharge_shotgun");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.DISCHARGE_GUN_FIRE;
+		return AoASounds.ITEM_DISCHARGE_GUN_FIRE.get();
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target != null)
 			bullet.doImpactEffect();
 
@@ -50,26 +46,25 @@ public class DischargeShotgun extends BaseShotgun {
 	}
 
 	@Override
-	public void fireShotgun(EntityLivingBase shooter, EnumHand hand, float spreadFactor, int pellets) {
+	public void fireShotgun(LivingEntity shooter, Hand hand, float spreadFactor, int pellets) {
 		for (int i = 0; i < pellets; i++) {
-			BaseBullet pellet = new EntityDischargeShot(shooter, this, hand, 4, 1.0f, 0, (itemRand.nextFloat() - 0.5f) * spreadFactor, (itemRand.nextFloat() - 0.5f) * spreadFactor, (itemRand.nextFloat() - 0.5f) * spreadFactor);
-			shooter.world.spawnEntity(pellet);
+			BaseBullet pellet = new DischargeShotEntity(shooter, this, hand, 4, 1.0f, 0, (random.nextFloat() - 0.5f) * spreadFactor, (random.nextFloat() - 0.5f) * spreadFactor, (random.nextFloat() - 0.5f) * spreadFactor);
+			shooter.world.addEntity(pellet);
 		}
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.DISCHARGE_CAPSULE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
-			return new EntityDischargeShot(player, (BaseGun)gunStack.getItem(), hand,4, 0);
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.DISCHARGE_CAPSULE.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+			return new DischargeShotEntity(player, (BaseGun)gunStack.getItem(), hand,4, 0);
 
 		return null;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(StringUtil.getColourLocaleString("item.DischargeShotgun.desc.1", TextFormatting.DARK_GREEN));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(StringUtil.getColourLocaleStringWithArguments("items.description.ammo.other", TextFormatting.LIGHT_PURPLE, StringUtil.getLocaleString("item.DischargeCapsule.name")));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.EXPLODES_ON_HIT, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / (double)100)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.ammo.item", LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(AoAItems.DISCHARGE_CAPSULE.get())));
 	}
 }

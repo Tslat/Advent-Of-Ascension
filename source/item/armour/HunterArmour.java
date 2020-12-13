@@ -1,42 +1,43 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.tslat.aoa3.item.SkillItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.skills.HunterUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.skill.HunterUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
-
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_HUNTER;
+import java.util.UUID;
 
 public class HunterArmour extends AdventArmour implements SkillItem {
-	public HunterArmour(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_HUNTER, name, registryName, slot);
+	private static final AttributeModifier HUNTER_ARMOUR_KNOCKBACK = new AttributeModifier(UUID.fromString("a794717e-8b9b-4d20-b224-0a7571ddd012"), "AoAHunterArmourBuff", 0.5, AttributeModifier.Operation.ADDITION);
+
+	public HunterArmour(EquipmentSlotType slot) {
+		super(ItemUtil.customArmourMaterial("aoa3:hunter", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.HUNTER;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.HUNTER;
 	}
 
 	@Override
-	public Enums.Skills getSkill() {
-		return Enums.Skills.HUNTER;
+	public Skills getSkill() {
+		return Skills.HUNTER;
 	}
 
 	@Override
@@ -45,47 +46,46 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 	}
 
 	@Override
-	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			plBuffs.addXpModifier(Enums.Skills.HUNTER, 0.3f);
+			plBuffs.addXpModifier(Skills.HUNTER, 0.3f);
 	}
 
 	@Override
-	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EntityEquipmentSlot slot) {
+	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			plBuffs.removeXpModifier(Enums.Skills.HUNTER, 0.3f);
+			plBuffs.removeXpModifier(Skills.HUNTER, 0.3f);
 	}
 
 	@Override
-	public void onEquip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
-		EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AoAAttributes.HUNTER_ARMOUR_KNOCKBACK);
+	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+		EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, HUNTER_ARMOUR_KNOCKBACK);
 	}
 
 	@Override
-	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
-		EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, AoAAttributes.HUNTER_ARMOUR_KNOCKBACK);
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+		EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.KNOCKBACK_RESISTANCE, HUNTER_ARMOUR_KNOCKBACK);
 	}
 
 	@Override
-	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
+	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots == null && HunterUtil.isHunterCreature(event.getEntityLiving()))
 			event.setAmount(event.getAmount() * 1.15f);
 	}
 
 	@Override
-	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots == null && event.getSource().getTrueSource() instanceof EntityLivingBase && HunterUtil.isHunterCreature((EntityLivingBase)event.getSource().getTrueSource()))
+	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
+		if (slots == null && event.getSource().getTrueSource() instanceof LivingEntity && HunterUtil.isHunterCreature((LivingEntity)event.getSource().getTrueSource()))
 			event.setAmount(event.getAmount() * 0.85f);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.2", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HunterArmour.desc.3", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.skillXpBonus", Enums.ItemDescriptionType.POSITIVE, Integer.toString(30), StringUtil.getLocaleString("skills.hunter.name")));
-		tooltip.add(ItemUtil.getFormattedLevelRestrictedDescriptionText(Enums.Skills.HUNTER, 100));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.hunter_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.hunter_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.hunter_armour.desc.3", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.BENEFICIAL, "30", LocaleUtil.getLocaleString(LocaleUtil.Constants.HUNTER)));
+		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.HUNTER, 100));
 	}
 }

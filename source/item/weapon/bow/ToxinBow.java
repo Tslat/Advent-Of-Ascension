@@ -2,36 +2,33 @@ package net.tslat.aoa3.item.weapon.bow;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.projectiles.arrow.EntityHollyArrow;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ToxinBow extends BaseBow {
 	public ToxinBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
-		setTranslationKey("ToxinBow");
-		setRegistryName("aoa3:toxin_bow");
 	}
 
 	@Override
-	public void doImpactEffect(EntityHollyArrow arrow, Entity target, Entity shooter, float damage) {
-		if (target instanceof EntityLivingBase)
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 300, 0, true, true));
+	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
+		if (target instanceof LivingEntity)
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 300));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.ToxinBow.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

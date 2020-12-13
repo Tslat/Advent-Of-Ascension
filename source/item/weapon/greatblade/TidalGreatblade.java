@@ -2,41 +2,39 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.projectiles.misc.EntityTidalWave;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.entity.projectile.misc.TidalWaveEntity;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class TidalGreatblade extends BaseGreatblade {
-	public TidalGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("TidalGreatblade");
-		setRegistryName("aoa3:tidal_greatblade");
+	public TidalGreatblade() {
+		super(24.0f, AttackSpeed.GREATBLADE, 1750);
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase attacker, Entity target, float dmgDealt) {
-		if (!(attacker instanceof EntityPlayer) || ((EntityPlayer)attacker).getCooledAttackStrength(0) < 0.95f)
+	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
+		if (EntityUtil.getAttackCooldown(attacker) < 0.95f)
 			return;
 
 		double xOffset = MathHelper.cos(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 		double zOffset = MathHelper.sin(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
 
-		attacker.world.spawnEntity(new EntityTidalWave(attacker.world, attacker, xOffset, zOffset));
-		attacker.world.spawnEntity(new EntityTidalWave(attacker.world, attacker, 0, 0));
-		attacker.world.spawnEntity(new EntityTidalWave(attacker.world, attacker, -xOffset, -zOffset));
+		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, xOffset, zOffset));
+		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, 0, 0));
+		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, -xOffset, -zOffset));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.TidalGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

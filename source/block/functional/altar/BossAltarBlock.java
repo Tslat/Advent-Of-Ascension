@@ -1,44 +1,49 @@
 package net.tslat.aoa3.block.functional.altar;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.EnumDifficulty;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.BasicBlock;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class BossAltarBlock extends BasicBlock {
-	public BossAltarBlock(String name, String registryName) {
-		super(name, registryName, Material.ROCK, -1f, 999999999f);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+public abstract class BossAltarBlock extends Block {
+	public BossAltarBlock(Block.Properties properties) {
+		super(properties);
+	}
+
+	public BossAltarBlock(MaterialColor mapColour) {
+		this(BlockUtil.generateBlockProperties(Material.ROCK, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldItem = player.getHeldItem(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
-			return false;
+			return ActionResultType.PASS;
 
-		if (!world.isRemote) {
+		if (player instanceof ServerPlayerEntity) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
-				if (world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-					PlayerUtil.getAdventPlayer(player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
-					return false;
+				if (world.getDifficulty() == Difficulty.PEACEFUL) {
+					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail");
+					return ActionResultType.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {
-					if (!player.capabilities.isCreativeMode)
+					if (!player.isCreative())
 						heldItem.shrink(1);
 
 					doActivationEffect(player, hand, state, pos);
@@ -46,19 +51,19 @@ public abstract class BossAltarBlock extends BasicBlock {
 			}
 		}
 
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 
 	@Nullable
 	protected abstract Item getActivationItem();
 
-	protected abstract void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos);
+	protected abstract void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos);
 
-	protected boolean checkActivationConditions(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos pos) {
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
 		return true;
 	}
 
-	protected void sendSpawnMessage(EntityPlayer player, TextComponentTranslation msg, BlockPos pos) {
-		StringUtil.sendMessageWithinRadius(msg, player, 50);
+	protected void sendSpawnMessage(PlayerEntity player, TranslationTextComponent msg, BlockPos pos) {
+		PlayerUtil.messageAllPlayersInRange(msg, player.world, pos, 50);
 	}
 }

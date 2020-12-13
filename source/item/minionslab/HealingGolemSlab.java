@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityHealingGolem;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.HealingGolemEntity;
 
 public class HealingGolemSlab extends BaseSlab {
 	public HealingGolemSlab() {
-		super("HealingGolemSlab", "healing_golem_slab", 90, 200, 90, 4000);
+		super(90, 200, 90, 4000);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityHealingGolem healingGolem = new EntityHealingGolem(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		HealingGolemEntity healingGolem = new HealingGolemEntity(AoAEntities.Minions.HEALING_GOLEM.get(), pl.world);
 
-		healingGolem.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		healingGolem.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		healingGolem.setTamedBy(pl);
-		pl.world.spawnEntity(healingGolem);
+		pl.world.addEntity(healingGolem);
 
 		return healingGolem;
 	}

@@ -1,41 +1,37 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class CrystonStaff extends BaseStaff {
+public class CrystonStaff extends BaseStaff<Integer> {
 	public CrystonStaff(int durability) {
 		super(durability);
-		setTranslationKey("CrystonStaff");
-		setRegistryName("aoa3:cryston_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.CRYSTEVIA_STAFF_CAST;
+		return AoASounds.ITEM_CRYSTEVIA_STAFF_CAST.get();
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		Integer count = caster.world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(10), PredicateUtil.IS_HOSTILE_MOB).size();
+	public Integer checkPreconditions(LivingEntity caster, ItemStack staff) {
+		int count = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB).size();
 
 		if (count > 0)
 			return count;
@@ -45,19 +41,18 @@ public class CrystonStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.DISTORTION_RUNE, 2);
-		runes.put(ItemRegister.ENERGY_RUNE, 4);
+		runes.put(AoAItems.DISTORTION_RUNE.get(), 2);
+		runes.put(AoAItems.ENERGY_RUNE.get(), 4);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
-		caster.addPotionEffect(new PotionEffect(MobEffects.SPEED, Math.min((Integer)args * 100, 1200), Math.min(3, (Integer)args) - 1));
+	public void cast(World world, ItemStack staff, LivingEntity caster, Integer args) {
+		EntityUtil.applyPotions(caster, new PotionUtil.EffectBuilder(Effects.SPEED, Math.min(args * 100, 1200)).level(Math.min(args, 3)));
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystonStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

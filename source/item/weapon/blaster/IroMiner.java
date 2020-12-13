@@ -2,22 +2,20 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.capabilities.handlers.AdventMiscStackCapability;
-import net.tslat.aoa3.capabilities.providers.AdventMiscStackProvider;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityIroMinerShot;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityHandles;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.IroMinerShotEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,59 +23,53 @@ import java.util.List;
 public class IroMiner extends BaseBlaster {
 	public IroMiner(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("IroMiner");
-		setRegistryName("aoa3:iro_miner");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.MOON_SHINER_FIRE;
+		return AoASounds.ITEM_MOON_SHINER_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityIroMinerShot(shooter, this, 60));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new IroMinerShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		ItemStack heldStack = shooter.getHeldItemMainhand();
 		float damageMod = 1;
 
 		if (heldStack.getItem() == this) {
-			AdventMiscStackCapability cap = (AdventMiscStackCapability)heldStack.getCapability(AdventMiscStackProvider.MISC_STACK, null);
+			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(heldStack, null);
 
-			if (cap != null) {
-				if (target.getUniqueID().equals(cap.getObject())) {
-					damageMod = cap.getValue() + 0.02f;
-					cap.setValue(damageMod);
-				}
-				else {
-					cap.setObject(target.getUniqueID());
-					cap.setValue(1.0f);
-				}
+			if (cap.getObject() != null &&target.getUniqueID().equals(cap.getObject())) {
+				damageMod = cap.getValue() + 0.02f;
+				cap.setValue(damageMod);
+			}
+			else {
+				cap.setObject(target.getUniqueID());
+				cap.setValue(1.0f);
 			}
 		}
 
-		return EntityUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg * damageMod, false);
+		return DamageUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg * damageMod, false);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		if (!stack.hasTagCompound())
-			stack.setTagCompound(new NBTTagCompound());
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		CompoundNBT tag = stack.getOrCreateTag();
 
-		stack.getTagCompound().setByte("HideFlags", (byte)2);
+		tag.putByte("HideFlags", (byte)2);
 
-		return new AdventMiscStackProvider();
+		return new VolatileStackCapabilityProvider();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.IroMiner.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

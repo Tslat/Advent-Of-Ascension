@@ -3,27 +3,24 @@ package net.tslat.aoa3.item.weapon.cannon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.EnchantmentsRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.common.registration.WeaponRegister;
-import net.tslat.aoa3.entity.projectiles.cannon.EntityFloroRPG;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.entity.projectile.cannon.FloroRPGEntity;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.ModUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,8 +31,6 @@ public class FloroRPG extends BaseCannon {
 
 	public FloroRPG(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("FloroRPG");
-		setRegistryName("aoa3:floro_rpg");
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
 	}
@@ -43,39 +38,38 @@ public class FloroRPG extends BaseCannon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.RPG_FIRE;
+		return AoASounds.ITEM_RPG_FIRE.get();
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(WeaponRegister.GRENADE), true, 1 + EnchantmentHelper.getEnchantmentLevel(EnchantmentsRegister.GREED, gunStack)))
-			return new EntityFloroRPG(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAWeapons.GRENADE.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+			return new FloroRPGEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target != null) {
-			if (target instanceof EntityLivingBase)
-				bulletDmgMultiplier *= 1 + (((EntityLivingBase)target).getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue() * 6.66) / 100;
+			if (target instanceof LivingEntity)
+				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(SharedMonsterAttributes.ARMOR).getValue() * 6.66) / 100;
 
-			if (EntityUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier) && shooter instanceof EntityPlayerMP) {
-				if (target instanceof EntityLivingBase && ((EntityLivingBase)target).getHealth() == 0 && target.isAirBorne) {
+			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier) && shooter instanceof ServerPlayerEntity) {
+				if (target instanceof LivingEntity && ((LivingEntity)target).getHealth() == 0 && target.isAirBorne) {
 					if (target.world.isAirBlock(target.getPosition().down()) && target.world.isAirBlock(target.getPosition().down(2)))
-						ModUtil.completeAdvancement((EntityPlayerMP)shooter, "overworld/surface_to_air", "rpg_air_kill");
+						AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/surface_to_air"), "rpg_air_kill");
 				}
 			}
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, ItemUtil.getFormattedDescriptionText("items.description.damage.gun", Enums.ItemDescriptionType.ITEM_DAMAGE, Double.toString(dmg)));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.RPG.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.cannon.damage", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.grenades", Enums.ItemDescriptionType.ITEM_AMMO_COST));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, NumberUtil.roundToNthDecimalPlace((float)dmg, 2)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.cannon.damage", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / (double)100)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(AoAWeapons.GRENADE.get())));
 	}
 }

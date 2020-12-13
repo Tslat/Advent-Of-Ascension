@@ -1,29 +1,18 @@
 package net.tslat.aoa3.item.misc;
 
-import net.tslat.aoa3.block.generation.misc.RunePostBlock;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.minecraft.item.Item;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 
-public class RuneItem extends SimpleItem {
+public class RuneItem extends Item {
 	private final boolean charged;
 
-	public RuneItem(String name, String registryName, boolean isCharged) {
-		this(name, registryName, isCharged, null);
+	public RuneItem(boolean isChargedRune) {
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+
+		this.charged = isChargedRune;
 	}
 
-	public RuneItem(String name, String registryName, boolean isCharged, RunePostBlock runePost) {
-		super(name, registryName);
-		this.charged = isCharged;
-		setCreativeTab(CreativeTabsRegister.AMMUNITION);
-
-		if (runePost != null)
-			applyToRunePost(runePost);
-	}
-
-	public boolean isChargedRune() {
+	public boolean isCharged() {
 		return charged;
-	}
-
-	private void applyToRunePost(RunePostBlock post) {
-		post.setRune(this);
 	}
 }

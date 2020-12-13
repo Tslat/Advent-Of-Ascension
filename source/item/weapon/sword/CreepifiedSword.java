@@ -1,38 +1,43 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.minions.EntityFriendlyCreeper;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.FriendlyCreeperEntity;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class CreepifiedSword extends BaseSword {
-	public CreepifiedSword(final ToolMaterial material, final double speed) {
-		super(material, speed);
-		setTranslationKey("CreepifiedSword");
-		setRegistryName("aoa3:creepified_sword");
+	public CreepifiedSword() {
+		super(ItemUtil.customItemTier(2000, AttackSpeed.NORMAL, 13.5f, 4, 10, null));
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker, float attackCooldown) {
-		if (!attacker.world.isRemote && itemRand.nextInt(10) == 0 && (!(attacker instanceof EntityPlayer) || attackCooldown > 0.75f)) {
-			final EntityFriendlyCreeper creeper = new EntityFriendlyCreeper(target.world);
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (!attacker.world.isRemote && RandomUtil.oneInNChance(10) && (!(attacker instanceof PlayerEntity) || attackCooldown > 0.75f)) {
+			final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.world);
 
-			creeper.setLocationAndAngles(target.posX, target.posY, target.posZ, itemRand.nextFloat() * 360.0f, 0.0f);
+			creeper.setLocationAndAngles(target.getPosX(), target.getPosY(), target.getPosZ(), random.nextFloat() * 360.0f, 0.0f);
 			creeper.setAttackTarget(target);
-			target.world.spawnEntity(creeper);
+			creeper.setOwnerId(attacker.getUniqueID());
+			target.world.addEntity(creeper);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CreepifiedSword.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

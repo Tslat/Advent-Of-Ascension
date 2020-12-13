@@ -1,45 +1,41 @@
 package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.PredicateUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class CrystalStaff extends BaseStaff {
+public class CrystalStaff extends BaseStaff<List<PlayerEntity>> {
 	public CrystalStaff(int durability) {
 		super(durability);
-		setTranslationKey("CrystalStaff");
-		setRegistryName("aoa3:crystal_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.CRYSTEVIA_STAFF_CAST;
+		return AoASounds.ITEM_CRYSTEVIA_STAFF_CAST.get();
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
-		List<EntityPlayer> playerList = caster.world.getEntitiesWithinAABB(EntityPlayer.class, caster.getEntityBoundingBox().grow(20), PredicateUtil.IS_VULNERABLE_PLAYER);
+	public List<PlayerEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<PlayerEntity> playerList = caster.world.getEntitiesWithinAABB(PlayerEntity.class, caster.getBoundingBox().grow(20), PlayerUtil::shouldPlayerBeAffected);
 
 		if (playerList.isEmpty())
 			return null;
 
-		for (EntityPlayer pl : playerList) {
+		for (PlayerEntity pl : playerList) {
 			if (pl.getHealth() != pl.getMaxHealth())
 				return playerList;
 		}
@@ -49,32 +45,31 @@ public class CrystalStaff extends BaseStaff {
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.DISTORTION_RUNE, 2);
-		runes.put(ItemRegister.LIFE_RUNE, 5);
+		runes.put(AoAItems.DISTORTION_RUNE.get(), 2);
+		runes.put(AoAItems.LIFE_RUNE.get(), 5);
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, List<PlayerEntity> args) {
 		float currentTotalHealth = 0;
 		float currentMaxHealth = 0;
 
-		for (EntityPlayer pl : (List<EntityPlayer>)args) {
+		for (PlayerEntity pl : args) {
 			currentMaxHealth += pl.getMaxHealth();
 			currentTotalHealth += pl.getHealth();
 		}
 
-		float healthPerPlayer = (currentMaxHealth * (currentTotalHealth / currentMaxHealth * 1.25f)) / (float)((List<EntityPlayer>)args).size();
+		float healthPerPlayer = (currentMaxHealth * (currentTotalHealth / currentMaxHealth * 1.25f)) / (float)((List<PlayerEntity>)args).size();
 
-		for (EntityPlayer pl : (List<EntityPlayer>)args) {
+		for (PlayerEntity pl : args) {
 			pl.setHealth(healthPerPlayer);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystalStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.CrystalStaff.desc.2", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,22 +1,23 @@
 package net.tslat.aoa3.item.minionslab;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.entity.minions.AoAMinion;
-import net.tslat.aoa3.entity.minions.EntityGoofer;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.minion.GooferEntity;
 
 public class GooferSlab extends BaseSlab {
 	public GooferSlab() {
-		super("GooferSlab", "goofer_slab", 74, 180, 74, 500);
+		super(74, 180, 74, 500);
 	}
 
 	@Override
-	public AoAMinion activateSlab(EntityPlayer pl, ItemStack stack) {
-		EntityGoofer goofer = new EntityGoofer(pl.world);
+	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
+		GooferEntity goofer = new GooferEntity(AoAEntities.Minions.GOOFER.get(), pl.world);
 
-		goofer.setPositionAndUpdate(pl.posX, pl.posY, pl.posZ);
+		goofer.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
 		goofer.setTamedBy(pl);
-		pl.world.spawnEntity(goofer);
+		pl.world.addEntity(goofer);
 
 		return goofer;
 	}

@@ -1,24 +1,25 @@
 package net.tslat.aoa3.block.generation.plants;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
-public class BloodSpikes extends PlantStackable {
+public class BloodSpikes extends StackablePlant {
 	public BloodSpikes() {
-		super("BloodSpikes", "blood_spikes", Material.GRASS, Material.GROUND);
+		super(MaterialColor.RED, Material.ORGANIC, Material.EARTH);
 	}
 
 	@Override
-	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
-			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 3, true, true));
-			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 2, true, true));
-		}
+	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+		if (entity instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)entity))
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 100), new PotionUtil.EffectBuilder(Effects.POISON, 100).level(3));
 	}
 }

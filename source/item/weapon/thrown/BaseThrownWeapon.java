@@ -4,44 +4,43 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
+public abstract class BaseThrownWeapon extends BaseGun {
 	double dmg;
 	int firingDelay;
 
 	public BaseThrownWeapon(double dmg, int fireDelayTicks) {
-		super(dmg, 1, fireDelayTicks, 0.0f);
-		setMaxDamage(0);
-		setMaxStackSize(64);
+		super(new Item.Properties().group(AoAItemGroups.THROWN_WEAPONS).maxStackSize(64), dmg, fireDelayTicks, 0);
+
 		this.dmg = dmg;
 		this.firingDelay = fireDelayTicks;
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target != null && dmg > 0.0f)
-			EntityUtil.dealRangedDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier);
+			DamageUtil.dealRangedDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier);
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(EntityPlayer player, ItemStack gunStack, EnumHand hand) {
+	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
 		return null;
 	}
 
@@ -50,18 +49,17 @@ public abstract class BaseThrownWeapon extends BaseGun implements AdventWeapon {
 		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		if (dmg > 0.0f)
-			tooltip.add(1, StringUtil.getColourLocaleStringWithArguments("items.description.damage.ranged", TextFormatting.DARK_RED, Double.toString(dmg)));
+			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.ranged", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(dmg)));
 
-		tooltip.add(StringUtil.getColourLocaleString("items.description.thrownWeapon", TextFormatting.AQUA));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.throwable.speed", Double.toString((2000 / firingDelay) / (double)100)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.thrownWeapon", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.throwable.speed", LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / (double)100)));
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack) {
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
 		return HashMultimap.<String, AttributeModifier>create();
 	}
 }

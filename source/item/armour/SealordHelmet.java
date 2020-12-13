@@ -1,57 +1,57 @@
 package net.tslat.aoa3.item.armour;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.library.misc.AoAAttributes;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
-
-import static net.tslat.aoa3.common.registration.MaterialsRegister.ARMOUR_SEALORD_HELMET;
+import java.util.UUID;
 
 public class SealordHelmet extends AdventArmour {
-	public SealordHelmet(String name, String registryName, EntityEquipmentSlot slot) {
-		super(ARMOUR_SEALORD_HELMET, name, registryName, slot);
+	public static final AttributeModifier SEALORD_ATTACK_BUFF = new AttributeModifier(UUID.fromString("027744fa-e85d-4d1e-946a-747739900753"), "AoASealordMovementBuff", 2, AttributeModifier.Operation.ADDITION);
+
+	public SealordHelmet() {
+		super(ItemUtil.customArmourMaterial("aoa3:sealord", 60, new int[] {5, 7, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), EquipmentSlotType.HEAD);
 	}
 
 	@Override
-	public Enums.ArmourSets setType() {
-		return Enums.ArmourSets.ALL;
+	public AdventArmour.Type setType() {
+		return AdventArmour.Type.ALL;
 	}
 
 	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EntityEquipmentSlot> slots) {
-		EntityPlayer player = plData.player();
+	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+		PlayerEntity player = plData.player();
 
-		if (player.isInsideOfMaterial(Material.WATER)) {
-			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SEALORD_ATTACK_BUFF);
+		if (player.areEyesInFluid(FluidTags.WATER)) {
+			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);
 		}
 		else {
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SEALORD_ATTACK_BUFF);
+			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);
 		}
 	}
 
 	@Override
-	public void onUnequip(PlayerDataManager plData, @Nullable EntityEquipmentSlot slot) {
-		EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, AoAAttributes.SEALORD_ATTACK_BUFF);
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+		EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SealordHelmet.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}
 }

@@ -2,32 +2,28 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.item.weapon.AdventWeapon;
-import net.tslat.aoa3.item.weapon.LongReachWeapon;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class PrimordialGreatblade extends BaseGreatblade {
-	public PrimordialGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("PrimordialGreatblade");
-		setRegistryName("aoa3:primordial_greatblade");
+	public PrimordialGreatblade() {
+		super(25.5f, AttackSpeed.GREATBLADE, 1900);
 	}
 
 	@Override
-	protected double getDamageForAttack(ItemStack stack, Entity target, EntityLivingBase attacker, double baseDmg) {
-		if (!(target instanceof EntityLivingBase))
+	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
+		if (!(target instanceof LivingEntity))
 			return super.getDamageForAttack(stack, target, attacker, baseDmg);
 
 		float extraDmg = 0;
-		EntityLivingBase livingTarget = (EntityLivingBase)target;
+		LivingEntity livingTarget = (LivingEntity)target;
 		float maxHealth = livingTarget.getMaxHealth();
 
 		if (maxHealth <= 100) {
@@ -46,8 +42,8 @@ public class PrimordialGreatblade extends BaseGreatblade {
 		return (float)baseDmg + extraDmg;
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.PrimordialGreatblade.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

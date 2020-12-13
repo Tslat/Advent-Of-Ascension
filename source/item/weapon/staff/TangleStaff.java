@@ -2,73 +2,67 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.entity.projectiles.staff.EntityTangleFall;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.entity.projectile.staff.TangleFallEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class TangleStaff extends BaseStaff {
+public class TangleStaff extends BaseStaff<BlockPos> {
 	public TangleStaff(int durability) {
 		super(durability);
-		setTranslationKey("TangleStaff");
-		setRegistryName("aoa3:tangle_staff");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return SoundsRegister.TANGLE_STAFF_CAST;
+		return AoASounds.ITEM_TANGLE_STAFF_CAST.get();
 	}
 
 	@Override
 	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
-		runes.put(ItemRegister.WIND_RUNE, 2);
-		runes.put(ItemRegister.POISON_RUNE, 2);
-		runes.put(ItemRegister.STORM_RUNE, 1);
+		runes.put(AoAItems.WIND_RUNE.get(), 2);
+		runes.put(AoAItems.POISON_RUNE.get(), 2);
+		runes.put(AoAItems.STORM_RUNE.get(), 1);
 	}
 
 	@Override
-	public Object checkPreconditions(EntityLivingBase caster, ItemStack staff) {
+	public BlockPos checkPreconditions(LivingEntity caster, ItemStack staff) {
 		BlockPos trace = null;
 
-		if (caster instanceof EntityPlayer)
-			trace = EntityUtil.getBlockAimingAt((EntityPlayer)caster, 70);
+		if (caster instanceof PlayerEntity)
+			trace = PlayerUtil.getBlockAimingAt((PlayerEntity)caster, 70);
 
 		return trace;
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, EntityLivingBase caster, Object args) {
+	public void cast(World world, ItemStack staff, LivingEntity caster, BlockPos args) {
 		BlockPos pos = (BlockPos)args;
 
 		for (int i = 0; i < 8; i++) {
-			world.spawnEntity(new EntityTangleFall(caster, this, (pos.getX() - 4) + itemRand.nextFloat() * 8, pos.getY() + 30, (pos.getZ() - 4) + itemRand.nextFloat() * 8, 3.0f));
+			world.addEntity(new TangleFallEntity(caster, this, (pos.getX() - 4) + RandomUtil.randomValueUpTo(8), pos.getY() + 30, (pos.getZ() - 4) + RandomUtil.randomValueUpTo(8), 3.0f));
 		}
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (EntityUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
-			if (target instanceof EntityLivingBase)
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 50, false, true));
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 60).level(50));
 
 			return true;
 		}
@@ -81,10 +75,9 @@ public class TangleStaff extends BaseStaff {
 		return 9;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.TangleStaff.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

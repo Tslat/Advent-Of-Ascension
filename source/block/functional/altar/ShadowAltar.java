@@ -1,35 +1,36 @@
 package net.tslat.aoa3.block.functional.altar;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.common.registration.ItemRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.scheduling.async.ShadowlordSpawnTask;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
 
 import java.util.concurrent.TimeUnit;
 
 public class ShadowAltar extends BossAltarBlock {
 	public ShadowAltar() {
-		super("ShadowAltar", "shadow_altar");
+		super(MaterialColor.BLACK);
 	}
 
 	@Override
-	protected void doActivationEffect(EntityPlayer player, EnumHand hand, IBlockState state, BlockPos blockPos) {
+	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		if (!player.world.isRemote) {
 			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.isPotionActive(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(ItemRegister.BLANK_REALMSTONE), true, 1))
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.DUSTOPIA_REALMSTONE));
+			if (player.isPotionActive(Effects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.DUSTOPIA_REALMSTONE.get()));
 		}
 	}
 
 	@Override
 	protected Item getActivationItem() {
-		return ItemRegister.BOOK_OF_SHADOWS;
+		return AoAItems.BOOK_OF_SHADOWS.get();
 	}
 }

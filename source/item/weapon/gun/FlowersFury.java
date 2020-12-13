@@ -2,53 +2,51 @@ package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.minions.EntityRosid;
-import net.tslat.aoa3.entity.projectiles.gun.BaseBullet;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.minion.RosidEntity;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class FlowersFury extends BaseGun {
 	public FlowersFury(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(dmg, durability, firingDelayTicks, recoil);
-		setTranslationKey("FlowersFury");
-		setRegistryName("aoa3:flowers_fury");
+		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.FAST_RIFLE_FIRE;
+		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, EntityLivingBase shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (EntityUtil.isHostileMob(target) && itemRand.nextInt(20) == 0) {
-			EntityRosid rosid = new EntityRosid(shooter.world);
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (EntityUtil.isHostileMob(target) && RandomUtil.oneInNChance(20)) {
+			RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.world);
 
-			if (shooter instanceof EntityPlayer)
-				rosid.setTamedBy((EntityPlayer)shooter);
+			if (shooter instanceof PlayerEntity)
+				rosid.setTamedBy((PlayerEntity)shooter);
 
-			rosid.setPosition(target.posX, target.posY, target.posZ);
-			shooter.world.spawnEntity(rosid);
+			rosid.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
+			shooter.world.addEntity(rosid);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.FlowersFury.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

@@ -1,9 +1,9 @@
 package net.tslat.aoa3.library.scheduling.async;
 
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.utils.ModUtil;
+import net.tslat.aoa3.library.scheduling.AoAScheduler;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,10 +19,10 @@ public class DracyonCleanupTask implements Runnable {
     @Override
     public void run() {
         if (world.getBlockState(waterPosition).getBlock() == Blocks.WATER)
-            world.setBlockToAir(waterPosition);
+            world.setBlockState(waterPosition, Blocks.AIR.getDefaultState());
     }
 
     public void schedule(Integer time, TimeUnit units) {
-        ModUtil.scheduleRequiredAsyncTask(this, time, units);
+        AoAScheduler.scheduleRequiredAsyncTask(this, time, units);
     }
 }

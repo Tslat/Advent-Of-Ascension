@@ -2,49 +2,47 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.constant.AttackSpeed;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class HauntedGreatblade extends BaseGreatblade {
-	public HauntedGreatblade(double dmg, double speed, int durability) {
-		super(dmg, speed, durability);
-		setTranslationKey("HauntedGreatblade");
-		setRegistryName("aoa3:haunted_greatblade");
+	public HauntedGreatblade() {
+		super(22.0f, AttackSpeed.GREATBLADE, 1370);
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && isSelected && entity instanceof EntityPlayer && itemRand.nextInt(12000) == 0) {
-			Potion potion = Potion.getPotionById(itemRand.nextInt(Potion.REGISTRY.getKeys().size()));
+	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+		if (!world.isRemote && isSelected && entity instanceof PlayerEntity && RandomUtil.oneInNChance(12000)) {
+			Effect effect = Effect.get(random.nextInt(ForgeRegistries.POTIONS.getValues().size()));
 
-			while (potion == null) {
-				potion = Potion.getPotionById(itemRand.nextInt(Potion.REGISTRY.getKeys().size()));
+			while (effect == null) {
+				effect = Effect.get(random.nextInt(ForgeRegistries.POTIONS.getValues().size()));
 			}
 
-			((EntityPlayer)entity).addPotionEffect(new PotionEffect(potion, 600, 0, false, true));
+			((PlayerEntity)entity).addPotionEffect(new EffectInstance(effect, 600, 0, false, true));
 
-			TextComponentTranslation component = StringUtil.getColourLocale("item.HauntedGreatblade.desc." + (2 + itemRand.nextInt(16)), TextFormatting.DARK_PURPLE);
+			TranslationTextComponent component = LocaleUtil.getLocaleMessage("item.aoa3.haunted_greatblade.message." + (1 + random.nextInt(16)), TextFormatting.DARK_PURPLE);
 
 			component.getStyle().setItalic(true);
-
 			entity.sendMessage(component);
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.HauntedGreatblade.desc.1", Enums.ItemDescriptionType.UNIQUE));
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

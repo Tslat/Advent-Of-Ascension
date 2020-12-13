@@ -1,46 +1,41 @@
 package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumAction;
+import net.minecraft.item.Food;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.item.UseAction;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Tea extends BasicFood {
+public class Tea extends Item {
 	public Tea() {
-		super("Tea", "tea", 0, 0.5f);
-		setAlwaysEdible();
+		super(new Item.Properties().group(AoAItemGroups.FOOD).containerItem(AoAItems.CUP.get())
+				.containerItem(AoAItems.CUP.get())
+				.food(new Food.Builder()
+						.hunger(0)
+						.saturation(0)
+						.setAlwaysEdible()
+						.effect(new PotionUtil.EffectBuilder(Effects.REGENERATION, 50).level(2).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.RESISTANCE, 130).build(), 1)
+						.build()));
 	}
 
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.DRINK;
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
 	}
 
 	@Override
-	protected void onFoodEaten(ItemStack stack, World world, EntityPlayer player) {
-		super.onFoodEaten(stack, world, player);
-
-		if (!world.isRemote) {
-			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 50, 1, true, false));
-			player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 130, 0, true, false));
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.CUP));
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(StringUtil.getLocaleString("item.Tea.desc.1"));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

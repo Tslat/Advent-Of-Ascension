@@ -1,82 +1,77 @@
 package net.tslat.aoa3.item.misc;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemWrittenBook;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.item.WrittenBookItem;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.FileUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.library.resourcemanager.MiscTextFileManager;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.SidedUtil;
 
-public class WornBook extends ItemWrittenBook {
-	private static final NBTTagCompound contents = new NBTTagCompound();
+public class WornBook extends WrittenBookItem {
+	private static final CompoundNBT contents = new CompoundNBT();
 
 	public WornBook() {
-		super();
-
-		this.setTranslationKey("WornBook");
-		this.setRegistryName("aoa3:worn_book");
-		setCreativeTab(CreativeTabsRegister.MISC);
+		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static ItemStack getBook() {
-		ItemStack stack = new ItemStack(ItemRegister.WORN_BOOK, 1);
-		stack.setTagCompound(getBookContents());
+	@OnlyIn(Dist.CLIENT)
+	public static ItemStack getBook(ItemStack stack) {
+		stack.setTag(getBookContents());
 		return stack;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack bookStack = player.getHeldItem(hand);
 
-		if (world.isRemote) {
-			player.openGui(AdventOfAscension.instance(), Enums.ModGuis.WORN_BOOK.guiId, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		if (!world.isRemote) {
+			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
+				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"));
+			}
 		}
-		else if (ItemUtil.findItemInInventory(player, ItemRegister.BLANK_REALMSTONE) == -1) {
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ItemRegister.BLANK_REALMSTONE));
-			player.sendMessage(StringUtil.getLocale("message.feedback.wornBook.droppedRealmstone"));
+		else {
+			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> SidedUtil::displayWornBookGui);
 		}
 
-		return ActionResult.newResult(EnumActionResult.SUCCESS, bookStack);
+		return ActionResult.resultSuccess(bookStack);
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static NBTTagCompound getBookContents() {
-		contents.setString("author", StringUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
-		contents.setString("title", StringUtil.getLocaleString("item.WornBook.name"));
+	@OnlyIn(Dist.CLIENT)
+	public static CompoundNBT getBookContents() {
+		contents.putString("author", LocaleUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
+		contents.putString("title", LocaleUtil.getLocaleString("item.aoa3.worn_book"));
 
-		String pageContents = FileUtil.getTextFromResourceFile("aoa3", "lang/aoa3/misc/" + FMLCommonHandler.instance().getCurrentLanguage() + "/worn_book.txt", "lang/aoa3/misc/en_us/worn_book.txt");
+		String pageContents = MiscTextFileManager.DATA.get(AoAItems.WORN_BOOK.get());
 
 		if (pageContents == null)
 			return contents;
 
 		String[] lines = pageContents.split("\n");
-		NBTTagList pages = new NBTTagList();
+		ListNBT pages = new ListNBT();
 
 		for (String line : lines) {
-			pages.appendTag(new NBTTagString(line.replaceAll("<br>", "\n")));
+			pages.add(StringNBT.valueOf(line.replaceAll("<br>", "\n")));
 		}
 
-		contents.setTag("pages", pages);
+		contents.put("pages", pages);
 
 		return contents;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return false;

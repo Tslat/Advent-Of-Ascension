@@ -1,42 +1,31 @@
 package net.tslat.aoa3.block.generation.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-
-import javax.annotation.Nonnull;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
+import net.tslat.aoa3.util.BlockUtil;
 
 public class BoneyBlock extends Block {
+	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.001d, 0.001d, 0.001d, 0.999d, 0.999d, 0.999d));
+
 	public BoneyBlock() {
-		super(Material.ROCK);
-		setTranslationKey("BoneyBlock");
-		setRegistryName("aoa3:boney_block");
-		setHardness(3.0f);
-		setResistance(3.0f);
-		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
-	}
-
-	@Nonnull
-	@Override
-	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GRAY, 3, 3, SoundType.STONE));
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return SHAPE;
+	}
+
+	@Override
+	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return false;
-	}
-
-	@Override
-	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
-		return true;
 	}
 }

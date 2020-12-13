@@ -1,51 +1,39 @@
 package net.tslat.aoa3.block.generation.misc;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.BasicBlock;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
-import javax.annotation.Nullable;
-
-public class ToxicWaste extends BasicBlock {
-	private static final AxisAlignedBB bounds = new AxisAlignedBB(0, 0, 0, 1, 0.90, 1);
+public class ToxicWaste extends Block {
+	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public ToxicWaste() {
-		super("ToxicWaste", "toxic_waste", Material.SPONGE, 0.25f, 0.1f);
-		setCreativeTab(CreativeTabsRegister.GENERATION_BLOCKS);
-		setHarvestLevel("shovel", 1);
-	}
-
-	@Nullable
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return bounds;
+		super(BlockUtil.generateBlockProperties(Material.EARTH, MaterialColor.GREEN_TERRACOTTA, 0.25f, 1, SoundType.SLIME));
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return bounds;
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
 	}
 
 	@Override
-	public AxisAlignedBB getSelectedBoundingBox(IBlockState state, World world, BlockPos pos) {
-		return bounds;
-	}
-
-	@Override
-	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
-			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 60, 7));
-			((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 150, 5));
-		}
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative())
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.POISON, 60).level(8), new PotionUtil.EffectBuilder(Effects.NAUSEA, 150));
 	}
 }

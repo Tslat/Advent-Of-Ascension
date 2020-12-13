@@ -2,22 +2,20 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityToxicShot;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.ToxicShotEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,26 +23,24 @@ import java.util.List;
 public class GasBlaster extends BaseBlaster {
 	public GasBlaster(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("GasBlaster");
-		setRegistryName("aoa3:gas_blaster");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.GAS_GUN_FIRE;
+		return AoASounds.ITEM_GAS_GUN_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityToxicShot(shooter, this, 1));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new ToxicShotEntity(shooter, this, 1));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (target instanceof EntityLivingBase && !EntityUtil.isTypeImmune(target, Enums.MobProperties.BLASTER_IMMUNE)) {
-			if (target instanceof EntityPlayer || (target instanceof EntityTameable && shooter.getUniqueID().equals(((EntityTameable)target).getOwnerId()))) {
-				EntityUtil.healEntity((EntityLivingBase)target, 0.05f);
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (target instanceof LivingEntity) {
+			if (target instanceof PlayerEntity || (target instanceof TameableEntity && shooter.getUniqueID().equals(((TameableEntity)target).getOwnerId()))) {
+				EntityUtil.healEntity((LivingEntity)target, 0.05f);
 
 				return true;
 			}
@@ -54,15 +50,15 @@ public class GasBlaster extends BaseBlaster {
 	}
 
 	@Override
-	protected void doImpactEffect(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (!((EntityLivingBase)target).isPotionActive(MobEffects.POISON))
-			((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON, 13, 1, false, true));
+	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (!((LivingEntity)target).isPotionActive(Effects.POISON))
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 13).level(2));
 	}
 
-	@SideOnly(Side.CLIENT)
+
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.GasBlaster.desc.1", Enums.ItemDescriptionType.POSITIVE));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.addInformation(stack, world, tooltip, flag);
 	}
 }

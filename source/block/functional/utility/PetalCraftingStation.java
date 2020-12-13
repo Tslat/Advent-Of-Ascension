@@ -1,59 +1,57 @@
 package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.ArmourRegister;
-import net.tslat.aoa3.common.registration.CreativeTabsRegister;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.common.registration.AoAArmour;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class PetalCraftingStation extends Block {
 	public PetalCraftingStation() {
-		super(Material.ROCK);
-		setTranslationKey("PetalCraftingStation");
-		setRegistryName("aoa3:petal_crafting_station");
-		setHardness(5.0f);
-		setResistance(10.0f);
-		setSoundType(SoundType.STONE);
-		setCreativeTab(CreativeTabsRegister.FUNCTIONAL_BLOCKS);
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem(hand).getItem() == ItemRegister.PETALS) {
-			if (!player.capabilities.isCreativeMode)
-				player.getHeldItem(hand).shrink(1);
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getHeldItem(hand).getItem() == AoAItems.PETALS.get()) {
+			if (!world.isRemote()) {
+				if (!player.isCreative())
+					player.getHeldItem(hand).shrink(1);
 
-			switch (player.getRNG().nextInt(4)) {
-				case 0:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_BOOTS));
-					break;
-				case 1:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_LEGS));
-					break;
-				case 2:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_CHESTPLATE));
-					break;
-				case 3:
-					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(ArmourRegister.HYDRANGIC_HELMET));
-					break;
+				switch (player.getRNG().nextInt(4)) {
+					case 0:
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAArmour.HYDRANGIC_ARMOUR.boots.get()));
+						break;
+					case 1:
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAArmour.HYDRANGIC_ARMOUR.leggings.get()));
+						break;
+					case 2:
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAArmour.HYDRANGIC_ARMOUR.chestplate.get()));
+						break;
+					case 3:
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAArmour.HYDRANGIC_ARMOUR.helmet.get()));
+						break;
+				}
+
+				world.playSound(null, pos, AoASounds.BLOCK_PETAL_CRAFTING_STATION_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
 
-			world.playSound(null, pos, SoundsRegister.PETAL_CRAFTING_STATION_SUCCESS, SoundCategory.BLOCKS, 1.0f, 1.0f);
-
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return false;
+		return ActionResultType.PASS;
 	}
 }

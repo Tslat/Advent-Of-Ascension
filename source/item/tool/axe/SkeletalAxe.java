@@ -1,52 +1,40 @@
 package net.tslat.aoa3.item.tool.axe;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent;
-import net.tslat.aoa3.common.registration.ItemRegister;
-import net.tslat.aoa3.common.registration.MaterialsRegister;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.tool.SpecialHarvestTool;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.ItemUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class SkeletalAxe extends BaseAxe implements SpecialHarvestTool {
 	public SkeletalAxe() {
-		super("SkeletalAxe", "skeletal_axe", MaterialsRegister.TOOL_SKELETAL);
+		super(ItemUtil.customItemTier(2000, 10.0f, 6.0f, 5, 10, null));
 	}
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
-		if (!e.getWorld().isRemote && itemRand.nextInt(3) == 0) {
-			int dropChoice = itemRand.nextInt(50);
+		if (!e.getWorld().isRemote() && RandomUtil.oneInNChance(3)) {
+			int dropChoice = RandomUtil.randomNumberUpTo(50);
 			ItemStack drop;
 
 			if (dropChoice == 0) {
-				Item bone = ItemRegister.SKULLBONE_FRAGMENT;
-
-				switch (itemRand.nextInt(4)) {
-					case 0:
-						bone = ItemRegister.SKULLBONE_FRAGMENT;
-						break;
-					case 1:
-						bone = ItemRegister.CHESTBONE_FRAGMENT;
-						break;
-					case 2:
-						bone = ItemRegister.LEGBONE_FRAGMENT;
-						break;
-					case 3:
-						bone = ItemRegister.FOOTBONE_FRAGMENT;
-						break;
-				}
-
-				drop = new ItemStack(bone);
+				drop = new ItemStack(RandomUtil.getRandomSelection(
+						AoAItems.SKULLBONE_FRAGMENT.get(),
+						AoAItems.CHESTBONE_FRAGMENT.get(),
+						AoAItems.LEGBONE_FRAGMENT.get(),
+						AoAItems.FOOTBONE_FRAGMENT.get()
+				));
 			}
 			else if (dropChoice < 10) {
-				drop = new ItemStack(Items.DYE, 1, 15);
+				drop = new ItemStack(Items.WHITE_DYE);
 			}
 			else {
 				drop = new ItemStack(Items.BONE);
@@ -57,7 +45,7 @@ public class SkeletalAxe extends BaseAxe implements SpecialHarvestTool {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.tool.skeletal", Enums.ItemDescriptionType.UNIQUE));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.skeletal", LocaleUtil.ItemDescriptionType.UNIQUE));
 	}
 }

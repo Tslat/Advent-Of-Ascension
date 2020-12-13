@@ -1,38 +1,42 @@
 package net.tslat.aoa3.block.generation.misc;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.UnbreakableBlock;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.PotionUtil;
 
-import javax.annotation.Nullable;
-
-public class KaiyuTempleTrapDamage extends UnbreakableBlock {
-	private final AxisAlignedBB COLLIDABLE_BLOCK_AABB = new AxisAlignedBB(0.05, 0.05, 0.05, 0.95, 0.95, 0.95);
+public class KaiyuTempleTrapDamage extends Block {
+	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public KaiyuTempleTrapDamage() {
-		super("KaiyuTempleTrapMaze", "kaiyu_temple_trap_maze", Material.ROCK);
-	}
-
-	@Nullable
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-		return COLLIDABLE_BLOCK_AABB;
+		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.ORANGE_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityPlayer && !((EntityPlayer)entity).capabilities.isCreativeMode) {
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return SHAPE;
+	}
+
+	@Override
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
 			entity.attackEntityFrom(new DamageSource("temple_trap").setDamageBypassesArmor(), 3.0f);
-			((EntityPlayer)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 40, 3, true, false));
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).level(4).isAmbient());
 		}
 	}
 }

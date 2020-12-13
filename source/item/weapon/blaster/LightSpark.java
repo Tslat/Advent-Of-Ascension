@@ -2,26 +2,25 @@ package net.tslat.aoa3.item.weapon.blaster;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.EnumHand;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.tslat.aoa3.common.registration.SoundsRegister;
-import net.tslat.aoa3.entity.projectiles.blaster.EntityLightSpark;
-import net.tslat.aoa3.entity.projectiles.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.Enums;
-import net.tslat.aoa3.utils.EntityUtil;
-import net.tslat.aoa3.utils.ItemUtil;
-import net.tslat.aoa3.utils.StringUtil;
-import net.tslat.aoa3.utils.player.PlayerDataManager;
-import net.tslat.aoa3.utils.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.projectile.blaster.LightSparkEntity;
+import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.constant.Resources;
+import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,55 +28,53 @@ import java.util.List;
 public class LightSpark extends BaseBlaster {
 	public LightSpark(double dmg, int durability, int fireDelayTicks, float energyCost) {
 		super(dmg, durability, fireDelayTicks, energyCost);
-		setTranslationKey("LightSpark");
-		setRegistryName("aoa3:light_spark");
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundsRegister.SOUL_SPARK_FIRE;
+		return AoASounds.ITEM_SOUL_SPARK_FIRE.get();
 	}
 
 	@Override
-	public void fire(ItemStack blaster, EntityLivingBase shooter) {
-		shooter.world.spawnEntity(new EntityLightSpark(shooter, this, 5));
+	public void fire(ItemStack blaster, LivingEntity shooter) {
+		shooter.world.addEntity(new LightSparkEntity(shooter, this, 5));
 	}
 
 	@Override
-	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, EntityLivingBase shooter) {
-		if (!EntityUtil.isSpecExempt(target, shooter) && !EntityUtil.isTypeImmune(target, Enums.MobProperties.BLASTER_IMMUNE)) {
-			if (shooter instanceof EntityPlayerMP && !((EntityPlayerMP)shooter).capabilities.isCreativeMode) {
-				EntityPlayer player = (EntityPlayer)shooter;
+	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
+		if (!EntityUtil.isImmuneToSpecialAttacks(target, shooter)) {
+			if (shooter instanceof ServerPlayerEntity && !((ServerPlayerEntity)shooter).isCreative()) {
+				ServerPlayerEntity player = (ServerPlayerEntity)shooter;
 				PlayerDataManager.PlayerStats stats = PlayerUtil.getAdventPlayer(player).stats();
 
-				if (stats.getResourceValue(Enums.Resources.ENERGY) < 200) {
-					PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.ENERGY, 200);
+				if (stats.getResourceValue(Resources.ENERGY) < 200) {
+					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, 200);
 
 					return false;
 				}
 
-				if (stats.getResourceValue(Enums.Resources.SOUL) < 50) {
-					PlayerUtil.notifyPlayerOfInsufficientResources((EntityPlayerMP)player, Enums.Resources.SOUL, 50);
+				if (stats.getResourceValue(Resources.SOUL) < 50) {
+					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.SOUL, 50);
 
 					return false;
 				}
-				stats.consumeResource(Enums.Resources.ENERGY, 200, false);
-				stats.consumeResource(Enums.Resources.SOUL, 50, false);
+				stats.consumeResource(Resources.ENERGY, 200, false);
+				stats.consumeResource(Resources.SOUL, 50, false);
 
-				EnumHand hand = player.getActiveHand();
+				Hand hand = player.getActiveHand();
 				ItemStack stack =  player.getHeldItem(hand);
 
 				if (stack.getItem() != this)
-					stack = player.getHeldItem(hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
+					stack = player.getHeldItem(hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND);
 
 				if (stack.getItem() != this)
 					return false;
 
-				stack.damageItem(1, shooter);
+				ItemUtil.damageItem(stack, shooter, hand);
 			}
 
-			target.setDead();
+			target.remove();
 
 			return true;
 		}
@@ -86,31 +83,31 @@ public class LightSpark extends BaseBlaster {
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
 		if (!player.world.isRemote) {
 			if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 				if (getFiringSound() != null)
-					player.world.playSound(null, player.posX, player.posY, player.posZ, getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+					player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 				fire(stack, player);
-				((EntityPlayer)player).addStat(StatList.getObjectUseStats(this));
+				((PlayerEntity)player).addStat(Stats.ITEM_USED.get(this));
 			}
 		}
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase player, int useTicksRemaining) {}
+	public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity player, int useTicksRemaining) {}
 
-	@SideOnly(Side.CLIENT)
+
 	@Override
-	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag flag) {
-		tooltip.add(ItemUtil.getFormattedDescriptionText("item.SoulSpark.desc.1", Enums.ItemDescriptionType.POSITIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.damage.specImmune", Enums.ItemDescriptionType.NEGATIVE));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, "200", StringUtil.getLocaleString("resources.energy.name")));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.ammo.resource", Enums.ItemDescriptionType.ITEM_AMMO_COST, "50", StringUtil.getLocaleString("resources.soul.name")));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.fire", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.slowing", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(ItemUtil.getFormattedDescriptionText("items.description.blaster.effect", Enums.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(StringUtil.getLocaleStringWithArguments("items.description.gun.speed", Double.toString((2000 / firingDelay) / 100d)));
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SPEC_IMMUNE, LocaleUtil.ItemDescriptionType.HARMFUL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, "200", LocaleUtil.getLocaleString(LocaleUtil.Constants.ENERGY_RESOURCE)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, "50", LocaleUtil.getLocaleString(LocaleUtil.Constants.SOUL_RESOURCE)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.slowing", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.effect", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / 100d)));
 	}
 }
