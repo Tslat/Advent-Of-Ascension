@@ -148,7 +148,7 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || world.dimension.getType() != DimensionType.OVERWORLD;
+		return !isOverworldNPC() || world.dimension.getType() != DimensionType.OVERWORLD || ticksExisted >= 72000;
 	}
 
 	@Override

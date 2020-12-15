@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -11,9 +12,9 @@ import net.minecraft.util.INameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoATileEntities;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -24,6 +25,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	@Nullable
 	private String entityId = null;
 	private boolean isOriginal = true;
+
+	private Block trophyBlock = null;
 
 	private float mobRotation;
 	private float prevMobRotation;
@@ -43,6 +46,9 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	public void tick() {
 		prevMobRotation = mobRotation;
 		mobRotation = (mobRotation + 0.05f) % 360;
+
+		if (trophyBlock == null && world != null)
+			trophyBlock = world.getBlockState(getPos()).getBlock();
 	}
 
 	public float getMobRotation() {
@@ -106,7 +112,6 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Nullable
-	@OnlyIn(Dist.CLIENT)
 	public Entity getCachedEntity() {
 		if (this.cachedEntity == null && entityId != null) {
 			CompoundNBT entityNBT = new CompoundNBT();
@@ -133,15 +138,27 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 	@Override
 	public ITextComponent getName() {
-		if (getCachedEntity() != null)
-			return getCachedEntity().getName().shallowCopy().appendSibling(new StringTextComponent(" ")).appendSibling(getBlockState().getBlock().getNameTextComponent());
+		if (trophyBlock == null || entityId == null)
+			return new StringTextComponent("Trophy");
 
-		return getBlockState().getBlock().getNameTextComponent();
+		if (getCachedEntity() == null)
+			return new StringTextComponent("Trophy");
+
+		if (trophyBlock == AoABlocks.TROPHY.get())
+			return LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+
+		if (trophyBlock == AoABlocks.GOLD_TROPHY.get())
+			return LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+
+		if (trophyBlock == AoABlocks.ORNATE_TROPHY.get())
+			return LocaleUtil.getLocaleMessage("block.aoa3.ornate_trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+
+		return new StringTextComponent("Trophy");
 	}
 
 	@Override
 	public boolean hasCustomName() {
-		return true;
+		return trophyBlock != null && entityId != null;
 	}
 
 	@Nullable

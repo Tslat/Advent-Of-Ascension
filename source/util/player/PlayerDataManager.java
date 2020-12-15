@@ -814,7 +814,6 @@ public final class PlayerDataManager {
 
 			float remaining = Math.min(544132359, xp);
 			int newLevels = 0;
-			boolean noXpDrop = lvl >= 100;
 			float xpRemaining = PlayerUtil.getXpRemainingUntilLevel(playerDataManager, skill);
 
 			if (remaining > xpRemaining) {
@@ -843,9 +842,7 @@ public final class PlayerDataManager {
 
 			checkAndUpdateLegitimacy();
 			AoAPackets.messagePlayer(player, new SkillDataPacket(skill.id, levels.get(skill), this.xp.get(skill), optionals.get(skill)));
-
-			if (!noXpDrop)
-				AoAPackets.messagePlayer(player, new XpGainPacket(skill.id, xp, newLevels > 0));
+			AoAPackets.messagePlayer(player, new XpGainPacket(skill.id, xp, newLevels > 0));
 		}
 
 		public void subtractXp(Skills skill, float xp) {

@@ -31,6 +31,6 @@ public class ForagingUtil {
 	}
 
 	public static List<ItemStack> getLoot(ServerPlayerEntity player, BlockPos pos) {
-		return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/foraging_loot")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player).withParameter(LootParameters.POSITION, pos).build(LootParameterSets.GIFT));
+		return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/foraging")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player).withParameter(LootParameters.POSITION, pos).build(LootParameterSets.GIFT));
 	}
 }
