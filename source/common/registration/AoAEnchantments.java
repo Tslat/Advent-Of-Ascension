@@ -11,7 +11,6 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.enchantment.*;
 import net.tslat.aoa3.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.item.weapon.cannon.BaseCannon;
-import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
 import net.tslat.aoa3.item.weapon.greatblade.BaseGreatblade;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.item.weapon.maul.BaseMaul;
@@ -30,7 +29,7 @@ public final class AoAEnchantments {
 	public static final EnchantmentType MAUL = EnchantmentType.create("MAUL", item -> item instanceof BaseMaul);
 	public static final EnchantmentType MELEE_WEAPON = EnchantmentType.create("MELEE_WEAPON", item -> item instanceof SwordItem || item instanceof BaseGreatblade || item instanceof BaseMaul);
 	public static final EnchantmentType STAFF = EnchantmentType.create("STAFF", item -> item instanceof BaseStaff);
-	public static final EnchantmentType AMMO_CONSUMING = EnchantmentType.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff || item instanceof BaseCrossbow);
+	public static final EnchantmentType AMMO_CONSUMING = EnchantmentType.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
 	public static final EnchantmentType BULLET_FIRING = EnchantmentType.create("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon));
 	public static final EnchantmentType BLASTER = EnchantmentType.create("BLASTER", item -> item instanceof BaseBlaster);
 	public static final EnchantmentType UNSTACKABLE = EnchantmentType.create("UNSTACKABLE", item -> item != null && item.getItemStackLimit(new ItemStack(item)) == 0);

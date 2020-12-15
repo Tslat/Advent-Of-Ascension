@@ -566,7 +566,7 @@ public final class StructureConfig {
 		ruinedTeleporterFrameSpawnChance = configBuilder
 				.comment("Chance for Ruined Teleporter Frame structures to generate per chunk in the Overworld.")
 				.translation("config.aoa3.ruinedTeleporterFrameSpawnChance")
-				.defineInRange("ruinedTeleporterFrameSpawnChance", 0.00769, 0, 1);
+				.defineInRange("ruinedTeleporterFrameSpawnChance", 0.01, 0, 1);
 
 		windRuneShrineSpawnChance = configBuilder
 				.comment("Chance for Wind Rune Shrine structures to generate per chunk in the Overworld.")

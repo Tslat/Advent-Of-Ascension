@@ -74,11 +74,12 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 				if (!blockEntityTag.contains("OriginalTrophy") || !blockEntityTag.getBoolean("OriginalTrophy"))
 					return false;
 
-				if (tag.contains("EntityID", 8)) {
+				if (blockEntityTag.contains("EntityID")) {
+					System.out.println(blockEntityTag.getString("EntityID"));
 					if (entityType == null) {
-						entityType = tag.getString("EntityID");
+						entityType = blockEntityTag.getString("EntityID");
 					}
-					else if (!entityType.equals(tag.getString("EntityID"))) {
+					else if (!entityType.equals(blockEntityTag.getString("EntityID"))) {
 						return false;
 					}
 				}

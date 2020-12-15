@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
 import net.tslat.aoa3.client.gui.hud.XpParticlesRenderer;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.constant.Skills;
@@ -31,9 +32,12 @@ public class XpGainPacket implements AoAPacket {
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		if (AoAConfig.CLIENT.showXpParticles.get())
-			XpParticlesRenderer.addXpParticle(Skills.getById(skillId), xp, levelUp);
+		if (AoAConfig.CLIENT.showXpParticles.get()) {
+			Skills skill = Skills.getById(skillId);
 
+			if (AdventGuiTabPlayer.getSkillLevel(skill) < 100 || AoAConfig.CLIENT.showVanityLevels.get())
+				XpParticlesRenderer.addXpParticle(skill, xp, levelUp);
+		}
 
 		context.get().setPacketHandled(true);
 	}

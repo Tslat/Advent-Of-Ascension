@@ -47,6 +47,6 @@ public class ExtractionUtil {
     }
 
     public static List<ItemStack> getLoot(ServerPlayerEntity player, BlockPos pos) {
-        return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/extraction_loot")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.THIS_ENTITY, player).build(LootParameterSets.GIFT));
+        return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/extraction")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.THIS_ENTITY, player).build(LootParameterSets.GIFT));
     }
 }

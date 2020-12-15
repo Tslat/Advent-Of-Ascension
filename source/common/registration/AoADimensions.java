@@ -43,6 +43,7 @@ import net.tslat.aoa3.worldgen.worlds.voxponds.VoxPondsDimension;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.function.BiFunction;
 
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
@@ -148,7 +149,7 @@ public final class AoADimensions {
 		private DimensionContainer(AoADimension dim, boolean hasSkyLight, BiFunction<World, DimensionType, ? extends Dimension> modDimFactory) {
 			this.dim = dim;
 			this.hasSkyLight = hasSkyLight;
-			this.modDim = MOD_DIMENSIONS.register(dim.toString().toLowerCase(), () -> new ModDimension() {
+			this.modDim = MOD_DIMENSIONS.register(dim.toString().toLowerCase(Locale.ENGLISH), () -> new ModDimension() {
 				@Override
 				public BiFunction<World, DimensionType, ? extends Dimension> getFactory() {
 					return modDimFactory;

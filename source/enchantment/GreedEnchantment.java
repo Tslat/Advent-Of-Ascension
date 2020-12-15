@@ -26,6 +26,11 @@ public class GreedEnchantment extends Enchantment {
 	}
 
 	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return super.canApplyAtEnchantingTable(stack);
+	}
+
+	@Override
 	public int getMinEnchantability(int enchantmentLevel) {
 		return 20;
 	}

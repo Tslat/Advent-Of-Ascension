@@ -78,7 +78,7 @@ public class TrophyBlock extends WaterloggableBlock {
 					TileEntity tile = worldIn.getTileEntity(pos);
 
 					if (tile instanceof TrophyTileEntity)
-						((TrophyTileEntity)tile).setEntity(dataTag.getString("EntityID"), false);
+						((TrophyTileEntity)tile).setEntity(dataTag.getString("EntityID"), dataTag.contains("OriginalTrophy") && !dataTag.getBoolean("OriginalTrophy"));
 				}
 			}
 		}
