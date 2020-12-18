@@ -5174,7 +5174,7 @@
   "message.feedback.immortallisProgression.evilSpiritsEnd": "あなたは25体の精霊を倒しました。進んでもよい。",
   "message.feedback.immortallisProgression.evilSpiritsStart": "エレーボンのために25体の邪悪な精霊を倒せ！",
   "message.feedback.immortallisProgression.flashStart": "フラッシュ、不死身の転移者が対峙する！",
-  "message.feedback.immortallisProgression.goldEnd": %1$s、進んでもよい。",
+  "message.feedback.immortallisProgression.goldEnd": "%1$s、進んでもよい。",
   "message.feedback.immortallisProgression.goldStart.0": "ゴールダムから金を集めよ。",
   "message.feedback.immortallisProgression.goldStart.1": "それを金のアキュムレーターに預けよ。",
   "message.feedback.immortallisProgression.klobberStart": "クローバー、不滅の力が対峙する！",
