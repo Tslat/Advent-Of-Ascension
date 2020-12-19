@@ -5168,6 +5168,7 @@
   "message.event.tribute.pluton": "普洛顿对你的贡献印象深刻。",
   "message.event.tribute.selyan": "塞里安赐予你祝福以奖赏你。",
   "message.feedback.crystalExtensionShrine.crystals": "这个祭坛需要吸收更多水晶。",
+  "message.feedback.extraction": "你获得了：%1$s",
   "message.feedback.extraction.empty": "熔岩缓缓滤过，但除了沮丧一无所获。",
   "message.feedback.extraction.fail": "熔岩缓缓滤过，但除了沮丧一无所获。",
   "message.feedback.extraction.noSpace": "下方没有足够的空间供设备运行",
