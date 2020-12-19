@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.tool.SpecialHarvestTool;
@@ -24,7 +25,7 @@ public class EmberstoneAxe extends BaseAxe implements SpecialHarvestTool {
 	}
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
-		if (e.getState().getBlock().isIn(BlockTags.LOGS)) {
+		if (e.getState().getBlock().isIn(BlockTags.LOGS) && e.getState().isToolEffective(ToolType.AXE)) {
 			if (e.getDrops().isEmpty())
 				return;
 

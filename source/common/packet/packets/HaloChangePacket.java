@@ -24,7 +24,7 @@ public class HaloChangePacket implements AoAPacket {
 	}
 
 	public static HaloChangePacket decode(PacketBuffer buffer) {
-		return new HaloChangePacket(AoAHalos.Type.Choosable.valueOf(buffer.readString()));
+		return new HaloChangePacket(AoAHalos.Type.Choosable.valueOf(buffer.readString(32767)));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

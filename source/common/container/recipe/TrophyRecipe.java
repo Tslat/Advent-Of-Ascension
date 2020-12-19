@@ -96,7 +96,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return ItemStack.EMPTY;
+		return new ItemStack(AoABlocks.GOLD_TROPHY.get());
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 		@Nullable
 		@Override
 		public TrophyRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			return new TrophyRecipe(buffer.readString());
+			return new TrophyRecipe(buffer.readString(32767));
 		}
 
 		@Override

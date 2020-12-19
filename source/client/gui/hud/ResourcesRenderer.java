@@ -29,7 +29,7 @@ public class ResourcesRenderer {
 	public static void onRenderTick(final TickEvent.RenderTickEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
 		
-		if (mc.currentScreen == null && !mc.gameSettings.hideGUI && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.resourcesEnabled.get()) {
+		if (ev.phase == TickEvent.Phase.END && mc.currentScreen == null && !mc.gameSettings.hideGUI && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.resourcesEnabled.get()) {
 			RenderSystem.pushMatrix();
 			RenderSystem.disableDepthTest();
 			RenderSystem.scalef(0.5f, 0.5f, 0.5f);

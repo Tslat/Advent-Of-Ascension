@@ -375,7 +375,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 		@Nullable
 		@Override
 		public InfusionRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			String group = buffer.readString();
+			String group = buffer.readString(32767);
 
 			if (buffer.readBoolean()) {
 				Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(buffer.readResourceLocation());

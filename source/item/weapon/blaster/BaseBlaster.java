@@ -153,7 +153,9 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 				}
 			}
 			else {
-				PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, energyConsumption);
+				if (player.getActiveItemStack() != ItemStack.EMPTY)
+					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, energyConsumption);
+
 				player.stopActiveHand();
 			}
 		}

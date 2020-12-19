@@ -23,7 +23,7 @@ public class MusicPacket implements AoAPacket {
 	}
 
 	public static MusicPacket decode(PacketBuffer buffer) {
-		return new MusicPacket(buffer.readBoolean(), new ResourceLocation(buffer.readString()));
+		return new MusicPacket(buffer.readBoolean(), new ResourceLocation(buffer.readString(32767)));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

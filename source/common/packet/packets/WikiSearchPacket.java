@@ -19,7 +19,7 @@ public class WikiSearchPacket implements AoAPacket {
 	}
 
 	public static WikiSearchPacket decode(PacketBuffer buffer) {
-		return new WikiSearchPacket(buffer.readString());
+		return new WikiSearchPacket(buffer.readString(32767));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

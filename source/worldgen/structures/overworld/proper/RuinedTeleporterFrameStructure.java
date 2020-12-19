@@ -3,17 +3,13 @@ package net.tslat.aoa3.worldgen.structures.overworld.proper;
 import com.mojang.datafixers.Dynamic;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.ScatteredStructure;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.util.RandomUtil;
 
-import java.util.Random;
 import java.util.function.Function;
 
 public class RuinedTeleporterFrameStructure extends ScatteredStructure<NoFeatureConfig> {
@@ -42,8 +38,13 @@ public class RuinedTeleporterFrameStructure extends ScatteredStructure<NoFeature
 	}
 
 	@Override
-	public boolean canBeGenerated(BiomeManager biomeManagerIn, ChunkGenerator<?> generatorIn, Random randIn, int chunkX, int chunkZ, Biome biomeIn) {
-		return super.canBeGenerated(biomeManagerIn, generatorIn, randIn, chunkX, chunkZ, biomeIn) || new RandomUtil.EasyRandom(randIn).percentChance(AoAConfig.SERVER.STRUCTURES.ruinedTeleporterFrameSpawnChance.get());
+	protected int getBiomeFeatureDistance(ChunkGenerator<?> chunkGenerator) {
+		return 8;
+	}
+
+	@Override
+	protected int getBiomeFeatureSeparation(ChunkGenerator<?> chunkGenerator) {
+		return 2;
 	}
 
 	public static class Start extends StructureStart {

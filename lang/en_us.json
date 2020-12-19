@@ -5168,6 +5168,7 @@
   "message.event.tribute.pluton": "Pluton smiles upon your resourcefulness.",
   "message.event.tribute.selyan": "Selyan nods approvingly over your good deeds.",
   "message.feedback.crystalExtensionShrine.crystals": "The shrine needs more crystals to absorb",
+  "message.feedback.extraction": "You got: %1$s",
   "message.feedback.extraction.empty": "The lava filters through, leaving nothing but sadness behind.",
   "message.feedback.extraction.fail": "The lava filters through, leaving nothing but sadness behind.",
   "message.feedback.extraction.noSpace": "There isn't enough space below the device to operate",

@@ -22,7 +22,7 @@ public class GuiDataPacket implements AoAPacket {
 	}
 
 	public static GuiDataPacket decode(PacketBuffer buffer) {
-		return new GuiDataPacket(Type.valueOf(buffer.readString()), buffer.readString());
+		return new GuiDataPacket(Type.valueOf(buffer.readString(32767)), buffer.readString(32767));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

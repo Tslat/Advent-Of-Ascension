@@ -50,15 +50,15 @@ public class ToastPopupPacket implements AoAPacket {
 	}
 
 	public static ToastPopupPacket decode(PacketBuffer buffer) {
-		ToastPopupType type = ToastPopupType.valueOf(buffer.readString());
+		ToastPopupType type = ToastPopupType.valueOf(buffer.readString(32767));
 
 		switch (type) {
 			case SKILL_REQUIREMENT:
-				return new ToastPopupPacket(Skills.valueOf(buffer.readString()), buffer.readInt());
+				return new ToastPopupPacket(Skills.valueOf(buffer.readString(32767)), buffer.readInt());
 			case RESOURCE_REQUIREMENT:
-				return new ToastPopupPacket(Resources.valueOf(buffer.readString()), buffer.readFloat());
+				return new ToastPopupPacket(Resources.valueOf(buffer.readString(32767)), buffer.readFloat());
 			case TRIBUTE_REQUIREMENT:
-				return new ToastPopupPacket(Deities.valueOf(buffer.readString()), buffer.readInt());
+				return new ToastPopupPacket(Deities.valueOf(buffer.readString(32767)), buffer.readInt());
 		}
 
 		return null;

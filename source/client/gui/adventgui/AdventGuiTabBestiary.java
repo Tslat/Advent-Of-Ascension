@@ -637,6 +637,11 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 			MatrixStack matrix = new MatrixStack();
 			Minecraft mc = Minecraft.getInstance();
 
+			float sizeFactor = Math.max(entity.getWidth(), entity.getHeight());
+
+			if (sizeFactor > 2.5D)
+				scale /= sizeFactor / 2.5;
+
 			matrix.translate(0.0D, 0.0D, 1000.0D);
 			matrix.scale(scale, scale, scale);
 

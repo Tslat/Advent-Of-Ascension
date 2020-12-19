@@ -30,6 +30,6 @@ public class LoggingUtil {
 	}
 
 	public static List<ItemStack> getLoot(ServerPlayerEntity player) {
-		return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/logging")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player).withRandom(player.getRNG()).build(LootParameterSets.GENERIC));
+		return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/logging")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.THIS_ENTITY, player).withRandom(player.getRNG()).build(LootParameterSets.GIFT));
 	}
 }

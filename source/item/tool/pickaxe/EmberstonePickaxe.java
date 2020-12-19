@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.tool.SpecialHarvestTool;
@@ -25,7 +26,7 @@ public class EmberstonePickaxe extends BasePickaxe implements SpecialHarvestTool
 
 	public void doHarvestEffect(BlockEvent.HarvestDropsEvent e) {
 		if (!e.getWorld().isRemote()) {
-			if (e.getDrops().isEmpty())
+			if (e.getDrops().isEmpty() || !e.getState().isToolEffective(ToolType.PICKAXE))
 				return;
 
 			Optional<FurnaceRecipe> smeltRecipe = ((ServerWorld)e.getWorld()).getRecipeManager().getRecipe(IRecipeType.SMELTING, new Inventory(e.getDrops().get(0)), (World)e.getWorld());

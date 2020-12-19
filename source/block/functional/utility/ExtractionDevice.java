@@ -95,7 +95,7 @@ public class ExtractionDevice extends Block {
 
 						for (ItemStack stack : loot) {
 							if (!stack.isEmpty()) {
-								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction").appendSibling(new TranslationTextComponent(stack.getTranslationKey() + ".name")));
+								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction").appendSibling(new TranslationTextComponent(stack.getTranslationKey())));
 							}
 							else {
 								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.nothing"));

@@ -158,7 +158,7 @@ public final class AoADimensions {
 		}
 
 		private void registerDimensionType() {
-			ResourceLocation dimId = new ResourceLocation(AdventOfAscension.MOD_ID, dim.toString().toLowerCase());
+			ResourceLocation dimId = new ResourceLocation(AdventOfAscension.MOD_ID, dim.toString().toLowerCase(Locale.ENGLISH));
 
 			dimType = DimensionManager.registerOrGetDimension(dimId, modDim.get(), new PacketBuffer(Unpooled.buffer()), hasSkyLight);
 			dimTypeMap.put(dimType, dim);
@@ -168,7 +168,7 @@ public final class AoADimensions {
 		public DimensionType type() {
 			if (dimType == null) {
 				if (FMLEnvironment.dist == Dist.CLIENT)
-					dimType = DimensionManager.registerOrGetDimension(new ResourceLocation(AdventOfAscension.MOD_ID, dim.toString().toLowerCase()), modDim.get(), new PacketBuffer(Unpooled.buffer()), hasSkyLight);
+					dimType = DimensionManager.registerOrGetDimension(new ResourceLocation(AdventOfAscension.MOD_ID, dim.toString().toLowerCase(Locale.ENGLISH)), modDim.get(), new PacketBuffer(Unpooled.buffer()), hasSkyLight);
 
 				if (dimType == null)
 					throw new IllegalAccessError("Attempted to access dimensionType prior to DimensionType registration. This should not be happening.");

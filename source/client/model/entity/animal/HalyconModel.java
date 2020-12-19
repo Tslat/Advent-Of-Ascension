@@ -125,7 +125,7 @@ public class HalyconModel extends EntityModel<MobEntity> {
 	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		if (isChild) {
 			matrix.push();
-			matrix.translate(0, 0.5f, 0);
+			matrix.translate(0, 0.5f, 0.25f);
 			head.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 			Jaw_spike.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 			matrix.pop();

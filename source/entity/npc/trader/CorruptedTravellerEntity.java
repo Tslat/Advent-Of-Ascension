@@ -10,6 +10,7 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
 import net.tslat.aoa3.config.AoAConfig;
@@ -43,6 +44,11 @@ public class CorruptedTravellerEntity extends AoATrader {
 	@Override
 	protected boolean isOverworldNPC() {
 		return true;
+	}
+
+	@Override
+	public boolean canDespawn(double distanceToClosestPlayer) {
+		return !isOverworldNPC() || world.dimension.getType() != DimensionType.OVERWORLD;
 	}
 
 	@Override
