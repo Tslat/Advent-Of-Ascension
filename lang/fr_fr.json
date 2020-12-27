@@ -5110,7 +5110,7 @@
   "items.description.thrownWeapon": "Arme à lancer",
   "items.description.tool.energisticCharge": "Clic droit pour remplier d'énergie",
   "items.description.tool.energisticStorage": "Énergie stockée: %1$s",
-  "items.description.tool.goofyNoDamage": "N"inflige aucun dégâts aux ennemis",
+  "items.description.tool.goofyNoDamage": "N'inflige aucun dégâts aux ennemis",
   "items.description.tool.goofyRegen": "Régénère lentement la durabilité au fil du temps",
   "items.description.tool.skeletal": "Haut en calcium",
   "items.description.vulcane.use": "Utilise quand la revanche est active",
