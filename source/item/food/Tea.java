@@ -1,6 +1,8 @@
 package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class Tea extends Item {
 	public Tea() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).containerItem(AoAItems.CUP.get())
+		super(new Item.Properties().group(AoAItemGroups.FOOD)
 				.containerItem(AoAItems.CUP.get())
 				.food(new Food.Builder()
 						.hunger(0)
@@ -32,6 +34,13 @@ public class Tea extends Item {
 	@Override
 	public UseAction getUseAction(ItemStack stack) {
 		return UseAction.DRINK;
+	}
+
+	@Override
+	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity user) {
+		ItemStack consumedStack = super.onItemUseFinish(stack, world, user);
+
+		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.isCreativeMode ? consumedStack : getContainerItem(stack);
 	}
 
 	@Override

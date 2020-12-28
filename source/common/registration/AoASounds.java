@@ -747,6 +747,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> HELLFIRE_IMPACT = registerSound("hellfire_impact", "entity.hellfire.impact");
 
 	public static final RegistryObject<SoundEvent> LOTTO_WIN = registerSound("lotto_win", "misc.lotto.win");
+	public static final RegistryObject<SoundEvent> JINGLE_BELLS = registerSound("jingle_bells", "misc.jingle_bells");
 
 	public static final RegistryObject<SoundEvent> SHYRELANDS_WIND = registerSound("shyrelands_wind", "world.shyrelands.wind");
 
@@ -933,7 +934,7 @@ public final class AoASounds {
 
 	private static SoundEvent createSoundEvent(String soundPath) {
 		if (HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.CHRISTMAS && soundPath.endsWith(".fire"))
-			soundPath = "misc.bells";
+			soundPath = "misc.jingle_bells";
 
 		return new SoundEvent(new ResourceLocation("aoa3", soundPath));
 	}

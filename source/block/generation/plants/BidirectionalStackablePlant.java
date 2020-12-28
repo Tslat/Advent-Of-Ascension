@@ -75,11 +75,12 @@ public class BidirectionalStackablePlant extends StackablePlant {
 
 		if (!isDownPlant) {
 			while (upPos.getY() > pos.getY()) {
+				BlockState breakState = world.getBlockState(upPos);
 				world.setBlockState(upPos, Blocks.AIR.getDefaultState(), 35);
-				world.playEvent(player, 2001, upPos, Block.getStateId(block));
+				world.playEvent(player, 2001, upPos, Block.getStateId(breakState));
 
 				if (!world.isRemote() && !player.isCreative())
-					spawnDrops(block, world, upPos, null, player, player.getHeldItemMainhand());
+					spawnDrops(breakState, world, upPos, null, player, player.getHeldItemMainhand());
 
 				upPos = upPos.down();
 			}
@@ -87,11 +88,12 @@ public class BidirectionalStackablePlant extends StackablePlant {
 
 		if (!isUpPlant) {
 			while (downPos.getY() < pos.getY()) {
+				BlockState breakState = world.getBlockState(downPos);
 				world.setBlockState(downPos, Blocks.AIR.getDefaultState(), 35);
-				world.playEvent(player, 2001, downPos, Block.getStateId(block));
+				world.playEvent(player, 2001, downPos, Block.getStateId(breakState));
 
 				if (!world.isRemote() && !player.isCreative())
-					spawnDrops(block, world, downPos, null, player, player.getHeldItemMainhand());
+					spawnDrops(breakState, world, downPos, null, player, player.getHeldItemMainhand());
 
 				downPos = downPos.up();
 			}
@@ -99,5 +101,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 
 		if (!world.isRemote() && !player.isCreative())
 			spawnDrops(state, world, pos, null, player, player.getHeldItemMainhand());
+
+		world.playEvent(player, 2001, pos, getStateId(state));
 	}
 }

@@ -306,10 +306,10 @@ public class PlayerEvents {
 
 			if (LoggingUtil.shouldGetLoot(lvl)) {
 				if (RandomUtil.fiftyFifty()) {
-					ev.getDrops().addAll(LoggingUtil.getLoot(pl));
+					ev.getDrops().addAll(LoggingUtil.getLoot(pl, ev.getPos()));
 
 					if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.LOGGING)
-						ev.getDrops().addAll(LoggingUtil.getLoot(pl));
+						ev.getDrops().addAll(LoggingUtil.getLoot(pl, ev.getPos()));
 				}
 				else {
 					ItemStack duplicateStack = ItemStack.EMPTY;
@@ -348,10 +348,6 @@ public class PlayerEvents {
 
 	@SubscribeEvent
 	public static void onBlockPlace(final BlockEvent.EntityPlaceEvent ev) {
-		if (!ev.getWorld().isRemote() && ev.getPlacedBlock().getBlock() == AoABlocks.CREEP_LEAVES.get()) {
-			new CreepTreeGenerator(null).generate(ev.getWorld(), new Random(), ev.getPos());
-		}
-
 		if (!WorldUtil.canModifyBlock(ev.getWorld(), ev.getPos(), ev.getEntity())) {
 			ev.setCanceled(true);
 

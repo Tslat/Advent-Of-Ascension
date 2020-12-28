@@ -11,7 +11,6 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -23,7 +22,6 @@ import net.minecraftforge.common.IShearable;
 import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +48,7 @@ public class StackablePlant extends Block implements IShearable, IPlantable {
 	}
 
 	public StackablePlant(MaterialColor mapColour, Material... growthMaterials) {
-		this(Material.PLANTS, mapColour, SoundType.PLANT, growthMaterials);
+		this(Material.TALL_PLANTS, mapColour, SoundType.PLANT, growthMaterials);
 	}
 
 	public StackablePlant setStemBlock(Supplier<Block> block) {
@@ -63,11 +61,6 @@ public class StackablePlant extends Block implements IShearable, IPlantable {
 		this.hatBlock = block;
 
 		return this;
-	}
-
-	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-		super.harvestBlock(worldIn, player, pos, Blocks.AIR.getDefaultState(), te, stack);
 	}
 
 	@Override

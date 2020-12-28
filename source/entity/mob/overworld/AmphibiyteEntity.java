@@ -88,11 +88,6 @@ public class AmphibiyteEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected boolean isOverworldMob() {
 		return true;
 	}

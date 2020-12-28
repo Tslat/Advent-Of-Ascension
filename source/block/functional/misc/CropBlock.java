@@ -54,7 +54,7 @@ public class CropBlock extends CropsBlock {
 				NonNullList<ItemStack> drops = NonNullList.create();
 				int fortune = Math.max(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(Hand.MAIN_HAND)), EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(Hand.OFF_HAND)));
 
-				getDrops(state, (ServerWorld)world, pos, null, player, player.getHeldItem(hand));
+				drops.addAll(getDrops(state, (ServerWorld)world, pos, null, player, player.getHeldItem(hand)));
 
 				float dropChance = ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, fortune, 1, false, player);
 

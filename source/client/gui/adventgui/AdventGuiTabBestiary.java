@@ -532,7 +532,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 						ResourceLocation registryName = entityStat.registryName;
 						int rowTop = top + 20 + i * 100;
 						Entity entity = getEntityFromStat(entityStat);
-						String entityName = entity != null ? entityStat.killStat.getValue().getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath() + ".name").replace("." + registryName.getNamespace(), "");
+						String entityName = entity != null ? entityStat.killStat.getValue().getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath()).replace("." + registryName.getNamespace(), "");
 
 						RenderUtil.drawColouredBox(left + 40, rowTop + 30, 0, 320, 150, 0xFF202020);
 
@@ -552,7 +552,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 						if (i + 1 < filteredMobList.size()) {
 							entityStat = filteredMobList.get(i + 1);
 							entity = getEntityFromStat(entityStat);
-							entityName = entity != null ? entity.getDisplayName().getFormattedText() : LocaleUtil.getLocaleString("entity." + entityStat.registryName.getNamespace() + "." + entityStat.registryName.getPath() + ".name").replace(".minecraft", "");
+							entityName = entity != null ? entity.getDisplayName().getFormattedText() : LocaleUtil.getLocaleString("entity." + entityStat.registryName.getNamespace() + "." + entityStat.registryName.getPath()).replace(".minecraft", "");
 
 							RenderUtil.drawColouredBox(right - 360, rowTop + 30, 0, 320, 150, 0xFF202020);
 
@@ -595,7 +595,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 					RenderUtil.drawColouredBox(left, top + 30, 0, right - left, bottom - top, 0xFF202020);
 					RenderUtil.drawColouredBox(left, top, 0, right - left, 30, 0xFF010101);
-					String entityName = openEntryInstance != null ? openEntryInstance.getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath() + ".name").replace(".minecraft", "");
+					String entityName = openEntryInstance != null ? openEntryInstance.getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath()).replace(".minecraft", "");
 
 					RenderUtil.drawCenteredScaledString(font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
 

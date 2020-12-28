@@ -34,9 +34,11 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.packet.packets.LongReachItemHitPacket;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.library.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.lwjgl.glfw.GLFW;
 
@@ -94,6 +96,11 @@ public class ClientEventHandler {
 			if (!ScopeOverlayRenderer.isScoped && helmetItem instanceof ScreenOverlayArmour) {
 				HelmetScreenRenderer.type = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
+			}
+
+			if (!Minecraft.getInstance().isSingleplayer()) {
+				GlobalEvents.tick++;
+				AoAScheduler.handleSyncScheduledTasks(GlobalEvents.tick);
 			}
 		}
 	}

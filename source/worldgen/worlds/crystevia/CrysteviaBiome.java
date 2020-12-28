@@ -1,6 +1,7 @@
 package net.tslat.aoa3.worldgen.worlds.crystevia;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.pattern.BlockMatcher;
 import net.minecraft.util.Direction;
@@ -8,6 +9,7 @@ import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
@@ -22,6 +24,8 @@ import net.tslat.aoa3.worldgen.AoABiome;
 import net.tslat.aoa3.worldgen.WorldGenMinable;
 import net.tslat.aoa3.worldgen.structures.AoAStructure;
 import net.tslat.aoa3.worldgen.structures.StructuresHandler;
+
+import java.util.Random;
 
 public class CrysteviaBiome extends AoABiome {
 	public CrysteviaBiome() {
@@ -52,6 +56,16 @@ public class CrysteviaBiome extends AoABiome {
 	@Override
 	public int getSkyColor() {
 		return NumberUtil.RGB(255, 255, 0);
+	}
+
+	@Override
+	public void buildSurface(Random random, IChunk chunkIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed) {
+		super.buildSurface(random, chunkIn, x, z, startHeight, noise, defaultBlock, defaultFluid, seaLevel, seed);
+
+		for (int i = 0; i <= 4; i++) {
+			chunkIn.setBlockState(new BlockPos(x, i, z), AoABlocks.DIMENSIONAL_FABRIC.get().getDefaultState(), false);
+			chunkIn.setBlockState(new BlockPos(x, 127 - i, z), AoABlocks.DIMENSIONAL_FABRIC.get().getDefaultState(), false);
+		}
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.generation.misc;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
@@ -21,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class DimensionalFabric extends Block {
 	public DimensionalFabric() {
-		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.CLOTH));
+		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, null));
 	}
 
 	@Override

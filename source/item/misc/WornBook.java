@@ -52,7 +52,7 @@ public class WornBook extends WrittenBookItem {
 
 	@OnlyIn(Dist.CLIENT)
 	public static CompoundNBT getBookContents() {
-		contents.putString("author", LocaleUtil.getLocaleString("entity.aoa3.corrupted_traveller.name"));
+		contents.putString("author", LocaleUtil.getLocaleString("entity.aoa3.corrupted_traveller"));
 		contents.putString("title", LocaleUtil.getLocaleString("item.aoa3.worn_book"));
 
 		String pageContents = MiscTextFileManager.DATA.get(AoAItems.WORN_BOOK.get());

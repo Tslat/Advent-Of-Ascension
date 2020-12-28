@@ -6,7 +6,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
@@ -39,8 +38,8 @@ public class GenericPlantBlock extends Block implements IShearable, IPlantable {
 		this.growthMaterials = Arrays.asList(growthMaterials);
 	}
 
-	public GenericPlantBlock(MaterialColor mapColour, Material... growthMaterials) {
-		this(Material.TALL_PLANTS, mapColour, SoundType.PLANT, growthMaterials);
+	public GenericPlantBlock(Material material, MaterialColor mapColour, Material... growthMaterials) {
+		this(material, mapColour, SoundType.PLANT, growthMaterials);
 	}
 
 	@Override
@@ -53,11 +52,6 @@ public class GenericPlantBlock extends Block implements IShearable, IPlantable {
 	@Override
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
 		return !state.isValidPosition(world, pos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
-	}
-
-	@Override
-	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
-		return false;
 	}
 
 	@Override

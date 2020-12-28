@@ -28,7 +28,7 @@ public class SkydriverBow extends BaseBow {
 				;
 			}
 
-			if (arrow.world.getBlockState(testPos).isSolidSide(arrow.world, testPos, Direction.UP))
+			if (arrow.world.getBlockState(testPos).isSolidSide(arrow.world, testPos, Direction.UP) && arrow.world.getBlockState(testPos.up()).getMaterial().isReplaceable())
 				arrow.world.setBlockState(testPos.up(), AoABlocks.ORANGE_ACID.get().getDefaultState());
 		}
 	}

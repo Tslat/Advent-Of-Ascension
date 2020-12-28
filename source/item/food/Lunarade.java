@@ -2,6 +2,7 @@ package net.tslat.aoa3.item.food;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class Lunarade extends Item {
 	public Lunarade() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).containerItem(AoAItems.LUNARADE_MUG.get())
+		super(new Item.Properties().group(AoAItemGroups.FOOD)
 				.containerItem(AoAItems.LUNARADE_MUG.get())
 				.food(new Food.Builder()
 						.hunger(0)
@@ -36,11 +37,13 @@ public class Lunarade extends Item {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity user) {
 		if (!world.isRemote)
-			entity.removePotionEffect(Effects.BLINDNESS);
+			user.removePotionEffect(Effects.BLINDNESS);
 
-		return super.onItemUseFinish(stack, world, entity);
+		ItemStack consumedStack = super.onItemUseFinish(stack, world, user);
+
+		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.isCreativeMode ? consumedStack : getContainerItem(stack);
 	}
 
 	@Override

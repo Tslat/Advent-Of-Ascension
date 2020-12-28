@@ -19,8 +19,8 @@ public class UpsideDownGenericPlant extends GenericPlantBlock {
 		super(material, mapColour, sound, growthMaterials);
 	}
 
-	public UpsideDownGenericPlant(MaterialColor mapColour, Material... growthMaterials) {
-		super(mapColour, growthMaterials);
+	public UpsideDownGenericPlant(Material material, MaterialColor mapColour, Material... growthMaterials) {
+		super(material, mapColour, growthMaterials);
 	}
 
 	@Override

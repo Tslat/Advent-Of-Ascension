@@ -15,6 +15,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
+import java.util.Locale;
+
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
 public class ScopeOverlayRenderer {
 	public static Type scope;
@@ -46,7 +48,7 @@ public class ScopeOverlayRenderer {
 		Minecraft mc = Minecraft.getInstance();
 		MainWindow window = mc.getMainWindow();
 
-		mc.getTextureManager().bindTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/" + scope.toString().toLowerCase() + ".png"));
+		mc.getTextureManager().bindTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/" + scope.toString().toLowerCase(Locale.ENGLISH) + ".png"));
 
 		final Tessellator tess = Tessellator.getInstance();
 		final BufferBuilder buff = tess.getBuffer();

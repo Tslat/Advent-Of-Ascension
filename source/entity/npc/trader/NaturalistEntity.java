@@ -41,7 +41,6 @@ public class NaturalistEntity extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.FLORACLE_STICKS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 16)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLDICAP_PETALS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 14)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.HEART_FRUIT.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 19)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.ARROW, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 17)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNACRIKE.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNA_GLOBE.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNALONS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));

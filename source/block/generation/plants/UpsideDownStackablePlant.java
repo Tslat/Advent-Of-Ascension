@@ -39,7 +39,7 @@ public class UpsideDownStackablePlant extends StackablePlant {
 	@Override
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		BlockPos newPos;
-		BlockState blockState = world.getBlockState(newPos = pos.up());
+		BlockState blockState = world.getBlockState(newPos = pos.down());
 		Block block = blockState.getBlock();
 
 		while (block == stemBlock.get() || block == hatBlock.get()) {

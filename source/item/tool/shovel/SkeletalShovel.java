@@ -34,7 +34,7 @@ public class SkeletalShovel extends BaseShovel implements SpecialHarvestTool {
 				));
 			}
 			else if (dropChoice < 10) {
-				drop = new ItemStack(Items.WHITE_DYE);
+				drop = new ItemStack(Items.BONE_MEAL);
 			}
 			else {
 				drop = new ItemStack(Items.BONE);

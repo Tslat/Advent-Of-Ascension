@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.PotionUtil;
 
 public class MysticBush extends GenericPlantBlock {
 	public MysticBush() {
-		super(MaterialColor.PURPLE, Material.EARTH, Material.ORGANIC);
+		super(Material.PLANTS, MaterialColor.PURPLE, Material.EARTH, Material.ORGANIC);
 	}
 
 	@Override

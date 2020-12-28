@@ -36,7 +36,7 @@ public abstract class BlockUtil {
 		return generateBlockProperties(material, mapColour, hardness, resistance, harvestTool, null, 0, harvestLevel);
 	}
 
-	public static Block.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, SoundType soundType) {
+	public static Block.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, @Nullable SoundType soundType) {
 		return generateBlockProperties(material, mapColour, hardness, resistance, null, soundType, 0, -1);
 	}
 
