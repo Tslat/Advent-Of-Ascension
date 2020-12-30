@@ -12,6 +12,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectile.mob.AquaballEntity;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.entity.projectile.mob.BloodballEntity;
 
 import javax.annotation.Nullable;
 
@@ -72,7 +73,7 @@ public class UndeadTrollEntity extends AoARangedMob {
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		if (rand.nextBoolean()) {
-			return null;//new EntityBloodball(this, BaseMobProjectile.Type.MAGIC);
+			return new BloodballEntity(this, BaseMobProjectile.Type.MAGIC);
 		}
 		else {
 			return new AquaballEntity(this, BaseMobProjectile.Type.MAGIC);

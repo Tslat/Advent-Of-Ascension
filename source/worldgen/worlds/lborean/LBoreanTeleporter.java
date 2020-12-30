@@ -18,7 +18,7 @@ public class LBoreanTeleporter extends AoATeleporter {
 
 	@Override
 	public PortalBlock getPortalBlock() {
-		return (PortalBlock)AoABlocks.BOREAN_PORTAL.get();
+		return (PortalBlock)AoABlocks.LBOREAN_PORTAL.get();
 	}
 
 	@Override
