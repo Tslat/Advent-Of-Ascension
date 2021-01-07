@@ -106,3 +106,43 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
 您可以阅读该过程的说明：
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+--
+
+Deutsch:
+# Advent of Ascension
+Dies ist das offizielle Github für Advent of Ascension.
+
+Diese Unterkategorie ist für die neueste 1.12.2 Version der Mod.
+
+## HAFTUNGSAUSSCHLUSS
+Der in diesem Github zur Verfügung gestellte Quelltext ist lediglich zum Betrachten da. Unter der Lizenz ist es dir erlaubt, den Code AUSSCHLIEßLICH FÜR PRIVATE ZWECKE anzupassen.
+Die Verbreitung des Codes stellt eine Verletzung der Lizenzbestimmungen dar.
+
+Das Einreichen von Änderungen am Code ist nicht erlaubt. Der hier einsehbare Quelltext stammt ausschließlich aus der aktuellsten öffentlichen Version der Mod.
+Dementsprechend werden alle eingereichten Änderungen am Code sofort gelöscht. Für Fehlerbehebungen und Änderungen reiche eine Fehlermeldung oder einen Änderungsvorschlag ein.
+
+## Was kann ich hier tun?
+Du kannst hier drei Dinge tun:
+1. Eine Fehlermeldung einreichen. Dazu navigierst du zur "Issues" Seite und klickst auf "New Issue":
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2. Einen Änderungsvorschlag einreichen. Dazu navigierst du zur "Issues" Seite, klickst auf "New Issue" und wählst die Art deines Vorschlags aus:
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3. Zur Übersetzung der Mod beitragen. Dazu befolgst du folgende Schritte:
+
+  i) Navigiere zum "lang" Ordner und klicke auf die Datei der Sprache, in die du die Mod übersetzen möchtest;
+
+  ii) Klicke auf das kleine Stiftsymbol oben rechts, um die Datei zu bearbeiten;
+
+  iii) Bearbeite die Datei nach Belieben und klicke anschließend auf "Propose File Change".
+
+ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.12.2 Version der Mod. Um eine andere Version zu bearbeiten, klicke auf "Branch" und wähle die Version aus, die du bearbeiten möchtest.
+
+Eine Anleitung zum Bearbeiten der Dateien findest du hier:
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+4. Informationen zum Erstellen einer Erweiterung für AoA bzw. zur Integration als third-party Mod finden.
+Relevante Informationen für Entwickler zum Integrieren in AoA finden sich hier:
+https://adventofascension.gamepedia.com/Third-Party_Mod_Integration/Making_an_Addon
