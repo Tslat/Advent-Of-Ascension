@@ -113,6 +113,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 
 				if (jumpIntervalTimer <= 0) {
 					setMotion(0.699, (target.getPosX() - getPosX()) * 0.045, (target.getPosZ() - getPosZ()) * 0.045);
+					velocityChanged = true;
 
 					if (!world.isRemote) {
 						world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_MECHBOT_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);

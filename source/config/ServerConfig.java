@@ -13,6 +13,7 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.BooleanValue allowNonPlayerPortalTravel;
 	public final ForgeConfigSpec.DoubleValue globalXpModifier;
 	public final ForgeConfigSpec.IntValue maxMinions;
+	public final ForgeConfigSpec.BooleanValue saveLootFromExplosions;
 	public final ForgeConfigSpec.BooleanValue overworldEventsEnabled;
 	public final ForgeConfigSpec.BooleanValue fullMoonEventEnabled;
 	public final ForgeConfigSpec.DoubleValue bigDayEventChance;
@@ -63,6 +64,11 @@ public final class ServerConfig {
 				.comment("Configure the maximum amount of minions a player can have at a given time")
 				.translation("config.aoa3.maxMinions")
 				.defineInRange("maxMinions", 10, 1, 200);
+
+		saveLootFromExplosions = configBuilder
+				.comment("Set to false to stop AoA saving loot-drops from explosions.")
+				.translation("config.aoa3.saveLootFromExplosions")
+				.define("saveLootFromExplosions", true);
 
 		configBuilder.pop();
 		configBuilder.comment("Entity-related settings").push("Entity Settings");

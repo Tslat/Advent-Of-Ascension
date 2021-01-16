@@ -7,7 +7,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resources.SimpleReloadableResourceManager;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.concurrent.ThreadTaskExecutor;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.LogicalSidedProvider;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
 import net.tslat.aoa3.client.gui.hud.toasts.LevelRequirementToast;
 import net.tslat.aoa3.client.gui.hud.toasts.ResourceRequirementToast;
@@ -21,12 +25,11 @@ import net.tslat.aoa3.item.misc.WornBook;
 import net.tslat.aoa3.library.resourcemanager.BestiaryManager;
 import net.tslat.aoa3.library.resourcemanager.GuidesManager;
 import net.tslat.aoa3.library.resourcemanager.MiscTextFileManager;
-import net.tslat.aoa3.library.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Resources;
 import net.tslat.aoa3.util.constant.Skills;
 
-public abstract class SidedUtil {
+public abstract class ClientOperations {
 	public static void displayWornBookGui() {
 		PlayerEntity player = Minecraft.getInstance().player;
 		ItemStack bookStack = player.getHeldItemMainhand().getItem() == AoAItems.WORN_BOOK.get() ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
@@ -45,9 +48,19 @@ public abstract class SidedUtil {
 	}
 
 	public static void spawnClientOnlyEntity(Entity entity) {
-		if (entity.world instanceof ClientWorld)
-			AoAScheduler.scheduleSyncronisedTask(() -> ((ClientWorld)entity.world).addEntity(entity.getEntityId(), entity), 1);
+		if (entity.world instanceof ClientWorld) {
+			ThreadTaskExecutor<?> executor = LogicalSidedProvider.WORKQUEUE.get(LogicalSide.CLIENT);
+			Runnable runnable = () -> ((ClientWorld)entity.world).addEntity(entity.getEntityId(), entity);
+
+			if (!executor.isOnExecutionThread()) {
+				executor.deferTask(runnable);
+			}
+			else {
+				runnable.run();
+			}
+		}
 	}
+
 
 	public static void removeClientOnlyEntity(Entity entity) {
 		if (entity.world instanceof ClientWorld)
@@ -96,8 +109,18 @@ public abstract class SidedUtil {
 		}
 	}
 
-	public static void doSilencerSilencer(SilencerEntity silencer) {
-		if (silencer.getDistanceSq(Minecraft.getInstance().player) < 8 * 8)
-			Minecraft.getInstance().getSoundHandler().stop();
+	public static void doSilencerSilence(SilencerEntity silencer) {
+		if (!SilencerEntity.isClientNearby) {
+			Minecraft mc = Minecraft.getInstance();
+
+			if (mc.getSoundHandler().sndManager.getVolume(SoundCategory.MASTER) > 0) {
+				if (silencer.getDistanceSq(mc.player) < 8 * 8) {
+					SilencerEntity.isClientNearby = true;
+					SilencerEntity.prevVolume = mc.getSoundHandler().sndManager.getVolume(SoundCategory.MASTER);
+
+					mc.getSoundHandler().setSoundLevel(SoundCategory.MASTER, 0);
+				}
+			}
+		}
 	}
 }

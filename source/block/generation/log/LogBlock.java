@@ -7,6 +7,7 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 
 public class LogBlock extends net.minecraft.block.LogBlock {
 	public LogBlock(MaterialColor mapColour, MaterialColor logEndMapColour) {
@@ -16,7 +17,8 @@ public class LogBlock extends net.minecraft.block.LogBlock {
 	private static Properties generateBlockProperties(MaterialColor mapColour) {
 		return Properties.create(Material.WOOD, mapColour)
 				.hardnessAndResistance(2.0f)
-				.sound(SoundType.WOOD);
+				.sound(SoundType.WOOD)
+				.harvestTool(ToolType.AXE);
 	}
 
 	@Override

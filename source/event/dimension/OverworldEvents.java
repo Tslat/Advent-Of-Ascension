@@ -102,7 +102,7 @@ public class OverworldEvents {
 
 						tributed = true;
 
-						if (pluton == 200 && luxon == 200 && erebon == 200 && selyan == 200)
+						if (pluton == 200 && luxon == 200 && erebon == 200 && selyan == 200 && AoAConfig.COMMON.resourcesEnabled.get())
 							ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAWeapons.HOLY_SWORD.get()));
 					}
 

@@ -10,11 +10,14 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 
 import javax.annotation.Nullable;
 
 public class SilencerEntity extends AoAMeleeMob {
+    public static boolean isClientNearby = false;
+    public static float prevVolume = 1;
+
     public SilencerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -72,7 +75,7 @@ public class SilencerEntity extends AoAMeleeMob {
     public void livingTick() {
         super.livingTick();
 
-        if (world.isRemote())
-            SidedUtil.doSilencerSilencer(this);
+        if (world.isRemote() && !isAIDisabled())
+            ClientOperations.doSilencerSilence(this);
     }
 }

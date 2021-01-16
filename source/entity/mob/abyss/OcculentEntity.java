@@ -12,7 +12,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 
 import javax.annotation.Nullable;
 
@@ -98,7 +98,7 @@ public class OcculentEntity extends AoAMeleeMob {
 				double yPos = world.getHeight(Heightmap.Type.WORLD_SURFACE, (int)xPos, (int)zPos);
 
 				occulent.setPosition(xPos, yPos, zPos);
-				SidedUtil.spawnClientOnlyEntity(occulent);
+				ClientOperations.spawnClientOnlyEntity(occulent);
 			}
 		}
 	}

@@ -50,7 +50,10 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ResourceDataPacket;
 import net.tslat.aoa3.common.packet.packets.SkillDataPacket;
 import net.tslat.aoa3.common.packet.packets.TributeDataPacket;
-import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.misc.AnimaStoneEntity;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
@@ -72,11 +75,9 @@ import net.tslat.aoa3.util.constant.Skills;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
 import net.tslat.aoa3.util.skill.*;
-import net.tslat.aoa3.worldgen.trees.CreepTreeGenerator;
 import org.apache.logging.log4j.Level;
 
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
