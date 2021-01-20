@@ -142,7 +142,3 @@ ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.12.2 V
 
 Eine Anleitung zum Bearbeiten der Dateien findest du hier:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
-
-4. Informationen zum Erstellen einer Erweiterung für AoA bzw. zur Integration als third-party Mod finden.
-Relevante Informationen für Entwickler zum Integrieren in AoA finden sich hier:
-https://adventofascension.gamepedia.com/Third-Party_Mod_Integration/Making_an_Addon
