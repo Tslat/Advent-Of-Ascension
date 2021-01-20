@@ -251,9 +251,9 @@ public class WebReaperEntity extends AoARangedMob {
 			String stagePrefix = (stage >= 15 ? "nightmare" : stage >= 5 ? "empowered" : null);
 
 			if (stagePrefix != null)
-				return LocaleUtil.getLocaleMessage("entity." + AdventOfAscension.MOD_ID + "." + stagePrefix + "_" + baseName + ".name");
+				return LocaleUtil.getLocaleMessage("entity." + AdventOfAscension.MOD_ID + "." + stagePrefix + "_" + baseName);
 
-			return LocaleUtil.getLocaleMessage("entity.aoa3." + baseName + ".name");
+			return LocaleUtil.getLocaleMessage("entity.aoa3." + baseName);
 		}
 	}
 }

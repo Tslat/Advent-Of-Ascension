@@ -12,7 +12,7 @@ import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.entity.misc.OccultBlockEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,7 +31,7 @@ public class OccultPickaxe extends BasePickaxe {
 						if (world.getBlockState(new BlockPos(i, j, k)).isIn(Tags.Blocks.ORES)) {
 							OccultBlockEntity entity = new OccultBlockEntity(world, new BlockPos(i, j, k));
 
-							SidedUtil.spawnClientOnlyEntity(entity);
+							ClientOperations.spawnClientOnlyEntity(entity);
 						}
 					}
 				}

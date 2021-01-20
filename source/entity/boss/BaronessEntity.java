@@ -81,7 +81,12 @@ public class BaronessEntity extends AoARangedMob {
 
 	@Override
 	public boolean isInvulnerable() {
-		return this.dataManager.get(INVULNERABLE);
+		return super.isInvulnerable() || this.dataManager.get(INVULNERABLE);
+	}
+
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return isInvulnerable() || super.isInvulnerableTo(source);
 	}
 
 	@Nullable

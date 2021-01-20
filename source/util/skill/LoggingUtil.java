@@ -15,8 +15,6 @@ import java.util.List;
 
 public class LoggingUtil {
 	public static boolean shouldGetLoot(final int lvl) {
-		if (true)
-			return true;
 		if (lvl < 20)
 			return RandomUtil.oneInNChance(25);
 

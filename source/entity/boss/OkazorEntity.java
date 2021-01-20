@@ -30,7 +30,7 @@ public class OkazorEntity extends AoAMeleeMob {
 	private int healCounter = 0;
 
 	public OkazorEntity(RaxxanEntity raxxan) {
-		this(AoAEntities.Mobs.RAXXAN.get(), raxxan.world);
+		this(AoAEntities.Mobs.OKAZOR.get(), raxxan.world);
 
 		setLocationAndAngles(raxxan.getPosX(), raxxan.getPosY(), raxxan.getPosZ(), raxxan.rotationYaw, raxxan.rotationPitch);
 	}

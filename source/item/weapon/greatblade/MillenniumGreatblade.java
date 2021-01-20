@@ -31,7 +31,7 @@ public class MillenniumGreatblade extends BaseGreatblade {
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
-		return (float)(random.nextFloat() * (maxDmg - baseDmg) + baseDmg);
+		return (float)(random.nextFloat() * (maxDmg - baseDmg) + baseDmg) - 1;
 	}
 
 	@Override

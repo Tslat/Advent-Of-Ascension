@@ -337,9 +337,10 @@ public class PlayerCommand implements Command<CommandSource> {
 				stats.subtractXp(skill, value);
 				break;
 			case "set":
-				float xpForNextLevel = PlayerUtil.getXpRequiredForNextLevel(stats.getLevel(skill));
+				float maxXpForLevel = PlayerUtil.getXpRequiredForNextLevel(stats.getLevel(skill));
 				float curXp = stats.getExp(skill);
-				adjustment = Math.min(xpForNextLevel, value) - curXp;
+				value = MathHelper.clamp(value, 0, maxXpForLevel);
+				adjustment = value - curXp;
 
 				if (adjustment > 0) {
 					stats.addXp(skill, adjustment, true, true);
@@ -443,7 +444,7 @@ public class PlayerCommand implements Command<CommandSource> {
 			case "subtract":
 				adjustment = -Math.min(value, pl.getHealth());
 
-				pl.setHealth(pl.getHealth() + value);
+				pl.setHealth(pl.getHealth() + adjustment);
 				break;
 			case "set":
 				float newHealth = MathHelper.clamp(value, 0, pl.getMaxHealth());

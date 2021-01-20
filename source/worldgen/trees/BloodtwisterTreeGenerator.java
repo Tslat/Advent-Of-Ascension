@@ -31,11 +31,12 @@ public class BloodtwisterTreeGenerator extends TreeGenerator {
 		BlockState leaves = AoABlocks.BLOOD_LEAVES.get().getDefaultState();
 		BlockState barkLog = AoABlocks.BLOOD_WOOD.get().getDefaultState();
 
+		placeBlock(world, pos.up(1 + rand.nextInt(3)), AoABlocks.EYEBALL_LOG.get().getDefaultState());
+
 		for (int i = 0; i < trunkHeight; i++) {
 			placeBlock(world, movablePos.move(Direction.UP), log);
 		}
 
-		placeBlock(world, pos.up(1 + rand.nextInt(3)), AoABlocks.EYEBALL_LOG.get().getDefaultState());
 		placeBlock(world, movablePos.add(1, 0, 0), barkLog);
 		placeBlock(world, movablePos.add(0, 0, 1), barkLog);
 		placeBlock(world, movablePos, barkLog);

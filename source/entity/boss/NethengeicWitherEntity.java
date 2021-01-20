@@ -46,6 +46,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(NethengeicWitherEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(NethengeicWitherEntity.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
+	private static final EntityPredicate NOT_UNDEAD = (new EntityPredicate()).setDistance(20.0D).setCustomPredicate((entity) -> entity.getCreatureAttribute() != CreatureAttribute.UNDEAD && entity.attackable());
 	private final float[] xRotationHeads = new float[2];
 	private final float[] yRotationHeads = new float[2];
 	private final float[] xRotOHeads = new float[2];
@@ -70,7 +71,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new SwimGoal(this));
-		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 20, 50, 32));
+		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 1, 10, 32));
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
@@ -117,79 +118,75 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	public boolean isNonBoss() {
 		return false;
 	}
-
+	
 	@Override
-	public void tick() {
-		Vec3d motion = getMotion();
-		double motionX = motion.getX();
-		double motionY = motion.getY();
-		double motionZ = motion.getZ();
-
-		motionY *= 0.6;
+	public void livingTick() {
+		Vec3d motion = getMotion().mul(1, 0.6d, 1);
 
 		if (!world.isRemote && getWatchedTargetId(0) > 0) {
-			Entity target = world.getEntityByID(getWatchedTargetId(0));
+			Entity primaryTarget = world.getEntityByID(getWatchedTargetId(0));
 
-			if (target != null) {
-				if (this.getPosY() < target.getPosY() + 5) {
-					if (motionY < 0)
-						motionY = 0;
+			if (primaryTarget != null) {
+				double yVelocity = motion.y;
 
-					motionY += (0.5 - motionY) * 0.6;
+				if (getPosY() < primaryTarget.getPosY() || getPosY() < primaryTarget.getPosY() + 5) {
+					yVelocity = Math.max(0.0D, yVelocity);
+					yVelocity = yVelocity + (0.3D - yVelocity * (double)0.6f);
 				}
 
-				double distanceX = target.getPosX() - this.getPosX();
-				double distanceZ = target.getPosZ() - this.getPosZ();
-				double distanceSq = distanceX * distanceX + distanceZ * distanceZ;
+				motion = new Vec3d(motion.x, yVelocity, motion.z);
+				Vec3d targetVec = new Vec3d(primaryTarget.getPosX() - getPosX(), 00D, primaryTarget.getPosZ() - getPosZ());
 
-				if (distanceSq > 9) {
-					double distance = MathHelper.sqrt(distanceSq);
-					motionX += (distanceX / distance * 0.5 - motionX) * 0.6;
-					motionZ += (distanceZ / distance * 0.5 - motionZ) * 0.6;
+				if (horizontalMag(targetVec) > 9.0D) {
+					targetVec = targetVec.normalize();
+					motion = motion.add(targetVec.x * 0.3d - motion.x * 0.6d, 0, targetVec.z * 0.3d - motion.z * 0.6d);
 				}
 			}
 		}
 
-		if (motionX * motionX * motionZ * motionZ > 0.05)
-			this.rotationYaw = (float)MathHelper.atan2(motionZ, motionX) * (180f / (float)Math.PI) - 90f;
+		setMotion(motion);
 
-		setMotion(new Vec3d(motionX, motionY, motionZ));
+		if (horizontalMag(motion) > 0.05d)
+			rotationYaw = (float)MathHelper.atan2(motion.z, motion.x) * (180f / (float)Math.PI) - 90f;
 
-		super.tick();
+		super.livingTick();
 
-		for (int i = 0; i < 2; i++) {
-			this.yRotOHeads[i] = this.yRotationHeads[i];
-			this.xRotOHeads[i] = this.xRotationHeads[i];
+		for (int i = 0; i < 2; ++i) {
+			yRotOHeads[i] = yRotationHeads[i];
+			xRotOHeads[i] = xRotationHeads[i];
 		}
 
-		for (int i = 0; i < 2; i++) {
-			int nextTargetId = this.getWatchedTargetId(i + 1);
-			Entity target = nextTargetId > 0 ? this.world.getEntityByID(nextTargetId) : null;
+		for (int headId = 0; headId < 2; ++headId) {
+			int nextTargetID = getWatchedTargetId(headId + 1);
+			Entity target = null;
+
+			if (nextTargetID > 0)
+				target = world.getEntityByID(nextTargetID);
 
 			if (target != null) {
-				double nextHeadX = this.getHeadX(i + 1);
-				double nextHeadY = this.getHeadY(i + 1);
-				double nextHeadZ = this.getHeadZ(i + 1);
-				double distanceX = target.getPosX() - nextHeadX;
-				double distanceY = target.getPosY() + target.getEyeHeight() - nextHeadY;
-				double distanceZ = target.getPosZ() - nextHeadZ;
-				double distance = MathHelper.sqrt(distanceX * distanceX + distanceZ * distanceZ);
-				float yRotation = (float)MathHelper.atan2(distanceZ, distanceX) * (180f / (float)Math.PI) - 90f;
-				float xRotation = (float)(-MathHelper.atan2(distanceY, distance) * (180f - Math.PI));
-				this.xRotationHeads[i] = this.clampRotation(this.xRotationHeads[i], xRotation, 40f);
-				this.yRotationHeads[i] = this.clampRotation(this.yRotationHeads[i], yRotation, 10f);
+				double headX = getHeadX(headId + 1);
+				double headY = getHeadY(headId + 1);
+				double headZ = getHeadZ(headId + 1);
+				double headTargetDistanceX = target.getPosX() - headX;
+				double headTargetDistanceY = target.getPosYEye() - headY;
+				double headTargetDistanceZ = target.getPosZ() - headZ;
+				double targetDistance = MathHelper.sqrt(headTargetDistanceX * headTargetDistanceX + headTargetDistanceZ * headTargetDistanceZ);
+				float f = (float)(MathHelper.atan2(headTargetDistanceZ, headTargetDistanceX) * (double)(180f / (float)Math.PI)) - 90f;
+				float f1 = (float)(-(MathHelper.atan2(headTargetDistanceY, targetDistance) * (double)(180f / (float)Math.PI)));
+				xRotationHeads[headId] = clampRotation(xRotationHeads[headId], f1, 40.0F);
+				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], f, 10.0F);
 			}
 			else {
-				this.yRotationHeads[i] = this.clampRotation(this.yRotationHeads[i], this.renderYawOffset, 10);
+				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], renderYawOffset, 10.0F);
 			}
 		}
 
 		for (int i = 0; i < 3; i++) {
-			double nextHeadX = this.getHeadX(i);
-			double nextHeadY = this.getHeadY(i);
-			double nextHeadZ = this.getHeadZ(i);
+			double nextHeadX = getHeadX(i);
+			double nextHeadY = getHeadY(i);
+			double nextHeadZ = getHeadZ(i);
 
-			world.addParticle(ParticleTypes.SMOKE, nextHeadX - this.rand.nextGaussian() * 0.3, nextHeadY + this.rand.nextGaussian() * 0.3, nextHeadZ + this.rand.nextGaussian() * 0.3, 0, 0, 0);
+			world.addParticle(ParticleTypes.SMOKE, nextHeadX - rand.nextGaussian() * 0.3, nextHeadY + rand.nextGaussian() * 0.3, nextHeadZ + rand.nextGaussian() * 0.3, 0, 0, 0);
 		}
 
 		if (getStage() > 1 && getHealth() > 0)
@@ -200,63 +197,63 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	protected void updateAITasks() {
 		super.updateAITasks();
 
-		for (int i = 1; i < 3; i++) {
-			if (this.ticksExisted >= this.nextHeadUpdate[i - 1]) {
-				this.nextHeadUpdate[i - 1] = this.ticksExisted + 10 + rand.nextInt(10);
+		for(int i = 1; i < 3; ++i) {
+			if (ticksExisted >= nextHeadUpdate[i - 1]) {
+				nextHeadUpdate[i - 1] = ticksExisted + 10 + rand.nextInt(10);
 
 				if (world.getDifficulty() == Difficulty.NORMAL || world.getDifficulty() == Difficulty.HARD) {
-					int head = i - 1;
-					int headUpdateTime = idleHeadUpdates[head];
-					this.idleHeadUpdates[head] = this.idleHeadUpdates[head] + 1;
+					int prevHeadId = i - 1;
+					int idleHeadUpdate = idleHeadUpdates[prevHeadId];
+					idleHeadUpdates[prevHeadId] = idleHeadUpdates[prevHeadId] + 1;
 
-					if (headUpdateTime > 15) {
-						double randPosX = MathHelper.nextDouble(this.rand, this.getPosX() - 10, this.getPosX() + 10);
-						double randPosY = MathHelper.nextDouble(this.rand, this.getPosY() - 5, this.getPosY() + 5);
-						double randPosZ = MathHelper.nextDouble(this.rand, this.getPosZ() - 10, this.getPosZ() + 10);
-						this.idleHeadUpdates[head] = 0;
+					if (idleHeadUpdate > 15) {
+						double targetPosX = MathHelper.nextDouble(rand, getPosX() - 10, getPosX() + 10);
+						double targetPosY = MathHelper.nextDouble(rand, getPosY() - 5, getPosY() + 5);
+						double targetPosZ = MathHelper.nextDouble(rand, getPosZ() - 10, getPosZ() + 10);
 
-						shootAtBlockPos(i + 1, randPosX, randPosY, randPosZ);
+						shootAtBlockPos(i + 1, targetPosX, targetPosY, targetPosZ);
+
+						idleHeadUpdates[prevHeadId] = 0;
 					}
 				}
 
-				int targetId = this.getWatchedTargetId(i);
+				int targetId = getWatchedTargetId(i);
 
 				if (targetId > 0) {
-					Entity target = this.world.getEntityByID(targetId);
+					Entity entity = world.getEntityByID(targetId);
 
-					if (target != null && target.isAlive() && target.getDistanceSq(target) <= 900 && canEntityBeSeen(target)) {
-						if (target instanceof PlayerEntity && ((PlayerEntity)target).abilities.disableDamage) {
-							this.setWatchedTargetId(i, 0);
+					if (entity != null && entity.isAlive() && !(getDistanceSq(entity) > 900) && canEntityBeSeen(entity)) {
+						if (entity instanceof PlayerEntity && ((PlayerEntity)entity).abilities.disableDamage) {
+							setWatchedTargetId(i, 0);
 						}
 						else {
-							this.shootAtTarget(i + 1, (LivingEntity)target);
-							this.nextHeadUpdate[i - 1] = this.ticksExisted + 40 + this.rand.nextInt(20);
-							this.idleHeadUpdates[i - 1] = 0;
+							shootAtTarget(i + 1, (LivingEntity)entity);
+							nextHeadUpdate[i - 1] = ticksExisted + 40 + rand.nextInt(20);
+							idleHeadUpdates[i - 1] = 0;
 						}
 					}
 					else {
-						this.setWatchedTargetId(i, 0);
+						setWatchedTargetId(i, 0);
 					}
 				}
 				else {
-					List<LivingEntity> targetList = world.getEntitiesWithinAABB(LivingEntity.class, this.getBoundingBox().grow(20, 8, 20), entity -> !entity.isEntityUndead());
+					List<LivingEntity> list = world.getTargettableEntitiesWithinAABB(LivingEntity.class, NOT_UNDEAD, this, getBoundingBox().grow(20, 8, 20));
 
-					for (int j = 0; j < 10 && !targetList.isEmpty(); ++j) {
-						LivingEntity target = targetList.get(rand.nextInt(targetList.size()));
+					for(int j2 = 0; j2 < 10 && !list.isEmpty(); ++j2) {
+						LivingEntity entity = list.get(rand.nextInt(list.size()));
 
-						if (target != this && target.isAlive() && canEntityBeSeen(target)) {
-							if (target instanceof PlayerEntity) {
-								if (!((PlayerEntity)target).abilities.disableDamage)
-									setWatchedTargetId(i, target.getEntityId());
+						if (entity != this && entity.isAlive() && !entity.isEntityUndead() && canEntityBeSeen(entity)) {
+							if (entity instanceof PlayerEntity) {
+								if (!((PlayerEntity)entity).abilities.disableDamage)
+									setWatchedTargetId(i, entity.getEntityId());
 							}
 							else {
-								setWatchedTargetId(i, target.getEntityId());
+								setWatchedTargetId(i, entity.getEntityId());
 							}
-
 							break;
 						}
 
-						targetList.remove(target);
+						list.remove(entity);
 					}
 				}
 			}
@@ -271,7 +268,6 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
-
 
 	private double getHeadX(int head) {
 		if (head <= 0)

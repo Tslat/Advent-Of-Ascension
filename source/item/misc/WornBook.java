@@ -18,7 +18,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.resourcemanager.MiscTextFileManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 
 public class WornBook extends WrittenBookItem {
 	private static final CompoundNBT contents = new CompoundNBT();
@@ -44,7 +44,7 @@ public class WornBook extends WrittenBookItem {
 			}
 		}
 		else {
-			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> SidedUtil::displayWornBookGui);
+			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayWornBookGui);
 		}
 
 		return ActionResult.resultSuccess(bookStack);

@@ -2,7 +2,7 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Resources;
 import net.tslat.aoa3.util.constant.Skills;
@@ -65,7 +65,7 @@ public class ToastPopupPacket implements AoAPacket {
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		SidedUtil.addToast(type, subject, value);
+		ClientOperations.addToast(type, subject, value);
 
 		context.get().setPacketHandled(true);
 	}
