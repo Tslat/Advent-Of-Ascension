@@ -109,7 +109,7 @@ Deutsch:
 # Advent of Ascension
 Dies ist das offizielle Github für Advent of Ascension.
 
-Diese Unterkategorie ist für die neueste 1.12.2 Version der Mod.
+Diese Unterkategorie ist für die neueste 1.15.2 Version der Mod.
 
 ## HAFTUNGSAUSSCHLUSS
 Der in diesem Github zur Verfügung gestellte Quelltext ist lediglich zum Betrachten da. Unter der Lizenz ist es dir erlaubt, den Code AUSSCHLIEßLICH FÜR PRIVATE ZWECKE anzupassen.
@@ -134,7 +134,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
   iii) Bearbeite die Datei nach Belieben und klicke anschließend auf "Propose File Change".
 
-ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.12.2 Version der Mod. Um eine andere Version zu bearbeiten, klicke auf "Branch" und wähle die Version aus, die du bearbeiten möchtest.
+ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.15.2 Version der Mod. Um eine andere Version zu bearbeiten, klicke auf "Branch" und wähle die Version aus, die du bearbeiten möchtest.
 
 Eine Anleitung zum Bearbeiten der Dateien findest du hier:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
