@@ -118,7 +118,12 @@ public class HydroliskEntity extends AoAMeleeMob {
 
 	@Override
 	public boolean isInvulnerable() {
-		return this.dataManager.get(SHIELDED);
+		return super.isInvulnerable() || isShielded();
+	}
+
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return isInvulnerable() || super.isInvulnerableTo(source);
 	}
 
 	public boolean isShielded() {

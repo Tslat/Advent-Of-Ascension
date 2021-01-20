@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Ultraflame extends BaseSword {
 	public Ultraflame() {
-		super(ItemUtil.customItemTier(2250, AttackSpeed.NORMAL, 16.5f, 4, 10, null));
+		super(ItemUtil.customItemTier(2250, AttackSpeed.NORMAL, 15.0f, 4, 10, null));
 	}
 
 	@Override

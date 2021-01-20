@@ -10,6 +10,7 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -18,6 +19,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -34,6 +36,7 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.packet.packets.LongReachItemHitPacket;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
@@ -186,5 +189,17 @@ public class ClientEventHandler {
 		}
 
 		return null;
+	}
+
+	@SubscribeEvent
+	public static void onSoundPlay(PlaySoundEvent ev) {
+		if (SilencerEntity.isClientNearby) {
+			ClientPlayerEntity player = Minecraft.getInstance().player;
+
+			if (player == null || player.world.getEntitiesWithinAABB(SilencerEntity.class, player.getBoundingBox().grow(8)).isEmpty()) {
+				SilencerEntity.isClientNearby = false;
+				Minecraft.getInstance().getSoundHandler().setSoundLevel(SoundCategory.MASTER, SilencerEntity.prevVolume);
+			}
+		}
 	}
 }

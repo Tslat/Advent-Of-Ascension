@@ -130,7 +130,7 @@ public class DeeplandsBiome extends AoABiome {
 		int posY;
 		int posZ;
 
-		world.setBlockState(pos.setPos(basePos.getX(), 19, basePos.getZ()), AoABlocks.DEEP_CRYSTAL.get().getDefaultState(), 2);
+		world.setBlockState(pos.setPos(basePos.getX() + rand.randomNumberUpTo(15), 19, basePos.getZ() + rand.randomNumberUpTo(15)), AoABlocks.DEEP_CRYSTAL.get().getDefaultState(), 2);
 
 		if (rand.oneInNChance(25)) {
 			posX = basePos.getX() + rand.randomNumberUpTo(16);

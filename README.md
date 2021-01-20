@@ -1,7 +1,7 @@
 # Advent of Ascension
 This is the official Github for Advent of Ascension.
 
-This branch is for the latest 1.12.2 version of the mod.
+This branch is for the latest 1.15.2 version of the mod.
 
 ## DISCLAIMER
 The source provided in this github is for viewing purposes only. Under license, you are permitted to modify the code for PRIVATE USE ONLY.
@@ -26,14 +26,10 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
   iii) Edit the file to your liking, then click "Propose File Change".
 
-NOTE: You are currently viewing the language files for the Minecraft-1.12.2 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
+NOTE: You are currently viewing the language files for the Minecraft-1.15.2 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
 
 You can read a tutorial on the editing process here:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
-
-4. Find information on creating an Addon/Extension for AoA or integration as a third-party mod.
-Relevant information for developers looking to integrate with AoA can head here:
-https://adventofascension.gamepedia.com/Third-Party_Mod_Integration/Making_an_Addon
 
 --
 
@@ -77,7 +73,7 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
 这是虚无世界的官方Github页面。
 
-这个分支是为Mod的1.12.2版本而用。
+这个分支是为Mod的1.15.2版本而用。
 
 ## 免责声明
 本GitHub代码仓库所提供代码仅供查看用途。在协议允许下，您仅能够将对代码的更改应用于个人用途。
@@ -102,7 +98,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
   iii)编辑您要更改的位置，最后单击"purpose file change"提交更改。
 
-注意：目前显示的语言文件为Minecraft版本为1.12.2的语言文件。如需翻译其他版本的语言文件，请单击"Branch"按钮，并选择你要编辑的版本。
+注意：目前显示的语言文件为Minecraft版本为1.15.2的语言文件。如需翻译其他版本的语言文件，请单击"Branch"按钮，并选择你要编辑的版本。
 
 您可以阅读该过程的说明：
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
@@ -113,7 +109,7 @@ Deutsch:
 # Advent of Ascension
 Dies ist das offizielle Github für Advent of Ascension.
 
-Diese Unterkategorie ist für die neueste 1.12.2 Version der Mod.
+Diese Unterkategorie ist für die neueste 1.15.2 Version der Mod.
 
 ## HAFTUNGSAUSSCHLUSS
 Der in diesem Github zur Verfügung gestellte Quelltext ist lediglich zum Betrachten da. Unter der Lizenz ist es dir erlaubt, den Code AUSSCHLIEßLICH FÜR PRIVATE ZWECKE anzupassen.
@@ -138,7 +134,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
   iii) Bearbeite die Datei nach Belieben und klicke anschließend auf "Propose File Change".
 
-ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.12.2 Version der Mod. Um eine andere Version zu bearbeiten, klicke auf "Branch" und wähle die Version aus, die du bearbeiten möchtest.
+ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.15.2 Version der Mod. Um eine andere Version zu bearbeiten, klicke auf "Branch" und wähle die Version aus, die du bearbeiten möchtest.
 
 Eine Anleitung zum Bearbeiten der Dateien findest du hier:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/

@@ -2,7 +2,7 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.tslat.aoa3.util.SidedUtil;
+import net.tslat.aoa3.util.ClientOperations;
 
 import java.util.function.Supplier;
 
@@ -27,7 +27,7 @@ public class GunRecoilPacket implements AoAPacket {
 
 	@Override
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		SidedUtil.addRecoil(recoilAmount, firingTime);
+		ClientOperations.addRecoil(recoilAmount, firingTime);
 
 		context.get().setPacketHandled(true);
 	}

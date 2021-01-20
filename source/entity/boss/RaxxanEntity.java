@@ -28,10 +28,10 @@ import javax.annotation.Nullable;
 public class RaxxanEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
 
-	public RaxxanEntity(HarkosEntity harkos) {
-		this(AoAEntities.Mobs.HARKOS.get(), harkos.world);
+	public RaxxanEntity(HarkosEntity raxxan) {
+		this(AoAEntities.Mobs.RAXXAN.get(), raxxan.world);
 
-		setLocationAndAngles(harkos.getPosX(), harkos.getPosY(), harkos.getPosZ(), harkos.rotationYaw, harkos.rotationPitch);
+		setLocationAndAngles(raxxan.getPosX(), raxxan.getPosY(), raxxan.getPosZ(), raxxan.rotationYaw, raxxan.rotationPitch);
 	}
 
 	public RaxxanEntity(EntityType<? extends MonsterEntity> entityType, World world) {

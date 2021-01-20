@@ -145,13 +145,13 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 			return new StringTextComponent("Trophy");
 
 		if (trophyBlock == AoABlocks.TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
 		if (trophyBlock == AoABlocks.GOLD_TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
 		if (trophyBlock == AoABlocks.ORNATE_TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.ornate_trophy.desc", LocaleUtil.getLocaleString(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.ornate_trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
 		return new StringTextComponent("Trophy");
 	}

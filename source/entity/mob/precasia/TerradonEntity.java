@@ -86,6 +86,11 @@ public class TerradonEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return super.isInvulnerableTo(source) || isInvulnerable();
+	}
+
+	@Override
 	public boolean isInvulnerable() {
 		return super.isInvulnerable() || dataManager.get(INVULNERABLE);
 	}

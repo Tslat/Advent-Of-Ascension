@@ -103,6 +103,11 @@ public class RunicGolemEntity extends AoAMeleeMob {
 		return super.isInvulnerable() || isShielded();
 	}
 
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return isInvulnerable() || super.isInvulnerableTo(source);
+	}
+
 	public boolean isShielded() {
 		return this.dataManager.get(SHIELDED);
 	}

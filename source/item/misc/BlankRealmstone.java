@@ -43,7 +43,7 @@ public class BlankRealmstone extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		if (world.isRemote)
-			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> SidedUtil::displayBlankRealmstoneGui);
+			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayBlankRealmstoneGui);
 
 		return ActionResult.resultSuccess(player.getHeldItem(hand));
 	}

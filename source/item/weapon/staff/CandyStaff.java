@@ -4,7 +4,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -47,10 +46,8 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity target : args) {
-			Vec3d motion = target.getMotion();
-
 			EntityUtil.pullEntityIn(caster, target, 1.0f);
-			target.setMotion(motion.getX(), Math.min(target.getMotion().getY(), motion.getY() + 0.9), motion.getZ());
+			target.setMotion(target.getMotion().mul(1, 1.1f, 1));
 		}
 	}
 

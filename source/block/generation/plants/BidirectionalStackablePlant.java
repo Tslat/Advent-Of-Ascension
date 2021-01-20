@@ -50,7 +50,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 		boolean isDownPlant = false;
 		BlockState block = world.getBlockState(downPos = downPos.down());
 
-		while (block.getBlock() == stemBlock.get() || block.getBlock() == bottomHatBlock.get()) {
+		while (block.getBlock() == stemBlock.get() || (bottomHatBlock != null && block.getBlock() == bottomHatBlock.get())) {
 			block = world.getBlockState(downPos = downPos.down());
 
 			if (block.getBlock() == bottomHatBlock)
@@ -63,7 +63,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 		BlockPos upPos = pos;
 		block = world.getBlockState(upPos = upPos.up());
 
-		while (block.getBlock() == stemBlock.get() || block.getBlock() == hatBlock.get()) {
+		while (block.getBlock() == stemBlock.get() || (hatBlock != null && block.getBlock() == hatBlock.get())) {
 			block = world.getBlockState(upPos = upPos.up());
 
 			if (block.getBlock() == hatBlock.get())

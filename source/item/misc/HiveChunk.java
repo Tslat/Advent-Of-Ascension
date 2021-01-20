@@ -4,6 +4,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -17,8 +18,13 @@ public class HiveChunk extends Item {
 	@Override
 	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (target.getType() == AoAEntities.Mobs.THARAFLY.get() && attacker instanceof PlayerEntity) {
-			stack.shrink(1);
-			ItemUtil.givePlayerItemOrDrop((PlayerEntity)attacker, new ItemStack(AoAItems.HIVE_EGG.get()));
+			if (stack.getCount() <= 1) {
+				attacker.setHeldItem(Hand.MAIN_HAND, new ItemStack(AoAItems.HIVE_EGG.get()));
+			}
+			else {
+				ItemUtil.givePlayerItemOrDrop((PlayerEntity)attacker, new ItemStack(AoAItems.HIVE_EGG.get()));
+				stack.shrink(1);
+			}
 
 			return true;
 		}
