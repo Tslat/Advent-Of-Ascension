@@ -138,3 +138,40 @@ ANMERKUNG: Du betrachtest gerade die Übersetzungsdateien der Minecraft 1.15.2 V
 
 Eine Anleitung zum Bearbeiten der Dateien findest du hier:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+--
+
+日本語:
+# Advent of Ascension
+これはAdvent of Ascensionの公式Githubです。
+
+このブランチは最新の1.15.2向けのmodです。
+
+## 免責事項
+このgithubで提供されているソースは閲覧のみを目的としています。ライセンスの元、「個人利用に限り」コードを変更することが許可されています。
+コードの再配布はライセンス違反です。
+
+ここで提供されているコードはコミットフリーです。ここで閲覧可能なすべてのソースは最新の公開情報を表示しています。
+そのため、このコードに対するすべての翻訳されていないコミットは直ちに削除されます。修正や変更のためのバグ報告や提案を提出してください。
+
+## ここで何が出来るの?
+ここにある3つのことが出来ます:
+1. バグ報告を提出することが出来ます。そのためには、下記のURLから"issues"ページに移動し、"New Issue"をクリックしてください。
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2. 提案を提出することが出来ます。そのためには、下記のURLから"issues"ページに移動し、"New Issue"をクリックしてください。そして、あなたが望む提案の種類を選んでください。
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3. modの翻訳に貢献することが出来ます。そのためには、次の手順を踏む必要があります。
+
+  i) 'lang'フォルダに行って、翻訳したい言語をクリックしましょう。
+
+  ii) ファイルを編集するために、右上の小さな鉛筆のアイコンをクリックしましょう。
+
+  iii) 好みにファイルを編集し、"Propose File Change"をクリックしましょう。
+
+注意: 現在見ている言語ファイルはMinecraft 1.15.2向けのmodのものです。ほかのバージョンの翻訳をするためには"Branch"ボタンをクリックし、編集したいバージョンを選びます。
+
+編集の過程のチュートリアルはここで読むことが出来ます。
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
