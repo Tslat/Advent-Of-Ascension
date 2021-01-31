@@ -5234,7 +5234,7 @@
   "message.feedback.teleporterFrame.vox_ponds": "奇妙な感情が自分の中に芽生え、気分が悪くなり始めます。",
   "message.feedback.wornBook.droppedRealmstone": "本を開いたら、不思議なアイテムが落ちてきました。",
   "message.feedback.yetiFingernails.eat": "ストレスを感じることが少なくなったので、歯には良いかもしれません。",
-  "message.login.welcome": "Advent of Ascensionへようこそ！ %1$s を押すと、あなたのステータスを確認できます",
+  "message.login.welcome": "Advent of Ascensionへようこそ！ %1$sを押すと、あなたのステータスを確認できます",
   "message.login.welcome.alt": "Advent of Ascensionへようこそ！ メインウィンドウを開くためのキーを割り当てるには、設定を確認してください",
   "message.mob.bane.kill": "%1$sがベインを倒した！",
   "message.mob.baroness.kill": "%1$sがバロネスを倒した！",
