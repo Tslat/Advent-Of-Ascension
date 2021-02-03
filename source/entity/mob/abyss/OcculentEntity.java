@@ -84,6 +84,9 @@ public class OcculentEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
+		if (true)
+			return;
+
 		if (world.isRemote()) {
 			if (mirageHost != null) {
 				if (ticksExisted >= 600 || !mirageHost.isAlive()) {

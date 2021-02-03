@@ -75,7 +75,7 @@ public class BlankRealmstone extends Item {
 			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getHeldItem(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setHeldItem(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, LocaleUtil.getLocaleString("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3));
 			}
 
 			return true;

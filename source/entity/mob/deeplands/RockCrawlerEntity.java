@@ -40,7 +40,8 @@ public class RockCrawlerEntity extends AoAMeleeMob {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4f));
+        goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4f));
+        goalSelector.addGoal(4, new MeleeAttackGoal(this, 1, true));
         goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
         goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
         goalSelector.addGoal(8, new LookRandomlyGoal(this));

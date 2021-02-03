@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,13 +15,12 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.item.armour.AdventArmour;
 
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
-@OnlyIn(Dist.CLIENT)
 public class HelmetScreenRenderer {
 	public static boolean active = false;
 	public static AdventArmour.Overlay type;
 
 	@SubscribeEvent
-	public void renderHelmetScreen(final RenderGameOverlayEvent.Post event) {
+	public static void renderHelmetScreen(final RenderGameOverlayEvent.Post event) {
 		if (!active || event.isCanceled() || event.getType() != RenderGameOverlayEvent.ElementType.HELMET || Minecraft.getInstance().gameSettings.thirdPersonView != 0)
 			return;
 
@@ -31,7 +29,7 @@ public class HelmetScreenRenderer {
 
 		switch (type) {
 			case NIGHT_VISION_GOGGLES:
-				mc.getTextureManager().bindTexture(new ResourceLocation("aoa3:textures/gui/helmets/night_vision_goggles.png"));
+				mc.getTextureManager().bindTexture(new ResourceLocation("aoa3:textures/gui/overlay/helmet/night_vision_goggles.png"));
 				break;
 			default:
 				return;

@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoATileEntities;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -139,21 +139,21 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	@Override
 	public ITextComponent getName() {
 		if (trophyBlock == null || entityId == null)
-			return new StringTextComponent("Trophy");
+			return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 
 		if (getCachedEntity() == null)
-			return new StringTextComponent("Trophy");
+			return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 
 		if (trophyBlock == AoABlocks.TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return new TranslationTextComponent("block.aoa3.trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
 		if (trophyBlock == AoABlocks.GOLD_TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return new TranslationTextComponent("block.aoa3.gold_trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
 		if (trophyBlock == AoABlocks.ORNATE_TROPHY.get())
-			return LocaleUtil.getLocaleMessage("block.aoa3.ornate_trophy.desc").appendSibling(LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return new TranslationTextComponent("block.aoa3.ornate_trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
 
-		return new StringTextComponent("Trophy");
+		return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 	}
 
 	@Override

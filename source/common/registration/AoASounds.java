@@ -894,6 +894,7 @@ public final class AoASounds {
 
 	public static final RegistryObject<SoundEvent> BANE_MUSIC = registerSound("bane_music", "entity.bane.music");
 	public static final RegistryObject<SoundEvent> BARONESS_MUSIC = registerSound("baroness_music", "entity.baroness.music");
+	public static final RegistryObject<SoundEvent> BLUE_GUARDIAN_MUSIC = registerSound("blue_guardian_music", "entity.blue_guardian.music");
 	public static final RegistryObject<SoundEvent> CLUNKHEAD_MUSIC = registerSound("clunkhead_music", "entity.clunkhead.music");
 	public static final RegistryObject<SoundEvent> CONIFERON_MUSIC = registerSound("coniferon_music", "entity.coniferon.music");
 	public static final RegistryObject<SoundEvent> CORALLUS_MUSIC = registerSound("corallus_music", "entity.corallus.music");
@@ -905,7 +906,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ELUSIVE_MUSIC = registerSound("elusive_music", "entity.elusive.music");
 	public static final RegistryObject<SoundEvent> GOLDORTH_MUSIC = registerSound("goldorth_music", "entity.goldorth.music");
 	public static final RegistryObject<SoundEvent> GRAW_MUSIC = registerSound("graw_music", "entity.graw.music");
-	public static final RegistryObject<SoundEvent> GUARDIAN_MUSIC = registerSound("guardian_music", "entity.guardian.music");
+	public static final RegistryObject<SoundEvent> GREEN_GUARDIAN_MUSIC = registerSound("green_guardian_music", "entity.green_guardian.music");
 	public static final RegistryObject<SoundEvent> GYRO_MUSIC = registerSound("gyro_music", "entity.gyro.music");
 	public static final RegistryObject<SoundEvent> HIVE_KING_MUSIC = registerSound("hive_king_music", "entity.hive_king.music");
 	public static final RegistryObject<SoundEvent> HORON_MUSIC = registerSound("horon_music", "entity.horon.music");
@@ -917,6 +918,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> NETHENGEIC_WITHER_MUSIC = registerSound("nethengeic_wither_music", "entity.nethengeic_wither.music");
 	public static final RegistryObject<SoundEvent> PENUMBRA_MUSIC = registerSound("penumbra_music", "entity.penumbra.music");
 	public static final RegistryObject<SoundEvent> PRIMORDIAL_MUSIC = registerSound("primordial_music", "entity.primordial.music");
+	public static final RegistryObject<SoundEvent> RED_GUARDIAN_MUSIC = registerSound("red_guardian_music", "entity.red_guardian.music");
 	public static final RegistryObject<SoundEvent> ROCK_RIDER_MUSIC = registerSound("rock_rider_music", "entity.rock_rider.music");
 	public static final RegistryObject<SoundEvent> SHADOWLORD_MUSIC = registerSound("shadowlord_music", "entity.shadowlord.music");
 	public static final RegistryObject<SoundEvent> SILVERFOOT_MUSIC = registerSound("silverfoot_music", "entity.silverfoot.music");
@@ -926,6 +928,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> VINOCORNE_MUSIC = registerSound("vinocorne_music", "entity.vinocorne.music");
 	public static final RegistryObject<SoundEvent> VISUALENT_MUSIC = registerSound("visualent_music", "entity.visualent.music");
 	public static final RegistryObject<SoundEvent> VOXXULON_MUSIC = registerSound("voxxulon_music", "entity.voxxulon.music");
+	public static final RegistryObject<SoundEvent> YELLOW_GUARDIAN_MUSIC = registerSound("yellow_guardian_music", "entity.yellow_guardian.music");
 
 
 	private static RegistryObject<SoundEvent> registerSound(String registryName, String soundPath) {

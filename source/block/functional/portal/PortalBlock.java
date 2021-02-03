@@ -99,7 +99,7 @@ public class PortalBlock extends Block {
 	private boolean isCompatibleNeighbour(World world, BlockPos pos) {
 		BlockState block = world.getBlockState(pos);
 
-		return block.getBlock() == this || block.isOpaqueCube(world, pos);
+		return block.getBlock() == this || !block.isAir(world, pos);
 	}
 
 	@OnlyIn(Dist.CLIENT)

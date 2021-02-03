@@ -5,11 +5,9 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
@@ -19,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArmour {
-	private static final ResourceLocation overlayTexture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/helmet/night_vision_goggles.png");
 	public NightVisionGoggles() {
 		super(ItemUtil.customArmourMaterial("aoa3:night_vision_goggles", 27, new int[] {2, 2, 2, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1), EquipmentSlotType.HEAD);
 	}

@@ -188,7 +188,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 	public void addTrackingPlayer(ServerPlayerEntity player) {
 		super.addTrackingPlayer(player);
 
-		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GUARDIAN_MUSIC.getId()));
+		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
@@ -196,7 +196,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 	public void removeTrackingPlayer(ServerPlayerEntity player) {
 		super.removeTrackingPlayer(player);
 
-		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GUARDIAN_MUSIC.getId()));
+		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 

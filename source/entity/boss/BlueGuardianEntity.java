@@ -184,7 +184,7 @@ public class BlueGuardianEntity extends AoARangedMob {
 	public void addTrackingPlayer(ServerPlayerEntity player) {
 		super.addTrackingPlayer(player);
 
-		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GUARDIAN_MUSIC.getId()));
+		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.BLUE_GUARDIAN_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
@@ -192,7 +192,7 @@ public class BlueGuardianEntity extends AoARangedMob {
 	public void removeTrackingPlayer(ServerPlayerEntity player) {
 		super.removeTrackingPlayer(player);
 
-		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GUARDIAN_MUSIC.getId()));
+		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.BLUE_GUARDIAN_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 

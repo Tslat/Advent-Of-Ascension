@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.event.PlayerEvents;
@@ -54,13 +55,10 @@ public class HarvestDropsLootModifier extends LootModifier {
 		return ev.getDrops();
 	}
 
-	public static class Serializer extends AoALootModifierSerializer<HarvestDropsLootModifier> {
+	public static class Serializer extends GlobalLootModifierSerializer<HarvestDropsLootModifier> {
 		@Override
 		public HarvestDropsLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
 			return new HarvestDropsLootModifier(lootConditions == null ? new ILootCondition[]{} : lootConditions);
 		}
-
-		@Override
-		public void write(JsonObject json) {}
 	}
 }

@@ -30,6 +30,7 @@ import net.tslat.aoa3.util.PotionUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Locale;
 
 public class ReservedItem extends Item {
 	private final String sequenceId;
@@ -158,24 +159,24 @@ public class ReservedItem extends Item {
 		if (pl.getHealth() > 0 && !pl.world.getWorldInfo().isHardcore())
 			return;
 
-		if (!pl.getHeldItemMainhand().getItem().getRegistryName().getPath().toLowerCase().startsWith("a"))
+		if (!pl.getHeldItemMainhand().getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
 			return;
 
 		NonNullList<ItemStack> armour = pl.inventory.armorInventory;
 
-		if (!armour.get(3).getItem().getRegistryName().getPath().toLowerCase().startsWith("l"))
+		if (!armour.get(3).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
 			return;
 
-		if (!armour.get(2).getItem().getRegistryName().getPath().toLowerCase().startsWith("i"))
+		if (!armour.get(2).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("i"))
 			return;
 
-		if (!armour.get(1).getItem().getRegistryName().getPath().toLowerCase().startsWith("e"))
+		if (!armour.get(1).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("e"))
 			return;
 
-		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase().startsWith("n"))
+		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
 			return;
 
-		if (!ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))
+		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))
 			return;
 
 		pl.entityDropItem(((ReservedItem)AoAItems.ALIEN_ORB.get()).newValidStack(), 0);

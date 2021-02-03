@@ -6,6 +6,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -14,9 +17,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.VinocorneEntity;
 import net.tslat.aoa3.util.BlockUtil;
 
@@ -56,7 +61,17 @@ public class LivingGrowth extends Block {
 		int currentAge = state.get(GROWTH_STAGE);
 
 		if (currentAge < 6) {
-			if (currentAge == 5) {
+			if (world.getDifficulty() == Difficulty.PEACEFUL) {
+				world.setBlockState(pos, Blocks.AIR.getDefaultState());
+
+				ItemEntity itemEntity = new ItemEntity(EntityType.ITEM, world);
+
+				itemEntity.setItem(new ItemStack(AoAItems.PETALS.get()));
+				itemEntity.setPosition(pos.getX(), pos.getY() + 0.5d, pos.getZ());
+				world.addEntity(itemEntity);
+			}
+			else if (currentAge == 5) {
+
 				VinocorneEntity vinocorne = new VinocorneEntity(AoAEntities.Mobs.VINOCORNE.get(), world);
 
 				vinocorne.setPosition(pos.getX(), pos.getY(), pos.getZ());

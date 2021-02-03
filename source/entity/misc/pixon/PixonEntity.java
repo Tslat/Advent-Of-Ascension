@@ -89,7 +89,7 @@ public abstract class PixonEntity extends CreatureEntity {
         if (!EntityUtil.isNaturalSpawnReason(reason))
             return true;
 
-        return world.getBrightness(getPosition()) > 0.5f;
+        return world.getBlockState(getPosition().down()).getBlock() == world.getBiome(getPosition()).getSurfaceBuilder().config.getTop().getBlock();
     }
 
     @Override

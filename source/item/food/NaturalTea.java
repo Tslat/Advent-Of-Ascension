@@ -22,6 +22,7 @@ public class NaturalTea extends Item {
 	public NaturalTea() {
 		super(new Item.Properties().group(AoAItemGroups.FOOD)
 				.containerItem(AoAItems.CUP.get())
+				.maxStackSize(1)
 				.food(new Food.Builder()
 						.hunger(0)
 						.saturation(0)

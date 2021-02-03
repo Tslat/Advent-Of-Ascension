@@ -144,7 +144,7 @@ public class EntityEvents {
 						hook.lureSpeed = Math.min(5, 2 + EnchantmentHelper.getFishingSpeedBonus(stack));
 				}
 			}
-			else if (ev.getEntity() instanceof WitherEntity) {
+			else if (ev.getEntity() instanceof WitherEntity && ((WitherEntity)ev.getEntity()).getInvulTime() == 220) {
 				if (ev.getWorld().getDimension().getType() == DimensionType.THE_NETHER) {
 					for (PlayerEntity pl : ev.getWorld().getEntitiesWithinAABB(PlayerEntity.class, ev.getEntity().getBoundingBox().grow(50))) {
 						if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))

@@ -368,18 +368,6 @@ public class PlayerEvents {
 	}
 
 	@SubscribeEvent
-	public static void onBlockInteract(final PlayerInteractEvent.RightClickBlock ev) {
-		DimensionType dimType = ev.getWorld().getDimension().getType();
-
-		if (dimType == AoADimensions.ANCIENT_CAVERN.type() || dimType == AoADimensions.IMMORTALLIS.type()) {
-			PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntity());
-
-			if (relevantPlayer == null || !relevantPlayer.isCreative())
-				ev.setUseItem(Event.Result.DENY);
-		}
-	}
-
-	@SubscribeEvent
 	public static void onEmptyBucketUse(final FillBucketEvent ev) {
 		DimensionType dimType = ev.getWorld().getDimension().getType();
 
