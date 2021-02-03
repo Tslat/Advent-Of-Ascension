@@ -1,0 +1,23 @@
+Screen Elements (Gui)
+
+Advent of Ascension installs a few display elements on your screen while you play. These elements are crucial to progressing through the mod, as they show you vital information that you will need to know as you play.
+You can toggle this display off with the assigned toggle button (default to 'o'). If you are unsure what your assigned button is, check your controls settings.
+
+The Fist Icon:
+  The orange/red fist icon is called Battle Rage. Battle rage regenerates passively over time, and once you gain a sufficient amount of it, your attacks will have a chance to hit extra hard, dealing much more damage. You can increase how much damage this hit deals by levelling up your Butchery skill.
+
+The Lighting Bolt:
+  The lighting bolt icon is called Energy. This represents a renewable, consumable resource that is used by blasters to fire. It will regenerate passively on its own, however it can drain quickly while firing a blaster.
+
+The Horned Creature Icon:
+  This icon is called Creation. It's a representation of creation points that passively regenerate while you play. Creation slabs from the Creation skill require a certain amount of creation points to use, so if you are summoning minions you will need to pay attention to how many you have.
+
+The Blue Alien Icon:
+  This icon is called Soul Power. It represents the amount of soul power points you have. Soul power points regenerate slowly over time while you play. Soul power is used to activate and power soul tablet items, which grant various area-of-effect bonuses.
+
+The Four Lines:
+  Wedged in-between Battle Rage and Energy is the Tribute icon. This icon is split into four individual lines, with each one representing a specific deity. There are four primary deities in Advent of Ascension: Erebon, Luxon, Pluton, and Selyan. Each one likes and dislikes different things, and so it can be hard to please them all.
+  When you do certain tasks throughout the day however, you will find these bars begin to fill up. If you manage to fill a bar up, then when the sun falls behind the horizon, you will be granted a favour by the deity you appeased. These favours can be very useful, so get to it!
+
+The Vulcane Icon:
+  This icon doesn't show all the time, it only appears for a short time when taking damage occasionally. When this icon appears, the mob that attacked you has its soul linked to yours. You can then use a Vulcane to remotely damage the creature in retaliation. Grab a Vulcane early on, as this can do a lot of damage very easily!

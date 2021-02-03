@@ -1,0 +1,9 @@
+Anima (Skill)
+
+Anima is a skill based around nature.
+
+You can level up your Anima skill by collecting plants and flowers, breaking leaves, and harvesting grown crops. When you do this, there's a small chance that a blue Anima stone will drop. Pick up this stone to gain a bit of Anima xp, and occasionally a Fragmented Anima Stone.
+Additionally, you can level Anima by activating fragmented anima stones. Fragmented anima stones can be obtained from some traders, and as a reward from other activities. When used on a grass block, it encourages nearby plants and flowers to grow, as well as giving you a bit of Anima xp.
+
+These Fragmented Anima Stones can be used to craft powerful tablets, which are very effective tools in almost any situation. Place a tablet down on the ground, and as long as you have sufficient soul power remaining, it will stay activated, giving off a powerful effect to the surrounding area.
+The higher your Anima level, the more tablets you will have available to you!

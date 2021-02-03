@@ -1,0 +1,23 @@
+Infusion (Skill)
+
+When you need just a bit more power out of your gear, you may find yourself wanting to imbue some magical abilities into your sword or helmet.
+Infusion allows you to do just that. Craft yourself an infusion table and some infusion enhancers, place it down, and open up its menu. When inside you have two tasks available to you; Infusion, and Imbuing.
+
+Infusion:
+  Infusion is the art of infusing the essence of items into a pre-made frame item. Doing this results in a brand new item being created, often with useful effects or abilities.
+  To perform infusion, put a frame-item (crafted on the Frame Bench block) into the left slot, and the relevant infusing items into the middle grid, and the infused item will be available on the right.
+
+Imbuing:
+  Imbuing an item is the act of taking an existing item and enhancing it with additional magical power. The effects of this power can vary greatly, and some effects are more powerful than others.
+  To imbue an item, place the item of your choice in the left hand slot, and the relevant enhancers and power stones into the middle grid. The imbued item will be available to collect on the right.
+
+To level up Infusion, you have a few options:
+
+Pixons:
+  While you roam around the worlds, you'll stumble across some bright flickering creatures that seem to aimlessly wander the land. These creatures are pixons. If you take a stone bowl to them, you'll be able to harvest them and collect their concentrated essence, giving you some infusion stones or power stones, and xp. Different pixons roam different worlds, and give different infusion stones and xp amounts.
+  When you're a high enough level, you'll be able to make yourself a diamond bowl, which allows you to harvest pixons even more efficiently.
+
+Infusion Stones:
+  As you find and collect infusion stones, you can take them back to your infusion table and insert them. Each time you do, you'll gain a little more Infusion xp, and a small chance to get an empowered version of the stone back. These empowered versions can then be used to infuse enchantments into different items.
+
+Level up your Infusion skill to unlock additional enchantment options on your infusion table, and access to more valuable pixons.
