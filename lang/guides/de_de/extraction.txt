@@ -1,0 +1,14 @@
+Extraction (Skill)
+
+Ever wondered if all those dead adventurers in the bottom of the lava leave behind anything useful? Well here's your chance to find out!
+Extraction is a skill based around 'extracting' items from lava. This is not an easy task, as while it may seem like lava is a watery liquid, it's actually very thick and sludge-like.
+
+To get started, you're going to need to craft yourself an extraction device. This device is the key to drawing the goods out of a source of lava.
+Place it down wherever you want, and empty some lava onto the top of the device. Runoff lava won't work as that doesn't contain any of the items; it has to be the source of the lava.
+The device will pull it in and begin to work. To operate the device, use a bowl of some kind to let the device deposit the loot into, and the remaining lava will solidify into obsidian below it.
+
+You'll need to clear away the obsidian blockages to continue using the device.
+Each time you successfully extract something, you'll learn a little bit more about the best techniques and timings, and you'll start to be able to retrieve more valuable and delicate items from the molten sludge.
+
+Eventually, you'll be extracting very valuable things, like precious gems, potions, and friendship.
+Just kidding, potions won't survive in the lava.

@@ -1,0 +1,6 @@
+Innervation (Skill)
+
+Innervation is the skill of vitality. Every time you kill a creature, it may drop a small shard of its vitality in the form of a heart stone. This heart stone can then be picked up by you to gain a little bit of innervation xp and heal you.
+
+As you level up your Innervation, you will find your maximum health increases beyond its normal limits. The higher your level, the higher your maximum health!
+This increased health limit stays with you permanently, so this skill will be vital for the most gruelling combat tasks.

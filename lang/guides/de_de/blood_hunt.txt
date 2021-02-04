@@ -1,0 +1,10 @@
+Blood Hunt (Event)
+
+"The hunt for blood has begun!"
+Adventurers beware, the blood hunt is upon us.
+Blood hunt is a nightly event that can happen on some nights in the overworld. When it begins, you will receive the above message - that's your cue to take cover!
+
+During the blood hunt, hostile creatures originating from the Abyss break out of their dimension and into ours, seeking to spread the blood of stray adventurers.
+Don't worry though, they don't want to drink your blood; only to spread it across the grass you walk on and celebrate your demise.
+
+These abyssal creatures prefer to stay in the dark, so once the sun rises they will stop pouring into the world, ending the blood hunt until they break through again.
