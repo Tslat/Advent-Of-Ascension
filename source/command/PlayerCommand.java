@@ -369,21 +369,21 @@ public class PlayerCommand implements Command<CommandSource> {
 			case "add":
 				adjustment = Math.min(value, 200 - stats.getResourceValue(resource));
 
-				stats.regenResource(resource, value);
+				stats.regenResource(resource, adjustment);
 				break;
 			case "subtract":
 				adjustment = -Math.min(value, stats.getResourceValue(resource));
 
-				stats.consumeResource(resource, value, true);
+				stats.consumeResource(resource, adjustment, true);
 				break;
 			case "set":
 				adjustment = value - stats.getResourceValue(resource);
 
-				if (adjustment > 0) {
+				if (adjustment >= 0) {
 					stats.regenResource(resource, adjustment);
 				}
 				else {
-					stats.consumeResource(resource, adjustment, true);
+					stats.consumeResource(resource, -adjustment, true);
 				}
 				break;
 		}

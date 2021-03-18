@@ -3,7 +3,6 @@ package net.tslat.aoa3.entity.projectile.staff;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -36,7 +35,7 @@ public class PhantomShotEntity extends BaseEnergyShot {
 		if (!world.isRemote) {
 			if (weapon != null) {
 				if (result.getType() == RayTraceResult.Type.BLOCK) {
-					weapon.doBlockImpact(this, ((BlockRayTraceResult)result).getPos(), owner);
+					weapon.doBlockImpact(this, result.getHitVec(), owner);
 					remove();
 				}
 				else if (result.getType() == RayTraceResult.Type.ENTITY && !((EntityRayTraceResult)result).getEntity().getUniqueID().equals(lastHit)) {

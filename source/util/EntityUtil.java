@@ -88,7 +88,7 @@ public abstract class EntityUtil {
 
 	public static float getAttackCooldown(LivingEntity entity) {
 		if (entity instanceof PlayerEntity)
-			((PlayerEntity)entity).getCooledAttackStrength(0);
+			return ((PlayerEntity)entity).getCooledAttackStrength(0);
 
 		return 1f;
 	}

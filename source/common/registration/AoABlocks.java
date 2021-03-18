@@ -76,7 +76,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> CREEP_STONE = registerBlock("creep_stone", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GREEN, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> CRYSTALLISED_ROCK = registerBlock("crystallised_rock", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> DARKENED_ROCK = registerBlock("darkened_rock", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLACK, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> DENSE_STONE = registerBlock("dense_stone", () -> new DenseStone(), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> DENSE_STONE = registerBlock("dense_stone", DenseStone::new, AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> FUNGAL_ROCK = registerBlock("fungal_rock", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLUE_TERRACOTTA, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> GRECKON_STONE = registerBlock("greckon_stone", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE_TERRACOTTA, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> HELLSTONE = registerBlock("hellstone", () -> new Block(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.TNT, 1.5f, 10f, ToolType.PICKAXE, 0)), AoAItemGroups.GENERATION_BLOCKS);
@@ -133,7 +133,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> CRYSTALLITE_ORE = registerBlock("crystallite_ore", () -> new OreBlock(MaterialColor.LIGHT_BLUE_TERRACOTTA, 6, 11, 4), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ELECANIUM_ORE = registerBlock("elecanium_ore", () -> new OreBlock(MaterialColor.BLUE, 4), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> EMBERSTONE_ORE = registerBlock("emberstone_ore", () -> new OreBlock(MaterialColor.NETHERRACK, 3), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> FOOTBONE_FRAGMENTS_ORE = registerBlock("footbone_fragments_ore", () -> new OreBlock(MaterialColor.GREEN_TERRACOTTA, 3), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> FOOTBONE_FRAGMENTS_ORE = registerBlock("footbone_fragments_ore", () -> new OreBlock(MaterialColor.GREEN_TERRACOTTA, 4, 8, 3), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> GEMENYTE_ORE = registerBlock("gemenyte_ore", () -> new OreBlock(MaterialColor.LIME_TERRACOTTA, 4, 8, 3), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> GHASTLY_ORE = registerBlock("ghastly_ore", () -> new OreBlock(MaterialColor.PURPLE_TERRACOTTA, 4), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> GHOULISH_ORE = registerBlock("ghoulish_ore", () -> new OreBlock(MaterialColor.PURPLE_TERRACOTTA, 4), AoAItemGroups.GENERATION_BLOCKS);
@@ -873,8 +873,8 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> SHROOM_STEM = customRender(registerBlock("shroom_stem", ShroomStem::new, AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> VOX_LOG = customRender(registerBlock("vox_log", VoxLog::new, AoAItemGroups.GENERATION_BLOCKS, 300), CUTOUT);
 	public static final RegistryObject<Block> CELEVE_STEM = registerBlock("celeve_stem", () -> new LogBlock(MaterialColor.WHITE_TERRACOTTA, MaterialColor.WHITE_TERRACOTTA), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> LUNAR_PILLAR = customRender(registerBlock("lunar_pillar", () -> new NonFullBlock(VoxelShapes.create(0.0625, 0, 0.0625, 0.9375, 1, 0.9375), BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 1.5f, 10f, SoundType.STONE)), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
-	public static final RegistryObject<Block> SPIKEY_PILLAR = customRender(registerBlock("spikey_pillar", () -> new NonFullBlock(VoxelShapes.create(0.1875, 0, 0.1875, 0.8125, 1, 0.8125), BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 1.5f, 10f, SoundType.STONE)), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
+	public static final RegistryObject<Block> LUNAR_PILLAR = customRender(registerBlock("lunar_pillar", () -> new NonFullBlock(VoxelShapes.create(0.0625, 0, 0.0625, 0.9375, 1, 0.9375), BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 1.5f, 10f, SoundType.STONE).notSolid()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
+	public static final RegistryObject<Block> SPIKEY_PILLAR = customRender(registerBlock("spikey_pillar", () -> new NonFullBlock(VoxelShapes.create(0.1875, 0, 0.1875, 0.8125, 1, 0.8125), BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 1.5f, 10f, SoundType.STONE).notSolid()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
 	public static final RegistryObject<Block> TOXIC_BLOCK = registerBlock("toxic_block", ToxicBlock::new, AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> TOXIC_WASTE = registerBlock("toxic_waste", ToxicWaste::new, AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> SHYRE_CLOUD = customRender(registerBlock("shyre_cloud", CloudBlock::new, AoAItemGroups.GENERATION_BLOCKS), TRANSLUCENT);

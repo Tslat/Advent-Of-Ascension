@@ -73,7 +73,7 @@ public abstract class BaseGun extends Item {
 		return firingDelay;
 	}
 
-	public double getDrawTime() {
+	private double getHolsterSpeed() {
 		return holsterMod;
 	}
 
@@ -188,10 +188,6 @@ public abstract class BaseGun extends Item {
 		tag.putByte("HideFlags", (byte)2);
 
 		return null;
-	}
-
-	private double getHolsterSpeed() {
-		return holsterMod;
 	}
 
 	@Override

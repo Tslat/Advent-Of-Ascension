@@ -3,6 +3,7 @@ package net.tslat.aoa3.client.gui.realmstone;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
@@ -130,8 +131,11 @@ public class BlankRealmstoneScreen extends Screen {
 		private RealmstoneWorldInsert(String worldNameKey, @Nullable String hoverTextKey, int posX, int posY, int uvX, int uvY) {
 			hoverTexts.add(LocaleUtil.getLocaleString(worldNameKey, TextFormatting.BLUE));
 
-			if (hoverTextKey != null)
-				hoverTexts.add(LocaleUtil.getLocaleString(hoverTextKey));
+			if (hoverTextKey != null) {
+				FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+
+				hoverTexts.add(fontRenderer.trimStringToWidth(LocaleUtil.getLocaleString(hoverTextKey), 200));
+			}
 
 			this.posX = posX;
 			this.posY = posY;

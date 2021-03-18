@@ -31,6 +31,30 @@ public abstract class StringUtil {
 		return buffer.toString();
 	}
 
+	public static String toSnakeCase(@Nonnull String str) {
+		int size = str.length();
+		StringBuilder buffer = new StringBuilder(size);
+
+		for (int i = 0; i < size; i++) {
+			char ch = str.charAt(i);
+
+			if (Character.isUpperCase(ch)) {
+				if (i > 0)
+					buffer.append('_');
+
+				buffer.append(Character.toLowerCase(ch));
+			}
+			else if (Character.isWhitespace(ch)) {
+				buffer.append('_');
+			}
+			else {
+				buffer.append(ch);
+			}
+		}
+
+		return buffer.toString();
+	}
+
 	public static boolean isSnakeCase(String str) {
 		return str != null && !str.isEmpty() && Pattern.matches("[a-z0-9_]", str);
 	}

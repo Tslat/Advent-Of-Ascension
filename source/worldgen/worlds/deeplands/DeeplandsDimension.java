@@ -94,6 +94,11 @@ public class DeeplandsDimension extends Dimension {
 		return false;
 	}
 
+	@Override
+	public int getActualHeight() {
+		return 128;
+	}
+
 	@Nullable
 	@Override
 	public IRenderHandler getSkyRenderer() {

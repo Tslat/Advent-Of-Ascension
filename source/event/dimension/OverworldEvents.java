@@ -253,13 +253,13 @@ public class OverworldEvents {
 
 				eventRand.setSeed(world.getSeed() + (world.getGameTime() - remainder));
 
-				if (RandomUtil.oneInNChance(15))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.soulScurryEventChance.get()))
 					events.add(Event.SOUL_SCURRY);
 
-				if (RandomUtil.oneInNChance(18))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.bloodHuntEventChance.get()))
 					events.add(Event.BLOOD_HUNT);
 
-				if (RandomUtil.oneInNChance(22))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.lunarInvasionEventChance.get()))
 					events.add(Event.LUNAR_INVASION);
 
 				if (world.getCurrentMoonPhaseFactor() == 1)
@@ -270,13 +270,13 @@ public class OverworldEvents {
 
 				eventRand.setSeed(world.getSeed() + (world.getGameTime() - remainder));
 
-				if (RandomUtil.oneInNChance(26))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.bigDayEventChance.get()))
 					events.add(Event.BIG_DAY);
 
-				if (RandomUtil.oneInNChance(30))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.creepDayEventChance.get()))
 					events.add(Event.CREEP_DAY);
 
-				if (RandomUtil.oneInNChance(25))
+				if (RandomUtil.percentChance(AoAConfig.SERVER.deathDayEventChance.get()))
 					events.add(Event.DEATH_DAY);
 			}
 		}

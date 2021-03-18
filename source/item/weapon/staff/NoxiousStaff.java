@@ -9,7 +9,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -63,7 +63,7 @@ public class NoxiousStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, BlockPos pos, LivingEntity shooter) {
+	public void doBlockImpact(BaseEnergyShot shot, Vec3d pos, LivingEntity shooter) {
 		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.world, shot.getPosX(), shot.getPosY(), shot.getPosZ());
 
 		cloud.setRadius(3);

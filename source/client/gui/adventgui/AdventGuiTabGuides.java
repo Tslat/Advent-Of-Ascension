@@ -149,6 +149,8 @@ public class AdventGuiTabGuides extends Screen {
 
 		@Override
 		public boolean handleMouseClick(double mouseX, double mouseY, int button) {
+			super.handleMouseClick(mouseX, mouseY, button);
+
 			int relativeMouseX = (int)mouseX - left + 2;
 
 			if (relativeMouseX < 0 || relativeMouseX > viewWidth - 6)

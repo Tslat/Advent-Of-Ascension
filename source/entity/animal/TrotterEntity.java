@@ -31,7 +31,7 @@ public class TrotterEntity extends AoAAnimal {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 25;
 	}
 
 	@Override

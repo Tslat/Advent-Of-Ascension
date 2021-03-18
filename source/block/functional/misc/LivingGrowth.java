@@ -34,8 +34,8 @@ public class LivingGrowth extends Block {
 			VoxelShapes.create(new AxisAlignedBB(0.1875, 0, 0.1875, 0.8125, 0.5, 0.8125)),
 			VoxelShapes.create(new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 0.875, 0.9375)),
 			VoxelShapes.create(new AxisAlignedBB(0.0625, 0, 0.0625, 0.9375, 1.4375, 0.9375)),
-			VoxelShapes.create(new AxisAlignedBB(0.001, 0, 0.001, 0.099, 1.625, 0.099)),
-			VoxelShapes.create(new AxisAlignedBB(0.001, 0, 0.001, 0.099, 1.625, 0.099))
+			VoxelShapes.create(new AxisAlignedBB(0.001, 0, 0.001, 0.99, 1.625, 0.99)),
+			VoxelShapes.create(new AxisAlignedBB(0.001, 0, 0.001, 0.99, 1.625, 0.99))
 	};
 
 	public LivingGrowth() {

@@ -226,7 +226,7 @@ public class WebReaperEntity extends AoARangedMob {
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
 
-		if (cause.getTrueSource() instanceof ServerPlayerEntity)
+		if (cause.getTrueSource() instanceof ServerPlayerEntity && stage >= 15)
 			AdvancementUtil.completeAdvancement((ServerPlayerEntity)cause.getTrueSource(), new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/reaper_reaper"), "nightmare_web_reaper_kill");
 	}
 

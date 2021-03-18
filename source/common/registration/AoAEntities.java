@@ -169,7 +169,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> DARK_BEAST = registerMob("dark_beast", DarkBeastEntity::new, 1.15f, 2.53125f, 2699834, 2632478);
 		public static final RegistryObject<EntityType<MonsterEntity>> DAWNLIGHT = registerMob("dawnlight", DawnlightEntity::new, 0.6875f, 1.375f, 10796201, 1948221);
 		public static final RegistryObject<EntityType<MonsterEntity>> DAYSEE = registerMob("daysee", DayseeEntity::new, 0.5f, 2.0625f, 11913662, 6272881);
-		public static final RegistryObject<EntityType<MonsterEntity>> DEAD_TREE = registerMob("dead_tree", DeadTreeEntity::new, 0.875f, 3f, 4470537, 2505992);
+		public static final RegistryObject<EntityType<MonsterEntity>> DEAD_TREE = registerMob("dead_tree", DeadTreeEntity::new, 0.875f, 3f, 4470537, 5192459);
 		public static final RegistryObject<EntityType<MonsterEntity>> DEATH_HUNTER = registerMob("death_hunter", DeathHunterEntity::new, 1.5f, 3.125f, 6291456, 14680832);
 		public static final RegistryObject<EntityType<MonsterEntity>> DEINOTHERIUM = registerMob("deinotherium", DeinotheriumEntity::new, 1.7f, 3f, 12040114, 10855832);
 		public static final RegistryObject<EntityType<MonsterEntity>> DEMON_REAPER = registerMob("demon_reaper", DemonReaperEntity::new, 0.9f, 2.4f, 1968647, 13848626);
@@ -432,7 +432,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> TORTIONE = registerMob("tortione", TortioneEntity::new, 1.75f, 1.875f, 4415509, 8691731);
 		public static final RegistryObject<EntityType<MonsterEntity>> TOXXULOUS = registerMob("toxxulous", ToxxulousEntity::new, 0.75f, 1.125f, 3165970, 2041878);
 		public static final RegistryObject<EntityType<MonsterEntity>> TRACKER = registerMob("tracker", TrackerEntity::new, 0.75f, 1.125f, 15550219, 15706387);
-		public static final RegistryObject<EntityType<MonsterEntity>> TREE_SPIRIT = registerMob("tree_spirit", TreeSpiritEntity::new, 1.0f, 3.5f);
+		public static final RegistryObject<EntityType<MonsterEntity>> TREE_SPIRIT = registerMob("tree_spirit", TreeSpiritEntity::new, 1.0f, 3.5f, 4470537, 2505992);
 		public static final RegistryObject<EntityType<MonsterEntity>> TRICKSTER = registerMob("trickster", TricksterEntity::new, 0.6f, 1.75f, 2237217, 7501167);
 		public static final RegistryObject<EntityType<MonsterEntity>> TRICKSTER_CLONE = registerMob("trickster_clone", TricksterCloneEntity::new, 0.6f, 1.75f);
 		public static final RegistryObject<EntityType<MonsterEntity>> TRICLOPS = registerMob("triclops", TriclopsEntity::new, 0.6f, 2.125f, 5311500, 3353644);

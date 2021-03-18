@@ -33,11 +33,11 @@ public class ToyMerchantEntity extends AoATrader {
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 5), new ItemStack(AoAItems.BALLOON.get(), 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 46), new ItemStack(AoAItems.GRAVITATOR.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 15), new ItemStack(AoAItems.TOY_GYROCOPTER.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 64), new ItemStack(AoAItems.CIRCUS_COIN.get(), 64), new ItemStack(AoAItems.SMILEY_UPGRADE_KIT.get()), 0, 1));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 15), new ItemStack(AoAWeapons.CONFETTI_CLUSTER.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 25), new ItemStack(AoAWeapons.BALLOON_BOMBER.get())));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 2), new ItemStack(AoAItems.BALLOON.get(), 10)));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 30), new ItemStack(AoAItems.GRAVITATOR.get())));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 10), new ItemStack(AoAItems.TOY_GYROCOPTER.get())));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 45), ItemStack.EMPTY, new ItemStack(AoAItems.SMILEY_UPGRADE_KIT.get()), 0, 1));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 12), new ItemStack(AoAWeapons.CONFETTI_CLUSTER.get())));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 18), new ItemStack(AoAWeapons.BALLOON_BOMBER.get())));
 	}
 }

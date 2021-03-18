@@ -2,7 +2,6 @@ package net.tslat.aoa3.worldgen.worlds.ancientcavern;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
@@ -106,10 +105,5 @@ public class AncientCavernDimension extends Dimension {
 	@Override
 	public boolean canDoRainSnowIce(Chunk chunk) {
 		return false;
-	}
-
-	@Override
-	public boolean canMineBlock(PlayerEntity player, BlockPos pos) {
-		return player.isCreative();
 	}
 }

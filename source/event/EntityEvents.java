@@ -22,6 +22,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.command.StructureCommand;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -130,6 +131,13 @@ public class EntityEvents {
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent ev) {
 		if (!ev.getWorld().isRemote) {
+			if (StructureCommand.isConverting) {
+				StructureCommand.conversionEntityConsumer.accept(ev.getEntity());
+				ev.setCanceled(true);
+
+				return;
+			}
+
 			if (ev.getEntity() instanceof FishingBobberEntity) {
 				FishingBobberEntity hook = (FishingBobberEntity)ev.getEntity();
 				ServerPlayerEntity fisher = (ServerPlayerEntity)hook.getAngler();

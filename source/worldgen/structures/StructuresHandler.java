@@ -37,7 +37,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 public class StructuresHandler {
-	private static final TreeMap<String, AoAStructure> structures = new TreeMap<String, AoAStructure>();
+	public static final TreeMap<String, AoAStructure> structures = new TreeMap<String, AoAStructure>();
 	public static final AoAStructure EMPTY_STRUCTURE = new AoAStructure.EmptyStructure();
 
 	protected static void registerStructure(AoAStructure structure) {

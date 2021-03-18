@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.tslat.aoa3.command.StructureCommand;
 import net.tslat.aoa3.worldgen.WorldGenerator;
 
 import java.util.Random;
@@ -45,6 +46,20 @@ public abstract class AoAStructure extends WorldGenerator {
 		if (rand == null)
 			rand = new Random();
 
+		if (StructureCommand.isConverting) {
+			rand = new Random() {
+				@Override
+				public boolean nextBoolean() {
+					return true;
+				}
+
+				@Override
+				public int nextInt(int val) {
+					return 0;
+				}
+			};
+		}
+
         build(world, rand, new BlockPos.Mutable(position));
         doPostBuildOps(world, rand, position);
         spawnEntities(world, rand, position);
@@ -59,11 +74,23 @@ public abstract class AoAStructure extends WorldGenerator {
     protected void spawnEntities(IWorld world, Random rand, BlockPos basePos) {}
 
     public final void addBlock(IWorld world, BlockPos pos, int xCoordOffset, int yCoordOffset, int zCoordOffset, BlockState block) {
+    	if (StructureCommand.isConverting) {
+			StructureCommand.conversionStateConsumer.accept(block, new BlockPos(xCoordOffset, yCoordOffset, zCoordOffset));
+
+			return;
+	    }
+
     	if (replacesBlocks() || world.isAirBlock(pos.add(xCoordOffset, yCoordOffset, zCoordOffset)))
     		world.setBlockState(pos.add(xCoordOffset, yCoordOffset, zCoordOffset), block, isWorldGen ? 2 : 3);
     }
 
     protected void initSpawner(IWorld world, BlockPos pos, EntityType<?> entityType) {
+    	if (StructureCommand.isConverting) {
+    		StructureCommand.conversionSpawnerConsumer.accept(entityType, pos);
+
+    		return;
+	    }
+
     	TileEntity spawnerTileEntity = world.getTileEntity(pos);
 
     	if (spawnerTileEntity instanceof MobSpawnerTileEntity)
@@ -72,6 +99,12 @@ public abstract class AoAStructure extends WorldGenerator {
 
     protected void assignLootChests(IWorld world, Random rand, ResourceLocation lootTable, BlockPos... positions) {
     	for (BlockPos pos : positions) {
+    		if (StructureCommand.isConverting) {
+    			StructureCommand.conversionChestConsumer.accept(lootTable, pos);
+
+    			continue;
+		    }
+
     		TileEntity tileEntity = world.getTileEntity(pos);
 
     		if (tileEntity instanceof ChestTileEntity)

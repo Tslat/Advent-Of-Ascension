@@ -80,7 +80,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 
 	@Override
 	protected double getBaseArmor() {
-		return 4;
+		return 1;
 	}
 
 	public int getStartLandingTicks() {

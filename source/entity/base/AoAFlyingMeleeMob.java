@@ -56,7 +56,7 @@ public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob {
 
 		getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage() * (AoAConfig.COMMON.hardcoreMode.get() ? 1.5f : 1f));
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(36);
+		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24);
 		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
 		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (AoAConfig.COMMON.hardcoreMode.get() ? 2f : 1f));
 		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());

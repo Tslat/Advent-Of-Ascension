@@ -173,7 +173,7 @@ public class SkillsRenderer {
 	}
 
 	private static int getPotionGuiRenderOffset(Minecraft mc) {
-		if (mc.player.getActivePotionEffects().isEmpty())
+		if (mc.player.getActivePotionEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
 			return 0;
 
 		int effectRenderYOffset = 0;

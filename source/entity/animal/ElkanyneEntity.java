@@ -28,7 +28,7 @@ public class ElkanyneEntity extends AoAAnimal {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 40;
+		return 25;
 	}
 
 	@Override

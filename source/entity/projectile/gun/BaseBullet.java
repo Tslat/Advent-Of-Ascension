@@ -223,7 +223,7 @@ public class BaseBullet extends ThrowableEntity implements HardProjectile {
 		AxisAlignedBB boundingBox;
 
 		if (ticksExisted == 1 && !(weapon instanceof BaseThrownWeapon)) {
-			float mod = weapon instanceof BaseSniper ? 0.1f : 0.5f;
+			float mod = weapon instanceof BaseSniper ? 0.05f : 0.5f;
 
 			position = new Vec3d(getPosX() - motion.getX() * mod, getPosY() - motion.getY() * mod, getPosZ() - motion.getZ() * mod);
 			boundingBox = new AxisAlignedBB(position.getX(), position.getY(), position.getZ(), getPosX(), getPosY(), getPosZ());

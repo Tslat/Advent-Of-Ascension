@@ -129,7 +129,7 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 		if (!world.isRemote) {
 			if (weapon != null && isAlive()) {
 				if (result.getType() == RayTraceResult.Type.BLOCK) {
-					weapon.doBlockImpact(this, ((BlockRayTraceResult)result).getPos(), owner);
+					weapon.doBlockImpact(this, result.getHitVec(), owner);
 				}
 				else if (result.getType() == RayTraceResult.Type.ENTITY) {
 					weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), owner);

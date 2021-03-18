@@ -19,7 +19,7 @@ public class AoACommand {
 				.then(EventCommand.register(dispatcher))
 				.then(PortalResetCommand.register(dispatcher))
 				.then(PlayerCommand.register(dispatcher))
-				//.then(StructureCommand.register(dispatcher))
+				.then(StructureCommand.register(dispatcher))
 				.then(WikiCommand.register(dispatcher));
 
 		dispatcher.register(cmd);

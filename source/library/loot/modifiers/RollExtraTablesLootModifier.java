@@ -44,7 +44,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 			}
 
 			if (compatible && table != LootTable.EMPTY_LOOT_TABLE)
-				generatedLoot.addAll(table.generate(context));
+				table.generate(context, generatedLoot::add);
 		}
 
 		return generatedLoot;

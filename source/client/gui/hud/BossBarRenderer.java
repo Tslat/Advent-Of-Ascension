@@ -28,7 +28,7 @@ public class BossBarRenderer {
 			String name;
 			String id;
 
-			if (nameComponent.getSiblings().isEmpty())
+			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof TranslationTextComponent))
 				return;
 
 			name = nameComponent.getSiblings().get(0).getFormattedText();

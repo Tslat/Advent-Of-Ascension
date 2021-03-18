@@ -384,7 +384,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, worldHeight, z);
+				checkPos.setPos(x, posY - searchRadius, z);
 
 				while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() != getPortalBlock() && checkPos.getY() >= 0) {
 					;
@@ -402,7 +402,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, posY, z);
+				checkPos.setPos(x, posY + searchRadius, z);
 
 				while (world.getBlockState(checkPos.move(Direction.UP)).getBlock() != getPortalBlock() && checkPos.getY() < worldHeight) {
 					;
@@ -415,7 +415,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		return null;
 	}
-	
+
 	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
 		BlockPos.Mutable checkPos = new BlockPos.Mutable();
 		int posX = (int)Math.floor(entity.getPosX());
@@ -616,9 +616,34 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, posY - 1, z);
+				checkPos.setPos(x, posY - searchRadius, z);
 
 				while (world.isAirBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= 0) {
+					;
+				}
+
+				int y = checkPos.getY();
+				cleanSpawn = true;
+
+				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
+					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
+						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
+							if (!world.isAirBlock(checkPos.setPos(x2, y2, z2)))
+								cleanSpawn = false;
+						}
+					}
+				}
+
+				if (cleanSpawn && y >= 0)
+					return checkPos.setPos(x, y + 2, z).toImmutable();
+			}
+		}
+
+		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
+			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
+				checkPos.setPos(x, worldHeight - 3, z);
+
+				while (world.isAirBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= posY + searchRadius) {
 					;
 				}
 

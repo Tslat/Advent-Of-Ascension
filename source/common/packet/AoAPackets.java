@@ -32,7 +32,8 @@ public class AoAPackets {
 	}
 
 	public static void messagePlayer(ServerPlayerEntity player, AoAPacket packet) {
-		INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
+		if (player.connection != null)
+			INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}
 
 	public static void messageAllPlayers(AoAPacket packet) {

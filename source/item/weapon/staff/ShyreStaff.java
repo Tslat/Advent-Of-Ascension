@@ -1,6 +1,6 @@
 package net.tslat.aoa3.item.weapon.staff;
 
-import net.minecraft.block.material.Material;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -48,21 +49,26 @@ public class ShyreStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, LivingEntity shooter) {
-		shot.setMotion(shot.getMotion().mul(-0.1, -0.1, -0.1));
+	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
+		World world = shooter.world;
+		BlockPos.Mutable testPos = new BlockPos.Mutable(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+		BlockState state = world.getBlockState(testPos);
+		Vec3d shotMotion = shot.getMotion();
+		Vec3d testVec = hitPos;
+		int tests = 0;
 
-		block = new BlockPos(shot.getPosX(), shot.getPosY(), shot.getPosZ());
-		Material blockMaterial = shooter.world.getBlockState(block).getMaterial();
-
-		while (blockMaterial != Material.AIR) {
-			block = block.up();
-			blockMaterial = shooter.world.getBlockState(block).getMaterial();
+		while (tests <= 10 && !(state = world.getBlockState(testPos)).getBlock().isAir(state, world, testPos)) {
+			testVec = testVec.subtract(shotMotion.getX() * 0.15f, shotMotion.getY() * 0.15f, shotMotion.getZ() * 0.15f);
+			testPos.setPos(testVec.getX() + shooter.getWidth(), testVec.getY(), testVec.getZ() + shooter.getWidth());
+			tests++;
 		}
 
-		shooter.setPositionAndUpdate(block.getX(), block.getY(), block.getZ());
+		if (state.getBlock().isAir(state, world, testPos)) {
+			shooter.setPositionAndUpdate(testVec.getX(), testVec.getY(), testVec.getZ());
 
-		if (shooter instanceof ServerPlayerEntity && shooter.world.getDimension().getType() == AoADimensions.LUNALUS.type())
-			AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
+			if (shooter instanceof ServerPlayerEntity && shooter.world.getDimension().getType() == AoADimensions.LUNALUS.type())
+				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
+		}
 	}
 
 	@Override

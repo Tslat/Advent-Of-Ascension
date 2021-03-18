@@ -33,7 +33,7 @@ public class CorateeEntity extends AoAAnimal {
 
 	@Override
 	protected double getBaseMaxHealth() {
-		return 45;
+		return 27;
 	}
 
 	@Override

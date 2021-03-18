@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -59,7 +60,7 @@ public class CelestialStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, BlockPos block, LivingEntity shooter) {
+	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
 		WorldUtil.createExplosion(shooter, shot.world, shot, 2.5f);
 	}
 

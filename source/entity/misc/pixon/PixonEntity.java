@@ -103,11 +103,6 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean canDespawn(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
     protected float getStandingEyeHeight(Pose pose, EntitySize size) {
         return 0.65f;
     }

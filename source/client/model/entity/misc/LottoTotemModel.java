@@ -117,6 +117,6 @@ public class LottoTotemModel extends EntityModel<Entity> {
 
 	@Override
 	public void setRotationAngles(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		coin.rotateAngleY = limbSwingAmount * 0.045f;
+		coin.rotateAngleY = (ageInTicks * 0.045f) % 360;
 	}
 }

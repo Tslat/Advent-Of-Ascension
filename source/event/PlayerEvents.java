@@ -119,6 +119,16 @@ public class PlayerEvents {
 	}
 
 	@SubscribeEvent
+	public static void onEnderPearl(final EnderTeleportEvent ev) {
+		if (!ev.getEntityLiving().world.isRemote() && ev.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity pl = (PlayerEntity)ev.getEntityLiving();
+
+			if (!pl.world.getDimension().getType().isVanilla() && ev.getTargetY() >= pl.world.getActualHeight())
+				ev.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
 	public static void onPlayerLevelUp(final PlayerLevelChangeEvent ev) {
 		if (ev.getSkill() == Skills.INNERVATION) {
 			double healthBuff = InnervationUtil.getHealthBuff(ev.getNewLevel());
