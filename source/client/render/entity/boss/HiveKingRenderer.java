@@ -17,8 +17,8 @@ public class HiveKingRenderer extends MobRenderer<HiveKingEntity, EntityModel<Hi
 	}
 
 	@Override
-	protected void preRenderCallback(HiveKingEntity hiveKing, MatrixStack matrix, float partialTicks) {
-		if (hiveKing.ticksExisted < 1000) {
+	protected void scale(HiveKingEntity hiveKing, MatrixStack matrix, float partialTicks) {
+		if (hiveKing.tickCount < 1000) {
 			float scaleFactor = hiveKing.getGrowthPercent() / 100f;
 
 			matrix.scale(scaleFactor, scaleFactor, scaleFactor);
@@ -26,7 +26,7 @@ public class HiveKingRenderer extends MobRenderer<HiveKingEntity, EntityModel<Hi
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(HiveKingEntity entity) {
+	public ResourceLocation getTextureLocation(HiveKingEntity entity) {
 		return TEXTURE;
 	}
 }

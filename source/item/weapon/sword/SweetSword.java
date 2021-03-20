@@ -30,14 +30,14 @@ public class SweetSword extends BaseSword {
 			if (!populated)
 				populateCandyList();
 
-			target.entityDropItem(candyList.get(random.nextInt(candyList.size())), target.getHeight() / 2f);
+			target.spawnAtLocation(candyList.get(random.nextInt(candyList.size())), target.getBbHeight() / 2f);
 		}
 	}
 
 	private static void populateCandyList() {
 		candyList.add(new ItemStack(Items.SUGAR, 3));
 
-		AoATags.Items.CANDY.getAllElements().forEach(item -> candyList.add(new ItemStack(item)));
+		AoATags.Items.CANDY.getValues().forEach(item -> candyList.add(new ItemStack(item)));
 
 		populated = true;
 	}
@@ -50,7 +50,7 @@ public class SweetSword extends BaseSword {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

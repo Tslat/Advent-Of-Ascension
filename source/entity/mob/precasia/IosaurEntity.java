@@ -28,26 +28,6 @@ public class IosaurEntity extends AoAMeleeMob {
 		return 1.59375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 78;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

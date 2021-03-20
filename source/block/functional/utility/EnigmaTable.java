@@ -20,21 +20,21 @@ import net.tslat.aoa3.util.RandomUtil;
 
 public class EnigmaTable extends Block {
 	public EnigmaTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLACK_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide) {
 			for (int i = 0; i < 4; i++) {
 				ItemEntity unchargedStone = new ItemEntity(world, pos.getX(), pos.getY() + 0.2, pos.getZ(), new ItemStack(AoAItems.UNCHARGED_STONE.get()));
 
-				unchargedStone.setPickupDelay(10);
-				unchargedStone.addVelocity(RandomUtil.randomGaussianValue(), 1 + RandomUtil.randomValueUpTo(1d), RandomUtil.randomGaussianValue());
-				world.addEntity(unchargedStone);
+				unchargedStone.setPickUpDelay(10);
+				unchargedStone.push(RandomUtil.randomGaussianValue(), 1 + RandomUtil.randomValueUpTo(1d), RandomUtil.randomGaussianValue());
+				world.addFreshEntity(unchargedStone);
 			}
 
-			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 
 		return ActionResultType.SUCCESS;

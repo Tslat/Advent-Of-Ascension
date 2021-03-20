@@ -16,12 +16,12 @@ public class TerradonRenderer extends AoAMobRenderer {
 	}
 
 	@Override
-	protected void preRenderCallback(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
 		matrix.scale(2, 2, 2);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity entity) {
-		return entity.isInvulnerable() ? invulnTexture : super.getEntityTexture(entity);
+	public ResourceLocation getTextureLocation(MobEntity entity) {
+		return entity.isInvulnerable() ? invulnTexture : super.getTextureLocation(entity);
 	}
 }

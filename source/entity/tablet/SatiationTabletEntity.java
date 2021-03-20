@@ -18,8 +18,8 @@ public class SatiationTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && (player.getFoodStats().needFood() || player.getFoodStats().getSaturationLevel() <= 0))) {
-			pl.getFoodStats().addStats(1, 2f);
+		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && (player.getFoodData().needsFood() || player.getFoodData().getSaturationLevel() <= 0))) {
+			pl.getFoodData().eat(1, 2f);
 		}
 	}
 

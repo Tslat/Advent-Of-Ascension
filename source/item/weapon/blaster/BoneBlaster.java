@@ -21,6 +21,6 @@ public class BoneBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new BonePelletEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new BonePelletEntity(shooter, this, 60));
 	}
 }

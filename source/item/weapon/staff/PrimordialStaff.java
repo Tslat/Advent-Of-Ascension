@@ -41,7 +41,7 @@ public class PrimordialStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new PrimordialShotEntity(caster, this, 60));
+		world.addFreshEntity(new PrimordialShotEntity(caster, this, 60));
 	}
 
 	@Override
@@ -61,8 +61,8 @@ public class PrimordialStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.WITHERS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

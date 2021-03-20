@@ -29,6 +29,7 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, CommonConfigSyncPacket.class, CommonConfigSyncPacket::encode, CommonConfigSyncPacket::decode, CommonConfigSyncPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, WikiSearchPacket.class, WikiSearchPacket::encode, WikiSearchPacket::decode, WikiSearchPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, MusicPacket.class, MusicPacket::encode, MusicPacket::decode, MusicPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, EntityStatsPacket.class, EntityStatsPacket::encode, EntityStatsPacket::decode, EntityStatsPacket::receiveMessage);
 	}
 
 	public static void messagePlayer(ServerPlayerEntity player, AoAPacket packet) {

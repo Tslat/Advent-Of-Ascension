@@ -16,7 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
@@ -27,7 +27,7 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public class MushroomSpiderEntity extends AoAMeleeMob {
-	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(MushroomSpiderEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(MushroomSpiderEntity.class, DataSerializers.BYTE);
 
 	public MushroomSpiderEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -36,8 +36,8 @@ public class MushroomSpiderEntity extends AoAMeleeMob {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new SwimGoal(this));
-		goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4f));
-		goalSelector.addGoal(4, new MeleeAttackGoal(this, 1, true));
+		goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4f));
+		goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, true));
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
@@ -47,9 +47,9 @@ public class MushroomSpiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(CLIMBING, (byte)0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CLIMBING, (byte)0);
 	}
 
 	@Override
@@ -58,28 +58,8 @@ public class MushroomSpiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World world) {
+	protected PathNavigator createNavigation(World world) {
 		return new ClimberPathNavigator(this, world);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 61d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28d;
 	}
 
 	@Nullable
@@ -102,39 +82,39 @@ public class MushroomSpiderEntity extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.ENTITY_SPIDER_STEP;
+		return SoundEvents.SPIDER_STEP;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
-	public void setMotionMultiplier(BlockState state, Vec3d motionMultiplierIn) {
+	public void makeStuckInBlock(BlockState state, Vector3d motionMultiplierIn) {
 		if (state.getBlock() != Blocks.COBWEB)
-			super.setMotionMultiplier(state, motionMultiplierIn);
+			super.makeStuckInBlock(state, motionMultiplierIn);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote)
-			setBesideClimbableBlock(this.collidedHorizontally);
+		if (!level.isClientSide)
+			setBesideClimbableBlock(this.horizontalCollision);
 	}
 
 	@Override
-	public boolean isOnLadder() {
+	public boolean onClimbable() {
 		return isBesideClimbableBlock();
 	}
 
 	public boolean isBesideClimbableBlock() {
-		return (this.dataManager.get(CLIMBING) & 1) != 0;
+		return (this.entityData.get(CLIMBING) & 1) != 0;
 	}
 
 	public void setBesideClimbableBlock(boolean climbing) {
-		byte climbingBit = this.dataManager.get(CLIMBING);
+		byte climbingBit = this.entityData.get(CLIMBING);
 
 		if (climbing) {
 			climbingBit = (byte)(climbingBit | 1);
@@ -143,7 +123,7 @@ public class MushroomSpiderEntity extends AoAMeleeMob {
 			climbingBit = (byte)(climbingBit & -2);
 		}
 
-		this.dataManager.set(CLIMBING, climbingBit);
+		this.entityData.set(CLIMBING, climbingBit);
 	}
 
 	@Override

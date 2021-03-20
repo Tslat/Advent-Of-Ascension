@@ -23,26 +23,26 @@ public class ShroomusSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (attackCooldown > 0.75) {
-			Collection<EffectInstance> effects = attacker.getActivePotionEffects();
+			Collection<EffectInstance> effects = attacker.getActiveEffects();
 
 			if (!effects.isEmpty()) {
 				ArrayList<EffectInstance> removableEffects = new ArrayList<EffectInstance>(effects.size());
 
 				for (EffectInstance effect : effects) {
-					if (!effect.getPotion().isBeneficial())
+					if (!effect.getEffect().isBeneficial())
 						removableEffects.add(effect);
 				}
 
 				for (EffectInstance effect : removableEffects) {
-					target.addPotionEffect(effect);
-					attacker.removePotionEffect(effect.getPotion());
+					target.addEffect(effect);
+					attacker.removeEffect(effect.getEffect());
 				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

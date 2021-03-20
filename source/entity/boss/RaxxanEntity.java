@@ -26,12 +26,12 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public class RaxxanEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public RaxxanEntity(HarkosEntity raxxan) {
-		this(AoAEntities.Mobs.RAXXAN.get(), raxxan.world);
+	public RaxxanEntity(HarkosEntity harkos) {
+		this(AoAEntities.Mobs.RAXXAN.get(), harkos.level);
 
-		setLocationAndAngles(raxxan.getPosX(), raxxan.getPosY(), raxxan.getPosZ(), raxxan.rotationYaw, raxxan.rotationPitch);
+		moveTo(harkos.getX(), harkos.getY(), harkos.getZ(), harkos.yRot, harkos.xRot);
 	}
 
 	public RaxxanEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -39,32 +39,12 @@ public class RaxxanEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		this.setAIMoveSpeed(1.4f);
+		this.setSpeed(1.4f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 2.009375f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -80,7 +60,7 @@ public class RaxxanEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -88,70 +68,70 @@ public class RaxxanEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote) {
-			if (rand.nextInt(100) == 0) {
-				PlayerEntity nearestTarget = world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 30, false);
+		if (!level.isClientSide) {
+			if (random.nextInt(100) == 0) {
+				PlayerEntity nearestTarget = level.getNearestPlayer(getX(), getY(), getZ(), 30, false);
 
 				if (nearestTarget != null && !nearestTarget.isCreative()) {
-					EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.NAUSEA, 100));
-					world.playSound(null, getPosition(), AoASounds.ENTITY_VOXXULON_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+					EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.CONFUSION, 100));
+					level.playSound(null, blockPosition(), AoASounds.ENTITY_VOXXULON_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 				}
 			}
-			else if (rand.nextInt(100) == 0) {
+			else if (random.nextInt(100) == 0) {
 				EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 25));
 				EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 25));
 			}
-			else if (rand.nextInt(200) == 0) {
+			else if (random.nextInt(200) == 0) {
 				heal(100);
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			OkazorEntity okazor = new OkazorEntity(this);
 
-			world.addEntity(okazor);
+			level.addFreshEntity(okazor);
 			remove();
 		}
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.PRIMORDIAL_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.PRIMORDIAL_MUSIC.getId()));
 		bossInfo.removePlayer(player);

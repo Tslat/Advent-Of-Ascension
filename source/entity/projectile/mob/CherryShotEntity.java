@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class CherryShotEntity extends BaseMobProjectile {
 	public CherryShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -16,11 +18,11 @@ public class CherryShotEntity extends BaseMobProjectile {
 	}
 
 	public CherryShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.CHERRY_SHOT.get(), shooter.world, shooter, projectileType);
+		super(AoAEntities.Projectiles.CHERRY_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.015f;
 	}
 }

@@ -30,12 +30,12 @@ public class IonRevolver extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target instanceof LivingEntity)
-			DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 0.4f, shooter.getPosX() - target.getPosX(), shooter.getPosZ() - target.getPosZ());
+			DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 0.4f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.KNOCKBACK, LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

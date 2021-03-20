@@ -25,27 +25,27 @@ public class CrystalBox extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (player instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)player;
 
-			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.world, new ResourceLocation(AdventOfAscension.MOD_ID, "items/crystal_box"), LootUtil.getGiftContext((ServerWorld)pl.world, pl.getPosition(), pl)));
+			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.level, new ResourceLocation(AdventOfAscension.MOD_ID, "items/crystal_box"), LootUtil.getGiftContext((ServerWorld)pl.level, pl.position(), pl)));
 
 			if (!pl.isCreative())
 				heldStack.shrink(1);
 
-			pl.container.detectAndSendChanges();
+			pl.inventoryMenu.broadcastChanges();
 
-			return ActionResult.resultSuccess(heldStack);
+			return ActionResult.success(heldStack);
 		}
 
-		return ActionResult.resultPass(heldStack);
+		return ActionResult.pass(heldStack);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -19,7 +19,7 @@ public class PortalResetCommand implements Command<CommandSource> {
 	public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
 		LiteralArgumentBuilder<CommandSource> builder = Commands.literal("portalreset").executes(CMD);
 
-		builder.then(Commands.argument("player", EntityArgument.player()).requires(command -> command.hasPermissionLevel(0))
+		builder.then(Commands.argument("player", EntityArgument.player()).requires(command -> command.hasPermission(0))
 				.executes(context -> resetPortals(context, EntityArgument.getPlayer(context, "player"))));
 
 		return builder;
@@ -28,7 +28,7 @@ public class PortalResetCommand implements Command<CommandSource> {
 	private static int resetPortals(CommandContext<CommandSource> cmd, Entity entity) throws CommandSyntaxException {
 		ServerPlayerEntity pl = (ServerPlayerEntity)entity;
 
-		if (pl != cmd.getSource().getEntity() && !cmd.getSource().hasPermissionLevel(4))
+		if (pl != cmd.getSource().getEntity() && !cmd.getSource().hasPermission(4))
 			throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 		AoACommand.feedback(cmd.getSource(), "PortalReset", "--", AoACommand.CommandFeedbackType.INFO);

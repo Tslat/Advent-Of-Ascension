@@ -23,29 +23,14 @@ public class CraggyEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 180;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.0d;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (super.attackEntityAsMob(entity)) {
-			entity.setFire(5);
+	public boolean doHurtTarget(Entity entity) {
+		if (super.doHurtTarget(entity)) {
+			entity.setSecondsOnFire(5);
 
 			return true;
 		}

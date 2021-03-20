@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.container;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -17,16 +18,16 @@ public class InfusionTableScreen extends ContainerScreen<InfusionTableContainer>
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrix);
+		super.render(matrix, mouseX, mouseY, partialTicks);
+		renderTooltip(matrix, mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1f,1f, 1f, 1f);
-		Minecraft.getInstance().getTextureManager().bindTexture(textures);
-		RenderUtil.renderCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
+		Minecraft.getInstance().getTextureManager().bind(textures);
+		RenderUtil.renderCustomSizedTexture(matrix, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 	}
 }

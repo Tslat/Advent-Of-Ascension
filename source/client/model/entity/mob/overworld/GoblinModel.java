@@ -17,39 +17,39 @@ public class GoblinModel extends EntityModel<MobEntity> {
 	private final ModelRenderer rightArm;
 
 	public GoblinModel() {
-		this.textureWidth = 64;
-		this.textureHeight = 32;
+		this.texWidth = 64;
+		this.texHeight = 32;
 		ModelRenderer leftEar = new ModelRenderer(this, 44, 0);
-		leftEar.setRotationPoint(0.0F, 3.0F, 0.0F);
+		leftEar.setPos(0.0F, 3.0F, 0.0F);
 		leftEar.addBox(-8.0F, -12.0F, 2.0F, 4, 6, 1, 0.0F);
 		this.setRotation(leftEar, 0.0F, 0.0F, 0.8922123136195012F);
 		this.head = new ModelRenderer(this, 0, 0);
-		this.head.setRotationPoint(0.0F, 3.0F, 0.0F);
+		this.head.setPos(0.0F, 3.0F, 0.0F);
 		this.head.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
 		ModelRenderer nose = new ModelRenderer(this, 33, 8);
-		nose.setRotationPoint(0.0F, 3.0F, -1.0F);
+		nose.setPos(0.0F, 3.0F, -1.0F);
 		nose.addBox(-1.0F, -7.0F, -5.0F, 2, 5, 2, 0.0F);
 		this.rightLeg = new ModelRenderer(this, 18, 18);
-		this.rightLeg.setRotationPoint(-2.0F, 14.0F, 1.0F);
+		this.rightLeg.setPos(-2.0F, 14.0F, 1.0F);
 		this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 10, 4, 0.0F);
 		this.rightArm = new ModelRenderer(this, 0, 18);
-		this.rightArm.setRotationPoint(-4.0F, 4.0F, 1.0F);
+		this.rightArm.setPos(-4.0F, 4.0F, 1.0F);
 		this.rightArm.addBox(-4.0F, -1.0F, -2.0F, 4, 10, 4, 0.0F);
 		this.leftLeg = new ModelRenderer(this, 18, 18);
-		this.leftLeg.setRotationPoint(2.0F, 14.0F, 1.0F);
+		this.leftLeg.setPos(2.0F, 14.0F, 1.0F);
 		this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 10, 4, 0.0F);
 		this.body = new ModelRenderer(this, 36, 15);
-		this.body.setRotationPoint(0.0F, 3.0F, 1.0F);
+		this.body.setPos(0.0F, 3.0F, 1.0F);
 		this.body.addBox(-4.0F, 0.0F, -3.0F, 8, 11, 6, 0.0F);
 		ModelRenderer rightEar = new ModelRenderer(this, 33, 0);
-		rightEar.setRotationPoint(0.0F, 3.0F, 0.0F);
+		rightEar.setPos(0.0F, 3.0F, 0.0F);
 		rightEar.addBox(4.0F, -12.0F, 2.0F, 4, 6, 1, 0.0F);
 		this.setRotation(rightEar, 0.0F, 0.0F, -0.8922123136195012F);
 		this.leftArm = new ModelRenderer(this, 0, 18);
-		this.leftArm.setRotationPoint(4.0F, 4.0F, 1.0F);
+		this.leftArm.setPos(4.0F, 4.0F, 1.0F);
 		this.leftArm.addBox(0.0F, -1.0F, -2.0F, 4, 10, 4, 0.0F);
 		this.Staff = new ModelRenderer(this, 59, 0);
-		this.Staff.setRotationPoint(-4.0F, 4.0F, 1.0F);
+		this.Staff.setPos(-4.0F, 4.0F, 1.0F);
 		this.Staff.addBox(-2.5F, -9.0F, -5.0F, 1, 20, 1, 0.0F);
 		this.setRotation(Staff, 0.43632999062538147F, 0.0F, 0.0F);
 		this.head.addChild(leftEar);
@@ -58,7 +58,7 @@ public class GoblinModel extends EntityModel<MobEntity> {
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		body.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		rightLeg.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		leftLeg.render(matrix, buffer, light, overlay, red, green, blue, alpha);
@@ -69,22 +69,22 @@ public class GoblinModel extends EntityModel<MobEntity> {
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
+		model.xRot = x;
+		model.yRot = y;
+		model.zRot = z;
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		head.rotateAngleY = netHeadYaw / (float)(180f / Math.PI);
-		rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f;
-		rightArm.rotateAngleZ = 0.0f;
-		Staff.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f + 0.43633f;
-		Staff.rotateAngleZ = 0.0f;
-		leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbSwingAmount * 0.5f;
-		leftArm.rotateAngleZ = 0.0f;
-		rightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		rightLeg.rotateAngleY = 0.0f;
-		leftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		head.yRot = netHeadYaw / (float)(180f / Math.PI);
+		rightArm.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f;
+		rightArm.zRot = 0.0f;
+		Staff.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f + 0.43633f;
+		Staff.zRot = 0.0f;
+		leftArm.xRot = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbSwingAmount * 0.5f;
+		leftArm.zRot = 0.0f;
+		rightLeg.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+		rightLeg.yRot = 0.0f;
+		leftLeg.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
 	}
 }

@@ -23,26 +23,6 @@ public class FungockEntity extends AoAMeleeMob {
 		return 1.1875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

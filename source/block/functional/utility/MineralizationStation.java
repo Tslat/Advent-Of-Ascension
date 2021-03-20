@@ -19,13 +19,13 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class MineralizationStation extends Block {
 	public MineralizationStation() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BROWN, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_BROWN, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote && !player.getHeldItem(hand).isEmpty()) {
-			ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide && !player.getItemInHand(hand).isEmpty()) {
+			ItemStack stack = player.getItemInHand(hand);
 			Item tokensItem = null;
 			int baseAmount = 5;
 
@@ -117,8 +117,8 @@ public class MineralizationStation extends Block {
 					tokensItem = AoAItems.CRYSTEVIA_TOKENS.get();
 					break;
 				case "blank_realmstone":
-					player.setHeldItem(hand, new ItemStack(AoAItems.IROMINE_REALMSTONE.get()));
-					player.container.detectAndSendChanges();
+					player.setItemInHand(hand, new ItemStack(AoAItems.IROMINE_REALMSTONE.get()));
+					player.inventoryMenu.broadcastChanges();
 					return ActionResultType.SUCCESS;
 				default:
 					break;
@@ -128,7 +128,7 @@ public class MineralizationStation extends Block {
 				if (!player.isCreative())
 					stack.shrink(1);
 
-				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(tokensItem, baseAmount + player.getRNG().nextInt(baseAmount)));
+				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(tokensItem, baseAmount + player.getRandom().nextInt(baseAmount)));
 			}
 		}
 

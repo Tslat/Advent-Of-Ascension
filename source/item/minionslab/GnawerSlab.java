@@ -13,11 +13,11 @@ public class GnawerSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		GnawerEntity gnawer = new GnawerEntity(AoAEntities.Minions.GNAWER.get(), pl.world);
+		GnawerEntity gnawer = new GnawerEntity(AoAEntities.Minions.GNAWER.get(), pl.level);
 
-		gnawer.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		gnawer.setTamedBy(pl);
-		pl.world.addEntity(gnawer);
+		gnawer.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		gnawer.tame(pl);
+		pl.level.addFreshEntity(gnawer);
 
 		return gnawer;
 	}

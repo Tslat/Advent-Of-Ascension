@@ -20,37 +20,12 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
         super(entityType, world);
 
         isSlipperyMovement = true;
-        setAIMoveSpeed(1.6f);
+        setSpeed(1.6f);
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 2f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 58;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.31;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 3;
     }
 
     @Nullable
@@ -72,11 +47,11 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
     }
 
     @Override
-    public boolean addPotionEffect(EffectInstance effect) {
-        if (effect.getPotion() == Effects.SPEED)
+    public boolean addEffect(EffectInstance effect) {
+        if (effect.getEffect() == Effects.MOVEMENT_SPEED)
             PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 2 - effect.getAmplifier());
 
-        return super.addPotionEffect(effect);
+        return super.addEffect(effect);
     }
 
     @Override

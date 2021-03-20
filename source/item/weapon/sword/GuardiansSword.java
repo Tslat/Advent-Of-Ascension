@@ -4,8 +4,9 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -35,29 +36,29 @@ public class GuardiansSword extends BaseSword {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(heldStack, null);
 
 		if (cap.getValue() <= 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CRYSTALLITE.get()), true, 1)) {
 			cap.setValue(world.getGameTime());
 
 			if (world instanceof ServerWorld) {
-				double xOffset = -MathHelper.sin(player.rotationYaw * (float)Math.PI / 140f);
-				double zOffset = MathHelper.cos(player.rotationYaw * (float)Math.PI / 140f);
+				double xOffset = -MathHelper.sin(player.yRot * (float)Math.PI / 140f);
+				double zOffset = MathHelper.cos(player.yRot * (float)Math.PI / 140f);
 
-				((ServerWorld)world).spawnParticle(ParticleTypes.END_ROD, player.getPosX() + xOffset, player.getPosY() + player.getHeight() * 0.5d, player.getPosZ() + zOffset, 5, xOffset, 0, zOffset, 0);
+				((ServerWorld)world).sendParticles(ParticleTypes.END_ROD, player.getX() + xOffset, player.getY() + player.getBbHeight() * 0.5d, player.getZ() + zOffset, 5, xOffset, 0, zOffset, 0);
 			}
 
-			return ActionResult.resultSuccess(heldStack);
+			return ActionResult.success(heldStack);
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
-		PersistentStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+		PersistentStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0.0f));
 
 		return false;
 	}
@@ -74,7 +75,7 @@ public class GuardiansSword extends BaseSword {
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
 
 		return true;
@@ -87,8 +88,8 @@ public class GuardiansSword extends BaseSword {
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<String, AttributeModifier> attributeMap = super.getAttributeModifiers(slot, stack);
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		Multimap<Attribute, AttributeModifier> attributeMap = super.getAttributeModifiers(slot, stack);
 
 		if (slot == EquipmentSlotType.MAINHAND) {
 			int buff = 0;
@@ -97,14 +98,14 @@ public class GuardiansSword extends BaseSword {
 			if (cap.getValue() > 0)
 				buff = 5;
 
-			ItemUtil.setAttribute(attributeMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getAttackDamage() + buff);
+			ItemUtil.setAttribute(attributeMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() + buff);
 		}
 
 		return attributeMap;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

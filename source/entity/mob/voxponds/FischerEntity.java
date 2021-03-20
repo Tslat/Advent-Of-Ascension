@@ -6,7 +6,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
@@ -21,26 +21,6 @@ public class FischerEntity extends AoAMeleeMob {
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return sizeIn.height * 0.85f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 79;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 6d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.3d;
     }
 
     @Nullable
@@ -62,16 +42,16 @@ public class FischerEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (isInWater()) {
-            Vec3d currentMotion = getMotion();
+            Vector3d currentMotion = getDeltaMovement();
             double motionX = currentMotion.x;
             double motionY = currentMotion.y;
             double motionZ = currentMotion.z;
 
-            if (getAttackTarget() != null && getAttackTarget().getPosY() > getPosY())
+            if (getTarget() != null && getTarget().getY() > getY())
                 motionY = 0.25;
 
             fallDistance = 0.5f;
@@ -82,12 +62,8 @@ public class FischerEntity extends AoAMeleeMob {
             if (motionZ > -1.100000023841858 && motionZ < 1.100000023841858)
                 motionZ *= 1.100000023841858;
 
-            setMotion(motionX, motionY, motionZ);
+            setDeltaMovement(motionX, motionY, motionZ);
         }
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 30;
-    }
 }

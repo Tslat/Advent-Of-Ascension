@@ -16,7 +16,7 @@ import java.util.List;
 
 public class IceArmour extends AdventArmour {
 	public IceArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:ice", 12, new int[] {2, 6, 6, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:ice", 12, new int[] {2, 6, 6, 2}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class IceArmour extends AdventArmour {
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (!world.isRemote && stack.getDamage() > 0 && player.getRNG().nextFloat() < 0.02f && WorldUtil.getAmbientTemperature(world, player.getPosition()) < 0.15f)
-			stack.setDamage(stack.getDamage() - 1);
+		if (!world.isClientSide && stack.getDamageValue() > 0 && player.getRandom().nextFloat() < 0.02f && WorldUtil.getAmbientTemperature(world, player.blockPosition()) < 0.15f)
+			stack.setDamageValue(stack.getDamageValue() - 1);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.ice_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

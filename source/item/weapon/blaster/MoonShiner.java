@@ -21,6 +21,6 @@ public class MoonShiner extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new MoonShinerEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new MoonShinerEntity(shooter, this, 60));
 	}
 }

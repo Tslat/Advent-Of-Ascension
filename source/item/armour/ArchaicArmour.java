@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ArchaicArmour extends AdventArmour {
 	public ArchaicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:archaic", 67, new int[] {5, 9, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:archaic", 67, new int[] {5, 9, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ArchaicArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.archaic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.archaic_armour.desc.2", LocaleUtil.ItemDescriptionType.HARMFUL));

@@ -1,8 +1,8 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvents;
@@ -25,7 +25,7 @@ public class SpeedArmour extends AdventArmour {
 	private static final AttributeModifier HELMET_BONUS = new AttributeModifier(UUID.fromString("6d13cd91-39d8-4e68-8c25-b9b45bb729d9"), "AoASpeedArmourHelmet", 0.1d, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
 	public SpeedArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:speed", 63, new int[] {4, 9, 9, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:speed", 63, new int[] {4, 9, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -36,21 +36,21 @@ public class SpeedArmour extends AdventArmour {
 	@Override
 	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, SET_BONUS);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, SET_BONUS);
 		}
 		else {
 			switch (slot) {
 				case FEET:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, BOOTS_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS);
 					break;
 				case LEGS:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, LEGS_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS);
 					break;
 				case CHEST:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
 					break;
 				case HEAD:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, HELMET_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS);
 					break;
 				default:
 					break;
@@ -61,21 +61,21 @@ public class SpeedArmour extends AdventArmour {
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, SET_BONUS);
+			EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, SET_BONUS);
 		}
 		else {
 			switch (slot) {
 				case FEET:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, BOOTS_BONUS);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS);
 					break;
 				case LEGS:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, LEGS_BONUS);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS);
 					break;
 				case CHEST:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
 					break;
 				case HEAD:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MOVEMENT_SPEED, HELMET_BONUS);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS);
 					break;
 				default:
 					break;
@@ -84,7 +84,7 @@ public class SpeedArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.speed_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

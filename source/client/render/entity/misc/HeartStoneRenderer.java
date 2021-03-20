@@ -27,47 +27,47 @@ public class HeartStoneRenderer extends EntityRenderer<HeartStoneEntity> {
 
 	@Override
 	public void render(HeartStoneEntity entity, float yaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
-		matrix.push();
+		matrix.pushPose();
 		matrix.scale(-1.0F, -1.0F, 1.0F);
 
-		float pitch = MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch);
+		float pitch = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
 
-		model.setLivingAnimations(entity, 0, 0, partialTicks);
-		model.setRotationAngles(entity, 0, 0, entity.ticksExisted, 0, pitch);
+		model.prepareMobModel(entity, 0, 0, partialTicks);
+		model.setupAnim(entity, 0, 0, entity.tickCount, 0, pitch);
 		matrix.translate(0.0D, -1.5f, 0.0D);
 
 		boolean visible = !entity.isInvisible();
-		boolean shade = !visible && !entity.isInvisibleToPlayer(Minecraft.getInstance().player);
+		boolean shade = !visible && !entity.isInvisibleTo(Minecraft.getInstance().player);
 		RenderType rendertype = getRenderType(entity, visible, shade);
 
 		if (rendertype != null) {
 			IVertexBuilder ivertexbuilder = buffer.getBuffer(rendertype);
 
-			this.model.render(matrix, ivertexbuilder, packedLight, NumberUtil.RGB(255, 255, 255), 1f, 1f, 1f, shade ? 0.15f : 1f);
+			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, NumberUtil.RGB(255, 255, 255), 1f, 1f, 1f, shade ? 0.15f : 1f);
 		}
 
-		matrix.pop();
+		matrix.popPose();
 		super.render(entity, yaw, partialTicks, matrix, buffer, packedLight);
 	}
 
 	@Nullable
 	protected RenderType getRenderType(HeartStoneEntity entity, boolean visible, boolean shade) {
-		ResourceLocation texture = getEntityTexture(entity);
+		ResourceLocation texture = getTextureLocation(entity);
 
 		if (shade) {
-			return RenderType.getEntityTranslucent(texture);
+			return RenderType.entityTranslucent(texture);
 		}
 		else if (visible) {
-			return model.getRenderType(texture);
+			return model.renderType(texture);
 		}
 		else {
-			return entity.isGlowing() ? RenderType.getOutline(texture) : null;
+			return entity.isGlowing() ? RenderType.outline(texture) : null;
 		}
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(HeartStoneEntity entity) {
+	public ResourceLocation getTextureLocation(HeartStoneEntity entity) {
 		return texture;
 	}
 }

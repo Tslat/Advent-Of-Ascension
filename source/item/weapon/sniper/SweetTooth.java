@@ -36,12 +36,12 @@ public class SweetTooth extends BaseSniper {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		EntityUtil.applyPotions(shooter, new PotionUtil.EffectBuilder(Effects.SPEED, 80).level(3));
+		EntityUtil.applyPotions(shooter, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 80).level(3));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

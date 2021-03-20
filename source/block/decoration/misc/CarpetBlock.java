@@ -16,10 +16,10 @@ import net.minecraft.world.IWorldReader;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class CarpetBlock extends Block {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 1, 16);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
 	public CarpetBlock(MaterialColor mapColour) {
-		super(BlockUtil.generateBlockProperties(Material.CARPET, mapColour, 0.1f, 0.1f, SoundType.CLOTH));
+		super(BlockUtil.generateBlockProperties(Material.CLOTH_DECORATION, mapColour, 0.1f, 0.1f, SoundType.WOOL));
 	}
 
 	@Override
@@ -28,12 +28,12 @@ public class CarpetBlock extends Block {
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
-		return !state.isValidPosition(world, pos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(state, facing, facingState, world, pos, facingPos);
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+		return !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, world, pos, facingPos);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		return !world.isAirBlock(pos.down());
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		return !world.isEmptyBlock(pos.below());
 	}
 }

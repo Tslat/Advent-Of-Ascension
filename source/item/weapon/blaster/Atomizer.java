@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -31,26 +31,26 @@ public class Atomizer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new AtomizerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new AtomizerShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
 		if (shot instanceof AtomizerShotEntity) {
-			shot.world.addEntity(new AtomizerBounceEntity(shooter, this, (AtomizerShotEntity)shot, random.nextGaussian() * 0.5, 1.3, random.nextGaussian() * 0.5));
+			shot.level.addFreshEntity(new AtomizerBounceEntity(shooter, this, (AtomizerShotEntity)shot, random.nextGaussian() * 0.5, 1.3, random.nextGaussian() * 0.5));
 		}
 		else {
-			WorldUtil.createExplosion(shooter, shot.world, shot, 1.5f);
+			WorldUtil.createExplosion(shooter, shot.level, shot, 1.5f);
 		}
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (super.doEntityImpact(shot, target, shooter)) {
-			WorldUtil.createExplosion(shooter, shot.world, shot, 1.5f);
+			WorldUtil.createExplosion(shooter, shot.level, shot, 1.5f);
 
 			if (shot instanceof AtomizerShotEntity)
-				shot.world.addEntity(new AtomizerBounceEntity(shooter, this, (AtomizerShotEntity)shot, random.nextGaussian() * 0.5, 1.3, random.nextGaussian() * 0.5));
+				shot.level.addFreshEntity(new AtomizerBounceEntity(shooter, this, (AtomizerShotEntity)shot, random.nextGaussian() * 0.5, 1.3, random.nextGaussian() * 0.5));
 
 			return true;
 		}
@@ -59,8 +59,8 @@ public class Atomizer extends BaseBlaster {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

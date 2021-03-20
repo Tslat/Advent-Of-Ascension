@@ -22,26 +22,6 @@ public class SoulscorneEntity extends AoAMeleeMob {
         return 1.59375f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 140d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -61,23 +41,18 @@ public class SoulscorneEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
-
-    @Override
     protected void onAttack(Entity target) {
         if (target instanceof LivingEntity) {
             LivingEntity entity = (LivingEntity)target;
-            ArrayList<EffectInstance> positiveEffects = new ArrayList<EffectInstance>(entity.getActivePotionEffects().size());
+            ArrayList<EffectInstance> positiveEffects = new ArrayList<EffectInstance>(entity.getActiveEffects().size());
 
-            for (EffectInstance effect : entity.getActivePotionEffects()) {
-                if (effect.getPotion().isBeneficial())
+            for (EffectInstance effect : entity.getActiveEffects()) {
+                if (effect.getEffect().isBeneficial())
                     positiveEffects.add(effect);
             }
 
             for (EffectInstance effect : positiveEffects) {
-                entity.removePotionEffect(effect.getPotion());
+                entity.removeEffect(effect.getEffect());
             }
         }
     }

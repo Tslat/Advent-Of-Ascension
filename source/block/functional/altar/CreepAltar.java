@@ -16,14 +16,14 @@ import java.util.concurrent.TimeUnit;
 
 public class CreepAltar extends BossAltarBlock {
 	public CreepAltar() {
-		super(MaterialColor.GREEN);
+		super(MaterialColor.COLOR_GREEN);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		double centerX = blockPos.getX() + 0.5d;
 		double centerZ = blockPos.getZ() + 0.5d;
-		World world = player.world;
+		World world = player.level;
 
 		if (world.getBlockState(blockPos.north()).getBlock() == this)
 			centerZ -= 0.5d;
@@ -38,7 +38,7 @@ public class CreepAltar extends BossAltarBlock {
 			centerX -= 0.5d;
 
 		new CreepSpawnTask(world, centerX, blockPos.getY() + 1, centerZ, RandomUtil.randomNumberUpTo(4)).schedule(1, TimeUnit.SECONDS);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.creep.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.creep.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ public class UltimatumShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0f;
 	}
 }

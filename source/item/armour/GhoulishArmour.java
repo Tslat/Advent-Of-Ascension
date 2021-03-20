@@ -18,7 +18,7 @@ import java.util.List;
 
 public class GhoulishArmour extends AdventArmour {
 	public GhoulishArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:ghoulish", 61, new int[] {6, 6, 8, 6}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:ghoulish", 61, new int[] {6, 6, 8, 6}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class GhoulishArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.ghoulish_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

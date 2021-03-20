@@ -22,31 +22,6 @@ public class ConstructOfMindEntity extends AoAMeleeMob {
         return 1.75f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.4;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 74;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 8;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 3;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

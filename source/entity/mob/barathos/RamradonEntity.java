@@ -23,26 +23,6 @@ public class RamradonEntity extends AoAMeleeMob {
 		return 0.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 68;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

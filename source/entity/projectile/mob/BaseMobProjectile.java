@@ -24,23 +24,24 @@ public abstract class BaseMobProjectile extends ThrowableEntity {
 	public BaseMobProjectile(EntityType<? extends ThrowableEntity> entityType, World world, AoARangedAttacker shooter, double posX, double posY, double posZ, Type projectileType) {
 		super(entityType, world);
 
-		setPosition(posX, posY, posZ);
-		setMotion(rand.nextGaussian() / 33 + 0.03, -2, rand.nextGaussian() / 33 + 0.03);
+		setPos(posX, posY, posZ);
+		setDeltaMovement(random.nextGaussian() / 33 + 0.03, -2, random.nextGaussian() / 33 + 0.03);
 
 		this.projectileType = projectileType;
 		this.shooter = shooter;
 	}
 
 	public BaseMobProjectile(EntityType<? extends ThrowableEntity> entityType, World world, AoARangedAttacker shooter, Entity target, Type projectileType) {
-		this(entityType, world, shooter, target.getPosX(), target.getPosY() + 25, target.getPosZ(), projectileType);
+		this(entityType, world, shooter, target.getX(), target.getY() + 25, target.getZ(), projectileType);
 	}
 
 	public BaseMobProjectile(EntityType<? extends ThrowableEntity> entityType, World world, AoARangedAttacker shooter, Type projectileType) {
 		super(entityType, world);
 
 		if (shooter instanceof LivingEntity) {
-			this.owner = (LivingEntity)shooter;
-			setPosition(owner.getPosX(), owner.getPosY() + owner.getEyeHeight() - 0.10000000149011612D, owner.getPosZ());
+			LivingEntity owner = (LivingEntity)shooter;
+			setOwner(owner);
+			setPos(owner.getX(), owner.getY() + owner.getEyeHeight() - 0.10000000149011612D, owner.getZ());
 		}
 
 		this.projectileType = projectileType;
@@ -52,25 +53,25 @@ public abstract class BaseMobProjectile extends ThrowableEntity {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.0f;
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (ticksExisted > 500)
+		if (tickCount > 500)
 			remove();
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result.getType() != RayTraceResult.Type.BLOCK || world.getBlockState(new BlockPos(result.getHitVec())).getMaterial().blocksMovement()) {
-			if (!world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+ 		if (result.getType() != RayTraceResult.Type.BLOCK || level.getBlockState(new BlockPos(result.getLocation())).getMaterial().blocksMotion()) {
+			if (!level.isClientSide) {
 				if (result.getType() == RayTraceResult.Type.ENTITY) {
 					if (result.hitInfo == shooter || shooter == null)
 						return;
@@ -78,8 +79,9 @@ public abstract class BaseMobProjectile extends ThrowableEntity {
 					shooter.doProjectileEntityImpact(this, ((EntityRayTraceResult)result).getEntity());
 				}
 				else if (result.getType() == RayTraceResult.Type.BLOCK) {
-					if (shooter != null)
-						shooter.doProjectileBlockImpact(this, world.getBlockState(new BlockPos(result.getHitVec())), new BlockPos(result.getHitVec()), ((BlockRayTraceResult)result).getFace());
+					if (shooter != null) {
+						shooter.doProjectileBlockImpact(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), ((BlockRayTraceResult)result).getDirection());
+					}
 				}
 
 				remove();
@@ -88,7 +90,7 @@ public abstract class BaseMobProjectile extends ThrowableEntity {
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
@@ -100,7 +102,7 @@ public abstract class BaseMobProjectile extends ThrowableEntity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

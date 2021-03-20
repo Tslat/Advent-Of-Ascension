@@ -22,23 +22,8 @@ public class PlateosaurEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 320.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5.0d;
 	}
 
 	@Nullable

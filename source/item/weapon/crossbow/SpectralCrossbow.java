@@ -30,27 +30,27 @@ public class SpectralCrossbow extends BaseCrossbow {
 
 	@Override
 	public void doArrowMods(CustomArrowEntity arrow, Entity shooter, int useTicksRemaining) {
-		arrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+		arrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(getDamage()))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 
 		List<ItemStack> projectiles = getChargedProjectiles(stack);
 
 		if (isCharged(stack) && !projectiles.isEmpty()) {
 			ItemStack projectile = projectiles.get(0);
-			tooltip.add((new TranslationTextComponent("item.minecraft.crossbow.projectile")).appendText(" ").appendSibling(projectile.getTextComponent()));
+			tooltip.add((new TranslationTextComponent("item.minecraft.crossbow.projectile")).append(" ").append(projectile.getDisplayName()));
 
 			if (flag.isAdvanced() && projectile.getItem() == Items.FIREWORK_ROCKET) {
 				List<ITextComponent> list1 = Lists.newArrayList();
-				Items.FIREWORK_ROCKET.addInformation(projectile, worldIn, list1, flag);
+				Items.FIREWORK_ROCKET.appendHoverText(projectile, worldIn, list1, flag);
 
 				if (!list1.isEmpty()) {
 					for(int i = 0; i < list1.size(); ++i) {
-						list1.set(i, (new StringTextComponent("  ")).appendSibling(list1.get(i)).applyTextStyle(TextFormatting.GRAY));
+						list1.set(i, (new StringTextComponent("  ")).append(list1.get(i)).withStyle(TextFormatting.GRAY));
 					}
 
 					tooltip.addAll(list1);

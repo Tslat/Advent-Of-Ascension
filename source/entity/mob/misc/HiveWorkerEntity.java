@@ -16,9 +16,9 @@ import javax.annotation.Nullable;
 
 public class HiveWorkerEntity extends AoAMeleeMob {
 	public HiveWorkerEntity(HiveKingEntity hiveKing) {
-		this(AoAEntities.Mobs.HIVE_WORKER.get(), hiveKing.world);
+		this(AoAEntities.Mobs.HIVE_WORKER.get(), hiveKing.level);
 
-		setLocationAndAngles(hiveKing.getPosX(), hiveKing.getPosY(), hiveKing.getPosZ(), rand.nextFloat() * 360, 1);
+		moveTo(hiveKing.getX(), hiveKing.getY(), hiveKing.getZ(), random.nextFloat() * 360, 1);
 	}
 
 	public HiveWorkerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -28,26 +28,6 @@ public class HiveWorkerEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.1625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.mob.abyss;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -13,6 +14,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -26,26 +28,6 @@ public class BloodsuckerEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return sizeIn.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 109;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.295d;
 	}
 
 	@Nullable
@@ -65,22 +47,22 @@ public class BloodsuckerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 80).level(3));
-		heal((float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue() * 2f);
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 80).level(3));
+		heal((float)getAttribute(Attributes.ATTACK_DAMAGE).getValue() * 2f);
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.ANCIENT_CAVERN.type()) {
-			Entity source = cause.getTrueSource();
+		if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.ANCIENT_CAVERN.key)) {
+			Entity source = cause.getEntity();
 			ServerPlayerEntity killer = null;
 
 			if (source != null) {

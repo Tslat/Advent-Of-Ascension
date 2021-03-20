@@ -8,19 +8,23 @@ import net.minecraft.client.gui.IProgressMeter;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Quaternion;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.network.play.client.CClientStatusPacket;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.StatisticsManager;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,9 +34,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.data.client.BestiaryManager;
 import net.tslat.aoa3.entity.base.*;
-import net.tslat.aoa3.library.resourcemanager.BestiaryManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -69,7 +74,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	private int openEntryHeight = 0;
 	private float lastDistanceScrolled = 0;
 	private Entity openEntryInstance = null;
-	private List<String> openEntryInfoLines = null;
+	private List<IReorderingProcessor> openEntryInfoLines = null;
 	private List<String> openEntryStatsLines = null;
 
 	private int adjustedMouseX;
@@ -93,20 +98,20 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		if (scrollMenu == null)
 			scrollMenu = new BestiaryMenu(minecraft, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.scale);
 
-		searchField = new TextFieldWidget(font, AdventMainGui.scaledTabRootX + 20, AdventMainGui.scaledTabRootY, (int)((width - 40) / 2d), 15, "");
+		searchField = new TextFieldWidget(font, AdventMainGui.scaledTabRootX + 20, AdventMainGui.scaledTabRootY, (int)((width - 40) / 2d), 15, new StringTextComponent(""));
 
 		searchField.setVisible(false);
-		getMinecraft().getConnection().sendPacket(new CClientStatusPacket(CClientStatusPacket.State.REQUEST_STATS));
+		getMinecraft().getConnection().send(new CClientStatusPacket(CClientStatusPacket.State.REQUEST_STATS));
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		super.render(mouseX, mouseY, partialTicks);
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
 		this.adjustedMouseX = (int)(mouseX * AdventMainGui.scaleInverse);
 		this.adjustedMouseY = (int)(mouseY * AdventMainGui.scaleInverse);
 
-		scrollMenu.render(adjustedMouseX, adjustedMouseY, partialTicks);
+		scrollMenu.render(matrixStack, adjustedMouseX, adjustedMouseY, partialTicks);
 	}
 
 	@Override
@@ -177,9 +182,9 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	}
 
 	@Override
-	public void onClose() {
+	public void removed() {
 		if (searchField != null && searchField.isFocused())
-			searchField.setFocused2(false);
+			searchField.setFocus(false);
 	}
 
 	@Nullable
@@ -190,7 +195,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 			return instancesMap.get(registryName);
 
 		try {
-			Entity entity = ForgeRegistries.ENTITIES.getValue(stat.registryName).create(minecraft.player.worldClient);
+			Entity entity = ForgeRegistries.ENTITIES.getValue(stat.registryName).create(minecraft.player.clientLevel);
 
 			instancesMap.put(registryName, entity);
 
@@ -206,16 +211,16 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	@Override
 	public boolean charTyped(char character, int arg) {
 		if (searchField.isFocused()) {
-			int searchTextLength = searchField.getText().length();
+			int searchTextLength = searchField.getValue().length();
 
 			if (searchField.charTyped(character, arg)) {
-				if (searchField.getText().isEmpty()) {
+				if (searchField.getValue().isEmpty()) {
 					filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
 					searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
 				}
-				else if (searchField.getText().length() != searchTextLength) {
-					searchFilterBestiaryEntries(searchTextLength < searchField.getText().length());
+				else if (searchField.getValue().length() != searchTextLength) {
+					searchFilterBestiaryEntries(searchTextLength < searchField.getValue().length());
 				}
 			}
 
@@ -230,25 +235,25 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		boolean success = super.keyPressed(keyCode, scanCode, modifiers);
 
 		if (openEntryIndex < 0 && keyCode == 70 && hasControlDown() && !hasShiftDown() && !hasAltDown())  {
-			if (!searchField.getVisible())
+			if (!searchField.isVisible())
 				searchField.setVisible(true);
 
-			searchField.setFocused2(true);
+			searchField.setFocus(true);
 
 			return true;
 		}
 
 		if (searchField.isFocused()) {
-			int searchTextLength = searchField.getText().length();
+			int searchTextLength = searchField.getValue().length();
 
 			if (searchField.keyPressed(keyCode, scanCode, modifiers)) {
-				if (searchField.getText().isEmpty()) {
+				if (searchField.getValue().isEmpty()) {
 					filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
 					searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
 				}
-				else if (searchField.getText().length() != searchTextLength) {
-					searchFilterBestiaryEntries(searchTextLength < searchField.getText().length());
+				else if (searchField.getValue().length() != searchTextLength) {
+					searchFilterBestiaryEntries(searchTextLength < searchField.getValue().length());
 				}
 			}
 
@@ -261,7 +266,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	private void searchFilterBestiaryEntries(boolean additiveEdit) {
 		searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
 
-		if (searchField.getText().isEmpty()) {
+		if (searchField.getValue().isEmpty()) {
 			filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
 			return;
@@ -270,7 +275,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		if (!additiveEdit || filteredMobList == null)
 			filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
-		String searchFilter = searchField.getText().toLowerCase();
+		String searchFilter = searchField.getValue().toLowerCase();
 
 		if (searchFilter.startsWith("@")) {
 			String modIdFilter = searchFilter.split("@", 2)[1].split(" ")[0];
@@ -309,7 +314,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		String entityModId = registryName.getNamespace();
 		openEntryInstance = getEntityFromStat(stat);
 		openEntryStatsLines = new ArrayList<String>();
-		openEntryInfoLines = new ArrayList<String>(0);
+		openEntryInfoLines = new ArrayList<IReorderingProcessor>(0);
 		LivingEntity livingInstance = openEntryInstance instanceof LivingEntity ? (LivingEntity)openEntryInstance : null;
 
 		if (openEntryInstance != null) {
@@ -319,7 +324,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 					openEntryStatsLines = entityData.getA();
 
 					if (entityData.getB() != null && entityData.getB().length() > 0)
-						openEntryInfoLines = font.listFormattedStringToWidth(entityData.getB(), (int)(734 / 1.5f));
+						openEntryInfoLines = font.split(new StringTextComponent(entityData.getB()), (int)(734 / 1.5f));
 				}
 				catch (ClassCastException ex) {
 					Logging.logMessage(Level.WARN, "Mod '" + entityModId + "' provided invalid bestiary entry handler. Removing support. Report this to the mod author.");
@@ -334,7 +339,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				String type;
 				String attribute = "";
 
-				if (!openEntryInstance.isNonBoss()) {
+				if (!openEntryInstance.canChangeDimensions()) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.boss");
 				}
 				else if (openEntryInstance instanceof AoAMeleeMob) {
@@ -353,6 +358,9 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				}
 				else if (openEntryInstance instanceof AoAFlyingRangedMob) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingRanged");
+				}
+				else if (openEntryInstance instanceof AoAWaterMeleeMob) {
+					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingMelee");
 				}
 				else if (openEntryInstance instanceof AnimalEntity) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.animal");
@@ -376,7 +384,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				}
 
 				if (livingInstance != null) {
-					CreatureAttribute creatureAttribute = (livingInstance).getCreatureAttribute();
+					CreatureAttribute creatureAttribute = (livingInstance).getMobType();
 
 					if (creatureAttribute == ARTHROPOD) {
 						attribute = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.attribute.arthropod");
@@ -400,39 +408,39 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				}
 
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.attribute") + TextFormatting.RESET + " " + attribute);
-				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.size") + TextFormatting.RESET + " " + ((int)(openEntryInstance.getWidth() * 1000)) / 1000f + "x" + ((int)(openEntryInstance.getHeight() * 1000)) / 1000f);
+				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.size") + TextFormatting.RESET + " " + ((int)(openEntryInstance.getBbWidth() * 1000)) / 1000f + "x" + ((int)(openEntryInstance.getBbHeight() * 1000)) / 1000f);
 				openEntryStatsLines.add("");
 
 				if (livingInstance != null) {
 					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.health") + TextFormatting.RESET + " " + livingInstance.getMaxHealth());
 
-					if (livingInstance.getAttribute(SharedMonsterAttributes.ARMOR).getValue() > 0)
-						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.armour") + TextFormatting.RESET + " " + livingInstance.getAttribute(SharedMonsterAttributes.ARMOR).getValue());
+					if (livingInstance.getAttribute(Attributes.ARMOR).getValue() > 0)
+						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.armour") + TextFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ARMOR).getValue());
 
-					if (livingInstance.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getValue() > 0)
-						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.knockback") + TextFormatting.RESET + " " + (livingInstance.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getValue() * 100) + "%");
+					if (livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() > 0)
+						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.knockback") + TextFormatting.RESET + " " + (livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() * 100) + "%");
 
-					IAttributeInstance attackAttribute = livingInstance.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+					ModifiableAttributeInstance attackAttribute = livingInstance.getAttribute(Attributes.ATTACK_DAMAGE);
 
 					if (attackAttribute != null && attackAttribute.getValue() > 0)
-						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.strength") + TextFormatting.RESET + " " + livingInstance.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
+						openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.strength") + TextFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
 
 					if (openEntryInstance instanceof AoARangedAttacker) {
 						if (openEntryInstance instanceof AoARangedMob) {
-							openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + TextFormatting.RESET + " " + ((AoARangedMob)openEntryInstance).getBaseProjectileDamage());
+							openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + TextFormatting.RESET + " " + ((AoARangedMob)openEntryInstance).getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 						}
 						else if (openEntryInstance instanceof AoAFlyingRangedMob) {
-							openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + TextFormatting.RESET + " " + ((AoAFlyingRangedMob)openEntryInstance).getBaseProjectileDamage());
+							openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.projectileStrength") + TextFormatting.RESET + " " + ((AoAFlyingRangedMob)openEntryInstance).getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 						}
 					}
 
-					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.speed") + TextFormatting.RESET + " " + (int)(livingInstance.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue() * 1000) / 1000f);
+					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.speed") + TextFormatting.RESET + " " + (int)(livingInstance.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 1000) / 1000f);
 				}
 
 				String bestiaryInfo = BestiaryManager.BESTIARY.get(registryName);
 
 				if (bestiaryInfo != null)
-					openEntryInfoLines = font.listFormattedStringToWidth(bestiaryInfo, (int)(734 / 1.5f));
+					openEntryInfoLines = font.split(new StringTextComponent(bestiaryInfo), (int)(734 / 1.5f));
 			}
 		}
 		else {
@@ -496,33 +504,33 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		}
 
 		@Override
-		public void drawPaneContents(int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
-			RenderSystem.pushMatrix();
+		public void drawPaneContents(MatrixStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
+			matrix.pushPose();
 
 			if (!receivedStats) {
-				RenderUtil.drawCenteredScaledString(font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-				RenderUtil.drawCenteredScaledString(font, LOADING_STRINGS[(int)(Util.milliTime() / 150L % (long)LOADING_STRINGS.length)], left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, font, LOADING_SYMBOLS[(int)(Util.getMillis() / 150L % (long)LOADING_SYMBOLS.length)], left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 			}
 			else if (filteredMobList.isEmpty()) {
 				if (!statList.isEmpty()) {
-					RenderUtil.drawColouredBox(left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
-					getMinecraft().getTextureManager().bindTexture(iconsTextures);
+					RenderUtil.drawColouredBox(matrix, left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
+					getMinecraft().getTextureManager().bind(iconsTextures);
 					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
-					if (searchField.getVisible()) {
+					if (searchField.isVisible()) {
 						searchField.x = (int)((left + 20) / 2d);
 						searchField.y = (int)(AdventMainGui.scaledTabRootY / 2d);
 						searchField.setWidth((int)((right - left - 40) / 2d));
-						RenderSystem.scalef(2, 2, 2);
-						searchField.render(adjustedMouseX, adjustedMouseX, partialTicks);
-						RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+						matrix.scale(2, 2, 2);
+						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
+						matrix.scale(0.5f, 0.5f, 0.5f);
 					}
 
-					RenderUtil.drawCenteredScaledString(font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 				}
 				else {
-					RenderUtil.drawCenteredScaledString(font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 				}
 			}
 			else {
@@ -532,58 +540,58 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 						ResourceLocation registryName = entityStat.registryName;
 						int rowTop = top + 20 + i * 100;
 						Entity entity = getEntityFromStat(entityStat);
-						String entityName = entity != null ? entityStat.killStat.getValue().getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath()).replace("." + registryName.getNamespace(), "");
+						ITextComponent entityName = entity != null ? entityStat.killStat.getValue().getDescription() : LocaleUtil.getLocaleMessage("entity." + registryName.getNamespace().replace(".minecraft", "") + "." + registryName.getPath());
 
-						RenderUtil.drawColouredBox(left + 40, rowTop + 30, 0, 320, 150, 0xFF202020);
+						RenderUtil.drawColouredBox(matrix, left + 40, rowTop + 30, 0, 320, 150, 0xFF202020);
 
 						if (entity != null)
-							drawEntity(entity, left + 200, rowTop + 170, 50f);
+							drawEntity(matrix, entity, left + 200, rowTop + 170, 50f);
 
-						RenderUtil.drawColouredBox(left + 40, rowTop, 0, 320, 30, 0xFF010101);
-						RenderUtil.drawCenteredScaledString(font, entityName, left + 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-						getMinecraft().getTextureManager().bindTexture(iconsTextures);
+						RenderUtil.drawColouredBox(matrix, left + 40, rowTop, 0, 320, 30, 0xFF010101);
+						RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+						getMinecraft().getTextureManager().bind(iconsTextures);
 						RenderSystem.enableAlphaTest();
-						RenderUtil.renderScaledCustomSizedTexture(left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
-						RenderUtil.renderScaledCustomSizedTexture(left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
+						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
+						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 						RenderSystem.disableAlphaTest();
-						RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-						RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
 
 						if (i + 1 < filteredMobList.size()) {
 							entityStat = filteredMobList.get(i + 1);
 							entity = getEntityFromStat(entityStat);
-							entityName = entity != null ? entity.getDisplayName().getFormattedText() : LocaleUtil.getLocaleString("entity." + entityStat.registryName.getNamespace() + "." + entityStat.registryName.getPath()).replace(".minecraft", "");
+							entityName = entity != null ? entity.getDisplayName() : LocaleUtil.getLocaleMessage("entity." + entityStat.registryName.getNamespace().replace(".minecraft", "") + "." + entityStat.registryName.getPath());
 
-							RenderUtil.drawColouredBox(right - 360, rowTop + 30, 0, 320, 150, 0xFF202020);
+							RenderUtil.drawColouredBox(matrix, right - 360, rowTop + 30, 0, 320, 150, 0xFF202020);
 
 							if (entity != null)
-								drawEntity(entity, right - 200, rowTop + 170, 50f);
+								drawEntity(matrix, entity, right - 200, rowTop + 170, 50f);
 
-							RenderUtil.drawColouredBox(right - 360, rowTop, 0, 320, 30, 0xFF010101);
-							RenderUtil.drawCenteredScaledString(font, entityName, right - 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-							getMinecraft().getTextureManager().bindTexture(iconsTextures);
+							RenderUtil.drawColouredBox(matrix, right - 360, rowTop, 0, 320, 30, 0xFF010101);
+							RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, right - 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+							getMinecraft().getTextureManager().bind(iconsTextures);
 							RenderSystem.enableAlphaTest();
-							RenderUtil.renderScaledCustomSizedTexture(right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
-							RenderUtil.renderScaledCustomSizedTexture(right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
+							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
+							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 							RenderSystem.disableAlphaTest();
-							RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-							RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
 						}
 					}
 
 					RenderSystem.disableDepthTest();
-					RenderUtil.drawColouredBox(left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
-					getMinecraft().getTextureManager().bindTexture(iconsTextures);
+					RenderUtil.drawColouredBox(matrix, left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
+					getMinecraft().getTextureManager().bind(iconsTextures);
 					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
-					if (searchField.getVisible()) {
+					if (searchField.isVisible()) {
 						searchField.x = (int)((left + 20) / 2d);
 						searchField.y = (int)(AdventMainGui.scaledTabRootY / 2d);
 						searchField.setWidth((int)((right - left - 40) / 2d));
-						RenderSystem.scalef(2, 2, 2);
-						searchField.render(adjustedMouseX, adjustedMouseX, partialTicks);
-						RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+						matrix.scale(2, 2, 2);
+						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
+						matrix.scale(0.5f, 0.5f, 0.5f);
 					}
 
 					RenderSystem.enableDepthTest();
@@ -591,53 +599,52 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				else {
 					EntityStats entityStat = filteredMobList.get(openEntryIndex);
 					ResourceLocation registryName = entityStat.registryName;
-					openEntryHeight = Math.max(viewHeight - 30, 320 + (int)(openEntryInfoLines.size() * font.FONT_HEIGHT * 1.5f));
+					openEntryHeight = Math.max(viewHeight - 30, 320 + (int)(openEntryInfoLines.size() * font.lineHeight * 1.5f));
 
-					RenderUtil.drawColouredBox(left, top + 30, 0, right - left, bottom - top, 0xFF202020);
-					RenderUtil.drawColouredBox(left, top, 0, right - left, 30, 0xFF010101);
-					String entityName = openEntryInstance != null ? openEntryInstance.getName().getFormattedText() : LocaleUtil.getLocaleString("entity." + registryName.getNamespace() + "." + registryName.getPath()).replace(".minecraft", "");
+					RenderUtil.drawColouredBox(matrix, left, top + 30, 0, right - left, bottom - top, 0xFF202020);
+					RenderUtil.drawColouredBox(matrix, left, top, 0, right - left, 30, 0xFF010101);
+					ITextComponent entityName = openEntryInstance != null ? openEntryInstance.getName() : LocaleUtil.getLocaleMessage("entity." + registryName.getNamespace().replace(".minecraft", "") + "." + registryName.getPath());
 
-					RenderUtil.drawCenteredScaledString(font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
 
 					if (openEntryInstance != null)
-						drawEntity(openEntryInstance, left + 200, top + 240, 75f);
+						drawEntity(matrix, openEntryInstance, left + 200, top + 240, 75f);
 
-					getMinecraft().getTextureManager().bindTexture(iconsTextures);
+					getMinecraft().getTextureManager().bind(iconsTextures);
 					RenderSystem.enableAlphaTest();
-					RenderUtil.renderScaledCustomSizedTexture(left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 48);
-					RenderUtil.renderScaledCustomSizedTexture(left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 48);
 					RenderSystem.disableAlphaTest();
-					RenderUtil.drawScaledString(font, "X", right - 20, top + 5, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 445, top + 48, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 445, top + 68, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, "X", right - 20, top + 5, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 445, top + 48, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 445, top + 68, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
 
-					RenderSystem.scalef(1.5f, 1.5f, 1.5f);
+					matrix.scale(1.5f, 1.5f, 1.5f);
 
 					for (int i = 0; i < openEntryStatsLines.size(); i++) {
-						font.drawStringWithShadow(openEntryStatsLines.get(i), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), NumberUtil.RGB(255, 255, 255));
+						font.drawShadow(matrix, openEntryStatsLines.get(i), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), NumberUtil.RGB(255, 255, 255));
 					}
 
 					for (int i = 0; i < openEntryInfoLines.size(); i++) {
-						font.drawString(openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), NumberUtil.RGB(255, 255, 255));
+						font.draw(matrix, openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), NumberUtil.RGB(255, 255, 255));
 					}
 				}
 			}
 
-			RenderSystem.popMatrix();
+			matrix.popPose();
 		}
 
 		@Override
-		public void drawBackground() {}
+		public void drawBackground(MatrixStack matrix) {}
 
-		private void drawEntity(Entity entity, int posX, int posY, float scale) {
-			RenderSystem.pushMatrix();
-			RenderSystem.translatef((float)posX, (float)posY, 1050.0F);
-			RenderSystem.scalef(1.0F, 1.0F, -1.0F);
+		private void drawEntity(MatrixStack matrix, Entity entity, int posX, int posY, float scale) {
+			matrix.pushPose();
+			matrix.translate((float)posX, (float)posY, 1050.0F);
+			matrix.scale(1.0F, 1.0F, -1.0F);
 
-			MatrixStack matrix = new MatrixStack();
 			Minecraft mc = Minecraft.getInstance();
 
-			float sizeFactor = Math.max(entity.getWidth(), entity.getHeight());
+			float sizeFactor = Math.max(entity.getBbWidth(), entity.getBbHeight());
 
 			if (sizeFactor > 2.5D)
 				scale /= sizeFactor / 2.5;
@@ -647,21 +654,21 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 			Quaternion quaternion = Vector3f.XP.rotationDegrees(180f);
 
-			matrix.rotate(quaternion);
+			matrix.mulPose(quaternion);
 
-			entity.ticksExisted = mc.player.ticksExisted;
-			entity.rotationYaw = 0;
-			entity.rotationPitch = 0;
-			EntityRendererManager renderManager = mc.getRenderManager();
+			entity.tickCount = mc.player.tickCount;
+			entity.yRot = 0;
+			entity.xRot = 0;
+			EntityRendererManager renderManager = mc.getEntityRenderDispatcher();
 
 			renderManager.setRenderShadow(false);
 
-			IRenderTypeBuffer.Impl renderBuffer = mc.getRenderTypeBuffers().getBufferSource();
+			IRenderTypeBuffer.Impl renderBuffer = mc.renderBuffers().bufferSource();
 
-			renderManager.renderEntityStatic(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, 15728880);
-			renderBuffer.finish();
+			renderManager.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, 15728880);
+			renderBuffer.endBatch();
 			renderManager.setRenderShadow(true);
-			RenderSystem.popMatrix();
+			matrix.popPose();
 		}
 
 		@Override
@@ -675,17 +682,17 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 			if (openEntryIndex < 0) {
 				if (relativeMouseX >= 0 && relativeMouseX <= 20 && mouseY - top + 2 < 20) {
-					searchField.setVisible(!searchField.getVisible());
+					searchField.setVisible(!searchField.isVisible());
 
-					if (searchField.getVisible()) {
-						searchField.setFocused2(true);
+					if (searchField.isVisible()) {
+						searchField.setFocus(true);
 					}
 					else {
-						searchField.setText("");
+						searchField.setValue("");
 						searchFilterBestiaryEntries(false);
 					}
 				}
-				else if (searchField.getVisible()) {
+				else if (searchField.isVisible()) {
 					if (searchField.mouseClicked((int)((relativeMouseX + left) / 2d), (int)((mouseY - 2) / 2d), 0))
 						return true;
 				}

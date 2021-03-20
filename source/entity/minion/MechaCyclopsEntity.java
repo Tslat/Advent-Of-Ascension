@@ -22,23 +22,8 @@ public class MechaCyclopsEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 30.0d;
 	}
 
 	@Nullable

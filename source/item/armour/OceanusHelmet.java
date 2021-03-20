@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OceanusHelmet extends AdventArmour {
 	public OceanusHelmet() {
-		super(ItemUtil.customArmourMaterial("aoa3:oceanus", 40, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:oceanus", 40, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), EquipmentSlotType.HEAD);
 	}
 
 	@Override
@@ -27,11 +27,11 @@ public class OceanusHelmet extends AdventArmour {
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (plData.player().isInWater())
-			plData.player().setAir(-10);
+			plData.player().setAirSupply(-10);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}

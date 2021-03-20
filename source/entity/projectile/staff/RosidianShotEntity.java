@@ -14,7 +14,7 @@ public class RosidianShotEntity extends BaseEnergyShot {
 	private boolean impacted = false;
 
 	public RosidianShotEntity(RosidianShotEntity tangleShot, double posX, double posY, double posZ) {
-		super(AoAEntities.Projectiles.ROSIDIAN_SHOT.get(), tangleShot.owner, tangleShot.weapon, posX, posY, posZ, -1f);
+		super(AoAEntities.Projectiles.ROSIDIAN_SHOT.get(), tangleShot.getOwner(), tangleShot.weapon, posX, posY, posZ, -1f);
 
 		lifespan = 2;
 	}
@@ -39,22 +39,22 @@ public class RosidianShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && impacted && lifespan > 15 && ticksExisted % 5 == 0) {
-			double posX = this.getPosX() + rand.nextGaussian() * 3;
-			double posZ = this.getPosZ() + rand.nextGaussian() * 3;
-			double posY = world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, getPosY(), posZ)).getY();
+		if (!level.isClientSide && impacted && lifespan > 15 && tickCount % 5 == 0) {
+			double posX = this.getX() + random.nextGaussian() * 3;
+			double posZ = this.getZ() + random.nextGaussian() * 3;
+			double posY = level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, getY(), posZ)).getY();
 
-			world.addEntity(new RosidianShotEntity(this, posX, posY + 0.5, posZ));
+			level.addFreshEntity(new RosidianShotEntity(this, posX, posY + 0.5, posZ));
 		}
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
+	protected void onHit(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.ENTITY) {
-			super.onImpact(result);
+			super.onHit(result);
 		}
 		else {
-			setMotion(0, 0, 0);
+			setDeltaMovement(0, 0, 0);
 
 			impacted = true;
 		}

@@ -18,32 +18,12 @@ public class TrackerEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.4f);
+		setSpeed(1.4f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 0.96875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3d;
 	}
 
 	@Nullable

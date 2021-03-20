@@ -1,6 +1,7 @@
 package net.tslat.aoa3.block.generation.log;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -17,12 +18,12 @@ public class StranglewoodLog extends LogBlock {
 	public static final VoxelShape EAST_WEST_AABB = VoxelShapes.create(new AxisAlignedBB(0.001D, 0.001D, 0.0D, 0.999D, 0.999D, 1.0D));
 
 	public StranglewoodLog() {
-		super(MaterialColor.BROWN, MaterialColor.BROWN_TERRACOTTA);
+		super(MaterialColor.COLOR_BROWN, MaterialColor.TERRACOTTA_BROWN);
 	}
 
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		switch(state.get(net.minecraft.block.LogBlock.AXIS)) {
+		switch(state.getValue(RotatedPillarBlock.AXIS)) {
 			case X:
 				return NORTH_SOUTH_AABB;
 			case Z:

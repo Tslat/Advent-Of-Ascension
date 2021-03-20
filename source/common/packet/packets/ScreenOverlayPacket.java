@@ -36,17 +36,15 @@ public class ScreenOverlayPacket implements AoAPacket {
 	public enum Type {
 		BLOODY(0),
 		CIRCLES(1),
-		CONIFERON_VINES(2),
-		DARKNESS(3),
-		EILOSAPIEN(4),
-		GRILLFACE(5),
-		LIGHTWALKER(6),
-		PURPLE_FOG(7),
-		SCRATCHES(8),
-		SHYRELANDS_BLIND(9),
-		SHYRELANDS_DIZZY(10),
-		SPIKEY_CIRCLES(11),
-		STATIC(12);
+		DARKNESS(2),
+		GRILLFACE(3),
+		LIGHTWALKER(4),
+		PURPLE_FOG(5),
+		SCRATCHES(6),
+		SHYRELANDS_BLIND(7),
+		SHYRELANDS_DIZZY(8),
+		SPIKEY_CIRCLES(9),
+		STATIC(10);
 
 		public final int id;
 
@@ -67,20 +65,16 @@ public class ScreenOverlayPacket implements AoAPacket {
 				case 4:
 					return DARKNESS;
 				case 5:
-					return EILOSAPIEN;
-				case 6:
 					return PURPLE_FOG;
-				case 7:
+				case 6:
 					return CIRCLES;
-				case 8:
-					return CONIFERON_VINES;
-				case 9:
+				case 7:
 					return SPIKEY_CIRCLES;
-				case 10:
+				case 8:
 					return SHYRELANDS_DIZZY;
-				case 11:
+				case 9:
 					return SHYRELANDS_BLIND;
-				case 12:
+				case 10:
 					return LIGHTWALKER;
 				default:
 					return null;

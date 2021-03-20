@@ -22,7 +22,7 @@ import java.util.List;
 
 public class SpacekingArmour extends AdventArmour {
 	public SpacekingArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:spaceking", 62, new int[] {4, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:spaceking", 62, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -35,18 +35,18 @@ public class SpacekingArmour extends AdventArmour {
 		if (slots == null && !DamageUtil.isEnvironmentalDamage(event.getSource()) && !DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			PlayerEntity pl = plData.player();
 
-			if (!pl.world.isRemote && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
-				OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.world);
+			if (!pl.level.isClientSide && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
+				OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.level);
 
-				orbling.setPosition(pl.getPosX(), pl.getPosY() + 1.5, pl.getPosZ());
-				orbling.setTamedBy(pl);
-				pl.world.addEntity(orbling);
+				orbling.setPos(pl.getX(), pl.getY() + 1.5, pl.getZ());
+				orbling.tame(pl);
+				pl.level.addFreshEntity(orbling);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.spaceking_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.spaceking_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

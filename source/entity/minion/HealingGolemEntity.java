@@ -7,8 +7,8 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 
@@ -23,16 +23,6 @@ public class HealingGolemEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 200.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return false;
 	}
@@ -43,25 +33,25 @@ public class HealingGolemEntity extends AoAMinion {
 
 		LivingEntity owner = getOwner();
 
-		if (isAlive() && isTamed() && owner != null && owner.getHealth() < owner.getMaxHealth())
+		if (isAlive() && isTame() && owner != null && owner.getHealth() < owner.getMaxHealth())
 			owner.heal(0.15f);
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_AUTOMATON_AMBIENT.get();
+		return null;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_AUTOMATON_HURT.get();
+		return SoundEvents.IRON_GOLEM_HURT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_AUTOMATON_DEATH.get();
+		return SoundEvents.IRON_GOLEM_DEATH;
 	}
 }

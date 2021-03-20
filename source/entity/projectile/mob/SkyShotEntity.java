@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class SkyShotEntity extends BaseMobProjectile {
 	public SkyShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -16,11 +18,11 @@ public class SkyShotEntity extends BaseMobProjectile {
 	}
 
 	public SkyShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.SKY_SHOT.get(), shooter.world, shooter, projectileType);
+		super(AoAEntities.Projectiles.SKY_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0;
 	}
 }

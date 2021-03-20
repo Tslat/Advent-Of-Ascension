@@ -23,19 +23,19 @@ public class NethengeicSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.world.isRemote) {
-			if (target.isImmuneToFire() || target.isInvulnerableTo(DamageSource.ON_FIRE)) {
+		if (!attacker.level.isClientSide) {
+			if (target.fireImmune() || target.isInvulnerableTo(DamageSource.ON_FIRE)) {
 
-				target.addPotionEffect(new EffectInstance(Effects.WITHER, (int)(80 * attackCooldown), 2, false, true));
+				target.addEffect(new EffectInstance(Effects.WITHER, (int)(80 * attackCooldown), 2, false, true));
 			}
 			else {
-				target.setFire((int)(4 * (attacker instanceof PlayerEntity ? attackCooldown : 1)));
+				target.setSecondsOnFire((int)(4 * (attacker instanceof PlayerEntity ? attackCooldown : 1)));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.BURNS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}

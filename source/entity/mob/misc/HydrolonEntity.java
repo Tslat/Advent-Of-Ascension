@@ -6,27 +6,16 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.boss.HydroliskEntity;
 import net.tslat.aoa3.entity.minion.AoAMinion;
 
 import javax.annotation.Nullable;
 
 public class HydrolonEntity extends AoAMeleeMob {
-	public HydrolonEntity(HydroliskEntity hydrolisk) {
-		this(AoAEntities.Mobs.HYDROLON.get(), hydrolisk.world);
-
-		setLocationAndAngles(hydrolisk.getPosX(), hydrolisk.getPosY(), hydrolisk.getPosZ(), rand.nextFloat() * 360, 0);
-	}
-
 	public HydrolonEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -46,26 +35,6 @@ public class HydrolonEntity extends AoAMeleeMob {
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 45;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -92,13 +61,5 @@ public class HydrolonEntity extends AoAMeleeMob {
 
 		if (isInWater())
 			heal(0.8f);
-	}
-
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.LBOREAN.type())
-			entityDropItem(new ItemStack(AoAItems.HYDRO_STONE.get(), 1), 0);
 	}
 }

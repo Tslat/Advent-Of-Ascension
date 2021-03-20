@@ -21,7 +21,7 @@ public class GravityTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 10).level(5).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.JUMP, 10).level(5).isAmbient());
 	}
 
 	@Override

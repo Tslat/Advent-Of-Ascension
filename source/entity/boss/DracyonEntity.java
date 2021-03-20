@@ -36,37 +36,17 @@ import javax.annotation.Nullable;
 import java.util.concurrent.TimeUnit;
 
 public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacker {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public DracyonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
 
-		this.setAIMoveSpeed(3.7f);
+		this.setSpeed(3.7f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.15625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1700;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
 	}
 
 	@Nullable
@@ -88,45 +68,50 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
+	}
+
+	@Override
+	public boolean canBreatheUnderwater() {
+		return true;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote) {
-			if (rand.nextInt(200) == 0 && !world.getDimension().doesWaterVaporize() && world.getBlockState(getPosition()).getMaterial().isReplaceable()) {
-				world.setBlockState(getPosition(), Blocks.WATER.getDefaultState());
-				new DracyonCleanupTask(world, getPosition()).schedule(5, TimeUnit.SECONDS);
+		if (!level.isClientSide) {
+			if (random.nextInt(200) == 0 && !level.dimensionType().ultraWarm() && level.getBlockState(blockPosition()).getMaterial().isReplaceable()) {
+				level.setBlockAndUpdate(blockPosition(), Blocks.WATER.defaultBlockState());
+				new DracyonCleanupTask(level, blockPosition()).schedule(5, TimeUnit.SECONDS);
 			}
 
-			if (rand.nextInt(70) == 0 && getAttackTarget() != null) {
-				LivingEntity target = getAttackTarget();
+			if (random.nextInt(70) == 0 && getTarget() != null) {
+				LivingEntity target = getTarget();
 				BaseMobProjectile projectile = new SpectralShotEntity(this, BaseMobProjectile.Type.MAGIC);
 
-				double distanceFactorX = target.getPosX() - projectile.getPosX();
-				double distanceFactorY = target.getBoundingBox().minY + (target.getHeight() / 3) - projectile.getPosY();
-				double distanceFactorZ = target.getPosZ() - projectile.getPosZ();
+				double distanceFactorX = target.getX() - projectile.getX();
+				double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
+				double distanceFactorZ = target.getZ() - projectile.getZ();
 				double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-				world.playSound(null, getPosition(), AoASounds.ENTITY_DRACYON_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
-				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
-				world.addEntity(projectile);
+				level.playSound(null, blockPosition(), AoASounds.ENTITY_DRACYON_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
+				level.addFreshEntity(projectile);
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && !isAIDisabled()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide && !isNoAi()) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.dracyon.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.dracyon.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -147,42 +132,42 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 45));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 45));
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.DRACYON_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.DRACYON_MUSIC.getId()));
 		bossInfo.removePlayer(player);

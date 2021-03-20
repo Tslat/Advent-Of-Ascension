@@ -12,6 +12,7 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -33,32 +34,32 @@ public class ImmortallisProgressor extends Block {
 	public static final IntegerProperty STAGE = IntegerProperty.create("stage", 1, 9);
 
 	public ImmortallisProgressor() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GOLD, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.GOLD, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 
-		setDefaultState(getDefaultState().with(STAGE, 1));
+		registerDefaultState(defaultBlockState().setValue(STAGE, 1));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (!(player instanceof ServerPlayerEntity))
 			return ActionResultType.SUCCESS;
 
 		PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
-		switch (state.get(STAGE)) {
+		switch (state.getValue(STAGE)) {
 			case 1:
 				if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), true, 1)) {
 					ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 
-					if (!player.addItemStackToInventory(new ItemStack(AoAItems.RETURN_CRYSTAL.get()))) {
+					if (!player.addItem(new ItemStack(AoAItems.RETURN_CRYSTAL.get()))) {
 						plData.sendThrottledChatMessage("message.feedback.item.returnCrystal.noSpace");
 						plData.stats().resetAllTribute();
-						player.entityDropItem(new ItemStack(AoAItems.PROGRESS_TOKEN.get()), 0.5f);
+						player.spawnAtLocation(new ItemStack(AoAItems.PROGRESS_TOKEN.get()), 0.5f);
 					}
 					else {
-						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.goldStart.0", TextFormatting.GOLD));
-						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.goldStart.1", TextFormatting.GOLD));
-						player.setPositionAndUpdate(28, 20, 2);
+						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.goldStart.0", TextFormatting.GOLD), Util.NIL_UUID);
+						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.goldStart.1", TextFormatting.GOLD), Util.NIL_UUID);
+						player.teleportTo(28, 20, 2);
 					}
 
 					return ActionResultType.SUCCESS;
@@ -68,10 +69,10 @@ public class ImmortallisProgressor extends Block {
 				if (plData.stats().getTribute(Deities.PLUTON) >= 100) {
 					KlobberEntity klobber = new KlobberEntity(AoAEntities.Mobs.KLOBBER.get(), world);
 
-					klobber.setPositionAndUpdate(69, 21, 4);
-					world.addEntity(klobber);
-					player.setPositionAndUpdate(67, 21, 2);
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.klobberStart", TextFormatting.DARK_AQUA));
+					klobber.teleportTo(69, 21, 4);
+					world.addFreshEntity(klobber);
+					player.teleportTo(67, 21, 2);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.klobberStart", TextFormatting.DARK_AQUA), Util.NIL_UUID);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -80,8 +81,8 @@ public class ImmortallisProgressor extends Block {
 				if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), true, 1)) {
 					ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()));
 
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.skeletalSpiritsStart", TextFormatting.RED));
-					player.setPositionAndUpdate(81, 21, 2);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.skeletalSpiritsStart", TextFormatting.RED), Util.NIL_UUID);
+					player.teleportTo(81, 21, 2);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -90,10 +91,10 @@ public class ImmortallisProgressor extends Block {
 				if (plData.stats().getTribute(Deities.EREBON) >= 100) {
 					ProshieldEntity proshield = new ProshieldEntity(AoAEntities.Mobs.PROSHIELD.get(), world);
 
-					proshield.setPositionAndUpdate(123, 21, 6);
-					world.addEntity(proshield);
-					player.setPositionAndUpdate(122, 21, 2);
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.proshieldStart", TextFormatting.DARK_AQUA));
+					proshield.teleportTo(123, 21, 6);
+					world.addFreshEntity(proshield);
+					player.teleportTo(122, 21, 2);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.proshieldStart", TextFormatting.DARK_AQUA), Util.NIL_UUID);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -102,9 +103,9 @@ public class ImmortallisProgressor extends Block {
 				if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), true, 1)) {
 					ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()));
 
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.pureGoldStart.0", TextFormatting.GOLD));
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.pureGoldStart.1", TextFormatting.GOLD));
-					player.setPositionAndUpdate(141, 24, 2);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.pureGoldStart.0", TextFormatting.GOLD), Util.NIL_UUID);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.pureGoldStart.1", TextFormatting.GOLD), Util.NIL_UUID);
+					player.teleportTo(141, 24, 2);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -113,10 +114,10 @@ public class ImmortallisProgressor extends Block {
 				if (plData.stats().getTribute(Deities.PLUTON) == 200) {
 					MirageEntity mirage = new MirageEntity(AoAEntities.Mobs.MIRAGE.get(), world);
 
-					mirage.setPositionAndUpdate(177, 24, -2);
-					world.addEntity(mirage);
-					player.setPositionAndUpdate(168, 24, 7);
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.mirageStart", TextFormatting.DARK_AQUA));
+					mirage.teleportTo(177, 24, -2);
+					world.addFreshEntity(mirage);
+					player.teleportTo(168, 24, 7);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.mirageStart", TextFormatting.DARK_AQUA), Util.NIL_UUID);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -125,8 +126,8 @@ public class ImmortallisProgressor extends Block {
 				if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), true, 1)) {
 					ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()));
 
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.evilSpiritsStart", TextFormatting.RED));
-					player.setPositionAndUpdate(189, 20, 2);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.evilSpiritsStart", TextFormatting.RED), Util.NIL_UUID);
+					player.teleportTo(189, 20, 2);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -135,10 +136,10 @@ public class ImmortallisProgressor extends Block {
 				if (plData.stats().getTribute(Deities.EREBON) == 200) {
 					FlashEntity flash = new FlashEntity(AoAEntities.Mobs.FLASH.get(), world);
 
-					flash.setPositionAndUpdate(235, 22, 10);
-					world.addEntity(flash);
-					player.setPositionAndUpdate(233, 21, 3);
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.flashStart", TextFormatting.DARK_AQUA));
+					flash.teleportTo(235, 22, 10);
+					world.addFreshEntity(flash);
+					player.teleportTo(233, 21, 3);
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.immortallisProgression.flashStart", TextFormatting.DARK_AQUA), Util.NIL_UUID);
 
 					return ActionResultType.SUCCESS;
 				}
@@ -147,7 +148,7 @@ public class ImmortallisProgressor extends Block {
 				if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), true, 1)) {
 					ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 
-					player.setPositionAndUpdate(0, 20, 0);
+					player.teleportTo(0, 20, 0);
 					plData.stats().resetAllTribute();
 
 					return ActionResultType.SUCCESS;
@@ -159,7 +160,7 @@ public class ImmortallisProgressor extends Block {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(STAGE);
 	}
 }

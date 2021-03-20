@@ -23,26 +23,6 @@ public class MotherVoidWalkerEntity extends AoAMeleeMob {
 		return sizeIn.height * 0.85f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,17 +40,8 @@ public class MotherVoidWalkerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public int getMaxSpawnHeight() {
-		return 35;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 200));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

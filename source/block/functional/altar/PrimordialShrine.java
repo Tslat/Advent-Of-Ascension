@@ -20,18 +20,18 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class PrimordialShrine extends BossAltarBlock {
 	public PrimordialShrine() {
-		super(MaterialColor.BLACK_TERRACOTTA);
+		super(MaterialColor.TERRACOTTA_BLACK);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (world.getDifficulty() == Difficulty.PEACEFUL && player instanceof ServerPlayerEntity) {
 			PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).sendThrottledChatMessage("message.feedback.spawnBoss.difficultyFail");
 
 			return ActionResultType.FAIL;
 		}
 
-		if (!world.isRemote && checkActivationConditions(player, hand, state, pos))
+		if (!world.isClientSide && checkActivationConditions(player, hand, state, pos))
 			doActivationEffect(player, hand, state, pos);
 
 		return ActionResultType.SUCCESS;
@@ -39,19 +39,19 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		BlockPos pos2 = pos.up(1).west(3).north(5);
-		BlockPos pos3 = pos.up(1).west(1).north(4);
-		BlockPos pos4 = pos.up(3).north(3).east(1);
-		BlockPos pos5 = pos.up(5).north(1).east(1);
+		BlockPos pos2 = pos.above(1).west(3).north(5);
+		BlockPos pos3 = pos.above(1).west(1).north(4);
+		BlockPos pos4 = pos.above(3).north(3).east(1);
+		BlockPos pos5 = pos.above(5).north(1).east(1);
 
-		return checkLamps(player.world,
-				pos.up(1).west(3).north(5),
+		return checkLamps(player.level,
+				pos.above(1).west(3).north(5),
 				pos2.south(10),
-				pos.up(1).west(1).north(4),
+				pos.above(1).west(1).north(4),
 				pos3.south(8),
-				pos.up(3).north(3).east(1),
+				pos.above(3).north(3).east(1),
 				pos4.south(6),
-				pos.up(5).north(1).east(1),
+				pos.above(5).north(1).east(1),
 				pos5.south(2));
 	}
 
@@ -59,7 +59,7 @@ public class PrimordialShrine extends BossAltarBlock {
 		for (BlockPos pos : positions) {
 			BlockState state = world.getBlockState(pos);
 
-			if (state.getBlock() != AoABlocks.DUSTOPIAN_LAMP.get() || !state.get(DustopianLamp.LIT))
+			if (state.getBlock() != AoABlocks.DUSTOPIAN_LAMP.get() || !state.getValue(DustopianLamp.LIT))
 				return false;
 		}
 
@@ -68,41 +68,41 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		World world = player.world;
-		BlockState lampOff = AoABlocks.DUSTOPIAN_LAMP.get().getDefaultState().with(DustopianLamp.LIT, false);
+		World world = player.level;
+		BlockState lampOff = AoABlocks.DUSTOPIAN_LAMP.get().defaultBlockState().setValue(DustopianLamp.LIT, false);
 
-		switch (player.getRNG().nextInt(8)) {
+		switch (player.getRandom().nextInt(8)) {
 			case 0:
-				world.setBlockState(blockPos.up().west(3).north(5), lampOff);
+				world.setBlockAndUpdate(blockPos.above().west(3).north(5), lampOff);
 				break;
 			case 1:
-				world.setBlockState(blockPos.up().west(3).south(5), lampOff);
+				world.setBlockAndUpdate(blockPos.above().west(3).south(5), lampOff);
 				break;
 			case 2:
-				world.setBlockState(blockPos.up().west().north(4), lampOff);
+				world.setBlockAndUpdate(blockPos.above().west().north(4), lampOff);
 				break;
 			case 3:
-				world.setBlockState(blockPos.up().west().south(4), lampOff);
+				world.setBlockAndUpdate(blockPos.above().west().south(4), lampOff);
 				break;
 			case 4:
-				world.setBlockState(blockPos.up(3).north(3).east(), lampOff);
+				world.setBlockAndUpdate(blockPos.above(3).north(3).east(), lampOff);
 				break;
 			case 5:
-				world.setBlockState(blockPos.up(3).south(3).east(), lampOff);
+				world.setBlockAndUpdate(blockPos.above(3).south(3).east(), lampOff);
 				break;
 			case 6:
-				world.setBlockState(blockPos.up(5).north().east(), lampOff);
+				world.setBlockAndUpdate(blockPos.above(5).north().east(), lampOff);
 				break;
 			case 7:
-				world.setBlockState(blockPos.up(5).south().east(), lampOff);
+				world.setBlockAndUpdate(blockPos.above(5).south().east(), lampOff);
 				break;
 		}
 
-		KajarosEntity kajaros = new KajarosEntity(AoAEntities.Mobs.KAJAROS.get(), player.world);
+		KajarosEntity kajaros = new KajarosEntity(AoAEntities.Mobs.KAJAROS.get(), player.level);
 
-		kajaros.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.addEntity(kajaros);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.primordialFive.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		kajaros.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		player.level.addFreshEntity(kajaros);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.primordialFive.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

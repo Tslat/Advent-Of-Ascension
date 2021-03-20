@@ -22,26 +22,6 @@ public class ZorpEntity extends AoAMeleeMob {
 		return 1.6875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 114;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

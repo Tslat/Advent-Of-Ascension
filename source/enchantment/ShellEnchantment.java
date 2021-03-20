@@ -13,7 +13,7 @@ public class ShellEnchantment extends Enchantment {
 		super(Enchantment.Rarity.UNCOMMON, AoAEnchantments.BULLET_FIRING, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseGun && !(item instanceof BaseCannon);
@@ -24,12 +24,12 @@ public class ShellEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 8 + 8 * (enchantmentLevel - 1);
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 20;
+	public int getMaxCost(int enchantmentLevel) {
+		return getMinCost(enchantmentLevel) + 20;
 	}
 }

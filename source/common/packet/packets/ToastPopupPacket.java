@@ -34,31 +34,31 @@ public class ToastPopupPacket implements AoAPacket {
 
 	@Override
 	public void encode(PacketBuffer buffer) {
-		buffer.writeString(type.toString());
+		buffer.writeUtf(type.toString());
 
 		switch (type) {
 			case SKILL_REQUIREMENT:
 			case TRIBUTE_REQUIREMENT:
-				buffer.writeString(subject.toString());
+				buffer.writeUtf(subject.toString());
 				buffer.writeInt((Integer)value);
 				break;
 			case RESOURCE_REQUIREMENT:
-				buffer.writeString(subject.toString());
+				buffer.writeUtf(subject.toString());
 				buffer.writeFloat((Float)value);
 				break;
 		}
 	}
 
 	public static ToastPopupPacket decode(PacketBuffer buffer) {
-		ToastPopupType type = ToastPopupType.valueOf(buffer.readString(32767));
+		ToastPopupType type = ToastPopupType.valueOf(buffer.readUtf(32767));
 
 		switch (type) {
 			case SKILL_REQUIREMENT:
-				return new ToastPopupPacket(Skills.valueOf(buffer.readString(32767)), buffer.readInt());
+				return new ToastPopupPacket(Skills.valueOf(buffer.readUtf(32767)), buffer.readInt());
 			case RESOURCE_REQUIREMENT:
-				return new ToastPopupPacket(Resources.valueOf(buffer.readString(32767)), buffer.readFloat());
+				return new ToastPopupPacket(Resources.valueOf(buffer.readUtf(32767)), buffer.readFloat());
 			case TRIBUTE_REQUIREMENT:
-				return new ToastPopupPacket(Deities.valueOf(buffer.readString(32767)), buffer.readInt());
+				return new ToastPopupPacket(Deities.valueOf(buffer.readUtf(32767)), buffer.readInt());
 		}
 
 		return null;

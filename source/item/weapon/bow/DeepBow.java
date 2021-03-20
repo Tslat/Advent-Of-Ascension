@@ -24,8 +24,8 @@ public class DeepBow extends BaseBow {
 
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
-		if (!arrow.world.isRemote)
-			((ServerWorld)arrow.world).spawnParticle(ParticleTypes.FIREWORK, arrow.getPosX(), arrow.getPosY() + 0.1, arrow.getPosZ(), 1, 0, 0, 0, (double)0);
+		if (!arrow.level.isClientSide)
+			((ServerWorld)arrow.level).sendParticles(ParticleTypes.FIREWORK, arrow.getX(), arrow.getY() + 0.1, arrow.getZ(), 1, 0, 0, 0, (double)0);
 	}
 
 	@Override
@@ -35,8 +35,8 @@ public class DeepBow extends BaseBow {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

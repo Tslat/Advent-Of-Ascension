@@ -26,26 +26,6 @@ public class StickyEntity extends AoAMeleeMob {
 		return 1.78125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 85;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -66,6 +46,6 @@ public class StickyEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 60));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 60));
 	}
 }

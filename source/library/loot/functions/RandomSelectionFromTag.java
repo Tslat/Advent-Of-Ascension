@@ -4,16 +4,17 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootFunction;
+import net.minecraft.loot.LootFunctionType;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootFunction;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoALootOperations;
 
 public class RandomSelectionFromTag extends LootFunction {
 	private final String tagType;
@@ -27,34 +28,35 @@ public class RandomSelectionFromTag extends LootFunction {
 	}
 
 	@Override
-	protected ItemStack doApply(ItemStack stack, LootContext context) {
-		Tag<? extends IItemProvider> tag;
+	public LootFunctionType getType() {
+		return AoALootOperations.LootFunctions.RANDOM_SELECTION_FROM_TAG;
+	}
+
+	@Override
+	protected ItemStack run(ItemStack stack, LootContext context) {
+		ITag.INamedTag<? extends IItemProvider> tag;
 
 		switch (tagType.toLowerCase()) {
 			case "block":
-				tag = new BlockTags.Wrapper(new ResourceLocation(this.tag));
+				tag = BlockTags.createOptional(new ResourceLocation(this.tag));
 				break;
 			case "item":
 			default:
-				tag = new ItemTags.Wrapper(new ResourceLocation(this.tag));
+				tag = ItemTags.createOptional(new ResourceLocation(this.tag));
 				break;
 		}
 
-		if (tag.getAllElements().isEmpty())
+		if (tag.getValues().isEmpty())
 			return stack;
 
 		return new ItemStack(tag.getRandomElement(context.getRandom()), stack.getCount(), stack.getTag());
 	}
 
 	public static LootFunction.Builder<?> builder(String tagType, String tag) {
-		return builder((conditions) -> new RandomSelectionFromTag(tagType, tag, conditions));
+		return simpleBuilder((conditions) -> new RandomSelectionFromTag(tagType, tag, conditions));
 	}
 
 	public static class Serializer extends LootFunction.Serializer<RandomSelectionFromTag> {
-		public Serializer() {
-			super(new ResourceLocation(AdventOfAscension.MOD_ID, "random_selection_from_tag"), RandomSelectionFromTag.class);
-		}
-
 		@Override
 		public void serialize(JsonObject object, RandomSelectionFromTag function, JsonSerializationContext context) {
 			super.serialize(object, function, context);
@@ -65,7 +67,7 @@ public class RandomSelectionFromTag extends LootFunction {
 
 		@Override
 		public RandomSelectionFromTag deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditions) {
-			return new RandomSelectionFromTag(JSONUtils.getString(object, "tag_type"), JSONUtils.getString(object, "tag"), conditions);
+			return new RandomSelectionFromTag(JSONUtils.getAsString(object, "tag_type"), JSONUtils.getAsString(object, "tag"), conditions);
 		}
 	}
 }

@@ -4,6 +4,8 @@ import net.minecraft.item.Item;
 
 import java.util.function.Supplier;
 
+import net.minecraft.item.Item.Properties;
+
 public class WaterloggedItem extends Item {
 	private final Supplier<Item> decloggedItem;
 

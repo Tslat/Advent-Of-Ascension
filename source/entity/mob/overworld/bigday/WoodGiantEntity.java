@@ -2,21 +2,19 @@ package net.tslat.aoa3.entity.mob.overworld.bigday;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
-
-import javax.annotation.Nonnull;
 
 public class WoodGiantEntity extends AoAMeleeMob {
 	public WoodGiantEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -26,31 +24,6 @@ public class WoodGiantEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 5.7f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 2d;
 	}
 
 	@Override
@@ -69,40 +42,24 @@ public class WoodGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Nonnull
-	@Override
-	protected OverworldEvents.Event getEventRequirement() {
-		return OverworldEvents.Event.BIG_DAY;
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 50).isAmbient());
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50).isAmbient());
 
 			double resist = 1;
-			IAttributeInstance attrib = ((LivingEntity)target).getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
-			Vec3d motion = getMotion();
+			ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+			Vector3d motion = getDeltaMovement();
 
 			if (attrib != null)
 				resist -= attrib.getValue();
 
-			target.addVelocity(motion.getX() * 21 * resist, motion.getY() * 1.6 * resist, motion.getZ() * 21 * resist);
-			target.velocityChanged = true;
+			target.push(motion.x() * 21 * resist, motion.y() * 1.6 * resist, motion.z() * 21 * resist);
+			target.hurtMarked = true;
 		}
 	}
 }

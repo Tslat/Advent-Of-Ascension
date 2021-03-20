@@ -17,12 +17,12 @@ public class PenguinSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		PenguinEntity penguin = new PenguinEntity(AoAEntities.Minions.PENGUIN.get(), pl.world);
+		PenguinEntity penguin = new PenguinEntity(AoAEntities.Minions.PENGUIN.get(), pl.level);
 
-		penguin.setPosition(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		penguin.setTamedBy(pl);
-		pl.world.addEntity(penguin);
-		if (pl instanceof ServerPlayerEntity && pl.world.getBiome(pl.getPosition()).doesSnowGenerate(pl.world, pl.getPosition()))
+		penguin.setPos(pl.getX(), pl.getY(), pl.getZ());
+		penguin.tame(pl);
+		pl.level.addFreshEntity(penguin);
+		if (pl instanceof ServerPlayerEntity && pl.level.getBiome(pl.blockPosition()).shouldSnow(pl.level, pl.blockPosition()))
 			AdvancementUtil.completeAdvancement((ServerPlayerEntity)pl, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/happy_feet"), "snowy_penguin_summon");
 
 		return penguin;

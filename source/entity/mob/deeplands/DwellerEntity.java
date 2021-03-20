@@ -17,28 +17,4 @@ public class DwellerEntity extends AoAMeleeMob {
         return 2.125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 50;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 6.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.3d;
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
 }

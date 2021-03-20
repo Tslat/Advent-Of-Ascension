@@ -12,7 +12,7 @@ public class ControlEnchantment extends Enchantment {
 		super(Enchantment.Rarity.RARE, AoAEnchantments.GUN, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseGun;
@@ -23,12 +23,12 @@ public class ControlEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 15 + enchantmentLevel * 5;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 20;
+	public int getMaxCost(int enchantmentLevel) {
+		return getMinCost(enchantmentLevel) + 20;
 	}
 }

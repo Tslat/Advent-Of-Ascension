@@ -30,113 +30,113 @@ public class ArcWizardModel extends EntityModel<MobEntity> {
 	private final ModelRenderer rightArm4;
 
 	public ArcWizardModel() {
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		head = new ModelRenderer(this, 46, 3);
 		head.addBox(4.0F, -13.0F, 1.0F, 1, 4, 2);
-		head.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head.setTextureSize(64, 32);
+		head.setPos(0.0F, 0.0F, 0.0F);
+		head.setTexSize(64, 32);
 		setRotation(head, 0.0F, 0.0F, 0.0F);
 		body = new ModelRenderer(this, 16, 37);
 		body.addBox(-0.5F, 6.0F, -2.0F, 1, 4, 4);
-		body.setRotationPoint(0.0F, -4.0F, 0.0F);
-		body.setTextureSize(64, 32);
+		body.setPos(0.0F, -4.0F, 0.0F);
+		body.setTexSize(64, 32);
 		setRotation(body, 0.0F, 0.0F, 0.0F);
 		rightArm = new ModelRenderer(this, 38, 42);
 		rightArm.addBox(-3.0F, -14.0F, -7.0F, 4, 5, 2);
-		rightArm.setRotationPoint(-5.0F, -3.0F, 0.0F);
-		rightArm.setTextureSize(64, 32);
+		rightArm.setPos(-5.0F, -3.0F, 0.0F);
+		rightArm.setTexSize(64, 32);
 		setRotation(rightArm, 0.3490659F, 0.0F, 0.0F);
 		leftArm = new ModelRenderer(this, 40, 16);
 		leftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 16, 4);
-		leftArm.setRotationPoint(5.0F, -3.0F, 0.0F);
-		leftArm.setTextureSize(64, 32);
+		leftArm.setPos(5.0F, -3.0F, 0.0F);
+		leftArm.setTexSize(64, 32);
 		setRotation(leftArm, 0.0F, 0.0F, 0.0F);
 		rightLeg = new ModelRenderer(this, 0, 16);
 		rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
-		rightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
-		rightLeg.setTextureSize(64, 32);
+		rightLeg.setPos(-2.0F, 12.0F, 0.0F);
+		rightLeg.setTexSize(64, 32);
 		setRotation(rightLeg, 0.0F, 0.0F, 0.0F);
 		leftLeg = new ModelRenderer(this, 0, 16);
 		leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 12, 4);
-		leftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
-		leftLeg.setTextureSize(64, 32);
+		leftLeg.setPos(2.0F, 12.0F, 0.0F);
+		leftLeg.setTexSize(64, 32);
 		setRotation(leftLeg, 0.0F, 0.0F, 0.0F);
 		r1 = new ModelRenderer(this, 52, 8);
 		r1.addBox(-2.0F, -14.0F, -1.0F, 4, 6, 2);
-		r1.setRotationPoint(0.0F, 0.0F, 0.0F);
-		r1.setTextureSize(64, 32);
+		r1.setPos(0.0F, 0.0F, 0.0F);
+		r1.setTexSize(64, 32);
 		setRotation(r1, 0.0F, 0.0F, 0.0F);
 		head2 = new ModelRenderer(this, 46, 3);
 		head2.addBox(-5.0F, -13.0F, 1.0F, 1, 4, 2);
-		head2.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head2.setTextureSize(64, 32);
+		head2.setPos(0.0F, 0.0F, 0.0F);
+		head2.setTexSize(64, 32);
 		setRotation(head2, 0.0F, 0.0F, 0.0F);
 		head3 = new ModelRenderer(this, 26, 3);
 		head3.addBox(4.0F, -9.0F, -4.0F, 1, 4, 8);
-		head3.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head3.setTextureSize(64, 32);
+		head3.setPos(0.0F, 0.0F, 0.0F);
+		head3.setTexSize(64, 32);
 		setRotation(head3, 0.0F, 0.0F, 0.0F);
 		head4 = new ModelRenderer(this, 26, 3);
 		head4.addBox(-5.0F, -9.0F, -4.0F, 1, 4, 8);
-		head4.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head4.setTextureSize(64, 32);
+		head4.setPos(0.0F, 0.0F, 0.0F);
+		head4.setTexSize(64, 32);
 		setRotation(head4, 0.0F, 0.0F, 0.0F);
 		head5 = new ModelRenderer(this, 39, 3);
 		head5.addBox(4.0F, -11.0F, -3.0F, 1, 2, 2);
-		head5.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head5.setTextureSize(64, 32);
+		head5.setPos(0.0F, 0.0F, 0.0F);
+		head5.setTexSize(64, 32);
 		setRotation(head5, 0.0F, 0.0F, 0.0F);
 		head6 = new ModelRenderer(this, 39, 3);
 		head6.addBox(-5.0F, -11.0F, -3.0F, 1, 2, 2);
-		head6.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head6.setTextureSize(64, 32);
+		head6.setPos(0.0F, 0.0F, 0.0F);
+		head6.setTexSize(64, 32);
 		setRotation(head6, 0.0F, 0.0F, 0.0F);
 		head7 = new ModelRenderer(this, 0, 0);
 		head7.addBox(-4.0F, -7.0F, -4.0F, 8, 2, 8);
-		head7.setRotationPoint(0.0F, 0.0F, 0.0F);
-		head7.setTextureSize(64, 32);
+		head7.setPos(0.0F, 0.0F, 0.0F);
+		head7.setTexSize(64, 32);
 		setRotation(head7, 0.0F, 0.0F, 0.0F);
 		body2 = new ModelRenderer(this, 16, 16);
 		body2.addBox(-4.0F, 0.0F, -2.0F, 8, 6, 4);
-		body2.setRotationPoint(0.0F, -4.0F, 0.0F);
-		body2.setTextureSize(64, 32);
+		body2.setPos(0.0F, -4.0F, 0.0F);
+		body2.setTexSize(64, 32);
 		setRotation(body2, 0.0F, 0.0F, 0.0F);
 		body3 = new ModelRenderer(this, 16, 26);
 		body3.addBox(-4.0F, 10.0F, -2.0F, 8, 6, 4);
-		body3.setRotationPoint(0.0F, -4.0F, 0.0F);
-		body3.setTextureSize(64, 32);
+		body3.setPos(0.0F, -4.0F, 0.0F);
+		body3.setTexSize(64, 32);
 		setRotation(body3, 0.0F, 0.0F, 0.0F);
 		body4 = new ModelRenderer(this, 16, 37);
 		body4.addBox(-3.0F, 6.0F, -2.0F, 1, 4, 4);
-		body4.setRotationPoint(0.0F, -4.0F, 0.0F);
-		body4.setTextureSize(64, 32);
+		body4.setPos(0.0F, -4.0F, 0.0F);
+		body4.setTexSize(64, 32);
 		setRotation(body4, 0.0F, 0.0F, 0.0F);
 		body5 = new ModelRenderer(this, 16, 37);
 		body5.addBox(2.0F, 6.0F, -2.0F, 1, 4, 4);
-		body5.setRotationPoint(0.0F, -4.0F, 0.0F);
-		body5.setTextureSize(64, 32);
+		body5.setPos(0.0F, -4.0F, 0.0F);
+		body5.setTexSize(64, 32);
 		setRotation(body5, 0.0F, 0.0F, 0.0F);
 		rightArm2 = new ModelRenderer(this, 40, 16);
 		rightArm2.addBox(-3.0F, -2.0F, -2.0F, 4, 16, 4);
-		rightArm2.setRotationPoint(-5.0F, -3.0F, 0.0F);
-		rightArm2.setTextureSize(64, 32);
+		rightArm2.setPos(-5.0F, -3.0F, 0.0F);
+		rightArm2.setTexSize(64, 32);
 		setRotation(rightArm2, 0.0F, 0.0F, 0.0F);
 		rightArm3 = new ModelRenderer(this, 56, 20);
 		rightArm3.addBox(-2.0F, -5.0F, -7.0F, 2, 28, 2);
-		rightArm3.setRotationPoint(-5.0F, -3.0F, 0.0F);
-		rightArm3.setTextureSize(64, 32);
+		rightArm3.setPos(-5.0F, -3.0F, 0.0F);
+		rightArm3.setTexSize(64, 32);
 		setRotation(rightArm3, 0.3490659F, 0.0F, 0.0F);
 		rightArm4 = new ModelRenderer(this, 38, 37);
 		rightArm4.addBox(-4.0F, -8.0F, -7.0F, 6, 2, 2);
-		rightArm4.setRotationPoint(-5.0F, -3.0F, 0.0F);
-		rightArm4.setTextureSize(64, 32);
+		rightArm4.setPos(-5.0F, -3.0F, 0.0F);
+		rightArm4.setTexSize(64, 32);
 		setRotation(rightArm4, 0.3490659F, 0.0F, 0.0F);
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		head.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		body.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		rightArm.render(matrix, buffer, light, overlay, red, green, blue, alpha);
@@ -160,33 +160,33 @@ public class ArcWizardModel extends EntityModel<MobEntity> {
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
+		model.xRot = x;
+		model.yRot = y;
+		model.zRot = z;
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		rightLeg.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount);
-		rightLeg.rotateAngleY = 0.0F;
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		rightLeg.xRot = (MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount);
+		rightLeg.yRot = 0.0F;
 
-		leftLeg.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount);
+		leftLeg.xRot = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount);
 
-		r1.rotateAngleY = (ageInTicks * 0.067F * 1.25F);
+		r1.yRot = (ageInTicks * 0.067F * 1.25F);
 
-		rightArm.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
-		rightArm.rotateAngleZ = 0.0F;
+		rightArm.xRot = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
+		rightArm.zRot = 0.0F;
 
-		rightArm2.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F);
-		rightArm2.rotateAngleZ = 0.0F;
+		rightArm2.xRot = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F);
+		rightArm2.zRot = 0.0F;
 
-		rightArm3.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
-		rightArm3.rotateAngleZ = 0.0F;
+		rightArm3.xRot = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
+		rightArm3.zRot = 0.0F;
 
-		rightArm4.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
-		rightArm4.rotateAngleZ = 0.0F;
+		rightArm4.xRot = (MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 2.0F * limbSwingAmount * 0.5F + 0.349F);
+		rightArm4.zRot = 0.0F;
 
-		leftArm.rotateAngleX = (MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F);
-		leftArm.rotateAngleZ = 0.0F;
+		leftArm.xRot = (MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F);
+		leftArm.zRot = 0.0F;
 	}
 }

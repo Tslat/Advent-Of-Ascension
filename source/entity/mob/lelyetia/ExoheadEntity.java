@@ -23,26 +23,6 @@ public class ExoheadEntity extends AoAMeleeMob {
 		return 1.59375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 55d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -62,7 +42,7 @@ public class ExoheadEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.projectile.cannon;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,25 +34,27 @@ public class FungalRockFragmentEntity extends BaseBullet implements HardProjecti
 
 	@Override
 	public void doImpactEffect() {
-		if (!world.isRemote && WorldUtil.checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && world.isAirBlock(getPosition())) {
+		if (!level.isClientSide && WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 
-			while (world.getBlockState(getPosition().down(i)).getMaterial().isReplaceable() && getPosition().getY() - i >= 0) {
+			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {
 				i++;
 			}
 
-			if (getPosition().getY() - i <= 0)
+			if (blockPosition().getY() - i <= 0)
 				return;
 
-			if (!WorldUtil.canModifyBlock(world, getPosition(), owner instanceof PlayerEntity ? owner : null))
+			Entity shooter = getOwner();
+
+			if (!WorldUtil.canModifyBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null))
 				return;
 
-			world.setBlockState(getPosition().down(i - 1), Blocks.COBBLESTONE.getDefaultState());
+			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.COBBLESTONE.defaultBlockState());
 		}
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.06f;
 	}
 }

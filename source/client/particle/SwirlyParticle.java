@@ -1,32 +1,32 @@
 package net.tslat.aoa3.client.particle;
 
 import net.minecraft.client.particle.*;
-import net.minecraft.world.World;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.minecraft.client.world.ClientWorld;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 import javax.annotation.Nullable;
 
 public class SwirlyParticle extends SpriteTexturedParticle {
 	private final IAnimatedSprite sprite;
 
-	public SwirlyParticle(World world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
+	public SwirlyParticle(ClientWorld world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
 		super(world, posX, posY, posZ, velocityX, velocityY, velocityZ);
 
 		this.sprite = sprite;
-		this.motionX = velocityX + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
-		this.motionY = velocityY + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
-		this.motionZ = velocityZ + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
-		this.particleScale = (rand.nextFloat() * rand.nextFloat() * 6.0f + 1.0f) * scale / 5f;
-		this.maxAge = (int)Math.ceil((ageModifier * (rand.nextFloat() * 0.8 + 0.2)));
-		this.particleRed = red;
-		this.particleGreen = green;
-		this.particleBlue = blue;
-		this.particleAlpha = alpha;
+		this.xd = velocityX + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
+		this.yd = velocityY + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
+		this.zd = velocityZ + (float)(Math.random() * 2.0 - 1.0) * 0.05f;
+		this.quadSize = (random.nextFloat() * random.nextFloat() * 6.0f + 1.0f) * scale / 5f;
+		this.lifetime = (int)Math.ceil((ageModifier * (random.nextFloat() * 0.8 + 0.2)));
+		this.rCol = red;
+		this.gCol = green;
+		this.bCol = blue;
+		this.alpha = alpha;
 
-		if (particleAlpha == 0)
-			particleAlpha = 1f;
+		if (alpha == 0)
+			alpha = 1f;
 
-		selectSpriteWithAge(sprite);
+		setSpriteFromAge(sprite);
 	}
 
 	@Override
@@ -36,25 +36,25 @@ public class SwirlyParticle extends SpriteTexturedParticle {
 
 	@Override
 	public void tick() {
-		this.prevPosX = posX;
-		this.prevPosY = posY;
-		this.prevPosZ = posZ;
+		this.xo = x;
+		this.yo = y;
+		this.zo = z;
 
-		selectSpriteWithAge(this.sprite);
+		setSpriteFromAge(this.sprite);
 
-		move(motionX, motionY, motionZ);
+		move(xd, yd, zd);
 
-		this.motionX *= 0.8999999761581421;
-		this.motionY *= 0.8999999761581421;
-		this.motionZ *= 0.8999999761581421;
+		this.xd *= 0.8999999761581421;
+		this.yd *= 0.8999999761581421;
+		this.zd *= 0.8999999761581421;
 
 		if (onGround) {
-			this.motionX *= 0.699999988079071;
-			this.motionZ *= 0.699999988079071;
+			this.xd *= 0.699999988079071;
+			this.zd *= 0.699999988079071;
 		}
 
-		if (age++ >= maxAge)
-			setExpired();
+		if (age++ >= lifetime)
+			remove();
 	}
 
 	public static class Factory implements IParticleFactory<CustomisableParticleType.Data> {
@@ -66,7 +66,7 @@ public class SwirlyParticle extends SpriteTexturedParticle {
 
 		@Nullable
 		@Override
-		public Particle makeParticle(CustomisableParticleType.Data data, World world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(CustomisableParticleType.Data data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new SwirlyParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprite, data.scale, data.ageModifier, data.red, data.green, data.blue, data.alpha);
 		}
 	}

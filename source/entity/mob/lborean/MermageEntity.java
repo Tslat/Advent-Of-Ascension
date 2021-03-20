@@ -4,21 +4,22 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoARangedMob;
+import net.tslat.aoa3.entity.base.AoAWaterRangedMob;
 import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.CyanShotEntity;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class MermageEntity extends AoARangedMob {
-	public MermageEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+public class MermageEntity extends AoAWaterRangedMob {
+	public MermageEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -36,26 +37,6 @@ public class MermageEntity extends AoARangedMob {
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
 		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 130;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 14;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
 	}
 
 	@Nullable
@@ -76,14 +57,6 @@ public class MermageEntity extends AoARangedMob {
 		return AoASounds.ENTITY_MERMAGE_HURT.get();
 	}
 
-	@Override
-	public void livingTick() {
-		super.livingTick();
-
-		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
-			heal(0.2f);
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
@@ -94,4 +67,7 @@ public class MermageEntity extends AoARangedMob {
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new CyanShotEntity(this, BaseMobProjectile.Type.MAGIC);
 	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
 }

@@ -13,11 +13,11 @@ public class MechaSkelloxSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		MechaSkelloxEntity mechaSkellox = new MechaSkelloxEntity(AoAEntities.Minions.MECHA_SKELLOX.get(), pl.world);
+		MechaSkelloxEntity mechaSkellox = new MechaSkelloxEntity(AoAEntities.Minions.MECHA_SKELLOX.get(), pl.level);
 
-		mechaSkellox.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		mechaSkellox.setTamedBy(pl);
-		pl.world.addEntity(mechaSkellox);
+		mechaSkellox.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		mechaSkellox.tame(pl);
+		pl.level.addFreshEntity(mechaSkellox);
 
 		return mechaSkellox;
 	}

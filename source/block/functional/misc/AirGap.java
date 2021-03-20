@@ -22,29 +22,24 @@ import javax.annotation.Nullable;
 
 public class AirGap extends Block {
 	public AirGap() {
-		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.AIR, BlockUtil.UNBREAKABLE_HARDNESS, 0));
+		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.NONE, BlockUtil.UNBREAKABLE_HARDNESS, 0));
 	}
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return VoxelShapes.empty();
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {}
+	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {}
 
 	@Override
-	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
+	public boolean canBeReplaced(BlockState state, BlockItemUseContext useContext) {
 		return true;
 	}
 
 	@Override
-	public boolean isReplaceable(BlockState state, Fluid fluidIn) {
+	public boolean canBeReplaced(BlockState state, Fluid fluidIn) {
 		return true;
-	}
-
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
 	}
 
 	@Override

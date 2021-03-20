@@ -15,7 +15,7 @@ public class WebReaperRenderer extends AoAMobRenderer {
 	}
 
 	@Override
-	protected void preRenderCallback(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
 		if (entity instanceof WebReaperEntity) {
 			float scale = ((WebReaperEntity)entity).getStageMod();
 

@@ -13,16 +13,16 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class PowerStation extends BossAltarBlock {
 	public PowerStation() {
-		super(MaterialColor.YELLOW);
+		super(MaterialColor.COLOR_YELLOW);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		CrystocoreEntity crystocore = new CrystocoreEntity(AoAEntities.Mobs.CRYSTOCORE.get(), player.world);
+		CrystocoreEntity crystocore = new CrystocoreEntity(AoAEntities.Mobs.CRYSTOCORE.get(), player.level);
 
-		crystocore.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.addEntity(crystocore);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.crystocore.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		crystocore.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		player.level.addFreshEntity(crystocore);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.crystocore.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

@@ -26,42 +26,22 @@ public class FacelessFloaterEntity extends AoAMeleeMob {
         return 1.8125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 131d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 12.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.27d;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AoASounds.ENTITY_FACELESS_RUNNER_AMBIENT.get();
+        return AoASounds.ENTITY_GHOST_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AoASounds.ENTITY_FACELESS_RUNNER_DEATH.get();
+        return AoASounds.ENTITY_GHOST_DEATH.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return AoASounds.ENTITY_FACELESS_RUNNER_HURT.get();
+        return AoASounds.ENTITY_GHOST_HURT.get();
     }
 
     @Override

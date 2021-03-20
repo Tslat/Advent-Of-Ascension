@@ -8,6 +8,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -18,6 +19,7 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -27,28 +29,18 @@ public class CreepBankerEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.CREEPONIA.key);
 	}
 
 	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.CREEPONIA.type();
-	}
+		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
+			return ActionResultType.SUCCESS;
 
-	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
-
-		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
-			return true;
-
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override
@@ -64,7 +56,7 @@ public class CreepBankerEntity extends AoATrader {
 			public Container createMenu(int screenId, PlayerInventory inv, PlayerEntity player) {
 				return new BankerContainer(screenId, player.inventory, CreepBankerEntity.this);
 			}
-		}, buffer -> buffer.writeInt(getEntityId()));
+		}, buffer -> buffer.writeInt(getId()));
 	}
 
 	@Override

@@ -8,7 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -34,7 +36,7 @@ public abstract class BaseSlab extends Item {
 	public final float sacrificeXp;
 
 	public BaseSlab(int lvl, float creationCost, int sacrificeLvl, float sacrificeXp) {
-		super(new Item.Properties().group(AoAItemGroups.MINION_SLABS));
+		super(new Item.Properties().tab(AoAItemGroups.MINION_SLABS));
 
 		this.lvl = lvl;
 		this.cost = creationCost;
@@ -43,8 +45,8 @@ public abstract class BaseSlab extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (player instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)player;
@@ -53,13 +55,13 @@ public abstract class BaseSlab extends Item {
 			if (!player.isCreative() && !PlayerUtil.doesPlayerHaveLevel(pl, Skills.CREATION, lvl)) {
 				PlayerUtil.notifyPlayerOfInsufficientLevel(pl, Skills.CREATION, lvl);
 
-				return ActionResult.resultFail(stack);
+				return ActionResult.fail(stack);
 			}
 
-			if (world.getEntitiesWithinAABB(AoAMinion.class, player.getBoundingBox().grow(30), minion -> minion != null && player.getUniqueID().equals(minion.getOwnerId())).size() >= AoAConfig.SERVER.maxMinions.get()) {
-				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.minionSlab.maxMinions", String.valueOf(AoAConfig.SERVER.maxMinions.get())));
+			if (world.getEntitiesOfClass(AoAMinion.class, player.getBoundingBox().inflate(30), minion -> minion != null && player.getUUID().equals(minion.getOwnerUUID())).size() >= AoAConfig.SERVER.maxMinions.get()) {
+				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.minionSlab.maxMinions", new StringTextComponent(String.valueOf(AoAConfig.SERVER.maxMinions.get()))), Util.NIL_UUID);
 
-				return ActionResult.resultFail(stack);
+				return ActionResult.fail(stack);
 			}
 
 			if (player.isCreative() || plData.stats().consumeResource(Resources.CREATION, cost, false)) {
@@ -72,26 +74,26 @@ public abstract class BaseSlab extends Item {
 					applyBuffs(minion);
 
 				player.playSound(AoASounds.ITEM_CREATION_SLAB_USE.get(), 1.0f, 1.0f);
-				return ActionResult.resultSuccess(stack);
+				return ActionResult.success(stack);
 			}
 		}
 
-		return ActionResult.resultPass(stack);
+		return ActionResult.pass(stack);
 	}
 
 	public abstract AoAMinion activateSlab(PlayerEntity pl, ItemStack stack);
 
 	protected void applyBuffs(AoAMinion minion) {
 		EntityUtil.applyPotions(minion, RandomUtil.getRandomSelection(
-				new PotionUtil.EffectBuilder(Effects.SPEED, 1200).level(2).hideParticles().isAmbient(),
-				new PotionUtil.EffectBuilder(Effects.STRENGTH, 1200).level(2).hideParticles().isAmbient(),
+				new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 1200).level(2).hideParticles().isAmbient(),
+				new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, 1200).level(2).hideParticles().isAmbient(),
 				new PotionUtil.EffectBuilder(Effects.REGENERATION, 1200).level(2).hideParticles().isAmbient(),
-				new PotionUtil.EffectBuilder(Effects.RESISTANCE, 1200).level(2).hideParticles().isAmbient()));
+				new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, 1200).level(2).hideParticles().isAmbient()));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.slab.cost", LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, Integer.toString((int)cost)));
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.slab.cost", LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent(Integer.toString((int)cost))));
 		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.CREATION, lvl));
 	}
 }

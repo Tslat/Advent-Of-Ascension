@@ -22,26 +22,6 @@ public class BushBabyEntity extends AoAMeleeMob {
 		return 0.75f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -59,13 +39,4 @@ public class BushBabyEntity extends AoAMeleeMob {
 	}
 
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

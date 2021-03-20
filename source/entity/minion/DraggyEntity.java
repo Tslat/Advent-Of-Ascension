@@ -25,23 +25,8 @@ public class DraggyEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.0d;
 	}
 
 	@Nullable

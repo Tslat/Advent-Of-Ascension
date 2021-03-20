@@ -24,26 +24,6 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 		return 0.46875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -63,19 +43,14 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	protected int getMinSpawnHeight() {
-		return 50;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
-		WorldUtil.createExplosion(this, world, 2.5f);
+		WorldUtil.createExplosion(this, level, 2.5f);
 		remove();
 	}
 
 	@Override
 	protected void onHit(DamageSource source, float amount) {
-		if (!world.isRemote && DamageUtil.isPoisonDamage(source, this, amount) && attackingPlayer != null && ItemUtil.findInventoryItem(attackingPlayer, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-			ItemUtil.givePlayerItemOrDrop(attackingPlayer, new ItemStack(AoAItems.MYSTERIUM_REALMSTONE.get()));
+		if (!level.isClientSide && DamageUtil.isPoisonDamage(source, this, amount) && lastHurtByPlayer != null && ItemUtil.findInventoryItem(lastHurtByPlayer, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			ItemUtil.givePlayerItemOrDrop(lastHurtByPlayer, new ItemStack(AoAItems.MYSTERIUM_REALMSTONE.get()));
 	}
 }

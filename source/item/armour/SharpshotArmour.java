@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SharpshotArmour extends AdventArmour {
 	public SharpshotArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:sharpshot", 54, new int[] {4, 6, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:sharpshot", 54, new int[] {4, 6, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class SharpshotArmour extends AdventArmour {
 	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		Item gun;
 
-		if (DamageUtil.isGunDamage(event.getSource()) && ((gun = plData.player().getHeldItemMainhand().getItem()) instanceof BaseGun || (gun = plData.player().getHeldItemOffhand().getItem()) instanceof BaseGun)) {
+		if (DamageUtil.isGunDamage(event.getSource()) && ((gun = plData.player().getMainHandItem().getItem()) instanceof BaseGun || (gun = plData.player().getOffhandItem().getItem()) instanceof BaseGun)) {
 			if (slots == null) {
 				if (gun instanceof BaseSniper)
 					event.setAmount(event.getAmount() * 1.1f);
@@ -45,7 +45,7 @@ public class SharpshotArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.sharpshot_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

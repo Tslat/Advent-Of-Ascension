@@ -37,18 +37,18 @@ public class HiveStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		HiveSoldierEntity hiveSoldier = new HiveSoldierEntity(AoAEntities.Minions.HIVE_SOLDIER.get(), caster.world);
+		HiveSoldierEntity hiveSoldier = new HiveSoldierEntity(AoAEntities.Minions.HIVE_SOLDIER.get(), caster.level);
 
 		if (caster instanceof PlayerEntity)
-			hiveSoldier.setTamedBy((PlayerEntity)caster);
+			hiveSoldier.tame((PlayerEntity)caster);
 
-		hiveSoldier.setPosition(caster.getPosX(), caster.getPosY(), caster.getPosZ());
-		caster.world.addEntity(hiveSoldier);
+		hiveSoldier.setPos(caster.getX(), caster.getY(), caster.getZ());
+		caster.level.addFreshEntity(hiveSoldier);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -27,10 +27,10 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class CrystocoreEntity extends AoAFlyingMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private byte damageType = 0;
 	private int changeCooldown = 220;
-	private static final DataParameter<Byte> TYPE = EntityDataManager.<Byte>createKey(CrystocoreEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> TYPE = EntityDataManager.<Byte>defineId(CrystocoreEntity.class, DataSerializers.BYTE);
 
 	public CrystocoreEntity(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
@@ -42,40 +42,20 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(TYPE, (byte)0);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.6;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 3000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
+		this.entityData.define(TYPE, (byte)0);
 	}
 
 	public int getPhase() {
-		return this.dataManager.get(TYPE);
+		return this.entityData.get(TYPE);
 	}
 
 	private void changeState() {
-		damageType = (byte)rand.nextInt(6);
+		damageType = (byte)random.nextInt(6);
 
-		this.dataManager.set(TYPE, damageType);
+		this.entityData.set(TYPE, damageType);
 	}
 
 	@Nullable
@@ -97,7 +77,7 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -105,7 +85,7 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (changeCooldown > 0) {
 				changeCooldown--;
 			}
@@ -113,27 +93,27 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 				changeCooldown = 220;
 				changeState();
 
-				EntityUtil.applyPotions(world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(10), PlayerUtil::shouldPlayerBeAffected), RandomUtil.getRandomSelection(
+				EntityUtil.applyPotions(level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(10), PlayerUtil::shouldPlayerBeAffected), RandomUtil.getRandomSelection(
 						new PotionUtil.EffectBuilder(Effects.POISON, 180).level(2),
 						new PotionUtil.EffectBuilder(Effects.BLINDNESS, 180),
 						new PotionUtil.EffectBuilder(Effects.WEAKNESS, 180).level(2),
-						new PotionUtil.EffectBuilder(Effects.NAUSEA, 180),
+						new PotionUtil.EffectBuilder(Effects.CONFUSION, 180),
 						new PotionUtil.EffectBuilder(Effects.WITHER, 180).level(2),
-						new PotionUtil.EffectBuilder(Effects.SLOWNESS, 180).level(2)
+						new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 180).level(2)
 				));
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && !isAIDisabled()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide && !isNoAi()) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.crystocore.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.crystocore.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -151,52 +131,52 @@ public class CrystocoreEntity extends AoAFlyingMeleeMob {
 					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 180).level(2));
 					break;
 				case 3:
-					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.NAUSEA, 180));
+					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.CONFUSION, 180));
 					break;
 				case 4:
 					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WITHER, 180).level(2));
 					break;
 				case 5:
 				default:
-					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 180).level(2));
+					EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 180).level(2));
 					break;
 			}
 		}
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.CRYSTOCORE_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.CRYSTOCORE_MUSIC.getId()));
 		bossInfo.removePlayer(player);

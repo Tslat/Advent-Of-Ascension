@@ -21,12 +21,12 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
 	public ClunkheadAltar() {
-		super(MaterialColor.LIGHT_BLUE);
+		super(MaterialColor.COLOR_LIGHT_BLUE);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
 			return ActionResultType.PASS;
@@ -51,11 +51,11 @@ public class ClunkheadAltar extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		ClunkheadEntity clunkhead = new ClunkheadEntity(AoAEntities.Mobs.CLUNKHEAD.get(), player.world);
+		ClunkheadEntity clunkhead = new ClunkheadEntity(AoAEntities.Mobs.CLUNKHEAD.get(), player.level);
 
-		clunkhead.setPositionAndUpdate(blockPos.getX() - 4, blockPos.up().getY(), blockPos.getZ() + 5);
-		player.world.addEntity(clunkhead);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		clunkhead.teleportTo(blockPos.getX() - 4, blockPos.above().getY(), blockPos.getZ() + 5);
+		player.level.addFreshEntity(clunkhead);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

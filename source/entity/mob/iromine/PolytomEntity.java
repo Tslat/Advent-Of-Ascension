@@ -24,31 +24,6 @@ public class PolytomEntity extends AoAFlyingRangedMob {
 		return 0.75f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 5;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {

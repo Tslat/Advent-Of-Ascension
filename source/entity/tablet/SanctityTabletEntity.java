@@ -23,8 +23,8 @@ public class SanctityTabletEntity extends SoulTabletEntity {
 	@Override
 	protected void doTickEffect() {
 		for (LivingEntity entity : getTargetsWithinRadius(LivingEntity.class, entity -> entity instanceof IMob && entity.isAlive())) {
-			if (!entity.isImmuneToFire()) {
-				entity.setFire(1);
+			if (!entity.fireImmune()) {
+				entity.setSecondsOnFire(1);
 			}
 			else {
 				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.WITHER, 40).isAmbient());

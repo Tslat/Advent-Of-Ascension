@@ -12,6 +12,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
@@ -41,29 +42,29 @@ public class EnergisticPickaxe extends BasePickaxe {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
 		PersistentStackCapabilityHandles cap = getCapability(stack);
 
 		if (super.getDestroySpeed(stack, state) != 1.0f)
 			cap.setValue(Math.max(0, cap.getValue() - 5));
 
-		return super.onBlockDestroyed(stack, world, state, pos, entity);
+		return super.mineBlock(stack, world, state, pos, entity);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		if (!world.isRemote) {
-			PersistentStackCapabilityHandles cap = getCapability(player.getHeldItem(hand));
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if (!world.isClientSide) {
+			PersistentStackCapabilityHandles cap = getCapability(player.getItemInHand(hand));
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 			float storeAmount = MathHelper.clamp(2000f - cap.getValue(), 0, Math.min(20, plData.stats().getResourceValue(Resources.ENERGY)));
 
 			cap.setValue(cap.getValue() + storeAmount);
 			plData.stats().consumeResource(Resources.ENERGY, storeAmount, true);
 
-			return ActionResult.resultSuccess(player.getHeldItem(hand));
+			return ActionResult.success(player.getItemInHand(hand));
 		}
 
-		return super.onItemRightClick(world, player, hand);
+		return super.use(world, player, hand);
 	}
 
 	private boolean hasEnergy(ItemStack stack) {
@@ -102,12 +103,12 @@ public class EnergisticPickaxe extends BasePickaxe {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticCharge", LocaleUtil.ItemDescriptionType.NEUTRAL));
 
 		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL,  Integer.toString((int)cap.getValue())));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL,  new StringTextComponent(Integer.toString((int)cap.getValue()))));
 	}
 }

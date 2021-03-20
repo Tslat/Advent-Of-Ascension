@@ -31,18 +31,18 @@ public class BlastChiller extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new IceShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new IceShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity)
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 10).level(5));
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 10).level(5));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SLOWS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -24,31 +24,6 @@ public class TortioneEntity extends AoAMeleeMob {
 		return 1.5625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 7d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

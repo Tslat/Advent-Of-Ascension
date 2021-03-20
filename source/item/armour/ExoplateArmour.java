@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class ExoplateArmour extends AdventArmour {
 	public ExoplateArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:exoplate", 46, new int[] {4, 6, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:exoplate", 46, new int[] {4, 6, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -34,15 +35,15 @@ public class ExoplateArmour extends AdventArmour {
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots != null && !DamageUtil.isEnvironmentalDamage(event.getSource())) {
 			LivingEntity entity = event.getEntityLiving();
-			BlockPos playerPos = entity.getPosition();
-			int lightLvl = MathHelper.clamp(2 + WorldUtil.getLightLevel(entity.world, playerPos, false, false), 2, 15);
+			BlockPos playerPos = entity.blockPosition();
+			int lightLvl = MathHelper.clamp(2 + WorldUtil.getLightLevel((ServerWorld)entity.level, playerPos, false, false), 2, 15);
 
 			event.setAmount(event.getAmount() * (1 - (1 - (lightLvl / 15f)) * 0.0625f * slots.size()));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.exoplate_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

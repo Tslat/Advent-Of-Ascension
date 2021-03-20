@@ -11,9 +11,9 @@ import net.tslat.aoa3.entity.boss.BaneEntity;
 
 public class BaneCloneEntity extends AoAMeleeMob {
 	public BaneCloneEntity(BaneEntity bane) {
-		this(AoAEntities.Misc.BANE_CLONE.get(), bane.world);
+		this(AoAEntities.Misc.BANE_CLONE.get(), bane.level);
 
-		setLocationAndAngles(bane.getPosX(), bane.getPosY(), bane.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(bane.getX(), bane.getY(), bane.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public BaneCloneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -25,23 +25,4 @@ public class BaneCloneEntity extends AoAMeleeMob {
 		return 1.1875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
 }

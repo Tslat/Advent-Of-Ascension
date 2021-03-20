@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.boss.RockRiderEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -30,9 +31,9 @@ public class HeavyBoulder extends BossSpawningItem {
 	public void spawnBoss(World world, ServerPlayerEntity summoner, double posX, double posY, double posZ) {
 		RockRiderEntity rockrider = new RockRiderEntity(AoAEntities.Mobs.ROCK_RIDER.get(), world);
 
-		rockrider.setLocationAndAngles(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
-		world.addEntity(rockrider);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.rockrider.spawn", summoner.getDisplayName().getFormattedText()), world, new BlockPos(posX, posY, posZ), 50);
+		rockrider.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
+		world.addFreshEntity(rockrider);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.rockrider.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -43,13 +44,13 @@ public class HeavyBoulder extends BossSpawningItem {
 			return false;
 		}
 
-		if (world.getDimension().getType() != AoADimensions.HAVEN.type()) {
+		if (!WorldUtil.isWorld(world, AoADimensions.HAVEN.key)) {
 			PlayerUtil.notifyPlayer(player, "entity.aoa3.rockrider.wrongDimension", TextFormatting.RED);
 
 			return false;
 		}
 
-		if (world.checkBlockCollision(new AxisAlignedBB(posX - 1d, posY, posZ - 1d, posX + 1d, posY + 4d, posZ + 1d))) {
+		if (!world.noCollision(new AxisAlignedBB(posX - 1d, posY, posZ - 1d, posX + 1d, posY + 4d, posZ + 1d))) {
 			PlayerUtil.notifyPlayer(player, "message.feedback.spawnBoss.noSpace", TextFormatting.RED);
 
 			return false;
@@ -59,7 +60,7 @@ public class HeavyBoulder extends BossSpawningItem {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getLocaleMessage("items.description.boss_summon_item.unstable", TextFormatting.AQUA));
 	}

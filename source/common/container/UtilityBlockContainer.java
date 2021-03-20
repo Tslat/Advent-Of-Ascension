@@ -23,10 +23,10 @@ public abstract class UtilityBlockContainer extends Container {
 		this.functionCaller = functionCaller;
 		inputs = new Inventory(2) {
 			@Override
-			public void markDirty() {
-				super.markDirty();
+			public void setChanged() {
+				super.setChanged();
 
-				onCraftMatrixChanged(this);
+				slotsChanged(this);
 			}
 		};
 
@@ -48,52 +48,52 @@ public abstract class UtilityBlockContainer extends Container {
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventory) {
-		functionCaller.consume((world, pos) -> updateOutput());
+	public void slotsChanged(IInventory inventory) {
+		functionCaller.execute((world, pos) -> updateOutput());
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity playerIn) {
-		super.onContainerClosed(playerIn);
+	public void removed(PlayerEntity playerIn) {
+		super.removed(playerIn);
 
-		functionCaller.consume((world, pos) -> clearContainer(playerIn, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(playerIn, world, inputs));
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return isWithinUsableDistance(functionCaller, player, getBlock());
+	public boolean stillValid(PlayerEntity player) {
+		return stillValid(functionCaller, player, getBlock());
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index == 2) {
-				functionCaller.consume((world, pos) -> slotStack.getItem().onCreated(slotStack, world, player));
+				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, world, player));
 
-				if (!mergeItemStack(slotStack, 3, 39, true))
+				if (!moveItemStackTo(slotStack, 3, 39, true))
 					return ItemStack.EMPTY;
 
-				slot.onSlotChange(slotStack, stack);
+				slot.onQuickCraft(slotStack, stack);
 			}
 			else if (index != 0 && index != 1) {
-				if (index < 39 && !mergeItemStack(slotStack, 0, 2, false))
+				if (index < 39 && !moveItemStackTo(slotStack, 0, 2, false))
 					return ItemStack.EMPTY;
 			}
-			else if (!mergeItemStack(slotStack, 3, 39, false)) {
+			else if (!moveItemStackTo(slotStack, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())

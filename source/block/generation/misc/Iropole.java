@@ -12,10 +12,10 @@ import net.tslat.aoa3.block.WaterloggableBlock;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class Iropole extends WaterloggableBlock {
-	private static final VoxelShape SHAPE = makeCuboidShape(3, 0, 3, 13, 16, 13);
+	private static final VoxelShape SHAPE = box(3, 0, 3, 13, 16, 13);
 
 	public Iropole() {
-		super(BlockUtil.generateBlockProperties(Material.IRON, MaterialColor.BLACK, 1.5f, 10f, SoundType.METAL));
+		super(BlockUtil.generateBlockProperties(Material.METAL, MaterialColor.COLOR_BLACK, 1.5f, 10f, SoundType.METAL));
 	}
 
 	@Override

@@ -1,31 +1,32 @@
 package net.tslat.aoa3.entity.base;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.common.Tags;
-import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.util.EntityUtil;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public abstract class AoAAnimal extends AnimalEntity {
 	public AoAAnimal(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
-
-		experienceValue = ((int)getBaseMaxHealth() / 25);
 	}
 
 	protected void registerGoals() {
@@ -40,30 +41,16 @@ public abstract class AoAAnimal extends AnimalEntity {
 			goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
 
 			if (getTemptItem() != null)
-				goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.fromItems(getTemptItem()), false));
+				goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(getTemptItem()), false));
 		}
 	}
 
+	@Nullable
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+		xpReward = (int)(getAttributeValue(Attributes.MAX_HEALTH) / 25f);
 
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-		getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(getBaseArmor());
-	}
-
-	protected abstract double getBaseMaxHealth();
-
-	protected abstract double getBaseMovementSpeed();
-
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	protected double getBaseArmor() {
-		return 0;
+		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Nullable
@@ -79,38 +66,11 @@ public abstract class AoAAnimal extends AnimalEntity {
 	}
 
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.ENTITY_COW_STEP;
-	}
-
-	public static boolean meetsSpawnConditions(EntityType<? extends MobEntity> type, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		return true;
+		return SoundEvents.COW_STEP;
 	}
 
 	@Override
-	public boolean canSpawn(IWorld world, SpawnReason reason) {
-		if (!EntityUtil.isNaturalSpawnReason(reason))
-			return true;
-
-		BlockPos checkPos = new BlockPos(this);
-		BlockState spawnBlock = world.getBlockState(checkPos.down());
-
-		return (spawnBlock.isIn(Tags.Blocks.DIRT) || spawnBlock.isIn(Tags.Blocks.STONE) || spawnBlock.isIn(AoATags.Blocks.GRASS)) && checkSpawningLightConditions();
-	}
-
-	protected int getSpawnChanceFactor() {
-		return 1;
-	}
-
-	private boolean checkSpawnChance() {
-		return getSpawnChanceFactor() <= 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
-	}
-
-	protected boolean checkSpawningLightConditions() {
-		return world.getBrightness(getPosition()) > 0.5f;
-	}
-
-	@Override
-	public boolean isBreedingItem(ItemStack stack) {
+	public boolean isFood(ItemStack stack) {
 		return stack.getItem() == getTemptItem();
 	}
 
@@ -131,7 +91,7 @@ public abstract class AoAAnimal extends AnimalEntity {
 
 	@Nullable
 	@Override
-	public AgeableEntity createChild(AgeableEntity partner) {
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity partner) {
 		return null;
 	}
 }

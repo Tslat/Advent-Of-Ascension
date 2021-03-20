@@ -15,6 +15,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoATools;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class PrimordialSpellbinderEntity extends AoATrader {
 	public PrimordialSpellbinderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -27,18 +28,8 @@ public class PrimordialSpellbinderEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.DUSTOPIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.DUSTOPIA.key);
 	}
 
 	@Override
@@ -47,7 +38,7 @@ public class PrimordialSpellbinderEntity extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.POWER_RUNE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.WITHER_RUNE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.COMPASS_RUNE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(Enchantments.SILK_TOUCH, 1))));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), EnchantedBookItem.createForEnchantment(new EnchantmentData(Enchantments.SILK_TOUCH, 1))));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 8), new ItemStack(AoATools.ENERGISTIC_AXE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 10), new ItemStack(AoATools.ENERGISTIC_PICKAXE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 9), new ItemStack(AoATools.ENERGISTIC_SHOVEL.get())));

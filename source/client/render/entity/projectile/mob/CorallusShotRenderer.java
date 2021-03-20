@@ -19,7 +19,7 @@ public class CorallusShotRenderer extends LivingRenderer<CorallusShotEntity, Ent
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(CorallusShotEntity entity) {
+	public ResourceLocation getTextureLocation(CorallusShotEntity entity) {
 		return TEXTURE;
 	}
 }

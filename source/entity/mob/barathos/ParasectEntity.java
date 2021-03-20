@@ -23,26 +23,6 @@ public class ParasectEntity extends AoAMeleeMob {
 		return 1.0625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.5f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,12 +40,7 @@ public class ParasectEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public int getMaxSpawnHeight() {
-		return 50;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.NAUSEA, 45));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.CONFUSION, 45));
 	}
 }

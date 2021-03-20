@@ -22,6 +22,7 @@ import net.tslat.aoa3.entity.boss.TyrosaurEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -29,11 +30,11 @@ import java.util.List;
 
 public class BoneHorn extends Item {
 	public BoneHorn() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxDamage(3));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(3));
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BOW;
 	}
 
@@ -43,52 +44,52 @@ public class BoneHorn extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
-			if (!world.isRemote)
+			if (!world.isClientSide)
 				player.playSound(AoASounds.ITEM_BONE_HORN_CALL.get(), 1.0f, 1.0f);
 
-			player.setActiveHand(hand);
-			player.getCooldownTracker().setCooldown(this, 150);
+			player.startUsingItem(hand);
+			player.getCooldowns().addCooldown(this, 150);
 
-			return ActionResult.resultSuccess(heldItem);
+			return ActionResult.success(heldItem);
 		}
 		else if (player instanceof ServerPlayerEntity) {
 			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail", TextFormatting.RED);
 		}
 
-		return ActionResult.resultFail(heldItem);
+		return ActionResult.fail(heldItem);
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.PRECASIA.type()) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity user) {
+		if (!world.isClientSide && WorldUtil.isWorld(world, AoADimensions.PRECASIA.key)) {
 			TyrosaurEntity tyrosaur = new TyrosaurEntity(AoAEntities.Mobs.TYROSAUR.get(), world);
-			BlockPos spawnPos = RandomUtil.getRandomPositionWithinRange(user.getPosition(), 20, 10, 20, true, world);
+			BlockPos spawnPos = RandomUtil.getRandomPositionWithinRange(user.blockPosition(), 20, 10, 20, true, world);
 			int tries = 10;
 
-			while (spawnPos.getY() > user.getPosY() + 10 && tries > 0) {
-				spawnPos = RandomUtil.getRandomPositionWithinRange(user.getPosition(), 20, 10, 20, true, world);
+			while (spawnPos.getY() > user.getY() + 10 && tries > 0) {
+				spawnPos = RandomUtil.getRandomPositionWithinRange(user.blockPosition(), 20, 10, 20, true, world);
 				tries--;
 			}
 
 			if (tries == 0)
 				return stack;
 
-			tyrosaur.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-			tyrosaur.setAttackTarget(user);
-			world.addEntity(tyrosaur);
-			ItemUtil.damageItem(stack, user, user.getActiveHand());
-			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.tyrosaur.spawn", user.getDisplayName().getFormattedText()), world, user.getPosition(), 50);
+			tyrosaur.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+			tyrosaur.setTarget(user);
+			world.addFreshEntity(tyrosaur);
+			ItemUtil.damageItem(stack, user, user.getUsedItemHand());
+			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.tyrosaur.spawn", user.getDisplayName()), world, user.blockPosition(), 50);
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

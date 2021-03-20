@@ -19,7 +19,7 @@ public class DracyonCleanupTask implements Runnable {
     @Override
     public void run() {
         if (world.getBlockState(waterPosition).getBlock() == Blocks.WATER)
-            world.setBlockState(waterPosition, Blocks.AIR.getDefaultState());
+            world.setBlockAndUpdate(waterPosition, Blocks.AIR.defaultBlockState());
     }
 
     public void schedule(Integer time, TimeUnit units) {

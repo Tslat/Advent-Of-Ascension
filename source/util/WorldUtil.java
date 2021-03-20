@@ -2,6 +2,7 @@ package net.tslat.aoa3.util;
 
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,11 +10,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
@@ -39,7 +40,7 @@ public abstract class WorldUtil {
 	}
 
 	public static Explosion createExplosion(@Nonnull Entity exploder, World world, float strength) {
-		return createExplosion(exploder, world, exploder.getPosX(), exploder.getPosY(), exploder.getPosZ(), strength, checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, @Nonnull Entity explodingEntity, float strength) {
@@ -60,7 +61,7 @@ public abstract class WorldUtil {
 				exploder = explodingEntity;
 		}
 
-		return createExplosion(exploder, world, explodingEntity.getPosX(), explodingEntity.getPosY(), explodingEntity.getPosZ(), strength, doGriefing ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+		return createExplosion(exploder, world, explodingEntity.getX(), explodingEntity.getY(), explodingEntity.getZ(), strength, doGriefing ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, double posX, double posY, double posZ, float strength) {
@@ -72,10 +73,10 @@ public abstract class WorldUtil {
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, double posX, double posY, double posZ, float strength, Explosion.Mode explosionType, boolean fieryExplosion) {
-		return world.createExplosion(exploder, posX, posY, posZ, strength, fieryExplosion, explosionType);
+		return world.explode(exploder, posX, posY, posZ, strength, fieryExplosion, explosionType);
 	}
 
-	public static int getLightLevel(World world, BlockPos position, boolean ignoreSkyLight, boolean ignoreBlockLight) {
+	public static int getLightLevel(IServerWorld world, BlockPos position, boolean ignoreSkyLight, boolean ignoreBlockLight) {
 		if (ignoreBlockLight && ignoreSkyLight) {
 			ignoreBlockLight = false;
 			ignoreSkyLight = false;
@@ -89,21 +90,24 @@ public abstract class WorldUtil {
 		}
 
 		if (ignoreSkyLight)
-			return world.getLightFor(LightType.BLOCK, position);
+			return world.getBrightness(LightType.BLOCK, position);
 
 		if (ignoreBlockLight)
-			return world.getLightFor(LightType.SKY, position) - world.getSkylightSubtracted();
+			return world.getBrightness(LightType.SKY, position) - world.getSkyDarken();
 
-		return world.getLightSubtracted(position, 0);
+		return world.getRawBrightness(position, 0);
 	}
 
 	public static void spawnLightning(ServerWorld world, @Nullable ServerPlayerEntity caster, double x, double y, double z, boolean destructive) {
-		LightningBoltEntity lightning = new LightningBoltEntity(world, x, y, z, !destructive);
+		LightningBoltEntity lightning = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
+
+		lightning.setVisualOnly(!destructive);
+		lightning.moveTo(x, y, z);
 
 		if (caster != null)
-			lightning.setCaster(caster);
+			lightning.setCause(caster);
 
-		world.addLightningBolt(lightning);
+		world.addFreshEntity(lightning);
 	}
 
 	public static boolean harvestAdditionalBlock(World world, PlayerEntity pl, BlockPos breakPos, boolean damageTool) {
@@ -113,35 +117,35 @@ public abstract class WorldUtil {
 		if (block.isAir(blockState, world, breakPos))
 			return false;
 
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			ServerPlayerEntity player = (ServerPlayerEntity)pl;
-			GameType gameType = player.interactionManager.getGameType();
+			GameType gameType = player.gameMode.getGameModeForPlayer();
 			int exp = ForgeHooks.onBlockBreakEvent(world, gameType, player, breakPos);
 
 			if (exp == -1)
 				return false;
 
-			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !pl.canUseCommandBlock()) {
-				world.notifyBlockUpdate(breakPos, blockState, blockState, 3);
+			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !pl.canUseGameMasterBlocks()) {
+				world.sendBlockUpdated(breakPos, blockState, blockState, 3);
 
 				return false;
 			}
-			else if (pl.getHeldItemMainhand().onBlockStartBreak(breakPos, pl) || pl.blockActionRestricted(world, breakPos, gameType)) {
+			else if (pl.getMainHandItem().onBlockStartBreak(breakPos, pl) || pl.blockActionRestricted(world, breakPos, gameType)) {
 				return false;
 			}
 			else {
 				if (pl.isCreative()) {
 					if (blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos)))
-						block.onPlayerDestroy(world, breakPos, blockState);
+						block.destroy(world, breakPos, blockState);
 				}
 				else {
-					ItemStack heldStack = pl.getHeldItemMainhand();
+					ItemStack heldStack = pl.getMainHandItem();
 					ItemStack clonedStack = heldStack.copy();
 
 					boolean canHarvest = blockState.canHarvestBlock(world, breakPos, pl);
 
-					if (damageTool && blockState.getBlockHardness(world, breakPos) != 0)
-						heldStack.damageItem(1, pl, (harvester) -> harvester.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+					if (damageTool && blockState.getDestroySpeed(world, breakPos) != 0)
+						heldStack.hurtAndBreak(1, pl, (harvester) -> harvester.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
 
 					if (heldStack.isEmpty() && !clonedStack.isEmpty())
 						ForgeEventFactory.onPlayerDestroyItem(pl, clonedStack, Hand.MAIN_HAND);
@@ -149,13 +153,13 @@ public abstract class WorldUtil {
 					boolean removed = blockState.removedByPlayer(world, breakPos, player, canHarvest, world.getFluidState(breakPos));
 
 					if (removed) {
-						block.onPlayerDestroy(world, breakPos, blockState);
+						block.destroy(world, breakPos, blockState);
 
 						if (canHarvest)
-							block.harvestBlock(world, pl, breakPos, blockState, world.getTileEntity(breakPos), clonedStack);
+							block.playerDestroy(world, pl, breakPos, blockState, world.getBlockEntity(breakPos), clonedStack);
 
 						if (exp > 0)
-							blockState.getBlock().dropXpOnBlockBreak(world, breakPos, exp);
+							blockState.getBlock().popExperience((ServerWorld)world, breakPos, exp);
 					}
 				}
 
@@ -171,7 +175,7 @@ public abstract class WorldUtil {
 		float temp = biome.getTemperature(pos);
 
 		if (world.canSeeSky(pos)) {
-			if (world.isDaytime()) {
+			if (world.isDay()) {
 				temp *= 1.35f;
 			}
 			else {
@@ -195,8 +199,8 @@ public abstract class WorldUtil {
 	public static ArrayList<PlayerEntity> getAllPlayersInRegion(World world, AxisAlignedBB region) {
 		ArrayList<PlayerEntity> players = new ArrayList<PlayerEntity>();
 
-		for (PlayerEntity player : world.getPlayers()) {
-			if (region.contains(player.getPositionVec()))
+		for (PlayerEntity player : world.players()) {
+			if (region.contains(player.position()))
 				players.add(player);
 		}
 
@@ -204,44 +208,31 @@ public abstract class WorldUtil {
 	}
 
 	public static int getTrueWorldHeight(World world, int x, int z) {
-		boolean match1 = false;
-		boolean match2 = false;
+		boolean headBlock = false;
+		boolean feetBlock = false;
 
 		try {
-			int height;
-
-			if (world.getDimension().getType() == AoADimensions.DEEPLANDS.type()) {
-				height = 121;
-			}
-			else if (world.getDimension().getType() == DimensionType.THE_NETHER) {
-				height = 128;
-			}
-			else if (world.getDimension().getType() == AoADimensions.CRYSTEVIA.type()) {
-				height = 127;
-			}
-			else {
-				return world.getHeight(Heightmap.Type.MOTION_BLOCKING, x, z);
-			}
+			int height = Math.max(world.getHeight(Heightmap.Type.MOTION_BLOCKING, x, z), world.dimensionType().logicalHeight());
 
 			if (Math.abs(x) > 30000000 || Math.abs(z) > 30000000)
 				return 0;
 
 			for (int i = height; i > 0; i--) {
 				if (world.getBlockState(new BlockPos(x, i, z)).getBlock() == Blocks.AIR) {
-					if (match1) {
-						if (!match2)
-							match2 = true;
+					if (headBlock) {
+						if (!feetBlock)
+							feetBlock = true;
 					}
 					else {
-						match1 = true;
+						headBlock = true;
 					}
 				}
 				else {
-					if (match1 && match2)
+					if (headBlock && feetBlock)
 						return i;
 
-					match1 = false;
-					match2 = false;
+					headBlock = false;
+					feetBlock = false;
 				}
 			}
 		}
@@ -254,20 +245,23 @@ public abstract class WorldUtil {
 
 	public static void toAir(World world, BlockPos... positions) {
 		for (BlockPos pos : positions) {
-			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 	}
 
 	public static boolean canModifyBlock(IWorld world, BlockPos pos, @Nullable Entity entity) {
-		DimensionType dimType = world.getDimension().getType();
+		if (!(world instanceof World))
+			return true;
+
+		RegistryKey<World> worldKey = ((World)world).dimension();
 		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
-		if (dimType == AoADimensions.IMMORTALLIS.type() || dimType == AoADimensions.ANCIENT_CAVERN.type()) {
+		if (WorldUtil.isWorld((World)world, AoADimensions.IMMORTALLIS.key, AoADimensions.ANCIENT_CAVERN.key)) {
 			if (relevantPlayer == null || !relevantPlayer.isCreative())
 				return false;
 		}
 
-		return relevantPlayer == null || world.getWorld().canMineBlockBody(relevantPlayer, pos);
+		return true;
 	}
 
 	public static void operateOnMultipleBlocksInRange(World world, BlockPos center, int radius, Predicate<BlockState> test, Consumer<BlockPos> operation) {
@@ -290,14 +284,32 @@ public abstract class WorldUtil {
 		for (int x = (int)Math.floor(aabb.minX); x <= Math.ceil(aabb.maxX); x++) {
 			for (int y = (int)Math.floor(aabb.minY); y <= Math.ceil(aabb.maxY); y++) {
 				for (int z = (int)Math.floor(aabb.minZ); z <= Math.ceil(aabb.maxZ); z++) {
-					checkPos.setPos(x, y, z);
+					checkPos.set(x, y, z);
 
 					if (predicate == null || predicate.test(world.getBlockState(checkPos), checkPos))
-						matches.add(checkPos.toImmutable());
+						matches.add(checkPos.immutable());
 				}
 			}
 		}
 
 		return matches;
+	}
+
+	public static boolean isWorld(IServerWorld world, RegistryKey<World>... keys) {
+		for (RegistryKey<World> key : keys) {
+			if (world.getLevel().dimension() == key)
+				return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isWorld(World world, RegistryKey<World>... keys) {
+		for (RegistryKey<World> key : keys) {
+			if (world.dimension() == key)
+				return true;
+		}
+
+		return false;
 	}
 }

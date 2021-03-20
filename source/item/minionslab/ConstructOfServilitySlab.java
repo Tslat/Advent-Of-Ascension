@@ -13,11 +13,11 @@ public class ConstructOfServilitySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		ConstructOfServilityEntity constructOfServility = new ConstructOfServilityEntity(AoAEntities.Minions.CONSTRUCT_OF_SERVILITY.get(), pl.world);
+		ConstructOfServilityEntity constructOfServility = new ConstructOfServilityEntity(AoAEntities.Minions.CONSTRUCT_OF_SERVILITY.get(), pl.level);
 
-		constructOfServility.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		constructOfServility.setTamedBy(pl);
-		pl.world.addEntity(constructOfServility);
+		constructOfServility.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		constructOfServility.tame(pl);
+		pl.level.addFreshEntity(constructOfServility);
 
 		return constructOfServility;
 	}

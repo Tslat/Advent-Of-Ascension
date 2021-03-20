@@ -8,6 +8,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class NecroArmour extends AdventArmour {
 	public NecroArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:necro", 64, new int[] {5, 8, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:necro", 64, new int[] {5, 8, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -46,12 +47,12 @@ public class NecroArmour extends AdventArmour {
 
 			event.setAmount(0);
 			plData.equipment().setCooldown("necro_armour", 72000);
-			pl.inventory.damageArmor(500);
+			pl.inventory.hurtArmor(DamageSource.GENERIC, 2000);
 
 			if (pl.getHealth() < 4)
 				pl.setHealth(4);
 
-			((ServerWorld)pl.world).spawnParticle(ParticleTypes.HEART, pl.getPosX(), pl.getBoundingBox().maxY, pl.getPosZ(), 5, 0, 0, 0, (double)0);
+			((ServerWorld)pl.level).sendParticles(ParticleTypes.HEART, pl.getX(), pl.getBoundingBox().maxY, pl.getZ(), 5, 0, 0, 0, (double)0);
 		}
 	}
 
@@ -62,12 +63,12 @@ public class NecroArmour extends AdventArmour {
 			int inventoryIndex = 0;
 			PlayerInventory inv = plData.player().inventory;
 
-			while (count > 0 && inventoryIndex < inv.getSizeInventory()) {
-				ItemStack stack = inv.getStackInSlot(inventoryIndex);
+			while (count > 0 && inventoryIndex < inv.getContainerSize()) {
+				ItemStack stack = inv.getItem(inventoryIndex);
 
-				if (!stack.isEmpty() && EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) == 0 && EnchantmentHelper.getEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) == 0) {
+				if (!stack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) == 0) {
 					plData.storeInterventionItem(stack);
-					inv.setInventorySlotContents(inventoryIndex, ItemStack.EMPTY);
+					inv.setItem(inventoryIndex, ItemStack.EMPTY);
 					count--;
 				}
 
@@ -77,7 +78,7 @@ public class NecroArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.necro_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.necro_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());

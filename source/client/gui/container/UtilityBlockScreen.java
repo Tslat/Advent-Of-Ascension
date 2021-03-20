@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.container;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -17,26 +18,28 @@ public class UtilityBlockScreen extends ContainerScreen<UtilityBlockContainer> {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrix);
+
+		super.render(matrix, mouseX, mouseY, partialTicks);
+
+		renderTooltip(matrix, mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		UtilityBlockContainer container = getContainer();
+	protected void renderBg(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
+		UtilityBlockContainer container = getMenu();
 
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		Minecraft.getInstance().getTextureManager().bindTexture(textures);
-		RenderUtil.renderCustomSizedTexture(guiLeft, guiTop, 0, 0, 175, 141, 256, 256);
+		Minecraft.getInstance().getTextureManager().bind(textures);
+		RenderUtil.renderCustomSizedTexture(matrix, leftPos, topPos, 0, 0, 175, 141, 256, 256);
 
-		if ((!container.inputs.getStackInSlot(0).isEmpty() || !container.inputs.getStackInSlot(1).isEmpty()) && container.output.getStackInSlot(0).isEmpty())
-			RenderUtil.renderCustomSizedTexture(guiLeft + 99, guiTop + 21, xSize, 0, 28, 21, 256, 256);
+		if ((!container.inputs.getItem(0).isEmpty() || !container.inputs.getItem(1).isEmpty()) && container.output.getItem(0).isEmpty())
+			RenderUtil.renderCustomSizedTexture(matrix, leftPos + 99, topPos + 21, imageWidth, 0, 28, 21, 256, 256);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		RenderUtil.drawCenteredScaledString(Minecraft.getInstance().fontRenderer, getTitle().getFormattedText(), 88, 6, 1, 4210752, RenderUtil.StringRenderType.NORMAL);
+	protected void renderLabels(MatrixStack matrix, int mouseX, int mouseY) {
+		RenderUtil.drawCenteredScaledMessage(matrix, Minecraft.getInstance().font, getTitle(), 88, 6, 1, 4210752, RenderUtil.StringRenderType.NORMAL);
 	}
 }

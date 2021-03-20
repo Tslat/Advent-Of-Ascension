@@ -13,11 +13,11 @@ public class SpraggySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		SpraggyEntity spraggy = new SpraggyEntity(AoAEntities.Minions.SPRAGGY.get(), pl.world);
+		SpraggyEntity spraggy = new SpraggyEntity(AoAEntities.Minions.SPRAGGY.get(), pl.level);
 
-		spraggy.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		spraggy.setTamedBy(pl);
-		pl.world.addEntity(spraggy);
+		spraggy.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		spraggy.tame(pl);
+		pl.level.addFreshEntity(spraggy);
 
 		return spraggy;
 	}

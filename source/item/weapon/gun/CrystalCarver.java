@@ -20,7 +20,7 @@ public class CrystalCarver extends BaseGun {
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem().isIn(Tags.Items.GEMS) || super.getIsRepairable(stack, repairMaterial);
+	public boolean isValidRepairItem(ItemStack stack, ItemStack repairMaterial) {
+		return repairMaterial.getItem().is(Tags.Items.GEMS) || super.isValidRepairItem(stack, repairMaterial);
 	}
 }

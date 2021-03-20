@@ -24,26 +24,6 @@ public class FenixEntity extends AoAMeleeMob {
 		return 1.65625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.27d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -64,12 +44,12 @@ public class FenixEntity extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 }

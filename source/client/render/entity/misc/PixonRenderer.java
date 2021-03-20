@@ -7,7 +7,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.mob.InvisibleEntityRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 public class PixonRenderer extends InvisibleEntityRenderer {
 	private final int colour;
@@ -20,11 +20,11 @@ public class PixonRenderer extends InvisibleEntityRenderer {
 
 	@Override
 	public void render(MobEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-		entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1.25f, 3, colour), true, entity.getPosX(), entity.getPosY() + 0.65d, entity.getPosZ(), 0, 0, 0);
+		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1.25f, 3, colour), true, entity.getX(), entity.getY() + 0.65d, entity.getZ(), 0, 0, 0);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity entity) {
+	public ResourceLocation getTextureLocation(MobEntity entity) {
 		return null;
 	}
 }

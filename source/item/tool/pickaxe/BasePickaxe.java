@@ -7,6 +7,6 @@ import net.tslat.aoa3.common.registration.AoAItemGroups;
 
 public class BasePickaxe extends PickaxeItem {
 	public BasePickaxe(IItemTier stats) {
-		super(stats, 1, -2.8F, new Item.Properties().maxDamage(stats.getMaxUses()).group(AoAItemGroups.TOOLS));
+		super(stats, 1, -2.8F, new Item.Properties().durability(stats.getUses()).tab(AoAItemGroups.TOOLS));
 	}
 }

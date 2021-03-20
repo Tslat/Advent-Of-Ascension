@@ -35,7 +35,7 @@ public class GigaCannon extends BaseCannon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
 			return new GigaGreenBallEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
@@ -43,17 +43,17 @@ public class GigaCannon extends BaseCannon {
 
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		ItemStack gunStack = shooter.getHeldItemMainhand();
+		ItemStack gunStack = shooter.getMainHandItem();
 
-		if (!gunStack.isEmpty() && (gunStack.getTag() == null || gunStack.getEnchantmentTagList().isEmpty()))
+		if (!gunStack.isEmpty() && (gunStack.getTag() == null || gunStack.getEnchantmentTags().isEmpty()))
 			bulletDmgMultiplier *= 1.2f;
 
 		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

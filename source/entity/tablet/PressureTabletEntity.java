@@ -22,7 +22,7 @@ public class PressureTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(LivingEntity.class, entity -> entity instanceof IMob && entity.isAlive()), new PotionUtil.EffectBuilder(Effects.SLOWNESS, 10).level(3).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(LivingEntity.class, entity -> entity instanceof IMob && entity.isAlive()), new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 10).level(3).isAmbient());
 	}
 
 	@Override

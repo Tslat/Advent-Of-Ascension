@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -30,7 +30,7 @@ public class ArcwormShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.1f;
 	}
 
@@ -38,12 +38,12 @@ public class ArcwormShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		Vec3d motion = getMotion();
-		float motionVector = MathHelper.sqrt(motion.getX() * motion.getX() + motion.getZ() * motion.getZ());
-		rotationYaw = (float)(MathHelper.atan2(motion.getX(), motion.getZ()) * (180D / Math.PI));
-		rotationPitch = (float)(MathHelper.atan2(motion.getY(), motionVector) * (180D / Math.PI));
-		prevRotationYaw = rotationYaw;
-		prevRotationPitch = rotationPitch;
+		Vector3d motion = getDeltaMovement();
+		float motionVector = MathHelper.sqrt(motion.x() * motion.x() + motion.z() * motion.z());
+		yRot = (float)(MathHelper.atan2(motion.x(), motion.z()) * (180D / Math.PI));
+		xRot = (float)(MathHelper.atan2(motion.y(), motionVector) * (180D / Math.PI));
+		yRotO = yRot;
+		xRotO = xRot;
 	}
 
 	@Override

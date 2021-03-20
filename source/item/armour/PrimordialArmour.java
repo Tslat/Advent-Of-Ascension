@@ -20,7 +20,7 @@ import java.util.List;
 
 public class PrimordialArmour extends AdventArmour {
 	public PrimordialArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:primordial", 62, new int[] {5, 8, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:primordial", 62, new int[] {5, 8, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -31,13 +31,13 @@ public class PrimordialArmour extends AdventArmour {
 	@Override
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots == null || (DamageUtil.isMeleeDamage(event.getSource()) && plData.equipment().getCurrentFullArmourSet() != setType())) {
-			if (event.getSource().getTrueSource() instanceof LivingEntity && ((LivingEntity)event.getSource().getTrueSource()).isPotionActive(Effects.WITHER))
+			if (event.getSource().getEntity() instanceof LivingEntity && ((LivingEntity)event.getSource().getEntity()).hasEffect(Effects.WITHER))
 				event.setAmount(event.getAmount() * (1 - 0.15f * (slots == null ? 4 : slots.size())));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.primordial_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.primordial_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

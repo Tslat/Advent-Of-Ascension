@@ -24,17 +24,17 @@ import java.util.Random;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GREEN_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE).tickRandomly());
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_GREEN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE).randomTicks());
 	}
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		if (!player.world.isRemote && player.world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(pos).grow(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
-			SkeleElderEntity skeleElder = new SkeleElderEntity(player.world, pos, 0);
+		if (!player.level.isClientSide && player.level.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(pos).inflate(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
+			SkeleElderEntity skeleElder = new SkeleElderEntity(player.level, pos, 0);
 
-			skeleElder.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
+			skeleElder.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
 
-			player.world.addEntity(skeleElder);
+			player.level.addFreshEntity(skeleElder);
 		}
 
 		return false;
@@ -42,14 +42,14 @@ public class ArmyBlock extends BossAltarBlock {
 
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		if (!world.isRemote && rand.nextBoolean() && world.getEntitiesWithinAABB(SkeleElderEntity.class, new AxisAlignedBB(pos).grow(100)).isEmpty())
-			world.addEntity(new SkeleElderEntity(world, pos, 0));
+		if (!world.isClientSide && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AxisAlignedBB(pos).inflate(100)).isEmpty())
+			world.addFreshEntity(new SkeleElderEntity(world, pos, 0));
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		spawnWave(player.world, blockPos, 1);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		spawnWave(player.level, blockPos, 1);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.spawn", player.getDisplayName()), blockPos);
 	}
 
 	private static void spawnWaveEntities(World world, BlockPos armyBlockPos, Entity... entities) {
@@ -58,18 +58,18 @@ public class ArmyBlock extends BossAltarBlock {
 			int posZ = armyBlockPos.getZ() - 11 + RandomUtil.randomNumberUpTo(19);
 			BlockPos.Mutable checkPos = new BlockPos.Mutable(posX, armyBlockPos.getY(), posZ);
 
-			while (checkPos.getY() < world.getHeight() && !world.isAirBlock(checkPos.move(Direction.UP))) {
+			while (checkPos.getY() < world.getMaxBuildHeight() && !world.isEmptyBlock(checkPos.move(Direction.UP))) {
 				;
 			}
 
-			entity.setPosition(posX, checkPos.getY(), posZ);
-			world.addEntity(entity);
+			entity.setPos(posX, checkPos.getY(), posZ);
+			world.addFreshEntity(entity);
 		}
 	}
 
 
 	public static void spawnWave(World world, BlockPos blockPos, int wave) {
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			switch (wave) {
 				case 1:
 					spawnWaveEntities(world, blockPos,
@@ -466,7 +466,7 @@ public class ArmyBlock extends BossAltarBlock {
 							new SkeleElderEntity(world, blockPos, wave));
 					break;
 				case 39:
-					world.addEntity(new SkeletronEntity(world, blockPos));
+					world.addFreshEntity(new SkeletronEntity(world, blockPos));
 					break;
 				default:
 					break;

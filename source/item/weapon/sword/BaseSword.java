@@ -1,10 +1,12 @@
 package net.tslat.aoa3.item.weapon.sword;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
@@ -22,17 +24,22 @@ import net.tslat.aoa3.config.AoAConfig;
 import javax.annotation.Nullable;
 
 public class BaseSword extends SwordItem {
+	private final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+
 	protected final float dmg;
 	protected final double speed;
 
 	public BaseSword(IItemTier itemStats) {
-		super(itemStats, 0, itemStats.getEfficiency(), new Item.Properties().maxDamage(itemStats.getMaxUses()).group(AoAItemGroups.SWORDS).addToolType(ToolType.get("sword"), itemStats.getHarvestLevel()));
-		this.dmg = itemStats.getAttackDamage();
-		this.speed = itemStats.getEfficiency();
+		super(itemStats, 0, itemStats.getSpeed(), new Item.Properties().durability(itemStats.getUses()).tab(AoAItemGroups.SWORDS).addToolType(ToolType.get("sword"), itemStats.getLevel()));
+		this.dmg = itemStats.getAttackDamageBonus();
+		this.speed = itemStats.getSpeed();
+
+		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamage(), AttributeModifier.Operation.ADDITION));
+		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));
 	}
 
 	@Override
-	public float getAttackDamage() {
+	public float getDamage() {
 		return dmg * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
 	}
 
@@ -42,16 +49,16 @@ public class BaseSword extends SwordItem {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0.0f));
 
 		return false;
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		doMeleeEffect(stack, target, attacker, VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue());
 
-		return super.hitEntity(stack, target, attacker);
+		return super.hurtEnemy(stack, target, attacker);
 	}
 
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {}
@@ -63,13 +70,11 @@ public class BaseSword extends SwordItem {
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		Multimap<Attribute, AttributeModifier> multimap = super.getDefaultAttributeModifiers(slot);
 
-		if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", getAttackDamage(), AttributeModifier.Operation.ADDITION));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));
-		}
+		if (slot == EquipmentSlotType.MAINHAND)
+			return attributeModifiers;
 
 		return multimap;
 	}

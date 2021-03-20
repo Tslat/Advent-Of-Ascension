@@ -24,21 +24,6 @@ public class PeppermintSnailEntity extends AoAAnimal {
 		return 0.3125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {

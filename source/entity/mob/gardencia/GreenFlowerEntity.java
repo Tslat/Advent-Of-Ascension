@@ -11,9 +11,9 @@ import net.tslat.aoa3.entity.boss.VinocorneEntity;
 
 public class GreenFlowerEntity extends AoAMeleeMob {
 	public GreenFlowerEntity(VinocorneEntity vinocorne) {
-		this(AoAEntities.Mobs.GREEN_FLOWER.get(), vinocorne.world);
+		this(AoAEntities.Mobs.GREEN_FLOWER.get(), vinocorne.level);
 
-		setLocationAndAngles(vinocorne.getPosX(), vinocorne.getPosY(), vinocorne.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(vinocorne.getX(), vinocorne.getY(), vinocorne.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public GreenFlowerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -25,23 +25,4 @@ public class GreenFlowerEntity extends AoAMeleeMob {
 		return 1.5f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
 }

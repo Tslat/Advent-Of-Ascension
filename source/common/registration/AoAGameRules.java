@@ -12,18 +12,18 @@ public final class AoAGameRules {
 
 	public static void registerGameRules() {
 		try {
-			registerBooleanGameRule(AoAGameRules.class.getField("DESTRUCTIVE_WEAPON_PHYSICS"), "destructiveWeaponPhysics", false);
-			registerBooleanGameRule(AoAGameRules.class.getField("STRONGER_MOB_GRIEFING"), "doStrongerMobGriefing", false);
+			registerBooleanGameRule(AoAGameRules.class.getField("DESTRUCTIVE_WEAPON_PHYSICS"), "destructiveWeaponPhysics", GameRules.Category.PLAYER, false);
+			registerBooleanGameRule(AoAGameRules.class.getField("STRONGER_MOB_GRIEFING"), "doStrongerMobGriefing", GameRules.Category.MOBS, false);
 		}
 		catch (NoSuchFieldException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void registerBooleanGameRule(Field field, String name, boolean defaultValue) {
+	private static void registerBooleanGameRule(Field field, String name, GameRules.Category category, boolean defaultValue) {
 		DeferredWorkQueue.runLater(() -> {
 			try {
-				field.set(null, GameRules.register(name, (GameRules.RuleType< GameRules.BooleanValue>) ObfuscationReflectionHelper.findMethod(GameRules.BooleanValue.class, "func_223568_b", boolean.class).invoke(null, defaultValue)));
+				field.set(null, GameRules.register(name, category, (GameRules.RuleType< GameRules.BooleanValue>)ObfuscationReflectionHelper.findMethod(GameRules.BooleanValue.class, "func_223568_b", boolean.class).invoke(null, defaultValue)));
 			}
 			catch (Exception e) {
 				e.printStackTrace();

@@ -26,26 +26,6 @@ public class LurkerEntity extends AoAMeleeMob {
         return 1.785f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.6;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 140;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 16.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

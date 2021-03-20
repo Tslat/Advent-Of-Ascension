@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
@@ -16,6 +17,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class ExplosivesExpertEntity extends AoATrader {
 	public ExplosivesExpertEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -23,28 +25,18 @@ public class ExplosivesExpertEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
+
+		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
+			return ActionResultType.SUCCESS;
+
+		return super.mobInteract(player, hand);
 	}
 
 	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
-
-		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
-			return true;
-
-		return super.processInteract(player, hand);
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.CREEPONIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.CREEPONIA.key);
 	}
 
 	@Override

@@ -24,31 +24,6 @@ public class BonebackEntity extends AoAMeleeMob {
 		return 0.55f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 3d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -71,13 +46,4 @@ public class BonebackEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_GENERIC_VERY_HEAVY_STEP.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

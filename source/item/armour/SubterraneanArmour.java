@@ -1,8 +1,8 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -24,7 +24,7 @@ public class SubterraneanArmour extends AdventArmour {
 	private static final AttributeModifier ATTACK_SPEED_DEBUFF = new AttributeModifier(UUID.fromString("d4631555-8ceb-490d-9066-fb4188560b15"), "AoASubterraneanAttackSpeedDebuff", -0.16666667, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
 	public SubterraneanArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:subterranean", 47, new int[] {3, 7, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:subterranean", 47, new int[] {3, 7, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -35,23 +35,23 @@ public class SubterraneanArmour extends AdventArmour {
 	@Override
 	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
 	}
 
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
+			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
 	}
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null)
-			plData.player().addPotionEffect(new EffectInstance(Effects.HASTE, -1, 1, true, false));
+			plData.player().addEffect(new EffectInstance(Effects.DIG_SPEED, -1, 1, true, false));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.subterranean_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

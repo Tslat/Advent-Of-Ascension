@@ -13,11 +13,11 @@ public class SpikebackSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		SpikebackEntity spikeback = new SpikebackEntity(AoAEntities.Minions.SPIKEBACK.get(), pl.world);
+		SpikebackEntity spikeback = new SpikebackEntity(AoAEntities.Minions.SPIKEBACK.get(), pl.level);
 
-		spikeback.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		spikeback.setTamedBy(pl);
-		pl.world.addEntity(spikeback);
+		spikeback.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		spikeback.tame(pl);
+		pl.level.addFreshEntity(spikeback);
 
 		return spikeback;
 	}

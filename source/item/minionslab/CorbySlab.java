@@ -13,11 +13,11 @@ public class CorbySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		CorbyEntity corby = new CorbyEntity(AoAEntities.Minions.CORBY.get(), pl.world);
+		CorbyEntity corby = new CorbyEntity(AoAEntities.Minions.CORBY.get(), pl.level);
 
-		corby.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		corby.setTamedBy(pl);
-		pl.world.addEntity(corby);
+		corby.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		corby.tame(pl);
+		pl.level.addFreshEntity(corby);
 
 		return corby;
 	}

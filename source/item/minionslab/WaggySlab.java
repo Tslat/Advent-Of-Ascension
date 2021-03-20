@@ -13,11 +13,11 @@ public class WaggySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		WaggyEntity waggy = new WaggyEntity(AoAEntities.Minions.WAGGY.get(), pl.world);
+		WaggyEntity waggy = new WaggyEntity(AoAEntities.Minions.WAGGY.get(), pl.level);
 
-		waggy.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		waggy.setTamedBy(pl);
-		pl.world.addEntity(waggy);
+		waggy.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		waggy.tame(pl);
+		pl.level.addFreshEntity(waggy);
 
 		return waggy;
 	}

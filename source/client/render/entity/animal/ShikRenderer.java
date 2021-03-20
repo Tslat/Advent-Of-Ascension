@@ -16,7 +16,7 @@ public class ShikRenderer extends MobRenderer<ShikEntity, EntityModel<ShikEntity
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ShikEntity entity) {
+	public ResourceLocation getTextureLocation(ShikEntity entity) {
 		return texture;
 	}
 }

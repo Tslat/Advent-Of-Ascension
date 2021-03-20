@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -21,6 +21,7 @@ import net.tslat.aoa3.entity.projectile.staff.ShyreShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -45,42 +46,42 @@ public class ShyreStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new ShyreShotEntity(caster, this, 120));
+		world.addFreshEntity(new ShyreShotEntity(caster, this, 120));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
-		World world = shooter.world;
-		BlockPos.Mutable testPos = new BlockPos.Mutable(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
+		World world = shooter.level;
+		BlockPos.Mutable testPos = new BlockPos.Mutable(hitPos.x(), hitPos.y(), hitPos.z());
 		BlockState state = world.getBlockState(testPos);
-		Vec3d shotMotion = shot.getMotion();
-		Vec3d testVec = hitPos;
+		Vector3d shotMotion = shot.getDeltaMovement();
+		Vector3d testVec = hitPos;
 		int tests = 0;
 
 		while (tests <= 10 && !(state = world.getBlockState(testPos)).getBlock().isAir(state, world, testPos)) {
-			testVec = testVec.subtract(shotMotion.getX() * 0.15f, shotMotion.getY() * 0.15f, shotMotion.getZ() * 0.15f);
-			testPos.setPos(testVec.getX() + shooter.getWidth(), testVec.getY(), testVec.getZ() + shooter.getWidth());
+			testVec = testVec.subtract(shotMotion.x() * 0.15f, shotMotion.y() * 0.15f, shotMotion.z() * 0.15f);
+			testPos.set(testVec.x() + shooter.getBbWidth(), testVec.y(), testVec.z() + shooter.getBbWidth());
 			tests++;
 		}
 
 		if (state.getBlock().isAir(state, world, testPos)) {
-			shooter.setPositionAndUpdate(testVec.getX(), testVec.getY(), testVec.getZ());
+			shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
 
-			if (shooter instanceof ServerPlayerEntity && shooter.world.getDimension().getType() == AoADimensions.LUNALUS.type())
+			if (shooter instanceof ServerPlayerEntity && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
 				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
 		}
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		shooter.setPositionAndUpdate((target.getPosX() + shot.getPosX()) / 2d, (target.getPosY() + shot.getPosY()) / 2d, (target.getPosZ() + shot.getPosZ()) / 2d);
+		shooter.teleportTo((target.getX() + shot.getX()) / 2d, (target.getY() + shot.getY()) / 2d, (target.getZ() + shot.getZ()) / 2d);
 
 		return true;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

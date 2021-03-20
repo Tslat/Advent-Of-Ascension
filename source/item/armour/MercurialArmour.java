@@ -19,7 +19,7 @@ import java.util.List;
 
 public class MercurialArmour extends AdventArmour {
 	public MercurialArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:mercurial", 42, new int[] {3, 8, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:mercurial", 42, new int[] {3, 8, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -29,18 +29,18 @@ public class MercurialArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
-		if (!plData.player().world.isRemote && event.getSource().isExplosion() && event.getAmount() > 0) {
+		if (!plData.player().level.isClientSide && event.getSource().isExplosion() && event.getAmount() > 0) {
 			if (slots == null) {
-				plData.player().addPotionEffect(new EffectInstance(Effects.RESISTANCE, 320, 1, true, true));
+				plData.player().addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 320, 1, true, true));
 			}
 			else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
-				plData.player().addPotionEffect(new EffectInstance(Effects.RESISTANCE, 80 * slots.size(), 0, true, true));
+				plData.player().addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 80 * slots.size(), 0, true, true));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.mercurial_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.mercurial_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

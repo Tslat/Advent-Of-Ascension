@@ -4,11 +4,15 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
@@ -20,26 +24,6 @@ public class LelyetianWarriorEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.75f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 65;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -58,5 +42,13 @@ public class LelyetianWarriorEntity extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_LELYETIAN_HURT.get();
+	}
+
+	@Override
+	public void die(DamageSource cause) {
+		super.die(cause);
+
+		if (!level.isClientSide() && cause.getMsgId().equals("fireworks") && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.CELEVE_REALMSTONE.get()));
 	}
 }

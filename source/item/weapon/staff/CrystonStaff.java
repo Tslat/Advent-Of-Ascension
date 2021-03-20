@@ -31,7 +31,7 @@ public class CrystonStaff extends BaseStaff<Integer> {
 
 	@Override
 	public Integer checkPreconditions(LivingEntity caster, ItemStack staff) {
-		int count = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB).size();
+		int count = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB).size();
 
 		if (count > 0)
 			return count;
@@ -47,12 +47,12 @@ public class CrystonStaff extends BaseStaff<Integer> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Integer args) {
-		EntityUtil.applyPotions(caster, new PotionUtil.EffectBuilder(Effects.SPEED, Math.min(args * 100, 1200)).level(Math.min(args, 3)));
+		EntityUtil.applyPotions(caster, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, Math.min(args * 100, 1200)).level(Math.min(args, 3)));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

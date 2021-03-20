@@ -17,11 +17,11 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class WhitewashingTable extends Block {
 	public WhitewashingTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.WHITE_TERRACOTTA, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (player instanceof ServerPlayerEntity)
 			WhitewashingTableContainer.openContainer((ServerPlayerEntity)player, pos);
 

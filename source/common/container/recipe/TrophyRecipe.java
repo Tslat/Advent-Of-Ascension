@@ -6,9 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -40,15 +42,26 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	}
 
 	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		NonNullList<Ingredient> ingredients = NonNullList.create();
+
+		for (int i = 0; i < 9; i++) {
+			ingredients.add(Ingredient.of(new ItemStack(AoABlocks.TROPHY.get())));
+		}
+
+		return ingredients;
+	}
+
+	@Override
 	public String getGroup() {
 		return group;
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			if (inv.getStackInSlot(i).getItem() == AoABlocks.TROPHY.get().asItem())
-				return TrophyBlock.cloneTrophy(inv.getStackInSlot(i), AoABlocks.GOLD_TROPHY.get());
+	public ItemStack assemble(CraftingInventory inv) {
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			if (inv.getItem(i).getItem() == AoABlocks.TROPHY.get().asItem())
+				return TrophyBlock.cloneTrophy(inv.getItem(i), AoABlocks.GOLD_TROPHY.get());
 		}
 
 		return ItemStack.EMPTY;
@@ -59,7 +72,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 
 		for(int gridX = 0; gridX < inv.getWidth(); ++gridX) {
 			for(int gridY = 0; gridY < inv.getHeight(); ++gridY) {
-				ItemStack slotStack = inv.getStackInSlot(gridX + gridY * inv.getWidth());
+				ItemStack slotStack = inv.getItem(gridX + gridY * inv.getWidth());
 
 				if (slotStack.getItem() != AoABlocks.TROPHY.get().asItem() || !slotStack.hasTag())
 					return false;
@@ -75,7 +88,6 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 					return false;
 
 				if (blockEntityTag.contains("EntityID")) {
-					System.out.println(blockEntityTag.getString("EntityID"));
 					if (entityType == null) {
 						entityType = blockEntityTag.getString("EntityID");
 					}
@@ -90,12 +102,12 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width >= 3 && height >= 3;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return new ItemStack(AoABlocks.GOLD_TROPHY.get());
 	}
 
@@ -126,19 +138,19 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 
 	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TrophyRecipe> {
 		@Override
-		public TrophyRecipe read(ResourceLocation recipeId, JsonObject json) {
-			return new TrophyRecipe(json.has("group") ? JSONUtils.getString(json, "group") : "");
+		public TrophyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			return new TrophyRecipe(json.has("group") ? JSONUtils.getAsString(json, "group") : "");
 		}
 
 		@Nullable
 		@Override
-		public TrophyRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			return new TrophyRecipe(buffer.readString(32767));
+		public TrophyRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			return new TrophyRecipe(buffer.readUtf(32767));
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, TrophyRecipe recipe) {
-			buffer.writeString(recipe.getGroup());
+		public void toNetwork(PacketBuffer buffer, TrophyRecipe recipe) {
+			buffer.writeUtf(recipe.getGroup());
 		}
 	}
 }

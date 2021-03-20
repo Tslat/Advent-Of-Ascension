@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -10,6 +11,8 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.resources.Language;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 public class AdventMainGui extends Screen implements IProgressMeter {
 	private static final ResourceLocation titleResource = HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.APRIL_FOOLS ? new ResourceLocation("aoa3", "textures/gui/maingui/aoa_title_alt.png") : new ResourceLocation("aoa3", "textures/gui/maingui/aoa_title.png");
 
-	public static Language currentLanguage = Minecraft.getInstance().getLanguageManager().getCurrentLanguage();
+	public static Language currentLanguage = Minecraft.getInstance().getLanguageManager().getSelected();
 
 	protected static final ArrayList<AdventGuiTextures> textures = new ArrayList<AdventGuiTextures>();
 	protected static int currentTextureIndex = 0;
@@ -52,12 +55,12 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		super(new TranslationTextComponent("gui.aoa3.adventGui.title"));
 		instance = this;
 
-		if (this.player == null || this.player.getEntityWorld() == null || this.player.getEntityWorld() != player.getEntityWorld())
+		if (this.player == null || this.player.getCommandSenderWorld() == null || this.player.getCommandSenderWorld() != player.getCommandSenderWorld())
 			tabScreen = null;
 
 		this.player = player;
 
-		currentLanguage = Minecraft.getInstance().getLanguageManager().getCurrentLanguage();
+		currentLanguage = Minecraft.getInstance().getLanguageManager().getSelected();
 
 		if (textures.isEmpty())
 			prepTextures();
@@ -75,10 +78,10 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 	@Override
 	protected void init() {
-		addButton(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
-		addButton(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
-		addButton(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleString("gui.aoa3.adventGui.guides"), ADVENT_WINDOW_TAB.GUIDES));
-		addButton(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleString("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
+		addButton(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
+		addButton(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
+		addButton(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.guides"), ADVENT_WINDOW_TAB.GUIDES));
+		addButton(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
 
 		correctGuiPositions();
 		initTabScreen();
@@ -93,37 +96,37 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrix);
 
 		AdventGuiTextures currentTextures = textures.get(currentTextureIndex);
 
-		getMinecraft().getTextureManager().bindTexture(currentTextures.backgroundTexture);
+		getMinecraft().getTextureManager().bind(currentTextures.backgroundTexture);
 
-		RenderSystem.pushMatrix();
+		matrix.pushPose();
 		RenderSystem.color4f(1, 1, 1, 1);
-		RenderSystem.scalef(scale, scale, scale);
+		matrix.scale(scale, scale, scale);
 
-		RenderUtil.renderCustomSizedTexture(scaledRootX, scaledRootY, 24, 16, guiWidth, guiHeight, 1024, 512);
+		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX, scaledRootY, 24, 16, guiWidth, guiHeight, 1024, 512);
 
-		getMinecraft().getTextureManager().bindTexture(titleResource);
-		RenderUtil.renderCustomSizedTexture(scaledRootX - ((1024 - guiWidth) / 2) + 68, scaledRootY - ((512 - guiHeight) / 2) + 21, 0, 0, 892, 112, 892, 112);
+		getMinecraft().getTextureManager().bind(titleResource);
+		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((1024 - guiWidth) / 2) + 68, scaledRootY - ((512 - guiHeight) / 2) + 21, 0, 0, 892, 112, 892, 112);
 
-		RenderSystem.scalef(scaleInverse, scaleInverse, scaleInverse);
+		matrix.scale(scaleInverse, scaleInverse, scaleInverse);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		super.render(mouseX, mouseY, partialTicks);
+		super.render(matrix, mouseX, mouseY, partialTicks);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		RenderSystem.scalef(scale, scale, scale);
+		matrix.scale(scale, scale, scale);
 
 		if (currentTextures.overlayTexture != null) {
-			getMinecraft().getTextureManager().bindTexture(currentTextures.overlayTexture);
+			getMinecraft().getTextureManager().bind(currentTextures.overlayTexture);
 			RenderSystem.enableBlend();
-			RenderUtil.renderCustomSizedTexture(scaledRootX - ((1024 - guiWidth) / 2), scaledRootY - ((512 - guiHeight) / 2), 0, 0, 1024, 512, 1024, 512);
+			RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((1024 - guiWidth) / 2), scaledRootY - ((512 - guiHeight) / 2), 0, 0, 1024, 512, 1024, 512);
 			RenderSystem.disableBlend();
 		}
 
-		RenderSystem.scalef(1.25f, 1.25f, 1.25f);
-		font.drawStringWithShadow("v" + AdventOfAscension.VERSION, (scaledRootX + 175) / 1.25f, (scaledRootY + 85) / 1.25f, NumberUtil.RGB(255, 223, 0));
+		matrix.scale(1.25f, 1.25f, 1.25f);
+		font.drawShadow(matrix, new StringTextComponent("v" + AdventOfAscension.VERSION), (scaledRootX + 175) / 1.25f, (scaledRootY + 85) / 1.25f, NumberUtil.RGB(255, 223, 0));
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
@@ -132,21 +135,21 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 				updateMessageTicker = 90;
 
 			if (updateMessageTicker > 0) {
-				String msg = LocaleUtil.getLocaleString("gui.aoa3.adventGui.update", WebUtil.getLatestVersion());
+				ITextComponent msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", new StringTextComponent(WebUtil.getLatestVersion()));
 
-				font.drawStringWithShadow(msg, (int)((scaledRootX + 925 - font.getStringWidth(msg)) / 1.25f), (int)((scaledRootY + 105) / 1.25f), NumberUtil.RGB(229, 0, 0));
+				font.drawShadow(matrix, msg, (int)((scaledRootX + 925 - font.width(msg)) / 1.25f), (int)((scaledRootY + 105) / 1.25f), NumberUtil.RGB(229, 0, 0));
 			}
 		}
 
 		RenderSystem.color4f(1, 1, 1, 1);
-		RenderSystem.scalef(0.8f, 0.8f, 0.8f);
+		matrix.scale(0.8f, 0.8f, 0.8f);
 
 		if (tabScreen != null)
-			tabScreen.render(mouseX, mouseY, partialTicks);
+			tabScreen.render(matrix, mouseX, mouseY, partialTicks);
 
-		RenderSystem.scalef(scaleInverse, scaleInverse, scaleInverse);
+		matrix.scale(scaleInverse, scaleInverse, scaleInverse);
 		RenderSystem.color4f(1, 1, 1, 1);
-		RenderSystem.popMatrix();
+		matrix.popPose();
 	}
 
 	@Override
@@ -168,25 +171,25 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 		private final ADVENT_WINDOW_TAB tabID;
 
-		private AdventMainGuiTabButton(int x, int y, String buttonText, ADVENT_WINDOW_TAB tab) {
+		private AdventMainGuiTabButton(int x, int y, ITextComponent buttonText, ADVENT_WINDOW_TAB tab) {
 			super(x, y, buttonWidth, buttonHeight, buttonText);
 
 			this.tabID = tab;
 		}
 
 		@Override
-		public void renderButton(int mouseX, int mouseY, float partialTicks) {
+		public void renderButton(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
-				mc.getTextureManager().bindTexture(textures.get(currentTextureIndex).menuButtonTexture);
+				mc.getTextureManager().bind(textures.get(currentTextureIndex).menuButtonTexture);
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.scalef(scale, scale, scale);
+				matrix.scale(scale, scale, scale);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
 				int textureX = 0;
 				int textureY = buttonHeight * (tabID == selectedTab ? 0 : (getYImage(this.isHovered) == 2) ? 1 : 2);
 
-				RenderUtil.renderScaledCustomSizedTexture(scaledRootX + x, scaledRootY + y, textureX, textureY, 180, 60, 180, 60, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + x, scaledRootY + y, textureX, textureY, 180, 60, 180, 60, 180, 180);
 
 				int stringColour = NumberUtil.RGB(239, 137, 119);
 
@@ -200,8 +203,8 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 					stringColour = NumberUtil.RGB(247, 239, 0);
 				}
 
-				RenderUtil.drawCenteredScaledString(mc.fontRenderer, getMessage(), scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
-				RenderSystem.scalef(scaleInverse, scaleInverse, scaleInverse);
+				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
+				matrix.scale(scaleInverse, scaleInverse, scaleInverse);
 			}
 		}
 
@@ -262,8 +265,8 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		if (!isBlockingKeys() && keyCode == Keybinds.keyAdventGui.getKey().getKeyCode()) {
-			getMinecraft().displayGuiScreen(null);
+		if (!isBlockingKeys() && keyCode == Keybinds.ADVENT_GUI.getKey().getValue()) {
+			getMinecraft().setScreen(null);
 
 			return true;
 		}
@@ -339,10 +342,10 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	}
 
 	private void correctGuiPositions() {
-		MainWindow window = getMinecraft().getMainWindow();
+		MainWindow window = getMinecraft().getWindow();
 
-		scaledRootX = (int) (Math.round((window.getScaledWidth() / 2d) / scale) - Math.round(guiWidth / 2d));
-		scaledRootY = (int) (Math.round((window.getScaledHeight() / 2d) / scale) - Math.round(guiHeight / 2d));
+		scaledRootX = (int) (Math.round((window.getGuiScaledWidth() / 2d) / scale) - Math.round(guiWidth / 2d));
+		scaledRootY = (int) (Math.round((window.getGuiScaledHeight() / 2d) / scale) - Math.round(guiHeight / 2d));
 		scaledTabRootX = scaledRootX + 201;
 		scaledTabRootY = scaledRootY + 129;
 	}
@@ -358,11 +361,11 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	}
 
 	@Override
-	public void onClose() {
-		super.onClose();
+	public void removed() {
+		super.removed();
 
 		if (tabScreen != null)
-			tabScreen.onClose();
+			tabScreen.removed();
 	}
 
 	public static void addTheme(String name, @Nullable ResourceLocation backgroundTexture, @Nullable ResourceLocation menuButtonsTexture, @Nullable ResourceLocation overlayTexture) {

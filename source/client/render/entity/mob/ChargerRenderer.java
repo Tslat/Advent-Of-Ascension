@@ -12,7 +12,7 @@ public class ChargerRenderer extends AoAMobRenderer {
 	public ChargerRenderer(EntityRendererManager renderManager, final ResourceLocation resource) {
 		super(renderManager, new ChargerModel(), AoAEntities.Mobs.CHARGER.get().getWidth() / 3f, 1, resource);
 
-		texture = ChargerModel.getChargerTexture((ChargerModel)entityModel, resource);
+		texture = ChargerModel.getChargerTexture((ChargerModel)model, resource);
 	}
 
 	public ResourceLocation getTexture() {

@@ -54,7 +54,7 @@ public class FirestormStaff extends BaseStaff<BlockPos> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, BlockPos args) {
 		for (int i = 0; i < 8; i++) {
-			world.addEntity(new FirestormFallEntity(caster, this, (args.getX() - 4) + RandomUtil.randomValueUpTo(8), args.getY() + 30, (args.getZ() - 4) + RandomUtil.randomValueUpTo(8), 3.0f));
+			world.addFreshEntity(new FirestormFallEntity(caster, this, (args.getX() - 4) + RandomUtil.randomValueUpTo(8), args.getY() + 30, (args.getZ() - 4) + RandomUtil.randomValueUpTo(8), 3.0f));
 		}
 	}
 
@@ -62,7 +62,7 @@ public class FirestormStaff extends BaseStaff<BlockPos> {
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
 			if (target instanceof LivingEntity)
-				target.setFire(7);
+				target.setSecondsOnFire(7);
 
 			return true;
 		}
@@ -76,8 +76,8 @@ public class FirestormStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

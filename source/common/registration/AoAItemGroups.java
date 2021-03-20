@@ -36,25 +36,25 @@ public final class AoAItemGroups {
 	public static final ItemGroup BANNERS = new AoAItemGroup("AoA Banners", "banners", () -> new ItemStack(AoABlocks.ANCIENT_BANNER.get()));
 
 	public static class AoAItemGroup extends ItemGroup {
-		private final String displayName;
+		private final String localeName;
 		private final Supplier<ItemStack> displayStack;
 
 		public AoAItemGroup(String name, String id, Supplier<ItemStack> iconStack) {
 			super(AdventOfAscension.MOD_ID + "." + id);
 
-			this.displayName = name;
+			this.localeName = name;
 			this.displayStack = iconStack;
 
 			REGISTERED_ITEM_GROUPS.add(this);
 		}
 
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return displayStack.get();
 		}
 
-		public String getDisplayName() {
-			return this.displayName;
+		public String getLocaleName() {
+			return this.localeName;
 		}
 	}
 }

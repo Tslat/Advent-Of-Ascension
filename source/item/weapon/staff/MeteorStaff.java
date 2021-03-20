@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -56,19 +56,19 @@ public class MeteorStaff extends BaseStaff<BlockPos> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, BlockPos args) {
 		for (int i = 0; i < 8; i++) {
-			world.addEntity(new MeteorFallEntity(caster, this, (args.getX() - 4) + RandomUtil.randomValueUpTo(8), args.getY() + 30, (args.getZ() - 4) + RandomUtil.randomValueUpTo(8), 3.0f));
+			world.addFreshEntity(new MeteorFallEntity(caster, this, (args.getX() - 4) + RandomUtil.randomValueUpTo(8), args.getY() + 30, (args.getZ() - 4) + RandomUtil.randomValueUpTo(8), 3.0f));
 		}
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.world, shot, 1.4f);
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
+		WorldUtil.createExplosion(shooter, shot.level, shot, 1.4f);
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
-			WorldUtil.createExplosion(shooter, shot.world, shot, 1.4f);
+			WorldUtil.createExplosion(shooter, shot.level, shot, 1.4f);
 
 			return true;
 		}
@@ -82,8 +82,8 @@ public class MeteorStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

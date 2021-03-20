@@ -10,20 +10,11 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class CrystalTraderEntity extends AoATrader {
 	public CrystalTraderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Override
@@ -32,8 +23,8 @@ public class CrystalTraderEntity extends AoATrader {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.CRYSTEVIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.CRYSTEVIA.key);
 	}
 
 	@Override

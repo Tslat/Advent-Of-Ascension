@@ -17,8 +17,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.mob.shyrelands.ArcwormEntity;
@@ -45,7 +45,7 @@ public class ReservedItem extends Item {
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!verifyStack(stack)) {
 			stack.setCount(0);
-			entityIn.replaceItemInInventory(itemSlot, ItemStack.EMPTY);
+			entityIn.setSlot(itemSlot, ItemStack.EMPTY);
 		}
 	}
 
@@ -54,11 +54,11 @@ public class ReservedItem extends Item {
 		if (context.getPlayer() == null)
 			return super.onItemUseFirst(stack, context);
 
-		Block block = context.getWorld().getBlockState(context.getPos()).getBlock();
+		Block block = context.getLevel().getBlockState(context.getClickedPos()).getBlock();
 
 		if (block == AoABlocks.CHARGING_TABLE.get()) {
 			if (this == AoAItems.FLESHY_BONES.get()) {
-				context.getPlayer().setHeldItem(context.getHand(), ((ReservedItem)AoAItems.DARK_BONES.get()).newValidStack());
+				context.getPlayer().setItemInHand(context.getHand(), ((ReservedItem)AoAItems.DARK_BONES.get()).newValidStack());
 
 
 				return ActionResultType.SUCCESS;
@@ -66,7 +66,7 @@ public class ReservedItem extends Item {
 		}
 		else if (block == AoABlocks.MINERALIZATION_STATION.get()) {
 			if (this == AoAItems.DARK_BONES.get()) {
-				context.getPlayer().setHeldItem(context.getHand(), ((ReservedItem)AoAItems.ROCK_BONES.get()).newValidStack());
+				context.getPlayer().setItemInHand(context.getHand(), ((ReservedItem)AoAItems.ROCK_BONES.get()).newValidStack());
 
 
 				return ActionResultType.SUCCESS;
@@ -77,24 +77,11 @@ public class ReservedItem extends Item {
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!target.world.isRemote) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (!target.level.isClientSide) {
 			if (stack.getItem() == AoAItems.MILLENNIUM_UPGRADER.get()) {
 				if (target.isInLava() && attacker.isInLava()) {
-					attacker.setHeldItem(Hand.MAIN_HAND, ((ReservedItem)AoAItems.MOLTEN_UPGRADER.get()).newValidStack());
-
-					return true;
-				}
-			}
-			else if (stack.getItem() == AoAItems.MOLTEN_UPGRADER.get()) {
-				if (target.world.getCurrentMoonPhaseFactor() == 1 && target.getHealth() <= 0 &&
-						(target.getType() == AoAEntities.Mobs.DARK_BEAST.get() ||
-						target.getType() == AoAEntities.Mobs.IRKLING.get() ||
-						target.getType() == AoAEntities.Mobs.NIGHT_WATCHER.get() ||
-						target.getType() == AoAEntities.Mobs.SCRUBBY.get() ||
-						target.getType() == AoAEntities.Mobs.SKELLOX.get())) {
-					attacker.setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
-					target.entityDropItem(((ReservedItem)AoAItems.MOONSTONE.get()).newValidStack(), 0);
+					attacker.setItemInHand(Hand.MAIN_HAND, ((ReservedItem)AoAItems.MOLTEN_UPGRADER.get()).newValidStack());
 
 					return true;
 				}
@@ -145,24 +132,33 @@ public class ReservedItem extends Item {
 		return tag.getBoolean(sequenceId);
 	}
 
+	public static void handlePlayerToss(ItemTossEvent ev) {
+		World world = ev.getEntityItem().level;
+
+		if (!world.isClientSide()) {
+			if (ev.getEntityItem().getItem().getItem() == AoAItems.MOLTEN_UPGRADER.get() && world.getMoonBrightness() == 1)
+				ev.getEntityItem().setItem(((ReservedItem)AoAItems.MOONSTONE.get()).newValidStack());
+		}
+	}
+
 	public static void handleArcworm(ArcwormEntity arcworm) {
-		if (arcworm.getPosY() > 275 && arcworm.getAttackingEntity() instanceof PlayerEntity) {
-			if (arcworm.getAttackingEntity().getHeldItemMainhand().getItem() == AoAItems.MOONSTONE.get()) {
-				arcworm.entityDropItem(((ExperimentW801)AoAWeapons.EXPERIMENT_W_801.get()).newValidStack(), 0);
-				arcworm.getAttackingEntity().setHeldItem(Hand.MAIN_HAND, ItemStack.EMPTY);
+		if (arcworm.getY() > 275 && arcworm.getKillCredit() instanceof PlayerEntity) {
+			if (arcworm.getKillCredit().getMainHandItem().getItem() == AoAItems.MOONSTONE.get()) {
+				arcworm.spawnAtLocation(((ExperimentW801)AoAWeapons.EXPERIMENT_W_801.get()).newValidStack(), 0);
+				arcworm.getKillCredit().setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
 				arcworm.remove();
 			}
 		}
 	}
 
 	public static void handlePlayerDeath(PlayerEntity pl) {
-		if (pl.getHealth() > 0 && !pl.world.getWorldInfo().isHardcore())
+		if (pl.getHealth() > 0 && !pl.level.getLevelData().isHardcore())
 			return;
 
-		if (!pl.getHeldItemMainhand().getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
+		if (!pl.getMainHandItem().getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
 			return;
 
-		NonNullList<ItemStack> armour = pl.inventory.armorInventory;
+		NonNullList<ItemStack> armour = pl.inventory.armor;
 
 		if (!armour.get(3).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
 			return;
@@ -179,11 +175,11 @@ public class ReservedItem extends Item {
 		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))
 			return;
 
-		pl.entityDropItem(((ReservedItem)AoAItems.ALIEN_ORB.get()).newValidStack(), 0);
+		pl.spawnAtLocation(((ReservedItem)AoAItems.ALIEN_ORB.get()).newValidStack(), 0);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (stack.getItem() == AoAItems.ALIEN_ORB.get())
 			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}

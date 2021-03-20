@@ -28,14 +28,14 @@ public class RecoilRenderer {
 			if (player == null)
 				return;
 
-			float partialTicks = mc.getRenderPartialTicks();
-			float mod = 20 / (float)Minecraft.debugFPS;
+			float partialTicks = mc.getFrameTime();
+			float mod = 20 / (float)Minecraft.fps;
 
 			if (recoilTicksRemaining >= recoilTicks - 5) {
-				player.rotationPitch -= mod * partialTicks * (recoilAngle / (4.0f * (ScopeOverlayRenderer.isScoped ? 4 : 1)));
+				player.xRot -= mod * partialTicks * (recoilAngle / (4.0f * (ScopeOverlayRenderer.isScoped ? 4 : 1)));
 			}
 			else {
-				player.rotationPitch += mod * partialTicks * (recoilAngle / (35.0f  * (ScopeOverlayRenderer.isScoped ? 2 : 1)));
+				player.xRot += mod * partialTicks * (recoilAngle / (35.0f  * (ScopeOverlayRenderer.isScoped ? 2 : 1)));
 			}
 		}
 	}

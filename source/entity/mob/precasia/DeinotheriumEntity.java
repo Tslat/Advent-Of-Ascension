@@ -24,26 +24,6 @@ public class DeinotheriumEntity extends AoAMeleeMob {
 		return 2.5625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 120d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.29d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

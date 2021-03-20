@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -23,31 +24,6 @@ public class VoltronEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.78125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 94;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 12;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 1.5d;
 	}
 
 	@Nullable
@@ -69,11 +45,11 @@ public class VoltronEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onStruckByLightning(LightningBoltEntity lightningBolt) {}
+	public void thunderHit(ServerWorld world, LightningBoltEntity lightningBolt) {}
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (world instanceof ServerWorld)
-			((ServerWorld)world).addLightningBolt(new LightningBoltEntity(world, target.getPosX(), target.getPosY(), target.getPosZ(), false));
+		if (level instanceof ServerWorld)
+			WorldUtil.spawnLightning((ServerWorld)level, null, target.getX(), target.getY(), target.getZ(), false);
 	}
 }

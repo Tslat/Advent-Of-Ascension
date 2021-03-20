@@ -13,16 +13,16 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class VoxxulonAltar extends BossAltarBlock {
 	public VoxxulonAltar() {
-		super(MaterialColor.GREEN_TERRACOTTA);
+		super(MaterialColor.TERRACOTTA_GREEN);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		VoxxulonEntity voxxulon = new VoxxulonEntity(AoAEntities.Mobs.VOXXULON.get(), player.world);
+		VoxxulonEntity voxxulon = new VoxxulonEntity(AoAEntities.Mobs.VOXXULON.get(), player.level);
 
-		voxxulon.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.addEntity(voxxulon);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.voxxulon.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		voxxulon.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		player.level.addFreshEntity(voxxulon);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.voxxulon.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

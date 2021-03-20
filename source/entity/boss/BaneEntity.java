@@ -31,7 +31,7 @@ import java.util.HashSet;
 
 public class BaneEntity extends AoAMeleeMob {
 	private final HashSet<AoAMeleeMob> summons = new HashSet<AoAMeleeMob>();
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public BaneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -40,26 +40,6 @@ public class BaneEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.1875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1750;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -81,7 +61,7 @@ public class BaneEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -89,40 +69,40 @@ public class BaneEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (world.isRemote)
+		if (level.isClientSide)
 			return;
 
-		if (rand.nextInt(200) == 0) {
+		if (random.nextInt(200) == 0) {
 			for (int i = 0; i < 6; i++) {
 				BaneCloneEntity clone = new BaneCloneEntity(this);
 
 				summons.add(clone);
-				world.addEntity(clone);
+				level.addFreshEntity(clone);
 			}
 		}
-		else if (rand.nextInt(300) == 0) {
+		else if (random.nextInt(300) == 0) {
 			BigBaneCloneEntity bigClone = new BigBaneCloneEntity(this);
 
 			summons.add(bigClone);
-			world.addEntity(bigClone);
+			level.addFreshEntity(bigClone);
 		}
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 40));
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 80).level(2));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 80).level(2));
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.bane.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.bane.kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 			for (AoAMeleeMob summon : summons) {
 				if (summon != null)
@@ -137,38 +117,38 @@ public class BaneEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.BANE_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.BANE_MUSIC.getId()));
 		bossInfo.removePlayer(player);

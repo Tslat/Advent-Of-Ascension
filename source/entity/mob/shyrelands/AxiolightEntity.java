@@ -28,31 +28,6 @@ public class AxiolightEntity extends AoAMeleeMob {
         return sizeIn.height * 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 167;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -72,10 +47,10 @@ public class AxiolightEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(12), PlayerUtil::shouldPlayerBeAffected);
+        List<PlayerEntity> playerList = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(12), PlayerUtil::shouldPlayerBeAffected);
 
         if (playerList.isEmpty())
             EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY).hideParticles());

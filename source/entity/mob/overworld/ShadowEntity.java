@@ -24,31 +24,6 @@ public class ShadowEntity extends AoAMeleeMob {
 		return 1.5f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 0.5d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1095;
-	}
-
-	@Override
-	public int getMaxSpawnHeight() {
-		return 45;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -66,30 +41,25 @@ public class ShadowEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 		transform();
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	private void transform() {
-		if (!world.isRemote) {
-			ShadeEntity shade = new ShadeEntity(AoAEntities.Mobs.SHADE.get(), world);
+		if (!level.isClientSide) {
+			ShadeEntity shade = new ShadeEntity(AoAEntities.Mobs.SHADE.get(), level);
 
-			shade.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, rotationPitch);
-			world.addEntity(shade);
+			shade.moveTo(getX(), getY(), getZ(), yRot, xRot);
+			level.addFreshEntity(shade);
 		}
 
 		this.remove();
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
 	}
 
 }

@@ -25,19 +25,19 @@ public class CrystalCreator extends Block {
 	private final Supplier<Item> crystal;
 
 	public CrystalCreator(MaterialColor mapColour, Supplier<Item> gemstone, Supplier<Item> crystal) {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
+		super(BlockUtil.generateBlockProperties(Material.STONE, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
 
 		this.gemstone = gemstone;
 		this.crystal = crystal;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (stack.getItem() == gemstone.get()) {
-			if (!world.isRemote()) {
-				player.setHeldItem(hand, ItemStack.EMPTY);
+			if (!world.isClientSide()) {
+				player.setItemInHand(hand, ItemStack.EMPTY);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(crystal.get(), stack.getCount()));
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_CRYSTAL_CREATOR_CONVERT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);

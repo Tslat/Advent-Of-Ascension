@@ -22,31 +22,6 @@ public class EnforcerEntity extends AoAMeleeMob {
         return 2.0625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.4;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 89;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 10;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.25;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 4;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

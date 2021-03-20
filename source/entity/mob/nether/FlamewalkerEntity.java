@@ -24,26 +24,6 @@ public class FlamewalkerEntity extends AoAMeleeMob {
         return 2.03125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 65d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 6.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -63,10 +43,10 @@ public class FlamewalkerEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        if (!world.isRemote && world.getGameRules().getBoolean(GameRules.MOB_GRIEFING) && (getAttackTarget() != null || getRevengeTarget() != null) && world.isAirBlock(getPosition()))
-            world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
+        if (!level.isClientSide && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && (getTarget() != null || getLastHurtByMob() != null) && level.isEmptyBlock(blockPosition()))
+            level.setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
     }
 }

@@ -23,26 +23,6 @@ public class MuckopedeEntity extends AoAMeleeMob {
 		return 0.6875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.7f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,22 +40,12 @@ public class MuckopedeEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 150).level(3));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 150).level(3));
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 }

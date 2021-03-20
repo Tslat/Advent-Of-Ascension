@@ -24,26 +24,6 @@ public class KeelerEntity extends AoAMeleeMob {
 		return 0.6875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 70;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -67,13 +47,8 @@ public class KeelerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public int getMaxSpawnHeight() {
-		return 50;
-	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (getHealth() < 8 && getHealth() > 0) {
 			setHealth(getMaxHealth());

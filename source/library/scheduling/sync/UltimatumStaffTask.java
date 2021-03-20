@@ -29,20 +29,20 @@ public class UltimatumStaffTask implements Runnable {
 		this.startingTick = GlobalEvents.tick;
 		this.shooter = shooter;
 		this.target = target;
-		this.shooterPos = shooter.getPosition();
-		this.targetPos = target.getPosition();
+		this.shooterPos = shooter.blockPosition();
+		this.targetPos = target.blockPosition();
 		this.shooterStartHealth = shooter.getHealth();
 		this.targetStartHealth = target.getHealth();
 
-		target.setMotion(0, 0, 0);
-		shooter.setMotion(0, 0, 0);
+		target.setDeltaMovement(0, 0, 0);
+		shooter.setDeltaMovement(0, 0, 0);
 
 		EntityUtil.removePotions(target, Effects.REGENERATION);
 		EntityUtil.removePotions(shooter, Effects.REGENERATION);
 		EntityUtil.applyPotions(Arrays.asList(target, shooter),
-				new PotionUtil.EffectBuilder(Effects.SLOWNESS, 210).level(100).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 210).level(100).hideParticles(),
 				new PotionUtil.EffectBuilder(Effects.WEAKNESS, 210).level(50).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.RESISTANCE, 210).level(5).hideParticles(),
+				new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, 210).level(5).hideParticles(),
 				new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 510).hideParticles(),
 				new PotionUtil.EffectBuilder(Effects.BLINDNESS, 210).hideParticles(),
 				new PotionUtil.EffectBuilder(Effects.LEVITATION, 210).level(-1).hideParticles());
@@ -50,7 +50,7 @@ public class UltimatumStaffTask implements Runnable {
 
 	@Override
 	public void run() {
-		if (shooter == null || target == null || shooter.world.isRemote || !shooter.getPosition().equals(shooterPos) || !target.getPosition().equals(targetPos)) {
+		if (shooter == null || target == null || shooter.level.isClientSide || !shooter.blockPosition().equals(shooterPos) || !target.blockPosition().equals(targetPos)) {
 			resetStates();
 
 			return;
@@ -71,13 +71,13 @@ public class UltimatumStaffTask implements Runnable {
 				resetStates();
 				DamageUtil.dealMagicDamage(null, shooter, target, target.getHealth() - targetPostHealth, true);
 
-				target.setMotion(0, 0, 0);
+				target.setDeltaMovement(0, 0, 0);
 			}
 			else {
 				target.setHealth(targetPostHealth);
 			}
 
-			((ServerWorld)shooter.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, target.getPosX(), target.getPosY() + target.getHeight(), target.getPosZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
+			((ServerWorld)shooter.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + target.getBbHeight(), target.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 		}
 		else {
 			if (!(shooter instanceof PlayerEntity) || !((PlayerEntity)shooter).isCreative()) {
@@ -89,7 +89,7 @@ public class UltimatumStaffTask implements Runnable {
 					shooter.setHealth(shooterPostHealth);
 				}
 
-				((ServerWorld)shooter.world).spawnParticle(ParticleTypes.DAMAGE_INDICATOR, shooter.getPosX(), shooter.getPosY() + shooter.getHeight(), shooter.getPosZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
+				((ServerWorld)shooter.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, shooter.getX(), shooter.getY() + shooter.getBbHeight(), shooter.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 			}
 		}
 
@@ -100,9 +100,9 @@ public class UltimatumStaffTask implements Runnable {
 
 	private void resetStates() {
 		if (target.getHealth() > 0)
-			EntityUtil.removePotions(target, Effects.BLINDNESS, Effects.RESISTANCE, Effects.WEAKNESS, Effects.SLOWNESS, Effects.LEVITATION, Effects.NIGHT_VISION);
+			EntityUtil.removePotions(target, Effects.BLINDNESS, Effects.DAMAGE_RESISTANCE, Effects.WEAKNESS, Effects.MOVEMENT_SLOWDOWN, Effects.LEVITATION, Effects.NIGHT_VISION);
 
 		if (shooter.getHealth() > 0)
-			EntityUtil.removePotions(shooter, Effects.BLINDNESS, Effects.RESISTANCE, Effects.WEAKNESS, Effects.SLOWNESS, Effects.LEVITATION, Effects.NIGHT_VISION);
+			EntityUtil.removePotions(shooter, Effects.BLINDNESS, Effects.DAMAGE_RESISTANCE, Effects.WEAKNESS, Effects.MOVEMENT_SLOWDOWN, Effects.LEVITATION, Effects.NIGHT_VISION);
 	}
 }

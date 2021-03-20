@@ -27,7 +27,7 @@ public class HeavyRedBulletEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.1f;
 	}
 }

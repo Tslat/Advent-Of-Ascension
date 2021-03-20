@@ -41,80 +41,80 @@ public class ChargerModel extends EntityModel<MobEntity> {
 	}
 
 	private void doGhostChargerModel() {
-		textureWidth = 64;
-		textureHeight = 32;
+		texWidth = 64;
+		texHeight = 32;
 
 		root = new ModelRenderer(this);
-		root.setRotationPoint(0.0F, 24.0F, 0.0F);
+		root.setPos(0.0F, 24.0F, 0.0F);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -14.0F, 0.0F);
+		head.setPos(0.0F, -14.0F, 0.0F);
 		root.addChild(head);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -7.0F, -6.0F, 4, 1, 2, 0.0F, true);
-		head.setTextureOffset(3, 20).addBox(-5.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-3.0F, -6.0F, -6.0F, 6, 2, 2, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -6.0F, -7.0F, 4, 2, 1, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -4.0F, -6.0F, 4, 1, 2, 0.0F, true);
-		head.setTextureOffset(38, 7).addBox(-3.0F, -10.0F, -3.0F, 6, 1, 6, 0.0F, true);
-		head.setTextureOffset(2, 20).addBox(4.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, false);
-		head.setTextureOffset(45, 16).addBox(-3.0F, -8.0F, 4.0F, 6, 6, 1, 0.0F, true);
-		head.setTextureOffset(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8, 8, 8, 0.0F, true);
-		head.setTextureOffset(9, 24).addBox(-2.0F, -4.0F, -7.0F, 4, 7, 0, 0.0F, false);
-		head.setTextureOffset(4, 23).addBox(-3.0F, -2.0F, 5.0F, 6, 8, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(-2.999F, -4.0F, -6.0F, 1, 8, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(3.001F, -2.0F, 4.0F, 1, 7, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(4.001F, -2.0F, 3.0F, 1, 7, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(4.001F, -2.0F, -3.0F, 1, 7, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(-4.999F, -2.0F, 3.0F, 1, 8, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(-4.999F, -2.0F, -3.0F, 1, 8, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(3.001F, -1.0F, -4.0F, 1, 5, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(2.001F, -4.0F, -6.0F, 1, 8, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(-3.999F, -2.0F, 4.0F, 1, 7, 0, 0.0F, false);
-		head.setTextureOffset(0, 24).addBox(-3.999F, -1.0F, -4.0F, 1, 7, 0, 0.0F, false);
-		head.setTextureOffset(0, 22).addBox(-2.999F, -4.0F, -6.0F, 0, 8, 2, 0.0F, false);
-		head.setTextureOffset(0, 22).addBox(-3.999F, -1.0F, -4.0F, 0, 6, 1, 0.0F, false);
-		head.setTextureOffset(5, 18).addBox(-5.0F, -2.0F, -3.0F, 0, 8, 6, 0.0F, false);
-		head.setTextureOffset(0, 18).addBox(5.001F, -2.0F, -3.0F, 0, 8, 6, 0.0F, true);
-		head.setTextureOffset(0, 22).addBox(3.001F, -4.0F, -6.0F, 0, 8, 2, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(2.001F, -4.0F, -7.0F, 0, 8, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(-3.999F, -2.0F, 3.0F, 0, 7, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(4.001F, -1.0F, -4.0F, 0, 5, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(-2.999F, -2.0F, 4.0F, 0, 8, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(3.001F, -2.0F, 4.0F, 0, 8, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(-1.999F, -4.0F, -7.0F, 0, 8, 1, 0.0F, false);
-		head.setTextureOffset(0, 23).addBox(4.001F, -2.0F, 3.0F, 0, 7, 1, 0.0F, false);
+		head.texOffs(37, 0).addBox(-2.0F, -7.0F, -6.0F, 4, 1, 2, 0.0F, true);
+		head.texOffs(3, 20).addBox(-5.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
+		head.texOffs(37, 0).addBox(-3.0F, -6.0F, -6.0F, 6, 2, 2, 0.0F, true);
+		head.texOffs(37, 0).addBox(-2.0F, -6.0F, -7.0F, 4, 2, 1, 0.0F, true);
+		head.texOffs(37, 0).addBox(-2.0F, -4.0F, -6.0F, 4, 1, 2, 0.0F, true);
+		head.texOffs(38, 7).addBox(-3.0F, -10.0F, -3.0F, 6, 1, 6, 0.0F, true);
+		head.texOffs(2, 20).addBox(4.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, false);
+		head.texOffs(45, 16).addBox(-3.0F, -8.0F, 4.0F, 6, 6, 1, 0.0F, true);
+		head.texOffs(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8, 8, 8, 0.0F, true);
+		head.texOffs(9, 24).addBox(-2.0F, -4.0F, -7.0F, 4, 7, 0, 0.0F, false);
+		head.texOffs(4, 23).addBox(-3.0F, -2.0F, 5.0F, 6, 8, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(-2.999F, -4.0F, -6.0F, 1, 8, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(3.001F, -2.0F, 4.0F, 1, 7, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(4.001F, -2.0F, 3.0F, 1, 7, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(4.001F, -2.0F, -3.0F, 1, 7, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(-4.999F, -2.0F, 3.0F, 1, 8, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(-4.999F, -2.0F, -3.0F, 1, 8, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(3.001F, -1.0F, -4.0F, 1, 5, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(2.001F, -4.0F, -6.0F, 1, 8, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(-3.999F, -2.0F, 4.0F, 1, 7, 0, 0.0F, false);
+		head.texOffs(0, 24).addBox(-3.999F, -1.0F, -4.0F, 1, 7, 0, 0.0F, false);
+		head.texOffs(0, 22).addBox(-2.999F, -4.0F, -6.0F, 0, 8, 2, 0.0F, false);
+		head.texOffs(0, 22).addBox(-3.999F, -1.0F, -4.0F, 0, 6, 1, 0.0F, false);
+		head.texOffs(5, 18).addBox(-5.0F, -2.0F, -3.0F, 0, 8, 6, 0.0F, false);
+		head.texOffs(0, 18).addBox(5.001F, -2.0F, -3.0F, 0, 8, 6, 0.0F, true);
+		head.texOffs(0, 22).addBox(3.001F, -4.0F, -6.0F, 0, 8, 2, 0.0F, false);
+		head.texOffs(0, 23).addBox(2.001F, -4.0F, -7.0F, 0, 8, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(-3.999F, -2.0F, 3.0F, 0, 7, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(4.001F, -1.0F, -4.0F, 0, 5, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(-2.999F, -2.0F, 4.0F, 0, 8, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(3.001F, -2.0F, 4.0F, 0, 8, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(-1.999F, -4.0F, -7.0F, 0, 8, 1, 0.0F, false);
+		head.texOffs(0, 23).addBox(4.001F, -2.0F, 3.0F, 0, 7, 1, 0.0F, false);
 
 		bone2 = new ModelRenderer(this);
-		bone2.setRotationPoint(0.0F, 14.0F, 0.0F);
+		bone2.setPos(0.0F, 14.0F, 0.0F);
 		head.addChild(bone2);
 		setRotation(bone2, 0.0F, 0.0F, -0.7854F);
-		bone2.setTextureOffset(0, 26).addBox(15.2635F, -13.435F, -6.0F, 1, 1, 2, 0.0F, false);
-		bone2.setTextureOffset(0, 26).addBox(12.435F, -16.2635F, -6.0F, 1, 1, 2, 0.0F, false);
-		bone2.setTextureOffset(0, 26).addBox(12.0208F, -16.2635F, -6.0F, 1, 1, 2, 0.0F, false);
-		bone2.setTextureOffset(0, 26).addBox(15.2635F, -13.0208F, -6.0F, 1, 1, 2, 0.0F, false);
+		bone2.texOffs(0, 26).addBox(15.2635F, -13.435F, -6.0F, 1, 1, 2, 0.0F, false);
+		bone2.texOffs(0, 26).addBox(12.435F, -16.2635F, -6.0F, 1, 1, 2, 0.0F, false);
+		bone2.texOffs(0, 26).addBox(12.0208F, -16.2635F, -6.0F, 1, 1, 2, 0.0F, false);
+		bone2.texOffs(0, 26).addBox(15.2635F, -13.0208F, -6.0F, 1, 1, 2, 0.0F, false);
 
 		bone = new ModelRenderer(this);
-		bone.setRotationPoint(0.0F, 14.0F, 0.0F);
+		bone.setPos(0.0F, 14.0F, 0.0F);
 		head.addChild(bone);
 		setRotation(bone, -0.7854F, 0.0F, 0.0F);
-		bone.setTextureOffset(0, 25).addBox(-2.0F, -14.8492F, -19.0919F, 4, 5, 2, 0.0F, false);
-		bone.setTextureOffset(0, 26).addBox(-1.999F, -10.1924F, -19.092F, 4, 1, 1, 0.0F, false);
+		bone.texOffs(0, 25).addBox(-2.0F, -14.8492F, -19.0919F, 4, 5, 2, 0.0F, false);
+		bone.texOffs(0, 26).addBox(-1.999F, -10.1924F, -19.092F, 4, 1, 1, 0.0F, false);
 
 		rightleg = new ModelRenderer(this);
-		rightleg.setRotationPoint(3.0F, -15.0F, 0.0F);
+		rightleg.setPos(3.0F, -15.0F, 0.0F);
 		root.addChild(rightleg);
-		rightleg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, false);
-		rightleg.setTextureOffset(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
-		rightleg.setTextureOffset(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
-		rightleg.setTextureOffset(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		rightleg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, false);
+		rightleg.texOffs(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		rightleg.texOffs(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
+		rightleg.texOffs(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
 
 		leftleg = new ModelRenderer(this);
-		leftleg.setRotationPoint(-3.0F, -15.0F, 0.0F);
+		leftleg.setPos(-3.0F, -15.0F, 0.0F);
 		root.addChild(leftleg);
-		leftleg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
-		leftleg.setTextureOffset(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
-		leftleg.setTextureOffset(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, false);
-		leftleg.setTextureOffset(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		leftleg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
+		leftleg.texOffs(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		leftleg.texOffs(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, false);
+		leftleg.texOffs(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
 	}
 
 	public ChargerModel() {
@@ -127,56 +127,56 @@ public class ChargerModel extends EntityModel<MobEntity> {
 
 		isGhost = false;
 
-		textureWidth = 64;
-		textureHeight = 32;
+		texWidth = 64;
+		texHeight = 32;
 
 		root = new ModelRenderer(this);
-		root.setRotationPoint(0.0F, 24.0F, 0.0F);
+		root.setPos(0.0F, 24.0F, 0.0F);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -14.0F, 0.0F);
+		head.setPos(0.0F, -14.0F, 0.0F);
 		root.addChild(head);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -7.0F, -6.0F, 4, 1, 2, 0.0F, true);
-		head.setTextureOffset(16, 4).addBox(-5.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-3.0F, -6.0F, -6.0F, 6, 2, 2, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -6.0F, -7.0F, 4, 2, 1, 0.0F, true);
-		head.setTextureOffset(37, 0).addBox(-2.0F, -4.0F, -6.0F, 4, 1, 2, 0.0F, true);
-		head.setTextureOffset(38, 7).addBox(-3.0F, -10.0F, -3.0F, 6, 1, 6, 0.0F, true);
-		head.setTextureOffset(16, 4).addBox(4.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
-		head.setTextureOffset(45, 16).addBox(-3.0F, -8.0F, 4.0F, 6, 6, 1, 0.0F, true);
-		head.setTextureOffset(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8, 8, 8, 0.0F, true);
+		head.texOffs(37, 0).addBox(-2.0F, -7.0F, -6.0F, 4, 1, 2, 0.0F, true);
+		head.texOffs(16, 4).addBox(-5.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
+		head.texOffs(37, 0).addBox(-3.0F, -6.0F, -6.0F, 6, 2, 2, 0.0F, true);
+		head.texOffs(37, 0).addBox(-2.0F, -6.0F, -7.0F, 4, 2, 1, 0.0F, true);
+		head.texOffs(37, 0).addBox(-2.0F, -4.0F, -6.0F, 4, 1, 2, 0.0F, true);
+		head.texOffs(38, 7).addBox(-3.0F, -10.0F, -3.0F, 6, 1, 6, 0.0F, true);
+		head.texOffs(16, 4).addBox(4.0F, -8.0F, -3.0F, 1, 6, 6, 0.0F, true);
+		head.texOffs(45, 16).addBox(-3.0F, -8.0F, 4.0F, 6, 6, 1, 0.0F, true);
+		head.texOffs(0, 0).addBox(-4.0F, -9.0F, -4.0F, 8, 8, 8, 0.0F, true);
 
 		rightleg = new ModelRenderer(this);
-		rightleg.setRotationPoint(3.0F, -15.0F, 0.0F);
+		rightleg.setPos(3.0F, -15.0F, 0.0F);
 		root.addChild(rightleg);
-		rightleg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
-		rightleg.setTextureOffset(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
-		rightleg.setTextureOffset(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
-		rightleg.setTextureOffset(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		rightleg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
+		rightleg.texOffs(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		rightleg.texOffs(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
+		rightleg.texOffs(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
 
 		leftleg = new ModelRenderer(this);
-		leftleg.setRotationPoint(-3.0F, -15.0F, 0.0F);
+		leftleg.setPos(-3.0F, -15.0F, 0.0F);
 		root.addChild(leftleg);
-		leftleg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
-		leftleg.setTextureOffset(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
-		leftleg.setTextureOffset(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
-		leftleg.setTextureOffset(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		leftleg.texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4, 3, 4, 0.0F, true);
+		leftleg.texOffs(18, 24).addBox(-2.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
+		leftleg.texOffs(33, 16).addBox(-1.0F, 3.0F, -1.0F, 2, 12, 2, 0.0F, true);
+		leftleg.texOffs(18, 24).addBox(1.0F, 13.0F, -5.0F, 1, 2, 6, 0.0F, true);
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		rightleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leftleg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		rightleg.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+		leftleg.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		root.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
+		model.xRot = x;
+		model.yRot = y;
+		model.zRot = z;
 	}
 }

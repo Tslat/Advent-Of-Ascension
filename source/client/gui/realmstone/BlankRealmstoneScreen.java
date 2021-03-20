@@ -1,11 +1,13 @@
 package net.tslat.aoa3.client.gui.realmstone;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
@@ -65,7 +67,7 @@ public class BlankRealmstoneScreen extends Screen {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 		if (minecraft == null)
 			return;
 
@@ -91,30 +93,30 @@ public class BlankRealmstoneScreen extends Screen {
 			panMouseY = 0;
 		}
 
-		renderBackground();
-		RenderSystem.pushMatrix();
-		RenderSystem.scalef(scale, scale, scale);
-		minecraft.getTextureManager().bindTexture(background);
-		RenderUtil.renderCustomSizedTexture((int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(234 / scale), (int)(155 / scale), backgroundWidth, backgroundHeight);
+		renderBackground(matrix);
+		matrix.pushPose();
+		matrix.scale(scale, scale, scale);
+		minecraft.getTextureManager().bind(background);
+		RenderUtil.renderCustomSizedTexture(matrix, (int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(234 / scale), (int)(155 / scale), backgroundWidth, backgroundHeight);
 
 		for (RealmstoneWorldInsert insert : worldInserts) {
-			insert.render(minecraft, (int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
+			insert.render(matrix, minecraft, (int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
 		}
 
-		RenderSystem.popMatrix();
-		drawWindowFrame(x, y);
+		matrix.popPose();
+		drawWindowFrame(matrix, x, y);
 
 		if (currentlyHoveredInsert != null && !currentlyHoveredInsert.getHoverTexts().isEmpty())
-			renderTooltip(currentlyHoveredInsert.getHoverTexts(), mouseX, mouseY);
+			renderTooltip(matrix, currentlyHoveredInsert.getHoverTexts(), mouseX, mouseY);
 	}
 
-	private void drawWindowFrame(int x, int y) {
+	private void drawWindowFrame(MatrixStack matrix, int x, int y) {
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.enableBlend();
-		RenderHelper.disableStandardItemLighting();
-		minecraft.getTextureManager().bindTexture(windowFrame);
-		RenderUtil.renderCustomSizedTexture(x, y, 0, 0, 256, 187, 256, 256);
-		minecraft.fontRenderer.drawString(title.getFormattedText(), x + 8, y + 6, NumberUtil.RGB(181, 181, 181));
+		RenderHelper.turnOff();
+		minecraft.getTextureManager().bind(windowFrame);
+		RenderUtil.renderCustomSizedTexture(matrix, x, y, 0, 0, 256, 187, 256, 256);
+		minecraft.font.draw(matrix, title, x + 8, y + 6, NumberUtil.RGB(181, 181, 181));
 	}
 
 	private static class RealmstoneWorldInsert {
@@ -126,15 +128,15 @@ public class BlankRealmstoneScreen extends Screen {
 		private final int posX;
 		private final int posY;
 
-		private final ArrayList<String> hoverTexts = new ArrayList<String>(2);
+		private final ArrayList<IReorderingProcessor> hoverTexts = new ArrayList<IReorderingProcessor>(2);
 
 		private RealmstoneWorldInsert(String worldNameKey, @Nullable String hoverTextKey, int posX, int posY, int uvX, int uvY) {
-			hoverTexts.add(LocaleUtil.getLocaleString(worldNameKey, TextFormatting.BLUE));
+			hoverTexts.add(LocaleUtil.getLocaleMessage(worldNameKey, TextFormatting.BLUE).getVisualOrderText());
 
 			if (hoverTextKey != null) {
-				FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+				FontRenderer fontRenderer = Minecraft.getInstance().font;
 
-				hoverTexts.add(fontRenderer.trimStringToWidth(LocaleUtil.getLocaleString(hoverTextKey), 200));
+				hoverTexts.addAll(fontRenderer.split(LocaleUtil.getLocaleMessage(hoverTextKey), 200));
 			}
 
 			this.posX = posX;
@@ -143,7 +145,7 @@ public class BlankRealmstoneScreen extends Screen {
 			this.uvY = uvY;
 		}
 
-		private void render(Minecraft mc, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
+		private void render(MatrixStack matrix, Minecraft mc, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
 			int renderX = baseX + posX - scrollX;
 			int renderY = baseY + posY - scrollY;
 			int overlapLeft = MathHelper.clamp(baseX - renderX, 0, iconSize);
@@ -171,17 +173,17 @@ public class BlankRealmstoneScreen extends Screen {
 			int width = iconSize - overlapLeft - overlapRight;
 			int height = iconSize - overlapTop - overlapBottom;
 
-			GlStateManager.enableBlend();
-			mc.getTextureManager().bindTexture(RealmstoneWorldInsert.worldImages);
-			RenderUtil.renderCustomSizedTexture(renderX, renderY, uvX + overlapLeft, uvY + overlapTop, width, height, 1000, 1000);
-			RenderUtil.renderCustomSizedTexture(renderX, renderY, overlapLeft, overlapTop, width, height, 1000, 1000);
-			GlStateManager.disableBlend();
+			GlStateManager._enableBlend();
+			mc.getTextureManager().bind(RealmstoneWorldInsert.worldImages);
+			RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, uvX + overlapLeft, uvY + overlapTop, width, height, 1000, 1000);
+			RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 1000, 1000);
+			GlStateManager._disableBlend();
 
 			if (currentlyHoveredInsert == null && mouseX > renderX + 5 && mouseX < renderX + width - 5 && mouseY > renderY + 5 && mouseY < renderY + height - 5)
 				currentlyHoveredInsert = this;
 		}
 
-		private ArrayList<String> getHoverTexts() {
+		private ArrayList<IReorderingProcessor> getHoverTexts() {
 			return hoverTexts;
 		}
 	}

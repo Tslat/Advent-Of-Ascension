@@ -24,16 +24,16 @@ public class BaronGreatblade extends BaseGreatblade {
 	}
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
-		if (!attacker.world.isRemote && EntityUtil.getAttackCooldown(attacker) > 0.85f) {
+		if (!attacker.level.isClientSide && EntityUtil.getAttackCooldown(attacker) > 0.85f) {
 			if (!(attacker instanceof PlayerEntity) || ((PlayerEntity)attacker).isCreative() || ItemUtil.findInventoryItem((PlayerEntity)attacker, new ItemStack(AoAWeapons.GRENADE.get()), true, 1)) {
-				attacker.world.addEntity(new GrenadeEntity(attacker, null));
+				attacker.level.addFreshEntity(new GrenadeEntity(attacker, null));
 				ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

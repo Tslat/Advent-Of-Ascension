@@ -19,15 +19,17 @@ public class JusticeBow extends BaseBow {
 
 	@Override
 	public double getArrowDamage(CustomArrowEntity arrow, Entity target, double currentDamage, float drawStrength, boolean isCritical) {
-		if (arrow.getShooter() instanceof LivingEntity && ((LivingEntity)arrow.getShooter()).getRevengeTarget() == target)
+		Entity shooter = arrow.getOwner();
+
+		if (shooter instanceof LivingEntity && ((LivingEntity)shooter).getLastHurtByMob() == target)
 			return super.getArrowDamage(arrow, target, currentDamage, drawStrength, isCritical) * 1.25f;
 
 		return super.getArrowDamage(arrow, target, currentDamage, drawStrength, isCritical);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

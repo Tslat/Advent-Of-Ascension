@@ -11,6 +11,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -43,7 +44,7 @@ public class HotShot extends BaseGun {
 	}
 
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.METAL_SLUG.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.METAL_SLUG.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
 			return new HotShotEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
 		return null;
@@ -51,27 +52,27 @@ public class HotShot extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.world, (target.getPosX() + bullet.getPosX()) / 2d, (target.getPosY() + bullet.getPosY()) / 2d, (target.getPosZ() + bullet.getPosZ()) / 2d);
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 		cloud.setOwner(shooter);
-		cloud.setParticleData(ParticleTypes.FLAME);
+		cloud.setParticle(ParticleTypes.FLAME);
 		cloud.setRadius(1f);
 		cloud.setDuration(5);
 		cloud.setRadiusPerTick(0.4f);
 		cloud.setWaitTime(0);
 
-		bullet.world.addEntity(cloud);
+		bullet.level.addFreshEntity(cloud);
 
-		for (LivingEntity entity : bullet.world.getEntitiesWithinAABB(LivingEntity.class, cloud.getBoundingBox().grow(2, 1, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
-			entity.setFire(4);
+		for (LivingEntity entity : bullet.level.getEntitiesOfClass(LivingEntity.class, cloud.getBoundingBox().inflate(2, 1, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
+			entity.setSecondsOnFire(4);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / firingDelay) / (double)100)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(AoAItems.METAL_SLUG.get())));
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(20 / (float)firingDelay, 2))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getLocaleMessage(AoAItems.METAL_SLUG.get().getDescriptionId())));
 	}
 }

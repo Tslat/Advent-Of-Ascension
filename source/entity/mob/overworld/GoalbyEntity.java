@@ -23,26 +23,6 @@ public class GoalbyEntity extends AoAMeleeMob {
 		return 1.3f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,17 +40,8 @@ public class GoalbyEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 45));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

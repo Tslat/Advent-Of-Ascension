@@ -24,7 +24,7 @@ public class OcculentEntity extends AoAMeleeMob {
 	}
 
 	public OcculentEntity(OcculentEntity mirageHost) {
-		this(AoAEntities.Mobs.OCCULENT.get(), mirageHost.world);
+		this(AoAEntities.Mobs.OCCULENT.get(), mirageHost.level);
 
 		this.mirageHost = mirageHost;
 	}
@@ -32,26 +32,6 @@ public class OcculentEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return sizeIn.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 98;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -71,12 +51,12 @@ public class OcculentEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (mirageHost != null) {
 			return false;
 		}
 		else {
-			return super.attackEntityFrom(source, amount);
+			return super.hurt(source, amount);
 		}
 	}
 
@@ -87,20 +67,20 @@ public class OcculentEntity extends AoAMeleeMob {
 		if (true)
 			return;
 
-		if (world.isRemote()) {
+		if (level.isClientSide()) {
 			if (mirageHost != null) {
-				if (ticksExisted >= 600 || !mirageHost.isAlive()) {
+				if (tickCount >= 600 || !mirageHost.isAlive()) {
 					remove();
-					setPositionAndUpdate(0, 0, 0);
+					teleportTo(0, 0, 0);
 				}
 			}
 			else if (RandomUtil.oneInNChance(200)) {
 				OcculentEntity occulent = new OcculentEntity(this);
-				double xPos = getPosX() + (int)(rand.nextFloat() * 10 - 5);
-				double zPos = getPosZ() + (int)(rand.nextFloat() * 10 - 5);
-				double yPos = world.getHeight(Heightmap.Type.WORLD_SURFACE, (int)xPos, (int)zPos);
+				double xPos = getX() + (int)(random.nextFloat() * 10 - 5);
+				double zPos = getZ() + (int)(random.nextFloat() * 10 - 5);
+				double yPos = level.getHeight(Heightmap.Type.WORLD_SURFACE, (int)xPos, (int)zPos);
 
-				occulent.setPosition(xPos, yPos, zPos);
+				occulent.setPos(xPos, yPos, zPos);
 				ClientOperations.spawnClientOnlyEntity(occulent);
 			}
 		}

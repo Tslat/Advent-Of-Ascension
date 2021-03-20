@@ -11,11 +11,13 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class CloudBlock extends Block {
 	public CloudBlock() {
-		super(BlockUtil.generateBlockProperties(Material.AIR, MaterialColor.AIR, 0, 0, SoundType.CLOTH).doesNotBlockMovement().notSolid().noDrops());
+		super(BlockUtil.generateBlockProperties(Material.AIR, MaterialColor.NONE, 0, 0, SoundType.WOOL).noCollission().noOcclusion().noDrops());
 	}
 
 	@Override
@@ -28,8 +30,9 @@ public class CloudBlock extends Block {
 		return VoxelShapes.empty();
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) {
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
 		return adjacentBlockState.getBlock() == this;
 	}
 }

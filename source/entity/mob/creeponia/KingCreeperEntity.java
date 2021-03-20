@@ -26,26 +26,6 @@ public class KingCreeperEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 85d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.23d;
-    }
-
-    @Override
 	public float getExplosionStrength() {
         return 6f;
     }
@@ -67,10 +47,10 @@ public class KingCreeperEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT) && cause.getTrueSource() instanceof SkeletalCowmanEntity)
-            entityDropItem(AoAItems.MUSIC_DISC_OUTLAW.get(), 1);
+        if (level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && cause.getEntity() instanceof SkeletalCowmanEntity)
+            spawnAtLocation(AoAItems.MUSIC_DISC_OUTLAW.get(), 1);
     }
 }

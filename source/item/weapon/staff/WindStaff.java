@@ -37,14 +37,14 @@ public class WindStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new PrimordialShotEntity(caster, this, 60));
+		world.addFreshEntity(new PrimordialShotEntity(caster, this, 60));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
 			if (target instanceof LivingEntity)
-				DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 1.3f, shooter.getPosX() - target.getPosX(), shooter.getPosZ() - target.getPosZ());
+				DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 1.3f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
 
 			return true;
 		}
@@ -58,8 +58,8 @@ public class WindStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

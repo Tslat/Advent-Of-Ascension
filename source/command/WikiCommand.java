@@ -11,10 +11,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -36,7 +34,7 @@ public class WikiCommand implements Command<CommandSource> {
 	public static ArgumentBuilder<CommandSource, ?> register(CommandDispatcher<CommandSource> dispatcher) {
 		LiteralArgumentBuilder<CommandSource> builder = Commands.literal("wiki").executes(CMD);
 
-		builder.then(Commands.argument("search", StringArgumentType.greedyString()).requires(command -> command.hasPermissionLevel(0))
+		builder.then(Commands.argument("search", StringArgumentType.greedyString()).requires(command -> command.hasPermission(0))
 				.executes(WikiCommand::sendPacket));
 
 		return builder;
@@ -63,23 +61,23 @@ public class WikiCommand implements Command<CommandSource> {
 				e.printStackTrace();
 		}
 		catch (IOException ex) {
-			Minecraft.getInstance().player.sendMessage(AoACommand.getCmdPrefix("Wiki").appendSibling(new TranslationTextComponent("command.aoa.wiki.connectionFail").setStyle(new Style().setColor(AoACommand.CommandFeedbackType.ERROR.getColour()))));
+			Minecraft.getInstance().player.sendMessage(AoACommand.getCmdPrefix("Wiki").append(new TranslationTextComponent("command.aoa.wiki.connectionFail").setStyle(Style.EMPTY.applyFormat(AoACommand.CommandFeedbackType.ERROR.getColour()))), Util.NIL_UUID);
 		}
 
 		if (search.equals("Special:Random"))
 			search = "???";
 
-		ITextComponent responseComponent = getComponentFromKeys("command.aoa.wiki.response", baseUrl, StringUtil.toSentenceCase(search));
-		Minecraft.getInstance().player.sendMessage(AoACommand.getCmdPrefix("Wiki").appendSibling(responseComponent != null ? responseComponent.setStyle(new Style().setColor(TextFormatting.GRAY)) : new TranslationTextComponent("command.aoawiki.response", baseUrl)));
+		IFormattableTextComponent responseComponent = getComponentFromKeys("command.aoa.wiki.response", baseUrl, StringUtil.toSentenceCase(search));
+		Minecraft.getInstance().player.sendMessage(AoACommand.getCmdPrefix("Wiki").append(responseComponent != null ? responseComponent.setStyle(Style.EMPTY.applyFormat(TextFormatting.GRAY)) : new TranslationTextComponent("command.aoawiki.response", baseUrl)), Util.NIL_UUID);
 	}
 
 	@Nullable
-	private static ITextComponent getComponentFromKeys(String langKey, String url, String pageTitle) {
+	private static IFormattableTextComponent getComponentFromKeys(String langKey, String url, String pageTitle) {
 		return ITextComponent.Serializer.fromJson("{\"translate\":\"" + langKey + "\",\"with\":[{\"text\":\"" + pageTitle + "\",\"color\":\"red\",\"underlined\":true,\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + url + "\"}}]}");
 	}
 
 	private static int sendPacket(CommandContext<CommandSource> cmd) throws CommandSyntaxException {
-		AoAPackets.messagePlayer((ServerPlayerEntity)cmd.getSource().assertIsEntity(), new WikiSearchPacket(StringArgumentType.getString(cmd, "search")));
+		AoAPackets.messagePlayer((ServerPlayerEntity)cmd.getSource().getEntityOrException(), new WikiSearchPacket(StringArgumentType.getString(cmd, "search")));
 
 		return 1;
 	}

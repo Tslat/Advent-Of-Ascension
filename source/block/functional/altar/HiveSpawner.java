@@ -13,21 +13,21 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class HiveSpawner extends BossAltarBlock {
 	public HiveSpawner() {
-		super(MaterialColor.RED_TERRACOTTA);
+		super(MaterialColor.TERRACOTTA_RED);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		HiveKingEntity hiveKing = new HiveKingEntity(player.world, 0);
+		HiveKingEntity hiveKing = new HiveKingEntity(player.level, 0);
 
-		hiveKing.setLocationAndAngles(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
-		player.world.addEntity(hiveKing);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.hiveKing.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		hiveKing.moveTo(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
+		player.level.addFreshEntity(hiveKing);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.hiveKing.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		return player.world.getEntitiesWithinAABB(HiveKingEntity.class, new AxisAlignedBB(pos).grow(20)).isEmpty();
+		return player.level.getEntitiesOfClass(HiveKingEntity.class, new AxisAlignedBB(pos).inflate(20)).isEmpty();
 	}
 
 	@Override

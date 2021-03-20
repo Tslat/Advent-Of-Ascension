@@ -25,12 +25,12 @@ public class CoralstormSword extends BaseSword {
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity.isInWater() && isSelected && entity instanceof LivingEntity)
-			((LivingEntity)entity).addPotionEffect(new EffectInstance(Effects.STRENGTH, -1, 0, true, false));
+			((LivingEntity)entity).addEffect(new EffectInstance(Effects.DAMAGE_BOOST, -1, 0, true, false));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -13,11 +13,11 @@ public class HorntailSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		HorntailEntity horntail = new HorntailEntity(AoAEntities.Minions.HORNTAIL.get(), pl.world);
+		HorntailEntity horntail = new HorntailEntity(AoAEntities.Minions.HORNTAIL.get(), pl.level);
 
-		horntail.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		horntail.setTamedBy(pl);
-		pl.world.addEntity(horntail);
+		horntail.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		horntail.tame(pl);
+		pl.level.addFreshEntity(horntail);
 
 		return horntail;
 	}

@@ -24,12 +24,12 @@ public class BaronSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (RandomUtil.percentChance(0.2f * attackCooldown))
-			DamageUtil.dealMeleeDamage(attacker, target, getAttackDamage() * 0.5f, false);
+			DamageUtil.dealMeleeDamage(attacker, target, getDamage() * 0.5f, false);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class HazmatArmour extends AdventArmour {
 	public HazmatArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:hazmat", 30, new int[] {2, 5, 6, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:hazmat", 30, new int[] {2, 5, 6, 2}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 0), slot);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class HazmatArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.hazmat_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

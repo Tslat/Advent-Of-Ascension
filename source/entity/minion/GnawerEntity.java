@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
@@ -30,52 +31,37 @@ public class GnawerEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 430.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 9.0d;
-	}
-
-	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 		Item item = stack.getItem();
 
-		if (item != Items.AIR && getOwner() != null && getOwnerId().equals(player.getUniqueID()) && item.isIn(ItemTags.FISHES)) {
+		if (item != Items.AIR && getOwner() != null && getOwnerUUID().equals(player.getUUID()) && item.is(ItemTags.FISHES)) {
 			if (item instanceof HealingFood) {
 				if (!player.isCreative() && player.getHealth() < player.getMaxHealth()) {
 					stack.shrink(1);
 					EntityUtil.healEntity(player, ((HealingFood)item).getHealAmount());
 					setHealth(getHealth() - ((HealingFood)item).getHealAmount());
 
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			}
-			else if (item.isFood()) {
+			else if (item.isEdible()) {
 				if (!player.isCreative() && player.getHealth() < player.getMaxHealth()) {
 					stack.shrink(1);
-					EntityUtil.healEntity(player, item.getFood().getHealing());
-					setHealth(getHealth() - item.getFood().getHealing());
+					EntityUtil.healEntity(player, item.getFoodProperties().getNutrition());
+					setHealth(getHealth() - item.getFoodProperties().getNutrition());
 
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			}
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Nullable

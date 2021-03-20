@@ -9,7 +9,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -25,10 +25,10 @@ public class DeadTreeEntity extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		setPositionAndRotation(((int)getPosX()) + 0.5d, getPosY(), ((int)getPosZ()) + 0.5d, 0, 0);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		absMoveTo(((int)getX()) + 0.5d, getY(), ((int)getZ()) + 0.5d, 0, 0);
 
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
@@ -40,54 +40,29 @@ public class DeadTreeEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1.0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 0.5;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (source == DamageSource.OUT_OF_WORLD) {
 			remove();
 
 			return true;
 		}
 
-		if (!world.isRemote && isAlive() && source.getImmediateSource() instanceof PlayerEntity) {
-			TreeSpiritEntity treeSpirit = new TreeSpiritEntity(AoAEntities.Mobs.TREE_SPIRIT.get(), world);
+		if (!level.isClientSide && isAlive() && source.getDirectEntity() instanceof PlayerEntity) {
+			TreeSpiritEntity treeSpirit = new TreeSpiritEntity(AoAEntities.Mobs.TREE_SPIRIT.get(), level);
 
-			treeSpirit.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, rotationPitch);
-			world.addEntity(treeSpirit);
-			treeSpirit.attackEntityFrom(source, amount);
+			treeSpirit.moveTo(getX(), getY(), getZ(), yRot, xRot);
+			level.addFreshEntity(treeSpirit);
+			treeSpirit.hurt(source, amount);
 
 			if (treeSpirit.getHealth() <= 0)
-				AdvancementUtil.completeAdvancement((ServerPlayerEntity)source.getImmediateSource(), new ResourceLocation("aoa3", "overworld/mightiest_tree_in_the_forest"), "tree_spirit_instakill");
+				AdvancementUtil.completeAdvancement((ServerPlayerEntity)source.getDirectEntity(), new ResourceLocation("aoa3", "overworld/mightiest_tree_in_the_forest"), "tree_spirit_instakill");
 
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_TREE_SPIRIT_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_TREE_SPIRIT_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			remove();
 
 			return true;
@@ -97,18 +72,14 @@ public class DeadTreeEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {}
+	public void playerTouch(PlayerEntity entityIn) {}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {}
+	protected void doPush(Entity entityIn) {}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

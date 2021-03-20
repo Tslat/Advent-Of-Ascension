@@ -23,7 +23,7 @@ public class CandyBlade extends BaseGreatblade {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.EAT;
 	}
 
@@ -33,33 +33,33 @@ public class CandyBlade extends BaseGreatblade {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (player.canEat(false)) {
-			player.setActiveHand(hand);
+			player.startUsingItem(hand);
 
-			return ActionResult.resultSuccess(stack);
+			return ActionResult.success(stack);
 		}
 
-		return ActionResult.resultFail(stack);
+		return ActionResult.fail(stack);
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
 		if (entity instanceof PlayerEntity) {
 			PlayerEntity pl = (PlayerEntity)entity;
-			int foodHealAmount = Math.min(20 - pl.getFoodStats().getFoodLevel(), stack.getMaxDamage() - stack.getDamage());
+			int foodHealAmount = Math.min(20 - pl.getFoodData().getFoodLevel(), stack.getMaxDamage() - stack.getDamageValue());
 
-			pl.getFoodStats().addStats(foodHealAmount, 20f);
-			ItemUtil.damageItem(stack, entity, foodHealAmount * 4, pl.getActiveHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
+			pl.getFoodData().eat(foodHealAmount, 20f);
+			ItemUtil.damageItem(stack, entity, foodHealAmount * 4, pl.getUsedItemHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

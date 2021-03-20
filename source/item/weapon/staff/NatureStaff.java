@@ -34,7 +34,7 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 
 	@Override
 	public ArrayList<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.world, caster.getBoundingBox().grow(10), (state, pos) -> state.getBlock() instanceof IGrowable && ((IGrowable)state.getBlock()).canGrow(caster.world, pos.toImmutable(), state, false));
+		ArrayList<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> state.getBlock() instanceof IGrowable && ((IGrowable)state.getBlock()).isValidBonemealTarget(caster.level, pos.immutable(), state, false));
 
 		return blocks.isEmpty() ? null : blocks;
 	}
@@ -48,13 +48,13 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
 		for (BlockPos pos : (ArrayList<BlockPos>)args) {
-			BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), caster.world, pos);
+			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level, pos);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

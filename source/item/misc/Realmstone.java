@@ -15,7 +15,7 @@ public class Realmstone extends Item {
 	private final String portalMessageSuffix;
 
 	public Realmstone(RegistryObject<Block> portalBlock, @Nullable RegistryObject<SoundEvent> activationSound, String portalMessageSuffix) {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
 
 		this.portalBlock = portalBlock;
 		this.activationSound = activationSound;

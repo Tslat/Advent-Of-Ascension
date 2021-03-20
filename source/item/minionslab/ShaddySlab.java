@@ -13,11 +13,11 @@ public class ShaddySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		ShaddyEntity shaddy = new ShaddyEntity(AoAEntities.Minions.SHADDY.get(), pl.world);
+		ShaddyEntity shaddy = new ShaddyEntity(AoAEntities.Minions.SHADDY.get(), pl.level);
 
-		shaddy.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		shaddy.setTamedBy(pl);
-		pl.world.addEntity(shaddy);
+		shaddy.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		shaddy.tame(pl);
+		pl.level.addFreshEntity(shaddy);
 
 		return shaddy;
 	}

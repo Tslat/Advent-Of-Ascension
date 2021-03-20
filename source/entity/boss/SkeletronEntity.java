@@ -30,12 +30,12 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class SkeletronEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public SkeletronEntity(World world, BlockPos armyBlockPos) {
 		this(AoAEntities.Mobs.SKELETRON.get(), world);
 
-		this.setLocationAndAngles(armyBlockPos.getX(), armyBlockPos.getY() + 2, armyBlockPos.getZ(), rand.nextFloat() * 360, 0);
+		this.moveTo(armyBlockPos.getX(), armyBlockPos.getY() + 2, armyBlockPos.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public SkeletronEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -45,26 +45,6 @@ public class SkeletronEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1100;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 70;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -92,7 +72,7 @@ public class SkeletronEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -102,17 +82,17 @@ public class SkeletronEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.kill", killer.getDisplayName()), level, blockPosition(), 50);
 
-				if (killer instanceof ServerPlayerEntity && killer.getHeldItemMainhand().getItem() == AoAWeapons.SKELETAL_SWORD.get()) {
-					for (ItemStack stack : killer.getArmorInventoryList()) {
+				if (killer instanceof ServerPlayerEntity && killer.getMainHandItem().getItem() == AoAWeapons.SKELETAL_SWORD.get()) {
+					for (ItemStack stack : killer.getArmorSlots()) {
 						if (!(stack.getItem() instanceof AdventArmour) || ((AdventArmour)stack.getItem()).setType() != AdventArmour.Type.SKELETAL)
 							return;
 					}
@@ -124,43 +104,43 @@ public class SkeletronEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.SKELETRON_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.SKELETRON_MUSIC.getId()));
 		bossInfo.removePlayer(player);

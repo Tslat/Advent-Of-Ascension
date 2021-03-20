@@ -34,26 +34,6 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
     }
 
     @Override
-    protected double getBaseKnockbackResistance() {
-        return 0d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 50d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.207d;
-    }
-
-    @Override
 	public float getExplosionStrength() {
         return 4;
     }
@@ -75,49 +55,44 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 50;
-    }
-
-    @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (!isAlive())
             return;
 
-        PlayerEntity target = world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 20, false);
+        PlayerEntity target = level.getNearestPlayer(getX(), getY(), getZ(), 20, false);
 
         if (target == null || target.isCreative())
             return;
 
-        if (!world.isRemote && RandomUtil.oneInNChance(120)) {
-            setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
-            world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_CREEPERLOCK_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+        if (!level.isClientSide && RandomUtil.oneInNChance(120)) {
+            setPos(target.getX(), target.getY(), target.getZ());
+            level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CREEPERLOCK_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
         }
 
         if (RandomUtil.oneInNChance(70)) {
             CreeperShotEntity projectile = new CreeperShotEntity(this, BaseMobProjectile.Type.MAGIC);
 
-            double distanceFactorX = target.getPosX() - getPosX();
-            double distanceFactorY = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0f) - projectile.getPosY();
-            double distanceFactorZ = target.getPosZ() - this.getPosZ();
+            double distanceFactorX = target.getX() - getX();
+            double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
+            double distanceFactorZ = target.getZ() - this.getZ();
             double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-            world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
-            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
-            world.addEntity(projectile);
+            level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
+            level.addFreshEntity(projectile);
         }
     }
 
     @Override
     public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        WorldUtil.createExplosion(this, world, projectile, 2f);
+        WorldUtil.createExplosion(this, level, projectile, 2f);
     }
 
     @Override
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-        WorldUtil.createExplosion(this, world, projectile, 2f);
+        WorldUtil.createExplosion(this, level, projectile, 2f);
     }
 
     @Override

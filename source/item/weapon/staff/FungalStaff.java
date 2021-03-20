@@ -48,13 +48,13 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 		for (int x = -2; x <= 2; x++) {
 			for (int y = -2; y <= 2; y++) {
 				for (int z = -2; z <= 2; z++) {
-					Block block = caster.world.getBlockState(checkPos.setPos(caster.getPosX() + x, caster.getPosY() + y, caster.getPosZ() + z)).getBlock();
+					Block block = caster.level.getBlockState(checkPos.set(caster.getX() + x, caster.getY() + y, caster.getZ() + z)).getBlock();
 
 					if (block == Blocks.GRASS_BLOCK) {
-						workablePositions.put(checkPos.toImmutable(), true);
+						workablePositions.put(checkPos.immutable(), true);
 					}
 					else if (block instanceof MushroomBlock) {
-						workablePositions.put(checkPos.toImmutable(), false);
+						workablePositions.put(checkPos.immutable(), false);
 					}
 				}
 			}
@@ -68,26 +68,26 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 		if (world instanceof ServerWorld) {
 			for (Map.Entry<BlockPos, Boolean> entry : args.entrySet()) {
 				if (entry.getValue()) {
-					world.setBlockState(entry.getKey(), Blocks.MYCELIUM.getDefaultState());
+					world.setBlockAndUpdate(entry.getKey(), Blocks.MYCELIUM.defaultBlockState());
 				}
 				else {
 					BlockPos pos = entry.getKey();
 					BlockState state = world.getBlockState(pos);
 					MushroomBlock mushroom = (MushroomBlock)state.getBlock();
 
-					if (mushroom.canGrow(world, pos, state, false) && mushroom.canUseBonemeal(world, random, pos, state))
-						mushroom.grow((ServerWorld)world, random, pos, state);
+					if (mushroom.isValidBonemealTarget(world, pos, state, false) && mushroom.isBonemealSuccess(world, random, pos, state))
+						mushroom.performBonemeal((ServerWorld)world, random, pos, state);
 				}
 
-				world.playEvent(2005, entry.getKey(), 0);
+				world.levelEvent(2005, entry.getKey(), 0);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

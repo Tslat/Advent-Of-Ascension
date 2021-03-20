@@ -17,25 +17,25 @@ public class FlyingRangedAttackGoal extends Goal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		return this.taskOwner.getAttackTarget() != null;
+	public boolean canUse() {
+		return this.taskOwner.getTarget() != null;
 	}
 
 	@Override
-	public void startExecuting() {
+	public void start() {
 		this.attackCooldownTimer = 0;
 	}
 
 	@Override
 	public void tick() {
-		LivingEntity target = this.taskOwner.getAttackTarget();
+		LivingEntity target = this.taskOwner.getTarget();
 
-		if (target.getDistanceSq(this.taskOwner) < 4096 && this.taskOwner.canEntityBeSeen(target)) {
+		if (target.distanceToSqr(this.taskOwner) < 4096 && this.taskOwner.canSee(target)) {
 			this.attackCooldownTimer++;
 
 			if (this.attackCooldownTimer >= attackCooldownMin) {
-				taskOwner.attackEntityWithRangedAttack(target, 0);
-				attackCooldownTimer = -taskOwner.getRNG().nextInt(attackCooldownMax - attackCooldownMin);
+				taskOwner.performRangedAttack(target, 0);
+				attackCooldownTimer = -taskOwner.getRandom().nextInt(attackCooldownMax - attackCooldownMin);
 			}
 		}
 		else if (this.attackCooldownTimer > 0) {

@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.EditStructureScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
@@ -11,13 +12,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.TickEvent;
@@ -71,8 +74,8 @@ public class ClientEventHandler {
 			if (player == null)
 				return;
 
-			if (player.isSneaking() && player.onGround) {
-				Item sniper = player.getHeldItem(Hand.MAIN_HAND).getItem();
+			if (player.isShiftKeyDown() && player.onGround) {
+				Item sniper = player.getItemInHand(Hand.MAIN_HAND).getItem();
 
 				if (sniper instanceof BaseSniper) {
 					ScopeOverlayRenderer.isScoped = true;
@@ -94,14 +97,14 @@ public class ClientEventHandler {
 			}
 
 			HelmetScreenRenderer.active = false;
-			Item helmetItem = player.inventory.armorInventory.get(3).getItem();
+			Item helmetItem = player.inventory.armor.get(3).getItem();
 
 			if (!ScopeOverlayRenderer.isScoped && helmetItem instanceof ScreenOverlayArmour) {
 				HelmetScreenRenderer.type = ((ScreenOverlayArmour)helmetItem).getOverlay();
 				HelmetScreenRenderer.active = true;
 			}
 
-			if (!Minecraft.getInstance().isSingleplayer()) {
+			if (!Minecraft.getInstance().hasSingleplayerServer()) {
 				GlobalEvents.tick++;
 				AoAScheduler.handleSyncScheduledTasks(GlobalEvents.tick);
 			}
@@ -110,21 +113,21 @@ public class ClientEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onLongReachSwing(InputEvent.MouseInputEvent ev) {
-		if (ev.getAction() == GLFW.GLFW_PRESS && ev.getButton() == GLFW.GLFW_MOUSE_BUTTON_1 && Minecraft.getInstance().currentScreen == null) {
+		if (ev.getAction() == GLFW.GLFW_PRESS && ev.getButton() == GLFW.GLFW_MOUSE_BUTTON_1 && Minecraft.getInstance().screen == null) {
 			Minecraft mc = Minecraft.getInstance();
 			PlayerEntity player = mc.player;
 
-			if (player != null && player.world != null) {
+			if (player != null && player.level != null) {
 				if (player.isSpectator())
 					return;
 
-				ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+				ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
 
-				if (stack.getItem() instanceof LongReachItem && !player.isHandActive()) {
+				if (stack.getItem() instanceof LongReachItem && !player.isUsingItem()) {
 					RayTraceResult ray = getExtendedReachRayTrace(((LongReachItem)stack.getItem()).getReach());
 
 					if (ray instanceof EntityRayTraceResult)
-						AoAPackets.messageServer(new LongReachItemHitPacket((((EntityRayTraceResult)ray).getEntity().getEntityId())));
+						AoAPackets.messageServer(new LongReachItemHitPacket((((EntityRayTraceResult)ray).getEntity().getId())));
 				}
 			}
 		}
@@ -133,16 +136,16 @@ public class ClientEventHandler {
 	@SubscribeEvent
 	public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
 		if (AoAConfig.CLIENT.showWelcomeMessage.get()) {
-			if (Keybinds.keyAdventGui.getKey().getKeyCode() == GLFW.GLFW_KEY_UNKNOWN) {
-				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", TextFormatting.GRAY));
+			if (Keybinds.ADVENT_GUI.getKey().getValue() == GLFW.GLFW_KEY_UNKNOWN) {
+				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", TextFormatting.GRAY), Util.NIL_UUID);
 			}
 			else {
-				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome", TextFormatting.GRAY, Keybinds.keyAdventGui.getLocalizedName()));
+				ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome", TextFormatting.GRAY, Keybinds.ADVENT_GUI.getKeyBinding().getTranslatedKeyMessage()), Util.NIL_UUID);
 			}
 		}
 
-		if (ev.getPlayer().world.isRemote())
-			AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfig.CLIENT.personalHaloPreference.get()), ((ClientPlayerEntity)ev.getPlayer()).connection.getNetworkManager(), NetworkDirection.PLAY_TO_SERVER);
+		if (ev.getPlayer().level.isClientSide())
+			AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfig.CLIENT.personalHaloPreference.get()), ((ClientPlayerEntity)ev.getPlayer()).connection.getConnection(), NetworkDirection.PLAY_TO_SERVER);
 	}
 
 	@SubscribeEvent
@@ -154,38 +157,38 @@ public class ClientEventHandler {
 	@Nullable
 	private static RayTraceResult getExtendedReachRayTrace(float reach) {
 		Minecraft mc = Minecraft.getInstance();
-		Entity player = mc.getRenderViewEntity();
+		Entity player = mc.getCameraEntity();
 
-		if (player != null && player.world != null) {
-			float partialTicks = mc.getRenderPartialTicks();
-			mc.pointedEntity = null;
-			mc.objectMouseOver = player.pick(reach, partialTicks, false);
-			Vec3d eyePos = player.getEyePosition(partialTicks);
+		if (player != null && player.level != null) {
+			float partialTicks = mc.getFrameTime();
+			mc.crosshairPickEntity = null;
+			mc.hitResult = player.pick(reach, partialTicks, false);
+			Vector3d eyePos = player.getEyePosition(partialTicks);
 			double squareDistance = reach;
 
 			squareDistance = squareDistance * squareDistance;
 
-			if (mc.objectMouseOver != null)
-				squareDistance = mc.objectMouseOver.getHitVec().squareDistanceTo(eyePos);
+			if (mc.hitResult != null)
+				squareDistance = mc.hitResult.getLocation().distanceToSqr(eyePos);
 
-			Vec3d lookVec = player.getLook(1.0F);
-			Vec3d reachVec = eyePos.add(lookVec.x * (double)reach, lookVec.y * (double)reach, lookVec.z * (double)reach);
-			AxisAlignedBB boundingBox = player.getBoundingBox().expand(lookVec.scale(reach)).grow(1.0D, 1.0D, 1.0D);
-			EntityRayTraceResult trace = ProjectileHelper.rayTraceEntities(player, eyePos, reachVec, boundingBox, (entity) -> !entity.isSpectator() && entity.canBeCollidedWith(), squareDistance);
+			Vector3d lookVec = player.getViewVector(1.0F);
+			Vector3d reachVec = eyePos.add(lookVec.x * (double)reach, lookVec.y * (double)reach, lookVec.z * (double)reach);
+			AxisAlignedBB boundingBox = player.getBoundingBox().expandTowards(lookVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+			EntityRayTraceResult trace = ProjectileHelper.getEntityHitResult(player, eyePos, reachVec, boundingBox, (entity) -> !entity.isSpectator() && entity.isPickable(), squareDistance);
 
 			if (trace != null) {
 				Entity entity = trace.getEntity();
 
-				if (eyePos.squareDistanceTo(trace.getHitVec()) < squareDistance || mc.objectMouseOver == null) {
-					mc.objectMouseOver = trace;
+				if (eyePos.distanceToSqr(trace.getLocation()) < squareDistance || mc.hitResult == null) {
+					mc.hitResult = trace;
 
 					if (entity instanceof LivingEntity || entity instanceof ItemFrameEntity)
-						mc.pointedEntity = entity;
+						mc.crosshairPickEntity = entity;
 				}
 			}
 
-			if (mc.objectMouseOver.getType() == RayTraceResult.Type.ENTITY)
-				return mc.objectMouseOver;
+			if (mc.hitResult.getType() == RayTraceResult.Type.ENTITY)
+				return mc.hitResult;
 		}
 
 		return null;
@@ -196,10 +199,20 @@ public class ClientEventHandler {
 		if (SilencerEntity.isClientNearby) {
 			ClientPlayerEntity player = Minecraft.getInstance().player;
 
-			if (player == null || player.world.getEntitiesWithinAABB(SilencerEntity.class, player.getBoundingBox().grow(8)).isEmpty()) {
+			if (player == null || player.level.getEntitiesOfClass(SilencerEntity.class, player.getBoundingBox().inflate(8)).isEmpty()) {
 				SilencerEntity.isClientNearby = false;
-				Minecraft.getInstance().getSoundHandler().setSoundLevel(SoundCategory.MASTER, SilencerEntity.prevVolume);
+				Minecraft.getInstance().getSoundManager().updateSourceVolume(SoundCategory.MASTER, SilencerEntity.prevVolume);
 			}
+		}
+	}
+
+	@SubscribeEvent // Patching structure block gui because it arbitrarily limits the name to 64 chars
+	public static void guiInitEvent(GuiScreenEvent.InitGuiEvent.Post ev) {
+		if (ev.getGui() instanceof EditStructureScreen) {
+			EditStructureScreen screen = (EditStructureScreen)ev.getGui();
+
+			screen.nameEdit.setMaxLength(256);
+			screen.nameEdit.setValue(screen.structure.getStructureName());
 		}
 	}
 }

@@ -4,12 +4,14 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class CreeponiaLottomanEntity extends LottomanEntity {
 	public CreeponiaLottomanEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -17,18 +19,18 @@ public class CreeponiaLottomanEntity extends LottomanEntity {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.CREEPONIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.CREEPONIA.key);
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
-		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().itemInteractionForEntity(heldStack, player, this, hand))
-			return true;
+		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
+			return ActionResultType.SUCCESS;
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override

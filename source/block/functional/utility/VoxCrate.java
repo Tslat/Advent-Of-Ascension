@@ -9,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -18,19 +19,19 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class VoxCrate extends Block {
 	public VoxCrate() {
-		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.GREEN_TERRACOTTA, 5, 3, SoundType.WOOD));
+		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.TERRACOTTA_GREEN, 5, 3, SoundType.WOOD));
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		super.onBlockHarvested(world, pos, state, player);
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.playerWillDestroy(world, pos, state, player);
 
-		if (!world.isRemote && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(Hand.MAIN_HAND)) == 0) {
+		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(Hand.MAIN_HAND)) == 0) {
 			ToxicLottomanEntity lottoman = new ToxicLottomanEntity(AoAEntities.NPCs.TOXIC_LOTTOMAN.get(), world);
 
-			lottoman.setLocationAndAngles(pos.getX(), pos.getY() + 0.5, pos.getZ(), 0, 0);
-			world.addEntity(lottoman);
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxLottoMan.spawn"));
+			lottoman.moveTo(pos.getX(), pos.getY() + 0.5, pos.getZ(), 0, 0);
+			world.addFreshEntity(lottoman);
+			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxLottoMan.spawn"), Util.NIL_UUID);
 		}
 	}
 }

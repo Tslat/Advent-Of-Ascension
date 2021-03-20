@@ -32,7 +32,7 @@ public class ConcussionStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(8), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(8), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -50,14 +50,14 @@ public class ConcussionStaff extends BaseStaff<List<LivingEntity>> {
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity e : args) {
 			EntityUtil.pushEntityAway(caster, e, 3f);
-			WorldUtil.createExplosion(caster, e.world, e.getPosX(), e.getPosY() + e.getHeight() + 0.5, e.getPosZ(), 2.3f);
-			EntityUtil.applyPotions(e, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 25).level(10));
+			WorldUtil.createExplosion(caster, e.level, e.getX(), e.getY() + e.getBbHeight() + 0.5, e.getZ(), 2.3f);
+			EntityUtil.applyPotions(e, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 25).level(10));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

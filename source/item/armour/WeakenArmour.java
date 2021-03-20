@@ -22,7 +22,7 @@ import java.util.List;
 
 public class WeakenArmour extends AdventArmour {
 	public WeakenArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:weaken", 44, new int[] {4, 6, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:weaken", 44, new int[] {4, 6, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -33,17 +33,17 @@ public class WeakenArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots == null) {
-			if (RandomUtil.percentChance(0.7f) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getTrueSource() instanceof LivingEntity)
-				((LivingEntity)event.getSource().getTrueSource()).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 60, 1, true, true));
+			if (RandomUtil.percentChance(0.7f) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getEntity() instanceof LivingEntity)
+				((LivingEntity)event.getSource().getEntity()).addEffect(new EffectInstance(Effects.WEAKNESS, 60, 1, true, true));
 		}
 		else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
-			if (RandomUtil.percentChance(0.175f * slots.size()) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getTrueSource() instanceof LivingEntity)
-				((LivingEntity)event.getSource().getTrueSource()).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 60, 0, true, true));
+			if (RandomUtil.percentChance(0.175f * slots.size()) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getEntity() instanceof LivingEntity)
+				((LivingEntity)event.getSource().getEntity()).addEffect(new EffectInstance(Effects.WEAKNESS, 60, 0, true, true));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.weaken_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

@@ -41,21 +41,21 @@ public class FireflyStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new FireflyShotEntity(caster, this, 60));
+		world.addFreshEntity(new FireflyShotEntity(caster, this, 60));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
-			target.setFire(5);
+			target.setSecondsOnFire(5);
 
-			UUID targetUUID = target.getUniqueID();
+			UUID targetUUID = target.getUUID();
 
 			if (targetUUID.equals(((FireflyShotEntity)shot).lastTargetUUID))
 				return true;
 
 			for (int i = 0; i < RandomUtil.randomNumberBetween(1, 7); i++) {
-				shot.world.addEntity(new FireflyShotEntity(shooter, this, (FireflyShotEntity)shot, targetUUID, random.nextGaussian() * 0.35, 1.4f, random.nextGaussian() * 0.35));
+				shot.level.addFreshEntity(new FireflyShotEntity(shooter, this, (FireflyShotEntity)shot, targetUUID, random.nextGaussian() * 0.35, 1.4f, random.nextGaussian() * 0.35));
 			}
 
 			return true;
@@ -70,8 +70,8 @@ public class FireflyStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -6,7 +6,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.entity.projectile.staff.SunShotEntity;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -17,14 +17,14 @@ public class SunShotRenderer extends ParticleProjectileRenderer<SunShotEntity> {
 
 	@Override
 	protected void addParticles(SunShotEntity entity, float partialTicks) {
-		entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 255, 0)), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
-		entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 0, 0)), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
+		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 255, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 0, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 
-		double posX = entity.getPosX() + RandomUtil.randomGaussianValue() * 0.5;
-		double posY = entity.getPosY() + RandomUtil.randomGaussianValue() * 0.5;
-		double posZ = entity.getPosZ() + RandomUtil.randomGaussianValue() * 0.5;
+		double posX = entity.getX() + RandomUtil.randomGaussianValue() * 0.5;
+		double posY = entity.getY() + RandomUtil.randomGaussianValue() * 0.5;
+		double posZ = entity.getZ() + RandomUtil.randomGaussianValue() * 0.5;
 
-		if (!Minecraft.getInstance().isGamePaused())
-			entity.world.addParticle(ParticleTypes.FLAME, posX, posY, posZ, 0, 0, 0);
+		if (!Minecraft.getInstance().isPaused())
+			entity.level.addParticle(ParticleTypes.FLAME, posX, posY, posZ, 0, 0, 0);
 	}
 }

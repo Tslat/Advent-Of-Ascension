@@ -21,26 +21,6 @@ public class BoboEntity extends AoAMeleeMob {
 		return 1.90625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.05;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.26;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

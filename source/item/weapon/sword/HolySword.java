@@ -24,17 +24,17 @@ public class HolySword extends BaseSword {
 
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		if (!world.isRemote)
-			WorldUtil.spawnLightning((ServerWorld)world, (ServerPlayerEntity)player, player.getPosX(), player.getPosY(), player.getPosZ(), false);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if (!world.isClientSide)
+			WorldUtil.spawnLightning((ServerWorld)world, (ServerPlayerEntity)player, player.getX(), player.getY(), player.getZ(), false);
 
-		player.getCooldownTracker().setCooldown(this, 100);
+		player.getCooldowns().addCooldown(this, 100);
 
-		return ActionResult.resultSuccess(player.getHeldItem(hand));
+		return ActionResult.success(player.getItemInHand(hand));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

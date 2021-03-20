@@ -7,6 +7,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
@@ -29,41 +30,26 @@ public class AlluricornEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 200;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 13.0d;
-	}
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
-	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-
-		if (stack != ItemStack.EMPTY && getOwner() != null && getOwnerId().equals(player.getUniqueID())) {
-			if (stack.getItem() == AoAItems.KINETIC_RUNE.get() && !player.isPotionActive(Effects.SPEED)) {
+		if (stack != ItemStack.EMPTY && getOwner() != null && getOwnerUUID().equals(player.getUUID())) {
+			if (stack.getItem() == AoAItems.KINETIC_RUNE.get() && !player.hasEffect(Effects.MOVEMENT_SPEED)) {
 				if (!player.isCreative())
 					stack.shrink(1);
 
-				EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.SPEED, 150).level(4));
+				EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 150).level(4));
 
-				return true;
+				return ActionResultType.SUCCESS;
 			}
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Nullable

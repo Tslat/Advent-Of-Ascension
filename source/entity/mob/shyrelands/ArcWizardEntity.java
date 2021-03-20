@@ -24,27 +24,7 @@ public class ArcWizardEntity extends AoARangedMob {
         return sizeIn.height * 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 148d;
-    }
-
-    @Override
-    public double getBaseProjectileDamage() {
-        return 16.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.207;
-    }
-
-    @Nullable
+	@Nullable
     @Override
     protected SoundEvent getAmbientSound() {
         return AoASounds.ENTITY_ARC_WIZARD_AMBIENT.get();
@@ -66,11 +46,6 @@ public class ArcWizardEntity extends AoARangedMob {
     @Override
     protected SoundEvent getShootSound() {
         return AoASounds.ENTITY_ARC_WIZARD_SHOOT.get();
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
     }
 
     @Override

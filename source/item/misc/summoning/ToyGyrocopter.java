@@ -21,33 +21,33 @@ import java.util.List;
 
 public class ToyGyrocopter extends Item {
 	public ToyGyrocopter() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
-			if (!world.isRemote) {
-				world.addEntity(new GyrocopterEntity(player));
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.gyro.spawn", player.getDisplayName().getFormattedText()), world, player.getPosition(), 50);
+			if (!world.isClientSide) {
+				world.addFreshEntity(new GyrocopterEntity(player));
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.gyro.spawn", player.getDisplayName()), world, player.blockPosition(), 50);
 
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 			}
 
-			return ActionResult.resultSuccess(heldItem);
+			return ActionResult.success(heldItem);
 		}
 		else if (player instanceof ServerPlayerEntity) {
 			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail", TextFormatting.RED);
 		}
 
-		return ActionResult.resultFail(heldItem);
+		return ActionResult.fail(heldItem);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

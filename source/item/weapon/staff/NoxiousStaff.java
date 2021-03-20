@@ -9,7 +9,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -43,12 +43,12 @@ public class NoxiousStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0, 0, 0));
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0.075f, 0.075f, 0));
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0, 0.075f));
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, 0, -0.075f, -0.075f));
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0.075f, -0.075f));
-		world.addEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, -0.075f, 0.075f));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0, 0, 0));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0.075f, 0.075f, 0));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0, 0.075f));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, 0, -0.075f, -0.075f));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, 0.075f, -0.075f));
+		world.addFreshEntity(new NoxiousShotEntity(caster, this, 60, -0.075f, -0.075f, 0.075f));
 	}
 
 	@Override
@@ -63,17 +63,17 @@ public class NoxiousStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d pos, LivingEntity shooter) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.world, shot.getPosX(), shot.getPosY(), shot.getPosZ());
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d pos, LivingEntity shooter) {
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.level, shot.getX(), shot.getY(), shot.getZ());
 
 		cloud.setRadius(3);
 		cloud.setPotion(Potions.STRONG_POISON);
 		cloud.addEffect(new EffectInstance(Effects.POISON, 100, 2, true, true));
 		cloud.setDuration(3);
-		cloud.setColor(NumberUtil.RGB(51, 102, 0));
+		cloud.setFixedColor(NumberUtil.RGB(51, 102, 0));
 		cloud.setOwner(shooter);
 
-		shot.world.addEntity(cloud);
+		shot.level.addFreshEntity(cloud);
 	}
 
 	@Override
@@ -82,8 +82,8 @@ public class NoxiousStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

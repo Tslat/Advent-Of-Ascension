@@ -33,23 +33,23 @@ public class IroMiner extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new IroMinerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new IroMinerShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		ItemStack heldStack = shooter.getHeldItemMainhand();
+		ItemStack heldStack = shooter.getMainHandItem();
 		float damageMod = 1;
 
 		if (heldStack.getItem() == this) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(heldStack, null);
 
-			if (cap.getObject() != null &&target.getUniqueID().equals(cap.getObject())) {
+			if (cap.getObject() != null &&target.getUUID().equals(cap.getObject())) {
 				damageMod = cap.getValue() + 0.02f;
 				cap.setValue(damageMod);
 			}
 			else {
-				cap.setObject(target.getUniqueID());
+				cap.setObject(target.getUUID());
 				cap.setValue(1.0f);
 			}
 		}
@@ -68,8 +68,8 @@ public class IroMiner extends BaseBlaster {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

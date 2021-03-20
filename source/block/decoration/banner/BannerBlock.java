@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
@@ -45,78 +45,73 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	private static final VoxelShape STANDING_WEST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.453125, 0, 0.1875, 0.609375, 1, 0.8125));
 
 	public BannerBlock() {
-		super(BlockUtil.generateBlockProperties(Material.MISCELLANEOUS, MaterialColor.IRON, 0.5f, 1f, SoundType.CLOTH).notSolid().doesNotBlockMovement());
+		super(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.METAL, 0.5f, 1f, SoundType.WOOL).noOcclusion().noCollission());
 
-		setDefaultState(getDefaultState().with(TYPE, BannerType.MOUNTED).with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, false));
+		registerDefaultState(defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		if (!world.isRemote()) {
-			if (state.get(TYPE) == BannerType.MOUNTED) {
-				world.setBlockState(pos.down(), AoABlocks.BANNER_EXTENSION.get().getDefaultState().with(TYPE, BannerType.MOUNTED).with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)).with(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.down()).getFluid() == Fluids.WATER));
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		if (!world.isClientSide()) {
+			if (state.getValue(TYPE) == BannerType.MOUNTED) {
+				world.setBlockAndUpdate(pos.below(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.below()).getType() == Fluids.WATER));
 			}
 			else {
-				world.setBlockState(pos.up(), AoABlocks.BANNER_EXTENSION.get().getDefaultState().with(TYPE, BannerType.STANDING).with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)).with(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.up()).getFluid() == Fluids.WATER));
+				world.setBlockAndUpdate(pos.above(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.above()).getType() == Fluids.WATER));
 			}
 		}
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (state.get(TYPE) == BannerType.MOUNTED) {
-			world.setBlockState(pos.down(), Blocks.AIR.getDefaultState());
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (state.getValue(TYPE) == BannerType.MOUNTED) {
+			world.setBlockAndUpdate(pos.below(), Blocks.AIR.defaultBlockState());
 		}
 		else {
-			world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+			world.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 		}
 
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 
 	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
-	}
-
-	@Override
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return 1;
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		if (state.get(TYPE) == BannerType.MOUNTED) {
-			Direction mountedFace = state.get(HorizontalBlock.HORIZONTAL_FACING);
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		if (state.getValue(TYPE) == BannerType.MOUNTED) {
+			Direction mountedFace = state.getValue(HorizontalBlock.FACING);
 
-			return hasEnoughSolidSide(world, pos.offset(mountedFace), mountedFace.getOpposite()) && world.getBlockState(pos.down()).getMaterial().isReplaceable();
+			return canSupportCenter(world, pos.relative(mountedFace), mountedFace.getOpposite()) && world.getBlockState(pos.below()).getMaterial().isReplaceable();
 		}
 		else {
-			return world.getBlockState(pos.up()).getMaterial().isReplaceable();
+			return world.getBlockState(pos.above()).getMaterial().isReplaceable();
 		}
 	}
 
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		switch (context.getFace()) {
+		switch (context.getClickedFace()) {
 			case SOUTH:
 			case NORTH:
 			case WEST:
 			case EAST:
-				return getDefaultState().with(TYPE, BannerType.MOUNTED).with(HorizontalBlock.HORIZONTAL_FACING, context.getFace().getOpposite()).with(BlockStateProperties.WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+				return defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, context.getClickedFace().getOpposite()).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 			case UP:
 			case DOWN:
 			default:
-				return getDefaultState().with(TYPE, BannerType.STANDING).with(HorizontalBlock.HORIZONTAL_FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true)).with(BlockStateProperties.WATERLOGGED, context.getWorld().getFluidState(context.getPos()).getFluid() == Fluids.WATER);
+				return defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true)).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 		}
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		boolean mounted = state.get(TYPE) == BannerType.MOUNTED;
+		boolean mounted = state.getValue(TYPE) == BannerType.MOUNTED;
 
-		switch (state.get(HorizontalBlock.HORIZONTAL_FACING)) {
+		switch (state.getValue(HorizontalBlock.FACING)) {
 			case SOUTH:
 				return mounted ? MOUNTED_SOUTH_SHAPE : STANDING_SOUTH_SHAPE;
 			case EAST:
@@ -131,13 +126,13 @@ public class BannerBlock extends Block implements IWaterLoggable {
 
 	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (state.get(TYPE) == BannerType.MOUNTED) {
-			if (!world.getBlockState(pos.offset(state.get(HorizontalBlock.HORIZONTAL_FACING))).getMaterial().isSolid())
-				world.setBlockState(pos, Blocks.AIR.getDefaultState());
+		if (state.getValue(TYPE) == BannerType.MOUNTED) {
+			if (!world.getBlockState(pos.relative(state.getValue(HorizontalBlock.FACING))).getMaterial().isSolid())
+				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 		else {
-			if (!world.getBlockState(pos.down()).getMaterial().isSolid())
-				world.setBlockState(pos, Blocks.AIR.getDefaultState());
+			if (!world.getBlockState(pos.below()).getMaterial().isSolid())
+				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 	}
 
@@ -147,21 +142,21 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(TYPE, HorizontalBlock.HORIZONTAL_FACING, WATERLOGGED);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(TYPE, HorizontalBlock.FACING, WATERLOGGED);
 	}
 
 	@Override
-	public IFluidState getFluidState(BlockState state) {
-		return state.get(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	public FluidState getFluidState(BlockState state) {
+		return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-		if (state.get(BlockStateProperties.WATERLOGGED))
-			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.getValue(BlockStateProperties.WATERLOGGED))
+			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 
-		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 
 	public enum BannerType implements IStringSerializable {
@@ -174,11 +169,8 @@ public class BannerBlock extends Block implements IWaterLoggable {
 			this.name = name;
 		}
 
-		public String toString() {
-			return this.name;
-		}
-
-		public String getName() {
+		@Override
+		public String getSerializedName() {
 			return this.name;
 		}
 	}

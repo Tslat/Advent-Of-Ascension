@@ -21,7 +21,7 @@ public class AgilityTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.SPEED, 10).level(3).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 10).level(3).isAmbient());
 	}
 
 	@Override

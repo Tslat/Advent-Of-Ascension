@@ -13,11 +13,11 @@ public class GooferSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		GooferEntity goofer = new GooferEntity(AoAEntities.Minions.GOOFER.get(), pl.world);
+		GooferEntity goofer = new GooferEntity(AoAEntities.Minions.GOOFER.get(), pl.level);
 
-		goofer.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		goofer.setTamedBy(pl);
-		pl.world.addEntity(goofer);
+		goofer.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		goofer.tame(pl);
+		pl.level.addFreshEntity(goofer);
 
 		return goofer;
 	}

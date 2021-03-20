@@ -1,7 +1,7 @@
 # Advent of Ascension
 This is the official Github for Advent of Ascension.
 
-This branch is for the latest 1.15.2 version of the mod.
+This branch is for the latest 1.16.5 version of the mod.
 
 ## DISCLAIMER
 The source provided in this github is for viewing purposes only. Under license, you are permitted to modify the code for PRIVATE USE ONLY.

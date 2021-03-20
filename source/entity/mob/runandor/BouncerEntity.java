@@ -19,33 +19,13 @@ public class BouncerEntity extends AoAMeleeMob {
 	public BouncerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 
-		rand.setSeed(getUniqueID().getMostSignificantBits());
+		random.setSeed(getUUID().getMostSignificantBits());
 		jumpCooldown = RandomUtil.randomNumberBetween(40, 120);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.1875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 110;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -67,18 +47,18 @@ public class BouncerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	protected float getJumpUpwardsMotion() {
-		return jumpCooldown == 0 ? 1.2f : super.getJumpUpwardsMotion();
+	protected float getJumpPower() {
+		return jumpCooldown == 0 ? 1.2f : super.getJumpPower();
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (!isAlive())
 			return;
@@ -87,7 +67,7 @@ public class BouncerEntity extends AoAMeleeMob {
 			jumpCooldown--;
 		}
 		else {
-			jump();
+			jumpFromGround();
 			jumpCooldown = 70;
 		}
 	}

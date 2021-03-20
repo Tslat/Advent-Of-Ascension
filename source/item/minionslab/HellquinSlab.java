@@ -13,11 +13,11 @@ public class HellquinSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		HellquinEntity hellquin = new HellquinEntity(AoAEntities.Minions.HELLQUIN.get(), pl.world);
+		HellquinEntity hellquin = new HellquinEntity(AoAEntities.Minions.HELLQUIN.get(), pl.level);
 
-		hellquin.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		hellquin.setTamedBy(pl);
-		pl.world.addEntity(hellquin);
+		hellquin.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		hellquin.tame(pl);
+		pl.level.addFreshEntity(hellquin);
 
 		return hellquin;
 	}

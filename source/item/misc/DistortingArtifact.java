@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DistortingArtifact extends Item {
 	public DistortingArtifact() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxDamage(10));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(10));
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class DistortingArtifact extends Item {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && itemSlot < 9 && entity.getPosY() < -3) {
-			entity.setPositionAndUpdate(entity.getPosX(), 257, entity.getPosZ());
+		if (!world.isClientSide && itemSlot < 9 && entity.getY() < -3) {
+			entity.teleportTo(entity.getX(), 257, entity.getZ());
 			entity.fallDistance = -255;
 
 			if (entity instanceof LivingEntity) {
@@ -39,14 +39,14 @@ public class DistortingArtifact extends Item {
 
 				if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
 					ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
-					((PlayerEntity)entity).container.detectAndSendChanges();
+					((PlayerEntity)entity).inventoryMenu.broadcastChanges();
 				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

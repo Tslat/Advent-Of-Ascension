@@ -49,24 +49,24 @@ public class ChakramEntity extends BaseBullet implements HardProjectile, IRender
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.05f;
 	}
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.attackEntityFrom(DamageSource.causeThrownDamage(this, null), Chakram.dmg);
+		target.hurt(DamageSource.thrown(this, null), Chakram.dmg);
 
 		if (target instanceof LivingEntity)
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 60).level(2));
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && ticksExisted <= 1 && getThrower() == null)
+	protected void onHit(RayTraceResult result) {
+		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
 			return;
 
-		super.onImpact(result);
+		super.onHit(result);
 	}
 
 	@Override

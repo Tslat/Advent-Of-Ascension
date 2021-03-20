@@ -21,6 +21,6 @@ public class MindBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new MindBlasterShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new MindBlasterShotEntity(shooter, this, 60));
 	}
 }

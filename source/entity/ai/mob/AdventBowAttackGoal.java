@@ -27,48 +27,48 @@ public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends
 		this.attackCooldown = attackCooldown;
 		this.maxAttackDistance = maxAttackDistance * maxAttackDistance;
 
-		setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+		setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
 	}
 
 	public void setAttackCooldown(int attackCooldown) {
 		this.attackCooldown = attackCooldown;
 	}
 
-	public boolean shouldExecute() {
-		return shooter.getAttackTarget() != null && isBowInMainhand();
+	public boolean canUse() {
+		return shooter.getTarget() != null && isBowInMainhand();
 	}
 
 	protected boolean isBowInMainhand() {
-		return shooter.getHeldItemMainhand().getItem() instanceof BowItem || shooter.getHeldItemOffhand().getItem() instanceof BowItem;
+		return shooter.getMainHandItem().getItem() instanceof BowItem || shooter.getOffhandItem().getItem() instanceof BowItem;
 	}
 
-	public boolean shouldContinueExecuting() {
-		return (shouldExecute() || !shooter.getNavigator().noPath()) && isBowInMainhand();
+	public boolean canContinueToUse() {
+		return (canUse() || !shooter.getNavigation().isDone()) && isBowInMainhand();
 	}
 
-	public void startExecuting() {
-		super.startExecuting();
+	public void start() {
+		super.start();
 
-		shooter.setAggroed(true);
+		shooter.setAggressive(true);
 	}
 
-	public void resetTask() {
-		super.resetTask();
+	public void stop() {
+		super.stop();
 
-		shooter.setAggroed(false);
+		shooter.setAggressive(false);
 
 		seeTime = 0;
 		attackTime = -1;
 
-		shooter.resetActiveHand();
+		shooter.stopUsingItem();
 	}
 
 	public void tick() {
-		LivingEntity target = shooter.getAttackTarget();
+		LivingEntity target = shooter.getTarget();
 
 		if (target != null) {
-			double distanceToTarget = shooter.getDistanceSq(target.getPosX(), target.getPosY(), target.getPosZ());
-			boolean canSeeTarget = shooter.getEntitySenses().canSee(target);
+			double distanceToTarget = shooter.distanceToSqr(target.getX(), target.getY(), target.getZ());
+			boolean canSeeTarget = shooter.getSensing().canSee(target);
 
 
 			if (canSeeTarget != seeTime > 0)
@@ -82,19 +82,19 @@ public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends
 			}
 
 			if (!(distanceToTarget > maxAttackDistance) && seeTime >= 20) {
-				shooter.getNavigator().clearPath();
+				shooter.getNavigation().stop();
 				++strafingTime;
 			}
 			else {
-				shooter.getNavigator().tryMoveToEntityLiving(target, moveSpeedAmp);
+				shooter.getNavigation().moveTo(target, moveSpeedAmp);
 				strafingTime = -1;
 			}
 
 			if (strafingTime >= 20) {
-				if (shooter.getRNG().nextFloat() < 0.3D)
+				if (shooter.getRandom().nextFloat() < 0.3D)
 					strafingClockwise = !strafingClockwise;
 
-				if (shooter.getRNG().nextFloat() < 0.3D)
+				if (shooter.getRandom().nextFloat() < 0.3D)
 					strafingBackwards = !strafingBackwards;
 
 				strafingTime = 0;
@@ -108,29 +108,29 @@ public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends
 					strafingBackwards = true;
 				}
 
-				shooter.getMoveHelper().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
-				shooter.faceEntity(target, 30.0F, 30.0F);
+				shooter.getMoveControl().strafe(strafingBackwards ? -0.5F : 0.5F, strafingClockwise ? 0.5F : -0.5F);
+				shooter.lookAt(target, 30.0F, 30.0F);
 			}
 			else {
-				shooter.getLookController().setLookPositionWithEntity(target, 30.0F, 30.0F);
+				shooter.getLookControl().setLookAt(target, 30.0F, 30.0F);
 			}
 
-			if (shooter.isHandActive()) {
+			if (shooter.isUsingItem()) {
 				if (!canSeeTarget && seeTime < -60) {
-					shooter.resetActiveHand();
+					shooter.stopUsingItem();
 				}
 				else if (canSeeTarget) {
-					int maxItemUseTime = shooter.getItemInUseMaxCount();
+					int maxItemUseTime = shooter.getTicksUsingItem();
 
 					if (maxItemUseTime >= 20) {
-						shooter.resetActiveHand();
-						shooter.attackEntityWithRangedAttack(target, BowItem.getArrowVelocity(maxItemUseTime));
+						shooter.stopUsingItem();
+						shooter.performRangedAttack(target, BowItem.getPowerForTime(maxItemUseTime));
 						attackTime = attackCooldown;
 					}
 				}
 			}
 			else if (--attackTime <= 0 && seeTime >= -60) {
-				shooter.setActiveHand(ProjectileHelper.getHandWith(shooter, Items.BOW));
+				shooter.startUsingItem(ProjectileHelper.getWeaponHoldingHand(shooter, Items.BOW));
 			}
 		}
 	}

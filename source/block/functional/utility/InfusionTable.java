@@ -28,13 +28,13 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class InfusionTable extends Block {
 	public InfusionTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 10, 15, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, 10, 15, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (player instanceof ServerPlayerEntity) {
-			ItemStack stack = player.getHeldItem(hand);
+			ItemStack stack = player.getItemInHand(hand);
 			Item item = stack.getItem();
 
 			if (item instanceof InfusionStone) {
@@ -56,10 +56,10 @@ public class InfusionTable extends Block {
 
 					if (!player.isCreative()) {
 						if (powerStoneCount > 0) {
-							player.setHeldItem(hand, new ItemStack(stone.getPowerStone(), powerStoneCount));
+							player.setItemInHand(hand, new ItemStack(stone.getPowerStone(), powerStoneCount));
 						}
 						else {
-							player.setHeldItem(hand, ItemStack.EMPTY);
+							player.setItemInHand(hand, ItemStack.EMPTY);
 						}
 					}
 					else {

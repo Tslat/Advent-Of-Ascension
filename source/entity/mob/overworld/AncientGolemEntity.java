@@ -7,6 +7,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -24,45 +25,22 @@ public class AncientGolemEntity extends AoAMeleeMob {
 		return 2f;
 	}
 
+	@Nullable
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.6d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 50;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 15d;
+	protected SoundEvent getAmbientSound() {
+		return null;
 	}
 
 	@Nullable
 	@Override
-	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_AUTOMATON_AMBIENT.get();
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return SoundEvents.IRON_GOLEM_HURT;
 	}
 
+	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_AUTOMATON_DEATH.get();
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_AUTOMATON_HURT.get();
+		return SoundEvents.IRON_GOLEM_DEATH;
 	}
 
 	@Nullable
@@ -71,13 +49,4 @@ public class AncientGolemEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_GOLEM_STEP.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

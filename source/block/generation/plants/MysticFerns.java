@@ -13,12 +13,12 @@ import net.tslat.aoa3.util.PotionUtil;
 
 public class MysticFerns extends GenericPlantBlock {
 	public MysticFerns() {
-		super(Material.PLANTS, MaterialColor.PURPLE, Material.EARTH, Material.ORGANIC);
+		super(Material.PLANT, MaterialColor.COLOR_PURPLE, Material.DIRT, Material.GRASS);
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity)
-			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 30).level(4));
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP, 30).level(4));
 	}
 }

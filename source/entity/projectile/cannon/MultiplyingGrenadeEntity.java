@@ -42,17 +42,17 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.075f;
 	}
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, 1.5f);
+		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
 
-		if (!world.isRemote && getAge() < 10 && shooter instanceof PlayerEntity && count < 5) {
-			world.addEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
-			world.playSound(null, shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+		if (!level.isClientSide && getAge() < 10 && shooter instanceof PlayerEntity && count < 5) {
+			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
+			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 
@@ -60,9 +60,9 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && count < 5 && getAge() == 10 && shooter instanceof PlayerEntity) {
-			world.addEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
-			world.playSound(null, shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+		if (!level.isClientSide && count < 5 && getAge() == 10 && shooter instanceof PlayerEntity) {
+			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
+			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 }

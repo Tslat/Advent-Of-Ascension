@@ -23,14 +23,14 @@ public class SliceStar extends BaseThrownWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundEvents.ENTITY_ARROW_SHOOT;
+		return SoundEvents.ARROW_SHOOT;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack weaponStack, Hand hand) {
 		BaseGun item = (BaseGun)weaponStack.getItem();
 
-		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), weaponStack)))
+		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), weaponStack)))
 			return new SliceStarEntity(player, item);
 
 		return null;

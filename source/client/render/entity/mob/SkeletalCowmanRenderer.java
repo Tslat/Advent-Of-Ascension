@@ -20,7 +20,7 @@ public class SkeletalCowmanRenderer extends BipedRenderer<MonsterEntity, BipedMo
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MonsterEntity entity) {
+	public ResourceLocation getTextureLocation(MonsterEntity entity) {
 		return texture;
 	}
 }

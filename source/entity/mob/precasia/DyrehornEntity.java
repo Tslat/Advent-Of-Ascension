@@ -20,32 +20,12 @@ public class DyrehornEntity extends AoAMeleeMob {
 
 		this.isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.8f);
+		setSpeed(1.8f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable

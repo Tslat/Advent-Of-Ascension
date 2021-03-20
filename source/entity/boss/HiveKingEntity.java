@@ -12,10 +12,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -32,18 +29,18 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class HiveKingEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>createKey(HiveKingEntity.class, DataSerializers.VARINT);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>defineId(HiveKingEntity.class, DataSerializers.INT);
 
 	private int growthPercent = 0;
 
 	public HiveKingEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 
-		if (!world.isRemote) {
-			dataManager.set(GROWTH_PERCENT, 100);
+		if (!world.isClientSide) {
+			entityData.set(GROWTH_PERCENT, 100);
 			growthPercent = 100;
-			recalculateSize();
+			refreshDimensions();
 		}
 	}
 
@@ -52,59 +49,39 @@ public class HiveKingEntity extends AoAMeleeMob {
 
 		this.growthPercent = growthPercent;
 
-		dataManager.set(GROWTH_PERCENT, growthPercent);
+		entityData.set(GROWTH_PERCENT, growthPercent);
 		setHealth(Math.max(1, getMaxHealth() / (100 / (float)growthPercent)));
-		recalculateSize();
-		setNoAI(true);
+		refreshDimensions();
+		setNoAi(true);
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		if (worldIn.isRemote())
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+		if (world.isClientSide())
 			growthPercent = 100;
 
-		return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(GROWTH_PERCENT, growthPercent);
+		entityData.define(GROWTH_PERCENT, growthPercent);
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 
 		if (key == GROWTH_PERCENT)
-			recalculateSize();
+			refreshDimensions();
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return size.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 2500;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -127,12 +104,12 @@ public class HiveKingEntity extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
-		return growthPercent >= 100 ? super.getLootTable() : null;
+	protected ResourceLocation getDefaultLootTable() {
+		return growthPercent >= 100 ? super.getDefaultLootTable() : null;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -141,8 +118,8 @@ public class HiveKingEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public float getRenderScale() {
-		return growthPercent >= 100 ? super.getRenderScale() : growthPercent / 100f;
+	public float getScale() {
+		return growthPercent >= 100 ? super.getScale() : growthPercent / 100f;
 	}
 
 	@Override
@@ -150,34 +127,34 @@ public class HiveKingEntity extends AoAMeleeMob {
 		super.tick();
 
 		if (growthPercent < 100) {
-			if (!world.isRemote) {
+			if (!level.isClientSide) {
 				incrementGrowth();
 			}
 			else {
-				growthPercent = dataManager.get(GROWTH_PERCENT);
+				growthPercent = entityData.get(GROWTH_PERCENT);
 			}
 
-			recalculateSize();
+			refreshDimensions();
 
 			if (growthPercent == 100)
-				setNoAI(false);
+				setNoAi(false);
 
 			return;
 		}
 
-		if (!world.isRemote && rand.nextInt(500) == 0) {
+		if (!level.isClientSide && random.nextInt(500) == 0) {
 			HiveWorkerEntity worker = new HiveWorkerEntity(this);
 
-			world.addEntity(worker);
+			level.addFreshEntity(worker);
 		}
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (growthPercent >= 100)
-			return super.attackEntityFrom(source, amount);
+			return super.hurt(source, amount);
 
-		if (!world.isRemote)
+		if (!level.isClientSide)
 			remove();
 
 		return true;
@@ -186,75 +163,75 @@ public class HiveKingEntity extends AoAMeleeMob {
 	private void incrementGrowth() {
 		growthPercent++;
 
-		dataManager.set(GROWTH_PERCENT, growthPercent);
+		entityData.set(GROWTH_PERCENT, growthPercent);
 		setHealth(getMaxHealth() / (100 / (float)growthPercent));
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
-		if (dataManager.get(GROWTH_PERCENT) < 100)
+		if (entityData.get(GROWTH_PERCENT) < 100)
 			setHealth(getMaxHealth());
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
+	public void die(DamageSource cause) {
 		if (growthPercent < 100)
 			return;
 
-		super.onDeath(cause);
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.hiveKing.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.hiveKing.kill", killer.getDisplayName()), level, blockPosition(), 50);
 
-				if (killer instanceof ServerPlayerEntity && cause.getImmediateSource() instanceof HiveSoldierEntity)
+				if (killer instanceof ServerPlayerEntity && cause.getDirectEntity() instanceof HiveSoldierEntity)
 					AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "barathos/daddy_issues"), "hive_king_hive_staff_kill");
 			}
 		}
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.HIVE_KING_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.HIVE_KING_MUSIC.getId()));
 		bossInfo.removePlayer(player);

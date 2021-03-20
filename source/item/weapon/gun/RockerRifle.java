@@ -26,12 +26,12 @@ public class RockerRifle extends BaseGun {
 
 	@Override
 	public float getRecoilForShot(ItemStack stack, LivingEntity shooter) {
-		return shooter.isSneaking() ? 0 : super.getRecoilForShot(stack, shooter);
+		return shooter.isShiftKeyDown() ? 0 : super.getRecoilForShot(stack, shooter);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

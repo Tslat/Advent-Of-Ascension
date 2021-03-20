@@ -23,9 +23,9 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 	private final ElusiveEntity elusive;
 
 	public ElusiveCloneEntity(ElusiveEntity elusive) {
-		super(AoAEntities.Mobs.ELUSIVE_CLONE.get(), elusive.world);
+		super(AoAEntities.Mobs.ELUSIVE_CLONE.get(), elusive.level);
 
-		setLocationAndAngles(elusive.getPosX(), elusive.getPosY(), elusive.getPosZ(), elusive.rotationYaw, elusive.rotationPitch);
+		moveTo(elusive.getX(), elusive.getY(), elusive.getZ(), elusive.yRot, elusive.xRot);
 		this.elusive = elusive;
 	}
 
@@ -38,26 +38,6 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.5f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -88,15 +68,15 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && elusive == null)
+		if (!level.isClientSide && elusive == null)
 			remove();
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && elusive != null)
-			WorldUtil.createExplosion(elusive, world, getPosX(), getPosY(), getPosZ(), 2f);
+		if (!level.isClientSide && elusive != null)
+			WorldUtil.createExplosion(elusive, level, getX(), getY(), getZ(), 2f);
 	}
 }

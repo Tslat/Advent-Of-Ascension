@@ -18,14 +18,14 @@ public class ScreamerBow extends BaseBow {
 
 	@Override
 	public double getArrowDamage(CustomArrowEntity arrow, Entity target, double currentDamage, float drawStrength, boolean isCritical) {
-		float damageModifier = 1 + ((float)Math.min(arrow.getMotion().getY(), 0) / -9f);
+		float damageModifier = 1 + ((float)Math.min(arrow.getDeltaMovement().y(), 0) / -9f);
 
 		return super.getArrowDamage(arrow, target, currentDamage, drawStrength, isCritical) * damageModifier;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

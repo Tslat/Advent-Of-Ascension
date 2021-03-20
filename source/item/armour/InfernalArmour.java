@@ -18,7 +18,7 @@ import java.util.List;
 
 public class InfernalArmour extends AdventArmour {
 	public InfernalArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:infernal", 39, new int[] {4, 7, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:infernal", 39, new int[] {4, 7, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -28,18 +28,18 @@ public class InfernalArmour extends AdventArmour {
 
 	@Override
 	public void onAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
-		if (event.getSource().isFireDamage() && slots != null)
+		if (event.getSource().isFire() && slots != null)
 			event.setAmount(event.getAmount() *  (1 - 0.15f * slots.size()));
 	}
 
 	@Override
 	public void onPreAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingAttackEvent event) {
-		if (event.getSource().isFireDamage() && slots == null)
+		if (event.getSource().isFire() && slots == null)
 			event.setCanceled(true);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.infernal_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

@@ -24,31 +24,6 @@ public class ShadeEntity extends AoAMeleeMob {
 		return 1.5f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23d;
-	}
-
-	@Override
-	public int getMaxSpawnHeight() {
-		return 30;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -66,22 +41,18 @@ public class ShadeEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
+	public boolean addEffect(EffectInstance effect) {
 		return false;
 	}
 
 	@Override
-	public boolean canBeHitWithPotion() {
+	public boolean isAffectedByPotions() {
 		return false;
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

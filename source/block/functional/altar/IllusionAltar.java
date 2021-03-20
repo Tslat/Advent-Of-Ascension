@@ -15,25 +15,25 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class IllusionAltar extends BossAltarBlock {
 	public IllusionAltar() {
-		super(MaterialColor.PURPLE);
+		super(MaterialColor.COLOR_PURPLE);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		ElusiveEntity elusive = new ElusiveEntity(AoAEntities.Mobs.ELUSIVE.get(), player.world);
+		ElusiveEntity elusive = new ElusiveEntity(AoAEntities.Mobs.ELUSIVE.get(), player.level);
 		ElusiveCloneEntity clone = new ElusiveCloneEntity(elusive);
-		double posX = (int)(blockPos.getX() + player.getLookVec().x * -10);
-		double posZ = (int)(blockPos.getZ() + player.getLookVec().z * -10);
+		double posX = (int)(blockPos.getX() + player.getLookAngle().x * -10);
+		double posZ = (int)(blockPos.getZ() + player.getLookAngle().z * -10);
 
-		clone.setLocationAndAngles(posX, player.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, player.rotationYawHead, 0);
+		clone.moveTo(posX, player.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, player.yHeadRot, 0);
 
 		posX += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
 		posZ += RANDOM.nextBoolean() ? 10 + RANDOM.nextInt(10) : -10 - RANDOM.nextInt(10);
 
-		elusive.setLocationAndAngles(posX, player.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, 0, 0);
-		player.world.addEntity(elusive);
-		player.world.addEntity(clone);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.elusive.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		elusive.moveTo(posX, player.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, 0, 0);
+		player.level.addFreshEntity(elusive);
+		player.level.addFreshEntity(clone);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.elusive.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

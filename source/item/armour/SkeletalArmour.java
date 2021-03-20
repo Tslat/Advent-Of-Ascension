@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SkeletalArmour extends AdventArmour {
 	public SkeletalArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:skeletal", 43, new int[] {3, 7, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:skeletal", 43, new int[] {3, 7, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -27,17 +27,17 @@ public class SkeletalArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		if (slots == null && plData.player().getFoodStats().getSaturationLevel() < 1) {
-			FoodStats foodStats = plData.player().getFoodStats();
+		if (slots == null && plData.player().getFoodData().getSaturationLevel() < 1) {
+			FoodStats foodStats = plData.player().getFoodData();
 			int foodLvl = foodStats.getFoodLevel();
 
-			foodStats.addStats(1, 0.5f);
+			foodStats.eat(1, 0.5f);
 			foodStats.setFoodLevel(foodLvl);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.skeletal_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

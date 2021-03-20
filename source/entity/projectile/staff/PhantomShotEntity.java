@@ -1,5 +1,6 @@
 package net.tslat.aoa3.entity.projectile.staff;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
@@ -31,15 +32,22 @@ public class PhantomShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (!world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+		if (!level.isClientSide) {
 			if (weapon != null) {
 				if (result.getType() == RayTraceResult.Type.BLOCK) {
-					weapon.doBlockImpact(this, result.getHitVec(), owner);
+					Entity shooter = getOwner();
+
+					if (shooter instanceof LivingEntity)
+						weapon.doBlockImpact(this, result.getLocation(), (LivingEntity)shooter);
+
 					remove();
 				}
-				else if (result.getType() == RayTraceResult.Type.ENTITY && !((EntityRayTraceResult)result).getEntity().getUniqueID().equals(lastHit)) {
-					weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), owner);
+				else if (result.getType() == RayTraceResult.Type.ENTITY && !((EntityRayTraceResult)result).getEntity().getUUID().equals(lastHit)) {
+					Entity shooter = getOwner();
+
+					if (shooter instanceof LivingEntity)
+						weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), (LivingEntity)shooter);
 				}
 			}
 		}

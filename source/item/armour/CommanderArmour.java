@@ -21,7 +21,7 @@ import java.util.List;
 
 public class CommanderArmour extends AdventArmour {
 	public CommanderArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:commander", 62, new int[] {4, 9, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:commander", 62, new int[] {4, 9, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -31,16 +31,16 @@ public class CommanderArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType() && plData.player().world.getGameTime() % 20 == 0) {
-			for (LivingEntity entity : plData.player().world.getEntitiesWithinAABB(LivingEntity.class, plData.player().getBoundingBox().grow(2 * (slots == null ? 4 : slots.size())))) {
+		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType() && plData.player().level.getGameTime() % 20 == 0) {
+			for (LivingEntity entity : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(2 * (slots == null ? 4 : slots.size())))) {
 				if (entity != plData.player() && (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).getOwner() == plData.player())))
-					entity.addPotionEffect(new EffectInstance(Effects.STRENGTH, 25, slots == null ? 1 : 0, false, true));
+					entity.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 25, slots == null ? 1 : 0, false, true));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.commander_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.commander_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

@@ -33,12 +33,12 @@ public class Clownershot extends BaseGun {
 	}
 
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
-			if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
+			if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
 				BaseBullet bullet2 = new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
-				bullet2.setPositionAndUpdate(bullet2.getPosX(), bullet2.getPosY() + 0.1f, bullet2.getPosZ());
-				player.world.addEntity(bullet2);
+				bullet2.teleportTo(bullet2.getX(), bullet2.getY() + 0.1f, bullet2.getZ());
+				player.level.addFreshEntity(bullet2);
 			}
 
 			return new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
@@ -48,8 +48,8 @@ public class Clownershot extends BaseGun {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

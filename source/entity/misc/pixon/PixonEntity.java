@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -31,46 +30,41 @@ public abstract class PixonEntity extends CreatureEntity {
     // TODO Fix level distribution across dimensions
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 0.75d));
         goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.55d));
         goalSelector.addGoal(3, new LookRandomlyGoal(this));
     }
 
     @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(15 + rand.nextInt(30));
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.40000000298023225);
-        getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
-    }
-
-    @Override
-    public boolean addPotionEffect(EffectInstance effectInstanceIn) {
+    public boolean addEffect(EffectInstance effectInstanceIn) {
         return false;
     }
 
     @Override
-    public boolean canBeHitWithPotion() {
+    public boolean isAffectedByPotions() {
         return false;
     }
 
     @Override
-    protected void collideWithEntity(Entity entity) {}
+    protected void doPush(Entity entity) {}
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    public int getMaxSpawnedInChunk() {
+    public boolean canBreatheUnderwater() {
+        return true;
+    }
+
+    @Override
+    public int getMaxSpawnClusterSize() {
         return 1;
     }
 
     public boolean canHarvest(ServerPlayerEntity player, ItemStack bowlStack) {
-        if (world.getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
+        if (level.getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
             InfusionBowl bowl = ((InfusionBowl)bowlStack.getItem());
 
             if (player.isCreative() || PlayerUtil.doesPlayerHaveLevel(player, Skills.INFUSION, getHarvestLevelReq() + bowl.getHarvestReqModifier())) {
@@ -85,11 +79,14 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean canSpawn(IWorld world, SpawnReason reason) {
+    public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
         if (!EntityUtil.isNaturalSpawnReason(reason))
             return true;
 
-        return world.getBlockState(getPosition().down()).getBlock() == world.getBiome(getPosition()).getSurfaceBuilder().config.getTop().getBlock();
+        if (!super.checkSpawnRules(world, reason))
+            return false;
+
+        return world.getBlockState(blockPosition().below()).getBlock() == world.getBiome(blockPosition()).getGenerationSettings().getSurfaceBuilder().get().config.getTopMaterial().getBlock();
     }
 
     @Override
@@ -131,7 +128,7 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    protected SoundEvent getFallSound(int heightIn) {
+    protected SoundEvent getFallDamageSound(int heightIn) {
         return null;
     }
 

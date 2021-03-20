@@ -29,26 +29,6 @@ public class LightwalkerEntity extends AoAMeleeMob {
         return 0.90625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 168;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -65,11 +45,6 @@ public class LightwalkerEntity extends AoAMeleeMob {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return AoASounds.ENTITY_VOID_WALKER_HURT.get();
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
     }
 
     @Override

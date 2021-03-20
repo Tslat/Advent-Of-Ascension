@@ -24,26 +24,6 @@ public class SpectralWizardEntity extends AoARangedMob {
 		return 1.9375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 120d;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 13d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

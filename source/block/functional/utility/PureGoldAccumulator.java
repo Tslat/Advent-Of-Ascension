@@ -20,22 +20,22 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class PureGoldAccumulator extends Block {
 	public PureGoldAccumulator() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GOLD, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.GOLD, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.PURE_GOLD.get()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.PURE_GOLD.get()) {
 			if (player instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
 				plData.stats().addTribute(Deities.PLUTON, 20);
 
 				if (plData.stats().getTribute(Deities.PLUTON) == 200)
-					plData.sendThrottledChatMessage("message.feedback.immortallisProgression.pureGoldEnd", player.getDisplayName().getFormattedText());
+					plData.sendThrottledChatMessage("message.feedback.immortallisProgression.pureGoldEnd", player.getDisplayName());
 			}
 
 			return ActionResultType.SUCCESS;

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class FaceMask extends AdventArmour {
 	public FaceMask() {
-		super(ItemUtil.customArmourMaterial("aoa3:face_mask", 36, new int[] {4, 7, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:face_mask", 36, new int[] {4, 7, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), EquipmentSlotType.HEAD);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class FaceMask extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}

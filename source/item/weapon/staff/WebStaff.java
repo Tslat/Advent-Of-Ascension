@@ -37,11 +37,11 @@ public class WebStaff extends BaseStaff<ArrayList<Effect>> {
 
 	@Override
 	public ArrayList<Effect> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<Effect> effects = new ArrayList<Effect>(caster.getActivePotionEffects().size());
+		ArrayList<Effect> effects = new ArrayList<Effect>(caster.getActiveEffects().size());
 
-		for (EffectInstance effect : caster.getActivePotionEffects()) {
-			if (!effect.getPotion().isBeneficial())
-				effects.add(effect.getPotion());
+		for (EffectInstance effect : caster.getActiveEffects()) {
+			if (!effect.getEffect().isBeneficial())
+				effects.add(effect.getEffect());
 		}
 
 		return effects.size() > 0 ? effects : null;
@@ -49,12 +49,12 @@ public class WebStaff extends BaseStaff<ArrayList<Effect>> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, ArrayList<Effect> args) {
-		args.forEach(caster::removePotionEffect);
+		args.forEach(caster::removeEffect);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

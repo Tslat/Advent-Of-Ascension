@@ -29,26 +29,6 @@ public class CherryBarragerEntity extends AoARangedMob {
 		return 1f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 130;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 14;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -63,19 +43,19 @@ public class CherryBarragerEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 3f);
+		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 3f);
+		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote && isInWater() && getHealth() > 0)
+		if (!level.isClientSide && isInWater() && getHealth() > 0)
 			heal(0.4f);
 	}
 

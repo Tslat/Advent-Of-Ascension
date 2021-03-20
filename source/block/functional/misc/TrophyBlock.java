@@ -21,6 +21,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -36,13 +37,13 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nullable;
 
 public class TrophyBlock extends WaterloggableBlock {
-	private static final VoxelShape BASE_SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 2, 12);
-	private static final VoxelShape MIDDLE_SHAPE = Block.makeCuboidShape(5, 2, 5, 11, 9, 11);
-	private static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(4.5, 9, 4.5, 11.5, 11, 11.5);
+	private static final VoxelShape BASE_SHAPE = Block.box(4, 0, 4, 12, 2, 12);
+	private static final VoxelShape MIDDLE_SHAPE = Block.box(5, 2, 5, 11, 9, 11);
+	private static final VoxelShape TOP_SHAPE = Block.box(4.5, 9, 4.5, 11.5, 11, 11.5);
 	private static final VoxelShape FULL_AABB = VoxelShapes.or(BASE_SHAPE, MIDDLE_SHAPE, TOP_SHAPE);
 
 	public TrophyBlock() {
-		super(BlockUtil.generateBlockProperties(new Material(MaterialColor.GOLD, false, true, true, true, true, false, false, PushReaction.BLOCK), MaterialColor.STONE, 10f, 2000f));
+		super(BlockUtil.generateBlockProperties(new Material(MaterialColor.GOLD, false, false, true, false, false, false, PushReaction.BLOCK), MaterialColor.STONE, 10f, 2000f));
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class TrophyBlock extends WaterloggableBlock {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (stack.hasTag()) {
 			CompoundNBT tag = stack.getTag();
 
@@ -75,7 +76,7 @@ public class TrophyBlock extends WaterloggableBlock {
 				CompoundNBT dataTag = tag.getCompound("BlockEntityTag");
 
 				if (dataTag.contains("EntityID", 8)) {
-					TileEntity tile = worldIn.getTileEntity(pos);
+					TileEntity tile = worldIn.getBlockEntity(pos);
 
 					if (tile instanceof TrophyTileEntity)
 						((TrophyTileEntity)tile).setEntity(dataTag.getString("EntityID"), dataTag.contains("OriginalTrophy") && !dataTag.getBoolean("OriginalTrophy"));
@@ -85,17 +86,17 @@ public class TrophyBlock extends WaterloggableBlock {
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() instanceof SpawnEggItem) {
-			TileEntity tile = world.getTileEntity(pos);
+			TileEntity tile = world.getBlockEntity(pos);
 			SpawnEggItem egg = (SpawnEggItem)heldStack.getItem();
 
 			if (tile instanceof TrophyTileEntity) {
 				((TrophyTileEntity)tile).setEntity(egg.getType(heldStack.getTag()).getRegistryName().toString(), true);
 
-				if (!world.isRemote() && !player.isCreative())
+				if (!world.isClientSide() && !player.isCreative())
 					heldStack.shrink(1);
 			}
 
@@ -108,7 +109,7 @@ public class TrophyBlock extends WaterloggableBlock {
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		ItemStack stack = new ItemStack(asItem());
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		TrophyTileEntity trophyTile;
 
 		if (tile instanceof TrophyTileEntity && ((trophyTile = (TrophyTileEntity)tile).getEntityId() != null)) {
@@ -123,8 +124,8 @@ public class TrophyBlock extends WaterloggableBlock {
 
 			if (trophyTile.getCachedEntity() != null) {
 				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				String entityName = cachedEntity == null ? "" : LocaleUtil.getLocaleString(cachedEntity.getType().getTranslationKey());
-				stack.setDisplayName(LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", entityName));
+				ITextComponent entityName = cachedEntity == null ? new StringTextComponent("") : cachedEntity.getName();
+				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", entityName));
 			}
 		}
 
@@ -166,7 +167,7 @@ public class TrophyBlock extends WaterloggableBlock {
 				}
 
 				if (sourceTag.contains("BlockEntityTag")) {
-					displayTag.putString("Name", ITextComponent.Serializer.toJson(new TranslationTextComponent(localePrefix, new TranslationTextComponent(Util.makeTranslationKey("entity", new ResourceLocation(sourceTag.getCompound("BlockEntityTag").getString("EntityID")))))));
+					displayTag.putString("Name", ITextComponent.Serializer.toJson(new TranslationTextComponent(localePrefix, new TranslationTextComponent(Util.makeDescriptionId("entity", new ResourceLocation(sourceTag.getCompound("BlockEntityTag").getString("EntityID")))))));
 				}
 				else {
 					displayTag = sourceTag.getCompound("display");
@@ -194,7 +195,7 @@ public class TrophyBlock extends WaterloggableBlock {
 			localePrefix = "block.aoa3.ornate_trophy.desc";
 		}
 
-		displayTag.putString("Name", ITextComponent.Serializer.toJson(new TranslationTextComponent(localePrefix, new TranslationTextComponent(entity.getTranslationKey()))));
+		displayTag.putString("Name", ITextComponent.Serializer.toJson(new TranslationTextComponent(localePrefix, new TranslationTextComponent(entity.getDescriptionId()))));
 		tag.put("display", displayTag);
 
 		return tag;

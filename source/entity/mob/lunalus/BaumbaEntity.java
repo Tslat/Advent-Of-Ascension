@@ -11,7 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedMob;
@@ -29,26 +29,6 @@ public class BaumbaEntity extends AoARangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.78125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 134;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 12;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
 	}
 
 	@Nullable
@@ -71,29 +51,29 @@ public class BaumbaEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (isAlive() && ticksExisted % 50 == 0) {
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_BAUMBA_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+		if (isAlive() && tickCount % 50 == 0) {
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_BAUMBA_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 
-			Vec3d motion = getMotion();
+			Vector3d motion = getDeltaMovement();
 
-			setMotion(motion.getX(), 0.5d, motion.getZ());
+			setDeltaMovement(motion.x(), 0.5d, motion.z());
 
-			motion = getMotion();
+			motion = getDeltaMovement();
 
-			if (getAttackTarget() != null)
-				setMotion((getAttackTarget().getPosX() - getPosX()) * 0.0649, motion.getY(), (getAttackTarget().getPosZ() - getPosZ()) * 0.0649);
+			if (getTarget() != null)
+				setDeltaMovement((getTarget().getX() - getX()) * 0.0649, motion.y(), (getTarget().getZ() - getZ()) * 0.0649);
 		}
 	}
 

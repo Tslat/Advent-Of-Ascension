@@ -54,7 +54,7 @@ public class LunarStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, BlockPos args) {
-		world.addEntity(new LunarFallEntity(caster, this, args.getX(), args.getY() + 30, args.getZ(), 3.0f));
+		world.addFreshEntity(new LunarFallEntity(caster, this, args.getX(), args.getY() + 30, args.getZ(), 3.0f));
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class LunarStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

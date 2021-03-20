@@ -13,11 +13,11 @@ public class HealingGolemSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		HealingGolemEntity healingGolem = new HealingGolemEntity(AoAEntities.Minions.HEALING_GOLEM.get(), pl.world);
+		HealingGolemEntity healingGolem = new HealingGolemEntity(AoAEntities.Minions.HEALING_GOLEM.get(), pl.level);
 
-		healingGolem.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		healingGolem.setTamedBy(pl);
-		pl.world.addEntity(healingGolem);
+		healingGolem.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		healingGolem.tame(pl);
+		pl.level.addFreshEntity(healingGolem);
 
 		return healingGolem;
 	}

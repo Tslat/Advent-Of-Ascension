@@ -14,7 +14,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
@@ -33,8 +33,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class CorallusEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Boolean> ENRAGED = EntityDataManager.<Boolean>createKey(CorallusEntity.class, DataSerializers.BOOLEAN);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Boolean> ENRAGED = EntityDataManager.<Boolean>defineId(CorallusEntity.class, DataSerializers.BOOLEAN);
 
 	private int shotCooldown = 7;
 	private int shootStageTimer = 0;
@@ -51,37 +51,10 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(ENRAGED, false);
-	}
-
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(52);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1800;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3286;
+		this.entityData.define(ENRAGED, false);
 	}
 
 	@Nullable
@@ -109,7 +82,7 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -119,21 +92,21 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	private void setEnraged(boolean enraged) {
-		this.dataManager.set(ENRAGED, enraged);
+		this.entityData.set(ENRAGED, enraged);
 	}
 
 	public boolean isEnraged() {
-		return this.dataManager.get(ENRAGED);
+		return this.entityData.get(ENRAGED);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		Vec3d motion = getMotion();
-		double motionX = motion.getX();
-		double motionY = motion.getY();
-		double motionZ = motion.getZ();
+		Vector3d motion = getDeltaMovement();
+		double motionX = motion.x();
+		double motionY = motion.y();
+		double motionZ = motion.z();
 
 		if (jumpCooldown == 0) {
 			motionY = 1.6;
@@ -141,24 +114,24 @@ public class CorallusEntity extends AoAMeleeMob {
 			jumpCooldown = 320;
 			shootStageTimer = 60;
 
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_CORALLUS_TAUNT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CORALLUS_TAUNT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
 		else {
 			jumpCooldown--;
 		}
 
 		if (shootStageTimer > 0) {
-			if (shotCooldown == 0 && !world.isRemote) {
-				List<PlayerEntity> targets = world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(40), PlayerUtil::shouldPlayerBeAffected);
+			if (shotCooldown == 0 && !level.isClientSide) {
+				List<PlayerEntity> targets = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected);
 
 				for (PlayerEntity target : targets) {
 					CorallusShotEntity shot = new CorallusShotEntity(this, target, 12);
 
-					shot.setLocationAndAngles(getPosX(), getPosY() + getEyeHeight(), getPosZ(), rand.nextFloat() * 360, 0);
-					world.addEntity(shot);
+					shot.moveTo(getX(), getY() + getEyeHeight(), getZ(), random.nextFloat() * 360, 0);
+					level.addFreshEntity(shot);
 				}
 
-				shotCooldown = 10 + rand.nextInt(15);
+				shotCooldown = 10 + random.nextInt(15);
 			}
 			else {
 				shotCooldown--;
@@ -171,17 +144,17 @@ public class CorallusEntity extends AoAMeleeMob {
 
 		if (rageStateCooldown <= 0) {
 			if (isEnraged()) {
-				if (!world.isRemote)
+				if (!level.isClientSide)
 					setEnraged(false);
 
 				rageStateCooldown = 200;
 			}
 			else {
-				if (!world.isRemote)
+				if (!level.isClientSide)
 					setEnraged(true);
 
 				rageStateCooldown = 80;
-				EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.STRENGTH, 80).level(4));
+				EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, 80).level(4));
 			}
 		}
 
@@ -193,31 +166,31 @@ public class CorallusEntity extends AoAMeleeMob {
 				motionZ *= 1.2000000476837158;
 		}
 
-		setMotion(motionX, motionY, motionZ);
+		setDeltaMovement(motionX, motionY, motionZ);
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
-			target.setMotion(getMotion().getX(), -1.799, getMotion().getZ());
+			target.setDeltaMovement(getDeltaMovement().x(), -1.799, getDeltaMovement().z());
 
 			if (!isInWater()) {
 				EntityUtil.applyPotions(target,
 						new PotionUtil.EffectBuilder(Effects.WEAKNESS, 100).level(15),
-						new PotionUtil.EffectBuilder(Effects.SLOWNESS, 50).level(4));
+						new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50).level(4));
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && !isAIDisabled()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide && !isNoAi()) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.corallus.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.corallus.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -227,38 +200,38 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.CORALLUS_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.CORALLUS_MUSIC.getId()));
 		bossInfo.removePlayer(player);

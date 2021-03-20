@@ -22,26 +22,6 @@ public class StitchesEntity extends AoAMeleeMob {
 		return 1.78125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 85;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

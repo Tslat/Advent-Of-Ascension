@@ -21,15 +21,15 @@ public class LunarBow extends BaseBow {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (isSelected && !world.isRemote && entity instanceof LivingEntity)
-			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, -1));
+		if (isSelected && !world.isClientSide && entity instanceof LivingEntity)
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP, -1));
 
 		super.inventoryTick(stack, world, entity, itemSlot, isSelected);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

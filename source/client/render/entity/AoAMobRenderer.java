@@ -19,23 +19,23 @@ public class AoAMobRenderer extends MobRenderer<MobEntity, EntityModel<MobEntity
 	public AoAMobRenderer(EntityRendererManager renderManager, EntityModel<MobEntity> model, float shadowSize, float scale, ResourceLocation texture) {
 		super(renderManager, model, shadowSize);
 
-		this.entityModel = getEntityModel();
+		this.model = getModel();
 		this.texture = texture;
 		this.scale = scale;
 	}
 
 	@Override
-	protected void preRenderCallback(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
 		matrix.scale(scale, scale, scale);
 	}
 
 	@Override
-	public EntityModel<MobEntity> getEntityModel() {
-		return AoAConfig.CLIENT.alwaysChargers.get() ? chargerModel : super.getEntityModel();
+	public EntityModel<MobEntity> getModel() {
+		return AoAConfig.CLIENT.alwaysChargers.get() ? chargerModel : super.getModel();
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity entity) {
+	public ResourceLocation getTextureLocation(MobEntity entity) {
 		return AoAConfig.CLIENT.alwaysChargers.get() ? chargerTexture : texture;
 	}
 }

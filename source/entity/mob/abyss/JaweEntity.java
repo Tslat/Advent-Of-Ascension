@@ -22,26 +22,6 @@ public class JaweEntity extends AoAMeleeMob {
 		return sizeIn.height * 0.85f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 93d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

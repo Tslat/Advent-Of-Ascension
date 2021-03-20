@@ -2,7 +2,8 @@ package net.tslat.aoa3.entity.boss;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -31,11 +32,9 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
-
 public class RockRiderEntity extends AoAMeleeMob {
-	private static final DataParameter<Boolean> ALTERNATE_FORM = EntityDataManager.<Boolean>createKey(RockRiderEntity.class, DataSerializers.BOOLEAN);
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private static final DataParameter<Boolean> ALTERNATE_FORM = EntityDataManager.<Boolean>defineId(RockRiderEntity.class, DataSerializers.BOOLEAN);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private boolean alternateForm = false;
 	private int formCooldown = 300;
 
@@ -44,7 +43,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		this.setAIMoveSpeed(0.8f);
+		this.setSpeed(0.8f);
 	}
 
 	@Override
@@ -53,30 +52,10 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(ALTERNATE_FORM, false);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1500;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
+		this.entityData.define(ALTERNATE_FORM, false);
 	}
 
 	@Nullable
@@ -98,7 +77,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -106,20 +85,20 @@ public class RockRiderEntity extends AoAMeleeMob {
 		if (alternate) {
 			formCooldown = 300;
 
-			if (!world.isRemote)
-				this.dataManager.set(ALTERNATE_FORM, true);
+			if (!level.isClientSide)
+				this.entityData.set(ALTERNATE_FORM, true);
 		}
 		else {
 			formCooldown = 300;
 
-			if (!world.isRemote)
-				this.dataManager.set(ALTERNATE_FORM, false);
+			if (!level.isClientSide)
+				this.entityData.set(ALTERNATE_FORM, false);
 		}
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if (dataManager.get(ALTERNATE_FORM)) {
+		if (entityData.get(ALTERNATE_FORM)) {
 			if (DamageUtil.isRangedDamage(source, this, 1))
 				return true;
 		}
@@ -132,7 +111,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	public boolean isAlternateForm() {
-		return this.dataManager.get(ALTERNATE_FORM);
+		return this.entityData.get(ALTERNATE_FORM);
 	}
 
 	@Override
@@ -148,16 +127,16 @@ public class RockRiderEntity extends AoAMeleeMob {
 
 				changeForm(false);
 
-				if (!world.isRemote)
-					world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				if (!level.isClientSide)
+					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 			else {
 				alternateForm = true;
 
 				changeForm(true);
 
-				if (!world.isRemote)
-					world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				if (!level.isClientSide)
+					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 		}
 	}
@@ -167,14 +146,14 @@ public class RockRiderEntity extends AoAMeleeMob {
 		if (target instanceof LivingEntity) {
 			if (alternateForm) {
 				double resist = 1;
-				IAttributeInstance attrib = ((LivingEntity)target).getAttribute(KNOCKBACK_RESISTANCE);
+				ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 				if (attrib != null)
 					resist -= attrib.getValue();
 
-				EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 150).level(4));
-				target.addVelocity(getMotion().getX() * 5 * resist, getMotion().getY() * resist, getMotion().getZ() * 5 * resist);
-				target.velocityChanged = true;
+				EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 150).level(4));
+				target.push(getDeltaMovement().x() * 5 * resist, getDeltaMovement().y() * resist, getDeltaMovement().z() * 5 * resist);
+				target.hurtMarked = true;
 			}
 			else {
 				EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 150).level(4));
@@ -183,14 +162,14 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.rockrider.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.rockrider.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -200,38 +179,38 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.ROCK_RIDER_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.ROCK_RIDER_MUSIC.getId()));
 		bossInfo.removePlayer(player);

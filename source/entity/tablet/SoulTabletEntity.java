@@ -15,7 +15,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -32,43 +32,43 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public abstract class SoulTabletEntity extends Entity {
-	private static final DataParameter<Boolean> ACTIVE = EntityDataManager.<Boolean>createKey(SoulTabletEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> ACTIVE = EntityDataManager.<Boolean>defineId(SoulTabletEntity.class, DataSerializers.BOOLEAN);
 	protected ServerPlayerEntity owner = null;
 	private UUID ownerUUID = null;
 
 	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
 		super(entityType, world);
 
-		this.preventEntitySpawning = true;
+		this.blocksBuilding = true;
 	}
 
 	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
 		this(entityType, world);
 		this.owner = placer;
-		this.ownerUUID = owner != null ? owner.getUniqueID() : null;
+		this.ownerUUID = owner != null ? owner.getUUID() : null;
 	}
 
 	@Override
-	protected void registerData() {
-		this.dataManager.register(ACTIVE, true);
+	protected void defineSynchedData() {
+		this.entityData.define(ACTIVE, true);
 	}
 
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		return ownerUUID == null || player.getUniqueID().equals(ownerUUID);
+	public ActionResultType interact(PlayerEntity player, Hand hand) {
+		return ownerUUID == null || player.getUUID().equals(ownerUUID) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 	}
 
 	@Override
-	public ActionResultType applyPlayerInteraction(PlayerEntity player, Vec3d vec, Hand hand) {
-		if (isAlive() && (ownerUUID == null || player.getUniqueID().equals(ownerUUID))) {
-			if (!world.isRemote && !player.isCreative()) {
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
+			if (!level.isClientSide && !player.isCreative()) {
 				ItemStack stack = new ItemStack(getRelevantItem());
 
-				if (player.getHeldItem(hand).isEmpty()) {
-					player.setHeldItem(hand, new ItemStack(getRelevantItem()));
+				if (player.getItemInHand(hand).isEmpty()) {
+					player.setItemInHand(hand, new ItemStack(getRelevantItem()));
 				}
-				else if (!player.addItemStackToInventory(stack)) {
-					entityDropItem(stack, 0f);
+				else if (!player.addItem(stack)) {
+					spawnAtLocation(stack, 0f);
 				}
 			}
 
@@ -81,17 +81,17 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundNBT compound) {
 		if (owner != null)
 			compound.putString("OwnedBy", ownerUUID.toString());
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 		if (compound.contains("OwnedBy")) {
 			try {
 				ownerUUID = UUID.fromString(compound.getString("OwnedBy"));
-				owner = world instanceof ServerWorld ? (ServerPlayerEntity)world.getPlayerByUuid(ownerUUID) : null;
+				owner = level instanceof ServerWorld ? (ServerPlayerEntity)level.getPlayerByUUID(ownerUUID) : null;
 			}
 			catch (IllegalArgumentException e) {
 				Logging.logMessage(Level.WARN, "Unknown or malformed owner UUID for soul tablet entity: " + compound.getString("OwnerBy"));
@@ -101,13 +101,13 @@ public abstract class SoulTabletEntity extends Entity {
 
 	@Override
 	public void tick() {
-		if (!world.isRemote) {
-			if (isAlive() && ticksExisted % 5 == 0) {
-				if (world.isAirBlock(getPosition().down())) {
-					ItemEntity itemDrop = entityDropItem(new ItemStack(getRelevantItem()), 0f);
+		if (!level.isClientSide) {
+			if (isAlive() && tickCount % 5 == 0) {
+				if (level.isEmptyBlock(blockPosition().below())) {
+					ItemEntity itemDrop = spawnAtLocation(new ItemStack(getRelevantItem()), 0f);
 
 					if (owner != null && itemDrop != null)
-						itemDrop.setOwnerId(ownerUUID);
+						itemDrop.setOwner(ownerUUID);
 
 					remove();
 
@@ -124,23 +124,23 @@ public abstract class SoulTabletEntity extends Entity {
 				}
 			}
 		}
-		else if (world.isAirBlock(getPosition().down())) {
+		else if (level.isEmptyBlock(blockPosition().below())) {
 			remove();
 		}
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return true;
 	}
 
@@ -150,14 +150,14 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	@Override
-	public void move(MoverType typeIn, Vec3d pos) {}
+	public void move(MoverType typeIn, Vector3d pos) {}
 
 	protected abstract void doTickEffect();
 
 	public abstract TabletItem getRelevantItem();
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -169,14 +169,14 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	public boolean isActive() {
-		return dataManager.get(ACTIVE);
+		return entityData.get(ACTIVE);
 	}
 
 	private void deactivate() {
-		dataManager.set(ACTIVE, false);
+		entityData.set(ACTIVE, false);
 	}
 
 	protected <T extends Entity> List<T> getTargetsWithinRadius(Class<? extends T> targetClass, @Nullable Predicate<? super T> predicate) {
-		return world.getEntitiesWithinAABB(targetClass, getBoundingBox().grow(getRelevantItem().getEffectRadius()), predicate);
+		return level.getEntitiesOfClass(targetClass, getBoundingBox().inflate(getRelevantItem().getEffectRadius()), predicate);
 	}
 }

@@ -26,10 +26,10 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	public SelyanSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.SELYAN_STICKLER_STUCK.get(), shooter.world);
+		super(AoAEntities.Projectiles.SELYAN_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
-		setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 0);
+		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
@@ -38,12 +38,12 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.0f;
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {}
+	protected void onHit(RayTraceResult result) {}
 
 	@Override
 	public void tick() {
@@ -51,33 +51,33 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 
 		age++;
 
-		if (world.isRemote)
+		if (level.isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
-			setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 360);
+			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 			EntityUtil.healEntity(shooter, 0.03f);
 		}
 		else {
-			WorldUtil.createExplosion(owner, world, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(owner, world, getPosX(), getPosY() + 1, getPosZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 		}
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

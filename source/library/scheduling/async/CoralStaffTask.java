@@ -25,7 +25,7 @@ public class CoralStaffTask implements Runnable {
     public void run() {
         for (BlockPos pos : coralPositions) {
             if (world.getBlockState(pos).getBlock() == coralBlock)
-                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
+                world.setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
         }
     }
 

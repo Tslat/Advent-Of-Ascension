@@ -25,33 +25,33 @@ import java.util.List;
 
 public class TreasureBox extends Item {
 	public TreasureBox() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (player instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)player;
 
 			for (int i = 0; i < HaulingUtil.getTreasureBoxRolls(PlayerUtil.getAdventPlayer(pl).stats().getLevel(Skills.HAULING)); i++) {
-				ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.world, new ResourceLocation(AdventOfAscension.MOD_ID, "items/treasure_box"), LootUtil.getGiftContext((ServerWorld)pl.world, pl.getPosition(), pl)));
+				ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.level, new ResourceLocation(AdventOfAscension.MOD_ID, "items/treasure_box"), LootUtil.getGiftContext((ServerWorld)pl.level, pl.position(), pl)));
 			}
 
 			if (!pl.isCreative())
 				heldStack.shrink(1);
 
-			pl.container.detectAndSendChanges();
+			pl.inventoryMenu.broadcastChanges();
 
-			return ActionResult.resultSuccess(heldStack);
+			return ActionResult.success(heldStack);
 		}
 
-		return ActionResult.resultPass(heldStack);
+		return ActionResult.pass(heldStack);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

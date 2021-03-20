@@ -29,10 +29,10 @@ public class DestructionShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		setMotion(getMotion().mul(0.4d, 0.4d, 0.4d));
+		setDeltaMovement(getDeltaMovement().multiply(0.4d, 0.4d, 0.4d));
 
 		if (getAge() >= 65) {
-			WorldUtil.createExplosion(owner, world, this, 3.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
 			remove();
 		}
 	}

@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -37,31 +38,31 @@ import java.util.List;
 
 public class BlankRealmstone extends Item {
 	public BlankRealmstone() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		if (world.isRemote)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if (world.isClientSide)
 			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayBlankRealmstoneGui);
 
-		return ActionResult.resultSuccess(player.getHeldItem(hand));
+		return ActionResult.success(player.getItemInHand(hand));
 	}
 
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-		if (!entity.world.isRemote) {
-			if (entity.world.getDimension().getType() == AoADimensions.PRECASIA.type()) {
-				BlockPos pos = entity.getPosition();
-				BlockState state = entity.world.getBlockState(pos);
+		if (!entity.level.isClientSide) {
+			if (WorldUtil.isWorld(entity.level, AoADimensions.PRECASIA.key)) {
+				BlockPos pos = entity.blockPosition();
+				BlockState state = entity.level.getBlockState(pos);
 
 				if (state.getBlock() == Blocks.CARROTS && ((CropsBlock)state.getBlock()).isMaxAge(state)) {
-					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAEntities.Mobs.PRIMITIVE_CARROTOP.get(), entity.world);
+					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAEntities.Mobs.PRIMITIVE_CARROTOP.get(), entity.level);
 
-					carrotop.setPosition(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
-					entity.world.addEntity(carrotop);
+					carrotop.setPos(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
+					entity.level.addFreshEntity(carrotop);
 					entity.remove();
-					entity.world.setBlockState(entity.getPosition(), Blocks.AIR.getDefaultState());
+					entity.level.setBlockAndUpdate(entity.blockPosition(), Blocks.AIR.defaultBlockState());
 				}
 			}
 		}
@@ -70,26 +71,26 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
-		if (player.world.getDimension().getType() == AoADimensions.CREEPONIA.type() && target instanceof AoATrader) {
-			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getHeldItem(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
-				player.setHeldItem(hand, ItemStack.EMPTY);
+	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+		if (WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key) && target instanceof AoATrader) {
+			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
+				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
 				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3));
 			}
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return false;
+		return ActionResultType.PASS;
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!attacker.world.isRemote && target.getHealth() <= 0 && target instanceof HuskEntity && attacker instanceof PlayerEntity)
-			attacker.setHeldItem(Hand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		if (!attacker.level.isClientSide && target.getHealth() <= 0 && target instanceof HuskEntity && attacker instanceof PlayerEntity)
+			attacker.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
 
-		return super.hitEntity(stack, target, attacker);
+		return super.hurtEnemy(stack, target, attacker);
 	}
 
 	@Nullable
@@ -101,7 +102,7 @@ public class BlankRealmstone extends Item {
 	public static void handleAncientCavernTask(ItemStack stack, LivingEntity construct, PlayerEntity player) {
 		VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 		HashMap<Class<? extends LivingEntity>, Long> constructKillMap;
-		long currentWorldTime = construct.world.getGameTime();
+		long currentWorldTime = construct.level.getGameTime();
 
 		if (cap.getObject() == null) {
 			constructKillMap = new HashMap<Class<? extends LivingEntity>, Long>(5);
@@ -123,7 +124,7 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

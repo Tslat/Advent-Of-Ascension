@@ -35,6 +35,6 @@ public class TriDischargeShotEntity extends BaseBullet implements HardProjectile
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, 3.0f);
+		WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
 	}
 }

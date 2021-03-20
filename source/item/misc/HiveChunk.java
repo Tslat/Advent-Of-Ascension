@@ -12,14 +12,14 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class HiveChunk extends Item {
 	public HiveChunk() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (target.getType() == AoAEntities.Mobs.THARAFLY.get() && attacker instanceof PlayerEntity) {
 			if (stack.getCount() <= 1) {
-				attacker.setHeldItem(Hand.MAIN_HAND, new ItemStack(AoAItems.HIVE_EGG.get()));
+				attacker.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAItems.HIVE_EGG.get()));
 			}
 			else {
 				ItemUtil.givePlayerItemOrDrop((PlayerEntity)attacker, new ItemStack(AoAItems.HIVE_EGG.get()));

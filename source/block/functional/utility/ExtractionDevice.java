@@ -16,13 +16,13 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -31,6 +31,7 @@ import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Skills;
 import net.tslat.aoa3.util.player.PlayerDataManager;
@@ -44,24 +45,19 @@ public class ExtractionDevice extends Block {
 	public static final BooleanProperty FILLED = BooleanProperty.create("filled");
 
 	public ExtractionDevice() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.OBSIDIAN, 5, 10, SoundType.STONE).notSolid());
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.PODZOL, 5, 10, SoundType.STONE).noOcclusion());
 
-		setDefaultState(getDefaultState().with(FILLED, false));
-	}
-
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
+		registerDefaultState(defaultBlockState().setValue(FILLED, false));
 	}
 
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		if (!world.isRemote) {
-			BlockState topBlock = world.getBlockState(pos.up());
+		if (!world.isClientSide) {
+			BlockState topBlock = world.getBlockState(pos.above());
 
-			if (!state.get(FILLED) && topBlock.getFluidState().isSource() && topBlock.getFluidState().isTagged(FluidTags.LAVA)) {
-				world.setBlockState(pos, getDefaultState().with(FILLED, true));
-				world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+			if (!state.getValue(FILLED) && topBlock.getFluidState().isSource() && topBlock.getFluidState().is(FluidTags.LAVA)) {
+				world.setBlockAndUpdate(pos, defaultBlockState().setValue(FILLED, true));
+				world.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 			}
 		}
 	}
@@ -69,54 +65,54 @@ public class ExtractionDevice extends Block {
 	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos neighborPos, boolean isMoving) {
 		if (world instanceof ServerWorld)
-			tick(state, (ServerWorld)world, pos, world.rand);
+			tick(state, (ServerWorld)world, pos, world.random);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (state.get(FILLED) && player.getHeldItem(hand).getItem() instanceof InfusionBowl) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (state.getValue(FILLED) && player.getItemInHand(hand).getItem() instanceof InfusionBowl) {
 			if (player instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
-				ItemStack heldStack = player.getHeldItem(hand);
+				ItemStack heldStack = player.getItemInHand(hand);
 
-				if (world.getBlockState(pos.down()).getMaterial().isReplaceable() || world.isOutsideBuildHeight(pos.down())) {
+				if (world.getBlockState(pos.below()).getMaterial().isReplaceable() || world.isOutsideBuildHeight(pos.below())) {
 					int lvl = plData.stats().getLevel(Skills.EXTRACTION);
 
-					world.setBlockState(pos, getDefaultState());
+					world.setBlockAndUpdate(pos, defaultBlockState());
 
 					if (plData.equipment().getCurrentFullArmourSet() != AdventArmour.Type.EXTRACTION)
-						world.setBlockState(pos.down(), Blocks.OBSIDIAN.getDefaultState());
+						world.setBlockAndUpdate(pos.below(), Blocks.OBSIDIAN.defaultBlockState());
 
 					if (ExtractionUtil.shouldGetLoot(lvl)) {
 						if (!player.isCreative())
 							ItemUtil.damageItem(heldStack, player, hand);
 
-						List<ItemStack> loot = ExtractionUtil.getLoot((ServerPlayerEntity)player, pos);
+						List<ItemStack> loot = ExtractionUtil.getLoot((ServerPlayerEntity)player, new Vector3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
 
 						for (ItemStack stack : loot) {
 							if (!stack.isEmpty()) {
-								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction").appendSibling(new TranslationTextComponent(stack.getTranslationKey())));
+								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction").append(new TranslationTextComponent(stack.getDescriptionId())), Util.NIL_UUID);
 							}
 							else {
-								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.nothing"));
+								player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.nothing"), Util.NIL_UUID);
 							}
 
 							ItemHandlerHelper.giveItemToPlayer(player, stack);
 						}
 
-						player.addStat(Stats.ITEM_USED.get(heldStack.getItem()));
+						player.awardStat(Stats.ITEM_USED.get(heldStack.getItem()));
 						plData.stats().addXp(Skills.EXTRACTION, PlayerUtil.getXpRequiredForNextLevel(lvl) / ExtractionUtil.getXpDenominator(lvl), false, false);
 						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_EXTRACTION_DEVICE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
-						if (player.world.getDimension().getType() == DimensionType.OVERWORLD && player.world.isDaytime())
+						if (WorldUtil.isWorld(player.level, World.OVERWORLD) && player.level.isDay())
 							plData.stats().addTribute(Deities.PLUTON, 4);
 					}
 					else {
-						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.fail"));
+						player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.fail"), Util.NIL_UUID);
 					}
 				}
 				else {
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.noSpace", TextFormatting.RED));
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.extraction.noSpace", TextFormatting.RED), Util.NIL_UUID);
 				}
 			}
 
@@ -127,7 +123,7 @@ public class ExtractionDevice extends Block {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FILLED);
 	}
 }

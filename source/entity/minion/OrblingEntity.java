@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.EntityUtil;
@@ -24,29 +25,19 @@ public class OrblingEntity extends AoAMinion {
 		super.tick();
 
 
-		setMotion(getMotion().mul(1, 0, 1));
+		setDeltaMovement(getDeltaMovement().multiply(1, 0, 1));
 	}
 
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		if (hand == Hand.MAIN_HAND && isTamed() && getOwner() != null) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		if (hand == Hand.MAIN_HAND && isTame() && getOwner() != null) {
 			EntityUtil.healEntity(player, 2.0f);
 			remove();
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return super.processInteract(player, hand);
-	}
-
-	@Override
-	protected double getBaseMoveSpeed() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 10.0d;
+		return super.mobInteract(player, hand);
 	}
 
 	@Override

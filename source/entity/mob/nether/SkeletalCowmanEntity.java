@@ -15,7 +15,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedMob;
@@ -30,10 +30,10 @@ public class SkeletalCowmanEntity extends AoARangedMob {
 
     @Nullable
     @Override
-    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-        ILivingEntityData data = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        ILivingEntityData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 
-        setHeldItem(Hand.MAIN_HAND, new ItemStack(Items.BOW));
+        setItemInHand(Hand.MAIN_HAND, new ItemStack(Items.BOW));
         setDropChance(EquipmentSlotType.MAINHAND, 0);
 
         return data;
@@ -51,26 +51,6 @@ public class SkeletalCowmanEntity extends AoARangedMob {
         goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
         goalSelector.addGoal(8, new LookRandomlyGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 58;
-    }
-
-    @Override
-    public double getBaseProjectileDamage() {
-        return 5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.207;
     }
 
     @Nullable
@@ -94,23 +74,23 @@ public class SkeletalCowmanEntity extends AoARangedMob {
     @Nullable
     @Override
     protected SoundEvent getShootSound() {
-        return SoundEvents.ENTITY_ARROW_SHOOT;
+        return SoundEvents.ARROW_SHOOT;
     }
 
     @Override
-    public void attackEntityWithRangedAttack(LivingEntity target, float bowDamageFactor) {
-        ArrowEntity arrow = new ArrowEntity(world, this);
+    public void performRangedAttack(LivingEntity target, float bowDamageFactor) {
+        ArrowEntity arrow = new ArrowEntity(level, this);
 
-        double distanceFactorX = target.getPosX() - this.getPosX();
-        double distanceFactorY = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0f) - arrow.getPosY();
-        double distanceFactorZ = target.getPosZ() - this.getPosZ();
+        double distanceFactorX = target.getX() - this.getX();
+        double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - arrow.getY();
+        double distanceFactorZ = target.getZ() - this.getZ();
         double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
         if (getShootSound() != null)
             playSound(getShootSound(), 1.0f, 1.0f);
 
-        arrow.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(8 - this.world.getDifficulty().getId()));
-        world.addEntity(arrow);
+        arrow.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(8 - this.level.getDifficulty().getId()));
+        level.addFreshEntity(arrow);
     }
 
     @Override
@@ -119,7 +99,7 @@ public class SkeletalCowmanEntity extends AoARangedMob {
     }
 
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.UNDEAD;
     }
 }

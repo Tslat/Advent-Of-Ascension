@@ -29,26 +29,6 @@ public class CrusiliskEntity extends AoAMeleeMob {
         return 1.35f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 125;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 14;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

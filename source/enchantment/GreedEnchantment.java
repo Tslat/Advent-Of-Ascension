@@ -19,7 +19,7 @@ public class GreedEnchantment extends Enchantment {
 		return true;
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff;
@@ -31,12 +31,12 @@ public class GreedEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 20;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 100;
 	}
 }

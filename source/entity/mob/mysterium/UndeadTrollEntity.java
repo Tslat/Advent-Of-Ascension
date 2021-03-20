@@ -12,7 +12,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectile.mob.AquaballEntity;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
-import net.tslat.aoa3.entity.projectile.mob.BloodballEntity;
 
 import javax.annotation.Nullable;
 
@@ -24,26 +23,6 @@ public class UndeadTrollEntity extends AoARangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.59375f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 67d;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 8d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
 	}
 
 	@Nullable
@@ -72,8 +51,8 @@ public class UndeadTrollEntity extends AoARangedMob {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		if (rand.nextBoolean()) {
-			return new BloodballEntity(this, BaseMobProjectile.Type.MAGIC);
+		if (random.nextBoolean()) {
+			return null;//new EntityBloodball(this, BaseMobProjectile.Type.MAGIC);
 		}
 		else {
 			return new AquaballEntity(this, BaseMobProjectile.Type.MAGIC);
@@ -81,7 +60,7 @@ public class UndeadTrollEntity extends AoARangedMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 }

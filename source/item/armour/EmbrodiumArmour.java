@@ -19,7 +19,7 @@ import java.util.List;
 
 public class EmbrodiumArmour extends AdventArmour {
 	public EmbrodiumArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:embrodium", 45, new int[] {4, 7, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:embrodium", 45, new int[] {4, 7, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class EmbrodiumArmour extends AdventArmour {
 		}
 		else {
 			PlayerEntity pl = plData.player();
-			float temp = WorldUtil.getAmbientTemperature(pl.world, pl.getPosition());
+			float temp = WorldUtil.getAmbientTemperature(pl.level, pl.blockPosition());
 
 			if (temp > 0.8f)
 				plData.stats().regenResource(Resources.ENERGY, 0.08f * slots.size() * Math.min(1f, (temp / 2f)));
@@ -42,7 +42,7 @@ public class EmbrodiumArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.embrodium_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

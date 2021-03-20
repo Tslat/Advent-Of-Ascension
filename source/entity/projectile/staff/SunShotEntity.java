@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.item.EnergyProjectileWeapon;
@@ -33,21 +33,21 @@ public class SunShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		setMotion(getMotion().mul(0.3d, 0.3d, 0.3d));
+		setDeltaMovement(getDeltaMovement().multiply(0.3d, 0.3d, 0.3d));
 
-		for (LivingEntity e : world.getEntitiesWithinAABB(LivingEntity.class, getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB)) {
-			if (!e.isBurning() && !e.isImmuneToFire())
-				e.setFire(1);
+		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB)) {
+			if (!e.isOnFire() && !e.fireImmune())
+				e.setSecondsOnFire(1);
 		}
 
 		if (getAge() >= 260) {
-			WorldUtil.createExplosion(owner, world, this, 3.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
 			remove();
 		}
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		setMotion(new Vec3d(0, world.getBlockState(getPosition().down()).getBlock() != Blocks.AIR ? 1 : getMotion().getY(), 0));
+	protected void onHit(RayTraceResult result) {
+		setDeltaMovement(new Vector3d(0, level.getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
 	}
 }

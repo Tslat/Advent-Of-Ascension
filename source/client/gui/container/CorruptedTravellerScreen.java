@@ -42,85 +42,84 @@ public class CorruptedTravellerScreen extends ContainerScreen<CorruptedTraveller
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(matrix);
+		super.render(matrix, mouseX, mouseY, partialTicks);
+		renderTooltip(matrix, mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.getTextureManager().bindTexture(guiTexture);
+		mc.getTextureManager().bind(guiTexture);
 
-		final int centerX = (width - xSize) / 2;
-		final int centerY = (height - ySize) / 2;
+		final int centerX = (width - imageWidth) / 2;
+		final int centerY = (height - imageHeight) / 2;
 
-		RenderUtil.renderCustomSizedTexture(centerX, centerY, 0, 0, xSize, ySize, 256, 256);
-		renderGhostlyFood(centerX, centerY);
+		RenderUtil.renderCustomSizedTexture(matrix, centerX, centerY, 0, 0, imageWidth, imageHeight, 256, 256);
+		renderGhostlyFood(matrix, centerX, centerY);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		int titleWidth = 4 + mc.fontRenderer.getStringWidth(title.getFormattedText());
+	protected void renderLabels(MatrixStack matrix, int mouseX, int mouseY) {
+		int titleWidth = 4 + mc.font.width(title);
 
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.getTextureManager().bindTexture(guiTexture);
-		RenderUtil.renderCustomSizedTexture(28, 4, 176, 0, 1, 12, 256, 256);
+		mc.getTextureManager().bind(guiTexture);
+		RenderUtil.renderCustomSizedTexture(matrix, 28, 4, 176, 0, 1, 12, 256, 256);
 
 		for (int i = 0; i < titleWidth - 2; i++) {
-			RenderUtil.renderCustomSizedTexture(29 + i, 4, 177, 0, 1, 12, 256, 256);
+			RenderUtil.renderCustomSizedTexture(matrix, 29 + i, 4, 177, 0, 1, 12, 256, 256);
 		}
 
-		RenderUtil.renderCustomSizedTexture(28 + titleWidth - 2, 4, 178, 0, 1, 12, 256, 256);
+		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 0, 1, 12, 256, 256);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.fontRenderer.drawString(title.getFormattedText(), 30, 6, NumberUtil.RGB(255, 255, 255));
+		mc.font.draw(matrix, title, 30, 6, NumberUtil.RGB(255, 255, 255));
 	}
 
-	private void renderGhostlyFood(int centerX, int centerY) {
-		Slot slot = container.getSlot(0);
+	private void renderGhostlyFood(MatrixStack matrix, int centerX, int centerY) {
+		Slot slot = menu.getSlot(0);
 
-		if (!slot.getHasStack()) {
+		if (!slot.hasItem()) {
 			ItemStack stack = new ItemStack(getGhostlyFood());
-			IBakedModel model = mc.getItemRenderer().getItemModelWithOverrides(stack, null, null);
+			IBakedModel model = mc.getItemRenderer().getModel(stack, null, null);
 
-			RenderSystem.pushMatrix();
-			mc.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
-			mc.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).setBlurMipmapDirect(false, false);
+			matrix.pushPose();
+			mc.textureManager.bind(AtlasTexture.LOCATION_BLOCKS);
+			mc.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS).setFilter(false, false);
 			RenderSystem.enableRescaleNormal();
 			RenderSystem.enableAlphaTest();
 			RenderSystem.defaultAlphaFunc();
 			RenderSystem.enableBlend();
 			RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.translatef(slot.xPos + centerX, slot.yPos + centerY, 100.0F);
-			RenderSystem.translatef(8.0F, 8.0F, 0.0F);
-			RenderSystem.scalef(1.0F, -1.0F, 1.0F);
-			RenderSystem.scalef(16.0F, 16.0F, 16.0F);
+			matrix.translate(slot.x + centerX, slot.y + centerY, 100.0F);
+			matrix.translate(8.0F, 8.0F, 0.0F);
+			matrix.scale(1.0F, -1.0F, 1.0F);
+			matrix.scale(16.0F, 16.0F, 16.0F);
 
-			MatrixStack matrixstack = new MatrixStack();
-			IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
-			boolean diffuseLighting = !model.func_230044_c_();
+			IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
+			boolean diffuseLighting = !model.usesBlockLight();
 
 			if (diffuseLighting)
-				RenderHelper.setupGuiFlatDiffuseLighting();
+				RenderHelper.setupForFlatItems();
 
-			mc.getItemRenderer().renderItem(stack, ItemCameraTransforms.TransformType.GUI, false, matrixstack, renderTypeBuffer, 100, OverlayTexture.NO_OVERLAY, model);
-			renderTypeBuffer.finish();
+			mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 100, OverlayTexture.NO_OVERLAY, model);
+			renderTypeBuffer.endBatch();
 			RenderSystem.enableDepthTest();
 
 			if (diffuseLighting)
-				RenderHelper.setupGui3DDiffuseLighting();
+				RenderHelper.setupFor3DItems();
 
 			RenderSystem.disableAlphaTest();
 			RenderSystem.disableRescaleNormal();
-			RenderSystem.popMatrix();
+			matrix.popPose();
 		}
 	}
 
 	private void compileFoodList() {
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
-			if (item.isFood())
+			if (item.isEdible())
 				validFoods.add(item);
 		}
 	}
@@ -130,7 +129,7 @@ public class CorruptedTravellerScreen extends ContainerScreen<CorruptedTraveller
 		if (validFoods.isEmpty())
 			compileFoodList();
 
-		long worldTick = mc.world.getGameTime();
+		long worldTick = mc.level.getGameTime();
 
 		if (worldTick >= nextFoodTick) {
 			currentGhostlyFood = validFoods.get(RandomUtil.randomNumberUpTo(validFoods.size()));

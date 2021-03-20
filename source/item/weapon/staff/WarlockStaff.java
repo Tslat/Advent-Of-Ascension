@@ -42,12 +42,12 @@ public class WarlockStaff extends BaseStaff<Boolean> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Boolean args) {
-		world.addEntity(new BaronBombEntity((PlayerEntity)caster));
+		world.addFreshEntity(new BaronBombEntity((PlayerEntity)caster));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -27,16 +27,16 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class RuneShrine extends Block {
 	public RuneShrine() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GRAY, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_GRAY, 5, 10, SoundType.STONE));
 	}
 	// TODO Fix level distribution across dimensions
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.UNPOWERED_RUNE.get() || heldStack.getItem() == AoAItems.CHARGED_RUNE.get()) {
 			if (player instanceof ServerPlayerEntity) {
-				BlockPos basePos = pos.up(2);
+				BlockPos basePos = pos.above(2);
 				Block post1 = world.getBlockState(basePos.north(3).east(3)).getBlock();
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
@@ -58,12 +58,12 @@ public class RuneShrine extends Block {
 								runeCount *= 2;
 
 							plData.stats().addXp(Skills.RUNATION, ((RunePostBlock)post1).getXpGain() * heldStack.getCount(), false, false);
-							player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), AoASounds.BLOCK_RUNE_SHRINE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+							player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.BLOCK_RUNE_SHRINE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 							if (!player.isCreative()) {
 								int handCount = Math.min(64, runeCount);
 
-								player.setHeldItem(hand, new ItemStack(rune, handCount));
+								player.setItemInHand(hand, new ItemStack(rune, handCount));
 
 								runeCount -= handCount;
 
@@ -80,7 +80,7 @@ public class RuneShrine extends Block {
 								ItemUtil.givePlayerItemOrDrop(player, new ItemStack(rune, runeCount));
 							}
 
-							player.container.detectAndSendChanges();
+							player.inventoryMenu.broadcastChanges();
 						}
 						else {
 							return ActionResultType.FAIL;
@@ -94,12 +94,12 @@ public class RuneShrine extends Block {
 				}
 				else {
 					if (!player.isCreative())
-						player.setHeldItem(hand, ItemStack.EMPTY);
+						player.setItemInHand(hand, ItemStack.EMPTY);
 
 					plData.sendThrottledChatMessage("message.feedback.runeShrine.practice");
 					plData.stats().addXp(Skills.RUNATION, 2 * heldStack.getCount(), false, false);
-					player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), AoASounds.BLOCK_RUNE_SHRINE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-					player.container.detectAndSendChanges();
+					player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.BLOCK_RUNE_SHRINE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					player.inventoryMenu.broadcastChanges();
 				}
 			}
 

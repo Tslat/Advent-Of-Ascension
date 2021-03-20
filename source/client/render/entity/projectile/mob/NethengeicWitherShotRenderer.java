@@ -25,23 +25,23 @@ public class NethengeicWitherShotRenderer extends EntityRenderer<NethengeicWithe
 
 	@Override
 	public void render(NethengeicWitherShotEntity entity, float entityYaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
-		matrix.push();
+		matrix.pushPose();
 		matrix.scale(-1.0F, -1.0F, 1.0F);
 
-		float rotY = MathHelper.rotLerp(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
-		float rotX = MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch);
-		IVertexBuilder ivertexbuilder = buffer.getBuffer(this.headModel.getRenderType(this.getEntityTexture(entity)));
+		float rotY = MathHelper.rotlerp(entity.yRotO, entity.yRot, partialTicks);
+		float rotX = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
+		IVertexBuilder ivertexbuilder = buffer.getBuffer(this.headModel.renderType(this.getTextureLocation(entity)));
 
-		headModel.func_225603_a_(0.0F, rotY, rotX);
-		headModel.render(matrix, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		matrix.pop();
+		headModel.setupAnim(0.0F, rotY, rotX);
+		headModel.renderToBuffer(matrix, ivertexbuilder, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		matrix.popPose();
 
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(NethengeicWitherShotEntity entity) {
+	public ResourceLocation getTextureLocation(NethengeicWitherShotEntity entity) {
 		return texture;
 	}
 }

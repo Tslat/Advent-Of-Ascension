@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Gravitator extends Item {
 	public Gravitator() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxDamage(1500));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(1500));
 	}
 
 	@Override
@@ -32,29 +32,29 @@ public class Gravitator extends Item {
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && entity instanceof LivingEntity) {
-			if (entity.getMotion().getY() < -0.079) {
-				entity.setMotion(entity.getMotion().mul(1, 0.8f, 1));
+			if (entity.getDeltaMovement().y() < -0.079) {
+				entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.8f, 1));
 				entity.fallDistance = -0.5f;
 
 				if (RandomUtil.oneInNChance(15) && (!(entity instanceof PlayerEntity) || !((PlayerEntity)entity).isCreative()))
 					ItemUtil.damageItem(stack, (LivingEntity)entity, 1, EquipmentSlotType.MAINHAND);
 			}
 
-			if (!world.isRemote) {
-				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, -1).level(6).isAmbient().hideParticles());
+			if (!world.isClientSide) {
+				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.JUMP, -1).level(6).isAmbient().hideParticles());
 
-				if (world.getDimension().getType() == AoADimensions.HAVEN.type() && !entity.onGround && world.getGameTime() % 5 == 0 && entity instanceof PlayerEntity) {
+				if (WorldUtil.isWorld(world, AoADimensions.HAVEN.key) && !entity.onGround && world.getGameTime() % 5 == 0 && entity instanceof PlayerEntity) {
 					PlayerEntity pl = (PlayerEntity)entity;
 
 					if (pl.isCreative())
 						return;
 
-					BlockPos.Mutable pos = new BlockPos.Mutable(entity.getPosition());
+					BlockPos.Mutable pos = new BlockPos.Mutable(entity.blockPosition().getX(), entity.blockPosition().getY(), entity.blockPosition().getZ());
 
-					for (ItemStack invStack : pl.inventory.mainInventory) {
+					for (ItemStack invStack : pl.inventory.items) {
 						if (invStack.getItem() == AoAItems.BLANK_REALMSTONE.get()) {
-							for (int i = 0; i < entity.getPosY(); i++) {
-								if (!world.isAirBlock(pos.setPos(pos.getX(), pos.getY() - i, pos.getZ())))
+							for (int i = 0; i < entity.getY(); i++) {
+								if (!world.isEmptyBlock(pos.set(pos.getX(), pos.getY() - i, pos.getZ())))
 									return;
 							}
 
@@ -70,7 +70,7 @@ public class Gravitator extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

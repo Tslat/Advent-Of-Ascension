@@ -19,7 +19,7 @@ public abstract class RunicLifeformEntity extends AoAMeleeMob {
 	private final RuneTemplarEntity templar;
 
 	public RunicLifeformEntity(EntityType<? extends MonsterEntity> entityType, RuneTemplarEntity templar) {
-		super(entityType, templar.world);
+		super(entityType, templar.level);
 
 		this.templar = templar;
 	}
@@ -35,48 +35,23 @@ public abstract class RunicLifeformEntity extends AoAMeleeMob {
 		return 1f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (templar != null) {
 				if (templar.getHealth() > 0 && templar.getHealth() < templar.getMaxHealth())
 					templar.heal(0.075f);

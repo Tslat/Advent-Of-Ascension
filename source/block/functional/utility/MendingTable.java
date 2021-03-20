@@ -17,11 +17,11 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class MendingTable extends Block {
 	public MendingTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.RED, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		if (player instanceof ServerPlayerEntity)
 			MendingTableContainer.openContainer((ServerPlayerEntity)player, pos);
 

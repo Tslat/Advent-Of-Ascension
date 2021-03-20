@@ -8,6 +8,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.tslat.aoa3.item.SkillItem;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class ExpeditionArmour extends AdventArmour implements SkillItem {
 	public ExpeditionArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:expedition", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:expedition", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -55,10 +56,10 @@ public class ExpeditionArmour extends AdventArmour implements SkillItem {
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			EffectInstance nightVision = plData.player().getActivePotionEffect(Effects.NIGHT_VISION);
+			EffectInstance nightVision = plData.player().getEffect(Effects.NIGHT_VISION);
 
 			if (nightVision != null && nightVision.getDuration() <= 300)
-				plData.player().removePotionEffect(Effects.NIGHT_VISION);
+				plData.player().removeEffect(Effects.NIGHT_VISION);
 		}
 	}
 
@@ -73,21 +74,21 @@ public class ExpeditionArmour extends AdventArmour implements SkillItem {
 		if (slots == null) {
 			PlayerEntity pl = plData.player();
 
-			pl.addPotionEffect(new EffectInstance(Effects.SPEED, -1, 1, true, false));
-			pl.addPotionEffect(new EffectInstance(Effects.WATER_BREATHING, -1, 0, true, false));
+			pl.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, -1, 1, true, false));
+			pl.addEffect(new EffectInstance(Effects.WATER_BREATHING, -1, 0, true, false));
 
-			EffectInstance nightVision = pl.getActivePotionEffect(Effects.NIGHT_VISION);
+			EffectInstance nightVision = pl.getEffect(Effects.NIGHT_VISION);
 
 			if (nightVision == null || nightVision.getDuration() < 250)
-				pl.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
+				pl.addEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.expedition_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.BENEFICIAL, "30", LocaleUtil.getLocaleString(LocaleUtil.Constants.EXPEDITION)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.BENEFICIAL, new StringTextComponent("30"), LocaleUtil.getLocaleMessage(LocaleUtil.Constants.EXPEDITION)));
 		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.EXPEDITION, 100));
 	}
 }

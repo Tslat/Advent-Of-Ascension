@@ -13,11 +13,11 @@ public class CraggySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		CraggyEntity craggy = new CraggyEntity(AoAEntities.Minions.CRAGGY.get(), pl.world);
+		CraggyEntity craggy = new CraggyEntity(AoAEntities.Minions.CRAGGY.get(), pl.level);
 
-		craggy.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		craggy.setTamedBy(pl);
-		pl.world.addEntity(craggy);
+		craggy.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		craggy.tame(pl);
+		pl.level.addFreshEntity(craggy);
 
 		return craggy;
 	}

@@ -6,13 +6,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameter;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.util.constant.Resources;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -30,16 +27,21 @@ public class PlayerHasResource implements ILootCondition {
 	}
 
 	@Override
-	public Set<LootParameter<?>> getRequiredParameters() {
+	public LootConditionType getType() {
+		return AoALootOperations.LootConditions.PLAYER_HAS_RESOURCE;
+	}
+
+	@Override
+	public Set<LootParameter<?>> getReferencedContextParams() {
 		return ImmutableSet.of(LootParameters.KILLER_ENTITY);
 	}
 
 	@Override
 	public boolean test(LootContext lootContext) {
-		Entity entity = lootContext.get(LootParameters.KILLER_ENTITY);
+		Entity entity = lootContext.getParamOrNull(LootParameters.KILLER_ENTITY);
 
 		if (entity == null)
-			entity = lootContext.get(LootParameters.THIS_ENTITY);
+			entity = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
 
 		if (entity instanceof ServerPlayerEntity)
 			return consume ? PlayerUtil.consumeResource((ServerPlayerEntity)entity, resource, amount, false) : PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().getResourceValue(resource) >= amount;
@@ -47,11 +49,7 @@ public class PlayerHasResource implements ILootCondition {
 		return false;
 	}
 
-	public static class Serializer extends AbstractSerializer<PlayerHasResource> {
-		public Serializer() {
-			super(new ResourceLocation(AdventOfAscension.MOD_ID, "player_has_resource"), PlayerHasResource.class);
-		}
-
+	public static class Serializer implements ILootSerializer<PlayerHasResource> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {
 			json.addProperty("resource", playerHasResource.resource.toString().toLowerCase());
@@ -61,7 +59,7 @@ public class PlayerHasResource implements ILootCondition {
 
 		@Override
 		public PlayerHasResource deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new PlayerHasResource(Resources.valueOf(JSONUtils.getString(json, "resource").toUpperCase()), JSONUtils.getFloat(json, "amount"), JSONUtils.hasField(json, "consume") && JSONUtils.getBoolean(json, "consume"));
+			return new PlayerHasResource(Resources.valueOf(JSONUtils.getAsString(json, "resource").toUpperCase()), JSONUtils.getAsFloat(json, "amount"), JSONUtils.isValidNode(json, "consume") && JSONUtils.getAsBoolean(json, "consume"));
 		}
 	}
 }

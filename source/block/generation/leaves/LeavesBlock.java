@@ -12,6 +12,8 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock;
+
 public class LeavesBlock extends net.minecraft.block.LeavesBlock {
 	private final float saplingDropChance;
 
@@ -21,12 +23,12 @@ public class LeavesBlock extends net.minecraft.block.LeavesBlock {
 		this.saplingDropChance = saplingChance;
 	}
 
-	private static Block.Properties generateBlockProperties(MaterialColor mapColour) {
-		Block.Properties blockProperties = Block.Properties.create(Material.LEAVES, mapColour);
+	private static AbstractBlock.Properties generateBlockProperties(MaterialColor mapColour) {
+		AbstractBlock.Properties blockProperties = AbstractBlock.Properties.of(Material.LEAVES, mapColour);
 
-		blockProperties.hardnessAndResistance(0.2f);
-		blockProperties.sound(SoundType.PLANT);
-		blockProperties.notSolid();
+		blockProperties.strength(0.2f);
+		blockProperties.sound(SoundType.GRASS);
+		blockProperties.noOcclusion();
 		// TODO Tick Randomly & decay
 
 		return blockProperties;

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AlacrityArmour extends AdventArmour {
 	public AlacrityArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:alacrity", 55, new int[] {4, 8, 9, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:alacrity", 55, new int[] {4, 8, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class AlacrityArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.alacrity_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

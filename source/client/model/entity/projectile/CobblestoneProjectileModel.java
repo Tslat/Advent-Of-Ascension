@@ -10,23 +10,23 @@ public class CobblestoneProjectileModel extends EntityModel<Entity> {
 	private final ModelRenderer block;
 
 	public CobblestoneProjectileModel() {
-		textureWidth = 64;
-		textureHeight = 32;
+		texWidth = 64;
+		texHeight = 32;
 
 		block = new ModelRenderer(this);
-		block.setRotationPoint(0.0F, 16.0F, 0.0F);
-		block.setTextureOffset(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, -2.0F, true);
+		block.setPos(0.0F, 16.0F, 0.0F);
+		block.texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, -2.0F, true);
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		block.render(matrix, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
-	public void setRotationAngles(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		block.rotateAngleX += limbSwingAmount * 0.03f + 1;
-		block.rotateAngleY += limbSwingAmount * 0.03f + 1;
-		block.rotateAngleZ += limbSwingAmount * 0.03f + 1;
+	public void setupAnim(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		block.xRot += limbSwingAmount * 0.03f + 1;
+		block.yRot += limbSwingAmount * 0.03f + 1;
+		block.zRot += limbSwingAmount * 0.03f + 1;
 	}
 }

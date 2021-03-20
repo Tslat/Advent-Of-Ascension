@@ -18,7 +18,7 @@ public class AtomizerBounceEntity extends BaseEnergyShot {
 	}
 
 	public AtomizerBounceEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, AtomizerShotEntity shot, double motionX, double motionY, double motionZ) {
-		super(AoAEntities.Projectiles.ATOMIZER_BOUNCE.get(), shooter, weapon, shot.getPosX(), shot.getPosY(), shot.getPosZ(), motionX, motionY, motionZ);
+		super(AoAEntities.Projectiles.ATOMIZER_BOUNCE.get(), shooter, weapon, shot.getX(), shot.getY(), shot.getZ(), motionX, motionY, motionZ);
 	}
 
 	public AtomizerBounceEntity(World world, double x, double y, double z) {
@@ -26,7 +26,7 @@ public class AtomizerBounceEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.1f;
 	}
 }

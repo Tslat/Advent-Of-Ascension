@@ -109,19 +109,19 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 			int ingredientCount = 0;
 			RecipeItemHelper recipeItemHelper = new RecipeItemHelper();
 			ArrayList<ItemStack> inputIngredients = new ArrayList<ItemStack>();
-			ItemStack inputStack = inv.getStackInSlot(0);
+			ItemStack inputStack = inv.getItem(0);
 
 			if (inputStack.isEmpty() || (!isEnchanting && (input.getItem() != inputStack.getItem())))
 				return false;
 
 			for (int i = 1; i < 10; i++) {
-				ItemStack stack = inv.getStackInSlot(i);
+				ItemStack stack = inv.getItem(i);
 
 				if (!stack.isEmpty()) {
 					ingredientCount++;
 
 					if (isSimple) {
-						recipeItemHelper.func_221264_a(stack, 1);
+						recipeItemHelper.accountStack(stack, 1);
 					}
 					else {
 						inputIngredients.add(stack);
@@ -132,7 +132,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 			if (ingredientCount != ingredients.size())
 				return false;
 
-			if (isEnchanting && EnchantmentHelper.getEnchantmentLevel(enchantment, inputStack) >= enchantmentLevel)
+			if (isEnchanting && EnchantmentHelper.getItemEnchantmentLevel(enchantment, inputStack) >= enchantmentLevel)
 				return false;
 
 			if (isSimple)
@@ -145,9 +145,9 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InfusionTableContainer.InfusionInventory inv) {
+	public ItemStack assemble(InfusionTableContainer.InfusionInventory inv) {
 		if (isEnchanting) {
-			return provideEmptyOrCompatibleStackForEnchanting(inv.getStackInSlot(0).copy());
+			return provideEmptyOrCompatibleStackForEnchanting(inv.getItem(0).copy());
 		}
 		else {
 			return output.copy();
@@ -155,17 +155,17 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AoABlocks.INFUSION_TABLE.get());
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width * height >= ingredients.size();
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return isEnchanting ? ItemStack.EMPTY : output;
 	}
 
@@ -210,12 +210,12 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(InfusionTableContainer.InfusionInventory inv) {
-		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
 		remainingItems.set(0, ItemStack.EMPTY);
 
 		for (int i = 1; i < remainingItems.size(); i++) {
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 
 			remainingItems.set(i, ForgeHooks.getContainerItem(stack));
 		}
@@ -249,7 +249,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 	}
 
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {
-		if (this == EMPTY_RECIPE || !enchantment.canApply(inputStack) || (!AoAConfig.SERVER.allowUnsafeInfusion.get() && enchantment.getMaxLevel() < enchantmentLevel))
+		if (this == EMPTY_RECIPE || !enchantment.canEnchant(inputStack) || (!AoAConfig.SERVER.allowUnsafeInfusion.get() && enchantment.getMaxLevel() < enchantmentLevel))
 			return ItemStack.EMPTY;
 
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(inputStack);
@@ -267,28 +267,28 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 
 	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<InfusionRecipe> {
 		@Override
-		public InfusionRecipe read(ResourceLocation recipeId, JsonObject json) {
-			if (JSONUtils.hasField(json, "infusion")) {
-				String group = JSONUtils.getString(json, "group", "");
+		public InfusionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			if (JSONUtils.isValidNode(json, "infusion")) {
+				String group = JSONUtils.getAsString(json, "group", "");
 				Enchantment enchantment;
 				int level = 1;
 				int infusionReq = 1;
 				int minXp = 0;
 				int maxXp = 0;
 				NonNullList<Ingredient> ingredients = NonNullList.create();
-				JsonObject enchantmentJson = JSONUtils.getJsonObject(json, "infusion");
+				JsonObject enchantmentJson = JSONUtils.getAsJsonObject(json, "infusion");
 
 				if (!enchantmentJson.has("enchantment"))
 					throw new JsonParseException("No valid enchantment for Infusion recipe");
 
-				String enchantmentString = JSONUtils.getString(enchantmentJson, "enchantment");
+				String enchantmentString = JSONUtils.getAsString(enchantmentJson, "enchantment");
 				enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantmentString));
 
 				if (json.has("infusion_level"))
-					infusionReq = JSONUtils.getInt(json, "infusion_level");
+					infusionReq = JSONUtils.getAsInt(json, "infusion_level");
 
 				if (json.has("infusion_xp")) {
-					JsonObject xpJson = JSONUtils.getJsonObject(json, "infusion_xp");
+					JsonObject xpJson = JSONUtils.getAsJsonObject(json, "infusion_xp");
 
 					if (xpJson.isJsonPrimitive()) {
 						minXp = maxXp = xpJson.getAsInt();
@@ -297,8 +297,8 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 						if (!xpJson.has("max"))
 							throw new JsonParseException("No max set for min/max xp amount for infusion recipe");
 
-						minXp = Math.max(0, JSONUtils.getInt(xpJson, "min"));
-						maxXp = Math.max(minXp, JSONUtils.getInt(xpJson, "max"));
+						minXp = Math.max(0, JSONUtils.getAsInt(xpJson, "min"));
+						maxXp = Math.max(minXp, JSONUtils.getAsInt(xpJson, "max"));
 					}
 				}
 
@@ -306,12 +306,12 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 					throw new JsonParseException("Invalid enchantment for infusion recipe: " + enchantmentString);
 
 				if (enchantmentJson.has("level"))
-					level = JSONUtils.getInt(enchantmentJson, "level");
+					level = JSONUtils.getAsInt(enchantmentJson, "level");
 
 				if (!AoAConfig.SERVER.allowUnsafeInfusion.get() && enchantment.getMaxLevel() < level)
-					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + LocaleUtil.getLocaleString(enchantment.getName()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
+					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + LocaleUtil.getLocaleString(enchantment.getDescriptionId()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
 
-				for (JsonElement element : JSONUtils.getJsonArray(json, "ingredients")) {
+				for (JsonElement element : JSONUtils.getAsJsonArray(json, "ingredients")) {
 					try {
 						ingredients.add(CraftingHelper.getIngredient(element));
 					}
@@ -332,19 +332,19 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 				return new InfusionRecipe(recipeId, group, enchantment, level, ingredients, infusionReq, minXp, maxXp);
 			}
 			else {
-				String group = JSONUtils.getString(json, "group", "");
-				ItemStack input = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "input"), false);
-				ItemStack output = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "result"), true);
+				String group = JSONUtils.getAsString(json, "group", "");
+				ItemStack input = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "input"), false);
+				ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
 				NonNullList<Ingredient> ingredients = NonNullList.create();
 				int infusionReq = 1;
 				int minXp = 0;
 				int maxXp = 0;
 
 				if (json.has("infusion_level"))
-					infusionReq = JSONUtils.getInt(json, "infusion_level");
+					infusionReq = JSONUtils.getAsInt(json, "infusion_level");
 
 				if (json.has("infusion_xp")) {
-					JsonObject xpJson = JSONUtils.getJsonObject(json, "infusion_xp");
+					JsonObject xpJson = JSONUtils.getAsJsonObject(json, "infusion_xp");
 
 					if (xpJson.isJsonPrimitive()) {
 						minXp = maxXp = xpJson.getAsInt();
@@ -353,12 +353,12 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 						if (!xpJson.has("max"))
 							throw new JsonParseException("No max set for min/max xp amount for infusion recipe");
 
-						minXp = Math.max(0, JSONUtils.getInt(xpJson, "min"));
-						maxXp = Math.max(minXp, JSONUtils.getInt(xpJson, "max"));
+						minXp = Math.max(0, JSONUtils.getAsInt(xpJson, "min"));
+						maxXp = Math.max(minXp, JSONUtils.getAsInt(xpJson, "max"));
 					}
 				}
 
-				for (JsonElement element : JSONUtils.getJsonArray(json, "ingredients")) {
+				for (JsonElement element : JSONUtils.getAsJsonArray(json, "ingredients")) {
 					ingredients.add(CraftingHelper.getIngredient(element));
 				}
 
@@ -374,8 +374,8 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 
 		@Nullable
 		@Override
-		public InfusionRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			String group = buffer.readString(32767);
+		public InfusionRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			String group = buffer.readUtf(32767);
 
 			if (buffer.readBoolean()) {
 				Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(buffer.readResourceLocation());
@@ -383,7 +383,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 				NonNullList<Ingredient> ingredients = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 
 				for (int i = 0; i < ingredients.size(); i++) {
-					ingredients.set(i, Ingredient.read(buffer));
+					ingredients.set(i, Ingredient.fromNetwork(buffer));
 				}
 
 				int infusionReq = buffer.readInt();
@@ -393,12 +393,12 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 				return new InfusionRecipe(recipeId, group, ench, lvl, ingredients, infusionReq, minXp, maxXp);
 			}
 			else {
-				ItemStack input = buffer.readItemStack();
-				ItemStack output = buffer.readItemStack();
+				ItemStack input = buffer.readItem();
+				ItemStack output = buffer.readItem();
 				NonNullList<Ingredient> ingredients = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 
 				for (int i = 0; i < ingredients.size(); i++) {
-					ingredients.set(i, Ingredient.read(buffer));
+					ingredients.set(i, Ingredient.fromNetwork(buffer));
 				}
 
 				int infusionReq = buffer.readInt();
@@ -410,27 +410,27 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, InfusionRecipe recipe) {
-			buffer.writeString(recipe.getGroup());
+		public void toNetwork(PacketBuffer buffer, InfusionRecipe recipe) {
+			buffer.writeUtf(recipe.getGroup());
 
 			if (recipe.isEnchanting()) {
 				buffer.writeBoolean(true);
 				buffer.writeResourceLocation(recipe.getEnchantment().enchantment.getRegistryName());
-				buffer.writeInt(recipe.getEnchantment().enchantmentLevel);
+				buffer.writeInt(recipe.getEnchantment().level);
 				buffer.writeInt(recipe.getIngredients().size());
 
 				for (Ingredient ing : recipe.getIngredients()) {
-					ing.write(buffer);
+					ing.toNetwork(buffer);
 				}
 			}
 			else {
 				buffer.writeBoolean(false);
 				buffer.writeItemStack(recipe.getRecipeInput(), true);
-				buffer.writeItemStack(recipe.getRecipeOutput(), false);
+				buffer.writeItemStack(recipe.getResultItem(), false);
 				buffer.writeInt(recipe.getIngredients().size());
 
 				for (Ingredient ing : recipe.getIngredients()) {
-					ing.write(buffer);
+					ing.toNetwork(buffer);
 				}
 			}
 

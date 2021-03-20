@@ -12,10 +12,10 @@ import net.tslat.aoa3.block.WaterloggableBlock;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class ShroomStem extends WaterloggableBlock {
-	private static final VoxelShape SHAPE = makeCuboidShape(5, 0, 5, 11, 16, 11);
+	private static final VoxelShape SHAPE = box(5, 0, 5, 11, 16, 11);
 
 	public ShroomStem() {
-		super(BlockUtil.generateBlockProperties(Material.GOURD, MaterialColor.WHITE_TERRACOTTA, 2, 0.5f, SoundType.WOOD));
+		super(BlockUtil.generateBlockProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_WHITE, 2, 0.5f, SoundType.WOOD));
 	}
 
 	@Override

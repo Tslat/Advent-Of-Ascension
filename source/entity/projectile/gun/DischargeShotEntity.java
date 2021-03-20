@@ -33,6 +33,6 @@ public class DischargeShotEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(getThrower(), world, this, 1.8f);
+		WorldUtil.createExplosion(getOwner(), level, this, 1.8f);
 	}
 }

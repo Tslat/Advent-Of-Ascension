@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class ZalSpellbinderEntity extends AoATrader {
 	public ZalSpellbinderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -25,18 +26,8 @@ public class ZalSpellbinderEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.LUNALUS.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
 	@Override
@@ -46,7 +37,7 @@ public class ZalSpellbinderEntity extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.LIFE_RUNE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.KINETIC_RUNE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get()), new ItemStack(AoABlocks.RUNE_SHRINE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get(), 2), EnchantedBookItem.getEnchantedItemStack(new EnchantmentData(Enchantments.MENDING, 1))));
+		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get(), 2), EnchantedBookItem.createForEnchantment(new EnchantmentData(Enchantments.MENDING, 1))));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 7), new ItemStack(AoAWeapons.SUPER_CANNON.get(), 1), new ItemStack(AoAWeapons.ULTRA_CANNON.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 10), new ItemStack(AoATools.SOULSTONE_AXE.get())));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 11), new ItemStack(AoATools.SOULSTONE_SHOVEL.get())));

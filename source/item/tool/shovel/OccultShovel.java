@@ -18,11 +18,11 @@ public class OccultShovel extends BaseShovel {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		return super.getDestroySpeed(stack, state) * (1 + (stack.getDamage() / (float)stack.getMaxDamage()));
+		return super.getDestroySpeed(stack, state) * (1 + (stack.getDamageValue() / (float)stack.getMaxDamage()));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

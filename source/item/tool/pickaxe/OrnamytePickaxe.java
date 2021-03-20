@@ -21,11 +21,11 @@ public class OrnamytePickaxe extends BasePickaxe {
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		float efficiency = super.getDestroySpeed(stack, state);
 
-		return state.getBlock() == Blocks.OBSIDIAN ? efficiency * 10f : efficiency;
+		return state.getBlock() == Blocks.OBSIDIAN || state.getBlock() == Blocks.CRYING_OBSIDIAN ? efficiency * 10f : efficiency;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

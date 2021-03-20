@@ -20,7 +20,7 @@ import java.util.List;
 
 public class BoreicArmour extends AdventArmour {
 	public BoreicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:boreic", 62, new int[] {4, 8, 10, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:boreic", 62, new int[] {4, 8, 10, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -34,18 +34,18 @@ public class BoreicArmour extends AdventArmour {
 
 		if (pl.isInWater() && !DamageUtil.isEnvironmentalDamage(event.getSource())) {
 			if (slots != null) {
-				WorldUtil.createExplosion(pl, pl.world, pl.getPosition() , 0.7f + 0.3f * slots.size());
+				WorldUtil.createExplosion(pl, pl.level, pl.blockPosition() , 0.7f + 0.3f * slots.size());
 			}
 			else {
-				for (LivingEntity entity : pl.world.getEntitiesWithinAABB(LivingEntity.class, pl.getBoundingBox().grow(4), EntityUtil.Predicates.HOSTILE_MOB)) {
-					entity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 40, 1, false, true));
+				for (LivingEntity entity : pl.level.getEntitiesOfClass(LivingEntity.class, pl.getBoundingBox().inflate(4), EntityUtil.Predicates.HOSTILE_MOB)) {
+					entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 40, 1, false, true));
 				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.boreic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.boreic_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

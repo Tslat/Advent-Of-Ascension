@@ -25,17 +25,17 @@ import java.util.List;
 
 public class CrystalExtensionShrine extends Block {
 	public CrystalExtensionShrine() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.WHITE_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!player.getHeldItem(hand).isEmpty()) {
-			ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!player.getItemInHand(hand).isEmpty()) {
+			ItemStack heldStack = player.getItemInHand(hand);
 
 			if (heldStack.getItem() == AoAItems.RAINBOW_DRUSE.get()) {
 				if (player instanceof ServerPlayerEntity) {
-					List<ItemEntity> crystalList = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos.getX() - 5, pos.getY() - 1, pos.getZ() - 5, pos.getX() + 5, pos.getY() + 1, pos.getZ() + 5), entity -> isCrystal(entity.getItem().getItem()));
+					List<ItemEntity> crystalList = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos.getX() - 5, pos.getY() - 1, pos.getZ() - 5, pos.getX() + 5, pos.getY() + 1, pos.getZ() + 5), entity -> isCrystal(entity.getItem().getItem()));
 					int count = 0;
 
 					for (ItemEntity item : crystalList) {

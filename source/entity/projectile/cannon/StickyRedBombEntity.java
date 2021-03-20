@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.projectile.cannon;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
@@ -39,22 +40,22 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
+	protected void onHit(RayTraceResult result) {
 		if (result.getType() == RayTraceResult.Type.BLOCK) {
 			BlockRayTraceResult rayTraceResult = (BlockRayTraceResult)result;
-			BlockState bl = world.getBlockState(rayTraceResult.getPos());
-			double posX = rayTraceResult.getPos().getX();
-			double posY = rayTraceResult.getPos().getY();
-			double posZ = rayTraceResult.getPos().getZ();
+			BlockState bl = level.getBlockState(rayTraceResult.getBlockPos());
+			double posX = rayTraceResult.getBlockPos().getX();
+			double posY = rayTraceResult.getBlockPos().getY();
+			double posZ = rayTraceResult.getBlockPos().getZ();
 
-			if (!bl.getMaterial().blocksMovement())
+			if (!bl.getMaterial().blocksMotion())
 				return;
 
 			ticksInGround++;
 
-			setMotion(0, 0, 0);
+			setDeltaMovement(0, 0, 0);
 
-			switch(rayTraceResult.getFace()) {
+			switch(rayTraceResult.getDirection()) {
 				case UP:
 					posY += 1;
 					break;
@@ -77,12 +78,16 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 					break;
 			}
 
-			setPosition(posX, posY, posZ);
+			setPos(posX, posY, posZ);
 		}
 		else {
-			if (!world.isRemote()) {
+			if (!level.isClientSide()) {
 				if (result.getType() == RayTraceResult.Type.ENTITY) {
-					weapon.doImpactDamage(((EntityRayTraceResult)result).getEntity(), getThrower(), this, 1.0f);
+					Entity shooter = getOwner();
+
+					if (shooter instanceof LivingEntity)
+						weapon.doImpactDamage(((EntityRayTraceResult)result).getEntity(), (LivingEntity)shooter, this, 1.0f);
+
 					doImpactEffect();
 				}
 
@@ -96,25 +101,25 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 		super.tick();
 
 		if (ticksInGround > 0) {
-			setMotion(0, 0, 0);
+			setDeltaMovement(0, 0, 0);
 
 			ticksInGround++;
 
-			if (ticksInGround >= 80 && !world.isRemote) {
+			if (ticksInGround >= 80 && !level.isClientSide) {
 				doImpactEffect();
 				return;
 			}
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				removed = false;
 		}
 	}
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, 2.0f);
+		WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
-		if (!world.isRemote)
+		if (!level.isClientSide)
 			remove();
 	}
 }

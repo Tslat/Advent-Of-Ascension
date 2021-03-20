@@ -3,26 +3,22 @@ package net.tslat.aoa3.library.misc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.pattern.BlockPattern;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
 import net.tslat.aoa3.worldgen.worlds.ancientcavern.AncientCavernTeleporter;
@@ -45,7 +41,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		if (entity instanceof ServerPlayerEntity) {
 			entity.setNoGravity(false);
-			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity)).getPortalReturnLocation(destWorld.getDimension().getType());
+			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity)).getPortalReturnLocation(destWorld.dimension());
 			BlockPos locPos;
 
 			if (loc != null) {
@@ -57,26 +53,26 @@ public abstract class AoATeleporter implements ITeleporter {
 					return customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false);
 				}
 				else if (!(locationBlock instanceof PortalBlock)) {
-					plData.removePortalReturnLocation(destWorld.getDimension().getType());
+					plData.removePortalReturnLocation(destWorld.dimension());
 
 					failedPortalReturn = true;
 				}
 			}
 		}
 
-		if (currentWorld.getBlockState(entity.getPosition()).getBlock() == getPortalBlock()) {
-			ChunkPos chunkPos = currentWorld.getChunk(entity.getPosition()).getPos();
+		if (currentWorld.getBlockState(entity.blockPosition()).getBlock() == getPortalBlock()) {
+			ChunkPos chunkPos = currentWorld.getChunk(entity.blockPosition()).getPos();
 
-			getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), entity.getPosition());
+			getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), entity.blockPosition());
 		}
 
 		BlockPos pos = null;
 
 		if (failedPortalReturn) {
-			if (destWorld.getDimension().getType() == AoADimensions.ANCIENT_CAVERN.type() && !(this instanceof AncientCavernTeleporter)) {
+			if (WorldUtil.isWorld((World)destWorld, AoADimensions.ANCIENT_CAVERN.key) && !(this instanceof AncientCavernTeleporter)) {
 				pos = new BlockPos(0.5, 18.5, 0.5);
 			}
-			else if (destWorld.getDimension().getType() == AoADimensions.IMMORTALLIS.type() && !(this instanceof ImmortallisTeleporter)) {
+			else if (WorldUtil.isWorld((World)destWorld, AoADimensions.IMMORTALLIS.key) && !(this instanceof ImmortallisTeleporter)) {
 				pos = new BlockPos(-5, 20, 3);
 			}
 		}
@@ -96,143 +92,77 @@ public abstract class AoATeleporter implements ITeleporter {
 		getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), pos);
 
 		if (plData != null) {
-			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(destWorld.getDimension().getType());
+			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(destWorld.dimension());
 
 			if (portalLoc != null) {
-				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.world.getDimension().getType());
+				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level.dimension());
 
-				if (returnPortalLoc != null && returnPortalLoc.fromDim == destWorld.getDimension().getType())
-					return entity instanceof ServerPlayerEntity ? customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false) : customEntityPlacementFunction(entity, currentWorld, destWorld, false);
+				if (returnPortalLoc != null && returnPortalLoc.fromDim == destWorld.dimension())
+					return customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false);
 			}
 
-			if (portalLoc == null || entity.world.getDimension().getType() == portalLoc.fromDim || entity.getDistanceSq(new Vec3d(portalLoc.asBlockPos())) > AoAConfig.SERVER.portalSearchRadius.get())
-				plData.setPortalReturnLocation(destWorld.getDimension().getType(), new PortalCoordinatesContainer(currentWorld.getDimension().getType(), pos.getX(), pos.getY(), pos.getZ()));
+			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfig.SERVER.portalSearchRadius.get())
+				plData.setPortalReturnLocation(destWorld.dimension(), new PortalCoordinatesContainer(currentWorld.dimension(), pos.getX(), pos.getY(), pos.getZ()));
 		}
 
 		return entity instanceof ServerPlayerEntity ? customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false) : customEntityPlacementFunction(entity, currentWorld, destWorld, false);
 	}
 
 	private Entity customPlayerPlacementFunction(ServerPlayerEntity entity, ServerWorld fromWorld, ServerWorld toWorld, boolean spawnPortal) {
-		double newPosX = entity.getPosX();
-		double newPosY = entity.getPosY();
-		double newPosZ = entity.getPosZ();
-		float pitch = entity.rotationPitch;
-		float yaw = entity.rotationYaw;
-		float f2 = yaw;
+		BlockPos originPos = entity.blockPosition();
 
-		entity.world.getProfiler().startSection("moving");
+		fromWorld.getProfiler().push("moving");
 
-		if (fromWorld.getDimension().getType() == DimensionType.OVERWORLD && toWorld.getDimension().getType() == DimensionType.THE_NETHER) {
-			entity.enteredNetherPosition = entity.getPositionVec();
+		if (fromWorld.dimension() == World.OVERWORLD && toWorld.dimension() == World.NETHER) {
+			entity.enteredNetherPosition = entity.position();
 		}
-		else if (fromWorld.getDimension().getType() == DimensionType.OVERWORLD && toWorld.getDimension().getType() == DimensionType.THE_END) {
-			BlockPos spawnLocation = toWorld.getSpawnCoordinate();
-			newPosX = spawnLocation.getX();
-			newPosY = spawnLocation.getY();
-			newPosZ = spawnLocation.getZ();
-			yaw = 90.0F;
-			pitch = 0.0F;
-		}
+		else if (spawnPortal && toWorld.dimension() == World.END) {
+			BlockPos.Mutable mutablePos = originPos.mutable();
 
-		entity.setLocationAndAngles(newPosX, newPosY, newPosZ, yaw, pitch);
-		fromWorld.getProfiler().endSection();
-		fromWorld.getProfiler().startSection("placing");
+			for(int x = -2; x <= 2; ++x) {
+				for(int y = -2; y <= 2; ++y) {
+					for(int z = -1; z < 3; ++z) {
+						BlockState state = z == -1 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.AIR.defaultBlockState();
 
-		double minX = Math.min(-2.9999872E7D, toWorld.getWorldBorder().minX() + 16.0D);
-		double minZ = Math.min(-2.9999872E7D, toWorld.getWorldBorder().minZ() + 16.0D);
-		double maxX = Math.min(2.9999872E7D, toWorld.getWorldBorder().maxX() - 16.0D);
-		double maxZ = Math.min(2.9999872E7D, toWorld.getWorldBorder().maxZ() - 16.0D);
-		newPosX = MathHelper.clamp(newPosX, minX, maxX);
-		newPosZ = MathHelper.clamp(newPosZ, minZ, maxZ);
-
-		entity.setLocationAndAngles(newPosX, newPosY, newPosZ, yaw, pitch);
-
-		if (toWorld.getDimension().getType() == DimensionType.THE_END) {
-			int baseX = MathHelper.floor(entity.getPosX());
-			int baseY = MathHelper.floor(entity.getPosY()) - 1;
-			int baseZ = MathHelper.floor(entity.getPosZ());
-
-			for(int j1 = -2; j1 <= 2; ++j1) {
-				for(int k1 = -2; k1 <= 2; ++k1) {
-					for(int l1 = -1; l1 < 3; ++l1) {
-						int i2 = baseX + k1;
-						int j2 = baseY + l1;
-						int k2 = baseZ + j1;
-						boolean flag = l1 < 0;
-
-						toWorld.setBlockState(new BlockPos(i2, j2, k2), flag ? Blocks.OBSIDIAN.getDefaultState() : Blocks.AIR.getDefaultState());
+						toWorld.setBlockAndUpdate(mutablePos.set(originPos).move(y, z, x), state);
 					}
 				}
 			}
-
-			entity.setLocationAndAngles(baseX, baseY, baseZ, yaw, 0.0F);
-			entity.setMotion(Vec3d.ZERO);
-		}
-		else if (spawnPortal && !toWorld.getDefaultTeleporter().placeInPortal(entity, f2)) {
-			toWorld.getDefaultTeleporter().makePortal(entity);
-			toWorld.getDefaultTeleporter().placeInPortal(entity, f2);
 		}
 
-		fromWorld.getProfiler().endSection();
-		entity.setWorld(toWorld);
+		fromWorld.getProfiler().pop();
+		fromWorld.getProfiler().push("placing");
+		entity.setLevel(toWorld);
 		toWorld.addDuringPortalTeleport(entity);
-		entity.func_213846_b(fromWorld);
-		entity.connection.setPlayerLocation(entity.getPosX(), entity.getPosY(), entity.getPosZ(), yaw, pitch);
+		entity.moveTo(originPos.getX(), originPos.getY(), originPos.getZ());
+		fromWorld.getProfiler().pop();
+		entity.triggerDimensionChangeTriggers(fromWorld);
 
 		return entity;
 	}
 
 	private Entity customEntityPlacementFunction(Entity entity, ServerWorld fromWorld, ServerWorld toWorld, boolean spawnPortal) {
-		Vec3d motion = entity.getMotion();
-		float portalRotation = 0.0F;
-		BlockPos pos;
-
-		if (fromWorld.getDimension().getType() == DimensionType.THE_END && toWorld.getDimension().getType() == DimensionType.OVERWORLD) {
-			pos = toWorld.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, toWorld.getSpawnPoint());
-		}
-		else if (toWorld.getDimension().getType() == DimensionType.THE_END) {
-			pos = toWorld.getSpawnCoordinate();
-		}
-		else {
-			double posX = entity.getPosX();
-			double posZ = entity.getPosZ();
-			double minX = Math.min(-2.9999872E7D, toWorld.getWorldBorder().minX() + 16.0D);
-			double minZ = Math.min(-2.9999872E7D, toWorld.getWorldBorder().minZ() + 16.0D);
-			double maxX = Math.min(2.9999872E7D, toWorld.getWorldBorder().maxX() - 16.0D);
-			double maxZ = Math.min(2.9999872E7D, toWorld.getWorldBorder().maxZ() - 16.0D);
-			posX = MathHelper.clamp(posX, minX, maxX);
-			posZ = MathHelper.clamp(posZ, minZ, maxZ);
-			Vec3d portalLocation = entity.getLastPortalVec();
-			pos = new BlockPos(posX, entity.getPosY(), posZ);
-
-			if (spawnPortal) {
-				BlockPattern.PortalInfo portalInfo = toWorld.getDefaultTeleporter().placeInExistingPortal(pos, motion, entity.getTeleportDirection(), portalLocation.x, portalLocation.y, entity instanceof PlayerEntity);
-
-				if (portalInfo == null)
-					return null;
-
-				pos = new BlockPos(portalInfo.pos);
-				motion = portalInfo.motion;
-				portalRotation = (float)portalInfo.rotation;
-			}
-		}
-
-		entity.world.getProfiler().endStartSection("reloading");
+		entity.level.getProfiler().popPush("reloading");
 
 		Entity newEntity = entity.getType().create(toWorld);
 
-		newEntity.copyDataFromOld(entity);
-		newEntity.moveToBlockPosAndAngles(pos, entity.rotationYaw + portalRotation, entity.rotationPitch);
-		newEntity.setMotion(motion);
-		toWorld.addFromAnotherDimension(newEntity);
+		if (newEntity != null) {
+			newEntity.restoreFrom(entity);
+			newEntity.moveTo(entity.getX(),entity.getY(), entity.getZ(), entity.yRot, entity.xRot);
+			newEntity.setDeltaMovement(entity.getDeltaMovement());
+			toWorld.addFromAnotherDimension(newEntity);
+
+			if (spawnPortal && toWorld.dimension() == World.END)
+				ServerWorld.makeObsidianPlatform(toWorld);
+		}
 
 		return newEntity;
 	}
 
 	public BlockPos findExistingPortal(World world, Entity entity) {
-		int posX = (int)Math.floor(entity.getPosX());
-		int posY = (int)Math.floor(entity.getPosY());
-		int posZ = (int)Math.floor(entity.getPosZ());
+		int posX = (int)Math.floor(entity.getX());
+		int posY = (int)Math.floor(entity.getY());
+		int posZ = (int)Math.floor(entity.getZ());
 		ChunkPos chunkPos = world.getChunk(new BlockPos(posX, posY, posZ)).getPos();
 		Long chunkPosLong = ChunkPos.asLong(chunkPos.x, chunkPos.z);
 		HashMap<Long, BlockPos> cachedPortalMap = getCachedPortalMap();
@@ -250,19 +180,19 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		BlockPos.Mutable checkPos = new BlockPos.Mutable();
 		int searchRadius = AoAConfig.SERVER.portalSearchRadius.get();
-		int worldHeight = world.getActualHeight();
+		int worldHeight = world.dimensionType().logicalHeight();
 
 		if (posY >= worldHeight)
 			posY = 65;
 
-		if (world.getBlockState(checkPos.setPos(posX, posY, posZ)).getBlock() == getPortalBlock()) {
+		if (world.getBlockState(checkPos.set(posX, posY, posZ)).getBlock() == getPortalBlock()) {
 			while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() == getPortalBlock()) {
 				;
 			}
 
 			IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
 
-			cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getZStart(), chunk.getPos().getZStart()), checkPos);
+			cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockZ(), chunk.getPos().getMinBlockZ()), checkPos);
 
 			return checkPos;
 		}
@@ -293,7 +223,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 						zNeg *= -1;
 
-						checkPos.setPos(x2, y2, z2);
+						checkPos.set(x2, y2, z2);
 
 						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
 							while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() == getPortalBlock()) {
@@ -302,7 +232,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
 
-							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getXStart(), chunk.getPos().getZStart()), checkPos);
+							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
 							return checkPos;
 						}
@@ -335,7 +265,7 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int x = -i; x <= i; x += i * 2) {
 						int x2 = posX + x;
 
-						checkPos.setPos(x2, y2, z2);
+						checkPos.set(x2, y2, z2);
 
 						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
 							while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() == getPortalBlock()) {
@@ -344,7 +274,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
 
-							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getXStart(), chunk.getPos().getZStart()), checkPos);
+							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
 							return checkPos;
 						}
@@ -364,7 +294,7 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int z = -i; z <= i; z += i * 2) {
 						int z2 = posZ + z;
 
-						checkPos.setPos(x2, y2, z2);
+						checkPos.set(x2, y2, z2);
 
 						if (world.getBlockState(checkPos).getBlock() == getPortalBlock()) {
 							while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() == getPortalBlock()) {
@@ -373,7 +303,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
 
-							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getXStart(), chunk.getPos().getZStart()), checkPos);
+							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
 							return checkPos;
 						}
@@ -384,7 +314,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, posY - searchRadius, z);
+				checkPos.set(x, posY - searchRadius, z);
 
 				while (world.getBlockState(checkPos.move(Direction.DOWN)).getBlock() != getPortalBlock() && checkPos.getY() >= 0) {
 					;
@@ -395,35 +325,35 @@ public abstract class AoATeleporter implements ITeleporter {
 						;
 					}
 
-					return checkPos.up(2).toImmutable();
+					return checkPos.above(2).immutable();
 				}
 			}
 		}
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, posY + searchRadius, z);
+				checkPos.set(x, posY + searchRadius, z);
 
 				while (world.getBlockState(checkPos.move(Direction.UP)).getBlock() != getPortalBlock() && checkPos.getY() < worldHeight) {
 					;
 				}
 
 				if (world.getBlockState(checkPos).getBlock() == getPortalBlock())
-					return checkPos.up(1).toImmutable();
+					return checkPos.above(1).immutable();
 			}
 		}
 
 		return null;
 	}
-
+	
 	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
 		BlockPos.Mutable checkPos = new BlockPos.Mutable();
-		int posX = (int)Math.floor(entity.getPosX());
-		int posY = (int)Math.floor(entity.getPosY());
-		int posZ = (int)Math.floor(entity.getPosZ());
+		int posX = (int)Math.floor(entity.getX());
+		int posY = (int)Math.floor(entity.getY());
+		int posZ = (int)Math.floor(entity.getZ());
 		BlockPos planBPos = null;
 		int searchRadius = AoAConfig.SERVER.portalSearchRadius.get();
-		int worldHeight = world.getActualHeight();
+		int worldHeight = world.dimensionType().logicalHeight();
 
 		if (posY >= worldHeight)
 			posY = 65;
@@ -433,18 +363,18 @@ public abstract class AoATeleporter implements ITeleporter {
 		for (int x = posX - 2; x <= posX + 2 && cleanSpawn; x++) {
 			for (int z = posZ - 2; z <= posZ + 2 && cleanSpawn; z++) {
 				for (int y = posY + 1; y <= posY + 6 && cleanSpawn; y++) {
-					if (!world.isAirBlock(checkPos.setPos(x, y, z)))
+					if (!world.isEmptyBlock(checkPos.set(x, y, z)))
 						cleanSpawn = false;
 				}
 			}
 		}
 
 		if (cleanSpawn) {
-			if (!world.isAirBlock(checkPos.setPos(posX, posY, posZ))) {
-				return checkPos.setPos(posX, posY + 2, posZ).toImmutable();
+			if (!world.isEmptyBlock(checkPos.set(posX, posY, posZ))) {
+				return checkPos.set(posX, posY + 2, posZ).immutable();
 			}
 			else {
-				planBPos = checkPos.setPos(posX, posY + 2, posZ).toImmutable();
+				planBPos = checkPos.set(posX, posY + 2, posZ).immutable();
 			}
 		}
 
@@ -474,20 +404,20 @@ public abstract class AoATeleporter implements ITeleporter {
 
 						zNeg *= -1;
 
-						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								return checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 						else if (planBPos == null) {
 							cleanSpawn = true;
@@ -495,14 +425,14 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								planBPos = checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 					}
 				}
@@ -533,20 +463,20 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int x = -i; x <= i; x += i * 2) {
 						int x2 = posX + x;
 
-						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								return checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 						else if (planBPos == null) {
 							cleanSpawn = true;
@@ -554,14 +484,14 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								planBPos = checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 					}
 				}
@@ -579,20 +509,20 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int z = -i; z <= i; z += i * 2) {
 						int z2 = posZ + z;
 
-						if (!world.isAirBlock(checkPos.setPos(x2, y2, z2))) {
+						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								return checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								return checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 						else if (planBPos == null) {
 							cleanSpawn = true;
@@ -600,14 +530,14 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isAirBlock(checkPos.setPos(x3, y3, z3)))
+										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
 							}
 
 							if (cleanSpawn)
-								planBPos = checkPos.setPos(x2, y2 + 2, z2).toImmutable();
+								planBPos = checkPos.set(x2, y2 + 2, z2).immutable();
 						}
 					}
 				}
@@ -616,9 +546,9 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, posY - searchRadius, z);
+				checkPos.set(x, posY - searchRadius, z);
 
-				while (world.isAirBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= 0) {
+				while (world.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= 0) {
 					;
 				}
 
@@ -628,22 +558,22 @@ public abstract class AoATeleporter implements ITeleporter {
 				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
 					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
 						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
-							if (!world.isAirBlock(checkPos.setPos(x2, y2, z2)))
+							if (!world.isEmptyBlock(checkPos.set(x2, y2, z2)))
 								cleanSpawn = false;
 						}
 					}
 				}
 
 				if (cleanSpawn && y >= 0)
-					return checkPos.setPos(x, y + 2, z).toImmutable();
+					return checkPos.set(x, y + 2, z).immutable();
 			}
 		}
 
 		for (int x = posX - searchRadius; x <= posX + searchRadius; x++) {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
-				checkPos.setPos(x, worldHeight - 3, z);
+				checkPos.set(x, worldHeight - 3, z);
 
-				while (world.isAirBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= posY + searchRadius) {
+				while (world.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= posY + searchRadius) {
 					;
 				}
 
@@ -653,73 +583,83 @@ public abstract class AoATeleporter implements ITeleporter {
 				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
 					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
 						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
-							if (!world.isAirBlock(checkPos.setPos(x2, y2, z2)))
+							if (!world.isEmptyBlock(checkPos.set(x2, y2, z2)))
 								cleanSpawn = false;
 						}
 					}
 				}
 
 				if (cleanSpawn)
-					return checkPos.setPos(x, y + 2, z).toImmutable();
+					return checkPos.set(x, y + 2, z).immutable();
 			}
 		}
 
 		if (planBPos != null)
 			return planBPos;
 
-		return entity.getPosition().up(2).toImmutable();
+		return entity.blockPosition().above(2).immutable();
 	}
 	
 	public BlockPos makePortal(World world, Entity entity, BlockPos pos) {
-		if (world.getDimension().getType() == DimensionType.OVERWORLD)
+		if (WorldUtil.isWorld(world, AoADimensions.OVERWORLD.key))
 			return pos;
 
 		BlockPos returnPos = pos;
-		pos = pos.down();
-		BlockState border = getBorderBlock().getDefaultState();
-		BlockState portal = getPortalBlock().getDefaultState();
+		pos = pos.below();
+		BlockState border = getBorderBlock().defaultBlockState();
+		BlockState portal = getPortalBlock().defaultBlockState();
 		Direction.Axis direction = EntityUtil.getDirectionFacing(entity, true).getAxis();
 
+		if (!world.isEmptyBlock(pos)) {
+			for (int x = pos.getX() - 3; x <= pos.getX() + 3; x++) {
+				for (int z = pos.getZ() - 3; z <= pos.getZ() + 3; z++) {
+					for (int y = pos.getY() + 1; y <= pos.getY() + 4; y++) {
+						world.setBlock(new BlockPos(x, y, z), Blocks.AIR.defaultBlockState(), 2);
+					}
+				}
+			}
+		}
+
 		if (direction == Direction.Axis.X) {
-			portal = portal.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
+			portal = portal.setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
 
 			for (int z = pos.getZ() - 2; z <= pos.getZ() + 2; z++) {
-				world.setBlockState(new BlockPos(pos.getX(), pos.getY(), z), border, 0);
-				world.setBlockState(new BlockPos(pos.getX(), pos.getY() + 5, z), border, 0);
+				world.setBlock(new BlockPos(pos.getX(), pos.getY(), z), border, 2);
+				world.setBlock(new BlockPos(pos.getX(), pos.getY() + 5, z), border, 2);
 			}
 
 			for (int y = pos.getY() + 1; y <= pos.getY() + 4; y++) {
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() - 2), border, 0);
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() - 1), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() + 1), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ() + 2), border, 0);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ() - 2), border, 2);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ() - 1), portal, 2);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ()), portal, 2);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ() + 1), portal, 2);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ() + 2), border, 2);
 			}
 		}
 		else {
-			portal = portal.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z);
+			portal = portal.setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z);
 
 			for (int x = pos.getX() - 2; x <= pos.getX() + 2; x++) {
-				world.setBlockState(new BlockPos(x, pos.getY(), pos.getZ()), border, 0);
-				world.setBlockState(new BlockPos(x, pos.getY() + 5, pos.getZ()), border, 0);
+				world.setBlock(new BlockPos(x, pos.getY(), pos.getZ()), border, 2);
+				world.setBlock(new BlockPos(x, pos.getY() + 5, pos.getZ()), border, 2);
 			}
 
 			for (int y = pos.getY() + 1; y <= pos.getY() + 4; y++) {
-				world.setBlockState(new BlockPos(pos.getX() - 2, y, pos.getZ()), border, 0);
-				world.setBlockState(new BlockPos(pos.getX() - 1, y, pos.getZ()), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX(), y, pos.getZ()), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX() + 1, y, pos.getZ()), portal, 0);
-				world.setBlockState(new BlockPos(pos.getX() + 2, y, pos.getZ()), border, 0);
+				world.setBlock(new BlockPos(pos.getX() - 2, y, pos.getZ()), border, 2);
+				world.setBlock(new BlockPos(pos.getX() - 1, y, pos.getZ()), portal, 2);
+				world.setBlock(new BlockPos(pos.getX(), y, pos.getZ()), portal, 2);
+				world.setBlock(new BlockPos(pos.getX() + 1, y, pos.getZ()), portal, 2);
+				world.setBlock(new BlockPos(pos.getX() + 2, y, pos.getZ()), border, 2);
 			}
 		}
 		
-		pos = pos.down();
+		pos = pos.below();
 		
 		for (int x = -1; x <= 1; x++) {
 			for (int z = -1; z <= 1; z++) {
-				BlockPos checkPos = pos.add(x, 0, z);
+				BlockPos checkPos = pos.offset(x, 0, z);
 
-				if (!world.getBlockState(checkPos).isSolidSide(world, checkPos, Direction.UP)) {
+				if (!world.getBlockState(checkPos).isFaceSturdy(world, checkPos, Direction.UP)) {
 					makePortalPlatformAndDecorate(world, pos, direction);
 					
 					return returnPos;
@@ -731,23 +671,23 @@ public abstract class AoATeleporter implements ITeleporter {
 	}
 	
 	public void makePortalPlatformAndDecorate(World world, BlockPos pos, Direction.Axis direction) {
-		BlockState border = getBorderBlock().getDefaultState();
+		BlockState border = getBorderBlock().defaultBlockState();
 
 		for (int x = pos.getX() - 2; x <= pos.getX() + 2; x++) {
 			for (int z = pos.getZ() - 2; z <= pos.getZ() + 2; z++) {
-				world.setBlockState(new BlockPos(x, pos.getY(), z), border);
+				world.setBlock(new BlockPos(x, pos.getY(), z), border, 2);
 			}
 		}
 	}
 	
 	public void placeInPortal(World world, Entity entity, BlockPos pos) {
-		entity.setMotion(0, 0, 0);
+		entity.setDeltaMovement(0, 0, 0);
 
 		if (entity instanceof ServerPlayerEntity) {
-			((ServerPlayerEntity)entity).connection.setPlayerLocation(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.rotationYaw, entity.rotationPitch);
+			((ServerPlayerEntity)entity).connection.teleport(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.yRot, entity.xRot);
 		}
 		else {
-			entity.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.rotationYaw, entity.rotationPitch);
+			entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.yRot, entity.xRot);
 		}
 	}
 }

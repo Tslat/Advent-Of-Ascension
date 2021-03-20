@@ -35,8 +35,8 @@ public class EchoGull extends BaseGun {
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		ArrayList<Tuple<LivingEntity, Integer>> entityList = new ArrayList<Tuple<LivingEntity, Integer>>();
 
-		for (LivingEntity entity : bullet.world.getEntitiesWithinAABB(LivingEntity.class, bullet.getBoundingBox().grow(30), EntityUtil.Predicates.HOSTILE_MOB)) {
-			int distance = (int)entity.getDistance(bullet);
+		for (LivingEntity entity : bullet.level.getEntitiesOfClass(LivingEntity.class, bullet.getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB)) {
+			int distance = (int)entity.distanceTo(bullet);
 
 			if (entityList.isEmpty()) {
 				entityList.add(new Tuple<LivingEntity, Integer>(entity, distance));
@@ -54,12 +54,12 @@ public class EchoGull extends BaseGun {
 			}
 		}
 
-		AoAScheduler.scheduleSyncronisedTask(new EchoGullTask(bullet.world, entityList), 1);
+		AoAScheduler.scheduleSyncronisedTask(new EchoGullTask(bullet.level, entityList), 1);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PhantomStaff extends BaseStaff<Object> {
 	public PhantomStaff(int durability) {
-		super(durability);
+		super(durability); // TODO move to phantom
 	}
 
 	@Nullable
@@ -38,7 +38,7 @@ public class PhantomStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new PhantomShotEntity(caster, this, 60));
+		world.addFreshEntity(new PhantomShotEntity(caster, this, 60));
 	}
 
 	@Override
@@ -52,8 +52,8 @@ public class PhantomStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

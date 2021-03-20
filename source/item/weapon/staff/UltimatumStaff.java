@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -42,20 +42,20 @@ public class UltimatumStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new UltimatumShotEntity(caster, this, 60));
+		world.addFreshEntity(new UltimatumShotEntity(caster, this, 60));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity && !EntityUtil.isImmuneToSpecialAttacks(target, shooter)) {
-			Vec3d lookVec = shooter.getLookVec();
+			Vector3d lookVec = shooter.getLookAngle();
 
-			double posX = shooter.getPosX() + lookVec.x * 4;
-			double posZ = shooter.getPosZ() + lookVec.z * 4;
+			double posX = shooter.getX() + lookVec.x * 4;
+			double posZ = shooter.getZ() + lookVec.z * 4;
 
-			target.setPositionAndRotation(posX, shooter.getPosY(), posZ, (shooter.rotationYawHead + 180) % 360, 0);
-			target.setRotationYawHead((shooter.rotationYawHead + 180) % 360);
-			target.setPositionAndUpdate(posX, shooter.getPosY(), posZ);
+			target.absMoveTo(posX, shooter.getY(), posZ, (shooter.yHeadRot + 180) % 360, 0);
+			target.setYHeadRot((shooter.yHeadRot + 180) % 360);
+			target.teleportTo(posX, shooter.getY(), posZ);
 			AoAScheduler.scheduleSyncronisedTask(new UltimatumStaffTask(shooter, (LivingEntity)target), 2);
 
 			return true;
@@ -65,9 +65,9 @@ public class UltimatumStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SPEC_IMMUNE, LocaleUtil.ItemDescriptionType.HARMFUL));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

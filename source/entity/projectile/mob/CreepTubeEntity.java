@@ -7,6 +7,8 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.util.WorldUtil;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class CreepTubeEntity extends BaseMobProjectile {
 	public CreepTubeEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -17,19 +19,19 @@ public class CreepTubeEntity extends BaseMobProjectile {
 	}
 
 	public CreepTubeEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.CREEP_TUBE.get(), shooter.world, shooter, projectileType);
+		super(AoAEntities.Projectiles.CREEP_TUBE.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && ticksExisted % 4 == 0)
-			WorldUtil.createExplosion(getThrower(), world, this, 2f);
+		if (!level.isClientSide && tickCount % 4 == 0)
+			WorldUtil.createExplosion(getOwner(), level, this, 2f);
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.075f;
 	}
 }

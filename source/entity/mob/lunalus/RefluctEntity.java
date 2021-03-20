@@ -24,26 +24,6 @@ public class RefluctEntity extends AoAMeleeMob {
 		return 1.84375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 122;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -63,11 +43,11 @@ public class RefluctEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		for (Entity e : world.getEntitiesInAABBexcluding(this, getBoundingBox().grow(3), entity -> entity instanceof BaseEnergyShot)) {
-			e.setMotion(e.getMotion().mul(-1, -1, -1));
+		for (Entity e : level.getEntities(this, getBoundingBox().inflate(3), entity -> entity instanceof BaseEnergyShot)) {
+			e.setDeltaMovement(e.getDeltaMovement().multiply(-1, -1, -1));
 		}
 	}
 }

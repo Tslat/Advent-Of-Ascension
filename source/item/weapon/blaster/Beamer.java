@@ -26,14 +26,14 @@ public class Beamer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new BeamerShotEntity(shooter, this, 60, 0, 0.25f, 0));
-		shooter.world.addEntity(new BeamerShotEntity(shooter, this, 60, 0, 0f, 0));
-		shooter.world.addEntity(new BeamerShotEntity(shooter, this, 60, 0, -0.25f, 0));
+		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0.25f, 0));
+		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0f, 0));
+		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, -0.25f, 0));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

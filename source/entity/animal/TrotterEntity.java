@@ -16,27 +16,12 @@ public class TrotterEntity extends AoAAnimal {
 	public TrotterEntity(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
 
-		setAIMoveSpeed(1.16f);
+		setSpeed(1.16f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 0.875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -61,7 +46,7 @@ public class TrotterEntity extends AoAAnimal {
 	public void tick() {
 		super.tick();
 
-		if (ticksExisted % 140 == 0)
-			setMotion(getMotion().mul(1, 1.2, 1));
+		if (tickCount % 140 == 0)
+			setDeltaMovement(getDeltaMovement().multiply(1, 1.2, 1));
 	}
 }

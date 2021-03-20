@@ -2,6 +2,7 @@ package net.tslat.aoa3.entity.projectile.cannon;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,28 +37,29 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.1f;
 	}
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, 1.5f);
+		Entity shooter = getOwner();
+		WorldUtil.createExplosion(shooter, level, this, 1.5f);
 
-		if (!world.isRemote && WorldUtil.checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && world.isAirBlock(getPosition()) && !world.getDimension().doesWaterVaporize()) {
-			if (!WorldUtil.canModifyBlock(world, getPosition(), owner instanceof PlayerEntity ? owner : null))
+		if (!level.isClientSide && WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && level.isEmptyBlock(blockPosition()) && !level.dimensionType().ultraWarm()) {
+			if (!WorldUtil.canModifyBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null))
 				return;
 
 			int i = 1;
 
-			while (world.getBlockState(getPosition().down(i)).getMaterial().isReplaceable() && getPosition().getY() - i >= 0) {
+			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {
 				i++;
 			}
 
-			if (getPosition().getY() - i <= 0)
+			if (blockPosition().getY() - i <= 0)
 				return;
 
-			world.setBlockState(getPosition().down(i - 1), Blocks.WATER.getDefaultState().with(FlowingFluidBlock.LEVEL, 7));
+			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.WATER.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, 7));
 		}
 	}
 }

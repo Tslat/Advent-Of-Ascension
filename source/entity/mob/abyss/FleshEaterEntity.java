@@ -24,26 +24,6 @@ public class FleshEaterEntity extends AoAMeleeMob {
 		return 1.125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -61,12 +41,12 @@ public class FleshEaterEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
+	public boolean addEffect(EffectInstance effect) {
 		return false;
 	}
 
 	@Override
-	public boolean canBeHitWithPotion() {
+	public boolean isAffectedByPotions() {
 		return false;
 	}
 
@@ -76,7 +56,7 @@ public class FleshEaterEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 }

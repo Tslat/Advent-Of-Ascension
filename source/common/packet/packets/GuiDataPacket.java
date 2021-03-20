@@ -17,19 +17,19 @@ public class GuiDataPacket implements AoAPacket {
 
 	@Override
 	public void encode(PacketBuffer buffer) {
-		buffer.writeString(type.toString());
-		buffer.writeString(stringData);
+		buffer.writeUtf(type.toString());
+		buffer.writeUtf(stringData);
 	}
 
 	public static GuiDataPacket decode(PacketBuffer buffer) {
-		return new GuiDataPacket(Type.valueOf(buffer.readString(32767)), buffer.readString(32767));
+		return new GuiDataPacket(Type.valueOf(buffer.readUtf(32767)), buffer.readUtf(32767));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
 		switch (type) {
 			case FRAME_BENCH_SELECTION:
-				if (context.get().getSender().openContainer instanceof FrameBenchContainer)
-					((FrameBenchContainer)context.get().getSender().openContainer).changeSelection(stringData);
+				if (context.get().getSender().containerMenu instanceof FrameBenchContainer)
+					((FrameBenchContainer)context.get().getSender().containerMenu).changeSelection(stringData);
 		}
 
 		context.get().setPacketHandled(true);

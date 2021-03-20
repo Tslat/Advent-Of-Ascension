@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.entity.projectile.cannon.MoonShotEntity;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.util.NumberUtil;
 
 import javax.annotation.Nullable;
@@ -49,14 +49,14 @@ public class MoonShotRenderer extends EntityRenderer<MoonShotEntity> {
 					entity.toggle2 = !entity.toggle2;
 			}
 
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 105, 180)), entity.getPosX(), entity.getPosY() + entity.yOffset1, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 255, 255)), entity.getPosX(), entity.getPosY() + entity.yOffset2, entity.getPosZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 105, 180)), entity.getX(), entity.getY() + entity.yOffset1, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY() + entity.yOffset2, entity.getZ(), 0, 0, 0);
 		}
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(MoonShotEntity entity) {
+	public ResourceLocation getTextureLocation(MoonShotEntity entity) {
 		return texture;
 	}
 }

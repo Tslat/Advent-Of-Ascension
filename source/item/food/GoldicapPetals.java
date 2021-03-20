@@ -16,13 +16,13 @@ import java.util.List;
 
 public class GoldicapPetals extends Item {
 	public GoldicapPetals() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).food(
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(
 				new Food.Builder()
-						.hunger(0)
-						.saturation(0)
-						.setAlwaysEdible()
-						.effect(new PotionUtil.EffectBuilder(Effects.SPEED, 40).level(2).build(), 1)
-						.effect(new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 40).level(2).build(), 1)
+						.nutrition(0)
+						.saturationMod(0)
+						.alwaysEat()
+						.effect(new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 40).level(2).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.JUMP, 40).level(2).build(), 1)
 						.build()));
 	}
 
@@ -32,7 +32,7 @@ public class GoldicapPetals extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -26,26 +26,6 @@ public class DevourerEntity extends AoAMeleeMob {
 		return 0.9375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 135;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 14d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

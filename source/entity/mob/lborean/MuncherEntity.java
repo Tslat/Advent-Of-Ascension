@@ -3,46 +3,37 @@ package net.tslat.aoa3.entity.mob.lborean;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class MuncherEntity extends AoAMeleeMob {
-	public MuncherEntity(EntityType<? extends MonsterEntity> entityType, World world) {
-		super(entityType, world);
+public class MuncherEntity extends AoAWaterMeleeMob {
+	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("muncher.snap", false);
 
-		isSlipperyMovement = true;
-		setAIMoveSpeed(1.6f);
+	public MuncherEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
+		super(entityType, world);
+	}
+
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25f, false));
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.96875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.5;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 135;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 13.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3;
 	}
 
 	@Nullable
@@ -64,10 +55,26 @@ public class MuncherEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
-			heal(0.2f);
+		if (!onGround)
+			setDeltaMovement(getDeltaMovement().add(0, -0.005, 0));
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(new AnimationController<MuncherEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<MuncherEntity>() {
+			@Override
+			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+				if (swinging) {
+					animationEvent.getController().setAnimation(BITE_ANIMATION);
+
+					return PlayState.CONTINUE;
+				}
+
+				return PlayState.STOP;
+			}
+		}));
 	}
 }

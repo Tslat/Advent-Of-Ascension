@@ -22,31 +22,6 @@ public class ConstructOfFlightEntity extends AoAFlyingMeleeMob {
         return 0.5f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 55;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 3;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

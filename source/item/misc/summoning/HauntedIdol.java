@@ -15,6 +15,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.boss.BaneEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -29,20 +30,20 @@ public class HauntedIdol extends BossSpawningItem {
 	public void spawnBoss(World world, ServerPlayerEntity summoner, double posX, double posY, double posZ) {
 		BaneEntity bane = new BaneEntity(AoAEntities.Mobs.BANE.get(), world);
 
-		bane.setLocationAndAngles(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
-		world.addEntity(bane);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.bane.spawn", summoner.getDisplayName().getFormattedText()), world, new BlockPos(posX, posY, posZ), 50);
+		bane.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
+		world.addFreshEntity(bane);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.bane.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
 	public boolean canSpawnHere(World world, ServerPlayerEntity player, double posX, double posY, double posZ) {
-		if (world.getDimension().getType() != AoADimensions.GRECKON.type()) {
+		if (!WorldUtil.isWorld(world, AoADimensions.GRECKON.key)) {
 			PlayerUtil.notifyPlayer(player, "entity.aoa3.bane.wrongDimension", TextFormatting.RED);
 
 			return false;
 		}
 
-		if (world.checkBlockCollision(new AxisAlignedBB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 2.5d, posZ + 0.5d))) {
+		if (!world.noCollision(new AxisAlignedBB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 2.5d, posZ + 0.5d))) {
 			PlayerUtil.notifyPlayer(player, "message.feedback.spawnBoss.noSpace", TextFormatting.RED);
 
 			return false;
@@ -52,7 +53,7 @@ public class HauntedIdol extends BossSpawningItem {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getLocaleMessage("items.description.boss_summon_item.unstable", TextFormatting.AQUA));
 	}

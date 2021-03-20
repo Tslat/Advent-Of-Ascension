@@ -18,7 +18,7 @@ import java.util.HashSet;
 
 public abstract class AdventArmour extends ArmorItem {
 	public AdventArmour(IArmorMaterial material, EquipmentSlotType slot) {
-		super(material, slot, new Item.Properties().group(AoAItemGroups.ARMOUR).maxDamage(material.getDurability(slot)));
+		super(material, slot, new Item.Properties().tab(AoAItemGroups.ARMOUR).durability(material.getDurabilityForSlot(slot)));
 	}
 
 	@Nullable
@@ -142,7 +142,7 @@ public abstract class AdventArmour extends ArmorItem {
 	public void onPlayerDeath(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDeathEvent event) {}
 
 	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
+	public boolean isValidRepairItem(ItemStack stack, ItemStack repairMaterial) {
 		return false;
 	}
 

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.generation.ore;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -9,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.util.RandomUtil;
+
+import net.minecraft.block.AbstractBlock.Properties;
 
 public class OreBlock extends Block {
 	private final int minXp;
@@ -26,12 +29,13 @@ public class OreBlock extends Block {
 	}
 
 	private static Properties generateBlockProperties(MaterialColor mapColour, int harvestLevel) {
-		Properties blockProperties = Properties.create(Material.ROCK, mapColour);
+		AbstractBlock.Properties blockProperties = AbstractBlock.Properties.of(Material.STONE, mapColour);
 
-		blockProperties.hardnessAndResistance(5.0f, 10f);
+		blockProperties.strength(5.0f, 10f);
 		blockProperties.sound(SoundType.STONE);
 		blockProperties.harvestTool(ToolType.PICKAXE);
 		blockProperties.harvestLevel(harvestLevel);
+		blockProperties.requiresCorrectToolForDrops();
 
 		return blockProperties;
 	}

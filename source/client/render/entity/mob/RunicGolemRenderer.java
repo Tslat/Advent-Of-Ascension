@@ -22,7 +22,7 @@ public class RunicGolemRenderer extends AoAMobRenderer {
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity runicGolem) {
+	public ResourceLocation getTextureLocation(MobEntity runicGolem) {
 		return texture;
 	}
 }

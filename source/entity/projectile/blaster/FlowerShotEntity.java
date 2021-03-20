@@ -26,7 +26,7 @@ public class FlowerShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.05f;
 	}
 }

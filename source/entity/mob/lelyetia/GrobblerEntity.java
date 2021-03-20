@@ -22,26 +22,6 @@ public class GrobblerEntity extends AoAMeleeMob {
 		return 1.87f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 85d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

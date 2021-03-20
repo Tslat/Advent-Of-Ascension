@@ -23,26 +23,6 @@ public class RawboneEntity extends AoAMeleeMob {
 		return 1f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 64;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -67,7 +47,7 @@ public class RawboneEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 }

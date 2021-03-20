@@ -16,16 +16,11 @@ public class BoneyBlock extends Block {
 	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.001d, 0.001d, 0.001d, 0.999d, 0.999d, 0.999d));
 
 	public BoneyBlock() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.GRAY, 3, 3, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_GRAY, 3, 3, SoundType.STONE));
 	}
 
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return SHAPE;
-	}
-
-	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
 	}
 }

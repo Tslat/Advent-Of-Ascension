@@ -26,26 +26,6 @@ public class DustonEntity extends AoAFlyingMeleeMob {
 		return 0.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 129;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
@@ -56,11 +36,11 @@ public class DustonEntity extends AoAFlyingMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && isAlive() && ticksExisted % 20 == 0 && world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
+		if (!level.isClientSide && isAlive() && tickCount % 20 == 0 && level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
 			cooldown -= 20;
 
 			if (cooldown <= 0) {
-				world.addEntity(new DustStriderEntity(this));
+				level.addFreshEntity(new DustStriderEntity(this));
 
 				cooldown = 600;
 			}

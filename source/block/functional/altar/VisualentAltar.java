@@ -13,16 +13,16 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class VisualentAltar extends BossAltarBlock {
 	public VisualentAltar() {
-		super(MaterialColor.PURPLE_TERRACOTTA);
+		super(MaterialColor.TERRACOTTA_PURPLE);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		VisualentEntity visualent = new VisualentEntity(AoAEntities.Mobs.VISUALENT.get(), player.world);
+		VisualentEntity visualent = new VisualentEntity(AoAEntities.Mobs.VISUALENT.get(), player.level);
 
-		visualent.setPositionAndUpdate(blockPos.getX() + 0.5, blockPos.up().getY(), blockPos.getZ() + 0.5);
-		player.world.addEntity(visualent);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.visualent.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		visualent.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
+		player.level.addFreshEntity(visualent);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.visualent.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

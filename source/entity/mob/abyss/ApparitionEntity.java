@@ -24,26 +24,6 @@ public class ApparitionEntity extends AoAMeleeMob {
 		return 1.28125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 82;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -61,17 +41,17 @@ public class ApparitionEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
+	public boolean addEffect(EffectInstance effect) {
 		return false;
 	}
 
 	@Override
-	public boolean canBeHitWithPotion() {
+	public boolean isAffectedByPotions() {
 		return false;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 

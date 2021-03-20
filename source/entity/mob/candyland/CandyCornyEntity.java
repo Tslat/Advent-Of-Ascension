@@ -22,26 +22,6 @@ public class CandyCornyEntity extends AoAMeleeMob {
 		return 1.53125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 83;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -55,8 +35,8 @@ public class CandyCornyEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (isInWater() && getHealth() > 0)
 			heal(0.4f);

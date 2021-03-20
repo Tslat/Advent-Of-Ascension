@@ -17,29 +17,29 @@ import java.util.List;
 
 public class TrilliadLeaves extends Item {
 	public TrilliadLeaves() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).food(
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(
 				new Food.Builder()
-						.hunger(0)
-						.saturation(0)
-						.setAlwaysEdible()
+						.nutrition(0)
+						.saturationMod(0)
+						.alwaysEat()
 						.effect(new PotionUtil.EffectBuilder(Effects.BLINDNESS, 130).build(), 1)
-						.effect(new PotionUtil.EffectBuilder(Effects.SLOWNESS, 100).level(11).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 100).level(11).build(), 1)
 						.effect(new PotionUtil.EffectBuilder(Effects.REGENERATION, 100).level(3).build(), 1)
 						.effect(new PotionUtil.EffectBuilder(Effects.POISON, 100).level(8).build(), 1)
-						.effect(new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 100).level(129).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.JUMP, 100).level(129).build(), 1)
 						.build()));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
-		if (!world.isRemote)
-			entity.removePotionEffect(Effects.NAUSEA);
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
+		if (!world.isClientSide)
+			entity.removeEffect(Effects.CONFUSION);
 
-		return super.onItemUseFinish(stack, world, entity);
+		return super.finishUsingItem(stack, world, entity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

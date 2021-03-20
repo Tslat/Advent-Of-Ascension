@@ -22,26 +22,6 @@ public class BasiliskEntity extends AoAMeleeMob {
         return sizeIn.height * 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 119;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 14;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

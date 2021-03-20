@@ -24,26 +24,6 @@ public class SabretoothEntity extends AoAMeleeMob {
 		return 1.3125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.65d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.29d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

@@ -19,17 +19,17 @@ import net.tslat.aoa3.util.skill.AnimaUtil;
 
 public class FragmentedAnimaStone extends Item {
 	public FragmentedAnimaStone() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
-		ItemStack stack = context.getItem();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		ItemStack stack = context.getItemInHand();
 
-		if (player != null && !player.canPlayerEdit(pos.offset(context.getFace()), context.getFace(), stack))
+		if (player != null && !player.mayUseItemAt(pos.relative(context.getClickedFace()), context.getClickedFace(), stack))
 			return ActionResultType.FAIL;
 
 		BlockState state = world.getBlockState(pos);
@@ -44,30 +44,30 @@ public class FragmentedAnimaStone extends Item {
 		if (state.getBlock() instanceof IGrowable) {
 			IGrowable growable = (IGrowable)state.getBlock();
 
-			if (growable.canGrow(world, pos, state, world.isRemote) && world instanceof ServerWorld) {
+			if (growable.isValidBonemealTarget(world, pos, state, world.isClientSide) && world instanceof ServerWorld) {
 				PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).stats();
 				Block block = state.getBlock();
 
 				if (block instanceof SaplingBlock) {
-					((SaplingBlock)block).placeTree((ServerWorld)world, pos, state, world.rand);
+					((SaplingBlock)block).advanceTree((ServerWorld)world, pos, state, world.random);
 				}
 				else if (block instanceof CropsBlock) {
-					world.setBlockState(pos, ((CropsBlock)block).withAge(((CropsBlock)block).getMaxAge()), 2);
+					world.setBlock(pos, ((CropsBlock)block).getStateForAge(((CropsBlock)block).getMaxAge()), 2);
 				}
 				else if (block instanceof CocoaBlock) {
-					world.setBlockState(pos, state.with(CocoaBlock.AGE, 2), 2);
+					world.setBlock(pos, state.setValue(CocoaBlock.AGE, 2), 2);
 				}
 				else {
 					int backupCounter = block instanceof GrassBlock ? 1 : 10;
 
 					while (world.getBlockState(pos).equals(state) && backupCounter > 0) {
 						backupCounter--;
-						growable.grow((ServerWorld)world, world.rand, pos, state);
+						growable.performBonemeal((ServerWorld)world, world.random, pos, state);
 					}
 				}
 
 				plStats.addXp(Skills.ANIMA, PlayerUtil.getXpRequiredForNextLevel(plStats.getLevel(Skills.ANIMA)) / AnimaUtil.getExpDenominator(plStats.getLevel(Skills.ANIMA)), false, false);
-				world.playEvent(2005, pos, 0);
+				world.levelEvent(2005, pos, 0);
 
 				if (!player.isCreative())
 					stack.shrink(1);

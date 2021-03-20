@@ -26,15 +26,15 @@ public class OccultBlockRenderer extends EntityRenderer<OccultBlockEntity> {
 		if (entity.isAlive()) {
 			Minecraft mc = Minecraft.getInstance();
 			BlockState block = entity.getMarkedBlock();
-			OutlineLayerBuffer renderTypeBuffer = mc.getRenderTypeBuffers().getOutlineBufferSource();
+			OutlineLayerBuffer renderTypeBuffer = mc.renderBuffers().outlineBufferSource();
 
 			applyColourToBuffer(renderTypeBuffer, block);
 
-			matrix.push();
+			matrix.pushPose();
 			matrix.scale(1.001f, 1.001f, 1.001f);
 			matrix.translate(-0.0005f, 0.0005f, -0.0005f);
-			mc.getBlockRendererDispatcher().renderBlock(block, matrix, renderTypeBuffer, LightTexture.packLight(15, 15), OverlayTexture.NO_OVERLAY);
-			matrix.pop();
+			mc.getBlockRenderer().renderSingleBlock(block, matrix, renderTypeBuffer, LightTexture.pack(15, 15), OverlayTexture.NO_OVERLAY);
+			matrix.popPose();
 		}
 
 		super.render(entity, entityYaw, partialTicks, matrix, bufferIn, packedLightIn);
@@ -57,7 +57,7 @@ public class OccultBlockRenderer extends EntityRenderer<OccultBlockEntity> {
 	}
 
 	@Nullable
-	public ResourceLocation getEntityTexture(OccultBlockEntity entity) {
+	public ResourceLocation getTextureLocation(OccultBlockEntity entity) {
 		return texture;
 	}
 }

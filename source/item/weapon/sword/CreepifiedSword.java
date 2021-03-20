@@ -25,19 +25,19 @@ public class CreepifiedSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.world.isRemote && RandomUtil.oneInNChance(10) && (!(attacker instanceof PlayerEntity) || attackCooldown > 0.75f)) {
-			final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.world);
+		if (!attacker.level.isClientSide && RandomUtil.oneInNChance(10) && (!(attacker instanceof PlayerEntity) || attackCooldown > 0.75f)) {
+			final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.level);
 
-			creeper.setLocationAndAngles(target.getPosX(), target.getPosY(), target.getPosZ(), random.nextFloat() * 360.0f, 0.0f);
-			creeper.setAttackTarget(target);
-			creeper.setOwnerId(attacker.getUniqueID());
-			target.world.addEntity(creeper);
+			creeper.moveTo(target.getX(), target.getY(), target.getZ(), random.nextFloat() * 360.0f, 0.0f);
+			creeper.setTarget(target);
+			creeper.setOwnerUUID(attacker.getUUID());
+			target.level.addFreshEntity(creeper);
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

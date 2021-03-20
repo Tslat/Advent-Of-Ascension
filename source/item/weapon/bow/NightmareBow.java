@@ -20,27 +20,27 @@ public class NightmareBow extends BaseBow {
 
 	@Override
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		double xOffset = MathHelper.cos(shooter.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
-		double zOffset = MathHelper.sin(shooter.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
+		double xOffset = MathHelper.cos(shooter.yRot / 180.0F * (float)Math.PI) * 0.7F;
+		double zOffset = MathHelper.sin(shooter.yRot / 180.0F * (float)Math.PI) * 0.7F;
 
 		CustomArrowEntity centralArrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
 		CustomArrowEntity leftArrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, getDamage());
 		CustomArrowEntity rightArrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, getDamage());
 
-		leftArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-		rightArrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+		leftArrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+		rightArrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 
-		leftArrow.setPositionAndUpdate(leftArrow.getPosX() + xOffset, leftArrow.getPosY(), leftArrow.getPosZ() + zOffset);
-		rightArrow.setPositionAndUpdate(rightArrow.getPosX() - xOffset, rightArrow.getPosY(), rightArrow.getPosZ() - zOffset);
-		shooter.world.addEntity(leftArrow);
-		shooter.world.addEntity(rightArrow);
+		leftArrow.teleportTo(leftArrow.getX() + xOffset, leftArrow.getY(), leftArrow.getZ() + zOffset);
+		rightArrow.teleportTo(rightArrow.getX() - xOffset, rightArrow.getY(), rightArrow.getZ() - zOffset);
+		shooter.level.addFreshEntity(leftArrow);
+		shooter.level.addFreshEntity(rightArrow);
 
 		return centralArrow;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

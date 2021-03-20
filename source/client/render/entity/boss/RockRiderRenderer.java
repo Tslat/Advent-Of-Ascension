@@ -20,13 +20,13 @@ public class RockRiderRenderer extends MobRenderer<RockRiderEntity, EntityModel<
 	}
 
 	@Override
-	protected void preRenderCallback(RockRiderEntity rockRider, MatrixStack matrix, float partialTicks) {
+	protected void scale(RockRiderEntity rockRider, MatrixStack matrix, float partialTicks) {
 		matrix.scale(1.5f, 1.5f, 1.5f);
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(RockRiderEntity corallus) {
+	public ResourceLocation getTextureLocation(RockRiderEntity corallus) {
 		return corallus.isAlternateForm() ? ALTERNATE_TEXTURE : TEXTURE;
 	}
 }

@@ -33,22 +33,22 @@ public class VileVanquisher extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (!target.isAlive() || (target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0)) {
-			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.world, (target.getPosX() + bullet.getPosX()) / 2d, (target.getPosY() + bullet.getPosY()) / 2d, (target.getPosZ() + bullet.getPosZ()) / 2d);
+			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 			cloud.setRadius(0.5f);
 			cloud.setDuration(10);
 			cloud.setRadiusPerTick(0.45f);
 			cloud.setWaitTime(0);
-			cloud.setColor(NumberUtil.RGB(51, 102, 0));
+			cloud.setFixedColor(NumberUtil.RGB(51, 102, 0));
 			cloud.addEffect(new EffectInstance(Effects.POISON, 150, 0, false, true));
 
-			bullet.world.addEntity(cloud);
+			bullet.level.addFreshEntity(cloud);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

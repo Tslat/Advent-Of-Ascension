@@ -2,7 +2,8 @@ package net.tslat.aoa3.entity.boss;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -24,17 +25,15 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.entity.SharedMonsterAttributes.KNOCKBACK_RESISTANCE;
-
 public class SmashEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getType().getDescription()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public SmashEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;
 
-		this.setAIMoveSpeed(2.1f);
+		this.setSpeed(2.1f);
 	}
 
 	@Nullable
@@ -62,32 +61,12 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 500;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 2.35f;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -98,38 +77,38 @@ public class SmashEntity extends AoAMeleeMob {
 
 			if (percentHealth > 0) {
 				double resist = 1;
-				IAttributeInstance attrib = ((LivingEntity)target).getAttribute(KNOCKBACK_RESISTANCE);
+				ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 				if (attrib != null)
 					resist -= attrib.getValue();
 
 				if (percentHealth <= 20) {
-					target.addVelocity(getMotion().getX() * 5.2 * resist, 3.5 * resist, getMotion().getZ() * 5.2 * resist);
+					target.push(getDeltaMovement().x() * 5.2 * resist, 3.5 * resist, getDeltaMovement().z() * 5.2 * resist);
 				}
 				else if (percentHealth <= 40) {
-					target.addVelocity(getMotion().getX() * 5.8 * resist, 3 * resist, getMotion().getZ() * 5.8 * resist);
+					target.push(getDeltaMovement().x() * 5.8 * resist, 3 * resist, getDeltaMovement().z() * 5.8 * resist);
 				}
 				else if (percentHealth <= 60) {
-					target.addVelocity(getMotion().getX() * 5.4 * resist, 2.5 * resist, getMotion().getZ() * 5.4 * resist);
+					target.push(getDeltaMovement().x() * 5.4 * resist, 2.5 * resist, getDeltaMovement().z() * 5.4 * resist);
 				}
 				else if (percentHealth <= 80) {
-					target.addVelocity(getMotion().getX() * 5 * resist, 2 * resist, getMotion().getZ() * 5 * resist);
+					target.push(getDeltaMovement().x() * 5 * resist, 2 * resist, getDeltaMovement().z() * 5 * resist);
 				}
 
-				target.velocityChanged = true;
+				target.hurtMarked = true;
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.smash.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.smash.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -139,38 +118,38 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.SMASH_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.SMASH_MUSIC.getId()));
 		bossInfo.removePlayer(player);

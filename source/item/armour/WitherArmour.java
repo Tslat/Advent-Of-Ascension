@@ -19,7 +19,7 @@ import java.util.List;
 
 public class WitherArmour extends AdventArmour {
 	public WitherArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:wither", 53, new int[] {4, 8, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:wither", 53, new int[] {4, 8, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class WitherArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.wither_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

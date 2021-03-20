@@ -22,24 +22,24 @@ public class DustopianLamp extends Block {
 	public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
 	public DustopianLamp() {
-		super(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.GRAY, 5f, 10f, SoundType.GLASS).lightValue(14));
+		super(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_GRAY, 5f, 10f, SoundType.GLASS).lightLevel(state -> state.getValue(LIT) ? 14 : 0));
 
-		setDefaultState(getDefaultState().with(LIT, false));
+		registerDefaultState(defaultBlockState().setValue(LIT, false));
 	}
 
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		return state.get(LIT) ? 14 : 0;
+		return state.getValue(LIT) ? 14 : 0;
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.DARKLY_POWDER.get() && !state.get(LIT)) {
-			if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.DARKLY_POWDER.get() && !state.getValue(LIT)) {
+			if (!world.isClientSide()) {
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
-				world.setBlockState(pos, getDefaultState().with(LIT, true));
+				world.setBlockAndUpdate(pos, defaultBlockState().setValue(LIT, true));
 			}
 
 			return ActionResultType.SUCCESS;
@@ -49,7 +49,7 @@ public class DustopianLamp extends Block {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(LIT);
 	}
 }

@@ -24,26 +24,6 @@ public class CryptidEntity extends AoAMeleeMob {
 		return 0.75f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 55;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -61,15 +41,10 @@ public class CryptidEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected int getMaxSpawnHeight() {
-		return 27;
-	}
+	public void aiStep() {
+		super.aiStep();
 
-	@Override
-	public void livingTick() {
-		super.livingTick();
-
-		if (world.getBlockState(getPosition().down()).getBlock() == AoABlocks.HELLSTONE.get() && world.getBlockState(getPosition()).getMaterial().isReplaceable())
-			world.setBlockState(getPosition(), Blocks.FIRE.getDefaultState());
+		if (level.getBlockState(blockPosition().below()).getBlock() == AoABlocks.HELLSTONE.get() && level.getBlockState(blockPosition()).getMaterial().isReplaceable())
+			level.setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
 	}
 }

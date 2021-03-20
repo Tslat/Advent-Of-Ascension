@@ -13,11 +13,11 @@ public class AlluricornSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		AlluricornEntity alluricorn = new AlluricornEntity(AoAEntities.Minions.ALLURICORN.get(), pl.world);
+		AlluricornEntity alluricorn = new AlluricornEntity(AoAEntities.Minions.ALLURICORN.get(), pl.level);
 
-		alluricorn.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		alluricorn.setTamedBy(pl);
-		pl.world.addEntity(alluricorn);
+		alluricorn.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		alluricorn.tame(pl);
+		pl.level.addFreshEntity(alluricorn);
 
 		return alluricorn;
 	}

@@ -2,6 +2,7 @@ package net.tslat.aoa3.library.scheduling.async;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -25,20 +26,20 @@ public class KrorSpawnTask implements Runnable {
 
 	public KrorSpawnTask(ServerPlayerEntity player, BlockPos pos) {
 		this.player = player;
-		this.world = player.world;
+		this.world = player.level;
 		this.chargingTablePos = pos;
 	}
 
 	@Override
 	public void run() {
-		if (player.world != world || player.getDistanceSq(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 100) {
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.kror.tooFar"));
+		if (player.level != world || player.distanceToSqr(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 100) {
+			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.kror.tooFar"), Util.NIL_UUID);
 
 			return;
 		}
 
 		if (world.getDifficulty() == Difficulty.PEACEFUL) {
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.difficultyFail"));
+			player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.difficultyFail"), Util.NIL_UUID);
 
 			return;
 		}
@@ -50,8 +51,8 @@ public class KrorSpawnTask implements Runnable {
 			if (PlayerUtil.consumeResource(player, Resources.ENERGY, 20, false)) {
 				chargedAmount += 20;
 
-				((ServerWorld)world).spawnParticle(ParticleTypes.END_ROD, chargingTablePos.getX() + 0.5d, chargingTablePos.getY() + 0.9, chargingTablePos.getZ() + 0.5d, 1, 0, 0, 0, 0d);
-				((ServerWorld)world).spawnParticle(ParticleTypes.END_ROD, player.getPosX(), player.getBoundingBox().maxY + 0.5d, player.getPosZ(), 1, 0, 0, 0, 0d);
+				((ServerWorld)world).sendParticles(ParticleTypes.END_ROD, chargingTablePos.getX() + 0.5d, chargingTablePos.getY() + 0.9, chargingTablePos.getZ() + 0.5d, 1, 0, 0, 0, 0d);
+				((ServerWorld)world).sendParticles(ParticleTypes.END_ROD, player.getX(), player.getBoundingBox().maxY + 0.5d, player.getZ(), 1, 0, 0, 0, 0d);
 
 				schedule(1, TimeUnit.SECONDS);
 			}
@@ -63,24 +64,24 @@ public class KrorSpawnTask implements Runnable {
 			KrorEntity kror = new KrorEntity(AoAEntities.Mobs.KROR.get(), world);
 			int i = 0;
 
-			kror.setPosition(chargingTablePos.getX() - 0.5d, chargingTablePos.getY(), chargingTablePos.getZ() - 0.5 + 10);
+			kror.setPos(chargingTablePos.getX() - 0.5d, chargingTablePos.getY(), chargingTablePos.getZ() - 0.5 + 10);
 
-			while (world.checkBlockCollision(kror.getBoundingBox())) {
+			while (!world.noCollision(kror.getBoundingBox())) {
 				i++;
-				Random rand = kror.getRNG();
+				Random rand = kror.getRandom();
 
-				kror.setPosition( kror.getPosX() + rand.nextInt(20) - 10, kror.getPosY(), kror.getPosZ() + rand.nextInt(20) - 10);
+				kror.setPos( kror.getX() + rand.nextInt(20) - 10, kror.getY(), kror.getZ() + rand.nextInt(20) - 10);
 
 				if (i > 64) {
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.noSpace"));
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.noSpace"), Util.NIL_UUID);
 
 					return;
 				}
 			}
 
-			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.kror.spawn", player.getDisplayName().getFormattedText()), world, player.getPosition(), 50);
-			world.addEntity(kror);
-			kror.setAttackTarget(player);
+			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.kror.spawn", player.getDisplayName()), world, player.blockPosition(), 50);
+			world.addFreshEntity(kror);
+			kror.setTarget(player);
 		}
 	}
 

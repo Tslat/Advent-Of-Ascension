@@ -47,7 +47,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile, IRender
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.075f;
 	}
 
@@ -56,21 +56,21 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile, IRender
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && ticksExisted <= 1 && getThrower() == null)
+	protected void onHit(RayTraceResult result) {
+		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
 			return;
 
-		super.onImpact(result);
+		super.onHit(result);
 	}
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, explosionStrength);
+		WorldUtil.createExplosion(getOwner(), level, this, explosionStrength);
 	}
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		WorldUtil.createExplosion(owner, world, this, explosionStrength);
+		WorldUtil.createExplosion(getOwner(), level, this, explosionStrength);
 	}
 
 	@Override

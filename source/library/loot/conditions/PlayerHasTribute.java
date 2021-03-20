@@ -6,13 +6,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.*;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameter;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -28,16 +25,21 @@ public class PlayerHasTribute implements ILootCondition {
 	}
 
 	@Override
-	public Set<LootParameter<?>> getRequiredParameters() {
+	public LootConditionType getType() {
+		return AoALootOperations.LootConditions.PLAYER_HAS_TRIBUTE;
+	}
+
+	@Override
+	public Set<LootParameter<?>> getReferencedContextParams() {
 		return ImmutableSet.of(LootParameters.KILLER_ENTITY);
 	}
 
 	@Override
 	public boolean test(LootContext lootContext) {
-		Entity entity = lootContext.get(LootParameters.KILLER_ENTITY);
+		Entity entity = lootContext.getParamOrNull(LootParameters.KILLER_ENTITY);
 
 		if (entity == null)
-			entity = lootContext.get(LootParameters.THIS_ENTITY);
+			entity = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
 
 		if (entity instanceof ServerPlayerEntity)
 			return PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().getTribute(deity) >= amount;
@@ -45,11 +47,7 @@ public class PlayerHasTribute implements ILootCondition {
 		return false;
 	}
 
-	public static class Serializer extends AbstractSerializer<PlayerHasTribute> {
-		public Serializer() {
-			super(new ResourceLocation(AdventOfAscension.MOD_ID, "player_has_tribute"), PlayerHasTribute.class);
-		}
-
+	public static class Serializer implements ILootSerializer<PlayerHasTribute> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasTribute playerHasTribute, JsonSerializationContext jsonSerializationContext) {
 			json.addProperty("deity", playerHasTribute.deity.toString().toLowerCase());
@@ -58,7 +56,7 @@ public class PlayerHasTribute implements ILootCondition {
 
 		@Override
 		public PlayerHasTribute deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new PlayerHasTribute(Deities.valueOf(JSONUtils.getString(json, "deity").toUpperCase()), JSONUtils.getInt(json, "amount"));
+			return new PlayerHasTribute(Deities.valueOf(JSONUtils.getAsString(json, "deity").toUpperCase()), JSONUtils.getAsInt(json, "amount"));
 		}
 	}
 }

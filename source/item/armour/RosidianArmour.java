@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RosidianArmour extends AdventArmour {
 	public RosidianArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:rosidian", 55, new int[] {4, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:rosidian", 55, new int[] {4, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -44,15 +44,15 @@ public class RosidianArmour extends AdventArmour {
 	}
 
 	private void spawnRosid(PlayerEntity pl) {
-		RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), pl.world);
+		RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), pl.level);
 
-		rosid.setTamedBy(pl);
-		rosid.setPosition(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		pl.world.addEntity(rosid);
+		rosid.tame(pl);
+		rosid.setPos(pl.getX(), pl.getY(), pl.getZ());
+		pl.level.addFreshEntity(rosid);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.rosidian_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

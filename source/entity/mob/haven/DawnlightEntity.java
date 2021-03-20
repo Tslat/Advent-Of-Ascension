@@ -3,43 +3,23 @@ package net.tslat.aoa3.entity.mob.haven;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.base.AoAAnimal;
 
 import javax.annotation.Nullable;
 
-public class DawnlightEntity extends AoAMeleeMob {
-	public DawnlightEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+public class DawnlightEntity extends AoAAnimal {
+	public DawnlightEntity(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.1875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 87;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -58,5 +38,10 @@ public class DawnlightEntity extends AoAMeleeMob {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_DAWNLIGHT_HURT.get();
+	}
+
+	@Override
+	protected boolean isBreedable() {
+		return false;
 	}
 }

@@ -22,7 +22,7 @@ public class FriendlyCreeperRenderer extends LivingRenderer<MobEntity, EntityMod
 	}
 
 	@Override
-	protected void preRenderCallback(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
 		float flashIntensity = ((FriendlyCreeperEntity)entity).getCreeperFlashIntensity(partialTicks);
 		float scaleRotationMod = 1.0F + MathHelper.sin(flashIntensity * 100.0F) * flashIntensity * 0.01F;
 		flashIntensity = (float)Math.pow(MathHelper.clamp(flashIntensity, 0.0F, 1.0F), 3);
@@ -33,14 +33,14 @@ public class FriendlyCreeperRenderer extends LivingRenderer<MobEntity, EntityMod
 	}
 
 	@Override
-	protected float getOverlayProgress(MobEntity entity, float partialTicks) {
+	protected float getWhiteOverlayProgress(MobEntity entity, float partialTicks) {
 		float flashIntensity = ((FriendlyCreeperEntity)entity).getCreeperFlashIntensity(partialTicks);
 
 		return (int)(flashIntensity * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(flashIntensity, 0.5F, 1.0F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity entity) {
+	public ResourceLocation getTextureLocation(MobEntity entity) {
 		return textures;
 	}
 }

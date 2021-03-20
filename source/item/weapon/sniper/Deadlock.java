@@ -33,12 +33,12 @@ public class Deadlock extends BaseSniper {
 
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier * (float)(1 + Math.min(0.5, Math.abs(target.getMotion().getX() * target.getMotion().getZ() * 50))));
+		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier * (float)(1 + Math.min(0.5, Math.abs(target.getDeltaMovement().x() * target.getDeltaMovement().z() * 50))));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

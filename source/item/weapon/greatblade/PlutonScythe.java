@@ -4,8 +4,9 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public class PlutonScythe extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
-		if (!attacker.world.isRemote) {
+		if (!attacker.level.isClientSide) {
 			float damagePercent = dmgDealt / (float)getAttackDamage();
 			PlayerDataManager.PlayerStats targetStats = target instanceof ServerPlayerEntity ? PlayerUtil.getAdventPlayer((ServerPlayerEntity)target).stats() : null;
 			float soulAmount = (targetStats != null ? Math.min(5, targetStats.getResourceValue(Resources.SOUL)) : 5) * damagePercent;
@@ -45,17 +46,17 @@ public class PlutonScythe extends BaseGreatblade {
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
-		Multimap<String, AttributeModifier> multimap =  super.getAttributeModifiers(equipmentSlot, stack);
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		Multimap<Attribute, AttributeModifier> multimap =  super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EquipmentSlotType.MAINHAND)
-			multimap.put(SharedMonsterAttributes.LUCK.getName(), LUCK_BUFF);
+			multimap.put(Attributes.LUCK, LUCK_BUFF);
 
 		return multimap;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.scythe", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

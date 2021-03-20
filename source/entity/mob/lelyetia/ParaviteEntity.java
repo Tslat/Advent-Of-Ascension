@@ -23,26 +23,6 @@ public class ParaviteEntity extends AoAMeleeMob {
 		return 1.59375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 68;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -62,7 +42,7 @@ public class ParaviteEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 }

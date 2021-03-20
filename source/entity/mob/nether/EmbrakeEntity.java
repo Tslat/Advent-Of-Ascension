@@ -26,26 +26,6 @@ public class EmbrakeEntity extends AoAMeleeMob {
 		return 0.9375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 70d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -70,9 +50,9 @@ public class EmbrakeEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		target.setFire(5);
+		target.setSecondsOnFire(5);
 
-		if (world.getBlockState(target.getPosition().down()) .getBlock() != Blocks.AIR)
-			world.setBlockState(target.getPosition(), Blocks.FIRE.getDefaultState());
+		if (level.getBlockState(target.blockPosition().below()) .getBlock() != Blocks.AIR)
+			level.setBlockAndUpdate(target.blockPosition(), Blocks.FIRE.defaultBlockState());
 	}
 }

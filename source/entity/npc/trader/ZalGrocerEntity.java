@@ -12,6 +12,7 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class ZalGrocerEntity extends AoATrader {
 	public ZalGrocerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -24,18 +25,8 @@ public class ZalGrocerEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.LUNALUS.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
 	@Override

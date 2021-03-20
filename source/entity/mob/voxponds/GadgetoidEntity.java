@@ -22,26 +22,6 @@ public class GadgetoidEntity extends AoAMeleeMob {
         return 1.5625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 110;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 11;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.27;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

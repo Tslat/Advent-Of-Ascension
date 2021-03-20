@@ -7,6 +7,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
@@ -29,31 +30,6 @@ public class CaseConstructEntity extends AoAMeleeMob {
         return 1.96875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.2f;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 90;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 6f;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.25d;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 2;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -73,19 +49,14 @@ public class CaseConstructEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
-
-    @Override
-    protected boolean processInteract(PlayerEntity player, Hand hand) {
-        if (!world.isRemote && player.getHeldItem(hand).getItem() == Item.getItemFromBlock(AoABlocks.DEEP_CRYSTAL.get())) {
+    protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+        if (!level.isClientSide && player.getItemInHand(hand).getItem() == Item.byBlock(AoABlocks.DEEP_CRYSTAL.get())) {
             if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
                 ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.CRYSTEVIA_REALMSTONE.get()));
 
-            return true;
+            return ActionResultType.SUCCESS;
         }
 
-        return super.processInteract(player, hand);
+        return super.mobInteract(player, hand);
     }
 }

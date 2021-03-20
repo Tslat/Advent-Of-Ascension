@@ -15,10 +15,10 @@ public class UriohRenderer extends AoAMobRenderer {
 	}
 
 	@Override
-	protected void preRenderCallback(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
 		float scale = Math.max(0.1f, entity.getHealth() / entity.getMaxHealth());
 
 		matrix.scale(scale, scale, scale);
-		shadowSize = shadowScale * scale;
+		shadowRadius = shadowScale * scale;
 	}
 }

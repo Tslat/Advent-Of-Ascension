@@ -1,6 +1,5 @@
 package net.tslat.aoa3.entity.minion;
 
-import net.minecraft.block.EnderChestBlock;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
@@ -8,9 +7,11 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 
@@ -27,29 +28,19 @@ public class EnderCarrierEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3346d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return false;
 	}
 
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		if (getOwnerId() != null && getOwnerId().equals(player.getUniqueID())) {
-			(player).openContainer(new SimpleNamedContainerProvider((id, pl, inventory) -> ChestContainer.createGeneric9X3(id, pl, (player).getInventoryEnderChest()), EnderChestBlock.CONTAINER_NAME));
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		if (getOwnerUUID() != null && getOwnerUUID().equals(player.getUUID())) {
+			(player).openMenu(new SimpleNamedContainerProvider((id, pl, inventory) -> ChestContainer.threeRows(id, pl, (player).getEnderChestInventory()), new TranslationTextComponent("container.enderchest")));
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Nullable

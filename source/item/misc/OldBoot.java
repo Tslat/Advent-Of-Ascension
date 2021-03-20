@@ -9,6 +9,6 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class OldBoot extends ArmorItem {
 	public OldBoot() {
-		super(ItemUtil.customArmourMaterial("aoa3:old_boot", 30, new int[] {2, 2, 2, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0), EquipmentSlotType.FEET, new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(ItemUtil.customArmourMaterial("aoa3:old_boot", 30, new int[] {2, 2, 2, 2}, 0, SoundEvents.ARMOR_EQUIP_LEATHER, 0), EquipmentSlotType.FEET, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 }

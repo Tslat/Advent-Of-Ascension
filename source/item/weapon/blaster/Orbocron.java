@@ -29,20 +29,20 @@ public class Orbocron extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new OrbocronEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new OrbocronEntity(shooter, this, 60));
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		for (LivingEntity e : shot.world.getEntitiesWithinAABB(LivingEntity.class, shot.getBoundingBox().grow(15), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity e : shot.level.getEntitiesOfClass(LivingEntity.class, shot.getBoundingBox().inflate(15), EntityUtil.Predicates.HOSTILE_MOB)) {
 			if (!EntityUtil.isImmuneToSpecialAttacks(e, shooter))
 				EntityUtil.pullEntityIn(target, e, 0.5f);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

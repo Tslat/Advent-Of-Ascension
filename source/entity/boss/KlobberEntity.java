@@ -22,7 +22,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class KlobberEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public KlobberEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -31,26 +31,6 @@ public class KlobberEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.75f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -68,11 +48,11 @@ public class KlobberEntity extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -80,9 +60,9 @@ public class KlobberEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(11), PlayerUtil::shouldPlayerBeAffected)) {
-			if (!pl.isSneaking())
-				pl.addVelocity(Math.signum(getPosX() - pl.getPosX()) * 0.019, 0, Math.signum(getPosZ() - pl.getPosZ()) * 0.019);
+		for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(11), PlayerUtil::shouldPlayerBeAffected)) {
+			if (!pl.isShiftKeyDown())
+				pl.push(Math.signum(getX() - pl.getX()) * 0.019, 0, Math.signum(getZ() - pl.getZ()) * 0.019);
 		}
 	}
 
@@ -92,37 +72,37 @@ public class KlobberEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
 	}

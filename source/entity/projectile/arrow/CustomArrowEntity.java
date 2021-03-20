@@ -19,7 +19,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -27,6 +27,8 @@ import net.tslat.aoa3.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
 
 import java.util.Arrays;
+
+import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
 
 public class CustomArrowEntity extends ArrowEntity {
 	protected BaseBow bow;
@@ -39,47 +41,47 @@ public class CustomArrowEntity extends ArrowEntity {
 	public CustomArrowEntity(World world, double x, double y, double z) {
 		super(AoAEntities.Projectiles.ARROW.get(), world);
 
-		setPosition(x, y, z);
+		setPos(x, y, z);
 	}
 
 	public CustomArrowEntity(World world, BaseBow bow, LivingEntity shooter, double baseDamage) {
 		super(AoAEntities.Projectiles.ARROW.get(), world);
 
-		setShooter(shooter);
-		setDamage(baseDamage);
+		setOwner(shooter);
+		setBaseDamage(baseDamage);
 
 		this.bow = bow;
 
-		setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
 	public CustomArrowEntity(World world, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
 		super(AoAEntities.Projectiles.ARROW.get(), world);
 
-		setShooter(shooter);
-		setDamage(baseDamage);
+		setOwner(shooter);
+		setBaseDamage(baseDamage);
 
 		this.crossbow = crossbow;
 
-		setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
 	public static CustomArrowEntity fromArrow(AbstractArrowEntity baseArrow, BaseBow bow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.world);
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.level);
 
-		arrow.setShooter(shooter);
-		arrow.setDamage(baseDamage);
-		arrow.setKnockbackStrength(baseArrow.knockbackStrength);
-		arrow.setIsCritical(baseArrow.getIsCritical());
-		arrow.setFire(baseArrow.getFireTimer());
+		arrow.setOwner(shooter);
+		arrow.setBaseDamage(baseDamage);
+		arrow.setKnockback(baseArrow.knockback);
+		arrow.setCritArrow(baseArrow.isCritArrow());
+		arrow.setSecondsOnFire(baseArrow.getRemainingFireTicks());
 		duplicateArrowVelocity(baseArrow, arrow);
-		arrow.setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		arrow.setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 
 		if (baseArrow instanceof ArrowEntity) {
 			ArrowEntity baseArrowEntity = (ArrowEntity)baseArrow;
 
 			arrow.potion = baseArrowEntity.potion;
-			arrow.customPotionEffects = baseArrowEntity.customPotionEffects;
+			arrow.effects = baseArrowEntity.effects;
 			arrow.setFixedColor(baseArrowEntity.getColor());
 		}
 
@@ -89,21 +91,21 @@ public class CustomArrowEntity extends ArrowEntity {
 	}
 
 	public static CustomArrowEntity fromArrow(AbstractArrowEntity baseArrow, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.world);
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.level);
 
-		arrow.setShooter(shooter);
-		arrow.setDamage(baseDamage);
-		arrow.setKnockbackStrength(baseArrow.knockbackStrength);
-		arrow.setIsCritical(baseArrow.getIsCritical());
-		arrow.setFire(baseArrow.getFireTimer());
+		arrow.setOwner(shooter);
+		arrow.setBaseDamage(baseDamage);
+		arrow.setKnockback(baseArrow.knockback);
+		arrow.setCritArrow(baseArrow.isCritArrow());
+		arrow.setSecondsOnFire(baseArrow.getRemainingFireTicks());
 		duplicateArrowVelocity(baseArrow, arrow);
-		arrow.setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		arrow.setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 
 		if (baseArrow instanceof ArrowEntity) {
 			ArrowEntity baseArrowEntity = (ArrowEntity)baseArrow;
 
 			arrow.potion = baseArrowEntity.potion;
-			arrow.customPotionEffects = baseArrowEntity.customPotionEffects;
+			arrow.effects = baseArrowEntity.effects;
 			arrow.setFixedColor(baseArrowEntity.getColor());
 		}
 
@@ -113,75 +115,76 @@ public class CustomArrowEntity extends ArrowEntity {
 	}
 
 	protected static void duplicateArrowVelocity(AbstractArrowEntity source, AbstractArrowEntity target) {
-		target.setMotion(source.getMotion());
+		target.setDeltaMovement(source.getDeltaMovement());
 
-		target.rotationPitch = source.rotationPitch;
-		target.rotationYaw = source.rotationYaw;
-		target.prevRotationPitch = source.prevRotationPitch;
-		target.prevRotationYaw = source.prevRotationYaw;
+		target.xRot = source.xRot;
+		target.yRot = source.yRot;
+		target.xRotO = source.xRotO;
+		target.yRotO = source.yRotO;
 	}
 
 	@Override
 	public void tick() {
 		if (bow != null) {
-			bow.onArrowTick(this, getShooter());
+			bow.onArrowTick(this, getOwner());
 		}
 		else if (crossbow != null) {
-			crossbow.onArrowTick(this, getShooter());
+			crossbow.onArrowTick(this, getOwner());
 		}
 
 		super.tick();
 	}
 
+
 	@Override
 	protected void onHit(RayTraceResult rayTrace) {
 		if (rayTrace.getType() == RayTraceResult.Type.ENTITY) {
-			onEntityHit((EntityRayTraceResult)rayTrace);
+			onHitEntity((EntityRayTraceResult)rayTrace);
 		}
 		else if (rayTrace.getType() == RayTraceResult.Type.BLOCK) {
 			BlockRayTraceResult blockTrace = (BlockRayTraceResult)rayTrace;
-			BlockState blockstate = world.getBlockState(blockTrace.getPos());
-			inBlockState = blockstate;
-			Vec3d vec3d = blockTrace.getHitVec().subtract(getPosX(), getPosY(), getPosZ());
+			BlockState blockstate = level.getBlockState(blockTrace.getBlockPos());
+			lastState = blockstate;
+			Vector3d Vector3d = blockTrace.getLocation().subtract(getX(), getY(), getZ());
 
 			if (bow != null) {
-				bow.onBlockHit(this, blockTrace, getShooter());
+				bow.onBlockHit(this, blockTrace, getOwner());
 			}
 			else if (crossbow != null) {
-				crossbow.onBlockHit(this, blockTrace, getShooter());
+				crossbow.onBlockHit(this, blockTrace, getOwner());
 			}
 
-			setMotion(vec3d);
+			setDeltaMovement(Vector3d);
 
-			Vec3d vec3d1 = vec3d.normalize().scale((double)0.05F);
+			Vector3d Vector3d1 = Vector3d.normalize().scale((double)0.05F);
 
-			setRawPosition(getPosX() - vec3d1.x, getPosY() - vec3d1.y, getPosZ() - vec3d1.z);
-			playSound(getHitGroundSound(), 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+			setPosRaw(getX() - Vector3d1.x, getY() - Vector3d1.y, getZ() - Vector3d1.z);
+			playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 
 			inGround = true;
-			arrowShake = 7;
+			shakeTime = 7;
 
-			setIsCritical(false);
+			setCritArrow(false);
 			setPierceLevel((byte)0);
-			setHitSound(SoundEvents.ENTITY_ARROW_HIT);
+			setSoundEvent(SoundEvents.ARROW_HIT);
 			setShotFromCrossbow(false);
 
-			if (hitEntities != null)
-				hitEntities.clear();
+			if (piercedAndKilledEntities != null)
+				piercedAndKilledEntities.clear();
 
-			if (piercedEntities != null)
-				piercedEntities.clear();
+			if (piercingIgnoreEntityIds != null)
+				piercingIgnoreEntityIds.clear();
 
-			blockstate.onProjectileCollision(world, blockstate, blockTrace, this);
+			blockstate.onProjectileHit(level, blockstate, blockTrace, this);
 		}
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult rayTrace) {
+	protected void onHitEntity(EntityRayTraceResult rayTrace) {
 		Entity target = rayTrace.getEntity();
-		float drawPower = (float)this.getMotion().length();
-		double damage = getDamage();
-		boolean critical = getIsCritical();
+		float drawPower = (float)this.getDeltaMovement().length();
+		double damage = getBaseDamage();
+		boolean critical = isCritArrow();
 
 		if (bow != null) {
 			damage = bow.getArrowDamage(this, target, damage, drawPower, critical);
@@ -193,41 +196,41 @@ public class CustomArrowEntity extends ArrowEntity {
 		damage = Math.max(damage, 0.0D);
 
 		if (getPierceLevel() > 0) {
-			if (piercedEntities == null)
-				piercedEntities = new IntOpenHashSet(5);
+			if (piercingIgnoreEntityIds == null)
+				piercingIgnoreEntityIds = new IntOpenHashSet(5);
 
-			if (hitEntities == null)
-				hitEntities = Lists.newArrayListWithCapacity(5);
+			if (piercedAndKilledEntities == null)
+				piercedAndKilledEntities = Lists.newArrayListWithCapacity(5);
 
-			if (piercedEntities.size() >= getPierceLevel() + 1) {
+			if (piercingIgnoreEntityIds.size() >= getPierceLevel() + 1) {
 				remove();
 
 				return;
 			}
 
-			piercedEntities.add(target.getEntityId());
+			piercingIgnoreEntityIds.add(target.getId());
 		}
 
-		Entity shooter = this.getShooter();
+		Entity shooter = this.getOwner();
 		DamageSource source;
 
 		if (shooter == null) {
-			source = DamageSource.causeArrowDamage(this, this);
+			source = DamageSource.arrow(this, this);
 		}
 		else {
-			source = DamageSource.causeArrowDamage(this, shooter);
+			source = DamageSource.arrow(this, shooter);
 
 			if (shooter instanceof LivingEntity)
-				((LivingEntity)shooter).setLastAttackedEntity(target);
+				((LivingEntity)shooter).setLastHurtMob(target);
 		}
 
 		boolean isEnderman = target.getType() == EntityType.ENDERMAN;
-		int fireTimer = target.getFireTimer();
+		int fireTimer = target.getRemainingFireTicks();
 
-		if (isBurning() && !isEnderman)
-			target.setFire(5);
+		if (isOnFire() && !isEnderman)
+			target.setSecondsOnFire(5);
 
-		if (target.attackEntityFrom(source, (float)damage)) {
+		if (target.hurt(source, (float)damage)) {
 			if (isEnderman)
 				return;
 
@@ -241,57 +244,56 @@ public class CustomArrowEntity extends ArrowEntity {
 			if (target instanceof LivingEntity) {
 				LivingEntity livingTarget = (LivingEntity)target;
 
-				if (!world.isRemote && getPierceLevel() <= 0)
-					livingTarget.setArrowCountInEntity(livingTarget.getArrowCountInEntity() + 1);
+				if (!level.isClientSide && getPierceLevel() <= 0)
+					livingTarget.setArrowCount(livingTarget.getArrowCount() + 1);
 
-				if (knockbackStrength > 0) {
-					Vec3d vec3d = getMotion().mul(1.0D, 0.0D, 1.0D).normalize().scale(knockbackStrength * 0.6D);
+				if (knockback > 0) {
+					Vector3d Vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockback * 0.6D);
 
-					if (vec3d.lengthSquared() > 0.0D)
-						livingTarget.addVelocity(vec3d.x, 0.1D, vec3d.z);
+					if (Vector3d.lengthSqr() > 0.0D)
+						livingTarget.push(Vector3d.x, 0.1D, Vector3d.z);
 				}
 
-				if (!world.isRemote && shooter instanceof LivingEntity) {
-					EnchantmentHelper.applyThornEnchantments(livingTarget, shooter);
-					EnchantmentHelper.applyArthropodEnchantments((LivingEntity)shooter, livingTarget);
+				if (!level.isClientSide && shooter instanceof LivingEntity) {
+					EnchantmentHelper.doPostHurtEffects(livingTarget, shooter);
+					EnchantmentHelper.doPostDamageEffects((LivingEntity)shooter, livingTarget);
 				}
 
-				arrowHit(livingTarget);
+				doPostHurtEffects(livingTarget);
 
 				if (livingTarget != shooter && livingTarget instanceof PlayerEntity && shooter instanceof ServerPlayerEntity)
-					((ServerPlayerEntity)shooter).connection.sendPacket(new SChangeGameStatePacket(6, 0.0F));
+					((ServerPlayerEntity)shooter).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
 
-				if (!target.isAlive() && hitEntities != null)
-					hitEntities.add(livingTarget);
+				if (!target.isAlive() && piercedAndKilledEntities != null)
+					piercedAndKilledEntities.add(livingTarget);
 
-				if (!world.isRemote && shooter instanceof ServerPlayerEntity) {
+				if (!level.isClientSide && shooter instanceof ServerPlayerEntity) {
 					ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)shooter;
 
-					if (hitEntities != null && getShotFromCrossbow()) {
-						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.hitEntities, this.hitEntities.size());
+					if (piercedAndKilledEntities != null && shotFromCrossbow()) {
+						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.piercedAndKilledEntities);
 					}
-					else if (!target.isAlive() && getShotFromCrossbow()) {
-						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(target), 0);
+					else if (!target.isAlive() && shotFromCrossbow()) {
+						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(target));
 					}
 				}
 			}
 
-			playSound(getHitGroundSound(), 1.0F, 1.2F / (rand.nextFloat() * 0.2F + 0.9F));
+			playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 
 			if (getPierceLevel() <= 0)
 				remove();
 		}
 		else {
-			target.setFireTimer(fireTimer);
-			setMotion(getMotion().scale(-0.1D));
+			target.setRemainingFireTicks(fireTimer);
+			setDeltaMovement(getDeltaMovement().scale(-0.1D));
 
-			rotationYaw += 180.0F;
-			prevRotationYaw += 180.0F;
-			ticksInAir = 0;
+			yRot += 180.0F;
+			yRotO += 180.0F;
 
-			if (!world.isRemote && getMotion().lengthSquared() < 0.0000001) {
-				if (pickupStatus == PickupStatus.ALLOWED)
-					entityDropItem(getArrowStack(), 0.1F);
+			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 0.0000001) {
+				if (pickup == PickupStatus.ALLOWED)
+					spawnAtLocation(getPickupItem(), 0.1F);
 
 				remove();
 			}
@@ -299,7 +301,7 @@ public class CustomArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

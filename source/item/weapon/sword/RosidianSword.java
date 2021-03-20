@@ -27,22 +27,22 @@ public class RosidianSword extends BaseSword {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity target) {
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getCooledAttackStrength(0.0f));
+		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0.0f));
 
 		if (player.getHealth() < player.getMaxHealth()) {
-			float motionX = (float)(player.getPosX() - target.getPosX()) * 0.1f;
-			float motionY = (float)(player.getPosY() - target.getPosY()) * 0.1f;
-			float motionZ = (float)(player.getPosZ() - target.getPosZ()) * 0.1f;
+			float motionX = (float)(player.getX() - target.getX()) * 0.1f;
+			float motionY = (float)(player.getY() - target.getY()) * 0.1f;
+			float motionZ = (float)(player.getZ() - target.getZ()) * 0.1f;
 
-			player.world.addParticle(ParticleTypes.END_ROD, true, target.getPosX() + random.nextGaussian() * 0.2, target.getPosY() + target.getHeight() / 2f, target.getPosZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
+			player.level.addParticle(ParticleTypes.END_ROD, true, target.getX() + random.nextGaussian() * 0.2, target.getY() + target.getBbHeight() / 2f, target.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 
-			for (LivingEntity swipeTarget : player.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(1, 0.25, 1))) {
-				if (swipeTarget != target && swipeTarget != player && !player.isOnSameTeam(swipeTarget) && player.getDistanceSq(swipeTarget) < 9) {
-					motionX = (float)(player.getPosX() - swipeTarget.getPosX()) * 0.1f;
-					motionY = (float)(player.getPosY() - swipeTarget.getPosY()) * 0.1f;
-					motionZ = (float)(player.getPosZ() - swipeTarget.getPosZ()) * 0.1f;
+			for (LivingEntity swipeTarget : player.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
+				if (swipeTarget != target && swipeTarget != player && !player.isAlliedTo(swipeTarget) && player.distanceToSqr(swipeTarget) < 9) {
+					motionX = (float)(player.getX() - swipeTarget.getX()) * 0.1f;
+					motionY = (float)(player.getY() - swipeTarget.getY()) * 0.1f;
+					motionZ = (float)(player.getZ() - swipeTarget.getZ()) * 0.1f;
 
-					player.world.addParticle(ParticleTypes.END_ROD, true, swipeTarget.getPosX() + random.nextGaussian() * 0.2, swipeTarget.getPosY() + target.getHeight() / 2f, swipeTarget.getPosZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
+					player.level.addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + random.nextGaussian() * 0.2, swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 				}
 			}
 		}
@@ -56,8 +56,8 @@ public class RosidianSword extends BaseSword {
 			EntityUtil.healEntity(attacker, 1);
 
 			if (attacker instanceof PlayerEntity) {
-				for (LivingEntity swipeTarget : attacker.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(1, 0.25, 1))) {
-					if (swipeTarget != target && swipeTarget != attacker && swipeTarget.getHealth() < swipeTarget.getMaxHealth() && !attacker.isOnSameTeam(swipeTarget) && attacker.getDistanceSq(swipeTarget) < 9)
+				for (LivingEntity swipeTarget : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
+					if (swipeTarget != target && swipeTarget != attacker && swipeTarget.getHealth() < swipeTarget.getMaxHealth() && !attacker.isAlliedTo(swipeTarget) && attacker.distanceToSqr(swipeTarget) < 9)
 						EntityUtil.healEntity(attacker, 0.4f);
 				}
 			}
@@ -66,7 +66,7 @@ public class RosidianSword extends BaseSword {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

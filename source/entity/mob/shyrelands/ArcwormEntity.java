@@ -25,26 +25,6 @@ public class ArcwormEntity extends AoAMeleeMob {
 		return 0.65625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 163;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 16;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -64,19 +44,15 @@ public class ArcwormEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		ReservedItem.handleArcworm(this);
 	}
 
-	@Override
-	protected int getMaxSpawnHeight() {
-		return 35;
-	}
 }

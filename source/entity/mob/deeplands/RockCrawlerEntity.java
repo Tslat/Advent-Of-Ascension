@@ -25,23 +25,23 @@ import net.tslat.aoa3.entity.minion.AoAMinion;
 import javax.annotation.Nullable;
 
 public class RockCrawlerEntity extends AoAMeleeMob {
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(RockCrawlerEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(RockCrawlerEntity.class, DataSerializers.BYTE);
 
     public RockCrawlerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(CLIMBING, (byte)0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CLIMBING, (byte)0);
     }
 
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.4f));
-        goalSelector.addGoal(4, new MeleeAttackGoal(this, 1, true));
+        goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4f));
+        goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, true));
         goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
         goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
         goalSelector.addGoal(8, new LookRandomlyGoal(this));
@@ -51,33 +51,13 @@ public class RockCrawlerEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected PathNavigator createNavigator(World world) {
+    protected PathNavigator createNavigation(World world) {
         return new ClimberPathNavigator(this, world);
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 1.6875f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 70;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.29d;
     }
 
     @Nullable
@@ -100,16 +80,11 @@ public class RockCrawlerEntity extends AoAMeleeMob {
 
     @Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-        return SoundEvents.ENTITY_SPIDER_STEP;
+        return SoundEvents.SPIDER_STEP;
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
-
-    @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
 
@@ -117,21 +92,21 @@ public class RockCrawlerEntity extends AoAMeleeMob {
     public void tick() {
         super.tick();
 
-        if (!world.isRemote)
-            setBesideClimbableBlock(this.collidedHorizontally);
+        if (!level.isClientSide)
+            setBesideClimbableBlock(this.horizontalCollision);
     }
 
     @Override
-    public boolean isOnLadder() {
+    public boolean onClimbable() {
         return isBesideClimbableBlock();
     }
 
     public boolean isBesideClimbableBlock() {
-        return (this.dataManager.get(CLIMBING) & 1) != 0;
+        return (this.entityData.get(CLIMBING) & 1) != 0;
     }
 
     public void setBesideClimbableBlock(boolean climbing) {
-        byte climbingBit = this.dataManager.get(CLIMBING);
+        byte climbingBit = this.entityData.get(CLIMBING);
 
         if (climbing) {
             climbingBit = (byte)(climbingBit | 1);
@@ -140,6 +115,6 @@ public class RockCrawlerEntity extends AoAMeleeMob {
             climbingBit = (byte)(climbingBit & -2);
         }
 
-        this.dataManager.set(CLIMBING, climbingBit);
+        this.entityData.set(CLIMBING, climbingBit);
     }
 }

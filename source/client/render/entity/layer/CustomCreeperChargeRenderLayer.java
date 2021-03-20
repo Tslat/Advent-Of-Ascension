@@ -25,16 +25,16 @@ public class CustomCreeperChargeRenderLayer extends LayerRenderer<AoACreeponiaCr
 	@Override
 	public void render(MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight, AoACreeponiaCreeper entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (entity.isCharged()) {
-			float renderTicks = (float)entity.ticksExisted + partialTicks;
+			float renderTicks = (float)entity.tickCount + partialTicks;
 			EntityModel<AoACreeponiaCreeper> model = getExpandedModel();
 
-			model.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
-			getEntityModel().copyModelAttributesTo(model);
+			model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
+			getParentModel().copyPropertiesTo(model);
 
-			IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.getEnergySwirl(getLayerTexture(), getLayerUV(renderTicks), renderTicks * 0.01F));
+			IVertexBuilder vertexBuilder = buffer.getBuffer(RenderType.energySwirl(getLayerTexture(), getLayerUV(renderTicks), renderTicks * 0.01F));
 
-			model.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			model.render(matrix, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			model.renderToBuffer(matrix, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
 	}
 

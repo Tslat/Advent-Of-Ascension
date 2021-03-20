@@ -24,26 +24,6 @@ public class SpinoledonEntity extends AoAMeleeMob {
 		return 1.40625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 72;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

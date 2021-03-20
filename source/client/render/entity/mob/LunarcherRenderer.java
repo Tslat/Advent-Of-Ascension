@@ -21,7 +21,7 @@ public class LunarcherRenderer extends BipedRenderer<FlyingEntity, LunarcherMode
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(FlyingEntity entity) {
+	public ResourceLocation getTextureLocation(FlyingEntity entity) {
 		return texture;
 	}
 }

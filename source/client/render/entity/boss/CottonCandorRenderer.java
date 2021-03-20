@@ -23,7 +23,7 @@ public class CottonCandorRenderer extends MobRenderer<CottonCandorEntity, Entity
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(CottonCandorEntity cottonCandor) {
+	public ResourceLocation getTextureLocation(CottonCandorEntity cottonCandor) {
 		switch (cottonCandor.getStage()) {
 			case 0:
 				return WIND_PHASE_TEXTURE;

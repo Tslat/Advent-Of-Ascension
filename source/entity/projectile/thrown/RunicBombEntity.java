@@ -53,7 +53,7 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, IRend
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.1f;
 	}
 
@@ -62,11 +62,11 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, IRend
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && ticksExisted <= 1 && getThrower() == null)
+	protected void onHit(RayTraceResult result) {
+		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
 			return;
 
-		super.onImpact(result);
+		super.onHit(result);
 	}
 
 	@Override
@@ -80,10 +80,10 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, IRend
 	}
 
 	private void explode() {
-		WorldUtil.createExplosion(shooter, world, this, explosionStrength);
+		WorldUtil.createExplosion(shooter, level, this, explosionStrength);
 
-		for (LivingEntity e : world.getEntitiesWithinAABB(LivingEntity.class, getBoundingBox().grow(3.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
-			EntityUtil.applyPotions(e, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 30).level(100));
+		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
+			EntityUtil.applyPotions(e, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 30).level(100));
 
 			if (e instanceof RunicGolemEntity && ((RunicGolemEntity)e).isShielded())
 				((RunicGolemEntity)e).deactivateShield();

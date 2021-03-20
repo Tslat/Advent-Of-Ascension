@@ -17,7 +17,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -32,9 +32,11 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class ShikEntity extends AoAAnimal {
-	private static final DataParameter<Boolean> SCARED = EntityDataManager.<Boolean>createKey(ShikEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> DANCING = EntityDataManager.<Boolean>createKey(ShikEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SCARED = EntityDataManager.<Boolean>defineId(ShikEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> DANCING = EntityDataManager.<Boolean>defineId(ShikEntity.class, DataSerializers.BOOLEAN);
 	private ShikEntity dancePartner = null;
 
 	public ShikEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -42,11 +44,11 @@ public class ShikEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(SCARED, false);
-		dataManager.register(DANCING, false);
+		entityData.define(SCARED, false);
+		entityData.define(DANCING, false);
 	}
 
 	@Override
@@ -61,21 +63,6 @@ public class ShikEntity extends AoAAnimal {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 0.34375f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2;
-	}
-
-	@Override
-	protected double getBaseArmor() {
-		return 4;
 	}
 
 	@Nullable
@@ -96,50 +83,40 @@ public class ShikEntity extends AoAAnimal {
 	}
 
 	public boolean isScared() {
-		return dataManager.get(SCARED);
+		return entityData.get(SCARED);
 	}
 
 	public boolean isDancing() {
-		return dataManager.get(DANCING);
+		return entityData.get(DANCING);
 	}
 
 	@Override
-	public boolean canSpawn(IWorld world, SpawnReason reason) {
+	public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
 		if (!EntityUtil.isNaturalSpawnReason(reason))
 			return true;
 
-		if (getPosY() >= 120)
+		if (getY() >= 120)
 			return false;
 
-		BlockPos checkPos = new BlockPos(this);
-		BlockState spawnBlock = world.getBlockState(checkPos.down());
+		BlockPos checkPos = new BlockPos(blockPosition());
+		BlockState spawnBlock = world.getBlockState(checkPos.below());
 
 		return spawnBlock.getBlock() == AoABlocks.DENSE_STONE.get();
 	}
 
 	@Override
-	protected int getSpawnChanceFactor() {
-		return 500;
+	public float getWalkTargetValue(BlockPos pos, IWorldReader world) {
+		return world.getBlockState(pos.below()).getBlock().is(Tags.Blocks.STONE) ? 1f : 1 - world.getBrightness(pos);
 	}
 
 	@Override
-	public float getBlockPathWeight(BlockPos pos, IWorldReader world) {
-		return world.getBlockState(pos.down()).getBlock().isIn(Tags.Blocks.STONE) ? 1f : 1 - world.getBrightness(pos);
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return ticksExisted > 400;
-	}
-
-	@Override
-	protected boolean checkSpawningLightConditions() {
-		return true;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return tickCount > 400;
 	}
 
 	private class ShikDanceGoal extends Goal {
 		private final ShikEntity shik;
-		private Vec3d startPos;
+		private Vector3d startPos;
 		private int danceTimer = 0;
 		private int nextDanceTime = 0;
 		private float danceAngleX;
@@ -148,26 +125,26 @@ public class ShikEntity extends AoAAnimal {
 		private ShikDanceGoal(ShikEntity shik) {
 			this.shik = shik;
 
-			setMutexFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+			setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			if (nextDanceTime + 100 >= shik.ticksExisted)
+		public boolean canUse() {
+			if (nextDanceTime + 100 >= shik.tickCount)
 				return false;
 
 			if (shik.dancePartner != null && shik.dancePartner.isAlive()) {
 				return true;
 			}
 
-			if (rand.nextFloat() <= 0.05f) {
-				List<ShikEntity> dancePartners = world.getEntitiesWithinAABB(ShikEntity.class, getBoundingBox().grow(0.5));
+			if (random.nextFloat() <= 0.05f) {
+				List<ShikEntity> dancePartners = level.getEntitiesOfClass(ShikEntity.class, getBoundingBox().inflate(0.5));
 
 				for (ShikEntity potentialPartner : dancePartners) {
 					if (potentialPartner == shik)
 						continue;
 
-					if (!potentialPartner.isScared() && potentialPartner.isAlive() && potentialPartner.dancePartner == null && potentialPartner.canEntityBeSeen(shik) && shik.canEntityBeSeen(potentialPartner)) {
+					if (!potentialPartner.isScared() && potentialPartner.isAlive() && potentialPartner.dancePartner == null && potentialPartner.canSee(shik) && shik.canSee(potentialPartner)) {
 						shik.dancePartner = potentialPartner;
 						potentialPartner.dancePartner = shik;
 
@@ -180,47 +157,47 @@ public class ShikEntity extends AoAAnimal {
 		}
 
 		@Override
-		public void resetTask() {
-			shik.dataManager.set(DANCING, false);
+		public void stop() {
+			shik.entityData.set(DANCING, false);
 			startPos = null;
 			danceTimer = 0;
-			shik.getNavigator().clearPath();
-			nextDanceTime = ticksExisted;
+			shik.getNavigation().stop();
+			nextDanceTime = tickCount;
 			shik.dancePartner = null;
 		}
 
 		@Override
-		public void startExecuting() {
-			getNavigator().clearPath();
-			startPos = getPositionVector();
+		public void start() {
+			getNavigation().stop();
+			startPos = position();
 
-			shik.dataManager.set(DANCING, true);
+			shik.entityData.set(DANCING, true);
 
-			shik.getLookController().setLookPosition(shik.dancePartner.getPosX(), shik.dancePartner.getPosY() + shik.dancePartner.getEyeHeight(), shik.dancePartner.getPosZ(), shik.dancePartner.getHorizontalFaceSpeed(), shik.dancePartner.getVerticalFaceSpeed());
+			shik.getLookControl().setLookAt(shik.dancePartner.getX(), shik.dancePartner.getY() + shik.dancePartner.getEyeHeight(), shik.dancePartner.getZ(), shik.dancePartner.getMaxHeadYRot(), shik.dancePartner.getMaxHeadXRot());
 
-			danceAngleX = MathHelper.sin(shik.rotationYaw * (float)Math.PI / 180f) * 2;
-			danceAngleZ = MathHelper.cos(shik.rotationYaw * (float)Math.PI / 180f) * 2;
+			danceAngleX = MathHelper.sin(shik.yRot * (float)Math.PI / 180f) * 2;
+			danceAngleZ = MathHelper.cos(shik.yRot * (float)Math.PI / 180f) * 2;
 
-			getNavigator().tryMoveToXYZ(startPos.x + danceAngleX * 5, startPos.y, startPos.z + danceAngleZ * 5, 1.25f);
+			getNavigation().moveTo(startPos.x + danceAngleX * 5, startPos.y, startPos.z + danceAngleZ * 5, 1.25f);
 		}
 
 		@Override
 		public void tick() {
 			danceTimer++;
-			shik.getLookController().setLookPosition(shik.dancePartner.getPosX(), shik.dancePartner.getPosY() + shik.dancePartner.getEyeHeight(), shik.dancePartner.getPosZ(), shik.dancePartner.getHorizontalFaceSpeed(), shik.dancePartner.getVerticalFaceSpeed());
-			shik.setRotation(shik.rotationYawHead, shik.rotationPitch);
+			shik.getLookControl().setLookAt(shik.dancePartner.getX(), shik.dancePartner.getY() + shik.dancePartner.getEyeHeight(), shik.dancePartner.getZ(), shik.dancePartner.getMaxHeadYRot(), shik.dancePartner.getMaxHeadXRot());
+			shik.setRot(shik.yHeadRot, shik.xRot);
 
-			if (danceTimer % 10 == 0 || getNavigator().noPath()) {
+			if (danceTimer % 10 == 0 || getNavigation().isDone()) {
 				danceAngleX *= -1;
 				danceAngleZ *= -1;
 
-				shik.getNavigator().clearPath();
-				shik.getNavigator().tryMoveToXYZ(startPos.x + danceAngleX * 5, startPos.y, startPos.z + danceAngleZ * 5, 1.25f);
+				shik.getNavigation().stop();
+				shik.getNavigation().moveTo(startPos.x + danceAngleX * 5, startPos.y, startPos.z + danceAngleZ * 5, 1.25f);
 			}
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return shik.dancePartner != null && startPos != null && shik.dancePartner.isAlive() && danceTimer < 100;
 		}
 	}
@@ -233,44 +210,44 @@ public class ShikEntity extends AoAAnimal {
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			if (taskOwner.getRNG().nextFloat() <= 0.1f && !world.getEntitiesInAABBexcluding(taskOwner, taskOwner.getBoundingBox().grow(5, 5, 5), entity -> entity != null && entity.getType() != taskOwner.getType()).isEmpty()) {
+		public boolean canUse() {
+			if (taskOwner.getRandom().nextFloat() <= 0.1f && !level.getEntities(taskOwner, taskOwner.getBoundingBox().inflate(5, 5, 5), entity -> entity != null && entity.getType() != taskOwner.getType()).isEmpty()) {
 				return getRandomPosition();
 			}
 			else {
-				return super.shouldExecute();
+				return super.canUse();
 			}
 		}
 
 		@Override
-		public void resetTask() {
-			taskOwner.noClip = false;
-			((ShikEntity)taskOwner).dataManager.set(SCARED, false);
+		public void stop() {
+			taskOwner.noPhysics = false;
+			((ShikEntity)taskOwner).entityData.set(SCARED, false);
 
-			super.resetTask();
+			super.stop();
 		}
 
 		@Override
-		public void startExecuting() {
-			((ShikEntity)taskOwner).dataManager.set(SCARED, true);
-			super.startExecuting();
+		public void start() {
+			((ShikEntity)taskOwner).entityData.set(SCARED, true);
+			super.start();
 		}
 
 		@Override
 		public void tick() {
-			if (taskOwner.getRNG().nextFloat() < 0.1f) {
+			if (taskOwner.getRandom().nextFloat() < 0.1f) {
 				if (hidePos != null) {
-					if (hidePos.distanceSq(taskOwner.getPosX(), taskOwner.getPosY(), taskOwner.getPosZ(), true) < 3) {
+					if (hidePos.distSqr(taskOwner.getX(), taskOwner.getY(), taskOwner.getZ(), true) < 3) {
 						remove();
 
 						return;
 					}
-					else if (taskOwner.getNavigator().noPath()) {
+					else if (taskOwner.getNavigation().isDone()) {
 						BlockPos.Mutable checkPos = new BlockPos.Mutable();
 
 						for (int x = -1; x <= 1; x++) {
 							for (int z = -1; z <= 1; z++) {
-								if (taskOwner.world.getBlockState(checkPos.setPos(taskOwner.getPosX() + -x, taskOwner.getPosY(), taskOwner.getPosZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+								if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
 									remove();
 
 									return;
@@ -280,22 +257,22 @@ public class ShikEntity extends AoAAnimal {
 					}
 				}
 
-				if (hidePos == null && taskOwner.getRNG().nextFloat() < 0.1f) {
+				if (hidePos == null && taskOwner.getRandom().nextFloat() < 0.1f) {
 					BlockPos.Mutable checkPos = new BlockPos.Mutable();
 
 					for (int x = 0; x <= 3; x++) {
 						for (int z = 0; z <= 3; z++) {
-							if (taskOwner.world.getBlockState(checkPos.setPos(taskOwner.getPosX() + x, taskOwner.getPosY(), taskOwner.getPosZ() + z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
-								getNavigator().tryMoveToXYZ(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
+							if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + x, taskOwner.getY(), taskOwner.getZ() + z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+								getNavigation().moveTo(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
 								panicTimer++;
-								hidePos = checkPos.toImmutable();
+								hidePos = checkPos.immutable();
 
 								return;
 							}
-							else if (taskOwner.world.getBlockState(checkPos.setPos(taskOwner.getPosX() + -x, taskOwner.getPosY(), taskOwner.getPosZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
-								taskOwner.getNavigator().tryMoveToXYZ(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
+							else if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+								taskOwner.getNavigation().moveTo(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
 								panicTimer++;
-								hidePos = checkPos.toImmutable();
+								hidePos = checkPos.immutable();
 
 								return;
 							}

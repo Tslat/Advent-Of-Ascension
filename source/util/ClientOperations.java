@@ -8,7 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resources.SimpleReloadableResourceManager;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Util;
 import net.minecraft.util.concurrent.ThreadTaskExecutor;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
@@ -20,11 +22,11 @@ import net.tslat.aoa3.client.gui.realmstone.BlankRealmstoneScreen;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.data.client.BestiaryManager;
+import net.tslat.aoa3.data.client.GuidesManager;
+import net.tslat.aoa3.data.client.MiscTextFileManager;
 import net.tslat.aoa3.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.item.misc.WornBook;
-import net.tslat.aoa3.library.resourcemanager.BestiaryManager;
-import net.tslat.aoa3.library.resourcemanager.GuidesManager;
-import net.tslat.aoa3.library.resourcemanager.MiscTextFileManager;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Resources;
 import net.tslat.aoa3.util.constant.Skills;
@@ -32,13 +34,13 @@ import net.tslat.aoa3.util.constant.Skills;
 public abstract class ClientOperations {
 	public static void displayWornBookGui() {
 		PlayerEntity player = Minecraft.getInstance().player;
-		ItemStack bookStack = player.getHeldItemMainhand().getItem() == AoAItems.WORN_BOOK.get() ? player.getHeldItemMainhand() : player.getHeldItemOffhand();
+		ItemStack bookStack = player.getMainHandItem().getItem() == AoAItems.WORN_BOOK.get() ? player.getMainHandItem() : player.getOffhandItem();
 
-		Minecraft.getInstance().displayGuiScreen(new ReadBookScreen(new ReadBookScreen.WrittenBookInfo(WornBook.getBook(bookStack))));
+		Minecraft.getInstance().setScreen(new ReadBookScreen(new ReadBookScreen.WrittenBookInfo(WornBook.getBook(bookStack))));
 	}
 
 	public static void displayBlankRealmstoneGui() {
-		Minecraft.getInstance().displayGuiScreen(new BlankRealmstoneScreen());
+		Minecraft.getInstance().setScreen(new BlankRealmstoneScreen());
 	}
 
 	public static void addRecoil(final float recoil, final int firingTime) {
@@ -48,12 +50,12 @@ public abstract class ClientOperations {
 	}
 
 	public static void spawnClientOnlyEntity(Entity entity) {
-		if (entity.world instanceof ClientWorld) {
+		if (entity.level instanceof ClientWorld) {
 			ThreadTaskExecutor<?> executor = LogicalSidedProvider.WORKQUEUE.get(LogicalSide.CLIENT);
-			Runnable runnable = () -> ((ClientWorld)entity.world).addEntity(entity.getEntityId(), entity);
+			Runnable runnable = () -> ((ClientWorld)entity.level).putNonPlayerEntity(entity.getId(), entity);
 
-			if (!executor.isOnExecutionThread()) {
-				executor.deferTask(runnable);
+			if (!executor.isSameThread()) {
+				executor.submitAsync(runnable);
 			}
 			else {
 				runnable.run();
@@ -61,10 +63,9 @@ public abstract class ClientOperations {
 		}
 	}
 
-
 	public static void removeClientOnlyEntity(Entity entity) {
-		if (entity.world instanceof ClientWorld)
-			((ClientWorld)entity.world).removeEntityFromWorld(entity.getEntityId());
+		if (entity.level instanceof ClientWorld)
+			((ClientWorld)entity.level).removeEntity(entity.getId());
 	}
 
 	public static void registerResourceListeners() {
@@ -75,35 +76,35 @@ public abstract class ClientOperations {
 
 		SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager)mc.getResourceManager();
 
-		resourceManager.addReloadListener(new GuidesManager());
-		resourceManager.addReloadListener(new BestiaryManager());
-		resourceManager.addReloadListener(new MiscTextFileManager());
+		resourceManager.registerReloadListener(new GuidesManager());
+		resourceManager.registerReloadListener(new BestiaryManager());
+		resourceManager.registerReloadListener(new MiscTextFileManager());
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
 		switch (type) {
 			case SKILL_REQUIREMENT:
 				if (AoAConfig.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToastGui().add(new LevelRequirementToast((Skills)subject, (Integer)value));
+					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast((Skills)subject, (Integer)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", TextFormatting.RED, String.valueOf(value), StringUtil.toSentenceCase(subject.toString())));
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", TextFormatting.RED, LocaleUtil.numToComponent((Integer)value), new StringTextComponent(StringUtil.toSentenceCase(subject.toString()))), Util.NIL_UUID);
 				}
 				break;
 			case RESOURCE_REQUIREMENT:
 				if (AoAConfig.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToastGui().add(new ResourceRequirementToast((Resources)subject, (Float)value));
+					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast((Resources)subject, (Float)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", TextFormatting.RED, NumberUtil.roundToNthDecimalPlace((Float)value, 2), StringUtil.toSentenceCase(subject.toString())));
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", TextFormatting.RED, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((Float)value, 2)), new StringTextComponent(StringUtil.toSentenceCase(subject.toString()))), Util.NIL_UUID);
 				}
 				break;
 			case TRIBUTE_REQUIREMENT:
 				if (AoAConfig.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToastGui().add(new TributeRequirementToast((Deities)subject, (Integer)value));
+					Minecraft.getInstance().getToasts().addToast(new TributeRequirementToast((Deities)subject, (Integer)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientTribute", TextFormatting.RED, String.valueOf(value), StringUtil.toSentenceCase(subject.toString())));
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientTribute", TextFormatting.RED, LocaleUtil.numToComponent((Integer)value), new StringTextComponent(StringUtil.toSentenceCase(subject.toString()))), Util.NIL_UUID);
 				}
 				break;
 		}
@@ -113,12 +114,12 @@ public abstract class ClientOperations {
 		if (!SilencerEntity.isClientNearby) {
 			Minecraft mc = Minecraft.getInstance();
 
-			if (mc.getSoundHandler().sndManager.getVolume(SoundCategory.MASTER) > 0) {
-				if (silencer.getDistanceSq(mc.player) < 8 * 8) {
+			if (mc.getSoundManager().soundEngine.getVolume(SoundCategory.MASTER) > 0) {
+				if (silencer.distanceToSqr(mc.player) < 8 * 8) {
 					SilencerEntity.isClientNearby = true;
-					SilencerEntity.prevVolume = mc.getSoundHandler().sndManager.getVolume(SoundCategory.MASTER);
+					SilencerEntity.prevVolume = mc.getSoundManager().soundEngine.getVolume(SoundCategory.MASTER);
 
-					mc.getSoundHandler().setSoundLevel(SoundCategory.MASTER, 0);
+					mc.getSoundManager().updateSourceVolume(SoundCategory.MASTER, 0);
 				}
 			}
 		}

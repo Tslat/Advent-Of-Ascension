@@ -23,7 +23,7 @@ public class ToxicWaste extends Block {
 	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public ToxicWaste() {
-		super(BlockUtil.generateBlockProperties(Material.EARTH, MaterialColor.GREEN_TERRACOTTA, 0.25f, 1, SoundType.SLIME));
+		super(BlockUtil.generateBlockProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN, 0.25f, 1, SoundType.SLIME_BLOCK));
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class ToxicWaste extends Block {
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative())
-			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.POISON, 60).level(8), new PotionUtil.EffectBuilder(Effects.NAUSEA, 150));
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.POISON, 60).level(8), new PotionUtil.EffectBuilder(Effects.CONFUSION, 150));
 	}
 }

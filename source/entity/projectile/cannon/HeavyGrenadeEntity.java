@@ -37,7 +37,7 @@ public class HeavyGrenadeEntity extends BaseBullet implements HardProjectile, IR
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.1f;
 	}
 

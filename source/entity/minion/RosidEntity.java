@@ -15,32 +15,17 @@ public class RosidEntity extends AoAMinion {
 	}
 
 	public RosidEntity(LivingEntity summoner) {
-		this(AoAEntities.Minions.ROSID.get(), summoner.world);
+		this(AoAEntities.Minions.ROSID.get(), summoner.level);
 
 		if (summoner instanceof PlayerEntity)
-			setTamedBy((PlayerEntity)summoner);
+			tame((PlayerEntity)summoner);
 
-		setPosition(summoner.getPosX(), summoner.getPosY(), summoner.getPosZ());
+		setPos(summoner.getX(), summoner.getY(), summoner.getZ());
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 0.71875f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20.0d;
-	}
-
-	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6.0d;
 	}
 
 	@Override

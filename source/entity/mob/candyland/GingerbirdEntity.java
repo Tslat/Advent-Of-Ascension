@@ -22,26 +22,6 @@ public class GingerbirdEntity extends AoAFlyingMeleeMob {
 		return 0.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 79;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {

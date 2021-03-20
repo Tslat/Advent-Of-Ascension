@@ -22,26 +22,6 @@ public class SnappyEntity extends AoAMeleeMob {
 		return 1.78125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 85;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

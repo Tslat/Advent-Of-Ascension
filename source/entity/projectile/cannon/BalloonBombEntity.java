@@ -33,12 +33,12 @@ public class BalloonBombEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.1f;
 	}
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(owner, world, this, 1.5f);
+		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
 	}
 }

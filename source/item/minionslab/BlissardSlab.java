@@ -13,11 +13,11 @@ public class BlissardSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		BlissardEntity blissard = new BlissardEntity(AoAEntities.Minions.BLISSARD.get(), pl.world);
+		BlissardEntity blissard = new BlissardEntity(AoAEntities.Minions.BLISSARD.get(), pl.level);
 
-		blissard.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		blissard.setTamedBy(pl);
-		pl.world.addEntity(blissard);
+		blissard.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		blissard.tame(pl);
+		pl.level.addFreshEntity(blissard);
 
 		return blissard;
 	}

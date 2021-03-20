@@ -38,9 +38,9 @@ public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<White
 
 	@Override
 	public List<Slot> getInventorySlots(WhitewashingTableContainer container) {
-		List<Slot> inventorySlots = new ArrayList<Slot>(container.inventorySlots.size() - 3);
+		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 3);
 
-		for (int i = 2; i < container.inventorySlots.size() - 1; i++) {
+		for (int i = 2; i < container.slots.size() - 1; i++) {
 			inventorySlots.add(container.getSlot(i));
 		}
 

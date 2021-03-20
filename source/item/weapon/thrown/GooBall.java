@@ -33,14 +33,14 @@ public class GooBall extends BaseThrownWeapon {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return SoundEvents.ENTITY_ARROW_SHOOT;
+		return SoundEvents.ARROW_SHOOT;
 	}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack weaponStack, Hand hand) {
 		BaseGun item = (BaseGun)weaponStack.getItem();
 
-		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), weaponStack)))
+		if (ItemUtil.findInventoryItem(player, new ItemStack(this), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), weaponStack)))
 			return new GooBallEntity(player, item);
 
 		return null;
@@ -49,14 +49,14 @@ public class GooBall extends BaseThrownWeapon {
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet gooBall, float bulletDmgMultiplier) {
 		if (target != null && DamageUtil.dealRangedDamage(target, shooter, gooBall, dmg * bulletDmgMultiplier)) {
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 60).level(2));
-			shooter.world.playSound(null, gooBall.getPosX(), gooBall.getPosY(), gooBall.getPosZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 60).level(2));
+			shooter.level.playSound(null, gooBall.getX(), gooBall.getY(), gooBall.getZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SLOWS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

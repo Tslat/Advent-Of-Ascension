@@ -15,23 +15,8 @@ public class SpikebackEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 23.0d;
 	}
 
 	@Nullable

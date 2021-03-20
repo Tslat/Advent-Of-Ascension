@@ -22,26 +22,6 @@ public class TharaflyEntity extends AoAFlyingMeleeMob {
 		return 0.625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 55;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

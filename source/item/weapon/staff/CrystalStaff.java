@@ -30,7 +30,7 @@ public class CrystalStaff extends BaseStaff<List<PlayerEntity>> {
 
 	@Override
 	public List<PlayerEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<PlayerEntity> playerList = caster.world.getEntitiesWithinAABB(PlayerEntity.class, caster.getBoundingBox().grow(20), PlayerUtil::shouldPlayerBeAffected);
+		List<PlayerEntity> playerList = caster.level.getEntitiesOfClass(PlayerEntity.class, caster.getBoundingBox().inflate(20), PlayerUtil::shouldPlayerBeAffected);
 
 		if (playerList.isEmpty())
 			return null;
@@ -67,9 +67,9 @@ public class CrystalStaff extends BaseStaff<List<PlayerEntity>> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

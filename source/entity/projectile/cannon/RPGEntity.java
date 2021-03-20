@@ -34,7 +34,7 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		if (!world.isRemote)
-			WorldUtil.createExplosion(shooter, world, this, 2.7f);
+		if (!level.isClientSide)
+			WorldUtil.createExplosion(shooter, level, this, 2.7f);
 	}
 }

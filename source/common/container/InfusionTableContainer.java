@@ -48,21 +48,21 @@ public class InfusionTableContainer extends Container {
 
 		addSlot(new SlotCraftingMod(player, inputs, output, 0, 139, 35) {
 			@Override
-			protected void onCrafting(ItemStack stack) {
-				if (!player.world.isRemote) {
-					InfusionRecipe recipe = (InfusionRecipe)((CraftResultInventory)inventory).getRecipeUsed();
+			protected void checkTakeAchievements(ItemStack stack) {
+				if (!player.level.isClientSide) {
+					InfusionRecipe recipe = (InfusionRecipe)((CraftResultInventory)container).getRecipeUsed();
 
 					if (recipe != null && recipe.getMaxXp() > 0) {
 						if (recipe.getMinXp() == recipe.getMaxXp()) {
 							applyRecipeXp((ServerPlayerEntity)player, recipe.getMinXp());
 						}
 						else {
-							applyRecipeXp((ServerPlayerEntity)player, recipe.getMinXp() + player.getRNG().nextInt(recipe.getMaxXp() - recipe.getMinXp()));
+							applyRecipeXp((ServerPlayerEntity)player, recipe.getMinXp() + player.getRandom().nextInt(recipe.getMaxXp() - recipe.getMinXp()));
 						}
 					}
 				}
 
-				super.onCrafting(stack);
+				super.checkTakeAchievements(stack);
 			}
 		});
 
@@ -86,66 +86,66 @@ public class InfusionTableContainer extends Container {
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventory) {
-		functionCaller.consume((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
+	public void slotsChanged(IInventory inventory) {
+		functionCaller.execute((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return isWithinUsableDistance(functionCaller, player, AoABlocks.INFUSION_TABLE.get());
+	public boolean stillValid(PlayerEntity player) {
+		return stillValid(functionCaller, player, AoABlocks.INFUSION_TABLE.get());
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player) {
-		super.onContainerClosed(player);
+	public void removed(PlayerEntity player) {
+		super.removed(player);
 
-		functionCaller.consume((world, pos) -> clearContainer(player, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(player, world, inputs));
 	}
 
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slot) {
-		return slot.inventory != output && super.canMergeSlot(stack, slot);
+	public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
+		return slot.container != output && super.canTakeItemForPickAll(stack, slot);
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				functionCaller.consume((world, pos) -> slotStack.getItem().onCreated(slotStack, player.world, player));
+				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level, player));
 
-				if (!mergeItemStack(slotStack, 11, 47, true))
+				if (!moveItemStackTo(slotStack, 11, 47, true))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 11 && index < 38) {
-				if (!mergeItemStack(slotStack, 1, 11, false) && !mergeItemStack(slotStack, 38, 47, false))
+				if (!moveItemStackTo(slotStack, 1, 11, false) && !moveItemStackTo(slotStack, 38, 47, false))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 38 && index < 47) {
-				if (!mergeItemStack(slotStack, 1, 11, false) && !mergeItemStack(slotStack, 11, 38, false))
+				if (!moveItemStackTo(slotStack, 1, 11, false) && !moveItemStackTo(slotStack, 11, 38, false))
 					return ItemStack.EMPTY;
 			}
-			else if (!mergeItemStack(slotStack, 11, 47, false)) {
+			else if (!moveItemStackTo(slotStack, 11, 47, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
 			if (index == 0)
-				player.dropItem(slot.onTake(player, slotStack), false);
+				player.drop(slot.onTake(player, slotStack), false);
 		}
 
 		return stack;
@@ -161,28 +161,28 @@ public class InfusionTableContainer extends Container {
 			@Nullable
 			@Override
 			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new InfusionTableContainer(windowId, inv, IWorldPosCallable.of(player.world, pos));
+				return new InfusionTableContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
 			}
 		}, pos);
 	}
 
 	protected void slotChangedCraftingGrid(World world, PlayerEntity player, InfusionInventory inv, CraftResultInventory craftResult) {
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
-			Optional<InfusionRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipe(AoARecipes.INFUSION.getA(), inv, world);
+			Optional<InfusionRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.INFUSION.getA(), inv, world);
 
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
 
-				if ((matchedRecipe.isDynamic() || !world.getGameRules().getBoolean(GameRules.DO_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().isUnlocked(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, Skills.INFUSION, matchedRecipe.getInfusionReq()))) {
+				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, Skills.INFUSION, matchedRecipe.getInfusionReq()))) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
-					resultStack = matchedRecipe.getCraftingResult(inv);
+					resultStack = matchedRecipe.assemble(inv);
 				}
 			}
 
-			craftResult.setInventorySlotContents(0, resultStack);
-			((ServerPlayerEntity)player).connection.sendPacket(new SSetSlotPacket(this.windowId, 0, resultStack));
+			craftResult.setItem(0, resultStack);
+			((ServerPlayerEntity)player).connection.send(new SSetSlotPacket(this.containerId, 0, resultStack));
 		}
 	}
 
@@ -202,7 +202,7 @@ public class InfusionTableContainer extends Container {
 		}
 
 		@Override
-		public int getSizeInventory() {
+		public int getContainerSize() {
 			return 10;
 		}
 
@@ -217,33 +217,33 @@ public class InfusionTableContainer extends Container {
 		}
 
 		@Override
-		public ItemStack getStackInSlot(int index) {
-			return index >= getSizeInventory() || index < 0 ? ItemStack.EMPTY : stackList.get(index);
+		public ItemStack getItem(int index) {
+			return index >= getContainerSize() || index < 0 ? ItemStack.EMPTY : stackList.get(index);
 		}
 
 		@Override
-		public ItemStack removeStackFromSlot(int index) {
-			return ItemStackHelper.getAndRemove(stackList, index);
+		public ItemStack removeItemNoUpdate(int index) {
+			return ItemStackHelper.takeItem(stackList, index);
 		}
 
 		@Override
-		public ItemStack decrStackSize(int index, int count) {
-			ItemStack stack = ItemStackHelper.getAndSplit(stackList, index, count);
+		public ItemStack removeItem(int index, int count) {
+			ItemStack stack = ItemStackHelper.removeItem(stackList, index, count);
 
 			if (!stack.isEmpty())
-				eventListener.onCraftMatrixChanged(this);
+				eventListener.slotsChanged(this);
 
 			return stack;
 		}
 
 		@Override
-		public void setInventorySlotContents(int index, ItemStack stack) {
+		public void setItem(int index, ItemStack stack) {
 			stackList.set(index, stack);
-			eventListener.onCraftMatrixChanged(this);
+			eventListener.slotsChanged(this);
 		}
 
 		@Override
-		public void clear() {
+		public void clearContent() {
 			stackList.clear();
 		}
 
@@ -268,23 +268,23 @@ public class InfusionTableContainer extends Container {
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack) {
+		public boolean mayPlace(ItemStack stack) {
 			return false;
 		}
 
 		@Override
-		public ItemStack decrStackSize(int amount) {
-			if (getHasStack())
-				amountCrafted += Math.min(amount, getStack().getCount());
+		public ItemStack remove(int amount) {
+			if (hasItem())
+				amountCrafted += Math.min(amount, getItem().getCount());
 
-			return super.decrStackSize(amount);
+			return super.remove(amount);
 		}
 
 		@Override
-		protected void onCrafting(ItemStack stack, int amount) {
+		protected void onQuickCraft(ItemStack stack, int amount) {
 			amountCrafted += amount;
 
-			onCrafting(stack);
+			checkTakeAchievements(stack);
 		}
 
 		@Override
@@ -293,42 +293,42 @@ public class InfusionTableContainer extends Container {
 		}
 
 		@Override
-		protected void onCrafting(ItemStack stack) {
+		protected void checkTakeAchievements(ItemStack stack) {
 			if (amountCrafted > 0) {
-				stack.onCrafting(player.world, player, amountCrafted);
+				stack.onCraftedBy(player.level, player, amountCrafted);
 				BasicEventHooks.firePlayerCraftingEvent(player, stack, craftInv);
 			}
 
 			amountCrafted = 0;
-			((CraftResultInventory)inventory).setRecipeUsed(null);
+			((CraftResultInventory)container).setRecipeUsed(null);
 		}
 
 		@Override
 		public ItemStack onTake(PlayerEntity player, ItemStack stack) {
-			onCrafting(stack);
+			checkTakeAchievements(stack);
 			ForgeHooks.setCraftingPlayer(player);
-			NonNullList<ItemStack> remainingItems = player.world.getRecipeManager().getRecipeNonNull(AoARecipes.INFUSION.getA(), craftInv, player.world);
+			NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.getA(), craftInv, player.level);
 			ForgeHooks.setCraftingPlayer(null);
 
 			for (int i = 0; i < remainingItems.size(); ++i) {
-				ItemStack slotStack = this.craftInv.getStackInSlot(i);
+				ItemStack slotStack = this.craftInv.getItem(i);
 				ItemStack remainingItem = remainingItems.get(i);
 
 				if (!slotStack.isEmpty()) {
-					craftInv.decrStackSize(i, 1);
-					slotStack = craftInv.getStackInSlot(i);
+					craftInv.removeItem(i, 1);
+					slotStack = craftInv.getItem(i);
 				}
 
 				if (!remainingItem.isEmpty()) {
 					if (slotStack.isEmpty()) {
-						craftInv.setInventorySlotContents(i, remainingItem);
+						craftInv.setItem(i, remainingItem);
 					}
-					else if (ItemStack.areItemsEqual(slotStack, remainingItem) && ItemStack.areItemStackTagsEqual(slotStack, remainingItem)) {
+					else if (ItemStack.isSame(slotStack, remainingItem) && ItemStack.tagMatches(slotStack, remainingItem)) {
 						remainingItem.grow(slotStack.getCount());
-						craftInv.setInventorySlotContents(i, remainingItem);
+						craftInv.setItem(i, remainingItem);
 					}
-					else if (!player.inventory.addItemStackToInventory(remainingItem)) {
-						player.dropItem(remainingItem, false);
+					else if (!player.inventory.add(remainingItem)) {
+						player.drop(remainingItem, false);
 					}
 				}
 			}

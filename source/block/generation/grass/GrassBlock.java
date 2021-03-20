@@ -7,12 +7,15 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
 
 import java.util.Random;
 import java.util.function.Supplier;
+
+import net.minecraft.block.AbstractBlock.Properties;
 
 public class GrassBlock extends net.minecraft.block.GrassBlock {
 	protected final Supplier<Block> soilBlock;
@@ -26,11 +29,11 @@ public class GrassBlock extends net.minecraft.block.GrassBlock {
 	}
 
 	private static Properties generateBlockProperties(MaterialColor mapColour) {
-		Properties blockProperties = Properties.create(Material.ORGANIC, mapColour);
+		Properties blockProperties = Properties.of(Material.GRASS, mapColour);
 
-		blockProperties.hardnessAndResistance(0.6f);
-		blockProperties.sound(SoundType.PLANT);
-		blockProperties.tickRandomly();
+		blockProperties.strength(0.6f);
+		blockProperties.sound(SoundType.GRASS);
+		blockProperties.randomTicks();
 		blockProperties.harvestTool(ToolType.SHOVEL);
 		blockProperties.harvestLevel(0);
 
@@ -42,20 +45,20 @@ public class GrassBlock extends net.minecraft.block.GrassBlock {
 	}
 
 	@Override
-	public void grow(ServerWorld world, Random rand, BlockPos pos, BlockState state) {}
+	public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {}
 
-	public boolean hasSufficientLight(BlockState grassState, IWorldReader world, BlockPos grassPos) {
-		BlockPos topPos = grassPos.up();
+	public boolean hasSufficientLight(BlockState grassState, World world, BlockPos grassPos) {
+		BlockPos topPos = grassPos.above();
 		BlockState topBlock = world.getBlockState(topPos);
 
-		if (topBlock.getBlock() == Blocks.SNOW && topBlock.get(SnowBlock.LAYERS) == 1)
+		if (topBlock.getBlock() == Blocks.SNOW && topBlock.getValue(SnowBlock.LAYERS) == 1)
 			return true;
 
-		return LightEngine.func_215613_a(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getOpacity(world, topPos)) < world.getMaxLightLevel();
+		return LightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
 	}
 
-	public boolean canStayGrass(BlockState grassState, IWorldReader world, BlockPos grassPos) {
-		return hasSufficientLight(grassState, world, grassPos) && !world.getFluidState(grassPos.up()).isTagged(FluidTags.WATER);
+	public boolean canStayGrass(BlockState grassState, World world, BlockPos grassPos) {
+		return hasSufficientLight(grassState, world, grassPos) && !world.getFluidState(grassPos.above()).is(FluidTags.WATER);
 	}
 
 	@Override
@@ -64,17 +67,60 @@ public class GrassBlock extends net.minecraft.block.GrassBlock {
 			if (!world.isAreaLoaded(pos, 3))
 				return;
 
-			world.setBlockState(pos, soilBlock.get().getDefaultState());
+			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
 		}
-		else if (growsInDark == (world.getLight(pos.up()) < 9)) {
-			BlockState grassState = this.getDefaultState();
+		else if (growsInDark == (world.getMaxLocalRawBrightness(pos.above()) < 9)) {
+			BlockState grassState = this.defaultBlockState();
 
 			for (int i = 0; i < 4; i++) {
-				BlockPos growPos = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+				BlockPos growPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
 
 				if (world.getBlockState(growPos).getBlock() == soilBlock.get() && canStayGrass(grassState, world, growPos))
-					world.setBlockState(growPos, grassState.with(SNOWY, world.getBlockState(growPos.up()).getBlock() == Blocks.SNOW));
+					world.setBlockAndUpdate(growPos, grassState.setValue(SNOWY, world.getBlockState(growPos.above()).getBlock() == Blocks.SNOW));
 			}
 		}
+	}
+
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		if (!couldBeSnowy(state, world, pos)) {
+			if (!world.isAreaLoaded(pos, 3))
+				return;
+
+			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
+		}
+		else {
+			if (world.getMaxLocalRawBrightness(pos.above()) >= 9) {
+				BlockState defaultState = defaultBlockState();
+
+				for(int i = 0; i < 4; ++i) {
+					BlockPos spreadPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+
+					if (world.getBlockState(spreadPos).is(Blocks.DIRT) && isSnowyAndNotUnderwater(defaultState, world, spreadPos))
+						world.setBlockAndUpdate(spreadPos, defaultState.setValue(SNOWY, Boolean.valueOf(world.getBlockState(spreadPos.above()).is(Blocks.SNOW))));
+				}
+			}
+		}
+	}
+
+	protected boolean couldBeSnowy(BlockState state, IWorldReader worldReader, BlockPos pos) {
+		BlockPos upPos = pos.above();
+		BlockState topBlock = worldReader.getBlockState(upPos);
+
+		if (topBlock.is(Blocks.SNOW) && topBlock.getValue(SnowBlock.LAYERS) == 1) {
+			return true;
+		}
+		else if (topBlock.getFluidState().getAmount() == 8) {
+			return false;
+		}
+		else {
+			int i = LightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
+
+			return i < worldReader.getMaxLightLevel();
+		}
+	}
+
+	protected boolean isSnowyAndNotUnderwater(BlockState state, IWorldReader worldReader, BlockPos pos) {
+		return couldBeSnowy(state, worldReader, pos) && !worldReader.getFluidState(pos.above()).is(FluidTags.WATER);
 	}
 }

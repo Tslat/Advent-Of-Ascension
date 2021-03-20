@@ -18,7 +18,7 @@ public class InvisibleEntityRenderer extends MobRenderer<MobEntity, EntityModel<
 	public void render(MobEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {}
 
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity entity) {
+	public ResourceLocation getTextureLocation(MobEntity entity) {
 		return null;
 	}
 }

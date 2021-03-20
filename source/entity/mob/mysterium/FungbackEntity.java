@@ -28,26 +28,6 @@ public class FungbackEntity extends AoAMeleeMob {
 		return 0.71875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.27;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -67,28 +47,28 @@ public class FungbackEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
-		if (effect.getPotion() == Effects.POISON)
+	public boolean addEffect(EffectInstance effect) {
+		if (effect.getEffect() == Effects.POISON)
 			return false;
 
-		return super.addPotionEffect(effect);
+		return super.addEffect(effect);
 	}
 
 	@Override
 	protected void onHit(DamageSource source, float amount) {
 		if (!DamageUtil.isEnvironmentalDamage(source)) {
-			AreaEffectCloudEntity effectCloud = new AreaEffectCloudEntity(world, getPosX(), getPosY(), getPosZ());
+			AreaEffectCloudEntity effectCloud = new AreaEffectCloudEntity(level, getX(), getY(), getZ());
 
 			effectCloud.setDuration(30);
 			effectCloud.setRadius(1.5f);
 			effectCloud.setOwner(this);
 			effectCloud.setWaitTime(0);
-			effectCloud.setColor(NumberUtil.RGB(51, 102, 0));
+			effectCloud.setFixedColor(NumberUtil.RGB(51, 102, 0));
 			effectCloud.setPotion(Potions.POISON);
 			effectCloud.addEffect(new EffectInstance(Effects.POISON, 40, 2, false, true));
 			effectCloud.setRadiusPerTick(-(effectCloud.getRadius() - 0.5f) / (float)effectCloud.getDuration());
 
-			world.addEntity(effectCloud);
+			level.addFreshEntity(effectCloud);
 		}
 	}
 }

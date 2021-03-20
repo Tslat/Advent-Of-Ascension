@@ -1,5 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -57,7 +58,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	@Override
-	public void draw(FrameBenchRecipe recipe, double mouseX, double mouseY) {
+	public void draw(FrameBenchRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 
 		drawButton(mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
@@ -73,12 +74,12 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	private void drawButton(Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
-		mc.getTextureManager().bindTexture(texture);
+		mc.getTextureManager().bind(texture);
 		RenderSystem.pushMatrix();
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		GuiUtils.drawTexturedModalRect(x, y, 176, recipe.getRecipeOutput().getItem() == frame ? 21 : 39, 18, 18, 0);
+		GuiUtils.drawTexturedModalRect(x, y, 176, recipe.getResultItem().getItem() == frame ? 21 : 39, 18, 18, 0);
 		RenderSystem.translatef(0, 0, 32);
-		mc.getItemRenderer().renderItemIntoGUI(new ItemStack(frame), x + 1, y + 1);
+		mc.getItemRenderer().renderGuiItem(new ItemStack(frame), x + 1, y + 1);
 		RenderSystem.popMatrix();
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 	}
@@ -86,7 +87,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	@Override
 	public void setIngredients(FrameBenchRecipe recipe, IIngredients ingredients) {
 		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override

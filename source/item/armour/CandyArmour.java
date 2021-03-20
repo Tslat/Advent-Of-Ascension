@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CandyArmour extends AdventArmour {
 	public CandyArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:candy", 59, new int[] {4, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:candy", 59, new int[] {4, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class CandyArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		if (plData.player().getFoodStats().needFood()) {
+		if (plData.player().getFoodData().needsFood()) {
 			if (slots == null || plData.equipment().isCooledDown("candy_armour")) {
 				if (findAndConsumeFood(plData.player()))
 					plData.equipment().setCooldown("candy_armour", 12000 / (slots == null ? 4 : slots.size()));
@@ -37,14 +37,14 @@ public class CandyArmour extends AdventArmour {
 	}
 
 	private boolean findAndConsumeFood(PlayerEntity player) {
-		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-			ItemStack stack = player.inventory.getStackInSlot(i);
+		for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+			ItemStack stack = player.inventory.getItem(i);
 
-			if (stack.getItem().isFood()) {
-				Food food = stack.getItem().getFood();
+			if (stack.getItem().isEdible()) {
+				Food food = stack.getItem().getFoodProperties();
 
-				if (food.getHealing() > 0 && food.getSaturation() > 0) {
-					player.inventory.setInventorySlotContents(i, stack.getItem().onItemUseFinish(stack, player.world, player));
+				if (food.getNutrition() > 0 && food.getSaturationModifier() > 0) {
+					player.inventory.setItem(i, stack.getItem().finishUsingItem(stack, player.level, player));
 
 					return true;
 				}
@@ -55,7 +55,7 @@ public class CandyArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.candy_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.candy_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

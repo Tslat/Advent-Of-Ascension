@@ -21,7 +21,7 @@ public class UntiringTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.HASTE, 10).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.DIG_SPEED, 10).isAmbient());
 	}
 
 	@Override

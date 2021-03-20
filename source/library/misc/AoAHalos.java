@@ -14,7 +14,7 @@ public class AoAHalos {
 	private static final HashSet<UUID> renderCheckedPlayers = new HashSet<UUID>();
 
 	public static void syncWithNewClient(ServerPlayerEntity player) {
-		Logging.logMessage(Level.DEBUG, "Syncing player halos with new player: " + player.getUniqueID().toString());
+		Logging.logMessage(Level.DEBUG, "Syncing player halos with new player: " + player.getUUID().toString());
 		AoAPackets.messagePlayer(player, new PlayerHaloDataPacket(playerHalos));
 	}
 

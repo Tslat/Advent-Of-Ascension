@@ -25,26 +25,6 @@ public class InfernalEntity extends AoAMeleeMob {
         return 1.71875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 95d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 8.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.25d;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -77,7 +57,7 @@ public class InfernalEntity extends AoAMeleeMob {
 
     @Override
     protected void onHit(DamageSource source, float amount) {
-        if (DamageUtil.isMeleeDamage(source) && (!(source.getTrueSource() instanceof PlayerEntity) || PlayerUtil.shouldPlayerBeAffected((PlayerEntity)source.getTrueSource())))
-            source.getTrueSource().setFire(5);
+        if (DamageUtil.isMeleeDamage(source) && (!(source.getEntity() instanceof PlayerEntity) || PlayerUtil.shouldPlayerBeAffected((PlayerEntity)source.getEntity())))
+            source.getEntity().setSecondsOnFire(5);
     }
 }

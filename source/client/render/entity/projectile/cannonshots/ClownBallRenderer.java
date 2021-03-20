@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.entity.projectile.cannon.ClownBallEntity;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.util.NumberUtil;
 
 public class ClownBallRenderer extends TexturedProjectileRenderer<ClownBallEntity> {
@@ -20,8 +20,8 @@ public class ClownBallRenderer extends TexturedProjectileRenderer<ClownBallEntit
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 3; i++) {
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(0, 255, 0)), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 255, 255)), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(0, 255, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

@@ -12,12 +12,12 @@ import net.tslat.aoa3.util.NumberUtil;
 
 public class AncientCavernPortalBlock extends PortalBlock {
 	public AncientCavernPortalBlock() {
-		super(AoADimensions.ANCIENT_CAVERN::type, MaterialColor.GREEN_TERRACOTTA, NumberUtil.RGB(0, 147, 66));
+		super(AoADimensions.ANCIENT_CAVERN.key, MaterialColor.TERRACOTTA_GREEN, NumberUtil.RGB(0, 147, 66));
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).isTamed()))
-			super.onEntityCollision(state, world, pos, entity);
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).isTame()))
+			super.entityInside(state, world, pos, entity);
 	}
 }

@@ -19,9 +19,9 @@ public class ShadowStalkerEntity extends AoAMinion {
 		this(AoAEntities.Minions.SHADOW_STALKER.get(), world);
 
 		if (caster instanceof PlayerEntity)
-			setTamedBy((PlayerEntity)caster);
+			tame((PlayerEntity)caster);
 
-		setPosition(caster.getPosX(), caster.getPosY(), caster.getPosZ());
+		setPos(caster.getX(), caster.getY(), caster.getZ());
 	}
 
 	public ShadowStalkerEntity(EntityType<? extends TameableEntity> entityType, final World world){
@@ -31,21 +31,6 @@ public class ShadowStalkerEntity extends AoAMinion {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 0.9375f;
-	}
-
-	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25.0d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15.0d;
 	}
 
 	@Override

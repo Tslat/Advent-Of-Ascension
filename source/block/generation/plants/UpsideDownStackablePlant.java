@@ -19,7 +19,7 @@ public class UpsideDownStackablePlant extends StackablePlant {
 	}
 
 	public UpsideDownStackablePlant(MaterialColor mapColour, Material... growthMaterial) {
-		super(Material.TALL_PLANTS, mapColour, SoundType.PLANT, growthMaterial);
+		super(Material.REPLACEABLE_PLANT, mapColour, SoundType.GRASS, growthMaterial);
 	}
 
 	@Override
@@ -30,31 +30,31 @@ public class UpsideDownStackablePlant extends StackablePlant {
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockState targetState = world.getBlockState(pos.up());
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockState targetState = world.getBlockState(pos.above());
 
-		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isOpaqueCube(world, pos.up())) || targetState.getBlock() == stemBlock.get();
+		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.above())) || targetState.getBlock() == stemBlock.get();
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		BlockPos newPos;
-		BlockState blockState = world.getBlockState(newPos = pos.down());
+		BlockState blockState = world.getBlockState(newPos = pos.above());
 		Block block = blockState.getBlock();
 
 		while (block == stemBlock.get() || block == hatBlock.get()) {
-			world.setBlockState(newPos, Blocks.AIR.getDefaultState(), 35);
-			world.playEvent(player, 2001, newPos, Block.getStateId(blockState));
+			world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 35);
+			world.levelEvent(player, 2001, newPos, Block.getId(blockState));
 
-			if (!world.isRemote() && !player.isCreative()) {
-				spawnDrops(state, world, pos, null, player, player.getHeldItemMainhand());
-				spawnDrops(blockState, world, newPos, null, player, player.getHeldItemMainhand());
+			if (!world.isClientSide() && !player.isCreative()) {
+				dropResources(state, world, pos, null, player, player.getMainHandItem());
+				dropResources(blockState, world, newPos, null, player, player.getMainHandItem());
 			}
 
-			blockState = world.getBlockState(newPos = newPos.down());
+			blockState = world.getBlockState(newPos = newPos.below());
 			block = blockState.getBlock();
 		}
 
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 }

@@ -20,35 +20,15 @@ public class DustStriderEntity extends AoAMeleeMob {
     }
 
     public DustStriderEntity(DustonEntity duston) {
-        this(AoAEntities.Mobs.DUST_STRIDER.get(), duston.world);
+        this(AoAEntities.Mobs.DUST_STRIDER.get(), duston.level);
 
-        setLocationAndAngles(duston.getPosX(), duston.getPosY() + 0.5, duston.getPosZ(), duston.rotationYaw, duston.rotationPitch);
+        moveTo(duston.getX(), duston.getY() + 0.5, duston.getZ(), duston.yRot, duston.xRot);
         fallDistance = -10;
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.8125f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 110;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 11.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
     }
 
     @Nullable
@@ -70,7 +50,7 @@ public class DustStriderEntity extends AoAMeleeMob {
     }
 
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
 

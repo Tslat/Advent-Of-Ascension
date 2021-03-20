@@ -19,11 +19,11 @@ public class MusicPacket implements AoAPacket {
 	@Override
 	public void encode(PacketBuffer buffer) {
 		buffer.writeBoolean(startingMusic);
-		buffer.writeString(id.toString());
+		buffer.writeUtf(id.toString());
 	}
 
 	public static MusicPacket decode(PacketBuffer buffer) {
-		return new MusicPacket(buffer.readBoolean(), new ResourceLocation(buffer.readString(32767)));
+		return new MusicPacket(buffer.readBoolean(), new ResourceLocation(buffer.readUtf(32767)));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

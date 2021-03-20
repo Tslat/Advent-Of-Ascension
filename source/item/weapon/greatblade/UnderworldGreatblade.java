@@ -20,11 +20,11 @@ public class UnderworldGreatblade extends BaseGreatblade {
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
-		return target instanceof LivingEntity && ((LivingEntity)target).getCreatureAttribute() == CreatureAttribute.UNDEAD ? baseDmg + 5 : baseDmg;
+		return target instanceof LivingEntity && ((LivingEntity)target).getMobType() == CreatureAttribute.UNDEAD ? baseDmg + 5 : baseDmg;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

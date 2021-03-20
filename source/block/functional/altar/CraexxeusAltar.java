@@ -13,19 +13,19 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class CraexxeusAltar extends BossAltarBlock {
 	public CraexxeusAltar() {
-		super(MaterialColor.CYAN);
+		super(MaterialColor.COLOR_CYAN);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		CraexxeusEntity craexxeus = new CraexxeusEntity(AoAEntities.Mobs.CRAEXXEUS.get(), player.world);
+		CraexxeusEntity craexxeus = new CraexxeusEntity(AoAEntities.Mobs.CRAEXXEUS.get(), player.level);
 
-		int offsetX = player.getRNG().nextBoolean() ? -11 : 11;
-		int offsetZ = player.getRNG().nextBoolean() ? -11 : 11;
+		int offsetX = player.getRandom().nextBoolean() ? -11 : 11;
+		int offsetZ = player.getRandom().nextBoolean() ? -11 : 11;
 
-		craexxeus.setLocationAndAngles(blockPos.getX() + offsetX, blockPos.getY(), blockPos.getZ() + offsetZ, 0, 0);
-		player.world.addEntity(craexxeus);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.craexxeus.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		craexxeus.moveTo(blockPos.getX() + offsetX, blockPos.getY(), blockPos.getZ() + offsetZ, 0, 0);
+		player.level.addFreshEntity(craexxeus);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.craexxeus.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

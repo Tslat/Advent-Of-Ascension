@@ -24,7 +24,7 @@ public class HidingFungiEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return true;
 	}
 
@@ -32,59 +32,30 @@ public class HidingFungiEntity extends AoAMeleeMob {
 	protected void registerGoals() {}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1.0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onHit(DamageSource source, float amount) {
-		if (!world.isRemote && HunterUtil.canAttackTarget(this, source.getTrueSource(), true)) {
-			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAEntities.Mobs.LIVING_FUNGI.get(), world);
+		if (!level.isClientSide && HunterUtil.canAttackTarget(this, source.getEntity(), true)) {
+			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAEntities.Mobs.LIVING_FUNGI.get(), level);
 
-			livingFungi.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, rotationPitch);
-			world.addEntity(livingFungi);
-			livingFungi.attackEntityFrom(source, amount);
+			livingFungi.moveTo(getX(), getY(), getZ(), yRot, xRot);
+			level.addFreshEntity(livingFungi);
+			livingFungi.hurt(source, amount);
 			playSound(AoASounds.ENTITY_LIVING_FUNGI_SPAWN.get(), 1.0f, 1.0f);
 			remove();
 		}
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entityIn) {}
+	public void playerTouch(PlayerEntity entityIn) {}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {}
+	protected void doPush(Entity entityIn) {}
 
 	@Override
-	public void addVelocity(double x, double y, double z) {}
+	public void push(double x, double y, double z) {}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

@@ -20,15 +20,15 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class HauntingTable extends Block {
 	public HauntingTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_PURPLE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.GHOULASM.get()) {
-			if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.GHOULASM.get()) {
+			if (!world.isClientSide()) {
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.PRIMED_GHOULASM.get()));
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_HAUNTING_TABLE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);

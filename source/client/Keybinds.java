@@ -15,9 +15,9 @@ import org.lwjgl.glfw.GLFW;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Keybinds {
-	public static KeyBinding keyResourceGui;
-	public static KeyBinding keySkillGui;
-	public static KeyBinding keyAdventGui;
+	public static KeyBinding RESOURCE_GUI;
+	public static KeyBinding SKILL_GUI;
+	public static KeyBinding ADVENT_GUI;
 
 	public static boolean statusResourceGui = false;
 	public static boolean statusSkillGui = false;
@@ -25,31 +25,31 @@ public class Keybinds {
 	public static boolean statusSkillGuiMessage = true;
 
 	public static void registerKeybinds() {
-		ClientRegistry.registerKeyBinding(keyResourceGui = new KeyBinding("key.aoa3.resources", GLFW.GLFW_KEY_O, "key.categories.aoa3"));
-		ClientRegistry.registerKeyBinding(keySkillGui = new KeyBinding("key.aoa3.skills", -1, "key.categories.aoa3"));
-		ClientRegistry.registerKeyBinding(keyAdventGui = new KeyBinding("key.aoa3.adventGui", GLFW.GLFW_KEY_DELETE, "key.categories.aoa3"));
+		ClientRegistry.registerKeyBinding(RESOURCE_GUI = new KeyBinding("key.aoa3.resources", GLFW.GLFW_KEY_O, "key.categories.aoa3"));
+		ClientRegistry.registerKeyBinding(SKILL_GUI = new KeyBinding("key.aoa3.skills", -1, "key.categories.aoa3"));
+		ClientRegistry.registerKeyBinding(ADVENT_GUI = new KeyBinding("key.aoa3.adventGui", GLFW.GLFW_KEY_DELETE, "key.categories.aoa3"));
 	}
 
 	@SubscribeEvent
 	public static void onKeyDown(final InputEvent.KeyInputEvent ev) {
-		if (keyResourceGui.isPressed()) {
+		if (RESOURCE_GUI.consumeClick()) {
 			statusResourceGui = !statusResourceGui;
 			statusResourceGuiMessage = false;
 		}
 
-		if (keySkillGui.isPressed()) {
+		if (SKILL_GUI.consumeClick()) {
 			statusSkillGui = !statusSkillGui;
 			statusSkillGuiMessage = false;
 		}
 
 		Minecraft mc = Minecraft.getInstance();
 
-		if (keyAdventGui.isPressed() && mc.player != null) {
-			if (mc.currentScreen instanceof AdventMainGui) {
-				mc.displayGuiScreen(null);
+		if (ADVENT_GUI.consumeClick() && mc.player != null) {
+			if (mc.screen instanceof AdventMainGui) {
+				mc.setScreen(null);
 			}
-			else if (mc.currentScreen == null) {
-				mc.displayGuiScreen(new AdventMainGui(mc.player));
+			else if (mc.screen == null) {
+				mc.setScreen(new AdventMainGui(mc.player));
 			}
 		}
 	}

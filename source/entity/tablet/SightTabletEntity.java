@@ -23,7 +23,7 @@ public class SightTabletEntity extends SoulTabletEntity {
 	@Override
 	protected void doTickEffect() {
 		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive())) {
-			EffectInstance nightVision = pl.getActivePotionEffect(Effects.NIGHT_VISION);
+			EffectInstance nightVision = pl.getEffect(Effects.NIGHT_VISION);
 
 			if (nightVision == null || nightVision.getDuration() < 250)
 				EntityUtil.applyPotions(pl, new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 300).isAmbient());

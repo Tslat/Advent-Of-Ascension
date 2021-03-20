@@ -21,7 +21,7 @@ public class DaybreakerBow extends BaseBow {
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		CustomArrowEntity centralArrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
 
-		if (shooter.rotationPitch < -70) {
+		if (shooter.xRot < -70) {
 			for (double x = -0.5; x <= 0.5; x += 0.5) {
 				for (double z = -0.5; z <= 0.5; z += 0.5) {
 					if (x == 0 && z == 0)
@@ -29,9 +29,9 @@ public class DaybreakerBow extends BaseBow {
 
 					CustomArrowEntity arrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, dmg);
 
-					arrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-					arrow.setPositionAndUpdate(arrow.getPosX() + x, arrow.getPosY(), arrow.getPosZ() + z);
-					arrow.world.addEntity(arrow);
+					arrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+					arrow.teleportTo(arrow.getX() + x, arrow.getY(), arrow.getZ() + z);
+					arrow.level.addFreshEntity(arrow);
 				}
 			}
 		}
@@ -40,8 +40,8 @@ public class DaybreakerBow extends BaseBow {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

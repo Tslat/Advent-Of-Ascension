@@ -20,43 +20,24 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class FlashEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public FlashEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;
 
-		this.setAIMoveSpeed(3.2f);
+		this.setSpeed(3.2f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.75f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 1000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -74,60 +55,60 @@ public class FlashEntity extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!world.isRemote && DamageUtil.isMeleeDamage(source)) {
-			if (world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-				switch (rand.nextInt(3)) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (!level.isClientSide && DamageUtil.isMeleeDamage(source)) {
+			if (WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+				switch (random.nextInt(3)) {
 					case 0:
-						setPositionAndUpdate(235, 22, 10);
+						teleportTo(235, 22, 10);
 						break;
 					case 1:
-						setPositionAndUpdate(235, 22, -3);
+						teleportTo(235, 22, -3);
 						break;
 					case 2:
-						setPositionAndUpdate(228, 22, 3);
+						teleportTo(228, 22, 3);
 						break;
 				}
 			}
 			else {
-				int x = (int)getPosX() + (rand.nextInt(14) - 7);
-				int z = (int)getPosZ() + (rand.nextInt(14) - 7);
-				setPosition(x, world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getPosY(), z)).getY(), z);
+				int x = (int)getX() + (random.nextInt(14) - 7);
+				int z = (int)getZ() + (random.nextInt(14) - 7);
+				setPos(x, level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getY(), z)).getY(), z);
 			}
 		}
 
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (!world.isRemote) {
-			if (world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-				switch (rand.nextInt(3)) {
+		if (!level.isClientSide) {
+			if (WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+				switch (random.nextInt(3)) {
 					case 0:
-						setPositionAndUpdate(235, 22, 10);
+						teleportTo(235, 22, 10);
 						break;
 					case 1:
-						setPositionAndUpdate(235, 22, -3);
+						teleportTo(235, 22, -3);
 						break;
 					case 2:
-						setPositionAndUpdate(228, 22, 3);
+						teleportTo(228, 22, 3);
 						break;
 				}
 			}
 			else {
-				int x = (int)getPosX() + (rand.nextInt(14) - 7);
-				int z = (int)getPosZ() + (rand.nextInt(14) - 7);
-				setPosition(x, world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getPosY(), z)).getY(), z);
+				int x = (int)getX() + (random.nextInt(14) - 7);
+				int z = (int)getZ() + (random.nextInt(14) - 7);
+				setPos(x, level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getY(), z)).getY(), z);
 			}
 		}
 	}
@@ -138,37 +119,37 @@ public class FlashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
 	}

@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 
 public class ExperimentW801 extends BaseBlaster {
 	public ExperimentW801(double dmg, int durability, int fireDelayTicks, float energyCost) {
-		super(new Item.Properties().group(null).maxDamage(durability), dmg, fireDelayTicks, energyCost);
+		super(new Item.Properties().tab(null).durability(durability), dmg, fireDelayTicks, energyCost);
 	}
 
 	@Nullable
@@ -26,14 +26,14 @@ public class ExperimentW801 extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new ArcwormShotEntity(shooter, this, 120));
+		shooter.level.addFreshEntity(new ArcwormShotEntity(shooter, this, 120));
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (!verifyStack(stack)) {
 			stack.setCount(0);
-			entityIn.replaceItemInInventory(itemSlot, ItemStack.EMPTY);
+			entityIn.setSlot(itemSlot, ItemStack.EMPTY);
 		}
 	}
 

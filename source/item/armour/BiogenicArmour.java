@@ -22,7 +22,7 @@ import java.util.List;
 
 public class BiogenicArmour extends AdventArmour {
 	public BiogenicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:biogenic", 38, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:biogenic", 38, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -33,38 +33,38 @@ public class BiogenicArmour extends AdventArmour {
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null) {
 			if (plData.player().isInWater())
-				plData.player().setAir(-10);
+				plData.player().setAirSupply(-10);
 
-			if (plData.player().areEyesInFluid(FluidTags.WATER)) {
-				plData.player().addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
+			if (plData.player().isEyeInFluid(FluidTags.WATER)) {
+				plData.player().addEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
 			}
 			else {
-				EffectInstance nightVision = plData.player().getActivePotionEffect(Effects.NIGHT_VISION);
+				EffectInstance nightVision = plData.player().getEffect(Effects.NIGHT_VISION);
 
 				if (nightVision != null && nightVision.getDuration() <= 300)
-					plData.player().removePotionEffect(Effects.NIGHT_VISION);
+					plData.player().removeEffect(Effects.NIGHT_VISION);
 			}
 		}
 	}
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
-		if (slots != null && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getTrueSource() instanceof LivingEntity)
-			((LivingEntity)event.getSource().getTrueSource()).addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int)event.getAmount() * 3 * slots.size(), slots.size() >= 2 ? 1 : 0, false, true));
+		if (slots != null && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getEntity() instanceof LivingEntity)
+			((LivingEntity)event.getSource().getEntity()).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int)event.getAmount() * 3 * slots.size(), slots.size() >= 2 ? 1 : 0, false, true));
 	}
 
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			EffectInstance nightVision = plData.player().getActivePotionEffect(Effects.NIGHT_VISION);
+			EffectInstance nightVision = plData.player().getEffect(Effects.NIGHT_VISION);
 
 			if (nightVision != null && nightVision.getDuration() <= 300)
-				plData.player().removePotionEffect(Effects.NIGHT_VISION);
+				plData.player().removeEffect(Effects.NIGHT_VISION);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.biogenic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.biogenic_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

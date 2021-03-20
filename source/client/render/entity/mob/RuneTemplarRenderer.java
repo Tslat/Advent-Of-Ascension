@@ -20,7 +20,7 @@ public class RuneTemplarRenderer extends MobRenderer<RuneTemplarEntity, EntityMo
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(RuneTemplarEntity entity) {
+	public ResourceLocation getTextureLocation(RuneTemplarEntity entity) {
 		return entity.isDisabled() ? disabledTexture : texture;
 	}
 }

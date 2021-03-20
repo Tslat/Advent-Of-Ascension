@@ -21,13 +21,13 @@ public class CrystalGreatblade extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
-		for (LivingEntity entity : target.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(2.0f), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity entity : target.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(2.0f), EntityUtil.Predicates.HOSTILE_MOB)) {
 			DamageUtil.dealAoeDamage(null, attacker, entity, random.nextFloat() * 1.5f * (dmgDealt / (float)getAttackDamage()), false);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

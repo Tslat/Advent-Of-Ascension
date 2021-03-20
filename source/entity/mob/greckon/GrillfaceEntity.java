@@ -28,26 +28,6 @@ public class GrillfaceEntity extends AoAMeleeMob {
         return 2f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.2;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 131;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 16;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -68,7 +48,7 @@ public class GrillfaceEntity extends AoAMeleeMob {
 
     @Override
     protected void onAttack(Entity target) {
-        if (target instanceof ServerPlayerEntity && getRevengeTarget() == null && scareCooldown <= 0) {
+        if (target instanceof ServerPlayerEntity && getLastHurtByMob() == null && scareCooldown <= 0) {
             playSound(AoASounds.ENTITY_GRILLFACE_SCARE.get(), 1.0f, 1.0f);
             AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(ScreenOverlayPacket.Type.GRILLFACE, 20));
 
@@ -77,8 +57,8 @@ public class GrillfaceEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (scareCooldown > 0)
             scareCooldown--;

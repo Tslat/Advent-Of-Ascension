@@ -14,22 +14,22 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class BaronessAltar extends BossAltarBlock {
 	public BaronessAltar() {
-		super(MaterialColor.PURPLE);
+		super(MaterialColor.COLOR_PURPLE);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		BaronessEntity baroness = new BaronessEntity(AoAEntities.Mobs.BARONESS.get(), player.world);
+		BaronessEntity baroness = new BaronessEntity(AoAEntities.Mobs.BARONESS.get(), player.level);
 
-		for (PlayerEntity pl : player.world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(blockPos).grow(5), entity -> entity != null && entity.isAlive())) {
+		for (PlayerEntity pl : player.level.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(blockPos).inflate(5), entity -> entity != null && entity.isAlive())) {
 
-			pl.addVelocity(Math.signum(pl.getPosX() - ((double)blockPos.getX() + 0.5d)) * 10, 0.1, Math.signum(pl.getPosZ() - ((double)blockPos.getZ() + 0.5d)) * 10);
-			pl.velocityChanged = true;
+			pl.push(Math.signum(pl.getX() - ((double)blockPos.getX() + 0.5d)) * 10, 0.1, Math.signum(pl.getZ() - ((double)blockPos.getZ() + 0.5d)) * 10);
+			pl.hurtMarked = true;
 		}
 
-		baroness.setPositionAndUpdate(blockPos.getX() + 0.5, blockPos.up().getY(), blockPos.getZ() + 0.5);
-		player.world.addEntity(baroness);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.baroness.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		baroness.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
+		player.level.addFreshEntity(baroness);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.baroness.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

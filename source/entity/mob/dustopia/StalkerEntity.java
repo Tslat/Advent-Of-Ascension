@@ -29,26 +29,6 @@ public class StalkerEntity extends AoAMeleeMob {
         return 2.375f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.3;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 138;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 13.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.3;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -71,20 +51,20 @@ public class StalkerEntity extends AoAMeleeMob {
     public void tick() {
         super.tick();
 
-        if (getAttackTarget() instanceof ServerPlayerEntity && canEntityBeSeen(getAttackTarget()) && EntityUtil.isPlayerLookingAtEntity((PlayerEntity)getAttackTarget(), this)) {
-            setMotion(0, getMotion().getY(), 0);
+        if (getTarget() instanceof ServerPlayerEntity && canSee(getTarget()) && EntityUtil.isPlayerLookingAtEntity((PlayerEntity)getTarget(), this)) {
+            setDeltaMovement(0, getDeltaMovement().y(), 0);
 
-            if (getAttackTarget().getDistanceSq(this) <= 2 * 2)
-                AoAPackets.messagePlayer((ServerPlayerEntity)getAttackTarget(), new ScreenOverlayPacket(ScreenOverlayPacket.Type.STATIC, 30));
+            if (getTarget().distanceToSqr(this) <= 2 * 2)
+                AoAPackets.messagePlayer((ServerPlayerEntity)getTarget(), new ScreenOverlayPacket(ScreenOverlayPacket.Type.STATIC, 30));
 
         }
     }
 
     @Override
     protected void onHit(DamageSource source, float amount) {
-        if (!world.isRemote && getAttackTarget() != null && getAttackTarget().getDistanceSq(this) <= 2 * 2) {
-            BlockPos teleportPos = RandomUtil.getRandomPositionWithinRange(getPosition(), 64, 0, 64, true, world);
-            attemptTeleport(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), false);
+        if (!level.isClientSide && getTarget() != null && getTarget().distanceToSqr(this) <= 2 * 2) {
+            BlockPos teleportPos = RandomUtil.getRandomPositionWithinRange(blockPosition(), 64, 0, 64, true, level);
+            randomTeleport(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), false);
         }
     }
 }

@@ -22,23 +22,8 @@ public class RammerhornEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 210.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11.0d;
 	}
 
 	@Nullable

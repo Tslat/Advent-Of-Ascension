@@ -15,6 +15,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.boss.CottonCandorEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class TreatBag extends Item {
 	public TreatBag() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).food(new Food.Builder().setAlwaysEdible().build()));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).food(new Food.Builder().alwaysEat().build()));
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class TreatBag extends Item {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity eater) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity eater) {
 		if (eater instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)eater;
 
@@ -39,19 +40,19 @@ public class TreatBag extends Item {
 				PlayerUtil.notifyPlayer(pl, "message.feedback.spawnBoss.difficultyFail", TextFormatting.RED);
 			}
 			else {
-				if (world.getDimension().getType() != AoADimensions.CANDYLAND.type()) {
+				if (!WorldUtil.isWorld(world, AoADimensions.CANDYLAND.key)) {
 					PlayerUtil.notifyPlayer(pl, "entity.aoa3.cotton_candor.wrongDimension", TextFormatting.RED);
 				}
 				else {
 					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAEntities.Mobs.COTTON_CANDOR.get(), world);
 
-					cottonCandor.setPosition(eater.getPosX(), eater.getPosY() + 15, eater.getPosZ());
-					world.addEntity(cottonCandor);
+					cottonCandor.setPos(eater.getX(), eater.getY() + 15, eater.getZ());
+					world.addFreshEntity(cottonCandor);
 
 					if (!((ServerPlayerEntity)eater).isCreative())
 						stack.shrink(1);
 
-					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.spawn", pl.getDisplayName().getFormattedText()), eater.world, eater.getPosition(), 50);
+					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.spawn", pl.getDisplayName()), eater.level, eater.blockPosition(), 50);
 				}
 			}
 		}
@@ -60,7 +61,7 @@ public class TreatBag extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

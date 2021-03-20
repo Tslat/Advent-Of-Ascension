@@ -3,9 +3,9 @@ package net.tslat.aoa3.item.weapon.staff;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvent;
@@ -49,23 +49,23 @@ public class MechaStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		world.addEntity(new LyonicShotEntity(caster, this, 60));
+		world.addFreshEntity(new LyonicShotEntity(caster, this, 60));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity)target;
-			IAttributeInstance armour = entity.getAttribute(SharedMonsterAttributes.ARMOR);
+			ModifiableAttributeInstance armour = entity.getAttribute(Attributes.ARMOR);
 
 			if (armour != null && armour.getValue() > 0 && !armour.hasModifier(DEBUFF)) {
-				EntityUtil.applyAttributeModifierSafely(entity, SharedMonsterAttributes.ARMOR, DEBUFF);
+				EntityUtil.applyAttributeModifierSafely(entity, Attributes.ARMOR, DEBUFF);
 
-				if (!entity.world.isRemote) {
+				if (!entity.level.isClientSide) {
 					AxisAlignedBB bounds = entity.getBoundingBox();
 
 					for (int i = 0; i < 8; i++) {
-						((ServerWorld)entity.world).spawnParticle(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getWidth()), 1, 0, 0, 0, 0);
+						((ServerWorld)entity.level).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
 					}
 				}
 			}
@@ -77,8 +77,8 @@ public class MechaStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

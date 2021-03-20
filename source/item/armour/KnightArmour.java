@@ -1,8 +1,8 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -27,7 +27,7 @@ public class KnightArmour extends AdventArmour {
 	public static final AttributeModifier KNIGHT_HELMET_BUFF = new AttributeModifier(UUID.fromString("673ef5d8-9df5-4dbb-84f0-1da677d59f05"), "AoAKnightArmourHelmet", 1.5d, AttributeModifier.Operation.ADDITION);
 
 	public KnightArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:knight", 70, new int[] {4, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:knight", 70, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class KnightArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null && EntityUtil.checkBelowHealthPercentThreshold(plData.player(), 0.2f))
-			plData.player().addPotionEffect(new EffectInstance(Effects.STRENGTH, -1, 1, false, true));
+			plData.player().addEffect(new EffectInstance(Effects.DAMAGE_BOOST, -1, 1, false, true));
 	}
 
 	@Override
@@ -46,16 +46,16 @@ public class KnightArmour extends AdventArmour {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
 					break;
 				case LEGS:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
 					break;
 				case CHEST:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
 					break;
 				case HEAD:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
 					break;
 			}
 		}
@@ -66,23 +66,23 @@ public class KnightArmour extends AdventArmour {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
 					break;
 				case LEGS:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
 					break;
 				case CHEST:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
 					break;
 				case HEAD:
-					EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
+					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
 					break;
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.knight_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

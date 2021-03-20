@@ -1,12 +1,13 @@
 package net.tslat.aoa3.library.advancement.trigger;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.loot.ConditionArraySerializer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -16,6 +17,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import net.minecraft.advancements.ICriterionTrigger.Listener;
 
 public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.Instance> {
 	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "level_up");
@@ -27,7 +30,7 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 	}
 
 	@Override
-	public void addListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+	public void addPlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
 		Listeners playerListeners = this.listeners.get(playerAdvancements);
 
 		if (playerListeners == null)
@@ -37,7 +40,7 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 	}
 
 	@Override
-	public void removeListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+	public void removePlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
 		Listeners playerListeners = this.listeners.get(playerAdvancements);
 
 		if (playerListeners != null) {
@@ -49,14 +52,14 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 	}
 
 	@Override
-	public void removeAllListeners(PlayerAdvancements playerAdvancements) {
+	public void removePlayerListeners(PlayerAdvancements playerAdvancements) {
 		this.listeners.remove(playerAdvancements);
 	}
 
 	@Override
-	public Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		Skills skill = json.has("skill") ? Skills.valueOf(JSONUtils.getString(json, "skill").toUpperCase()) : null;
-		int lvl = json.has("level") ? MathHelper.clamp(JSONUtils.getInt(json, "level"), 1, 1000) : 0;
+	public Instance createInstance(JsonObject json, ConditionArrayParser conditions) {
+		Skills skill = json.has("skill") ? Skills.valueOf(JSONUtils.getAsString(json, "skill").toUpperCase()) : null;
+		int lvl = json.has("level") ? MathHelper.clamp(JSONUtils.getAsInt(json, "level"), 1, 1000) : 0;
 
 		return new AoALevelUpTrigger.Instance(skill, lvl);
 	}
@@ -73,15 +76,19 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 		private final Skills skill;
 		private final int level;
 
-		public Instance(@Nullable Skills skill, int lvl) {
-			super(triggerId);
+		public Instance(@Nullable Skills skill, int lvl, EntityPredicate.AndPredicate playerPredicate) {
+			super(triggerId, playerPredicate);
 
 			this.skill = skill;
 			this.level = MathHelper.clamp(lvl, 1, 1000);
 		}
 
+		public Instance(@Nullable Skills skill, int lvl) {
+			this(skill, lvl, EntityPredicate.AndPredicate.ANY);
+		}
+
 		@Override
-		public JsonElement serialize() {
+		public JsonObject serializeToJson(ConditionArraySerializer conditions) {
 			JsonObject obj = new JsonObject();
 
 			if (skill != null)
@@ -122,7 +129,7 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 			ArrayList<Listener<Instance>> list = null;
 
 			for (Listener<Instance> listener : this.listeners) {
-				if (listener.getCriterionInstance().test(skill, lvl)) {
+				if (listener.getTriggerInstance().test(skill, lvl)) {
 					if (list == null)
 						list = new ArrayList<Listener<Instance>>();
 
@@ -132,7 +139,7 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 
 			if (list != null) {
 				for (Listener<Instance> listener : list) {
-					listener.grantCriterion(this.advancements);
+					listener.run(this.advancements);
 				}
 			}
 		}

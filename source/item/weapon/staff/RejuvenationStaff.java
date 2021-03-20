@@ -41,12 +41,12 @@ public class RejuvenationStaff extends BaseStaff<Object> {
 		PotionUtil.EffectBuilder effect = new PotionUtil.EffectBuilder(Effects.REGENERATION, 500);
 
 		EntityUtil.applyPotions(caster, effect);
-		EntityUtil.applyPotions(caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), (entity) -> entity != null && entity.isAlive() && !(entity instanceof IMob)), effect);
+		EntityUtil.applyPotions(caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), (entity) -> entity != null && entity.isAlive() && !(entity instanceof IMob)), effect);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

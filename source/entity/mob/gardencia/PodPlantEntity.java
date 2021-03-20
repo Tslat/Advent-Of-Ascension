@@ -1,8 +1,12 @@
 package net.tslat.aoa3.entity.mob.gardencia;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -35,26 +39,6 @@ public class PodPlantEntity extends AoAMeleeMob {
 		return 1f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 64d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.27d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -75,14 +59,14 @@ public class PodPlantEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 80));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 80));
 	}
 
 	@Override
 	protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;
@@ -91,39 +75,39 @@ public class PodPlantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
 		if (candiedWater)
 			compound.putBoolean("AoACandiedWater", true);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		candiedWater = compound.contains("AoACandiedWater");
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (isAlive() && getHealth() < getMaxHealth()) {
 			if (isInWater()) {
 				heal(0.2f);
 			}
-			else if (world.isRainingAt(getPosition())) {
+			else if (level.isRainingAt(blockPosition())) {
 				heal(0.1f);
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-			ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
+		if (!level.isClientSide && candiedWater && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
 	}
 }

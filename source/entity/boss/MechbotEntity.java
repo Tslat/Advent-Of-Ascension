@@ -32,7 +32,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int jumpCooldown = 200;
 	private int jumpCount = 0;
 	private int jumpIntervalTimer = 0;
@@ -44,26 +44,6 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 2.21875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 2500;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -91,7 +71,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -99,10 +79,10 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	public void tick() {
 		super.tick();
 
-		if (getAttackTarget() == null || !isAlive())
+		if (getTarget() == null || !isAlive())
 			return;
 
-		LivingEntity target = getAttackTarget();
+		LivingEntity target = getTarget();
 
 		if (jumpCooldown > 0)
 			jumpCooldown--;
@@ -112,18 +92,19 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 				jumpIntervalTimer--;
 
 				if (jumpIntervalTimer <= 0) {
-					setMotion(0.699, (target.getPosX() - getPosX()) * 0.045, (target.getPosZ() - getPosZ()) * 0.045);
-					velocityChanged = true;
+					setDeltaMovement(0.699, (target.getX() - getX()) * 0.045, (target.getZ() - getZ()) * 0.045);
 
-					if (!world.isRemote) {
-						world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_MECHBOT_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
-						world.addEntity(new MechFallEntity(this, getPosX(), getPosY() - 0.25, getPosZ(), BaseMobProjectile.Type.MAGIC));
+					hurtMarked = true;
+
+					if (!level.isClientSide) {
+						level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+						level.addFreshEntity(new MechFallEntity(this, getX(), getY() - 0.25, getZ(), BaseMobProjectile.Type.MAGIC));
 
 						if (getHealth() < 1250) {
-							world.addEntity(new MechFallEntity(this, getPosX() - 2.25, getPosY() - 0.25, getPosZ() - 2.25, BaseMobProjectile.Type.MAGIC));
-							world.addEntity(new MechFallEntity(this, getPosX() - 2.25, getPosY() - 0.25, getPosZ() + 2.25, BaseMobProjectile.Type.MAGIC));
-							world.addEntity(new MechFallEntity(this, getPosX() + 2.25, getPosY() - 0.25, getPosZ() - 2.25, BaseMobProjectile.Type.MAGIC));
-							world.addEntity(new MechFallEntity(this, getPosX() + 2.25, getPosY() - 0.25, getPosZ() + 2.25, BaseMobProjectile.Type.MAGIC));
+							level.addFreshEntity(new MechFallEntity(this, getX() - 2.25, getY() - 0.25, getZ() - 2.25, BaseMobProjectile.Type.MAGIC));
+							level.addFreshEntity(new MechFallEntity(this, getX() - 2.25, getY() - 0.25, getZ() + 2.25, BaseMobProjectile.Type.MAGIC));
+							level.addFreshEntity(new MechFallEntity(this, getX() + 2.25, getY() - 0.25, getZ() - 2.25, BaseMobProjectile.Type.MAGIC));
+							level.addFreshEntity(new MechFallEntity(this, getX() + 2.25, getY() - 0.25, getZ() + 2.25, BaseMobProjectile.Type.MAGIC));
 						}
 					}
 
@@ -138,29 +119,29 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 			}
 		}
 
-		if (getHealth() < 1000 ? rand.nextInt(10) == 0 : rand.nextInt(40) == 0) {
+		if (getHealth() < 1000 ? random.nextInt(10) == 0 : random.nextInt(40) == 0) {
 			MechShotEntity projectile = new MechShotEntity(this, BaseMobProjectile.Type.MAGIC);
 
-			double distanceFactorX = target.getPosX() - this.getPosX();
-			double distanceFactorY = target.getBoundingBox().minY + (double)(target.getHeight() / 3.0f) - projectile.getPosY();
-			double distanceFactorZ = target.getPosZ() - this.getPosZ();
+			double distanceFactorX = target.getX() - this.getX();
+			double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
+			double distanceFactorZ = target.getZ() - this.getZ();
 			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_MECHBOT_SHOOT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
-			projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
-			world.addEntity(projectile);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_SHOOT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
+			level.addFreshEntity(projectile);
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.mechbot.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.mechbot.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -177,47 +158,47 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 1f);
+		WorldUtil.createExplosion(this, level, projectile, 1f);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.MECHBOT_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.MECHBOT_MUSIC.getId()));
 		bossInfo.removePlayer(player);

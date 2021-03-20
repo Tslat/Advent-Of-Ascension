@@ -22,26 +22,6 @@ public class FurlionEntity extends AoAMeleeMob {
 		return 0.8125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -58,13 +38,4 @@ public class FurlionEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_FURLION_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.entity.projectile.blaster;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
@@ -34,19 +35,23 @@ public class HellBubbleShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		setMotion(getMotion().mul(0.3d, 0.3d, 0.3d));
+		setDeltaMovement(getDeltaMovement().multiply(0.3d, 0.3d, 0.3d));
 
 		if (getAge() >= 100)
 			remove();
 
 		if (!isAlive()) {
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.BUBBLE_SHOT_POP.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.BUBBLE_SHOT_POP.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
-		else if (!world.isRemote && weapon != null) {
-			List<LivingEntity> collidingEntities = world.getEntitiesWithinAABB(LivingEntity.class, getBoundingBox(), EntityUtil.Predicates.HOSTILE_MOB);
+		else if (!level.isClientSide && weapon != null) {
+			List<LivingEntity> collidingEntities = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox(), EntityUtil.Predicates.HOSTILE_MOB);
 
 			if (!collidingEntities.isEmpty()) {
-				weapon.doEntityImpact(this, collidingEntities.get(0), owner);
+				Entity shooter = getOwner();
+
+				if (shooter instanceof LivingEntity)
+					weapon.doEntityImpact(this, collidingEntities.get(0), (LivingEntity)shooter);
+
 				remove();
 			}
 		}

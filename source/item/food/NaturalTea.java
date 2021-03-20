@@ -20,32 +20,32 @@ import java.util.List;
 
 public class NaturalTea extends Item {
 	public NaturalTea() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD)
-				.containerItem(AoAItems.CUP.get())
-				.maxStackSize(1)
+		super(new Item.Properties().tab(AoAItemGroups.FOOD)
+				.craftRemainder(AoAItems.CUP.get())
+				.stacksTo(1)
 				.food(new Food.Builder()
-						.hunger(0)
-						.saturation(0)
-						.setAlwaysEdible()
+						.nutrition(0)
+						.saturationMod(0)
+						.alwaysEat()
 						.effect(new PotionUtil.EffectBuilder(Effects.REGENERATION, 50).build(), 1)
-						.effect(new PotionUtil.EffectBuilder(Effects.RESISTANCE, 150).level(2).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, 150).level(2).build(), 1)
 						.build()));
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity user) {
-		ItemStack consumedStack = super.onItemUseFinish(stack, world, user);
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity user) {
+		ItemStack consumedStack = super.finishUsingItem(stack, world, user);
 
-		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.isCreativeMode ? consumedStack : getContainerItem(stack);
+		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.instabuild ? consumedStack : getContainerItem(stack);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

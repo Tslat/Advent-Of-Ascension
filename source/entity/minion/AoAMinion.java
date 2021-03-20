@@ -1,6 +1,10 @@
 package net.tslat.aoa3.entity.minion;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +13,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.skill.HunterUtil;
 
@@ -35,7 +40,7 @@ public abstract class AoAMinion extends TameableEntity {
     public void tick() {
         super.tick();
 
-        if (lifespan > 0 && this.ticksExisted >= lifespan)
+        if (lifespan > 0 && this.tickCount >= lifespan)
             remove();
 
         if (animationTicks >= 0)
@@ -51,7 +56,7 @@ public abstract class AoAMinion extends TameableEntity {
         goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 8));
 
         if (isHostile()) {
-            if (getBaseMeleeDamage() >= 0) {
+            if (getAttributeValue(Attributes.ATTACK_DAMAGE) >= 0) {
                 goalSelector.addGoal(6, new MeleeAttackGoal(this, 1.5f, true));
                 goalSelector.addGoal(7, new LeapAtTargetGoal(this, 0.3f));
                 goalSelector.addGoal(8, new MoveTowardsTargetGoal(this, 0.8f, 16f));
@@ -70,7 +75,7 @@ public abstract class AoAMinion extends TameableEntity {
     }
 
     @Override
-    public void setAttackTarget(@Nullable LivingEntity target) {
+    public void setTarget(@Nullable LivingEntity target) {
         if (target != null) {
             LivingEntity owner = getOwner();
 
@@ -78,11 +83,11 @@ public abstract class AoAMinion extends TameableEntity {
                 return;
         }
 
-        super.setAttackTarget(target);
+        super.setTarget(target);
     }
 
     @Override
-    public void setRevengeTarget(@Nullable LivingEntity target) {
+    public void setLastHurtByMob(@Nullable LivingEntity target) {
         if (target != null) {
             LivingEntity owner = getOwner();
 
@@ -90,28 +95,7 @@ public abstract class AoAMinion extends TameableEntity {
                 return;
         }
 
-        super.setRevengeTarget(target);
-    }
-
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMoveSpeed());
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
-
-        if (isHostile())
-            getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getBaseMeleeDamage());
-    }
-
-    protected double getBaseMoveSpeed() {
-        return 0.25D;
-    }
-
-    protected abstract double getBaseMaxHealth();
-
-    protected double getBaseMeleeDamage() {
-        return -1;
+        super.setLastHurtByMob(target);
     }
 
     protected abstract boolean isHostile();
@@ -135,19 +119,19 @@ public abstract class AoAMinion extends TameableEntity {
     }
 
     @Override
-    protected SoundEvent getFallSound(int heightIn) {
-        return heightIn > 4 ? SoundEvents.ENTITY_GENERIC_BIG_FALL : SoundEvents.ENTITY_GENERIC_SMALL_FALL;
+    protected SoundEvent getFallDamageSound(int heightIn) {
+        return heightIn > 4 ? SoundEvents.GENERIC_BIG_FALL : SoundEvents.GENERIC_SMALL_FALL;
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
+    public boolean isFood(ItemStack stack) {
         return false;
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity) {
-        if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)((int)this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue()))) {
-            this.setLastAttackedEntity(entity);
+    public boolean doHurtTarget(Entity entity) {
+        if (entity.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttribute(Attributes.ATTACK_DAMAGE).getValue()))) {
+            this.setLastHurtMob(entity);
 
             return true;
         }
@@ -158,12 +142,12 @@ public abstract class AoAMinion extends TameableEntity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return super.isInvulnerableTo(source) || (getOwnerId() != null && source.getTrueSource() != null && source.getTrueSource().getUniqueID().equals(getOwnerId()));
+        return super.isInvulnerableTo(source) || (getOwnerUUID() != null && source.getEntity() != null && source.getEntity().getUUID().equals(getOwnerUUID()));
     }
 
     @Nullable
     @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
+    public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity partner) {
         return null;
     }
 }

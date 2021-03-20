@@ -21,16 +21,16 @@ public class CleansingTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && !player.getActivePotionMap().isEmpty())) {
-			ArrayList<EffectInstance> removeList = new ArrayList<EffectInstance>(pl.getActivePotionEffects().size());
+		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && !player.getActiveEffectsMap().isEmpty())) {
+			ArrayList<EffectInstance> removeList = new ArrayList<EffectInstance>(pl.getActiveEffects().size());
 
-			for (EffectInstance effect : pl.getActivePotionEffects()) {
-				if (!effect.getPotion().isBeneficial())
+			for (EffectInstance effect : pl.getActiveEffects()) {
+				if (!effect.getEffect().isBeneficial())
 					removeList.add(effect);
 			}
 
 			for (EffectInstance effect : removeList) {
-				pl.removePotionEffect(effect.getPotion());
+				pl.removeEffect(effect.getEffect());
 			}
 		}
 	}

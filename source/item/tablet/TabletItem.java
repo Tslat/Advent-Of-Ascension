@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -33,7 +34,7 @@ public abstract class TabletItem extends Item {
 	private final int effectRadius;
 
 	public TabletItem(float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
-		super(new Item.Properties().group(AoAItemGroups.TABLETS).maxStackSize(1));
+		super(new Item.Properties().tab(AoAItemGroups.TABLETS).stacksTo(1));
 
 		this.initialSoulCost = placementCost;
 		this.perTickSoulCost = tickSoulDrain;
@@ -50,13 +51,13 @@ public abstract class TabletItem extends Item {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+	public ActionResultType useOn(ItemUseContext context) {
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
 
-		BlockState targetBlockState = context.getWorld().getBlockState(pos);
+		BlockState targetBlockState = context.getLevel().getBlockState(pos);
 
-		if (context.getFace() != Direction.UP || !targetBlockState.isSolidSide(world, pos, Direction.UP))
+		if (context.getClickedFace() != Direction.UP || !targetBlockState.isFaceSturdy(world, pos, Direction.UP))
 			return ActionResultType.FAIL;
 
 		if (context.getPlayer() instanceof ServerPlayerEntity) {
@@ -68,14 +69,14 @@ public abstract class TabletItem extends Item {
 				SoulTabletEntity tabletEntity = getTabletEntity(world, player);
 				VoxelShape blockBoundingBox = targetBlockState.getCollisionShape(world, pos);
 
-				tabletEntity.setPositionAndRotation(context.getHitVec().getX(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.getEnd(Direction.Axis.Y)), context.getHitVec().getZ(), player.rotationYaw, 0);
+				tabletEntity.absMoveTo(context.getClickLocation().x(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.max(Direction.Axis.Y)), context.getClickLocation().z(), player.yRot, 0);
 
-				if (world.checkNoEntityCollision(tabletEntity, VoxelShapes.create(tabletEntity.getBoundingBox()))) {
+				if (world.isUnobstructed(tabletEntity, VoxelShapes.create(tabletEntity.getBoundingBox()))) {
 					if (plData.stats().consumeResource(Resources.SOUL, soulCost, false)) {
-						world.addEntity(tabletEntity);
+						world.addFreshEntity(tabletEntity);
 
 						if (!player.isCreative())
-							player.getHeldItem(context.getHand()).shrink(1);
+							player.getItemInHand(context.getHand()).shrink(1);
 
 						return ActionResultType.SUCCESS;
 					}
@@ -92,10 +93,10 @@ public abstract class TabletItem extends Item {
 	protected abstract SoulTabletEntity getTabletEntity(World world, ServerPlayerEntity placer);
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f)))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, String.valueOf(effectRadius)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(effectRadius))));
 	}
 }

@@ -18,32 +18,12 @@ public class HunterEntity extends AoAMeleeMob {
 
         isSlipperyMovement = true;
 
-        setAIMoveSpeed(2.7f);
+        setSpeed(2.7f);
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.875f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.25;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 123;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 13.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.3;
     }
 
     @Nullable

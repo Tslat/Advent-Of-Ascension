@@ -21,96 +21,96 @@ public class CryptidModel extends EntityModel<MobEntity> {
 	private final ModelRenderer body3;
 
 	public CryptidModel() {
-		textureWidth = 128;
-		textureHeight = 64;
+		texWidth = 128;
+		texHeight = 64;
 
 		root = new ModelRenderer(this);
-		root.setRotationPoint(0.0F, 24.0F, 0.0F);
+		root.setPos(0.0F, 24.0F, 0.0F);
 
 		head = new ModelRenderer(this);
-		head.setRotationPoint(0.0F, -11.0F, -10.0F);
+		head.setPos(0.0F, -11.0F, -10.0F);
 		root.addChild(head);
-		head.setTextureOffset(0, 0).addBox(-4.0F, 4.0F, -11.0F, 8, 3, 11, 0.0F, true);
-		head.setTextureOffset(40, 12).addBox(-5.0F, -6.0F, -12.0F, 10, 2, 12, 0.0F, false);
-		head.setTextureOffset(0, 14).addBox(-4.0F, -4.0F, -12.0F, 8, 8, 12, 0.0F, true);
+		head.texOffs(0, 0).addBox(-4.0F, 4.0F, -11.0F, 8, 3, 11, 0.0F, true);
+		head.texOffs(40, 12).addBox(-5.0F, -6.0F, -12.0F, 10, 2, 12, 0.0F, false);
+		head.texOffs(0, 14).addBox(-4.0F, -4.0F, -12.0F, 8, 8, 12, 0.0F, true);
 
 		leg1 = new ModelRenderer(this);
-		leg1.setRotationPoint(7.0F, -12.0F, 7.0F);
+		leg1.setPos(7.0F, -12.0F, 7.0F);
 		root.addChild(leg1);
-		leg1.setTextureOffset(28, 21).addBox(-3.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, true);
-		leg1.setTextureOffset(0, 44).addBox(-3.0F, 0.0F, -2.0F, 6, 12, 6, 0.0F, false);
-		leg1.setTextureOffset(28, 21).addBox(1.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, false);
+		leg1.texOffs(28, 21).addBox(-3.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, true);
+		leg1.texOffs(0, 44).addBox(-3.0F, 0.0F, -2.0F, 6, 12, 6, 0.0F, false);
+		leg1.texOffs(28, 21).addBox(1.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, false);
 
 		leg2 = new ModelRenderer(this);
-		leg2.setRotationPoint(-7.0F, -12.0F, 7.0F);
+		leg2.setPos(-7.0F, -12.0F, 7.0F);
 		root.addChild(leg2);
-		leg2.setTextureOffset(28, 21).addBox(-3.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, true);
-		leg2.setTextureOffset(0, 44).addBox(-3.0F, 0.0F, -2.0F, 6, 12, 6, 0.0F, true);
-		leg2.setTextureOffset(28, 21).addBox(1.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, false);
+		leg2.texOffs(28, 21).addBox(-3.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, true);
+		leg2.texOffs(0, 44).addBox(-3.0F, 0.0F, -2.0F, 6, 12, 6, 0.0F, true);
+		leg2.texOffs(28, 21).addBox(1.0F, 10.0F, -5.0F, 2, 2, 3, 0.0F, false);
 
 		leg3 = new ModelRenderer(this);
-		leg3.setRotationPoint(7.0F, -12.0F, -5.0F);
+		leg3.setPos(7.0F, -12.0F, -5.0F);
 		root.addChild(leg3);
-		leg3.setTextureOffset(28, 21).addBox(-3.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, true);
-		leg3.setTextureOffset(0, 44).addBox(-3.0F, 0.0F, -3.0F, 6, 12, 6, 0.0F, false);
-		leg3.setTextureOffset(28, 21).addBox(1.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, false);
+		leg3.texOffs(28, 21).addBox(-3.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, true);
+		leg3.texOffs(0, 44).addBox(-3.0F, 0.0F, -3.0F, 6, 12, 6, 0.0F, false);
+		leg3.texOffs(28, 21).addBox(1.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, false);
 
 		leg4 = new ModelRenderer(this);
-		leg4.setRotationPoint(-7.0F, -12.0F, -5.0F);
+		leg4.setPos(-7.0F, -12.0F, -5.0F);
 		root.addChild(leg4);
-		leg4.setTextureOffset(28, 21).addBox(-3.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, true);
-		leg4.setTextureOffset(0, 44).addBox(-3.0F, 0.0F, -3.0F, 6, 12, 6, 0.0F, true);
-		leg4.setTextureOffset(28, 21).addBox(1.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, false);
+		leg4.texOffs(28, 21).addBox(-3.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, true);
+		leg4.texOffs(0, 44).addBox(-3.0F, 0.0F, -3.0F, 6, 12, 6, 0.0F, true);
+		leg4.texOffs(28, 21).addBox(1.0F, 10.0F, -6.0F, 2, 2, 3, 0.0F, false);
 
 		body2 = new ModelRenderer(this);
-		body2.setRotationPoint(0.0F, 0.0F, 0.0F);
+		body2.setPos(0.0F, 0.0F, 0.0F);
 		root.addChild(body2);
-		body2.setTextureOffset(34, 36).addBox(-6.0F, -13.0F, -10.0F, 12, 6, 22, 0.0F, true);
+		body2.texOffs(34, 36).addBox(-6.0F, -13.0F, -10.0F, 12, 6, 22, 0.0F, true);
 
 		body6 = new ModelRenderer(this);
-		body6.setRotationPoint(-1.0F, -20.0F, -1.0F);
+		body6.setPos(-1.0F, -20.0F, -1.0F);
 		body2.addChild(body6);
 		setRotation(body6, 1.9199F, 0.0F, 0.0F);
-		body6.setTextureOffset(52, 12).addBox(-4.0F, -10.0F, -4.0F, 10, 18, 2, 0.0F, true);
+		body6.texOffs(52, 12).addBox(-4.0F, -10.0F, -4.0F, 10, 18, 2, 0.0F, true);
 
 		body5 = new ModelRenderer(this);
-		body5.setRotationPoint(0.0F, -17.0F, 0.0F);
+		body5.setPos(0.0F, -17.0F, 0.0F);
 		body2.addChild(body5);
 		setRotation(body5, 1.5708F, 0.0F, 0.0F);
-		body5.setTextureOffset(52, 12).addBox(-7.0F, -10.0F, -4.0F, 14, 22, 2, 0.0F, true);
+		body5.texOffs(52, 12).addBox(-7.0F, -10.0F, -4.0F, 14, 22, 2, 0.0F, true);
 
 		tail = new ModelRenderer(this);
-		tail.setRotationPoint(0.0F, -11.0F, 10.0F);
+		tail.setPos(0.0F, -11.0F, 10.0F);
 		body2.addChild(tail);
 		setRotation(tail, 1.1345F, 0.0F, 0.0F);
-		tail.setTextureOffset(32, 44).addBox(-4.0F, 0.0F, -2.0F, 8, 10, 4, 0.0F, true);
-		tail.setTextureOffset(52, 24).addBox(-5.0F, 0.0F, 2.0F, 10, 10, 2, 0.0F, true);
+		tail.texOffs(32, 44).addBox(-4.0F, 0.0F, -2.0F, 8, 10, 4, 0.0F, true);
+		tail.texOffs(52, 24).addBox(-5.0F, 0.0F, 2.0F, 10, 10, 2, 0.0F, true);
 
 		body3 = new ModelRenderer(this);
-		body3.setRotationPoint(-1.0F, -19.0F, 8.0F);
+		body3.setPos(-1.0F, -19.0F, 8.0F);
 		body2.addChild(body3);
 		setRotation(body3, 1.7977F, 0.0F, 0.0F);
-		body3.setTextureOffset(52, 19).addBox(-4.0F, -10.0F, -4.0F, 10, 15, 2, 0.0F, false);
+		body3.texOffs(52, 19).addBox(-4.0F, -10.0F, -4.0F, 10, 15, 2, 0.0F, false);
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		root.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
+		model.xRot = x;
+		model.yRot = y;
+		model.zRot = z;
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		leg1.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leg1.rotateAngleY = 0.0f;
-		leg3.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leg3.rotateAngleY = 0.0f;
-		leg2.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
-		leg4.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		leg1.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+		leg1.yRot = 0.0f;
+		leg3.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+		leg3.yRot = 0.0f;
+		leg2.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+		leg4.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
 	}
 }

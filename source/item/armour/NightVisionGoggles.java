@@ -16,9 +16,11 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
+import net.tslat.aoa3.item.armour.AdventArmour.Overlay;
+
 public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArmour {
 	public NightVisionGoggles() {
-		super(ItemUtil.customArmourMaterial("aoa3:night_vision_goggles", 27, new int[] {2, 2, 2, 2}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:night_vision_goggles", 27, new int[] {2, 2, 2, 2}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 1), EquipmentSlotType.HEAD);
 	}
 
 	@Override
@@ -33,19 +35,19 @@ public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArm
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		plData.player().addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
+		plData.player().addEffect(new EffectInstance(Effects.NIGHT_VISION, 300, 0, true, false));
 	}
 
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
-		EffectInstance nightVision = plData.player().getActivePotionEffect(Effects.NIGHT_VISION);
+		EffectInstance nightVision = plData.player().getEffect(Effects.NIGHT_VISION);
 
 		if (nightVision != null && nightVision.getDuration() < 300)
-			plData.player().removePotionEffect(Effects.NIGHT_VISION);
+			plData.player().removeEffect(Effects.NIGHT_VISION);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(anySetEffectHeader());
 	}

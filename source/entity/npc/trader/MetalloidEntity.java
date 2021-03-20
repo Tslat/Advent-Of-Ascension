@@ -15,16 +15,6 @@ public class MetalloidEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 15), new ItemStack(AoAItems.LIMONITE_INGOT.get(), 1)));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 20), new ItemStack(AoAItems.ROSITE_INGOT.get(), 1)));

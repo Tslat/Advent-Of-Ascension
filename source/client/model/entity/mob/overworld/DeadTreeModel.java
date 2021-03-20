@@ -10,27 +10,27 @@ public class DeadTreeModel extends EntityModel<MobEntity> {
 	private final ModelRenderer trunk;
 
 	public DeadTreeModel() {
-		textureWidth = 64;
-		textureHeight = 32;
+		texWidth = 64;
+		texHeight = 32;
 
 		trunk = new ModelRenderer(this);
-		trunk.setRotationPoint(0.0F, 24.0F, 0.0F);
-		trunk.setTextureOffset(0, 0).addBox(-7.0F, -16.0F, -7.0F, 14, 16, 14, 0.0F, false);
-		trunk.setTextureOffset(0, 0).addBox(-7.0F, -32.0F, -7.0F, 14, 16, 14, 0.0F, false);
-		trunk.setTextureOffset(0, 0).addBox(-7.0F, -48.0F, -7.0F, 14, 16, 14, 0.0F, false);
+		trunk.setPos(0.0F, 24.0F, 0.0F);
+		trunk.texOffs(0, 0).addBox(-7.0F, -16.0F, -7.0F, 14, 16, 14, 0.0F, false);
+		trunk.texOffs(0, 0).addBox(-7.0F, -32.0F, -7.0F, 14, 16, 14, 0.0F, false);
+		trunk.texOffs(0, 0).addBox(-7.0F, -48.0F, -7.0F, 14, 16, 14, 0.0F, false);
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		trunk.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 	}
 
 	public void setRotation(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+		modelRenderer.xRot = x;
+		modelRenderer.yRot = y;
+		modelRenderer.zRot = z;
 	}
 }

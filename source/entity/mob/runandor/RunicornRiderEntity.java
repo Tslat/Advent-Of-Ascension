@@ -18,32 +18,12 @@ public class RunicornRiderEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(2.3f);
+		setSpeed(2.3f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 2.34375f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 132;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 14d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.29;
 	}
 
 	@Nullable
@@ -65,15 +45,15 @@ public class RunicornRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
-		super.damageEntity(damageSrc, damageAmount);
+	protected void actuallyHurt(DamageSource damageSrc, float damageAmount) {
+		super.actuallyHurt(damageSrc, damageAmount);
 
-		if (!world.isRemote && getHealth() <= getMaxHealth() * 0.45f) {
+		if (!level.isClientSide && getHealth() <= getMaxHealth() * 0.45f) {
 			RunicornEntity runicorn = new RunicornEntity(this, getHealth());
 
-			world.addEntity(runicorn);
+			level.addFreshEntity(runicorn);
 			setHealth(0);
-			onDeath(damageSrc);
+			die(damageSrc);
 		}
 	}
 }

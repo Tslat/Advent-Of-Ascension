@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -34,8 +35,8 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class CottonCandorEntity extends AoAFlyingRangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Byte> STAGE = EntityDataManager.<Byte>createKey(CottonCandorEntity.class, DataSerializers.BYTE);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Byte> STAGE = EntityDataManager.<Byte>defineId(CottonCandorEntity.class, DataSerializers.BYTE);
 	private int stageCountdown = 100;
 
 	public CottonCandorEntity(EntityType<? extends FlyingEntity> entityType, World world) {
@@ -48,38 +49,18 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(STAGE, (byte)0);
+		entityData.define(STAGE, (byte)0);
 	}
 
 	private void changeStage(int stage) {
-		dataManager.set(STAGE, (byte)(stage & 0x7));
+		entityData.set(STAGE, (byte)(stage & 0x7));
 	}
 
 	public int getStage() {
-		return (int)dataManager.get(STAGE);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 3000;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 35;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
+		return (int)entityData.get(STAGE);
 	}
 
 	@Nullable
@@ -101,14 +82,14 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		if (source.getImmediateSource() instanceof IProjectile) {
-			IProjectile projectile = (IProjectile)source.getImmediateSource();
+		if (source.getDirectEntity() instanceof ProjectileEntity) {
+			ProjectileEntity projectile = (ProjectileEntity)source.getDirectEntity();
 
 			switch (getStage()) {
 				case 0:
@@ -154,11 +135,11 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			stageCountdown--;
 
 			if (stageCountdown == 0) {
-				changeStage(rand.nextInt(5));
+				changeStage(random.nextInt(5));
 				stageCountdown = 100;
 			}
 		}
@@ -166,25 +147,25 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 5f);
+		WorldUtil.createExplosion(this, level, projectile, 5f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 5f);
+		WorldUtil.createExplosion(this, level, projectile, 5f);
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.kill", killer.getDisplayName()), level, blockPosition(), 50);
 
-				if (cause.getImmediateSource() instanceof PrimordialShotEntity && (killer.getHeldItemMainhand().getItem() == AoAWeapons.WIND_STAFF.get() || killer.getHeldItemOffhand().getItem() == AoAWeapons.WIND_STAFF.get()))
+				if (cause.getDirectEntity() instanceof PrimordialShotEntity && (killer.getMainHandItem().getItem() == AoAWeapons.WIND_STAFF.get() || killer.getOffhandItem().getItem() == AoAWeapons.WIND_STAFF.get()))
 					AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "candyland/when_push_comes_to_shove"), "wind_staff_cotton_candor_kill");
 			}
 		}
@@ -196,38 +177,38 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.COTTON_CANDOR_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.COTTON_CANDOR_MUSIC.getId()));
 		bossInfo.removePlayer(player);

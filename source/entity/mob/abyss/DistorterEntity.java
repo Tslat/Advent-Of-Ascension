@@ -36,26 +36,6 @@ public class DistorterEntity extends AoAMeleeMob {
 		return 1.675f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -73,15 +53,15 @@ public class DistorterEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		effectTick--;
 
-		if (ticksExisted % 5 == 0) {
-			Effect currentEffect = effectTick <= 30 ? Effects.SLOWNESS : Effects.SPEED;
+		if (tickCount % 5 == 0) {
+			Effect currentEffect = effectTick <= 30 ? Effects.MOVEMENT_SLOWDOWN : Effects.MOVEMENT_SPEED;
 
-			for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(2), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canEntityBeSeen(pl))) {
+			for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(2), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canSee(pl))) {
 				EntityUtil.applyPotions(pl, new PotionUtil.EffectBuilder(currentEffect, 5).level(6).hideParticles()); // TODO custom effect?
 			}
 		}

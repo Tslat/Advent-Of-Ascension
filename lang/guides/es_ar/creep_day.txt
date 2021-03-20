@@ -1,6 +1,0 @@
-Invasión Creep (Evento)
-
-"Empiezan los ruidos extraños".
-C.R.E.E.P ha enviado a sus invasores, no es tiempo de estar tomando una taza de te ni de salir a pasear.
-
-Durante la invasión creep, los Host enviados por C.R.E.E.P apareceran por el Overworld. A pesar de que los Host no son peligrosos por si solos, la capacidad de invocar Creepers sin fin es suficiente para hacer volar por los aires a cualquier aventurero distraido.

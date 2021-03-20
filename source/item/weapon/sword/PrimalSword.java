@@ -4,8 +4,9 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -36,7 +37,7 @@ public class PrimalSword extends BaseSword {
 				if (currentDamageMod != currentCalcBuff) {
 					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
 					cap.setValue(currentCalcBuff);
-					((LivingEntity)entity).getAttributes().applyAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+					((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
 				}
 			}
 			else if (cap.getValue() != 0) {
@@ -48,7 +49,7 @@ public class PrimalSword extends BaseSword {
 
 	private float getCurrentDamageBuff(Entity holder) {
 		if (holder instanceof LivingEntity) {
-			float armour = (float)((LivingEntity)holder).getAttribute(SharedMonsterAttributes.ARMOR).getValue();
+			float armour = (float)((LivingEntity)holder).getAttribute(Attributes.ARMOR).getValue();
 
 			if (armour > 15) {
 				return 15 / armour;
@@ -62,20 +63,20 @@ public class PrimalSword extends BaseSword {
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<String, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot);
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		Multimap<Attribute, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot, stack);
 
 		if (slot == EquipmentSlotType.MAINHAND) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
-			ItemUtil.setAttribute(modifierMap, SharedMonsterAttributes.ATTACK_DAMAGE, ATTACK_DAMAGE_MODIFIER, getAttackDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
+			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
 		}
 
 		return modifierMap;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

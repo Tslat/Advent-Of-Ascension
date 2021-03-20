@@ -4,46 +4,35 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class SeaViperEntity extends AoAMeleeMob {
-	public SeaViperEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+public class SeaViperEntity extends AoAWaterMeleeMob {
+	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("sea_viper.bite", false);
+	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("sea_viper.swim", true);
+
+	public SeaViperEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 0.8125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 116;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 14.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.40625f;
 	}
 
 	@Nullable
@@ -65,15 +54,33 @@ public class SeaViperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
-
-		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
-			heal(0.2f);
+	protected void onAttack(Entity target) {
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 200));
 	}
 
 	@Override
-	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 200));
+	public int getCurrentSwingDuration() {
+		return 20;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(new AnimationController<SeaViperEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<SeaViperEntity>() {
+			@Override
+			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+				if (swinging) {
+					animationEvent.getController().setAnimation(BITE_ANIMATION);
+
+					return PlayState.CONTINUE;
+				}
+				else if (animationEvent.isMoving()) {
+					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+
+					return PlayState.CONTINUE;
+				}
+
+				return PlayState.STOP;
+			}
+		}));
 	}
 }

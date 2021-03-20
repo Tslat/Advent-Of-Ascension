@@ -30,8 +30,8 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	protected Slot initFirstInputSlot() {
 		return new Slot(inputs, 0, 27, 23) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
-				return stack.isDamageable();
+			public boolean mayPlace(ItemStack stack) {
+				return stack.isDamageableItem();
 			}
 		};
 	}
@@ -40,32 +40,32 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	protected Slot initOutputSlot() {
 		return new Slot(output, 2, 134, 23) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 
 			@Override
-			public boolean canTakeStack(PlayerEntity playerIn) {
-				return getHasStack();
+			public boolean mayPickup(PlayerEntity playerIn) {
+				return hasItem();
 			}
 
 			@Override
 			public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
 				if (totalMaterialCost > 0) {
-					ItemStack repairMaterialStack = inputs.getStackInSlot(1);
+					ItemStack repairMaterialStack = inputs.getItem(1);
 
 					if (!repairMaterialStack.isEmpty() && repairMaterialStack.getCount() >= totalMaterialCost) {
 						repairMaterialStack.shrink(totalMaterialCost);
 					}
 					else {
-						inputs.setInventorySlotContents(1, ItemStack.EMPTY);
+						inputs.setItem(1, ItemStack.EMPTY);
 					}
 				}
 				else {
-					inputs.setInventorySlotContents(1, ItemStack.EMPTY);
+					inputs.setItem(1, ItemStack.EMPTY);
 				}
 
-				inputs.setInventorySlotContents(0, ItemStack.EMPTY);
+				inputs.setItem(0, ItemStack.EMPTY);
 
 				return stack;
 			}
@@ -74,13 +74,13 @@ public class MendingTableContainer extends UtilityBlockContainer {
 
 	@Override
 	public void updateOutput() {
-		ItemStack repairStack = inputs.getStackInSlot(0);
+		ItemStack repairStack = inputs.getItem(0);
 
-		if (repairStack.isEmpty() || !repairStack.isDamageable()) {
+		if (repairStack.isEmpty() || !repairStack.isDamageableItem()) {
 			resetMendingContainerState();
 		}
 		else {
-			ItemStack repairMaterial = inputs.getStackInSlot(1);
+			ItemStack repairMaterial = inputs.getItem(1);
 
 			if (repairMaterial.isEmpty()) {
 				resetMendingContainerState();
@@ -89,7 +89,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 				ItemStack repairedStack = repairStack.copy();
 
 				if (repairMaterial.getItem() == AoAItems.MAGIC_REPAIR_DUST.get() || repairMaterial.getItem() == AoAItems.MAGIC_MENDING_COMPOUND.get()) {
-					int repairPortionValue = (repairMaterial.getItem() == AoAItems.MAGIC_MENDING_COMPOUND.get() ? repairedStack.getDamage() : Math.min(repairedStack.getDamage(), repairedStack.getMaxDamage() / 5));
+					int repairPortionValue = (repairMaterial.getItem() == AoAItems.MAGIC_MENDING_COMPOUND.get() ? repairedStack.getDamageValue() : Math.min(repairedStack.getDamageValue(), repairedStack.getMaxDamage() / 5));
 
 					if (repairPortionValue <= 0) {
 						resetMendingContainerState();
@@ -98,13 +98,13 @@ public class MendingTableContainer extends UtilityBlockContainer {
 						int repairCount;
 
 						for (repairCount = 0; repairPortionValue > 0 && repairCount < repairMaterial.getCount(); repairCount++) {
-							repairedStack.setDamage(repairedStack.getDamage() - repairPortionValue);
+							repairedStack.setDamageValue(repairedStack.getDamageValue() - repairPortionValue);
 
-							repairPortionValue = Math.min(repairedStack.getDamage(), repairedStack.getMaxDamage() / 5);
+							repairPortionValue = Math.min(repairedStack.getDamageValue(), repairedStack.getMaxDamage() / 5);
 						}
 
 						totalMaterialCost = repairCount;
-						output.setInventorySlotContents(0, repairedStack);
+						output.setItem(0, repairedStack);
 					}
 				}
 			}
@@ -112,7 +112,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	}
 
 	private void resetMendingContainerState() {
-		output.setInventorySlotContents(0, ItemStack.EMPTY);
+		output.setItem(0, ItemStack.EMPTY);
 		totalMaterialCost = 0;
 	}
 
@@ -131,7 +131,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 			@Nullable
 			@Override
 			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new MendingTableContainer(windowId, inv, IWorldPosCallable.of(player.world, pos));
+				return new MendingTableContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
 			}
 		}, pos);
 	}

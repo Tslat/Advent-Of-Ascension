@@ -3,8 +3,8 @@ package net.tslat.aoa3.item.weapon.staff;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
@@ -16,10 +16,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.LyonicShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PotionUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -47,7 +44,7 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	@Nullable
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> targets = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10, 1, 10), entity -> entity instanceof IMob && entity.isAlive());
+		List<LivingEntity> targets = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10, 1, 10), entity -> entity instanceof IMob && entity.isAlive());
 
 		return targets.isEmpty() ? null : targets;
 	}
@@ -56,18 +53,18 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (float x = -1; x <= 1; x += 0.125f) {
 			for (float z = -1; z <= 1; z += 0.125f) {
-				world.addEntity(new LyonicShotEntity(caster, this, 1, x, 0, z));
+				world.addFreshEntity(new LyonicShotEntity(caster, this, 1, x, 0, z));
 			}
 		}
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (EntityUtil.isHostileMob(target) && target.world instanceof ServerWorld) {
+		if (EntityUtil.isHostileMob(target) && target.level instanceof ServerWorld) {
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WITHER, 100).level(2));
 
 			if (RandomUtil.oneInNChance(150))
-				((ServerWorld)target.world).addLightningBolt(new LightningBoltEntity(target.world, target.getPosX(), target.getPosY(), target.getPosZ(), false));
+				WorldUtil.spawnLightning((ServerWorld)target.level, shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null, target.getX(), target.getY(), target.getZ(), true);
 
 			return true;
 		}
@@ -76,10 +73,10 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.WITHERS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

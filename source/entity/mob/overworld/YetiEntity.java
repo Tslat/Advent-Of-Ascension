@@ -1,7 +1,8 @@
 package net.tslat.aoa3.entity.mob.overworld;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -23,26 +24,6 @@ public class YetiEntity extends AoAMeleeMob {
 		return 2.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,27 +41,17 @@ public class YetiEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
 			double resist = 1;
-			IAttributeInstance attrib = ((LivingEntity)target).getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
+			ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 			if (attrib != null)
 				resist -= attrib.getValue();
 
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 50, 0, true, true));
-			target.addVelocity(getMotion().getX() * 5.5 * resist, 0.5 * resist, getMotion().getZ() * 5.5 * resist);
-			target.velocityChanged = true;
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 50, 0, true, true));
+			target.push(getDeltaMovement().x() * 5.5 * resist, 0.5 * resist, getDeltaMovement().z() * 5.5 * resist);
+			target.hurtMarked = true;
 		}
 	}
 }

@@ -7,11 +7,13 @@ import net.minecraftforge.common.ToolType;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock;
+
 public class CustomToolsBlock extends Block {
 	@Nonnull
 	private final ToolType[] validToolTypes;
 
-	public CustomToolsBlock(Block.Properties properties, @Nonnull String primaryType, String... secondaryTypes) {
+	public CustomToolsBlock(AbstractBlock.Properties properties, @Nonnull String primaryType, String... secondaryTypes) {
 		super(properties);
 
 		validToolTypes = new ToolType[secondaryTypes.length + 1];

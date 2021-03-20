@@ -37,9 +37,9 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 
 	@Override
 	public List<Slot> getInventorySlots(DivineStationContainer container) {
-		List<Slot> inventorySlots = new ArrayList<Slot>(container.inventorySlots.size() - 3);
+		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 3);
 
-		for (int i = 3; i < container.inventorySlots.size(); i++) {
+		for (int i = 3; i < container.slots.size(); i++) {
 			inventorySlots.add(container.getSlot(i));
 		}
 

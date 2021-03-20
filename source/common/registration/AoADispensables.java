@@ -5,7 +5,7 @@ import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -19,71 +19,71 @@ public final class AoADispensables {
 	}
 
 	private static void registerProjectileDispensables() {
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.HELLFIRE.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.HELLFIRE.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new HellfireEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new HellfireEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.GRENADE.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.GRENADE.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new GrenadeEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new GrenadeEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.CHAKRAM.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.CHAKRAM.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new ChakramEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new ChakramEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.GOO_BALL.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.GOO_BALL.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new GooBallEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new GooBallEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.RUNIC_BOMB.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.RUNIC_BOMB.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new RunicBombEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new RunicBombEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.VULKRAM.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.VULKRAM.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new VulkramEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new VulkramEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 
-		DispenserBlock.registerDispenseBehavior(AoAWeapons.SLICE_STAR.get(), new ProjectileDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAWeapons.SLICE_STAR.get(), new ProjectileDispenseBehavior() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition dispenserPos, ItemStack stack) {
-				return new SliceStarEntity(world, dispenserPos.getX(), dispenserPos.getY(), dispenserPos.getZ());
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new SliceStarEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
 	}
 
 	private static void registerMiscDispensables() {
-		DispenserBlock.registerDispenseBehavior(AoAItems.FRAGMENTED_ANIMA_STONE.get(), new OptionalDispenseBehavior() {
+		DispenserBlock.registerBehavior(AoAItems.FRAGMENTED_ANIMA_STONE.get(), new OptionalDispenseBehavior() {
 			@Override
-			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-				successful = true;
+			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+				setSuccess(true);
 
-				World world = source.getWorld();
-				BlockPos pos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
+				World world = source.getLevel();
+				BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
 
-				if (BoneMealItem.applyBonemeal(stack, world, pos)) {
-					if (!world.isRemote)
-						world.playEvent(2005, pos, 0);
+				if (BoneMealItem.growCrop(stack, world, pos)) {
+					if (!world.isClientSide)
+						world.levelEvent(2005, pos, 0);
 				}
 				else {
-					successful = false;
+					setSuccess(false);
 				}
 
 				return stack;

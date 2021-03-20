@@ -9,7 +9,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.item.LongReachItem;
@@ -43,11 +43,11 @@ public class LongReachItemHitPacket implements AoAPacket {
 			return;
 		}
 
-		player.closeContainer();
+		player.doCloseContainer();
 
-		if (player.container == null || player.openContainer instanceof PlayerContainer) {
+		if (player.inventoryMenu == null || player.containerMenu instanceof PlayerContainer) {
 			context.get().enqueueWork(() -> {
-				ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+				ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
 
 				if (!(stack.getItem() instanceof LongReachItem)) {
 					Logging.logMessage(Level.WARN, "Received long reach item packet but player is not holding a long reach item.");
@@ -55,7 +55,7 @@ public class LongReachItemHitPacket implements AoAPacket {
 					return;
 				}
 
-				Entity target = player.world.getEntityByID(entityId);
+				Entity target = player.level.getEntity(entityId);
 
 				if (target == null) {
 					Logging.logMessage(Level.WARN, "No entity found for long reach item packet, skipping");
@@ -65,15 +65,15 @@ public class LongReachItemHitPacket implements AoAPacket {
 
 				LongReachItem weapon = (LongReachItem)stack.getItem();
 
-				if (!player.isHandActive()) {
+				if (!player.isUsingItem()) {
 					double reach = weapon.getReach();
 
-					if (player.getDistanceSq(target) < reach * reach) {
-						RayTraceContext traceContext = new RayTraceContext(new Vec3d(player.getPosX(), player.getPosY() + player.getEyeHeight(), player.getPosZ()), new Vec3d(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ()), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null);
-						RayTraceResult rayTrace = player.world.rayTraceBlocks(traceContext);
-						BlockPos pos = new BlockPos(rayTrace.getHitVec());
+					if (player.distanceToSqr(target) < reach * reach) {
+						RayTraceContext traceContext = new RayTraceContext(new Vector3d(player.getX(), player.getY() + player.getEyeHeight(), player.getZ()), new Vector3d(target.getX(), target.getY() + target.getEyeHeight(), target.getZ()), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null);
+						RayTraceResult rayTrace = player.level.clip(traceContext);
+						BlockPos pos = new BlockPos(rayTrace.getLocation());
 
-						if (rayTrace.getType() == RayTraceResult.Type.MISS || (rayTrace.getType() == RayTraceResult.Type.BLOCK && !player.world.getBlockState(pos).isOpaqueCube(player.world, pos)))
+						if (rayTrace.getType() == RayTraceResult.Type.MISS || (rayTrace.getType() == RayTraceResult.Type.BLOCK && !player.level.getBlockState(pos).isSolidRender(player.level, pos)))
 							weapon.hitEntity(stack, target, player, -1);
 					}
 				}

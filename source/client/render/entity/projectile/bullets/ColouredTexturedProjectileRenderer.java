@@ -7,7 +7,7 @@ import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 public class ColouredTexturedProjectileRenderer extends TexturedProjectileRenderer<ThrowableEntity> {
 	private final int colour;
@@ -23,7 +23,7 @@ public class ColouredTexturedProjectileRenderer extends TexturedProjectileRender
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 8; i++) {
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, colour), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, colour), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

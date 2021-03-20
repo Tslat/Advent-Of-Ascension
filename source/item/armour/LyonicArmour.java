@@ -23,7 +23,7 @@ import java.util.List;
 
 public class LyonicArmour extends AdventArmour {
 	public LyonicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:lyonic", 56, new int[] {4, 7, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:lyonic", 56, new int[] {4, 7, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class LyonicArmour extends AdventArmour {
 			int pulledCount = 0;
 			float range = 1.5f * (float)slots.size();
 			ItemEntity item;
-			Iterator<ItemEntity> iterator = plData.player().world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pl.getPosX() - range, pl.getPosY() - range, pl.getPosZ() - range, pl.getPosX() + range, pl.getPosY() + range, pl.getPosZ() + range)).iterator();
+			Iterator<ItemEntity> iterator = plData.player().level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pl.getX() - range, pl.getY() - range, pl.getZ() - range, pl.getX() + range, pl.getY() + range, pl.getZ() + range)).iterator();
 
 			while (iterator.hasNext() && pulledCount <= 200 && canPullItem(item = iterator.next())) {
 				EntityUtil.pullEntityIn(pl, item, 0.1f);
@@ -48,7 +48,7 @@ public class LyonicArmour extends AdventArmour {
 		else {
 			PlayerEntity pl = plData.player();
 			int pulledCount = 0;
-			Iterator<ExperienceOrbEntity> iterator = plData.player().world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(pl.getPosX() - 6, pl.getPosY() - 6, pl.getPosZ() - 6, pl.getPosX() + 6, pl.getPosY() + 6, pl.getPosZ() + 6)).iterator();
+			Iterator<ExperienceOrbEntity> iterator = plData.player().level.getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(pl.getX() - 6, pl.getY() - 6, pl.getZ() - 6, pl.getX() + 6, pl.getY() + 6, pl.getZ() + 6)).iterator();
 
 			while (iterator.hasNext() && pulledCount <= 200) {
 				EntityUtil.pullEntityIn(pl, iterator.next(), 0.1f);
@@ -58,11 +58,11 @@ public class LyonicArmour extends AdventArmour {
 	}
 
 	private boolean canPullItem(ItemEntity item) {
-		return item.isAlive() && !item.getItem().isEmpty() && !item.cannotPickup();
+		return item.isAlive() && !item.getItem().isEmpty() && !item.hasPickUpDelay();
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyonic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyonic_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

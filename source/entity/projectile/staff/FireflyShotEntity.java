@@ -25,13 +25,13 @@ public class FireflyShotEntity extends BaseEnergyShot {
 	}
 
 	public FireflyShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, FireflyShotEntity shot, UUID lastTargetUUID, double motionX, double motionY, double motionZ) {
-		super(AoAEntities.Projectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getPosX(), shot.getPosY(), shot.getPosZ(), motionX, motionY, motionZ);
+		super(AoAEntities.Projectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getX(), shot.getY(), shot.getZ(), motionX, motionY, motionZ);
 
 		this.lastTargetUUID = lastTargetUUID;
 	}
 
 	public FireflyShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, FireflyShotEntity shot, double motionX, double motionY, double motionZ) {
-		super(AoAEntities.Projectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getPosX(), shot.getPosY(), shot.getPosZ(), motionX, motionY, motionZ);
+		super(AoAEntities.Projectiles.FIREFLY_SHOT.get(), shooter, weapon, shot.getX(), shot.getY(), shot.getZ(), motionX, motionY, motionZ);
 
 		this.lastTargetUUID = null;
 	}
@@ -49,7 +49,7 @@ public class FireflyShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.05f;
 	}
 }

@@ -23,29 +23,14 @@ public class HellquinEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 120;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.0d;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (super.attackEntityAsMob(entity)) {
-			entity.setFire(7);
+	public boolean doHurtTarget(Entity entity) {
+		if (super.doHurtTarget(entity)) {
+			entity.setSecondsOnFire(7);
 
 			return true;
 		}

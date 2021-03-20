@@ -20,38 +20,38 @@ import java.util.List;
 
 public class Rosidons extends Item {
 	public Rosidons() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).food(new Food.Builder().hunger(0).saturation(0).setAlwaysEdible().build()));
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
-		if (!world.isRemote) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
+		if (!world.isClientSide) {
 			PlayerDataManager plData = entity instanceof ServerPlayerEntity ? PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity) : null;
 
-			if (entity.world.dimension.getType() == AoADimensions.ANCIENT_CAVERN.type() || entity.world.dimension.getType() == AoADimensions.IMMORTALLIS.type()) {
+			if (WorldUtil.isWorld(world, AoADimensions.ANCIENT_CAVERN.key) || WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
 				if (plData != null)
 					plData.sendThrottledChatMessage("message.feedback.item.rosidons.dimFail");
 
-				return super.onItemUseFinish(stack, world, entity);
+				return super.finishUsingItem(stack, world, entity);
 			}
 
-			int calculatedY = WorldUtil.getTrueWorldHeight(world, (int)entity.getPosX(), (int)entity.getPosZ());
+			int calculatedY = WorldUtil.getTrueWorldHeight(world, (int)entity.getX(), (int)entity.getZ());
 
 			if (calculatedY == 0) {
 				if (plData != null)
 					plData.sendThrottledChatMessage("message.feedback.item.rosidons.noHeightFail");
 
-				return super.onItemUseFinish(stack, world, entity);
+				return super.finishUsingItem(stack, world, entity);
 			}
 
-			entity.setPositionAndUpdate(entity.getPosX(), calculatedY + 2, entity.getPosZ());
+			entity.teleportTo(entity.getX(), calculatedY + 2, entity.getZ());
 		}
 
-		return super.onItemUseFinish(stack, world, entity);
+		return super.finishUsingItem(stack, world, entity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -59,7 +59,7 @@ public class WhitewashingRecipeCategory implements IRecipeCategory<WhitewashingR
 	@Override
 	public void setIngredients(WhitewashingRecipe recipe, IIngredients ingredients) {
 		ArrayList<ItemStack> inputs = new ArrayList<ItemStack>(2);
-		Item output = recipe.getRecipeOutput().getItem();
+		Item output = recipe.getResultItem().getItem();
 
 		inputs.add(new ItemStack(Blocks.OBSIDIAN));
 

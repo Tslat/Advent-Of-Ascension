@@ -30,46 +30,26 @@ public class CentinelEntity extends AoARangedMob {
 		return 1f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 12;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_COW_HURT;
+		return SoundEvents.COW_HURT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_COW_HURT;
+		return SoundEvents.COW_HURT;
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Nullable

@@ -24,26 +24,6 @@ public class OmnilightEntity extends AoAFlyingRangedMob {
         return sizeIn.height * 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 156;
-    }
-
-    @Override
-    public double getBaseProjectileDamage() {
-        return 16;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.1;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getShootSound() {
@@ -66,11 +46,6 @@ public class OmnilightEntity extends AoAFlyingRangedMob {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return AoASounds.ENTITY_OMNILIGHT_HURT.get();
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
     }
 
     @Override

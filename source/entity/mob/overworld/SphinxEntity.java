@@ -22,26 +22,6 @@ public class SphinxEntity extends AoAMeleeMob {
 		return 0.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -58,13 +38,4 @@ public class SphinxEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_SPHINX_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

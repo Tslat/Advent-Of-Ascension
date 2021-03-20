@@ -54,7 +54,7 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 	@Override
 	public void setIngredients(UpgradeKitRecipe recipe, IIngredients ingredients) {
 		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override

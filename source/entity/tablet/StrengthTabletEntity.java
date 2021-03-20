@@ -21,7 +21,7 @@ public class StrengthTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.STRENGTH, 10).level(2).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, 10).level(2).isAmbient());
 	}
 
 	@Override

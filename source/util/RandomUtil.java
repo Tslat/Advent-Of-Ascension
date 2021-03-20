@@ -140,17 +140,17 @@ public abstract class RandomUtil {
 		}
 
 		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world) {
-			BlockPos.Mutable mutablePos = new BlockPos.Mutable(centerPos);
+			BlockPos.Mutable mutablePos = centerPos.mutable();
 			int newX = (int)Math.floor(mutablePos.getX() + RANDOM.nextFloat() * xRadius * 2 - xRadius);
 			int newY = (int)Math.floor(mutablePos.getY() + RANDOM.nextFloat() * yRadius * 2 - yRadius);
 			int newZ = (int)Math.floor(mutablePos.getZ() + RANDOM.nextFloat() * zRadius * 2 - zRadius);
 
-			mutablePos.setPos(newX, newY, newZ);
+			mutablePos.set(newX, newY, newZ);
 
 			if (safeSurfacePlacement && world != null)
-				mutablePos.setPos(world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
+				mutablePos.set(world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
 
-			return mutablePos.toImmutable();
+			return mutablePos.immutable();
 		}
 	}
 }

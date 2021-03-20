@@ -20,11 +20,11 @@ public class ShroomicGreatblade extends BaseGreatblade {
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
-		return (float)(attacker.isPotionActive(Effects.POISON) ? getAttackDamage() * 1.3f : getAttackDamage());
+		return (float)(attacker.hasEffect(Effects.POISON) ? getAttackDamage() * 1.3f : getAttackDamage());
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

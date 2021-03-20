@@ -22,7 +22,7 @@ public abstract class ParticleProjectileRenderer<T extends Entity> extends Entit
 	protected abstract void addParticles(T entity, float partialTicks);
 
 	@Override
-	public final ResourceLocation getEntityTexture(T entity) {
+	public final ResourceLocation getTextureLocation(T entity) {
 		return null;
 	}
 }

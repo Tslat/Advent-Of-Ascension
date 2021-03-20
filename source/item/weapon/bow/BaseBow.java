@@ -12,6 +12,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -27,20 +28,10 @@ public class BaseBow extends BowItem {
 	protected double dmg;
 
 	public BaseBow(double damage, float drawSpeedMultiplier, int durability) {
-		super(new Item.Properties().group(AoAItemGroups.BOWS).maxDamage(durability));
+		super(new Item.Properties().tab(AoAItemGroups.BOWS).durability(durability));
+
 		this.dmg = damage;
 		this.drawSpeedMultiplier = drawSpeedMultiplier;
-
-		addPropertyOverride(new ResourceLocation("pull"), (stack, world, entity) -> {
-			if (entity == null) {
-				return 0.0F;
-			}
-			else {
-				return !(entity.getActiveItemStack().getItem() instanceof BaseBow) ? 0.0F : getDrawSpeedMultiplier() * (float)(stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
-			}
-		});
-
-		addPropertyOverride(new ResourceLocation("pulling"), (stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 	}
 
 	public double getDamage() {
@@ -48,8 +39,8 @@ public class BaseBow extends BowItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(player, heldStack, player.isCreative()).isEmpty();
 		ActionResult<ItemStack> arrowNockEventResult = ForgeEventFactory.onArrowNock(heldStack, world, player, hand, hasAmmo);
 
@@ -57,20 +48,20 @@ public class BaseBow extends BowItem {
 			return arrowNockEventResult;
 
 		if (!player.isCreative() && !hasAmmo) {
-			return ActionResult.resultFail(heldStack);
+			return ActionResult.fail(heldStack);
 		}
 		else {
-			player.setActiveHand(hand);
-			return ActionResult.resultConsume(heldStack);
+			player.startUsingItem(hand);
+			return ActionResult.consume(heldStack);
 		}
 	}
 
-	public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity shooter, int timeLeft) {
+	public void releaseUsing(ItemStack stack, World world, LivingEntity shooter, int timeLeft) {
 		if (!(shooter instanceof PlayerEntity))
 			return;
 
 		PlayerEntity pl = (PlayerEntity)shooter;
-		boolean infiniteAmmo = pl.isCreative() || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+		boolean infiniteAmmo = pl.isCreative() || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 		ItemStack ammoStack = findAmmo(pl, stack, infiniteAmmo);
 		int charge = (int)((getUseDuration(stack) - timeLeft) * getDrawSpeedMultiplier());
 		charge = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, world, pl, charge, !ammoStack.isEmpty() || infiniteAmmo);
@@ -82,59 +73,59 @@ public class BaseBow extends BowItem {
 			if (ammoStack.isEmpty())
 				ammoStack = new ItemStack(Items.ARROW);
 
-			float velocity = getArrowVelocity(charge);
+			float velocity = getPowerForTime(charge);
 
 			if ((double)velocity >= 0.1D) {
-				if (!world.isRemote) {
+				if (!world.isClientSide) {
 					CustomArrowEntity arrow = makeArrow(pl, stack, ammoStack, velocity, !infiniteAmmo);
 
 					arrow = doArrowMods(arrow, shooter, ammoStack, timeLeft);
-					world.addEntity(arrow);
+					world.addFreshEntity(arrow);
 				}
 
-				world.playSound(null, pl.getPosX(), pl.getPosY(), pl.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
+				world.playSound(null, pl.getX(), pl.getY(), pl.getZ(), SoundEvents.ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (random.nextFloat() * 0.4F + 1.2F) + velocity * 0.5F);
 
-				if (!infiniteAmmo && !pl.abilities.isCreativeMode) {
+				if (!infiniteAmmo && !pl.abilities.instabuild) {
 					ammoStack.shrink(1);
 
 					if (ammoStack.isEmpty())
-						pl.inventory.deleteStack(ammoStack);
+						pl.inventory.removeItem(ammoStack);
 				}
 
-				pl.addStat(Stats.ITEM_USED.get(this));
+				pl.awardStat(Stats.ITEM_USED.get(this));
 			}
 		}
 	}
 
 	protected ItemStack findAmmo(PlayerEntity shooter, ItemStack bowStack, boolean infiniteAmmo) {
-		return shooter.findAmmo(bowStack);
+		return shooter.getProjectile(bowStack);
 	}
 
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		ArrowItem arrowItem = (ArrowItem)(ammoStack.getItem() instanceof ArrowItem ? ammoStack.getItem() : Items.ARROW);
-		CustomArrowEntity arrow = CustomArrowEntity.fromArrow(arrowItem.createArrow(shooter.world, ammoStack, shooter), this, shooter, getDamage());
+		CustomArrowEntity arrow = CustomArrowEntity.fromArrow(arrowItem.createArrow(shooter.level, ammoStack, shooter), this, shooter, getDamage());
 
-		arrow.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, velocity * 3.0F, 1.0F);
+		arrow.shootFromRotation(shooter, shooter.xRot, shooter.yRot, 0.0F, velocity * 3.0F, 1.0F);
 
 		if (velocity == 1.0F)
-			arrow.setIsCritical(true);
+			arrow.setCritArrow(true);
 
-		int powerEnchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, bowStack);
-		int punchEnchant = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, bowStack);
+		int powerEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
+		int punchEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, bowStack);
 
 		if (powerEnchant > 0)
-			arrow.setDamage(arrow.getDamage() + powerEnchant * 1.5D + 1D);
+			arrow.setBaseDamage(arrow.getBaseDamage() + powerEnchant * 1.5D + 1D);
 
 		if (punchEnchant > 0)
-			arrow.setKnockbackStrength(punchEnchant);
+			arrow.setKnockback(punchEnchant);
 
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, bowStack) > 0)
-			arrow.setFire(100);
+		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, bowStack) > 0)
+			arrow.setSecondsOnFire(100);
 
-		bowStack.damageItem(1, shooter, (firingEntity) -> firingEntity.sendBreakAnimation(shooter.getActiveHand()));
+		bowStack.hurtAndBreak(1, shooter, (firingEntity) -> firingEntity.broadcastBreakEvent(shooter.getUsedItemHand()));
 
 		if (!consumeAmmo || (shooter instanceof PlayerEntity && ((PlayerEntity)shooter).isCreative()) && (ammoStack.getItem() == Items.SPECTRAL_ARROW || ammoStack.getItem() == Items.TIPPED_ARROW))
-			arrow.pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+			arrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
 
 		return arrow;
 	}
@@ -163,14 +154,14 @@ public class BaseBow extends BowItem {
 	}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 8;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(getDamage())));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.bow.drawSpeed", LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(Items.ARROW)));
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(getDamage()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.bow.drawSpeed", LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent(Double.toString(((int)(72000 / getDrawSpeedMultiplier()) / 720) / (double)100))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getLocaleMessage(Items.ARROW.getDescriptionId())));
 	}
 }

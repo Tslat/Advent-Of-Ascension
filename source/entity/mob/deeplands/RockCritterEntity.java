@@ -18,52 +18,33 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
 public class RockCritterEntity extends AoAMeleeMob {
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(RockCritterEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(RockCritterEntity.class, DataSerializers.BYTE);
 
     public RockCritterEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(CLIMBING, (byte)0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CLIMBING, (byte)0);
     }
 
     @Override
-    protected PathNavigator createNavigator(World world) {
+    protected PathNavigator createNavigation(World world) {
         return new ClimberPathNavigator(this, world);
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.8125f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 75;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
     }
 
     @Nullable
@@ -86,38 +67,33 @@ public class RockCritterEntity extends AoAMeleeMob {
 
     @Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-        return SoundEvents.ENTITY_SPIDER_STEP;
+        return SoundEvents.SPIDER_STEP;
     }
 
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
-
-    @Override
+	@Override
     public void tick() {
         super.tick();
 
-        if (!world.isRemote)
-            setBesideClimbableBlock(this.collidedHorizontally);
+        if (!level.isClientSide)
+            setBesideClimbableBlock(this.horizontalCollision);
     }
 
     @Override
-    public boolean isOnLadder() {
+    public boolean onClimbable() {
         return isBesideClimbableBlock();
     }
 
     public boolean isBesideClimbableBlock() {
-        return (this.dataManager.get(CLIMBING) & 1) != 0;
+        return (this.entityData.get(CLIMBING) & 1) != 0;
     }
 
     public void setBesideClimbableBlock(boolean climbing) {
-        byte climbingBit = this.dataManager.get(CLIMBING);
+        byte climbingBit = this.entityData.get(CLIMBING);
 
         if (climbing) {
             climbingBit = (byte)(climbingBit | 1);
@@ -126,15 +102,15 @@ public class RockCritterEntity extends AoAMeleeMob {
             climbingBit = (byte)(climbingBit & -2);
         }
 
-        this.dataManager.set(CLIMBING, climbingBit);
+        this.entityData.set(CLIMBING, climbingBit);
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (!world.isRemote && world.getDimension().getType() == AoADimensions.ANCIENT_CAVERN.type()) {
-            Entity source = cause.getTrueSource();
+        if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.ANCIENT_CAVERN.key)) {
+            Entity source = cause.getEntity();
             ServerPlayerEntity killer = null;
 
             if (source != null) {

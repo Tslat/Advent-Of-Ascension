@@ -33,13 +33,13 @@ public class GasBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new ToxicShotEntity(shooter, this, 1));
+		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 1));
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity) {
-			if (target instanceof PlayerEntity || (target instanceof TameableEntity && shooter.getUniqueID().equals(((TameableEntity)target).getOwnerId()))) {
+			if (target instanceof PlayerEntity || (target instanceof TameableEntity && shooter.getUUID().equals(((TameableEntity)target).getOwnerUUID()))) {
 				EntityUtil.healEntity((LivingEntity)target, 0.05f);
 
 				return true;
@@ -51,14 +51,14 @@ public class GasBlaster extends BaseBlaster {
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (!((LivingEntity)target).isPotionActive(Effects.POISON))
+		if (!((LivingEntity)target).hasEffect(Effects.POISON))
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 13).level(2));
 	}
 
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

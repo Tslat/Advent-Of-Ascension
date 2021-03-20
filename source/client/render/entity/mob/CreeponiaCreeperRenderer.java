@@ -22,7 +22,7 @@ public class CreeponiaCreeperRenderer extends MobRenderer<AoACreeponiaCreeper, E
 	}
 
 	@Override
-	protected void preRenderCallback(AoACreeponiaCreeper entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(AoACreeponiaCreeper entity, MatrixStack matrix, float partialTicks) {
 		float flashIntensity = entity.getCreeperFlashIntensity(partialTicks);
 		float flashRatio = 1.0F + MathHelper.sin(flashIntensity * 100.0F) * flashIntensity * 0.01F;
 		flashIntensity = MathHelper.clamp(flashIntensity, 0.0F, 1.0F);
@@ -36,14 +36,14 @@ public class CreeponiaCreeperRenderer extends MobRenderer<AoACreeponiaCreeper, E
 	}
 
 	@Override
-	protected float getOverlayProgress(AoACreeponiaCreeper livingEntityIn, float partialTicks) {
+	protected float getWhiteOverlayProgress(AoACreeponiaCreeper livingEntityIn, float partialTicks) {
 		float flashIntensity = livingEntityIn.getCreeperFlashIntensity(partialTicks);
 
 		return (int)(flashIntensity * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(flashIntensity, 0.5F, 1.0F);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(AoACreeponiaCreeper entity) {
+	public ResourceLocation getTextureLocation(AoACreeponiaCreeper entity) {
 		return texture;
 	}
 }

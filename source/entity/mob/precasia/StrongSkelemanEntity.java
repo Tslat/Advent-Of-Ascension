@@ -28,26 +28,6 @@ public class StrongSkelemanEntity extends AoARangedMob {
 		return 1.46875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
@@ -62,31 +42,31 @@ public class StrongSkelemanEntity extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_SKELETON_AMBIENT;
+		return SoundEvents.SKELETON_AMBIENT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_SKELETON_DEATH;
+		return SoundEvents.SKELETON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_SKELETON_HURT;
+		return SoundEvents.SKELETON_HURT;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getImmediateSource() instanceof SpiritualShotEntity)
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.getDirectEntity() instanceof SpiritualShotEntity)
 			return false;
 
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 

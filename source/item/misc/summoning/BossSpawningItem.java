@@ -20,7 +20,7 @@ public abstract class BossSpawningItem extends Item {
 	private final Supplier<SoundEvent> throwingSound;
 
 	public BossSpawningItem(@Nullable Supplier<SoundEvent> throwSound, @Nonnull IParticleData... timerParticles) {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 
 		this.timerParticles = timerParticles;
 		this.throwingSound = throwSound;
@@ -30,7 +30,7 @@ public abstract class BossSpawningItem extends Item {
 		int index = (int)(ticksExisted / (float)lifespan * timerParticles.length);
 
 		if (RandomUtil.oneInNChance(1 + (lifespan - ticksExisted) / 20))
-			entityItem.world.addParticle(timerParticles[index], posX, posY + 0.25d, posZ, 0, 0, 0);
+			entityItem.level.addParticle(timerParticles[index], posX, posY + 0.25d, posZ, 0, 0, 0);
 	}
 
 	public abstract void spawnBoss(World world, ServerPlayerEntity summoner, double posX, double posY, double posZ);
@@ -43,12 +43,12 @@ public abstract class BossSpawningItem extends Item {
 	}
 
 	public static BossItemEntity newBossEntityItemFromExisting(ItemEntity item, PlayerEntity player) {
-		BossItemEntity bossItem = new BossItemEntity(item.world, item.getPosX(), item.getPosY(), item.getPosZ(), item.getItem(), player);
+		BossItemEntity bossItem = new BossItemEntity(item.level, item.getX(), item.getY(), item.getZ(), item.getItem(), player);
 
-		bossItem.setPickupDelay(10);
-		bossItem.setThrowerId(player.getUniqueID());
-		bossItem.setOwnerId(player.getUniqueID());
-		bossItem.setMotion(item.getMotion());
+		bossItem.setPickUpDelay(10);
+		bossItem.setThrower(player.getUUID());
+		bossItem.setOwner(player.getUUID());
+		bossItem.setDeltaMovement(item.getDeltaMovement());
 
 		return bossItem;
 	}

@@ -22,26 +22,6 @@ public class ArkzyneEntity extends AoAMeleeMob {
         return 2.5f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.4d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 135;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

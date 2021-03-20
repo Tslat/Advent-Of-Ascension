@@ -1,8 +1,12 @@
 package net.tslat.aoa3.entity.mob.gardencia;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -37,27 +41,7 @@ public class VineWizardEntity extends AoARangedMob {
         return 1.875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.15;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 90;
-    }
-
-    @Override
-    public double getBaseProjectileDamage() {
-        return 12;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.207;
-    }
-
-    @Override
+	@Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
         return null;
     }
@@ -69,8 +53,8 @@ public class VineWizardEntity extends AoARangedMob {
     }
 
     @Override
-    public void attackEntityWithRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
-        world.addEntity(new VineWizardShotEntity(this, target, BaseMobProjectile.Type.MAGIC));
+    public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
+        level.addFreshEntity(new VineWizardShotEntity(this, target, BaseMobProjectile.Type.MAGIC));
     }
 
     @Override
@@ -82,7 +66,7 @@ public class VineWizardEntity extends AoARangedMob {
     protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;
@@ -91,39 +75,39 @@ public class VineWizardEntity extends AoARangedMob {
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
 
         if (candiedWater)
             compound.putBoolean("AoACandiedWater", true);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
 
         candiedWater = compound.contains("AoACandiedWater");
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (isAlive() && getHealth() < getMaxHealth()) {
             if (isInWater()) {
                 heal(0.2f);
             }
-            else if (world.isRainingAt(getPosition())) {
+            else if (level.isRainingAt(blockPosition())) {
                 heal(0.1f);
             }
         }
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-            ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
+        if (!level.isClientSide && candiedWater && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+            ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
     }
 }

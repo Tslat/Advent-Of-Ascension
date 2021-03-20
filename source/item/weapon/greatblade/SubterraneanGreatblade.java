@@ -24,11 +24,11 @@ public class SubterraneanGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
 		if (target instanceof LivingEntity && RandomUtil.percentChance(EntityUtil.getAttackCooldown(attacker) * 0.2f))
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 30, 50, true, false));
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 30, 50, true, false));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

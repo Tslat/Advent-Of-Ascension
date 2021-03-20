@@ -26,28 +26,13 @@ public class ShaddyEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 200.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.0d;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (super.attackEntityAsMob(entity)) {
+	public boolean doHurtTarget(Entity entity) {
+		if (super.doHurtTarget(entity)) {
 			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.WITHER, 80).level(3));
 
 			return true;

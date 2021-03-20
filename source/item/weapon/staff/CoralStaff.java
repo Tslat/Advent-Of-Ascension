@@ -45,40 +45,40 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	@Nullable
 	public ArrayList<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		ArrayList<BlockPos> coralPositions = new ArrayList<BlockPos>();
-		final BlockPos pos = caster.getPosition();
+		final BlockPos pos = caster.blockPosition();
 		BlockPos.Mutable checkPos = new BlockPos.Mutable();
 
 		for (int x = -2; x <= 1; x++) {
 			for (int z = -2; z <= 1; z++) {
-				checkPos.setPos(pos.getX() + x, pos.getY() - 2, pos.getZ() + z);
+				checkPos.set(pos.getX() + x, pos.getY() - 2, pos.getZ() + z);
 
 				if (safeBlockPos(caster, checkPos))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 
 				if (safeBlockPos(caster, checkPos.move(Direction.UP, 4)))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 			}
 
 			for (int y = -2; y <= 2; y++) {
-				checkPos.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() - 2);
+				checkPos.set(pos.getX() + x, pos.getY() + y, pos.getZ() - 2);
 
 				if (safeBlockPos(caster, checkPos))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 
 				if (safeBlockPos(caster, checkPos.move(Direction.SOUTH, 4)))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 			}
 		}
 
 		for (int z = -2; z <= 2; z++) {
 			for (int y = -2; y <= 2; y++) {
-				checkPos.setPos(pos.getX() - 2, pos.getY() + y, pos.getZ() + z);
+				checkPos.set(pos.getX() - 2, pos.getY() + y, pos.getZ() + z);
 
 				if (safeBlockPos(caster, checkPos))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 
 				if (safeBlockPos(caster, checkPos.move(Direction.EAST, 4)))
-					coralPositions.add(checkPos.toImmutable());
+					coralPositions.add(checkPos.immutable());
 			}
 		}
 
@@ -87,23 +87,23 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
-		if (!world.isRemote && caster instanceof PlayerEntity) {
+		if (!world.isClientSide && caster instanceof PlayerEntity) {
 			for (BlockPos pos : args) {
-				world.setBlockState(pos, AoABlocks.PINK_CORAL.get().getDefaultState(), 2);
+				world.setBlock(pos, AoABlocks.PINK_CORAL.get().defaultBlockState(), 2);
 			}
 
-			world.playSound(null, caster.getPosX(), caster.getPosY(), caster.getPosZ(), AoASounds.ITEM_REEF_STAFF_CAST.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			world.playSound(null, caster.getX(), caster.getY(), caster.getZ(), AoASounds.ITEM_REEF_STAFF_CAST.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 			new CoralStaffTask(world, args).schedule(30, TimeUnit.SECONDS);
 		}
 	}
 
 	private boolean safeBlockPos(LivingEntity caster, BlockPos pos) {
-		return caster.world.getBlockState(pos).getBlock() == Blocks.AIR && (!(caster instanceof PlayerEntity) || caster.world.canMineBlockBody((PlayerEntity)caster, pos));
+		return caster.level.getBlockState(pos).getBlock() == Blocks.AIR;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

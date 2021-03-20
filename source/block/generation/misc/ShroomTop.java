@@ -9,12 +9,14 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.tslat.aoa3.block.WaterloggableBlock;
 
+import net.minecraft.block.AbstractBlock;
+
 public class ShroomTop extends WaterloggableBlock {
-	private static final VoxelShape BOTTOM_SHAPE = makeCuboidShape(5, 0, 5, 11, 6, 11);
-	private static final VoxelShape TOP_SHAPE = makeCuboidShape(0, 6, 0, 16, 16, 16);
+	private static final VoxelShape BOTTOM_SHAPE = box(5, 0, 5, 11, 6, 11);
+	private static final VoxelShape TOP_SHAPE = box(0, 6, 0, 16, 16, 16);
 	private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, TOP_SHAPE);
 
-	public ShroomTop(Block.Properties properties) {
+	public ShroomTop(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 

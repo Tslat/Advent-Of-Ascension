@@ -22,26 +22,6 @@ public class DusteivaEntity extends AoAMeleeMob {
 		return 2.125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 111;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 12d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

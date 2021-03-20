@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AlchemyArmour extends AdventArmour implements SkillItem {
 	public AlchemyArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:alchemy", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:alchemy", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class AlchemyArmour extends AdventArmour implements SkillItem {
 
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ALCHEMY, 100));
 	}
 }

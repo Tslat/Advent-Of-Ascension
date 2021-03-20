@@ -1,15 +1,16 @@
 package net.tslat.aoa3.library.misc;
 
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 
 public class PortalCoordinatesContainer {
-	public final DimensionType fromDim;
+	public final RegistryKey<World> fromDim;
 	public final double x;
 	public final double y;
 	public final double z;
 
-	public PortalCoordinatesContainer(DimensionType fromDim, double posX, double posY, double posZ) {
+	public PortalCoordinatesContainer(RegistryKey<World> fromDim, double posX, double posY, double posZ) {
 		this.fromDim = fromDim;
 		this.x = posX;
 		this.y = posY;

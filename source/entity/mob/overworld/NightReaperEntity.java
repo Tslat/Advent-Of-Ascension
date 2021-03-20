@@ -23,26 +23,6 @@ public class NightReaperEntity extends AoAMeleeMob {
 		return 2.1875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.9d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 35;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -65,12 +45,7 @@ public class NightReaperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 }

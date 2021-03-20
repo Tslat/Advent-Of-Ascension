@@ -20,15 +20,15 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class LunarEnrichmentTable extends Block {
 	public LunarEnrichmentTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PINK, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PINK, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.ROSITE_INGOT.get()) {
-			if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.ROSITE_INGOT.get()) {
+			if (!world.isClientSide()) {
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.LUNAR_INGOT.get()));
 				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_LUNAR_ENRICHMENT_TABLE_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);

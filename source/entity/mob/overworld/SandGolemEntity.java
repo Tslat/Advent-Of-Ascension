@@ -23,52 +23,18 @@ public class SandGolemEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 45;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 8d;
-	}
-
-	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_IRON_GOLEM_DEATH;
+		return SoundEvents.IRON_GOLEM_DEATH;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_IRON_GOLEM_HURT;
+		return SoundEvents.IRON_GOLEM_HURT;
 	}
 
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.ENTITY_IRON_GOLEM_STEP;
+		return SoundEvents.IRON_GOLEM_STEP;
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

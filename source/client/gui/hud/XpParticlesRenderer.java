@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.hud;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -74,22 +75,22 @@ public class XpParticlesRenderer {
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		MainWindow window = mc.getMainWindow();
+		MainWindow window = mc.getWindow();
 
 		if (AoAConfig.CLIENT.showXpParticles.get()) {
-			if (mc.currentScreen == null && !mc.gameSettings.hideGUI) {
+			if (mc.screen == null && !mc.options.hideGui) {
 				RenderSystem.disableDepthTest();
 				RenderSystem.enableAlphaTest();
-
+				MatrixStack matrix = new MatrixStack();
 				long currentTime = System.currentTimeMillis();
 				Iterator<Map.Entry<Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
 				int skillCount = particlesMap.size();
-				int scrollHeight = (int)(window.getScaledHeight() / 3f);
+				int scrollHeight = (int)(window.getGuiScaledHeight() / 3f);
 				int skillNum = 0;
 				float rowBasedScale = (int)(1 + ((skillCount - 1) / 5f));
 				float renderSize = 25 / (1 + (rowBasedScale - 1) * 0.5f);
-				final double skillIconsX = (window.getScaledWidth() - (renderSize * (1 + ((Math.min(skillCount, 5) - 1) * 0.5f)))) / 2d;
-				final double skillIconsY = 2;
+				final float skillIconsX = (window.getGuiScaledWidth() - (renderSize * (1 + ((Math.min(skillCount, 5) - 1) * 0.5f)))) / 2f;
+				final float skillIconsY = 2;
 
 				while (mapIterator.hasNext()) {
 					Map.Entry<Skills, CopyOnWriteArrayList<XPParticle>> particleEntry = mapIterator.next();
@@ -109,7 +110,7 @@ public class XpParticlesRenderer {
 						float particleLifespan = 1 - ((currentTime - particle.creationTime) / 1500f);
 
 						if (particleLifespan >= 0.1)
-							RenderUtil.drawCenteredScaledString(mc.fontRenderer, particle.xpString, (int)(window.getScaledWidth() / 2d), (int)(scrollHeight * particleLifespan), 0.5f, NumberUtil.RGB(255, 255, 255) | (int)MathHelper.clamp(255 * particleLifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawCenteredScaledString(matrix, mc.font, particle.xpString, (int)(window.getGuiScaledWidth() / 2d), (int)(scrollHeight * particleLifespan), 0.5f, NumberUtil.RGB(255, 255, 255) | (int)MathHelper.clamp(255 * particleLifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
 
 						if (particle.creationTime <= currentTime - 1800) {
 							if (removalList == null)
@@ -174,19 +175,19 @@ public class XpParticlesRenderer {
 							break;
 					}
 
-					double newX = skillIconsX + (skillNum % 5 * renderSize * 0.5f);
-					double newY = skillIconsY + (skillNum / 5 * renderSize * 0.5f);
+					float newX = skillIconsX + (skillNum % 5 * renderSize * 0.5f);
+					float newY = skillIconsY + (skillNum / 5 * renderSize * 0.5f);
 
-					mc.getTextureManager().bindTexture(skillsTextures);
+					mc.getTextureManager().bind(skillsTextures);
 					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(newX, newY, skillUvX, skillUvY, 50, 50, renderSize, renderSize, 450, 240);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, newX, newY, skillUvX, skillUvY, 50, 50, renderSize, renderSize, 450, 240);
 					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 					if (isLevelUp) {
 						String lvl = String.valueOf(AdventGuiTabPlayer.getSkillLevel(skill));
-						float stringScale = Math.min(1.4f, 16.8f / (float)mc.fontRenderer.getStringWidth(lvl)) / rowBasedScale;
+						float stringScale = Math.min(1.4f, 16.8f / (float)mc.font.width(lvl)) / rowBasedScale;
 
-						RenderUtil.drawCenteredScaledString(mc.fontRenderer, lvl, (int)(newX + (renderSize + 2) / 2f), (int)((newY + renderSize / 2f) - mc.fontRenderer.FONT_HEIGHT / 3f * stringScale), stringScale, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+						RenderUtil.drawCenteredScaledString(matrix, mc.font, lvl, (int)(newX + (renderSize + 2) / 2f), (int)((newY + renderSize / 2f) - mc.font.lineHeight / 3f * stringScale), stringScale, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 					}
 
 					if (removalList != null)

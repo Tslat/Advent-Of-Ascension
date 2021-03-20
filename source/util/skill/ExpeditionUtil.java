@@ -54,28 +54,28 @@ public class ExpeditionUtil {
     	PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 		int lvl = plData.stats().getLevel(Skills.EXPEDITION);
 
-		if (ev.player.isSprinting() && ev.player.ticksExisted % 140 == 0)
+		if (ev.player.isSprinting() && ev.player.tickCount % 140 == 0)
 			plData.stats().addXp(Skills.EXPEDITION, PlayerUtil.getXpRequiredForNextLevel(lvl) / getXpDenominator(lvl), false, false);
 
 		switch (plData.stats().getSkillData(Skills.EXPEDITION) % 4) {
 			case 1:
-				if (ev.player.isSprinting() && ev.player.ticksExisted % 600 == 0) {
-					if (RandomUtil.randomNumberUpTo(110) < lvl && !ev.player.isPotionActive(Effects.SPEED)) {
-						EntityUtil.applyPotions(ev.player, new PotionUtil.EffectBuilder(Effects.SPEED, 80).level(5).isAmbient());
+				if (ev.player.isSprinting() && ev.player.tickCount % 600 == 0) {
+					if (RandomUtil.randomNumberUpTo(110) < lvl && !ev.player.hasEffect(Effects.MOVEMENT_SPEED)) {
+						EntityUtil.applyPotions(ev.player, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 80).level(5).isAmbient());
 						plData.sendThrottledChatMessage("message.event.expedition.speed", TextFormatting.AQUA);
 					}
 				}
 				break;
 			case 2:
-				if (ev.player.isSprinting() && ev.player.ticksExisted % 600 == 0) {
+				if (ev.player.isSprinting() && ev.player.tickCount % 600 == 0) {
 					if (RandomUtil.randomNumberUpTo(110) < lvl) {
-						ev.player.getFoodStats().addStats(5, 0.3f);
+						ev.player.getFoodData().eat(5, 0.3f);
 						plData.sendThrottledChatMessage("message.event.expedition.food", TextFormatting.AQUA);
 					}
 				}
 				break;
 			case 3:
-				if (ev.player.isInWater() && ev.player.ticksExisted % 500 == 0) {
+				if (ev.player.isInWater() && ev.player.tickCount % 500 == 0) {
 					if (RandomUtil.randomNumberUpTo(110) < lvl) {
 						EntityUtil.applyPotions(ev.player, new PotionUtil.EffectBuilder(Effects.WATER_BREATHING, 400).isAmbient());
 						plData.sendThrottledChatMessage("message.event.expedition.breath", TextFormatting.AQUA);

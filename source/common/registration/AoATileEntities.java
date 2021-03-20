@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public final class AoATileEntities {
 	public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, AdventOfAscension.MOD_ID);
 
-	public static final RegistryObject<TileEntityType<TrophyTileEntity>> TROPHY = registerTileEntity("trophy", () -> TileEntityType.Builder.create(TrophyTileEntity::new, AoABlocks.TROPHY.get(), AoABlocks.GOLD_TROPHY.get(), AoABlocks.ORNATE_TROPHY.get()).build(null));
+	public static final RegistryObject<TileEntityType<TrophyTileEntity>> TROPHY = registerTileEntity("trophy", () -> TileEntityType.Builder.of(TrophyTileEntity::new, AoABlocks.TROPHY.get(), AoABlocks.GOLD_TROPHY.get(), AoABlocks.ORNATE_TROPHY.get()).build(null));
 
 	private static <T extends TileEntity> RegistryObject<TileEntityType<T>> registerTileEntity(String registryName, Supplier<TileEntityType<T>> tile) {
 		return TILES.register(registryName, tile);

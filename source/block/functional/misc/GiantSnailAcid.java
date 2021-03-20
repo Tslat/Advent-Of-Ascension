@@ -11,10 +11,10 @@ import net.tslat.aoa3.util.PotionUtil;
 
 public class GiantSnailAcid extends AcidBlock {
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entity) {
 		if (EntityUtil.isVulnerableEntity(entity, new DamageSource("acid"))) {
-			entity.attackEntityFrom(new DamageSource("acid"), 4);
-			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 40));
+			entity.hurt(new DamageSource("acid"), 4);
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 40));
 		}
 	}
 }

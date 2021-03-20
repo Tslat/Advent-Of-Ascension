@@ -19,32 +19,12 @@ public class VoidChargerEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.275f);
+		setSpeed(1.275f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return sizeIn.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.0f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -64,17 +44,8 @@ public class VoidChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public int getMaxSpawnHeight() {
-		return 20;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 150));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

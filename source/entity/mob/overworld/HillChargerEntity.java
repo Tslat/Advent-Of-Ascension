@@ -18,32 +18,12 @@ public class HillChargerEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.275f);
+		setSpeed(1.275f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return sizeIn.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -62,13 +42,4 @@ public class HillChargerEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_CHARGER_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

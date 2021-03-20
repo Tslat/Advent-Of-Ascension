@@ -40,73 +40,48 @@ public class ArcFlowerEntity extends AoAMeleeMob {
         return 0.05f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 1;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 14;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
         return null;
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
+	@Override
+    protected void jumpFromGround() {}
 
     @Override
-    protected void jump() {}
+    public void aiStep() {
+        super.aiStep();
 
-    @Override
-    public void livingTick() {
-        super.livingTick();
-
-        PlayerEntity nearestPlayer = world.getClosestPlayer(this, 64);
+        PlayerEntity nearestPlayer = level.getNearestPlayer(this, 64);
 
         if (nearestPlayer == null)
             return;
 
-        if (nearestPlayer.canEntityBeSeen(this))
-            setMotion(0, getMotion().getY(), 0);
+        if (nearestPlayer.canSee(this))
+            setDeltaMovement(0, getDeltaMovement().y(), 0);
     }
 
     @Override
-    public void addVelocity(double x, double y, double z) {}
+    public void push(double x, double y, double z) {}
 
     @Override
-    public void applyEntityCollision(Entity entityIn) {}
+    public void push(Entity entityIn) {}
 
     @Override
-    protected boolean canDropLoot() {
+    protected boolean shouldDropExperience() {
         return false;
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (!world.isRemote) {
-            ArcwormEntity arcworm = new ArcwormEntity(AoAEntities.Mobs.ARCWORM.get(), world);
+        if (!level.isClientSide) {
+            ArcwormEntity arcworm = new ArcwormEntity(AoAEntities.Mobs.ARCWORM.get(), level);
 
-            arcworm.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, rotationPitch);
-            world.addEntity(arcworm);
+            arcworm.moveTo(getX(), getY(), getZ(), yRot, xRot);
+            level.addFreshEntity(arcworm);
             remove();
         }
     }

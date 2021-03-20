@@ -3,57 +3,32 @@ package net.tslat.aoa3.entity.mob.lborean;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class AnglerEntity extends AoAMeleeMob {
-	public AnglerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+public class AnglerEntity extends AoAWaterMeleeMob implements IAnimatable {
+	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("angler.bite", false);
+	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("angler.swim", true);
+
+	public AnglerEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false));
-		goalSelector.addGoal(7, new RandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
-	}
-
-	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 1.125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 112;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 14;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
+		return 0.8f;
 	}
 
 	@Nullable
@@ -75,10 +50,28 @@ public class AnglerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public int getCurrentSwingDuration() {
+		return 20;
+	}
 
-		if (isInWater() && getHealth() > 0 && getHealth() < getMaxHealth())
-			heal(0.2f);
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(new AnimationController<AnglerEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<AnglerEntity>() {
+			@Override
+			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+				if (swinging) {
+					animationEvent.getController().setAnimation(BITE_ANIMATION);
+
+					return PlayState.CONTINUE;
+				}
+				else if (animationEvent.isMoving()) {
+					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+
+					return PlayState.CONTINUE;
+				}
+
+				return PlayState.STOP;
+			}
+		}));
 	}
 }

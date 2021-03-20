@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.hud;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
@@ -25,45 +26,46 @@ public class BossBarRenderer {
 	public static void renderBossBar(RenderGameOverlayEvent.BossInfo ev) {
 		if (!ev.isCanceled()) {
 			ITextComponent nameComponent = ev.getBossInfo().getName();
-			String name;
+			ITextComponent name;
 			String id;
+			MatrixStack matrix = ev.getMatrixStack();
 
 			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof TranslationTextComponent))
 				return;
-
-			name = nameComponent.getSiblings().get(0).getFormattedText();
 
 			id = ((TranslationTextComponent)nameComponent).getKey();
 
 			if (!id.startsWith("entity.aoa3."))
 				return;
 
+			name = nameComponent.getSiblings().get(0);
+
 			Minecraft mc = Minecraft.getInstance();
-			MainWindow mainWindow = mc.getMainWindow();
+			MainWindow mainWindow = mc.getWindow();
 			ResourceLocation texture = getTexture(id.substring(12));
 			int textureWidth = 196;
-			int xPos = mainWindow.getScaledWidth() / 2 - 100;
+			int xPos = mainWindow.getGuiScaledWidth() / 2 - 100;
 			int percentPixels = (int)Math.ceil(ev.getBossInfo().getPercent() * textureWidth);
-			int stringWidth = mc.fontRenderer.getStringWidth(name);
-			int x = mainWindow.getScaledWidth() / 2 - stringWidth / 2;
+			int stringWidth = mc.font.width(name);
+			int x = mainWindow.getGuiScaledWidth() / 2 - stringWidth / 2;
 
-			RenderSystem.pushMatrix();
+			matrix.pushPose();
 			RenderSystem.enableAlphaTest();
 			RenderSystem.disableDepthTest();
 			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-			mc.getTextureManager().bindTexture(texture);
+			mc.getTextureManager().bind(texture);
 
 			if (percentPixels < textureWidth)
-				RenderUtil.renderCustomSizedTexture(xPos, ev.getY(), 0, 12, 200, 12, 200, 36);
+				RenderUtil.renderCustomSizedTexture(matrix, xPos, ev.getY(), 0, 12, 200, 12, 200, 36);
 
 			if (percentPixels > 0)
-				RenderUtil.renderCustomSizedTexture(xPos + 2, ev.getY(), 2, 0, percentPixels, 12, 200, 36);
+				RenderUtil.renderCustomSizedTexture(matrix, xPos + 2, ev.getY(), 2, 0, percentPixels, 12, 200, 36);
 
-			RenderUtil.renderCustomSizedTexture(xPos, ev.getY(), 0, 24, 200, 12, 200, 36);
-			mc.fontRenderer.drawStringWithShadow(name, x, ev.getY() - 9, 16777215);
+			RenderUtil.renderCustomSizedTexture(matrix, xPos, ev.getY(), 0, 24, 200, 12, 200, 36);
+			mc.font.drawShadow(ev.getMatrixStack(), name, x, ev.getY() - 9, 16777215);
 			RenderSystem.enableDepthTest();
 			RenderSystem.disableAlphaTest();
-			RenderSystem.popMatrix();
+			matrix.popPose();
 
 			ev.setIncrement(ev.getIncrement() + 5);
 			ev.setCanceled(true);

@@ -29,6 +29,6 @@ public class LightSparkEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		setMotion(getMotion().mul(0.1d, 0.1d, 0.1d));
+		setDeltaMovement(getDeltaMovement().multiply(0.1d, 0.1d, 0.1d));
 	}
 }

@@ -32,8 +32,8 @@ public class PlayerHaloDataPacket implements AoAPacket {
 		buffer.writeInt(mapSize);
 
 		for (Map.Entry<UUID, AoAHalos.PlayerHaloContainer> entry : halosMap.entrySet()) {
-			buffer.writeString(entry.getKey().toString());
-			buffer.writeString(entry.getValue().getPreferredHalo().toString());
+			buffer.writeUtf(entry.getKey().toString());
+			buffer.writeUtf(entry.getValue().getPreferredHalo().toString());
 		}
 	}
 
@@ -43,7 +43,7 @@ public class PlayerHaloDataPacket implements AoAPacket {
 
 		for (int i = 0; i < mapSize; i++) {
 			try {
-				halosMap.put(UUID.fromString(buffer.readString(32767)), new AoAHalos.PlayerHaloContainer(AoAHalos.Type.valueOf(buffer.readString(32767))));
+				halosMap.put(UUID.fromString(buffer.readUtf(32767)), new AoAHalos.PlayerHaloContainer(AoAHalos.Type.valueOf(buffer.readUtf(32767))));
 			}
 			catch (Exception e) {
 				Logging.logMessage(Level.WARN, "Invalid formatting on received player halo type. This shouldn't happen.");

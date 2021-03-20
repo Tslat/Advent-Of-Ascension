@@ -30,7 +30,8 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class GreenGuardianEntity extends AoARangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+
 	private BlueGuardianEntity blueGuardian;
 	private RedGuardianEntity redGuardian;
 	private YellowGuardianEntity yellowGuardian;
@@ -56,26 +57,6 @@ public class GreenGuardianEntity extends AoARangedMob {
 		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 750;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -96,15 +77,15 @@ public class GreenGuardianEntity extends AoARangedMob {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		if (checkGuardian(blueGuardian) && checkGuardian(redGuardian) && checkGuardian(yellowGuardian))
-			return super.getLootTable();
+			return super.getDefaultLootTable();
 
 		return null;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -125,14 +106,14 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			remove();
 
 			if (checkGuardian(yellowGuardian) && checkGuardian(blueGuardian) && checkGuardian(redGuardian)) {
-				for (ServerPlayerEntity pl : world.getEntitiesWithinAABB(ServerPlayerEntity.class, getBoundingBox().grow(20))) {
+				for (ServerPlayerEntity pl : level.getEntitiesOfClass(ServerPlayerEntity.class, getBoundingBox().inflate(20))) {
 					AdvancementUtil.completeAdvancement(pl, new ResourceLocation(AdventOfAscension.MOD_ID, "haven/guard_that"), "kill_four_guardians");
 				}
 			}
@@ -141,7 +122,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
-		if (target instanceof AoARangedMob && !target.isNonBoss())
+		if (target instanceof AoARangedMob && !target.canChangeDimensions())
 			return;
 
 		super.doProjectileEntityImpact(projectile, target);
@@ -149,12 +130,12 @@ public class GreenGuardianEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
@@ -163,38 +144,38 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
 		bossInfo.removePlayer(player);

@@ -35,9 +35,9 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 
 	@Override
 	public List<Slot> getInventorySlots(FrameBenchContainer container) {
-		List<Slot> inventorySlots = new ArrayList<Slot>(container.inventorySlots.size() - 2);
+		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 2);
 
-		for (int i = 2; i < container.inventorySlots.size(); i++) {
+		for (int i = 2; i < container.slots.size(); i++) {
 			inventorySlots.add(container.getSlot(i));
 		}
 

@@ -31,14 +31,14 @@ public class BankerContainer extends Container {
 
 		inputs = new Inventory(6) {
 			@Override
-			public boolean isItemValidForSlot(int index, ItemStack stack) {
+			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == getCoinForSlot(index);
 			}
 		};
 
 		outputs = new Inventory(6) {
 			@Override
-			public boolean isItemValidForSlot(int index, ItemStack stack) {
+			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == getCoinForSlot(index + 6);
 			}
 		};
@@ -46,13 +46,13 @@ public class BankerContainer extends Container {
 		for (int i = 0; i < 6; i++) {
 			addSlot(new Slot(inputs, i, i < 3 ? 15 : 101, 28 + i % 3 * 23) {
 				@Override
-				public boolean isItemValid(ItemStack stack) {
+				public boolean mayPlace(ItemStack stack) {
 					return stack.getItem() == getCoinForSlot(getSlotIndex());
 				}
 
 				@Override
-				public void onSlotChanged() {
-					super.onSlotChanged();
+				public void setChanged() {
+					super.setChanged();
 
 					updateOutput(getSlotIndex());
 				}
@@ -62,18 +62,18 @@ public class BankerContainer extends Container {
 		for (int i = 0; i < 6; i++) {
 			addSlot(new Slot(outputs, i, i < 3 ? 58 : 144, 28 + i % 3 * 23) {
 				@Override
-				public boolean isItemValid(ItemStack stack) {
+				public boolean mayPlace(ItemStack stack) {
 					return false;
 				}
 
 				@Override
-				public boolean canTakeStack(PlayerEntity playerIn) {
-					return getHasStack();
+				public boolean mayPickup(PlayerEntity playerIn) {
+					return hasItem();
 				}
 
 				@Override
 				public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-					inputs.getStackInSlot(getSlotIndex()).shrink(getSlotIndex() < 3 ? 20 : 1);
+					inputs.getItem(getSlotIndex()).shrink(getSlotIndex() < 3 ? 20 : 1);
 					updateOutput(getSlotIndex());
 
 					return stack;
@@ -93,64 +93,64 @@ public class BankerContainer extends Container {
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player) {
-		super.onContainerClosed(player);
+	public void removed(PlayerEntity player) {
+		super.removed(player);
 
-		if (!player.world.isRemote)
-			clearContainer(player, player.world, inputs);
+		if (!player.level.isClientSide)
+			clearContainer(player, player.level, inputs);
 	}
 
 	protected void updateOutput(int index) {
-		ItemStack slotStack = inputs.getStackInSlot(index);
+		ItemStack slotStack = inputs.getItem(index);
 
 		if (!slotStack.isEmpty() && (index >= 3 || slotStack.getCount() >= 20)) {
-			outputs.setInventorySlotContents(index, new ItemStack(getCoinForSlot(index + 6), index < 3 ? 1 : 20));
+			outputs.setItem(index, new ItemStack(getCoinForSlot(index + 6), index < 3 ? 1 : 20));
 		}
 		else {
-			outputs.setInventorySlotContents(index, ItemStack.EMPTY);
+			outputs.setItem(index, ItemStack.EMPTY);
 		}
 
-		detectAndSendChanges();
+		broadcastChanges();
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index < 12) {
-				if (!mergeItemStack(slotStack, 12, 47, false))
+				if (!moveItemStackTo(slotStack, 12, 47, false))
 					return ItemStack.EMPTY;
 			}
 			else {
 				for (int i = 0; i < 6 && !slotStack.isEmpty(); i++) {
-					Slot slot2 = inventorySlots.get(i);
+					Slot slot2 = slots.get(i);
 
-					if (slot2.getHasStack() && slot2.getStack().getItem() == slotStack.getItem())
-						mergeItemStack(slotStack, i, i + 1, false);
+					if (slot2.hasItem() && slot2.getItem().getItem() == slotStack.getItem())
+						moveItemStackTo(slotStack, i, i + 1, false);
 				}
 
 				if (!slotStack.isEmpty()) {
 					if (index < 39) {
-						if (!mergeItemStack(slotStack, 39, 47, true))
+						if (!moveItemStackTo(slotStack, 39, 47, true))
 							return ItemStack.EMPTY;
 					}
 					else {
-						if (!mergeItemStack(slotStack, 12, 38, false))
+						if (!moveItemStackTo(slotStack, 12, 38, false))
 							return ItemStack.EMPTY;
 					}
 				}
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())
@@ -163,8 +163,8 @@ public class BankerContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return banker != null && banker.isAlive() && this.player.getDistanceSq(banker) <= 64;
+	public boolean stillValid(PlayerEntity player) {
+		return banker != null && banker.isAlive() && this.player.distanceToSqr(banker) <= 64;
 	}
 
 	public static Item getCoinForSlot(int index) {

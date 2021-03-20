@@ -35,14 +35,14 @@ import javax.annotation.Nullable;
 
 public class TeaSink extends Block {
 	public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-	private static final VoxelShape BOTTOM_SHAPE = makeCuboidShape(0, 0, 0, 16, 7, 16);
-	private static final VoxelShape TOP_SHAPE = makeCuboidShape(6, 7, 0, 10, 16, 10);
+	private static final VoxelShape BOTTOM_SHAPE = box(0, 0, 0, 16, 7, 16);
+	private static final VoxelShape TOP_SHAPE = box(6, 7, 0, 10, 16, 10);
 	private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, TOP_SHAPE);
 
 	public TeaSink() {
-		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.LIGHT_GRAY, 5, 3, SoundType.WOOD));
+		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.COLOR_LIGHT_GRAY, 5, 3, SoundType.WOOD));
 
-		setDefaultState(getDefaultState().with(FILLED, false).with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH));
+		registerDefaultState(defaultBlockState().setValue(FILLED, false).setValue(HorizontalBlock.FACING, Direction.NORTH));
 	}
 
 	@Override
@@ -51,10 +51,10 @@ public class TeaSink extends Block {
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (state.get(FILLED)) {
-			if (player.getHeldItem(hand).getItem() == AoAItems.CUP.get() && player.inventory.hasItemStack(new ItemStack(AoAItems.TEA_SHREDDINGS.get()))) {
-				if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (state.getValue(FILLED)) {
+			if (player.getItemInHand(hand).getItem() == AoAItems.CUP.get() && player.inventory.contains(new ItemStack(AoAItems.TEA_SHREDDINGS.get()))) {
+				if (!world.isClientSide()) {
 					boolean success = false;
 
 					if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.MYSTIC_SHROOMS.get()), true, 1)) {
@@ -77,12 +77,12 @@ public class TeaSink extends Block {
 
 					if (success) {
 						if (!player.isCreative())
-							player.getHeldItem(hand).shrink(1);
+							player.getItemInHand(hand).shrink(1);
 
 						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 
 						if (RandomUtil.oneInNChance(7))
-							world.setBlockState(pos, AoABlocks.TEA_SINK.get().getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)));
+							world.setBlockAndUpdate(pos, AoABlocks.TEA_SINK.get().defaultBlockState().setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)));
 					}
 				}
 			}
@@ -90,14 +90,14 @@ public class TeaSink extends Block {
 			return ActionResultType.SUCCESS;
 		}
 		else {
-			if (player.getHeldItem(hand).getItem() == Items.WATER_BUCKET) {
-				if (!world.isRemote()) {
+			if (player.getItemInHand(hand).getItem() == Items.WATER_BUCKET) {
+				if (!world.isClientSide()) {
 					if (!player.isCreative()) {
-						player.getHeldItem(hand).shrink(1);
+						player.getItemInHand(hand).shrink(1);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(Items.BUCKET));
 					}
 
-					world.setBlockState(pos, getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, state.get(HorizontalBlock.HORIZONTAL_FACING)).with(FILLED, true));
+					world.setBlockAndUpdate(pos, defaultBlockState().setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(FILLED, true));
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_FILL.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 				}
 
@@ -111,16 +111,11 @@ public class TeaSink extends Block {
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(FILLED, false).with(HorizontalBlock.HORIZONTAL_FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true));
+		return defaultBlockState().setValue(FILLED, false).setValue(HorizontalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true));
 	}
 
 	@Override
-	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return false;
-	}
-
-	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FILLED, HorizontalBlock.HORIZONTAL_FACING);
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(FILLED, HorizontalBlock.FACING);
 	}
 }

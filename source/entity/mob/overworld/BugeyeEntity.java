@@ -23,26 +23,6 @@ public class BugeyeEntity extends AoAMeleeMob {
 		return 0.65f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 3;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.29d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -66,12 +46,7 @@ public class BugeyeEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 }

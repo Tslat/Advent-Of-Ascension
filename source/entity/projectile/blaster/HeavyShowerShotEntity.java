@@ -26,7 +26,7 @@ public class HeavyShowerShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.2f;
 	}
 }

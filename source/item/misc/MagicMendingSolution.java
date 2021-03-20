@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MagicMendingSolution extends Item {
 	public MagicMendingSolution() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1).containerItem(AoAItems.METAL_TUB.get()));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).craftRemainder(AoAItems.METAL_TUB.get()));
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class MagicMendingSolution extends Item {
 		int coolingTime = tag.getInt("coolingTime");
 
 		if (coolingTime <= 0) {
-			if (!world.isRemote) {
+			if (!world.isClientSide) {
 				stack.shrink(1);
 
 				if (entity instanceof PlayerEntity)
@@ -48,7 +48,7 @@ public class MagicMendingSolution extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

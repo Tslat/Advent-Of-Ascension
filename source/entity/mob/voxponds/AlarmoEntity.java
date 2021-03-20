@@ -37,26 +37,6 @@ public class AlarmoEntity extends AoAMeleeMob {
         return 1f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 74;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875f;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -76,21 +56,21 @@ public class AlarmoEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        if (world.isRemote || isAIDisabled())
+        if (level.isClientSide || isNoAi())
             return;
 
-        List<PlayerEntity> playerList = world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canEntityBeSeen(pl));
+        List<PlayerEntity> playerList = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canSee(pl));
 
         if (!playerList.isEmpty()) {
-            List<LivingEntity> mobList = world.getEntitiesWithinAABB(LivingEntity.class, getBoundingBox().grow(30), EntityUtil.Predicates.HOSTILE_MOB);
+            List<LivingEntity> mobList = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
 
-            EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.SLOWNESS).level(20));
+            EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN).level(20));
 
             for (LivingEntity mob : mobList) {
-                mob.setRevengeTarget(playerList.get(rand.nextInt(playerList.size())));
+                mob.setLastHurtByMob(playerList.get(random.nextInt(playerList.size())));
             }
         }
     }

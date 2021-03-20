@@ -24,34 +24,14 @@ public class FakeZorpEntity extends AoAMeleeMob {
 	}
 
 	public FakeZorpEntity(Entity target) {
-		this(AoAEntities.Mobs.FAKE_ZORP.get(), target.world);
+		this(AoAEntities.Mobs.FAKE_ZORP.get(), target.level);
 
-		this.setLocationAndAngles(target.getPosX(), target.getPosY(), target.getPosZ(), target.rotationYaw, target.rotationPitch);
+		this.moveTo(target.getX(), target.getY(), target.getZ(), target.yRot, target.xRot);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.6875f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 114;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -73,10 +53,10 @@ public class FakeZorpEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (ticksExisted >= 200)
+		if (tickCount >= 200)
 			remove();
 	}
 }

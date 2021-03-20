@@ -41,27 +41,27 @@ public class WhitewashingRecipe implements IRecipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AoABlocks.WHITEWASHING_TABLE.get());
 	}
 
 	@Override
 	public boolean matches(Inventory inv, World world) {
-		return inv.getStackInSlot(0).getItem() == input.getItem() && inv.getStackInSlot(1).getItem() == powderIngredient.getItem();
+		return inv.getItem(0).getItem() == input.getItem() && inv.getItem(1).getItem() == powderIngredient.getItem();
 	}
 
 	@Override
-	public ItemStack getCraftingResult(Inventory inv) {
+	public ItemStack assemble(Inventory inv) {
 		return output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width == 2 && height == 1;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return output.copy();
 	}
 
@@ -89,8 +89,8 @@ public class WhitewashingRecipe implements IRecipe<Inventory> {
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> ingredients = NonNullList.<Ingredient>create();
 
-		ingredients.add(Ingredient.fromStacks(input));
-		ingredients.add(Ingredient.fromStacks(powderIngredient));
+		ingredients.add(Ingredient.of(input));
+		ingredients.add(Ingredient.of(powderIngredient));
 
 		return ingredients;
 	}

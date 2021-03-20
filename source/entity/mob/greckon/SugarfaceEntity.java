@@ -22,26 +22,6 @@ public class SugarfaceEntity extends AoAMeleeMob {
         return 1.875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.2;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 124;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

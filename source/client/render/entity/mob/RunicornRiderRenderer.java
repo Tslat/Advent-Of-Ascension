@@ -9,7 +9,7 @@ import net.tslat.aoa3.client.model.entity.mob.runandor.RunicornRiderModel;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.util.NumberUtil;
 
 public class RunicornRiderRenderer extends AoAMobRenderer {
@@ -22,14 +22,14 @@ public class RunicornRiderRenderer extends AoAMobRenderer {
 	public void render(MobEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
-		if (entity.getHealth() > 0 && entity.isAlive() && (entity.getMotion().getX() > 0 || entity.getMotion().getZ() > 0 || entity.getMotion().getY() > 0)) {
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 255, 255)), entity.getPosX(), entity.getPosY() + 1.5, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getPosX(), entity.getPosY() + 1.25, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 0, 255)), entity.getPosX(), entity.getPosY() + 1.05, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getPosX(), entity.getPosY(), entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 0, 255)), entity.getPosX(), entity.getPosY() + 0.95, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getPosX(), entity.getPosY() + 0.75, entity.getPosZ(), 0, 0, 0);
-			entity.world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 255, 255)), entity.getPosX(), entity.getPosY() + 0.5, entity.getPosZ(), 0, 0, 0);
+		if (entity.getHealth() > 0 && entity.isAlive() && (entity.getDeltaMovement().x() > 0 || entity.getDeltaMovement().z() > 0 || entity.getDeltaMovement().y() > 0)) {
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 255, 255)), entity.getX(), entity.getY() + 1.5, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY() + 1.25, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 0, 255)), entity.getX(), entity.getY() + 1.05, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 0, 255)), entity.getX(), entity.getY() + 0.95, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY() + 0.75, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, NumberUtil.RGB(0, 255, 255)), entity.getX(), entity.getY() + 0.5, entity.getZ(), 0, 0, 0);
 		}
 	}
 }

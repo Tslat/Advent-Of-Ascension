@@ -9,10 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.util.DamageUtil;
-
-import javax.annotation.Nonnull;
 
 public class SandGiantEntity extends AoAMeleeMob {
 	public SandGiantEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -22,26 +19,6 @@ public class SandGiantEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 5.7f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Override
@@ -60,24 +37,8 @@ public class SandGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Nonnull
-	@Override
-	protected OverworldEvents.Event getEventRequirement() {
-		return OverworldEvents.Event.BIG_DAY;
 	}
 
 	@Override

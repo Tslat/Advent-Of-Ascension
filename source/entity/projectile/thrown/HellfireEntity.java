@@ -58,7 +58,7 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, IRende
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.075f;
 	}
 
@@ -67,25 +67,25 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, IRende
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && ticksExisted <= 1 && getThrower() == null)
+	protected void onHit(RayTraceResult result) {
+		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
 			return;
 
-		super.onImpact(result);
+		super.onHit(result);
 	}
 
 	@Override
 	public void doImpactEffect() {
 		int count = 0;
 
-		for (LivingEntity e : world.getEntitiesWithinAABB(LivingEntity.class, getBoundingBox().grow(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
-			world.addEntity(new HellfireProjectileEntity(this, e.getPosX(), e.getPosY(), e.getPosZ()));
-			e.setFire(10);
+		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
+			level.addFreshEntity(new HellfireProjectileEntity(this, e.getX(), e.getY(), e.getZ()));
+			e.setSecondsOnFire(10);
 			count++;
 		}
 
 		if (shooter instanceof PlayerEntity) {
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 			if (count >= 20 && shooter instanceof ServerPlayerEntity)
 				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/heckfire"), "20_target_hellfire");

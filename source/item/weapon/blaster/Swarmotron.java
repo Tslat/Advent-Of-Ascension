@@ -26,16 +26,16 @@ public class Swarmotron extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0, 0, 0));
-		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0f, -0.125f));
-		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0, 0));
-		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, -0.125f, 0.125f));
-		shooter.world.addEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, 0.125f, 0.125f));
+		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0, 0, 0));
+		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0f, -0.125f));
+		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0, 0));
+		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, -0.125f, 0.125f));
+		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, 0.125f, 0.125f));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

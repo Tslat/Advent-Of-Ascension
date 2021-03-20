@@ -31,7 +31,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public VoxxulonEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -40,26 +40,6 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.8125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 2000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
 	}
 
 	@Nullable
@@ -87,7 +67,7 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -95,29 +75,29 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && getAttackTarget() != null && rand.nextInt(200) == 0 && getAttackTarget().getDistance(this) < 60)
-			setPositionAndUpdate(getAttackTarget().getPosX(), getAttackTarget().getPosY(), getAttackTarget().getPosZ());
+		if (!level.isClientSide && getTarget() != null && random.nextInt(200) == 0 && getTarget().distanceTo(this) < 60)
+			teleportTo(getTarget().getX(), getTarget().getY(), getTarget().getZ());
 
-		if (rand.nextInt(200) == 0)
-			EntityUtil.applyPotions(world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(40), PlayerUtil::shouldPlayerBeAffected), new PotionUtil.EffectBuilder(Effects.POISON, 100).level(5));
+		if (random.nextInt(200) == 0)
+			EntityUtil.applyPotions(level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected), new PotionUtil.EffectBuilder(Effects.POISON, 100).level(5));
 
-		if (rand.nextInt(10) == 0) {
-			PlayerEntity pl = world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 30, false);
+		if (random.nextInt(10) == 0) {
+			PlayerEntity pl = level.getNearestPlayer(getX(), getY(), getZ(), 30, false);
 
 			if (pl != null && !pl.isCreative())
-				world.addEntity(new VoxxulonMeteorEntity(this, pl, BaseMobProjectile.Type.MAGIC));
+				level.addFreshEntity(new VoxxulonMeteorEntity(this, pl, BaseMobProjectile.Type.MAGIC));
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.voxxulon.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.voxxulon.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -133,47 +113,47 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 1f);
+		WorldUtil.createExplosion(this, level, projectile, 1f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 1f);
+		WorldUtil.createExplosion(this, level, projectile, 1f);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.VOXXULON_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.VOXXULON_MUSIC.getId()));
 		bossInfo.removePlayer(player);

@@ -90,7 +90,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private Collection<IRecipe<DivineStationContainer.DivineStationInventory>> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return recipeManager.getRecipes(AoARecipes.UPGRADE_KIT.getA()).values();
+		return recipeManager.byType(AoARecipes.UPGRADE_KIT.getA()).values();
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
@@ -122,7 +122,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.getRecipes(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (((InfusionRecipe)recipe).isEnchanting())
 					imbuingRecipes.add((InfusionRecipe)recipe);
@@ -135,7 +135,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.getRecipes(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (!((InfusionRecipe)recipe).isEnchanting())
 					infusionRecipes.add((InfusionRecipe)recipe);

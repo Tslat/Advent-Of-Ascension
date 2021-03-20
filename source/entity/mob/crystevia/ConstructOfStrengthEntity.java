@@ -30,31 +30,6 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
         return 2.125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.5;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 69;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 3;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -82,16 +57,16 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
     }
 
     @Override
-    public boolean addPotionEffect(EffectInstance effect) {
-        if (effect.getPotion() == Effects.STRENGTH)
+    public boolean addEffect(EffectInstance effect) {
+        if (effect.getEffect() == Effects.DAMAGE_BOOST)
             PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 4 - effect.getAmplifier());
 
-        return super.addPotionEffect(effect);
+        return super.addEffect(effect);
     }
 
     @Override
     protected void onAttack(Entity target) {
-        if (!world.isRemote && target instanceof PlayerEntity && ((PlayerEntity)target).getHealth() > 0 && isPotionActive(Effects.STRENGTH) && ItemUtil.findInventoryItem((PlayerEntity)target, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+        if (!level.isClientSide && target instanceof PlayerEntity && ((PlayerEntity)target).getHealth() > 0 && hasEffect(Effects.DAMAGE_BOOST) && ItemUtil.findInventoryItem((PlayerEntity)target, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
             ItemUtil.givePlayerItemOrDrop((PlayerEntity)target, new ItemStack(AoAItems.IMMORTALLIS_REALMSTONE.get()));
     }
 }

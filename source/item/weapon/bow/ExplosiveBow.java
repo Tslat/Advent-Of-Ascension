@@ -20,19 +20,19 @@ public class ExplosiveBow extends BaseBow {
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		if (arrow.getIsCritical())
-			WorldUtil.createExplosion(shooter, arrow.world, arrow, 2.0f);
+		if (arrow.isCritArrow())
+			WorldUtil.createExplosion(shooter, arrow.level, arrow, 2.0f);
 	}
 
 	@Override
 	public void onBlockHit(CustomArrowEntity arrow, BlockRayTraceResult rayTrace, Entity shooter) {
-		if (arrow.getIsCritical())
-			WorldUtil.createExplosion(shooter, arrow.world, arrow, 2.5f);
+		if (arrow.isCritArrow())
+			WorldUtil.createExplosion(shooter, arrow.level, arrow, 2.5f);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

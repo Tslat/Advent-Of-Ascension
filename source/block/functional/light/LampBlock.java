@@ -33,22 +33,22 @@ public class LampBlock extends RedstoneLampBlock {
 	}
 
 	public LampBlock(MaterialColor mapColour, Material material, float hardness, float resistance, int lightLevel, @Nullable ToolType harvestTool, int harvestLevel, @Nullable SoundType soundType) {
-		super(BlockUtil.generateBlockProperties(material, mapColour, hardness, resistance, harvestTool, soundType, lightLevel, harvestLevel));
+		super(BlockUtil.generateBlockProperties(material, mapColour, hardness, resistance, harvestTool, soundType, lightLevel, harvestLevel).lightLevel(state -> state.getValue(LIT) ? 14 : 0));
 
-		setDefaultState(getDefaultState().with(TOGGLEABLE, true));
+		registerDefaultState(defaultBlockState().setValue(TOGGLEABLE, true));
 	}
 
 	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!world.isRemote() && state.get(TOGGLEABLE)) {
-			boolean lit = state.get(LIT);
+		if (!world.isClientSide() && state.getValue(TOGGLEABLE)) {
+			boolean lit = state.getValue(LIT);
 
-			if (lit != world.isBlockPowered(pos)) {
+			if (lit != world.hasNeighborSignal(pos)) {
 				if (lit) {
-					world.getPendingBlockTicks().scheduleTick(pos, this, 4);
+					world.getBlockTicks().scheduleTick(pos, this, 4);
 				}
 				else {
-					world.setBlockState(pos, state.cycle(LIT), 2);
+					world.setBlock(pos, state.cycle(LIT), 2);
 				}
 			}
 		}
@@ -56,12 +56,12 @@ public class LampBlock extends RedstoneLampBlock {
 
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		if (state.get(TOGGLEABLE) && state.get(LIT) && !world.isBlockPowered(pos))
-			world.setBlockState(pos, state.cycle(LIT), 2);
+		if (state.getValue(TOGGLEABLE) && state.getValue(LIT) && !world.hasNeighborSignal(pos))
+			world.setBlock(pos, state.cycle(LIT), 2);
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(LIT).add(TOGGLEABLE);
 	}
 }

@@ -30,35 +30,35 @@ public class ShadowlordSpawnTask implements Runnable {
         if (spawned) {
             for (int x = -2; x <= 2; x += 4) {
                 for (int z = -2; z <= 2; z += 4) {
-                    BlockPos pos = altarPosition.add(x, 1, z);
-                    Block block = player.world.getBlockState(pos).getBlock();
+                    BlockPos pos = altarPosition.offset(x, 1, z);
+                    Block block = player.level.getBlockState(pos).getBlock();
 
                     if (block instanceof LampBlock)
-                        player.world.setBlockState(pos, block.getDefaultState().with(LampBlock.LIT, true).with(LampBlock.TOGGLEABLE, false));
+                        player.level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(LampBlock.LIT, true).setValue(LampBlock.TOGGLEABLE, false));
                 }
             }
         }
         else if (spawning) {
             spawned = true;
-            ShadowlordEntity shadowlord = new ShadowlordEntity(AoAEntities.Mobs.SHADOWLORD.get(), player.world);
+            ShadowlordEntity shadowlord = new ShadowlordEntity(AoAEntities.Mobs.SHADOWLORD.get(), player.level);
 
-            shadowlord.setLocationAndAngles(altarPosition.getX(), altarPosition.getY() + 3, altarPosition.getZ(), 0, 0);
-            player.world.addEntity(shadowlord);
-            PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.shadowlord.spawn", player.getDisplayName().getFormattedText()), player.world, player.getPosition(), 50);
+            shadowlord.moveTo(altarPosition.getX(), altarPosition.getY() + 3, altarPosition.getZ(), 0, 0);
+            player.level.addFreshEntity(shadowlord);
+            PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.shadowlord.spawn", player.getDisplayName()), player.level, player.blockPosition(), 50);
             schedule(5, TimeUnit.SECONDS);
         }
         else {
             for (int x = -2; x <= 2; x++) {
                 for (int y = 0; y <= 1; y++) {
                     for (int z = -2; z <= 2; z++) {
-                        BlockPos pos = altarPosition.add(x, y, z);
-                        BlockState state = player.world.getBlockState(pos);
+                        BlockPos pos = altarPosition.offset(x, y, z);
+                        BlockState state = player.level.getBlockState(pos);
                         Block block = state.getBlock();
 
-                        if (block instanceof LampBlock && state.get(LampBlock.LIT)) {
-                            player.world.setBlockState(pos, state.with(LampBlock.LIT, false), 2);
+                        if (block instanceof LampBlock && state.getValue(LampBlock.LIT)) {
+                            player.level.setBlock(pos, state.setValue(LampBlock.LIT, false), 2);
                             schedule(2, TimeUnit.SECONDS);
-                            player.world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+                            player.level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
 
                             return;
                         }

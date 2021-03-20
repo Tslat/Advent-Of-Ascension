@@ -13,11 +13,11 @@ public class PlateosaurSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		PlateosaurEntity plateosaur = new PlateosaurEntity(AoAEntities.Minions.PLATEOSAUR.get(), pl.world);
+		PlateosaurEntity plateosaur = new PlateosaurEntity(AoAEntities.Minions.PLATEOSAUR.get(), pl.level);
 
-		plateosaur.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		plateosaur.setTamedBy(pl);
-		pl.world.addEntity(plateosaur);
+		plateosaur.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		plateosaur.tame(pl);
+		pl.level.addFreshEntity(plateosaur);
 
 		return plateosaur;
 	}

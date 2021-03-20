@@ -27,26 +27,6 @@ public class ShifterEntity extends AoAMeleeMob {
         return 1.46875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 130;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -66,13 +46,13 @@ public class ShifterEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (cloakCooldown > 0)
             cloakCooldown--;
 
-        if (cloakCooldown == 0 && getAttackTarget() != null) {
+        if (cloakCooldown == 0 && getTarget() != null) {
             cloakCooldown = 160;
 
             EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 40));

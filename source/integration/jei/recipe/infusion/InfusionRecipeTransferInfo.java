@@ -37,9 +37,9 @@ public class InfusionRecipeTransferInfo implements IRecipeTransferInfo<InfusionT
 
 	@Override
 	public List<Slot> getInventorySlots(InfusionTableContainer container) {
-		List<Slot> inventorySlots = new ArrayList<Slot>(container.inventorySlots.size() - 11);
+		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 11);
 
-		for (int i = 12; i < container.inventorySlots.size(); i++) {
+		for (int i = 12; i < container.slots.size(); i++) {
 			inventorySlots.add(container.getSlot(i));
 		}
 

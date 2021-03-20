@@ -15,7 +15,7 @@ public class Stranglewood extends LogBlock {
 	public static final VoxelShape BARK_AABB = VoxelShapes.create(new AxisAlignedBB(0.001D, 0.001D, 0.001D, 0.999D, 0.999D, 0.999D));
 
 	public Stranglewood() {
-		super(MaterialColor.BROWN, MaterialColor.BROWN_TERRACOTTA);
+		super(MaterialColor.COLOR_BROWN, MaterialColor.TERRACOTTA_BROWN);
 	}
 
 	@Override

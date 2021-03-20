@@ -4,21 +4,18 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootTable;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.ItemUtil;
@@ -28,14 +25,16 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public abstract class RuneTemplarEntity extends CreatureEntity {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Boolean> DISABLED = EntityDataManager.<Boolean>createKey(RuneTemplarEntity.class, DataSerializers.BOOLEAN);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Boolean> DISABLED = EntityDataManager.<Boolean>defineId(RuneTemplarEntity.class, DataSerializers.BOOLEAN);
 	private final HashSet<RunicLifeformEntity> lifeforms = new HashSet<RunicLifeformEntity>();
 	public static final float entityWidth = 1.125f;
 	public static final float entityHeight = 2f;
 
 	public RuneTemplarEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
+
+		bossInfo.setVisible(false);
 	}
 
 	@Override
@@ -44,39 +43,31 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(DISABLED, true);
-	}
-
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(400);
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
-		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
+		this.entityData.define(DISABLED, true);
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	private void changeState(boolean disabled) {
-		this.dataManager.set(DISABLED, disabled);
+		this.entityData.set(DISABLED, disabled);
+		this.bossInfo.setVisible(!disabled);
 	}
 
 	public boolean isDisabled() {
-		return this.dataManager.get(DISABLED);
+		return this.entityData.get(DISABLED);
 	}
 
 	@Override
@@ -90,80 +81,83 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	protected boolean canBeRidden(Entity entityIn) {
+	protected boolean canRide(Entity entityIn) {
 		return false;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	public void addVelocity(double x, double y, double z) {}
+	public void push(double x, double y, double z) {}
 
 	protected abstract RunicLifeformEntity getLifeForm();
 
 	protected abstract RuneItem getActivationRune();
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (isDisabled() && heldStack.getItem() == getActivationRune()) {
-			if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.RUNIC_ENERGY.get()), true, 1))
+			if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.RUNIC_ENERGY.get()), true, 1)) {
 				changeState(false);
 
-			return true;
+				return ActionResultType.CONSUME;
+			}
+
+			return ActionResultType.SUCCESS;
 		}
 		else {
-			return super.processInteract(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
@@ -171,7 +165,7 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && !isDisabled()) {
+		if (!level.isClientSide && !isDisabled()) {
 			setHealth(getHealth() - 0.25f);
 
 			if (getHealth() < 1) {
@@ -183,15 +177,15 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 					lifeforms.remove();
 				}
 			}
-			else if (rand.nextInt(125) == 0) {
-				if (world.getEntitiesWithinAABB(RunicLifeformEntity.class, getBoundingBox().grow(6, 3, 6)).size() <= 4) {
+			else if (random.nextInt(125) == 0) {
+				if (level.getEntitiesOfClass(RunicLifeformEntity.class, getBoundingBox().inflate(6, 3, 6)).size() <= 4) {
 					RunicLifeformEntity lifeform = getLifeForm();
 
-					int coordX = (int)getPosX() - 3 + rand.nextInt(6);
-					int coordZ = (int)getPosZ() - 3 + rand.nextInt(6);
+					int coordX = (int)getX() - 3 + random.nextInt(6);
+					int coordZ = (int)getZ() - 3 + random.nextInt(6);
 
-					lifeform.setLocationAndAngles(coordX, getPosY(), coordZ, rand.nextFloat() * 360, 0);
-					world.addEntity(lifeform);
+					lifeform.moveTo(coordX, getY(), coordZ, random.nextFloat() * 360, 0);
+					level.addFreshEntity(lifeform);
 					lifeforms.add(lifeform);
 				}
 			}
@@ -199,28 +193,28 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {}
+	public void die(DamageSource cause) {}
 
 	@Override
-	protected void dropLoot(DamageSource damageSourceIn, boolean p_213354_2_) {
-		super.dropLoot(damageSourceIn, p_213354_2_);
+	protected void dropFromLootTable(DamageSource damageSourceIn, boolean p_213354_2_) {
+		super.dropFromLootTable(damageSourceIn, p_213354_2_);
 	}
 
 	private void doDrops() {
 		float luck = 0;
 
-		for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(8))) {
+		for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(8))) {
 			float plLuck = pl.getLuck();
 
 			if (plLuck > luck)
 				luck = plLuck;
 		}
 
-		if (!world.isRemote()) {
-			LootTable table = LootUtil.getTable((ServerWorld)world, getLootTable());
+		if (!level.isClientSide()) {
+			LootTable table = LootUtil.getTable((ServerWorld)level, getDefaultLootTable());
 
-			for (ItemStack stack : table.generate(getLootContextBuilder(false, DamageSource.GENERIC).build(LootParameterSets.ENTITY))) {
-				entityDropItem(stack, 0);
+			for (ItemStack stack : table.getRandomItems(createLootContext(false, DamageSource.GENERIC).create(LootParameterSets.ENTITY))) {
+				spawnAtLocation(stack, 0);
 			}
 		}
 	}

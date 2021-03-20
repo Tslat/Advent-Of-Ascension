@@ -27,26 +27,6 @@ public class GiantSnailEntity extends AoAMeleeMob {
 		return 1.125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.7d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 7.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -72,27 +52,27 @@ public class GiantSnailEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
+	public boolean addEffect(EffectInstance effect) {
 		return false;
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source.getDamageType().equals("acid") || super.isInvulnerableTo(source);
+		return source.getMsgId().equals("acid") || super.isInvulnerableTo(source);
 	}
 
 	@Override
-	public boolean canBeHitWithPotion() {
+	public boolean isAffectedByPotions() {
 		return false;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote && world.getGameRules().getBoolean(GameRules.MOB_GRIEFING)) {
-			if (world.getBlockState(getPosition().down()).isOpaqueCube(world, getPosition().down()) && world.getBlockState(getPosition()).getMaterial().isReplaceable())
-				world.setBlockState(getPosition(), AoABlocks.GIANT_SNAIL_ACID.get().getDefaultState());
+		if (!level.isClientSide && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+			if (level.getBlockState(blockPosition().below()).isSolidRender(level, blockPosition().below()) && level.getBlockState(blockPosition()).getMaterial().isReplaceable())
+				level.setBlockAndUpdate(blockPosition(), AoABlocks.GIANT_SNAIL_ACID.get().defaultBlockState());
 		}
 	}
 }

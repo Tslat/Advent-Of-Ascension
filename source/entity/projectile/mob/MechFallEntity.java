@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.MechbotEntity;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class MechFallEntity extends BaseMobProjectile {
 	public MechFallEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -16,11 +18,11 @@ public class MechFallEntity extends BaseMobProjectile {
 	}
 
 	public MechFallEntity(MechbotEntity shooter, double posX, double posY, double posZ, Type projectileType) {
-		super(AoAEntities.Projectiles.MECH_FALL.get(), shooter.world, shooter, posX, posY, posZ, projectileType);
+		super(AoAEntities.Projectiles.MECH_FALL.get(), shooter.level, shooter, posX, posY, posZ, projectileType);
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0;
 	}
 }

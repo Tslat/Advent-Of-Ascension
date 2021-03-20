@@ -23,7 +23,7 @@ public class KaiyuTempleTrapWither extends Block {
 	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public KaiyuTempleTrapWither() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.ORANGE_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_ORANGE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class KaiyuTempleTrapWither extends Block {
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative())
-			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.WITHER, 40).level(4).isAmbient(), new PotionUtil.EffectBuilder(Effects.SLOWNESS, 40).level(4).isAmbient());
+			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.WITHER, 40).level(4).isAmbient(), new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 40).level(4).isAmbient());
 	}
 }

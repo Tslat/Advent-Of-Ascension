@@ -4,9 +4,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.IMob;
@@ -16,7 +16,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.FakePlayer;
 import net.tslat.aoa3.util.player.PlayerUtil;
 import net.tslat.aoa3.util.skill.HunterUtil;
@@ -30,8 +30,8 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public abstract class EntityUtil {
-	public static final AttributeModifier SPRINTING_SPEED_BOOST = (new AttributeModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"), "Sprinting speed boost", 0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL)).setSaved(false);
-	public static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION).setSaved(false);
+	public static final AttributeModifier SPRINTING_SPEED_BOOST = new AttributeModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"), "Sprinting speed boost", 0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL);
+	public static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 
 	public static boolean isVulnerableEntity(Entity entity, @Nullable DamageSource source) {
 		if (!(entity instanceof LivingEntity) || !entity.isAlive())
@@ -83,12 +83,12 @@ public abstract class EntityUtil {
 		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, false))
 			return true;
 
-		return target instanceof PlayerEntity || target instanceof WitherEntity || target instanceof EnderDragonEntity || !target.isNonBoss() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
+		return target instanceof PlayerEntity || target instanceof WitherEntity || target instanceof EnderDragonEntity || !target.canChangeDimensions() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
 	}
 
 	public static float getAttackCooldown(LivingEntity entity) {
 		if (entity instanceof PlayerEntity)
-			return ((PlayerEntity)entity).getCooledAttackStrength(0);
+			return ((PlayerEntity)entity).getAttackStrengthScale(0);
 
 		return 1f;
 	}
@@ -97,33 +97,33 @@ public abstract class EntityUtil {
 		return entity instanceof LivingEntity && (entity instanceof FlyingEntity || entity instanceof IFlyingAnimal);
 	}
 
-	public static void reapplyAttributeModifier(LivingEntity entity, IAttribute attribute, AttributeModifier modifier) {
-		IAttributeInstance instance = entity.getAttribute(attribute);
+	public static void reapplyAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null) {
-			if (instance.getModifier(modifier.getID()) != null)
-				instance.removeModifier(modifier.getID());
+			if (instance.getModifier(modifier.getId()) != null)
+				instance.removeModifier(modifier.getId());
 
-			instance.applyModifier(modifier);
+			instance.addTransientModifier(modifier);
 		}
 	}
 
-	public static void applyAttributeModifierSafely(LivingEntity entity, IAttribute attribute, AttributeModifier modifier) {
-		IAttributeInstance instance = entity.getAttribute(attribute);
+	public static void applyAttributeModifierSafely(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null && !instance.hasModifier(modifier))
-			instance.applyModifier(modifier);
+			instance.addTransientModifier(modifier);
 	}
 
-	public static void removeAttributeModifier(LivingEntity entity, IAttribute attribute, AttributeModifier modifier) {
-		IAttributeInstance instance = entity.getAttribute(attribute);
+	public static void removeAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null && instance.hasModifier(modifier))
 			instance.removeModifier(modifier);
 	}
 
-	public static void removeAttributeModifier(LivingEntity entity, IAttribute attribute, UUID modifierId) {
-		IAttributeInstance instance = entity.getAttribute(attribute);
+	public static void removeAttributeModifier(LivingEntity entity, Attribute attribute, UUID modifierId) {
+		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null) {
 			AttributeModifier modifier = instance.getModifier(modifierId);
@@ -134,22 +134,22 @@ public abstract class EntityUtil {
 	}
 
 	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
-		Vec3d targetMotion = targetEntity.getMotion();
+		Vector3d targetMotion = targetEntity.getDeltaMovement();
 
-		targetEntity.setMotion((targetEntity.getPosX() - centralEntity.getPosX()) * strength + targetMotion.getX(),
-				(targetEntity.getPosY() - centralEntity.getPosY()) * strength + targetMotion.getY(),
-				(targetEntity.getPosZ() - centralEntity.getPosZ()) * strength + targetMotion.getZ());
-		targetEntity.velocityChanged = true;
+		targetEntity.setDeltaMovement((targetEntity.getX() - centralEntity.getX()) * strength + targetMotion.x(),
+				(targetEntity.getY() - centralEntity.getY()) * strength + targetMotion.y(),
+				(targetEntity.getZ() - centralEntity.getZ()) * strength + targetMotion.z());
+		targetEntity.hurtMarked = true;
 	}
 
 	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
-		Vec3d targetMotion = targetEntity.getMotion();
+		Vector3d targetMotion = targetEntity.getDeltaMovement();
 
-		targetEntity.setMotion((centralEntity.getPosX() - targetEntity.getPosX()) * strength + targetMotion.getX(),
-				(centralEntity.getPosY() - targetEntity.getPosY()) * strength + targetMotion.getY(),
-				(centralEntity.getPosZ() - targetEntity.getPosZ()) * strength + targetMotion.getZ());
+		targetEntity.setDeltaMovement((centralEntity.getX() - targetEntity.getX()) * strength + targetMotion.x(),
+				(centralEntity.getY() - targetEntity.getY()) * strength + targetMotion.y(),
+				(centralEntity.getZ() - targetEntity.getZ()) * strength + targetMotion.z());
 
-		targetEntity.velocityChanged = true;
+		targetEntity.hurtMarked = true;
 	}
 
 	public static void applyPotions(Collection<? extends Entity> entities, PotionUtil.EffectBuilder... effects) {
@@ -166,27 +166,27 @@ public abstract class EntityUtil {
 
 		for (PotionUtil.EffectBuilder builder : effects) {
 			if (!onlyBeneficial || builder.getEffect().isBeneficial())
-				((LivingEntity)entity).addPotionEffect(builder.build());
+				((LivingEntity)entity).addEffect(builder.build());
 		}
 	}
 
 	public static void removePotions(LivingEntity entity, Effect... effects) {
 		for (Effect effect : effects) {
-			if (entity.isPotionActive(effect))
-				entity.removePotionEffect(effect);
+			if (entity.hasEffect(effect))
+				entity.removeEffect(effect);
 		}
 	}
 
 	public static boolean isPlayerLookingAtEntity(PlayerEntity pl, Entity target) {
-		return isPlayerLookingAt(pl, target.getPosX(), target.getBoundingBox().minY + target.getHeight() / 2D, target.getPosZ()) && pl.canEntityBeSeen(target);
+		return isPlayerLookingAt(pl, target.getX(), target.getBoundingBox().minY + target.getBbHeight() / 2D, target.getZ()) && pl.canSee(target);
 	}
 
 	public static boolean isPlayerLookingAt(PlayerEntity pl, double posX, double posY, double posZ) {
-		Vec3d playerLookVec = pl.getLookVec().normalize();
-		Vec3d requiredLookVec = new Vec3d(posX - pl.getPosX(), posY - (pl.getPosY() + pl.getEyeHeight()),posZ - pl.getPosZ());
+		Vector3d playerLookVec = pl.getLookAngle().normalize();
+		Vector3d requiredLookVec = new Vector3d(posX - pl.getX(), posY - (pl.getY() + pl.getEyeHeight()),posZ - pl.getZ());
 		double requiredLookVecLength = requiredLookVec.length();
 		requiredLookVec = requiredLookVec.normalize();
-		double vecDotProduct = playerLookVec.dotProduct(requiredLookVec);
+		double vecDotProduct = playerLookVec.dot(requiredLookVec);
 
 		return vecDotProduct > 1.0 - 0.025d / requiredLookVecLength;
 	}
@@ -196,26 +196,26 @@ public abstract class EntityUtil {
 	}
 
 	@Nullable
-	public static Vec3d preciseEntityInterceptCalculation(Entity impactedEntity, Entity impactingEntity, int granularity) {
-		Vec3d vecVelocity = impactingEntity.getMotion();
-		final double velocityX = vecVelocity.getX();
-		final double velocityY = vecVelocity.getY();
-		final double velocityZ = vecVelocity.getZ();
+	public static Vector3d preciseEntityInterceptCalculation(Entity impactedEntity, Entity impactingEntity, int granularity) {
+		Vector3d vecVelocity = impactingEntity.getDeltaMovement();
+		final double velocityX = vecVelocity.x();
+		final double velocityY = vecVelocity.y();
+		final double velocityZ = vecVelocity.z();
 
 		for (int i = 0; i < granularity; i++) {
 			double projectionX = velocityX * (1 / (float)granularity) * i;
 			double projectionY = velocityY * (1 / (float)granularity) * i;
 			double projectionZ = velocityZ * (1 / (float)granularity) * i;
-			Vec3d initialVec = new Vec3d(impactingEntity.getPosX(), impactingEntity.getPosY(), impactingEntity.getPosZ());
-			Vec3d projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
+			Vector3d initialVec = new Vector3d(impactingEntity.getX(), impactingEntity.getY(), impactingEntity.getZ());
+			Vector3d projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
 
-			List<Entity> entityList = impactingEntity.world.getEntitiesWithinAABBExcludingEntity(impactingEntity, impactingEntity.getBoundingBox().grow(projectionX, projectionY, projectionZ));
+			List<Entity> entityList = impactingEntity.level.getEntities(impactingEntity, impactingEntity.getBoundingBox().inflate(projectionX, projectionY, projectionZ));
 
 			for (Entity entity : entityList) {
 				if (entity != impactedEntity)
 					continue;
 
-				Optional<Vec3d> intercept = entity.getBoundingBox().rayTrace(initialVec, projectedVec);
+				Optional<Vector3d> intercept = entity.getBoundingBox().clip(initialVec, projectedVec);
 
 				if (intercept.isPresent())
 					return intercept.get();
@@ -226,19 +226,19 @@ public abstract class EntityUtil {
 	}
 
 	public static boolean canPvp(PlayerEntity attacker, PlayerEntity target) {
-		return attacker.world.getServer().isPVPEnabled() && attacker != target && !attacker.isOnSameTeam(target);
+		return attacker.level.getServer().isPvpAllowed() && attacker != target && !attacker.isAlliedTo(target);
 	}
 
 	public static Direction getDirectionFacing(Entity entity, boolean lateralOnly) {
 		if (!lateralOnly) {
-			if (entity.rotationPitch < -50)
+			if (entity.xRot < -50)
 				return Direction.DOWN;
 
-			if (entity.rotationPitch > 50)
+			if (entity.xRot > 50)
 				return Direction.UP;
 		}
 
-		int vec = MathHelper.floor(entity.rotationYaw * 4 / 360 + 0.5) & 0x3;
+		int vec = MathHelper.floor(entity.yRot * 4 / 360 + 0.5) & 0x3;
 
 		switch (++vec % 4) {
 			case 0:

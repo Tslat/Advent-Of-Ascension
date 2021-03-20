@@ -24,31 +24,6 @@ public class ConstructOfRangeEntity extends AoARangedMob {
 		return sizeIn.height * 0.85f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.3;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 70;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 10.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 3;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

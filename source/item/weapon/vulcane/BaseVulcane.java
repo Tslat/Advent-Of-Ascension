@@ -27,13 +27,13 @@ public abstract class BaseVulcane extends Item {
 	protected double baseDmg;
 
 	public BaseVulcane(double dmg, int durability) {
-		super(new Item.Properties().group(AoAItemGroups.VULCANES).maxDamage(durability));
+		super(new Item.Properties().tab(AoAItemGroups.VULCANES).durability(durability));
 
 		this.baseDmg = dmg;
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BOW;
 	}
 
@@ -42,16 +42,16 @@ public abstract class BaseVulcane extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (!(player instanceof ServerPlayerEntity))
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
 		PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
 		if (!plData.isRevengeActive())
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
 		return activate(plData, stack, hand);
 	}
@@ -61,26 +61,26 @@ public abstract class BaseVulcane extends Item {
 
 		if (DamageUtil.dealVulcaneDamage(plData.getRevengeTarget(), pl, (float)baseDmg)) {
 			doAdditionalEffect(plData.getRevengeTarget(), pl);
-			pl.world.playSound(null, pl.getPosX(), pl.getPosY(), pl.getPosZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 			ItemUtil.damageItem(vulcane, pl, hand);
 			plData.disableRevenge();
 
-			return ActionResult.resultSuccess(vulcane);
+			return ActionResult.success(vulcane);
 		}
 
-		return ActionResult.resultFail(vulcane);
+		return ActionResult.fail(vulcane);
 	}
 
 	public void doAdditionalEffect(LivingEntity target, PlayerEntity player) {}
 
 	@Override
-	public int getItemEnchantability() {
+	public int getEnchantmentValue() {
 		return 8;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.true", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Double.toString(baseDmg)));
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.true", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, LocaleUtil.numToComponent(baseDmg)));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.vulcane.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

@@ -23,26 +23,6 @@ public class TricksterCloneEntity extends AoAMeleeMob {
 		return 1.65f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 35;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,17 +40,13 @@ public class TricksterCloneEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			WorldUtil.createExplosion(this, world, 2);
+		if (!level.isClientSide) {
+			WorldUtil.createExplosion(this, level, 2);
 			remove();
 		}
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

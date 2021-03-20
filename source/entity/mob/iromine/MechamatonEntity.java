@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -23,47 +24,22 @@ public class MechamatonEntity extends AoAMeleeMob {
         return 1.90625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.8;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 120;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 11;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.295;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 3.5d;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AoASounds.ENTITY_AUTOMATON_AMBIENT.get();
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return AoASounds.ENTITY_AUTOMATON_DEATH.get();
+        return null;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return AoASounds.ENTITY_AUTOMATON_HURT.get();
+        return SoundEvents.IRON_GOLEM_HURT;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.IRON_GOLEM_DEATH;
     }
 
     @Override

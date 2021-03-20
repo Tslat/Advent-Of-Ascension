@@ -20,11 +20,11 @@ public class HaloChangePacket implements AoAPacket {
 
 	@Override
 	public void encode(PacketBuffer buffer) {
-		buffer.writeString(haloChoice);
+		buffer.writeUtf(haloChoice);
 	}
 
 	public static HaloChangePacket decode(PacketBuffer buffer) {
-		return new HaloChangePacket(AoAHalos.Type.Choosable.valueOf(buffer.readString(32767)));
+		return new HaloChangePacket(AoAHalos.Type.Choosable.valueOf(buffer.readUtf(32767)));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

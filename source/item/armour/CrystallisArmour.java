@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CrystallisArmour extends AdventArmour {
 	public CrystallisArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:crystallis", 56, new int[] {5, 6, 10, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:crystallis", 56, new int[] {5, 6, 10, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -30,20 +30,20 @@ public class CrystallisArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
-		if (event.getSource().getTrueSource() instanceof LivingEntity) {
+		if (event.getSource().getEntity() instanceof LivingEntity) {
 			if (slots == null && DamageUtil.isMeleeDamage(event.getSource()) || DamageUtil.isRangedDamage(event.getSource(), plData.player(), event.getAmount())) {
-				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount());
-				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
+				event.getSource().getEntity().hurt(DamageSource.thorns(plData.player()), event.getAmount());
+				plData.player().inventory.hurtArmor(DamageSource.GENERIC, event.getAmount() * 2);
 			}
 			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && DamageUtil.isMeleeDamage(event.getSource())) {
-				event.getSource().getTrueSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), event.getAmount() * slots.size() / 4f);
-				plData.player().inventory.damageArmor(event.getAmount() * 0.5f);
+				event.getSource().getEntity().hurt(DamageSource.thorns(plData.player()), event.getAmount() * slots.size() / 4f);
+				plData.player().inventory.hurtArmor(DamageSource.GENERIC, event.getAmount() * 2);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.crystallis_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.crystallis_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

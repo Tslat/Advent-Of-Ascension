@@ -28,26 +28,6 @@ public class SeaTrollEntity extends AoARangedMob {
 		return 1.625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -73,22 +53,13 @@ public class SeaTrollEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new CyanShotEntity(this, BaseMobProjectile.Type.MAGIC);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 120));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 120));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

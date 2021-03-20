@@ -27,26 +27,6 @@ public class LuxocronEntity extends AoAMeleeMob {
         return 0.90625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 169;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 14;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -66,10 +46,10 @@ public class LuxocronEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(4), PlayerUtil::shouldPlayerBeAffected)) {
+        for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(4), PlayerUtil::shouldPlayerBeAffected)) {
             EntityUtil.applyPotions(pl, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 30).level(3));
         }
     }

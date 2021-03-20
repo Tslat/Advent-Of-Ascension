@@ -20,14 +20,14 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class DecloggingTable extends Block {
 	public DecloggingTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.ICE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.ICE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() instanceof WaterloggedItem) {
-			if (!world.isRemote()) {
-				ItemStack stack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() instanceof WaterloggedItem) {
+			if (!world.isClientSide()) {
+				ItemStack stack = player.getItemInHand(hand);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(((WaterloggedItem)stack.getItem()).getDecloggedItem()));
 				stack.shrink(1);

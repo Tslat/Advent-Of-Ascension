@@ -25,26 +25,26 @@ public class NoxiousGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
 		if (target instanceof LivingEntity) {
-			if (((LivingEntity)target).isPotionActive(Effects.POISON)) {
-				AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(target.world, target.getPosX(), target.getPosY(), target.getPosZ());
+			if (((LivingEntity)target).hasEffect(Effects.POISON)) {
+				AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(target.level, target.getX(), target.getY(), target.getZ());
 
 				cloud.setRadius(2);
 				cloud.setPotion(Potions.STRONG_POISON);
 				cloud.addEffect(new EffectInstance(Effects.POISON, 60, 2, true, true));
 				cloud.setDuration(3);
-				cloud.setColor(NumberUtil.RGB(51, 102, 0));
+				cloud.setFixedColor(NumberUtil.RGB(51, 102, 0));
 				cloud.setOwner(attacker);
 
-				target.world.addEntity(cloud);
+				target.level.addFreshEntity(cloud);
 			}
 			else {
-				((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.POISON, 40, 1, true, true));
+				((LivingEntity)target).addEffect(new EffectInstance(Effects.POISON, 40, 1, true, true));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.POISONS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}

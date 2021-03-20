@@ -19,26 +19,6 @@ public class NightflyEntity extends AoAFlyingMeleeMob {
 		return sizeIn.height * 0.85f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 3.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3544;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -58,12 +38,7 @@ public class NightflyEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
@@ -71,11 +46,11 @@ public class NightflyEntity extends AoAFlyingMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (getRNG().nextBoolean()) {
-			setMotion(getMotion().mul(1, 1.25, 1));
+		if (getRandom().nextBoolean()) {
+			setDeltaMovement(getDeltaMovement().multiply(1, 1.25, 1));
 		}
 		else {
-			setMotion(getMotion().mul(1, 0.75, 1));
+			setDeltaMovement(getDeltaMovement().multiply(1, 0.75, 1));
 		}
 	}
 }

@@ -10,8 +10,9 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
@@ -29,10 +30,10 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 
 	@Nullable
 	@Override
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		ILivingEntityData data = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		ILivingEntityData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 
-		setHeldItem(Hand.MAIN_HAND, new ItemStack(AoAWeapons.LUNAR_BOW.get()));
+		setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAWeapons.LUNAR_BOW.get()));
 		setDropChance(EquipmentSlotType.MAINHAND, 0);
 
 		return data;
@@ -41,26 +42,6 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 118;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 14.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
 	}
 
 	@Nullable
@@ -84,7 +65,7 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return SoundEvents.ENTITY_ARROW_SHOOT;
+		return SoundEvents.ARROW_SHOOT;
 	}
 
 	@Override
@@ -93,18 +74,18 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
-		CustomArrowEntity projectile = new CustomArrowEntity(world, (BaseBow)AoAWeapons.LUNAR_BOW.get(), this, getBaseProjectileDamage());
+	public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
+		CustomArrowEntity projectile = new CustomArrowEntity(level, (BaseBow)AoAWeapons.LUNAR_BOW.get(), this, getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
-		double distanceFactorX = target.getPosX() - projectile.getPosX();
-		double distanceFactorY = target.getBoundingBox().minY + (target.getHeight() / 3) - projectile.getPosY();
-		double distanceFactorZ = target.getPosZ() - projectile.getPosZ();
+		double distanceFactorX = target.getX() - projectile.getX();
+		double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
+		double distanceFactorZ = target.getZ() - projectile.getZ();
 		double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 		if (getShootSound() != null)
 			playSound(getShootSound(), 1.0f, 1.0f);
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
-		world.addEntity(projectile);
+		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
+		level.addFreshEntity(projectile);
 	}
 }

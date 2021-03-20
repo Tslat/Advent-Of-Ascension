@@ -19,9 +19,9 @@ public class LittleBamEntity extends AoAMeleeMob {
 	private boolean isMinion = false;
 
 	public LittleBamEntity(KingBambambamEntity kingBambambam) {
-		this(AoAEntities.Mobs.LITTLE_BAM.get(), kingBambambam.world);
+		this(AoAEntities.Mobs.LITTLE_BAM.get(), kingBambambam.level);
 
-		setLocationAndAngles(kingBambambam.getPosX(), kingBambambam.getPosY(), kingBambambam.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(kingBambambam.getX(), kingBambambam.getY(), kingBambambam.getZ(), random.nextFloat() * 360, 0);
 
 		isMinion = true;
 	}
@@ -31,11 +31,11 @@ public class LittleBamEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setAttackTarget(@Nullable LivingEntity target) {
+	public void setTarget(@Nullable LivingEntity target) {
 		if (target instanceof KingBambambamEntity)
 			return;
 
-		super.setAttackTarget(target);
+		super.setTarget(target);
 	}
 
 	@Override
@@ -43,61 +43,41 @@ public class LittleBamEntity extends AoAMeleeMob {
 		return 0.78125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.7;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_BAT_HURT;
+		return SoundEvents.BAT_HURT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_BAT_DEATH;
+		return SoundEvents.BAT_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_BAT_HURT;
+		return SoundEvents.BAT_HURT;
 	}
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
-		return isMinion	? null : super.getLootTable();
+	protected ResourceLocation getDefaultLootTable() {
+		return isMinion	? null : super.getDefaultLootTable();
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("IsKingBambambamMinion"))
 			isMinion = true;
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
 		if (isMinion)
 			compound.putBoolean("IsKingBambambamMinion", true);
@@ -105,6 +85,6 @@ public class LittleBamEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		WorldUtil.createExplosion(this, world, 2f);
+		WorldUtil.createExplosion(this, level, 2f);
 	}
 }

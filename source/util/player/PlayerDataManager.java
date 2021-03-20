@@ -4,21 +4,22 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.Color;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.DimensionType;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -63,7 +64,7 @@ public final class PlayerDataManager {
 	private int revengeTimer = 0;
 	private LivingEntity revengeTarget;
 
-	private HashMap<DimensionType, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<DimensionType, PortalCoordinatesContainer>();
+	private HashMap<RegistryKey<World>, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<RegistryKey<World>, PortalCoordinatesContainer>();
 
 	private HashSet<ItemStack> interventionData = null;
 
@@ -100,7 +101,7 @@ public final class PlayerDataManager {
 	}
 
 	public void tickPlayer() {
-		if (player == null || player.isSpectator() || player.world.isRemote)
+		if (player == null || player.isSpectator() || player.level.isClientSide)
 			return;
 
 		equipment.handleEquipmentCheck(this);
@@ -129,7 +130,7 @@ public final class PlayerDataManager {
 		for (Object arg : args) {
 			if (arg.getClass() == TextFormatting.class) {
 				if (style == null)
-					style = new Style();
+					style = Style.EMPTY;
 
 				switch ((TextFormatting)arg) {
 					case UNDERLINE:
@@ -138,19 +139,19 @@ public final class PlayerDataManager {
 					case RESET:
 						break;
 					case ITALIC:
-						style.setItalic(true);
+						style.withItalic(true);
 						break;
 					case STRIKETHROUGH:
 						style.setStrikethrough(true);
 						break;
 					case BOLD:
-						style.setBold(true);
+						style.withBold(true);
 						break;
 					case OBFUSCATED:
 						style.setObfuscated(true);
 						break;
 					default:
-						style.setColor((TextFormatting)arg);
+						style.withColor(Color.fromLegacyFormat((TextFormatting)arg));
 						break;
 				}
 
@@ -178,34 +179,34 @@ public final class PlayerDataManager {
 
 		nextMessageTime = GlobalEvents.tick + 200;
 		lastMessage = message;
-		player.sendMessage(message);
+		player.sendMessage(message, Util.NIL_UUID);
 	}
 
 	private void storeInterventionItems() {
 		if (interventionData == null)
 			interventionData = new HashSet<ItemStack>();
 
-		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
-			ItemStack stack = player.inventory.getStackInSlot(i);
+		for (int i = 0; i < player.inventory.getContainerSize(); i++) {
+			ItemStack stack = player.inventory.getItem(i);
 
-			if (EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
+			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
 				interventionData.add(stack);
-				player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+				player.inventory.setItem(i, ItemStack.EMPTY);
 			}
 		}
 
 		for (int i = 0; i < 4; i++) {
-			ItemStack stack = player.inventory.armorInventory.get(i);
+			ItemStack stack = player.inventory.armor.get(i);
 
-			if (EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
+			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
 				interventionData.add(stack);
-				player.inventory.armorInventory.set(i, ItemStack.EMPTY);
+				player.inventory.armor.set(i, ItemStack.EMPTY);
 			}
 		}
 	}
@@ -230,11 +231,11 @@ public final class PlayerDataManager {
 		interventionData.add(stack);
 	}
 
-	public void setPortalReturnLocation(DimensionType toDim, PortalCoordinatesContainer coords) {
+	public void setPortalReturnLocation(RegistryKey<World> toDim, PortalCoordinatesContainer coords) {
 		portalCoordinatesMap.put(toDim, coords);
 	}
 
-	public void removePortalReturnLocation(DimensionType toDim) {
+	public void removePortalReturnLocation(RegistryKey<World> toDim) {
 		portalCoordinatesMap.remove(toDim);
 	}
 
@@ -242,7 +243,7 @@ public final class PlayerDataManager {
 		portalCoordinatesMap.clear();
 	}
 
-	public PortalCoordinatesContainer getPortalReturnLocation(DimensionType toDim) {
+	public PortalCoordinatesContainer getPortalReturnLocation(RegistryKey<World> toDim) {
 		return portalCoordinatesMap.get(toDim);
 	}
 
@@ -293,19 +294,19 @@ public final class PlayerDataManager {
 			if (adv == null)
 				return;
 
-			boolean legit = player.getAdvancements().getProgress(adv).isDone();
+			boolean legit = player.getAdvancements().getOrStartProgress(adv).isDone();
 			PlayerAdvancements plAdv = player.getAdvancements();
 			int opt = stats.optionals.get(Skills.EXPEDITION);
 
 			if (opt > 3 && legit) {
-				plAdv.revokeCriterion(adv, "legitimate");
+				plAdv.revoke(adv, "legitimate");
 			}
 			else if (!legit) {
 				Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));
 
-				if (!plAdv.getProgress(rootAdv).isDone()) {
-					plAdv.grantCriterion(rootAdv, "playerjoin");
-					plAdv.grantCriterion(adv, "legitimate");
+				if (!plAdv.getOrStartProgress(rootAdv).isDone()) {
+					plAdv.award(rootAdv, "playerjoin");
+					plAdv.award(adv, "legitimate");
 				}
 				else {
 					stats.optionals.put(Skills.EXPEDITION, (opt % 4) + 4);
@@ -319,7 +320,7 @@ public final class PlayerDataManager {
 		Advancement byTheBooksAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/by_the_books"));
 
 		if (byTheBooksAdv != null)
-			player.getAdvancements().revokeCriterion(byTheBooksAdv, "legitimate");
+			player.getAdvancements().revoke(byTheBooksAdv, "legitimate");
 
 		AoAPackets.messagePlayer(player, new SkillDataPacket(Skills.EXPEDITION.id, stats.levels.get(Skills.EXPEDITION), stats.xp.get(Skills.EXPEDITION), stats.optionals.get(Skills.EXPEDITION)));
 	}
@@ -364,7 +365,7 @@ public final class PlayerDataManager {
 		portalCoordinatesMap = sourcePlayerData.portalCoordinatesMap;
 
 		if (AoAConfig.COMMON.skillsEnabled.get()) {
-			EntityUtil.applyAttributeModifierSafely(player, SharedMonsterAttributes.MAX_HEALTH, InnervationUtil.getHealthModifier(stats.getLevel(Skills.INNERVATION)));
+			EntityUtil.applyAttributeModifierSafely(player, Attributes.MAX_HEALTH, InnervationUtil.getHealthModifier(stats.getLevel(Skills.INNERVATION)));
 			player.setHealth(player.getMaxHealth());
 		}
 	}
@@ -377,16 +378,16 @@ public final class PlayerDataManager {
 		if (!portalCoordinatesMap.isEmpty()) {
 			CompoundNBT portalCoordinatesNBT = new CompoundNBT();
 
-			for (Map.Entry<DimensionType, PortalCoordinatesContainer> entry : portalCoordinatesMap.entrySet()) {
+			for (Map.Entry<RegistryKey<World>, PortalCoordinatesContainer> entry : portalCoordinatesMap.entrySet()) {
 				CompoundNBT portalReturnTag = new CompoundNBT();
 				PortalCoordinatesContainer container = entry.getValue();
 
-				portalReturnTag.putString("FromDim", DimensionType.getKey(container.fromDim).toString());
+				portalReturnTag.putString("FromDim", container.fromDim.location().toString());
 				portalReturnTag.putDouble("PosX", container.x);
 				portalReturnTag.putDouble("PosY", container.y);
 				portalReturnTag.putDouble("PosZ", container.z);
 
-				portalCoordinatesNBT.put(DimensionType.getKey(entry.getKey()).toString(), portalReturnTag);
+				portalCoordinatesNBT.put(entry.getKey().location().toString(), portalReturnTag);
 			}
 
 			baseTag.put("PortalMap", portalCoordinatesNBT);
@@ -401,15 +402,17 @@ public final class PlayerDataManager {
 		if (baseTag.contains("PortalMap")) {
 			CompoundNBT portalMapTag = baseTag.getCompound("PortalMap");
 
-			for (String s : portalMapTag.keySet()) {
-				CompoundNBT portalReturnTag = portalMapTag.getCompound(s);
-				ResourceLocation fromDim = new ResourceLocation(portalReturnTag.getString("FromDim"));
-				double x = portalReturnTag.getDouble("PosX");
-				double y = portalReturnTag.getDouble("PosY");
-				double z = portalReturnTag.getDouble("PosZ");
-
+			for (String s : portalMapTag.getAllKeys()) {
 				try {
-					portalCoordinatesMap.put(DimensionType.byName(new ResourceLocation(s)), new PortalCoordinatesContainer(DimensionType.byName(fromDim), x, y, z));
+					CompoundNBT portalReturnTag = portalMapTag.getCompound(s);
+					ResourceLocation fromDim = new ResourceLocation(portalReturnTag.getString("FromDim"));
+					double x = portalReturnTag.getDouble("PosX");
+					double y = portalReturnTag.getDouble("PosY");
+					double z = portalReturnTag.getDouble("PosZ");
+					RegistryKey<World> toDimKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(s));
+					RegistryKey<World> fromDimKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, fromDim);
+
+					portalCoordinatesMap.put(toDimKey, new PortalCoordinatesContainer(fromDimKey, x, y, z));
 				}
 				catch (NumberFormatException e) {
 					Logging.logMessage(Level.WARN, "Found invalid portal map data, has someone been tampering with files? Data: " + s);
@@ -523,10 +526,10 @@ public final class PlayerDataManager {
 
 			boolean armourChanged;
 
-			armourChanged = checkAndHandleArmourSwap(boots, player.inventory.armorInventory.get(0).getItem(), EquipmentSlotType.FEET);
-			armourChanged |= checkAndHandleArmourSwap(legs, player.inventory.armorInventory.get(1).getItem(), EquipmentSlotType.LEGS);
-			armourChanged |= checkAndHandleArmourSwap(body, player.inventory.armorInventory.get(2).getItem(), EquipmentSlotType.CHEST);
-			armourChanged |= checkAndHandleArmourSwap(helmet, player.inventory.armorInventory.get(3).getItem(), EquipmentSlotType.HEAD);
+			armourChanged = checkAndHandleArmourSwap(boots, player.inventory.armor.get(0).getItem(), EquipmentSlotType.FEET);
+			armourChanged |= checkAndHandleArmourSwap(legs, player.inventory.armor.get(1).getItem(), EquipmentSlotType.LEGS);
+			armourChanged |= checkAndHandleArmourSwap(body, player.inventory.armor.get(2).getItem(), EquipmentSlotType.CHEST);
+			armourChanged |= checkAndHandleArmourSwap(helmet, player.inventory.armor.get(3).getItem(), EquipmentSlotType.HEAD);
 
 			AdventArmour oldSet = currentFullSet;
 
@@ -600,14 +603,14 @@ public final class PlayerDataManager {
 
 			if (PlayerUtil.shouldPlayerBeAffected(player)) {
 				for (Hand hand : Hand.values()) {
-					ItemStack heldStack = player.getHeldItem(hand);
+					ItemStack heldStack = player.getItemInHand(hand);
 
 					if (heldStack.getItem() instanceof SkillItem) {
 						SkillItem item = (SkillItem)heldStack.getItem();
 
 						if (stats.levels.get(item.getSkill()) < item.getLevelReq()) {
 							ItemHandlerHelper.giveItemToPlayer(player, heldStack);
-							player.setHeldItem(hand, ItemStack.EMPTY);
+							player.setItemInHand(hand, ItemStack.EMPTY);
 						}
 					}
 				}
@@ -615,32 +618,32 @@ public final class PlayerDataManager {
 				if (boots != null && !ItemUtil.hasLevelForItem(boots, playerDataManager)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armorInventory.get(0));
-					player.inventory.armorInventory.set(0, ItemStack.EMPTY);
+					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(0));
+					player.inventory.armor.set(0, ItemStack.EMPTY);
 					unequipAdventArmour(playerDataManager, boots, EquipmentSlotType.FEET);
 				}
 
 				if (legs != null && !ItemUtil.hasLevelForItem(legs, playerDataManager)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armorInventory.get(1));
-					player.inventory.armorInventory.set(1, ItemStack.EMPTY);
+					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(1));
+					player.inventory.armor.set(1, ItemStack.EMPTY);
 					unequipAdventArmour(playerDataManager, legs, EquipmentSlotType.LEGS);
 				}
 
 				if (body != null && !ItemUtil.hasLevelForItem(body, playerDataManager)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armorInventory.get(2));
-					player.inventory.armorInventory.set(2, ItemStack.EMPTY);
+					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(2));
+					player.inventory.armor.set(2, ItemStack.EMPTY);
 					unequipAdventArmour(playerDataManager, body, EquipmentSlotType.CHEST);
 				}
 
 				if (helmet != null && !ItemUtil.hasLevelForItem(helmet, playerDataManager)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armorInventory.get(3));
-					player.inventory.armorInventory.set(3, ItemStack.EMPTY);
+					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(3));
+					player.inventory.armor.set(3, ItemStack.EMPTY);
 					unequipAdventArmour(playerDataManager, helmet, EquipmentSlotType.HEAD);
 				}
 			}
@@ -655,7 +658,7 @@ public final class PlayerDataManager {
 			}
 
 			handleCooldowns();
-			player.container.detectAndSendChanges();
+			player.inventoryMenu.broadcastChanges();
 		}
 
 		private void equipAdventArmour(PlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlotType slot) {
@@ -760,18 +763,18 @@ public final class PlayerDataManager {
 		}
 
 		private void doTributeBuffs() {
-			if (player.world.getDimension().getType() == DimensionType.OVERWORLD && !player.world.isDaytime()) {
+			if (WorldUtil.isWorld(player.level, World.OVERWORLD) && !player.level.isDay()) {
 				if (tribute.get(Deities.LUXON) == 200)
 					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 5).isAmbient());
 
 				if (tribute.get(Deities.EREBON) == 200)
-					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.STRENGTH, PotionUtil.AMBIENT_POTION_DURATION).isAmbient());
+					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, PotionUtil.AMBIENT_POTION_DURATION).isAmbient());
 
 				if (tribute.get(Deities.PLUTON) == 200)
 					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.LUCK, PotionUtil.AMBIENT_POTION_DURATION).level(2).isAmbient());
 
 				if (tribute.get(Deities.SELYAN) == 200)
-					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.SPEED, PotionUtil.AMBIENT_POTION_DURATION).isAmbient());
+					EntityUtil.applyPotions(player, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, PotionUtil.AMBIENT_POTION_DURATION).isAmbient());
 			}
 		}
 
@@ -874,10 +877,10 @@ public final class PlayerDataManager {
 
 		public void levelUp(Skills skill, int oldLevel, int newLevel, boolean isNaturalLevel) {
 			if (newLevel < 100) {
-				player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), AoASounds.PLAYER_LEVEL_UP.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_UP.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 			}
 			else if (newLevel == 100 || newLevel == 1000) {
-				player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), AoASounds.PLAYER_LEVEL_100.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_100.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 			}
 
 			levels.put(skill, newLevel);
@@ -1031,7 +1034,7 @@ public final class PlayerDataManager {
 				int i = 0;
 
 				while (interventionTag.contains(String.valueOf(i))) {
-					interventionData.add(ItemStack.read(interventionTag.getCompound(String.valueOf(i))));
+					interventionData.add(ItemStack.of(interventionTag.getCompound(String.valueOf(i))));
 
 					i++;
 				}
@@ -1051,13 +1054,13 @@ public final class PlayerDataManager {
 		private HashMap<Resources, Float> resourceFortitudeBuffs = null;
 
 		private void applyDefensiveBuffs(LivingHurtEvent ev) {
-			if (defensiveBuffs != null && defensiveBuffs.containsKey(ev.getSource().getDamageType()))
-				ev.setAmount(ev.getAmount() * (1 - defensiveBuffs.get(ev.getSource().getDamageType())));
+			if (defensiveBuffs != null && defensiveBuffs.containsKey(ev.getSource().getMsgId()))
+				ev.setAmount(ev.getAmount() * (1 - defensiveBuffs.get(ev.getSource().getMsgId())));
 		}
 
 		private void applyOffensiveBuffs(LivingHurtEvent ev) {
-			if (offensiveBuffs != null && offensiveBuffs.containsKey(ev.getSource().getDamageType()))
-				ev.setAmount(ev.getAmount() * (1 + offensiveBuffs.get(ev.getSource().getDamageType())));
+			if (offensiveBuffs != null && offensiveBuffs.containsKey(ev.getSource().getMsgId()))
+				ev.setAmount(ev.getAmount() * (1 + offensiveBuffs.get(ev.getSource().getMsgId())));
 		}
 
 		private float applyXpBuffs(Skills skill, float baseXp) {

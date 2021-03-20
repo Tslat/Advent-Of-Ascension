@@ -29,12 +29,12 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class RuneRandomizer extends Block {
 	public RuneRandomizer() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.CYAN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_CYAN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (heldItem.getItem() == AoAItems.UNPOWERED_RUNE.get() || heldItem.getItem() == AoAItems.CHARGED_RUNE.get()) {
 			if (player instanceof ServerPlayerEntity) {
@@ -49,13 +49,13 @@ public class RuneRandomizer extends Block {
 				if (!player.isCreative())
 					heldItem.shrink(1);
 
-				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, pos, player)));
+				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, BlockUtil.posToVec(pos), player)));
 
 				if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.RUNATION)
-					ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, pos, player)));
+					ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, BlockUtil.posToVec(pos), player)));
 
 				plData.stats().addXp(Skills.RUNATION, 5, false, false);
-				player.world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_RUNE_RANDOMIZER_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+				player.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_RUNE_RANDOMIZER_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
 
 			return ActionResultType.SUCCESS;

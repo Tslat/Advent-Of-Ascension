@@ -25,26 +25,6 @@ public class StimulosusEntity extends AoAMeleeMob {
         return 1.78125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.15;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 180;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 17;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -64,26 +44,21 @@ public class StimulosusEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
+    public void aiStep() {
+        super.aiStep();
 
-    @Override
-    public void livingTick() {
-        super.livingTick();
-
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             float healthPercent = EntityUtil.getCurrentHealthPercent(this);
             PotionUtil.EffectBuilder effect = null;
 
             if (healthPercent < 0.25) {
-                effect = new PotionUtil.EffectBuilder(Effects.STRENGTH, -1).level(2);
+                effect = new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, -1).level(2);
             }
             else if (healthPercent < 0.50) {
-                effect = new PotionUtil.EffectBuilder(Effects.STRENGTH, -1).level(3);
+                effect = new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, -1).level(3);
             }
             else if (healthPercent < 0.75) {
-                effect = new PotionUtil.EffectBuilder(Effects.STRENGTH, -1).level(4);
+                effect = new PotionUtil.EffectBuilder(Effects.DAMAGE_BOOST, -1).level(4);
             }
 
             if (effect != null)

@@ -7,9 +7,7 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -27,26 +25,6 @@ public class NethengeicBeastEntity extends AoAMeleeMob {
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.75f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 65d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.29d;
     }
 
     @Nullable
@@ -73,18 +51,18 @@ public class NethengeicBeastEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected boolean processInteract(PlayerEntity player, Hand hand) {
-        ItemStack heldStack = player.getHeldItem(hand);
+    protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+        ItemStack heldStack = player.getItemInHand(hand);
 
         if (heldStack.getItem() == AoAItems.FLAMMABLE_DUST.get()) {
-            if (!world.isRemote) {
+            if (!level.isClientSide) {
                 ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NETHENGEIC_CALLSTONE.get()));
                 heldStack.shrink(1);
             }
 
-            return true;
+            return ActionResultType.SUCCESS;
         }
 
-        return super.processInteract(player, hand);
+        return super.mobInteract(player, hand);
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -20,11 +21,14 @@ public class ShyreSword extends BaseGreatblade {
 
 	@Override
 	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
-		return (float)getAttackDamage() - 4 + (WorldUtil.getLightLevel(attacker.world, attacker.getPosition(), false, false) / 15f * 9f);
+		if (!(attacker.level instanceof IServerWorld))
+			return getAttackDamage();
+
+		return (float)getAttackDamage() - 4 + (WorldUtil.getLightLevel((IServerWorld)attacker.level, attacker.blockPosition(), false, false) / 15f * 9f);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

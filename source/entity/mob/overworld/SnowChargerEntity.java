@@ -22,32 +22,12 @@ public class SnowChargerEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.5f);
+		setSpeed(1.5f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return sizeIn.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.0f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -67,18 +47,9 @@ public class SnowChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof ServerPlayerEntity)
 			PlayerUtil.getAdventPlayer((ServerPlayerEntity)target).stats().consumeResource(Resources.RAGE, 30, true);
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

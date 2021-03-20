@@ -13,6 +13,7 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -26,30 +27,10 @@ public class PrimitiveCarrotopEntity extends AoAMeleeMob {
 		return sizeIn.height * 0.85f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 70;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.3;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_ZOMBIE_PIGMAN_AMBIENT;
+		return SoundEvents.ZOMBIFIED_PIGLIN_AMBIENT;
 	}
 
 	@Nullable
@@ -65,10 +46,10 @@ public class PrimitiveCarrotopEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.PRECASIA.type())
-			entityDropItem(new ItemStack(AoAItems.GARDENCIA_REALMSTONE.get()), 0f);
+		if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.PRECASIA.key))
+			spawnAtLocation(new ItemStack(AoAItems.GARDENCIA_REALMSTONE.get()), 0f);
 	}
 }

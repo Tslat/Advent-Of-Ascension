@@ -21,7 +21,7 @@ public class ResistanceTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.RESISTANCE, 10).level(2).isAmbient());
+		EntityUtil.applyPotions(getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive()), new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, 10).level(2).isAmbient());
 	}
 
 	@Override

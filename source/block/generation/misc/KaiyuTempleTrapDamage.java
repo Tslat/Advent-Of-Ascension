@@ -24,7 +24,7 @@ public class KaiyuTempleTrapDamage extends Block {
 	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public KaiyuTempleTrapDamage() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.ORANGE_TERRACOTTA, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_ORANGE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
@@ -33,9 +33,9 @@ public class KaiyuTempleTrapDamage extends Block {
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
-			entity.attackEntityFrom(new DamageSource("temple_trap").setDamageBypassesArmor(), 3.0f);
+			entity.hurt(new DamageSource("temple_trap").bypassArmor(), 3.0f);
 			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).level(4).isAmbient());
 		}
 	}

@@ -22,26 +22,6 @@ public class SkullCreatureEntity extends AoAMeleeMob {
         return 2.03125f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 118;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 12;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

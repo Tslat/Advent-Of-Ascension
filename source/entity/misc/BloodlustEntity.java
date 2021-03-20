@@ -30,7 +30,7 @@ public class BloodlustEntity extends CreatureEntity {
     public BloodlustEntity(World world, BlockPos spawnPosition) {
         super(AoAEntities.Misc.BLOODLUST.get(), world);
 
-        setPositionAndUpdate(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
+        teleportTo(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
     }
 
     @Override
@@ -39,35 +39,26 @@ public class BloodlustEntity extends CreatureEntity {
     }
 
     @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
-        getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1);
-    }
-
-    @Override
     protected float getStandingEyeHeight(Pose pose, EntitySize size) {
         return 0.25f;
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    protected void collideWithEntity(Entity entity) {}
+    protected void doPush(Entity entity) {}
 
     @Override
-    public void onCollideWithPlayer(PlayerEntity player) {
+    public void playerTouch(PlayerEntity player) {
         if (player instanceof ServerPlayerEntity && isAlive()) {
             PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
             int lvl = plData.stats().getLevelForDisplay(Skills.BUTCHERY);
 
             plData.stats().addXp(Skills.BUTCHERY, PlayerUtil.getXpRequiredForNextLevel(lvl) / ButcheryUtil.getExpDenominator(lvl), false, false);
-            world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.BLOODLUST_COLLECT.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
+            level.playSound(null, getX(), getY(), getZ(), AoASounds.BLOODLUST_COLLECT.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
             remove();
         }
     }
@@ -83,12 +74,12 @@ public class BloodlustEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean canBeHitWithPotion() {
+    public boolean isAffectedByPotions() {
         return false;
     }
 
     @Override
-    public boolean addPotionEffect(EffectInstance effect) {
+    public boolean addEffect(EffectInstance effect) {
         return false;
     }
 
@@ -101,12 +92,12 @@ public class BloodlustEntity extends CreatureEntity {
     public void tick() {
         super.tick();
 
-        if (ticksExisted >= 200)
+        if (tickCount >= 200)
             remove();
     }
 
     @Override
-    public boolean canDespawn(double distanceToClosestPlayer) {
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return true;
     }
 
@@ -129,7 +120,7 @@ public class BloodlustEntity extends CreatureEntity {
     }
 
     @Override
-    protected SoundEvent getFallSound(int heightIn) {
+    protected SoundEvent getFallDamageSound(int heightIn) {
         return null;
     }
 

@@ -20,26 +20,6 @@ public class ExplodotEntity extends AoAFlyingMeleeMob {
 		return 0.71875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,8 +40,8 @@ public class ExplodotEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (!world.isRemote) {
-			WorldUtil.createExplosion(this, world, 1.75f);
+		if (!level.isClientSide) {
+			WorldUtil.createExplosion(this, level, 1.75f);
 			remove();
 		}
 	}

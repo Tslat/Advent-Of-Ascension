@@ -25,31 +25,6 @@ public class ConstructOfResistanceEntity extends AoAMeleeMob {
         return 2f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.15;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 80;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.28;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 15;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -69,16 +44,16 @@ public class ConstructOfResistanceEntity extends AoAMeleeMob {
     }
 
     @Override
-    public boolean isImmuneToExplosions() {
+    public boolean ignoreExplosion() {
         return true;
     }
 
     @Override
-    public boolean addPotionEffect(EffectInstance effect) {
-        if (effect.getPotion() == Effects.RESISTANCE)
+    public boolean addEffect(EffectInstance effect) {
+        if (effect.getEffect() == Effects.DAMAGE_RESISTANCE)
             PotionUtil.amplifyEffect(effect, 1);
 
-        return super.addPotionEffect(effect);
+        return super.addEffect(effect);
     }
 
     @Override

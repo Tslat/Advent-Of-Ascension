@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.mob.overworld;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -30,40 +31,20 @@ public class ChomperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
-	}
-
-	@Override
 	protected float getWaterSlowDown() {
 		return 1;
 	}
 
 	@Override
-	public void setAttackTarget(@Nullable LivingEntity target) {
+	public void setTarget(@Nullable LivingEntity target) {
 		if (target == null) {
-			EntityUtil.removeAttributeModifier(this, SharedMonsterAttributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
+			EntityUtil.removeAttributeModifier(this, Attributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
 		}
 		else {
-			EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
+			EntityUtil.applyAttributeModifierSafely(this, Attributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
 		}
 
-		super.setAttackTarget(target);
+		super.setTarget(target);
 	}
 
 	@Nullable
@@ -84,18 +65,9 @@ public class ChomperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity)
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 20, 2, true, true));
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20, 2, true, true));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

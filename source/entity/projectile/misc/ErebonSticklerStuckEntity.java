@@ -29,11 +29,11 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	public ErebonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.EREBON_STICKLER_STUCK.get(), shooter.world);
+		super(AoAEntities.Projectiles.EREBON_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
 
-		setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 0);
+		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
@@ -42,27 +42,27 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.0f;
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {}
+	protected void onHit(RayTraceResult result) {}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (world.isRemote)
+		if (level.isClientSide)
 			return;
 
 		age++;
 
 		if (target != null && target.isAlive()) {
-			setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 360);
+			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(shooter, world, this, 2.0f);
+			WorldUtil.createExplosion(shooter, level, this, 2.0f);
 			remove();
 
 			if (cloud != null)
@@ -72,7 +72,7 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(owner, world, getPosX(), getPosY() + 1, getPosZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
 			remove();
 
 			if (cloud != null)
@@ -82,23 +82,23 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 		}
 
 		if (cloud == null) {
-			cloud = new AreaEffectCloudEntity(world, target.getPosX(), target.getPosY(), target.getPosZ());
+			cloud = new AreaEffectCloudEntity(level, target.getX(), target.getY(), target.getZ());
 
 			cloud.setDuration(100 - age);
 			cloud.setRadius(2);
 			cloud.addEffect(new EffectInstance(Effects.WITHER, 40, 0, false, true));
-			world.addEntity(cloud);
+			level.addFreshEntity(cloud);
 		}
 		else {
-			cloud.setPositionAndUpdate(target.getPosX(), target.getPosY(), target.getPosZ());
+			cloud.teleportTo(target.getX(), target.getY(), target.getZ());
 		}
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

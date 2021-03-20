@@ -13,9 +13,9 @@ import net.tslat.aoa3.util.WorldUtil;
 
 public class BigBaneCloneEntity extends AoAMeleeMob {
 	public BigBaneCloneEntity(BaneEntity bane) {
-		this(AoAEntities.Misc.BIG_BANE_CLONE.get(), bane.world);
+		this(AoAEntities.Misc.BIG_BANE_CLONE.get(), bane.level);
 
-		setLocationAndAngles(bane.getPosX(), bane.getPosY(), bane.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(bane.getX(), bane.getY(), bane.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public BigBaneCloneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -28,31 +28,11 @@ public class BigBaneCloneEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-	@Override
-	protected double getBaseMaxHealth() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-
-		if (!world.isRemote) {
-			WorldUtil.createExplosion(this, world, 6f);
+		if (!level.isClientSide) {
+			WorldUtil.createExplosion(this, level, 6f);
 			remove();
 		}
 	}

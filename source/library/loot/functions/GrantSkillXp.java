@@ -7,15 +7,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootFunction;
+import net.minecraft.loot.LootFunctionType;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootFunction;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.util.constant.Skills;
 import net.tslat.aoa3.util.player.PlayerUtil;
+
+import net.minecraft.loot.LootFunction.Builder;
 
 public class GrantSkillXp extends LootFunction {
 	private final Skills skill;
@@ -29,11 +31,16 @@ public class GrantSkillXp extends LootFunction {
 	}
 
 	@Override
-	protected ItemStack doApply(ItemStack stack, LootContext context) {
-		Entity entity = context.get(LootParameters.KILLER_ENTITY);
+	public LootFunctionType getType() {
+		return AoALootOperations.LootFunctions.GRANT_SKILL_XP;
+	}
+
+	@Override
+	protected ItemStack run(ItemStack stack, LootContext context) {
+		Entity entity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
 
 		if (!(entity instanceof PlayerEntity))
-			entity = context.get(LootParameters.THIS_ENTITY);
+			entity = context.getParamOrNull(LootParameters.THIS_ENTITY);
 
 		if (entity instanceof ServerPlayerEntity)
 			PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().addXp(skill, xp, false, false);
@@ -42,14 +49,10 @@ public class GrantSkillXp extends LootFunction {
 	}
 
 	public static Builder<?> builder(Skills skill, float xp) {
-		return builder((conditions) -> new GrantSkillXp(conditions, skill, xp));
+		return simpleBuilder((conditions) -> new GrantSkillXp(conditions, skill, xp));
 	}
 
 	public static class Serializer extends LootFunction.Serializer<GrantSkillXp> {
-		public Serializer() {
-			super(new ResourceLocation(AdventOfAscension.MOD_ID, "grant_skill_xp"), GrantSkillXp.class);
-		}
-
 		@Override
 		public void serialize(JsonObject object, GrantSkillXp function, JsonSerializationContext context) {
 			super.serialize(object, function, context);
@@ -60,7 +63,7 @@ public class GrantSkillXp extends LootFunction {
 
 		@Override
 		public GrantSkillXp deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditions) {
-			return new GrantSkillXp(conditions, Skills.valueOf(JSONUtils.getString(object, "skill").toUpperCase()), JSONUtils.getFloat(object, "xp"));
+			return new GrantSkillXp(conditions, Skills.valueOf(JSONUtils.getAsString(object, "skill").toUpperCase()), JSONUtils.getAsFloat(object, "xp"));
 		}
 	}
 }

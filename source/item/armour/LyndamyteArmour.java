@@ -19,7 +19,7 @@ import java.util.List;
 
 public class LyndamyteArmour extends AdventArmour {
 	public LyndamyteArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:lyndamyte", 35, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:lyndamyte", 35, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 
 	@Override
@@ -29,18 +29,18 @@ public class LyndamyteArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
-		if (slots != null && !plData.player().world.isRemote && DamageUtil.isMeleeDamage(event.getSource()) && random.nextFloat() < 0.25f * slots.size())
-			event.getSource().getTrueSource().setFire(5);
+		if (slots != null && !plData.player().level.isClientSide && DamageUtil.isMeleeDamage(event.getSource()) && random.nextFloat() < 0.25f * slots.size())
+			event.getSource().getEntity().setSecondsOnFire(5);
 	}
 
 	@Override
 	public void onDamageDealt(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots == null && DamageUtil.isMeleeDamage(event.getSource()))
-			event.getEntityLiving().setFire(5);
+			event.getEntityLiving().setSecondsOnFire(5);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.lyndamyte_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

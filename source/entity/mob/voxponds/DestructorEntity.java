@@ -42,26 +42,6 @@ public class DestructorEntity extends AoARangedMob {
 		return 7.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 999;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -82,12 +62,12 @@ public class DestructorEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 3);
+		WorldUtil.createExplosion(this, level, projectile, 3);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 3);
+		WorldUtil.createExplosion(this, level, projectile, 3);
 	}
 
 	@Nullable

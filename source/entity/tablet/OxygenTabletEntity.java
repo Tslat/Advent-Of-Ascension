@@ -18,8 +18,8 @@ public class OxygenTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && player.getAir() < 300)) {
-			pl.setAir(300);
+		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && player.getAirSupply() < 300)) {
+			pl.setAirSupply(300);
 		}
 	}
 

@@ -2,7 +2,7 @@ package net.tslat.aoa3.item.weapon.staff;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.FireworkRocketEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -41,7 +41,7 @@ public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(30), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -52,9 +52,9 @@ public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity entity : args) {
-			entity.setFire(5);
+			entity.setSecondsOnFire(5);
 			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.GLOWING, 100));
-			world.addEntity(new FireworkRocketEntity(world, entity.getPosX(), entity.getBoundingBox().maxY, entity.getPosZ(), makeFireworksStack()));
+			world.addFreshEntity(new FireworkRocketEntity(world, entity.getX(), entity.getBoundingBox().maxY, entity.getZ(), makeFireworksStack()));
 		}
 	}
 
@@ -80,8 +80,8 @@ public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

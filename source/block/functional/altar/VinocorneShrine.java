@@ -18,28 +18,28 @@ import javax.annotation.Nullable;
 
 public class VinocorneShrine extends BossAltarBlock {
 	public VinocorneShrine() {
-		super(MaterialColor.GREEN);
+		super(MaterialColor.COLOR_GREEN);
 	}
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		return player.world.getBlockState(pos.up()).getMaterial().isReplaceable();
+		return player.level.getBlockState(pos.above()).getMaterial().isReplaceable();
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		player.world.setBlockState(blockPos.up(), AoABlocks.LIVING_GROWTH.get().getDefaultState());
-		player.world.getPendingBlockTicks().scheduleTick(blockPos.up(), AoABlocks.LIVING_GROWTH.get(), 40);
+		player.level.setBlockAndUpdate(blockPos.above(), AoABlocks.LIVING_GROWTH.get().defaultBlockState());
+		player.level.getBlockTicks().scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
 
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.vinocorne.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.vinocorne.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override
-	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
-		super.harvestBlock(world, player, pos, state, te, stack);
+	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		super.playerDestroy(world, player, pos, state, te, stack);
 
-		if (world.getBlockState(pos.up()).getBlock() == AoABlocks.LIVING_GROWTH.get())
-			world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
+		if (world.getBlockState(pos.above()).getBlock() == AoABlocks.LIVING_GROWTH.get())
+			world.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 	}
 
 	@Override

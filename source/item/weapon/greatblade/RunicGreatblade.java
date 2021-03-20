@@ -21,17 +21,17 @@ public class RunicGreatblade extends BaseGreatblade {
 
 	@Override
 	public boolean hitEntity(ItemStack stack, Entity target, LivingEntity attacker, float dmg) {
-		boolean ready = target.hurtResistantTime <= 0;
+		boolean ready = target.invulnerableTime <= 0;
 		boolean successful = super.hitEntity(stack, target, attacker, (float)getAttackDamage() - 4);
 
-		if (!target.world.isRemote && ready)
+		if (!target.level.isClientSide && ready)
 			DamageUtil.dealMagicDamage(null, attacker, target, 4 * EntityUtil.getAttackCooldown(attacker), false);
 
 		return successful;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

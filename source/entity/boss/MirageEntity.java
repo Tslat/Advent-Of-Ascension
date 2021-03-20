@@ -22,11 +22,12 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.SpiritualShotEntity;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class MirageEntity extends AoARangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public MirageEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -35,26 +36,6 @@ public class MirageEntity extends AoARangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.75f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 750;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
 	}
 
 	@Nullable
@@ -72,7 +53,7 @@ public class MirageEntity extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Nullable
@@ -82,7 +63,7 @@ public class MirageEntity extends AoARangedMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -95,30 +76,30 @@ public class MirageEntity extends AoARangedMob {
 	public void tick() {
 		super.tick();
 		
-		if (!world.isRemote && rand.nextInt(80) == 0) {
-			world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_MIRAGE_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+		if (!level.isClientSide && random.nextInt(80) == 0) {
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MIRAGE_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			
-			if (world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-				switch (rand.nextInt(4)) {
+			if (WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+				switch (random.nextInt(4)) {
 					case 0:
-						setLocationAndAngles(167, 24, 8, rand.nextFloat() * 360, 0);
+						moveTo(167, 24, 8, random.nextFloat() * 360, 0);
 						break;
 					case 1:
-						setLocationAndAngles(168, 24, -2, rand.nextFloat() * 360, 0);
+						moveTo(168, 24, -2, random.nextFloat() * 360, 0);
 						break;
 					case 2:
-						setLocationAndAngles(177, 24, 8, rand.nextFloat() * 360, 0);
+						moveTo(177, 24, 8, random.nextFloat() * 360, 0);
 						break;
 					case 3:
-						setLocationAndAngles(177, 24, -2, rand.nextFloat() * 360, 0);
+						moveTo(177, 24, -2, random.nextFloat() * 360, 0);
 						break;
 				}
 			}
 			else {
-				int x = (int)(rand.nextBoolean() ? getPosX() + 5 : getPosX() - 5);
-				int z = (int)(rand.nextBoolean() ? getPosZ() + 5 : getPosZ() - 5);
+				int x = (int)(random.nextBoolean() ? getX() + 5 : getX() - 5);
+				int z = (int)(random.nextBoolean() ? getZ() + 5 : getZ() - 5);
 
-				setLocationAndAngles(x, world.getHeight(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getPosY(), z)).getY(), z, rand.nextFloat() * 360, 0);
+				moveTo(x, level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getY(), z)).getY(), z, random.nextFloat() * 360, 0);
 			}
 		}
 	}
@@ -129,37 +110,37 @@ public class MirageEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
 	}

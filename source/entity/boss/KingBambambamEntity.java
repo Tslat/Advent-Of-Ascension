@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public class KingBambambamEntity extends AoARangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int minionCooldown = 60;
 
 	private final HashSet<LittleBamEntity> summons = new HashSet<LittleBamEntity>();
@@ -45,26 +45,6 @@ public class KingBambambamEntity extends AoARangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.78125f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 900;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
 	}
 
 	@Nullable
@@ -98,18 +78,18 @@ public class KingBambambamEntity extends AoARangedMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 2.0f);
+		WorldUtil.createExplosion(this, level, projectile, 2.0f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2.0f);
+		WorldUtil.createExplosion(this, level, projectile, 2.0f);
 	}
 
 	@Override
@@ -121,10 +101,10 @@ public class KingBambambamEntity extends AoARangedMob {
 	public void tick() {
 		super.tick();
 
-		if (!isAlive() || isAIDisabled())
+		if (!isAlive() || isNoAi())
 			return;
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (minionCooldown > 0) {
 				minionCooldown--;
 			}
@@ -132,22 +112,22 @@ public class KingBambambamEntity extends AoARangedMob {
 				minionCooldown = 60;
 				LittleBamEntity littleBam = new LittleBamEntity(this);
 
-				world.addEntity(littleBam);
-				world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_LITTLE_BAM_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.addFreshEntity(littleBam);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_LITTLE_BAM_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 				summons.add(littleBam);
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.kingBamBamBam.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.kingBamBamBam.kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 			for (LittleBamEntity littleBam : summons) {
 				littleBam.remove();
@@ -156,38 +136,38 @@ public class KingBambambamEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.KING_BAMBAMBAM_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.KING_BAMBAMBAM_MUSIC.getId()));
 		bossInfo.removePlayer(player);

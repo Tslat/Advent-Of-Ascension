@@ -19,13 +19,13 @@ public class HauntedBow extends BaseBow {
 
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
-		if (!arrow.world.isRemote && !arrow.inGround && arrow.ticksExisted % 2 == 0)
-			WorldUtil.createExplosion(shooter, arrow.world, arrow, 1.0f);
+		if (!arrow.level.isClientSide && !arrow.inGround && arrow.tickCount % 2 == 0)
+			WorldUtil.createExplosion(shooter, arrow.level, arrow, 1.0f);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

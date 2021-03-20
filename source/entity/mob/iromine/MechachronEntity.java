@@ -24,26 +24,6 @@ public class MechachronEntity extends AoAMeleeMob {
         return 1.5625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.7;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 114;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 10.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.295;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

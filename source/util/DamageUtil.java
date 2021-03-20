@@ -2,8 +2,8 @@ package net.tslat.aoa3.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
 import net.minecraft.entity.item.EnderCrystalEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +14,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.common.registration.AoAArmour;
@@ -29,21 +29,21 @@ public abstract class DamageUtil {
 		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
 			return;
 
-		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, attacker, strength, xRatio, zRatio);
+		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, strength, xRatio, zRatio);
 
 		if(event.isCanceled())
 			return;
 
-		strength = event.getStrength() * (float)(1 - target.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getValue());
+		strength = event.getStrength() * (float)(1 - target.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue());
 		xRatio = event.getRatioX();
 		zRatio = event.getRatioZ();
-		target.isAirBorne = true;
-		target.velocityChanged = true;
+		target.hasImpulse = true;
+		target.hurtMarked = true;
 		float vec = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
-		Vec3d targetMotion = target.getMotion();
-		double motionX = targetMotion.getX() / 2d - xRatio / (double)vec * (double)strength;
-		double motionZ = targetMotion.getZ() / 2d - zRatio / (double)vec * (double)strength;
-		double motionY = targetMotion.getY();
+		Vector3d targetMotion = target.getDeltaMovement();
+		double motionX = targetMotion.x() / 2d - xRatio / (double)vec * (double)strength;
+		double motionZ = targetMotion.z() / 2d - zRatio / (double)vec * (double)strength;
+		double motionY = targetMotion.y();
 
 		if (target.onGround) {
 			motionY /= 2.0D;
@@ -53,36 +53,36 @@ public abstract class DamageUtil {
 				motionY = 0.4000000059604645D;
 		}
 
-		target.setMotion(new Vec3d(motionX, motionY, motionZ));
-		target.velocityChanged = true;
+		target.setDeltaMovement(new Vector3d(motionX, motionY, motionZ));
+		target.hurtMarked = true;
 	}
 
 	public static void doBodySlamKnockback(LivingEntity target, Entity attacker, float xModifier, float yModifier, float zModifier) {
 		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
 			return;
 
-		Vec3d attackerVelocity = attacker.getMotion();
-		double xVelocity = attackerVelocity.getX() * xModifier;
-		double yVelocity = attackerVelocity.getY() * yModifier;
-		double zVelocity = attackerVelocity.getZ() * zModifier;
-		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, attacker, (float)NumberUtil.average(xVelocity, yVelocity, zVelocity), xVelocity, zVelocity);
+		Vector3d attackerVelocity = attacker.getDeltaMovement();
+		double xVelocity = attackerVelocity.x() * xModifier;
+		double yVelocity = attackerVelocity.y() * yModifier;
+		double zVelocity = attackerVelocity.z() * zModifier;
+		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, (float)NumberUtil.average(xVelocity, yVelocity, zVelocity), xVelocity, zVelocity);
 
 		if(event.isCanceled())
 			return;
 
 		double resist = 1;
-		IAttributeInstance attrib = target.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
+		ModifiableAttributeInstance attrib = target.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 		if (attrib != null)
 			resist -= attrib.getValue();
 
-		target.addVelocity(event.getRatioX() * resist, yVelocity * resist, event.getRatioZ() * resist);
-		target.velocityChanged = true;
+		target.push(event.getRatioX() * resist, yVelocity * resist, event.getRatioZ() * resist);
+		target.hurtMarked = true;
 	}
 
 	public static void killEntityCleanly(Entity entity) {
 		if (!(entity instanceof LivingEntity)) {
-			entity.attackEntityFrom(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+			entity.hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 			entity.remove();
 
 			return;
@@ -90,7 +90,7 @@ public abstract class DamageUtil {
 
 		LivingEntity target = (LivingEntity)entity;
 
-		target.attackEntityFrom(new DamageSource("magic").setDamageBypassesArmor().setDamageIsAbsolute().setMagicDamage(), ((LivingEntity)entity).getHealth());
+		target.hurt(new DamageSource("magic").bypassArmor().bypassMagic().setMagic(), ((LivingEntity)entity).getHealth());
 
 		if (target.getHealth() > 0)
 			target.setHealth(0);
@@ -100,15 +100,15 @@ public abstract class DamageUtil {
 		DamageSource damageSource;
 
 		if (indirectSource != null) {
-			damageSource = new IndirectEntityDamageSource("aoe", indirectSource, attacker).setMagicDamage();
+			damageSource = new IndirectEntityDamageSource("aoe", indirectSource, attacker).setMagic();
 		}
 		else {
-			damageSource = attacker instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity)attacker) : DamageSource.causeMobDamage(attacker);
+			damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
 		}
 
 		if (bypassProtections) {
-			damageSource.setDamageBypassesArmor();
-			damageSource.setDamageIsAbsolute();
+			damageSource.bypassArmor();
+			damageSource.bypassMagic();
 		}
 
 		if (target.isInvulnerableTo(damageSource))
@@ -117,28 +117,28 @@ public abstract class DamageUtil {
 		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, false))
 			return false;
 
-		target.hurtResistantTime = 0;
-		return target.attackEntityFrom(damageSource, dmg);
+		target.invulnerableTime = 0;
+		return target.hurt(damageSource, dmg);
 	}
 
 	public static boolean dealBlasterDamage(LivingEntity attacker, Entity target, Entity shot, float dmg, boolean bypassProtections) {
 		DamageSource damageSource = new IndirectEntityDamageSource("blaster", shot, attacker);
 
-		damageSource.setMagicDamage();
+		damageSource.setMagic();
 
 		if (!(target instanceof PlayerEntity))
-			damageSource.setDamageBypassesArmor();
+			damageSource.bypassArmor();
 
 		if (bypassProtections) {
-			damageSource.setDamageIsAbsolute();
-			damageSource.setDamageBypassesArmor();
+			damageSource.bypassMagic();
+			damageSource.bypassArmor();
 		}
 
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
 		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
-			return target.attackEntityFrom(damageSource, dmg);
+			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
 			return false;
@@ -146,33 +146,33 @@ public abstract class DamageUtil {
 		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
-		target.hurtResistantTime = 0;
-		Vec3d targetMotion = target.getMotion();
-		boolean success = target.attackEntityFrom(damageSource, dmg);
-		target.setMotion(targetMotion);
-		target.velocityChanged = false;
+		target.invulnerableTime = 0;
+		Vector3d targetMotion = target.getDeltaMovement();
+		boolean success = target.hurt(damageSource, dmg);
+		target.setDeltaMovement(targetMotion);
+		target.hurtMarked = false;
 		return success;
 	}
 
 	public static boolean dealMeleeDamage(LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
-		DamageSource damageSource = attacker instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity)attacker) : DamageSource.causeMobDamage(attacker);
+		DamageSource damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
 
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
 		if (bypassProtections) {
-			damageSource.setDamageBypassesArmor();
-			damageSource.setDamageIsAbsolute();
+			damageSource.bypassArmor();
+			damageSource.bypassMagic();
 		}
 
 		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
-		target.hurtResistantTime = 0;
+		target.invulnerableTime = 0;
 
-		boolean success = target.attackEntityFrom(damageSource, dmg);
+		boolean success = target.hurt(damageSource, dmg);
 
-		target.hurtResistantTime = 0;
+		target.invulnerableTime = 0;
 		return success;
 	}
 
@@ -183,22 +183,22 @@ public abstract class DamageUtil {
 			damageSource = new IndirectEntityDamageSource("magic", indirectSource, attacker);
 		}
 		else {
-			damageSource = attacker instanceof PlayerEntity ? DamageSource.causePlayerDamage((PlayerEntity)attacker) : DamageSource.causeMobDamage(attacker);
+			damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
 		}
 
-		damageSource.setMagicDamage();
+		damageSource.setMagic();
 
 		if (!(target instanceof PlayerEntity))
-			damageSource.setDamageBypassesArmor();
+			damageSource.bypassArmor();
 
 		if (bypassProtections)
-			damageSource.setDamageIsAbsolute();
+			damageSource.bypassMagic();
 
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
 		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
-			return target.attackEntityFrom(damageSource, dmg);
+			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
 			return false;
@@ -206,8 +206,8 @@ public abstract class DamageUtil {
 		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
-		target.hurtResistantTime = 0;
-		return target.attackEntityFrom(damageSource, dmg);
+		target.invulnerableTime = 0;
+		return target.hurt(damageSource, dmg);
 	}
 
 	public static void dealSelfHarmDamage(LivingEntity target, float dmg) {
@@ -218,8 +218,8 @@ public abstract class DamageUtil {
 			target.setHealth(target.getHealth() - dmg);
 		}
 		else {
-			target.hurtResistantTime = 0;
-			target.attackEntityFrom(new DamageSource("selfharm").setDamageIsAbsolute().setDamageBypassesArmor(), dmg);
+			target.invulnerableTime = 0;
+			target.hurt(new DamageSource("selfharm").bypassMagic().bypassArmor(), dmg);
 		}
 	}
 
@@ -230,7 +230,7 @@ public abstract class DamageUtil {
 			return false;
 
 		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
-			return target.attackEntityFrom(source, dmg);
+			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
 			return false;
@@ -238,25 +238,25 @@ public abstract class DamageUtil {
 		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
-		target.hurtResistantTime = 0;
+		target.invulnerableTime = 0;
 		boolean success;
 
 		if (RandomUtil.percentChance(0.6f)) {
-			Vec3d targetMotion = target.getMotion();
-			success = target.attackEntityFrom(source, dmg);
-			target.setMotion(targetMotion);
-			target.velocityChanged = false;
+			Vector3d targetMotion = target.getDeltaMovement();
+			success = target.hurt(source, dmg);
+			target.setDeltaMovement(targetMotion);
+			target.hurtMarked = false;
 		}
 		else {
-			success = target.attackEntityFrom(source, dmg);
-			target.velocityChanged = true;
+			success = target.hurt(source, dmg);
+			target.hurtMarked = true;
 		}
 
 		return success;
 	}
 
 	public static boolean dealVulcaneDamage(LivingEntity target, PlayerEntity attacker, float dmg) {
-		DamageSource source = DamageSource.causePlayerDamage(attacker).setDamageIsAbsolute().setDamageBypassesArmor();
+		DamageSource source = DamageSource.playerAttack(attacker).bypassMagic().bypassArmor();
 
 		if (target.isInvulnerableTo(source))
 			return false;
@@ -264,18 +264,18 @@ public abstract class DamageUtil {
 		if (!HunterUtil.canAttackTarget(target, attacker, false))
 			return false;
 
-		target.hurtResistantTime = 0;
-		return target.attackEntityFrom(source, dmg);
+		target.invulnerableTime = 0;
+		return target.hurt(source, dmg);
 	}
 
 	public static boolean dealRangedDamage(Entity target, LivingEntity attacker, Entity projectile, float dmg) {
-		DamageSource source = DamageSource.causeThrownDamage(projectile, attacker);
+		DamageSource source = DamageSource.thrown(projectile, attacker);
 
 		if (target.isInvulnerableTo(source))
 			return false;
 
 		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
-			return target.attackEntityFrom(source, dmg);
+			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
 			return false;
@@ -283,44 +283,44 @@ public abstract class DamageUtil {
 		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
-		target.hurtResistantTime = 0;
-		target.velocityChanged = true;
-		return target.attackEntityFrom(source, dmg);
+		target.invulnerableTime = 0;
+		target.hurtMarked = true;
+		return target.hurt(source, dmg);
 	}
 
 	public static boolean isMeleeDamage(DamageSource source) {
-		return source.getTrueSource() != null && !source.isProjectile() && !source.getDamageType().equals("thrown") && !source.isMagicDamage() && !source.isExplosion() && !source.isFireDamage() && source.getImmediateSource() == source.getTrueSource();
+		return source.getEntity() != null && !source.isProjectile() && !source.getMsgId().equals("thrown") && !source.isMagic() && !source.isExplosion() && !source.isFire() && source.getDirectEntity() == source.getEntity();
 	}
 
 	public static boolean isBlasterDamage(DamageSource source) {
-		return source.getDamageType().equals("blaster") && source.isMagicDamage();
+		return source.getMsgId().equals("blaster") && source.isMagic();
 	}
 
 	public static boolean isMagicDamage(DamageSource source, Entity target, float dmg) {
-		return source.isMagicDamage() && !source.getDamageType().equals("blaster") && !source.getDamageType().equals("thorns") && !(target instanceof LivingEntity && isPoisonDamage(source, target, dmg));
+		return source.isMagic() && !source.getMsgId().equals("blaster") && !source.getMsgId().equals("thorns") && !(target instanceof LivingEntity && isPoisonDamage(source, target, dmg));
 	}
 
 	public static boolean isRangedDamage(DamageSource source, Entity target, float dmg) {
-		return ((source.isProjectile() && !source.getDamageType().equals("gun")) || source.getDamageType().equals("thrown")) && !isMagicDamage(source, target, dmg);
+		return ((source.isProjectile() && !source.getMsgId().equals("gun")) || source.getMsgId().equals("thrown")) && !isMagicDamage(source, target, dmg);
 	}
 
 	public static boolean isGunDamage(DamageSource source) {
-		return source.getDamageType().equals("gun") && source.isProjectile();
+		return source.getMsgId().equals("gun") && source.isProjectile();
 	}
 
 	public static boolean isPoisonDamage(DamageSource source, Entity target, float dmg) {
-		return source.isMagicDamage() && source.getTrueSource() == null && !source.getDamageType().equals("thorns") && target instanceof LivingEntity && ((LivingEntity)target).isPotionActive(Effects.POISON) && dmg == 1.0f;
+		return source.isMagic() && source.getEntity() == null && !source.getMsgId().equals("thorns") && target instanceof LivingEntity && ((LivingEntity)target).hasEffect(Effects.POISON) && dmg == 1.0f;
 	}
 
 	public static boolean isPhysicalDamage(DamageSource source, Entity target, float dmg) {
-		return !isPoisonDamage(source, target, dmg) && !source.isMagicDamage() && !source.isExplosion() && source != DamageSource.WITHER && source != DamageSource.OUT_OF_WORLD && !source.isFireDamage() && source != DamageSource.STARVE;
+		return !isPoisonDamage(source, target, dmg) && !source.isMagic() && !source.isExplosion() && source != DamageSource.WITHER && source != DamageSource.OUT_OF_WORLD && !source.isFire() && source != DamageSource.STARVE;
 	}
 
 	public static boolean isEnvironmentalDamage(DamageSource source) {
-		if (source.getTrueSource() != null || source.isExplosion())
+		if (source.getEntity() != null || source.isExplosion())
 			return false;
 
-		switch (source.getDamageType()) {
+		switch (source.getMsgId()) {
 			case "onFire":
 			case "inFire":
 			case "cactus":
@@ -340,6 +340,6 @@ public abstract class DamageUtil {
 	}
 
 	public static boolean isPlayerEnvironmentallyProtected(ServerPlayerEntity player) {
-		return PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HAZMAT) || player.inventory.armorInventory.get(EquipmentSlotType.HEAD.getIndex()).getItem() == AoAArmour.FACE_MASK.get();
+		return PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HAZMAT) || player.inventory.armor.get(EquipmentSlotType.HEAD.getIndex()).getItem() == AoAArmour.FACE_MASK.get();
 	}
 }

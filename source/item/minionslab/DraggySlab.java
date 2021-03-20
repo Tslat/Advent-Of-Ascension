@@ -13,11 +13,11 @@ public class DraggySlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		DraggyEntity draggy = new DraggyEntity(AoAEntities.Minions.DRAGGY.get(), pl.world);
+		DraggyEntity draggy = new DraggyEntity(AoAEntities.Minions.DRAGGY.get(), pl.level);
 
-		draggy.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		draggy.setTamedBy(pl);
-		pl.world.addEntity(draggy);
+		draggy.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		draggy.tame(pl);
+		pl.level.addFreshEntity(draggy);
 
 		return draggy;
 	}

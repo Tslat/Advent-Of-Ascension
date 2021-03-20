@@ -28,26 +28,6 @@ public class LelyetianCasterEntity extends AoARangedMob {
 		return 1.75f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 7;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class HydrangicArmour extends AdventArmour {
 	public HydrangicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:hydrangic", 54, new int[] {4, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:hydrangic", 54, new int[] {4, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class HydrangicArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.hydrangic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

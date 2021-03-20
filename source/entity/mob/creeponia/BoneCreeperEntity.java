@@ -22,26 +22,6 @@ public class BoneCreeperEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    protected double getBaseKnockbackResistance() {
-        return 0d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 45d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.3d;
-    }
-
-    @Override
 	public float getExplosionStrength() {
         return 2.75f;
     }
@@ -49,11 +29,11 @@ public class BoneCreeperEntity extends AoACreeponiaCreeper {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        if (rand.nextBoolean()) {
+        if (random.nextBoolean()) {
             return AoASounds.ENTITY_CREEPOID_AMBIENT.get();
         }
         else {
-            return SoundEvents.ENTITY_SKELETON_AMBIENT;
+            return SoundEvents.SKELETON_AMBIENT;
         }
     }
 
@@ -64,6 +44,6 @@ public class BoneCreeperEntity extends AoACreeponiaCreeper {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_SKELETON_HURT;
+        return SoundEvents.SKELETON_HURT;
     }
 }

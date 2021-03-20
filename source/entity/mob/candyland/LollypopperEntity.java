@@ -23,26 +23,6 @@ public class LollypopperEntity extends AoAMeleeMob {
 		return 1.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.05;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 80;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.295;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -56,16 +36,16 @@ public class LollypopperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote)
-			WorldUtil.createExplosion(this, world, 3);
+		if (!level.isClientSide)
+			WorldUtil.createExplosion(this, level, 3);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (isInWater() && getHealth() > 0)
 			heal(0.4f);

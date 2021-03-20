@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ElecanyteArmour extends AdventArmour {
 	public ElecanyteArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:elecanyte", 63, new int[] {4, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:elecanyte", 63, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class ElecanyteArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.elecanyte_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.elecanyte_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

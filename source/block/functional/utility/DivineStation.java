@@ -17,11 +17,11 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class DivineStation extends Block {
 	public DivineStation() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.CYAN, 5, 10, SoundType.GLASS));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_CYAN, 5, 10, SoundType.GLASS));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if (player instanceof ServerPlayerEntity)
 			DivineStationContainer.openContainer((ServerPlayerEntity)player, pos);
 

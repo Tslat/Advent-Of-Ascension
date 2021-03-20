@@ -22,26 +22,6 @@ public class SyskerEntity extends AoAMeleeMob {
         return 1.15625f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 163;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 16;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -60,8 +40,4 @@ public class SyskerEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_SYSKER_HURT.get();
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
 }

@@ -35,7 +35,7 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(10), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -47,13 +47,13 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity target : args) {
 			EntityUtil.pullEntityIn(caster, target, 1.0f);
-			target.setMotion(target.getMotion().mul(1, 1.1f, 1));
+			target.setDeltaMovement(target.getDeltaMovement().multiply(1, 1.1f, 1));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

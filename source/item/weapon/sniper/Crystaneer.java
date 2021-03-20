@@ -44,7 +44,7 @@ public class Crystaneer extends BaseSniper {
 			if (!populated)
 				populateGemDrops();
 
-			target.entityDropItem(RandomUtil.getRandomSelection(gemDrops), 0f);
+			target.spawnAtLocation(RandomUtil.getRandomSelection(gemDrops), 0f);
 		}
 	}
 
@@ -66,8 +66,8 @@ public class Crystaneer extends BaseSniper {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

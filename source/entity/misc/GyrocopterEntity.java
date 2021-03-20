@@ -8,7 +8,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -16,12 +16,12 @@ import net.tslat.aoa3.entity.boss.GyroEntity;
 
 public class GyrocopterEntity extends Entity {
     public GyrocopterEntity(PlayerEntity player) {
-        this(AoAEntities.Misc.GYROCOPTER.get(), player.world);
+        this(AoAEntities.Misc.GYROCOPTER.get(), player.level);
 
-        double offsetX = -MathHelper.sin(player.rotationYaw * (float)Math.PI / 180f);
-        double offsetZ = MathHelper.cos(player.rotationYaw * (float)Math.PI / 180f);
+        double offsetX = -MathHelper.sin(player.yRot * (float)Math.PI / 180f);
+        double offsetZ = MathHelper.cos(player.yRot * (float)Math.PI / 180f);
 
-        setLocationAndAngles(player.getPosX() + offsetX * 1.5, player.getPosY(), player.getPosZ() + offsetZ * 1.5, player.rotationYaw, 0);
+        moveTo(player.getX() + offsetX * 1.5, player.getY(), player.getZ() + offsetZ * 1.5, player.yRot, 0);
     }
 
     public GyrocopterEntity(EntityType<? extends Entity> entityType, World world) {
@@ -36,42 +36,42 @@ public class GyrocopterEntity extends Entity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected void registerData() {}
+    protected void defineSynchedData() {}
 
     @Override
-    protected void readAdditional(CompoundNBT compound) {}
+    protected void readAdditionalSaveData(CompoundNBT compound) {}
 
     @Override
-    protected void writeAdditional(CompoundNBT compound) {}
+    protected void addAdditionalSaveData(CompoundNBT compound) {}
 
     @Override
     public void tick() {
         super.tick();
 
-        if (ticksExisted >= 200) {
-            if (!world.isRemote)
-                world.addEntity(new GyroEntity(this));
+        if (tickCount >= 200) {
+            if (!level.isClientSide)
+                level.addFreshEntity(new GyroEntity(this));
 
             remove();
 
             return;
         }
 
-        move(MoverType.SELF, new Vec3d(0, 0.1d, 0));
+        move(MoverType.SELF, new Vector3d(0, 0.1d, 0));
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return false;
     }
 

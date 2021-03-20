@@ -4,8 +4,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -18,15 +19,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoofyAxe extends BaseAxe {
+	private final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+
 	public GoofyAxe() {
 		super(ItemUtil.customItemTier(1500, 8.0f, -1f, 4, 10, null));
+
+		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", -1, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
 	// TODO see about sound effect on hit
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-		if (!world.isRemote && stack.isDamaged()) {
+		if (!world.isClientSide && stack.isDamaged()) {
 			int modulo;
 
 			if (selected) {
@@ -40,28 +45,26 @@ public class GoofyAxe extends BaseAxe {
 			}
 
 			if (world.getGameTime() % modulo == 0) {
-				stack.setDamage(stack.getDamage() - 1);
+				stack.setDamageValue(stack.getDamageValue() - 1);
 
 				if (entity instanceof PlayerEntity)
-					((PlayerEntity)entity).container.detectAndSendChanges();
+					((PlayerEntity)entity).inventoryMenu.broadcastChanges();
 			}
 		}
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
-		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
+		Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
-		if (equipmentSlot == EquipmentSlotType.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", -1, AttributeModifier.Operation.MULTIPLY_TOTAL));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
-		}
+		if (equipmentSlot == EquipmentSlotType.MAINHAND)
+			return attributeModifiers;
 
 		return multimap;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.goofyRegen", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.goofyNoDamage", LocaleUtil.ItemDescriptionType.HARMFUL));
 	}

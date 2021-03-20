@@ -31,7 +31,7 @@ public class ReeferShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.06f;
 	}
 }

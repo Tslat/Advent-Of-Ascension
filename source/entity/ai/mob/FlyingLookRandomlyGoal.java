@@ -7,35 +7,37 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.EnumSet;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class FlyingLookRandomlyGoal extends Goal {
 	private final MobEntity taskOwner;
 
 	public FlyingLookRandomlyGoal(MobEntity creature) {
 		this.taskOwner = creature;
 
-		setMutexFlags(EnumSet.of(Flag.LOOK));
+		setFlags(EnumSet.of(Flag.LOOK));
 	}
 
 	@Override
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		return true;
 	}
 
 	@Override
 	public void tick() {
-		if (taskOwner.getAttackTarget() == null) {
-			taskOwner.rotationYaw = -((float)MathHelper.atan2(taskOwner.getMotion().getX(), taskOwner.getMotion().getZ())) * (180F / (float)Math.PI);
-			taskOwner.renderYawOffset = taskOwner.rotationYaw;
+		if (taskOwner.getTarget() == null) {
+			taskOwner.yRot = -((float)MathHelper.atan2(taskOwner.getDeltaMovement().x(), taskOwner.getDeltaMovement().z())) * (180F / (float)Math.PI);
+			taskOwner.yBodyRot = taskOwner.yRot;
 		}
 		else {
-			LivingEntity target = this.taskOwner.getAttackTarget();
+			LivingEntity target = this.taskOwner.getTarget();
 
-			if (target.getDistanceSq(this.taskOwner) < 4096.0D) {
-				double vecX = target.getPosX() - this.taskOwner.getPosX();
-				double vecZ = target.getPosZ() - this.taskOwner.getPosZ();
+			if (target.distanceToSqr(this.taskOwner) < 4096.0D) {
+				double vecX = target.getX() - this.taskOwner.getX();
+				double vecZ = target.getZ() - this.taskOwner.getZ();
 
-				this.taskOwner.rotationYaw = -((float)MathHelper.atan2(vecX, vecZ)) * (180F / (float)Math.PI);
-				this.taskOwner.renderYawOffset = this.taskOwner.rotationYaw;
+				this.taskOwner.yRot = -((float)MathHelper.atan2(vecX, vecZ)) * (180F / (float)Math.PI);
+				this.taskOwner.yBodyRot = this.taskOwner.yRot;
 			}
 		}
 	}

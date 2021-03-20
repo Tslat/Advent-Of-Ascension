@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAAnimal;
@@ -24,21 +25,6 @@ public class ElkanyneEntity extends AoAAnimal {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.05f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
 	}
 
 	@Nullable
@@ -65,12 +51,12 @@ public class ElkanyneEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	protected Item getTemptItem() {
-		return Item.getItemFromBlock(Blocks.BROWN_MUSHROOM);
+		return Item.byBlock(Blocks.BROWN_MUSHROOM);
 	}
 
 	@Nullable
 	@Override
-	public AgeableEntity createChild(AgeableEntity mate) {
-		return new ElkanyneEntity(AoAEntities.Animals.ELKANYNE.get(), world);
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
+		return new ElkanyneEntity(AoAEntities.Animals.ELKANYNE.get(), this.level);
 	}
 }

@@ -28,7 +28,7 @@ public class FungalBallEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.1f;
 	}
 }

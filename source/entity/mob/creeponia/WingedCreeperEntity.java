@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 
@@ -21,26 +21,6 @@ public class WingedCreeperEntity extends AoACreeponiaCreeper {
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 1.40625f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.15d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 55d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.29d;
     }
 
     @Override
@@ -65,23 +45,23 @@ public class WingedCreeperEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    public boolean onLivingFall(float distance, float damageMultiplier) {
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
         return false;
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        PlayerEntity pl = world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 15, false);
+        PlayerEntity pl = level.getNearestPlayer(getX(), getY(), getZ(), 15, false);
 
         if (pl == null || pl.isCreative())
             return;
 
-        if (pl.getPosY() > getPosY() && ticksExisted % 3 == 0) {
-            Vec3d motion = getMotion();
+        if (pl.getY() > getY() && tickCount % 3 == 0) {
+            Vector3d motion = getDeltaMovement();
 
-            setMotion(motion.getX() + MathHelper.clamp(pl.getPosX() - getPosX(), -0.05, 0.05), motion.getY() + 0.3, motion.getZ() + MathHelper.clamp(pl.getPosZ() - getPosZ(), -0.05, 0.05));
+            setDeltaMovement(motion.x() + MathHelper.clamp(pl.getX() - getX(), -0.05, 0.05), motion.y() + 0.3, motion.z() + MathHelper.clamp(pl.getZ() - getZ(), -0.05, 0.05));
         }
     }
 }

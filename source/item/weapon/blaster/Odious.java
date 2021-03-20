@@ -29,25 +29,25 @@ public class Odious extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new OdiousEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new OdiousEntity(shooter, this, 60));
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (!EntityUtil.isImmuneToSpecialAttacks(target, shooter)) {
-			double motionY = target.getMotion().getY();
+			double motionY = target.getDeltaMovement().y();
 
 			EntityUtil.pullEntityIn(shooter, target, 0.1f);
 
-			motionY = Math.min(target.getMotion().getY(), motionY + 0.9);
+			motionY = Math.min(target.getDeltaMovement().y(), motionY + 0.9);
 
 
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

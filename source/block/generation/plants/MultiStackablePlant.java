@@ -36,10 +36,10 @@ public class MultiStackablePlant extends StackablePlant {
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockState targetState = world.getBlockState(pos.down());
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockState targetState = world.getBlockState(pos.below());
 
-		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isOpaqueCube(world, pos.down())) || isStemBlock(targetState.getBlock());
+		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.below())) || isStemBlock(targetState.getBlock());
 	}
 
 	private boolean isStemBlock(Block block) {
@@ -52,24 +52,24 @@ public class MultiStackablePlant extends StackablePlant {
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		BlockPos newPos;
-		BlockState blockState = world.getBlockState(newPos = pos.up());
+		BlockState blockState = world.getBlockState(newPos = pos.above());
 		Block block = blockState.getBlock();
 
 		while (isStemBlock(block) || block == hatBlock.get()) {
-			world.setBlockState(newPos, Blocks.AIR.getDefaultState(), 35);
-			world.playEvent(player, 2001, newPos, Block.getStateId(blockState));
+			world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 35);
+			world.levelEvent(player, 2001, newPos, Block.getId(blockState));
 
-			if (!world.isRemote() && !player.isCreative()) {
-				spawnDrops(state, world, pos, null, player, player.getHeldItemMainhand());
-				spawnDrops(blockState, world, newPos, null, player, player.getHeldItemMainhand());
+			if (!world.isClientSide() && !player.isCreative()) {
+				dropResources(state, world, pos, null, player, player.getMainHandItem());
+				dropResources(blockState, world, newPos, null, player, player.getMainHandItem());
 			}
 
-			blockState = world.getBlockState(newPos = newPos.up());
+			blockState = world.getBlockState(newPos = newPos.above());
 			block = blockState.getBlock();
 		}
 
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 }

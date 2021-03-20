@@ -15,7 +15,7 @@ import java.util.List;
 
 public class UtopianArmour extends AdventArmour {
 	public UtopianArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:utopian", 50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:utopian", 50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class UtopianArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.utopian_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

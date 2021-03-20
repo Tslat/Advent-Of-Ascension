@@ -10,6 +10,7 @@ import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.library.misc.AoATeleporter;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -26,15 +27,15 @@ public class ImmortallisTeleporter extends AoATeleporter {
 
 	@Override
 	public BlockPos findExistingPortal(World world, Entity entity) {
-		if (world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
+		if (WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
 			if (entity instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
-				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(world.getDimension().getType(), entity.getPosX(), entity.getPosY(), entity.getPosZ());
+				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(world.dimension(), entity.getX(), entity.getY(), entity.getZ());
 
-				plData.setPortalReturnLocation(entity.world.getDimension().getType(), portalLoc);
+				plData.setPortalReturnLocation(entity.level.dimension(), portalLoc);
 			}
 
-			return new BlockPos(-5, 20, 3);
+			return new BlockPos(-11, 20, -25);
 		}
 
 		return super.findExistingPortal(world, entity);

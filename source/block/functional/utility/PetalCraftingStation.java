@@ -21,17 +21,17 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class PetalCraftingStation extends Block {
 	public PetalCraftingStation() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 5, 10, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, 5, 10, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.PETALS.get()) {
-			if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.PETALS.get()) {
+			if (!world.isClientSide()) {
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
-				switch (player.getRNG().nextInt(4)) {
+				switch (player.getRandom().nextInt(4)) {
 					case 0:
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAArmour.HYDRANGIC_ARMOUR.boots.get()));
 						break;

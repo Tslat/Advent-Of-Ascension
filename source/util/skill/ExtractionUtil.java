@@ -2,12 +2,12 @@ package net.tslat.aoa3.util.skill;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -46,7 +46,7 @@ public class ExtractionUtil {
         return 500;
     }
 
-    public static List<ItemStack> getLoot(ServerPlayerEntity player, BlockPos pos) {
-        return player.world.getServer().getLootTableManager().getLootTableFromLocation(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/extraction")).generate(new LootContext.Builder((ServerWorld)player.world).withLuck(player.getLuck()).withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.THIS_ENTITY, player).build(LootParameterSets.GIFT));
+    public static List<ItemStack> getLoot(ServerPlayerEntity player, Vector3d pos) {
+        return player.level.getServer().getLootTables().get(new ResourceLocation(AdventOfAscension.MOD_ID, "skills/extraction")).getRandomItems(new LootContext.Builder((ServerWorld)player.level).withLuck(player.getLuck()).withParameter(LootParameters.ORIGIN, pos).withParameter(LootParameters.THIS_ENTITY, player).create(LootParameterSets.GIFT));
     }
 }

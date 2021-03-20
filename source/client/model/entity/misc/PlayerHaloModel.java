@@ -12,11 +12,11 @@ public class PlayerHaloModel extends PlayerModel<AbstractClientPlayerEntity> {
 	public PlayerHaloModel() {
 		super(0, false);
 
-		textureWidth = 1;
-		textureHeight = 1;
+		texWidth = 1;
+		texHeight = 1;
 
 		halo = new ModelRenderer(this, 0, 0);
-		halo.setRotationPoint(0.0F, 0.0F, 0.0F);
+		halo.setPos(0.0F, 0.0F, 0.0F);
 		halo.addBox(-1.0F, -11.5f, -3.0F, 2, 1, 1, 0.0F);
 		halo.addBox(-1.0F, -11.5f, 2.0F, 2, 1, 1, 0.0F);
 		halo.addBox(-1.5F, -11.5f, -2.5F, 1, 1, 1, 0.0F);
@@ -36,10 +36,10 @@ public class PlayerHaloModel extends PlayerModel<AbstractClientPlayerEntity> {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		halo.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 
 	@Override
-	public void setRotationAngles(AbstractClientPlayerEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+	public void setupAnim(AbstractClientPlayerEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 }

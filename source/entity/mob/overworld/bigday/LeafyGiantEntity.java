@@ -2,7 +2,8 @@ package net.tslat.aoa3.entity.mob.overworld.bigday;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -12,9 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.event.dimension.OverworldEvents;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class LeafyGiantEntity extends AoAMeleeMob {
@@ -25,26 +24,6 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 5.7f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 55;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.32d;
 	}
 
 	@Override
@@ -64,38 +43,22 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Nonnull
-	@Override
-	protected OverworldEvents.Event getEventRequirement() {
-		return OverworldEvents.Event.BIG_DAY;
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
 			double resist = 1;
-			IAttributeInstance attrib = ((LivingEntity)target).getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
+			ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 			if (attrib != null)
 				resist -= attrib.getValue();
 
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.SLOWNESS, 50, 0, true, true));
-			target.addVelocity(getMotion().getX() * 10.5f * resist, 0.5 * resist, getMotion().getZ() * 10.5 * resist);
-			target.velocityChanged = true;
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 50, 0, true, true));
+			target.push(getDeltaMovement().x() * 10.5f * resist, 0.5 * resist, getDeltaMovement().z() * 10.5 * resist);
+			target.hurtMarked = true;
 		}
 	}
 }

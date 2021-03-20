@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PredatiousArmour extends AdventArmour {
 	public PredatiousArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:predatious", 51, new int[] {3, 7, 9, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:predatious", 51, new int[] {3, 7, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -37,12 +37,12 @@ public class PredatiousArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
-		if (slots == null && event.getEntityLiving() != null && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getImmediateSource() instanceof LivingEntity)
-			event.getSource().getImmediateSource().attackEntityFrom(DamageSource.causeThornsDamage(plData.player()), 1);
+		if (slots == null && event.getEntityLiving() != null && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getDirectEntity() instanceof LivingEntity)
+			event.getSource().getDirectEntity().hurt(DamageSource.thorns(plData.player()), 1);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.predatious_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

@@ -23,26 +23,6 @@ public class FiendEntity extends AoAMeleeMob {
 		return 1.375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 90;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

@@ -21,7 +21,7 @@ import net.tslat.aoa3.util.DamageUtil;
 import javax.annotation.Nullable;
 
 public class RunicGolemEntity extends AoAMeleeMob {
-	private static final DataParameter<Boolean> SHIELDED = EntityDataManager.<Boolean>createKey(RunicGolemEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SHIELDED = EntityDataManager.<Boolean>defineId(RunicGolemEntity.class, DataSerializers.BOOLEAN);
 	private int shieldCooldown = 120;
 	private int runeStoneCooldown = 0;
 
@@ -35,29 +35,9 @@ public class RunicGolemEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(SHIELDED, false);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.265;
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(SHIELDED, false);
 	}
 
 	@Nullable
@@ -74,7 +54,7 @@ public class RunicGolemEntity extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.ENTITY_IRON_GOLEM_STEP;
+		return SoundEvents.IRON_GOLEM_STEP;
 	}
 
 	public void deactivateShield() {
@@ -83,19 +63,19 @@ public class RunicGolemEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!world.isRemote) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (!level.isClientSide) {
 			if (isShielded()) {
 				if (DamageUtil.isMeleeDamage(source) && runeStoneCooldown <= 0) {
 					runeStoneCooldown = 120;
-					entityDropItem(AoAItems.ACTIVE_RUNE_STONE.get(), 1);
+					spawnAtLocation(AoAItems.ACTIVE_RUNE_STONE.get(), 1);
 				}
 
 				return false;
 			}
 		}
 
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
@@ -103,22 +83,17 @@ public class RunicGolemEntity extends AoAMeleeMob {
 		return super.isInvulnerable() || isShielded();
 	}
 
-	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return isInvulnerable() || super.isInvulnerableTo(source);
-	}
-
 	public boolean isShielded() {
-		return this.dataManager.get(SHIELDED);
+		return this.entityData.get(SHIELDED);
 	}
 
 	private void setShielded(boolean shielded) {
-		this.dataManager.set(SHIELDED, shielded);
+		this.entityData.set(SHIELDED, shielded);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (runeStoneCooldown > 0)
 			runeStoneCooldown--;

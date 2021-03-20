@@ -33,9 +33,9 @@ public class BoulderBomber extends BaseCannon {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
-			if (!player.world.isRemote)
-				player.world.addEntity(new HeavyCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0.325f, 0));
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
+			if (!player.level.isClientSide)
+				player.level.addFreshEntity(new HeavyCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0.325f, 0));
 
 			return new HeavyCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0, 0);
 		}
@@ -44,8 +44,8 @@ public class BoulderBomber extends BaseCannon {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

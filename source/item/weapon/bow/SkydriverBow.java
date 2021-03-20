@@ -21,21 +21,23 @@ public class SkydriverBow extends BaseBow {
 
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
-		if (!arrow.inGround && arrow.ticksExisted > 1) {
-			BlockPos.Mutable testPos = new BlockPos.Mutable(arrow.getPosition());
+		if (!arrow.inGround && arrow.tickCount > 1) {
+			BlockPos.Mutable testPos = new BlockPos.Mutable();
 
-			while (testPos.getY() >= 0 && arrow.world.isAirBlock(testPos.move(Direction.DOWN))) {
+			testPos.set(arrow.blockPosition());
+
+			while (testPos.getY() >= 0 && arrow.level.isEmptyBlock(testPos.move(Direction.DOWN))) {
 				;
 			}
 
-			if (arrow.world.getBlockState(testPos).isSolidSide(arrow.world, testPos, Direction.UP) && arrow.world.getBlockState(testPos.up()).getMaterial().isReplaceable())
-				arrow.world.setBlockState(testPos.up(), AoABlocks.ORANGE_ACID.get().getDefaultState());
+			if (arrow.level.getBlockState(testPos).isFaceSturdy(arrow.level, testPos, Direction.UP) && arrow.level.getBlockState(testPos.above()).getMaterial().isReplaceable())
+				arrow.level.setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

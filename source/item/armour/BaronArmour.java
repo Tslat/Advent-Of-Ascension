@@ -14,7 +14,7 @@ import java.util.List;
 
 public class BaronArmour extends AdventArmour {
 	public BaronArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:baron", 150, new int[] {4, 6, 9, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:baron", 150, new int[] {4, 6, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class BaronArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.baron_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

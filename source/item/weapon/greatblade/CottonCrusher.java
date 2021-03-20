@@ -22,11 +22,11 @@ public class CottonCrusher extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
 		if (attacker instanceof PlayerEntity && EntityUtil.getAttackCooldown(attacker) > 0.95f)
-			((PlayerEntity)attacker).getFoodStats().addStats(1, 0);
+			((PlayerEntity)attacker).getFoodData().eat(1, 0);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

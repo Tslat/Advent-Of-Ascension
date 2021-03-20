@@ -5,12 +5,13 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Quaternion;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -18,16 +19,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ExpeditionTogglePacket;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.entity.animal.SpearmintSnailEntity;
-import net.tslat.aoa3.entity.mob.abyss.OcculentEntity;
-import net.tslat.aoa3.entity.mob.candyland.GingerbreadManEntity;
-import net.tslat.aoa3.entity.mob.celeve.*;
-import net.tslat.aoa3.entity.mob.misc.SeaSkeletonEntity;
-import net.tslat.aoa3.entity.mob.overworld.*;
-import net.tslat.aoa3.entity.mob.precasia.EliteSkelePigEntity;
-import net.tslat.aoa3.entity.mob.shyrelands.ArcwormEntity;
-import net.tslat.aoa3.entity.mob.shyrelands.ShyreTrollEntity;
-import net.tslat.aoa3.entity.mob.voxponds.AlarmoEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -112,84 +103,84 @@ public class AdventGuiTabPlayer extends Screen {
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 		this.adjustedMouseX = (int)(mouseX * AdventMainGui.scaleInverse);
 		this.adjustedMouseY = (int)(mouseY * AdventMainGui.scaleInverse);
 
-		drawPlayerBox(AdventMainGui.scaledTabRootX + 63, AdventMainGui.scaledTabRootY + 330, mouseX, mouseY, (int)(30 * AdventMainGui.scaleInverse));
+		drawPlayerBox(matrix, AdventMainGui.scaledTabRootX + 63, AdventMainGui.scaledTabRootY + 330, mouseX, mouseY, (int)(30 * AdventMainGui.scaleInverse));
 
 		if (AoAConfig.COMMON.resourcesEnabled.get())
-			renderResources();
+			renderResources(matrix);
 
 		if (AoAConfig.COMMON.skillsEnabled.get())
-			renderSkills();
+			renderSkills(matrix);
 	}
 
-	private void renderResources() {
+	private void renderResources(MatrixStack matrix) {
 		int x = AdventMainGui.scaledTabRootX + 15;
 		int y = AdventMainGui.scaledTabRootY + 20;
 		float percentComplete = tributeSelyan / 200f;
 		Minecraft mc = Minecraft.getInstance();
 		
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.tribute"), x + 50, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		mc.getTextureManager().bindTexture(resourcesTextures);
-		RenderUtil.renderScaledCustomSizedTexture(x, y, 0, 0, 100, 30, 100, 30, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x, y, 0, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.tribute"), x + 50, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		mc.getTextureManager().bind(resourcesTextures);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y, 0, 0, 100, 30, 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y, 0, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributeLuxon / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 30, 100, 0, 100, 30, 100, 30, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 30, 100, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 30, 100, 0, 100, 30, 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 30, 100, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributeErebon / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 60, 200, 0, 100, 30, 100, 30, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 60, 200, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 60, 200, 0, 100, 30, 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 60, 200, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = tributePluton / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 90, 300, 0, 100, 30, 100, 30, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x, y + 90, 300, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 90, 300, 0, 100, 30, 100, 30, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 90, 300, percentComplete == 1 ? 60 : 30, percentComplete * 100, 30, percentComplete * 100, 30, 400, 590);
 
 		percentComplete = resourceRage / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y, 0, 190, 50, 50, 62, 62, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y, resourceRage >= 150 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y, 0, 190, 50, 50, 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y, resourceRage >= 150 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		percentComplete = resourceEnergy / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 82, 0, 90, 50, 50, 62, 62, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 82, 0, 140, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 82, 0, 90, 50, 50, 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 82, 0, 140, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		percentComplete = resourceCreation / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 164, 0, 290, 50, 50, 62, 62, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 164, 0, 340, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 164, 0, 290, 50, 50, 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 164, 0, 340, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
 		percentComplete = resourceSoul / 200f;
 
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 246, 0, 390, 50, 50, 62, 62, 400, 590);
-		RenderUtil.renderScaledCustomSizedTexture(x + 135, y + 246, 0, 440, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 246, 0, 390, 50, 50, 62, 62, 400, 590);
+		RenderUtil.renderScaledCustomSizedTexture(matrix, x + 135, y + 246, 0, 440, percentComplete * 50, 50, percentComplete * 62, 62, 400, 590);
 
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.SELYAN), x + 50, y + 11, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.LUXON), x + 50, y + 41, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.EREBON), x + 50, y + 71, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.PLUTON), x + 50, y + 101, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.RAGE_RESOURCE), x + 166, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.ENERGY_RESOURCE), x + 166, y + 67, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.CREATION_RESOURCE), x + 166, y + 149, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString(LocaleUtil.Constants.SOUL_RESOURCE), x + 166, y + 231, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceRage + "/" + 200, x + 166, y + 40, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, (int)resourceEnergy + "/" + 200, x + 166, y + 122, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, NumberUtil.floorAndAppendSuffix(resourceCreation, true) + "/" + NumberUtil.floorAndAppendSuffix(200, true), x + 166, y + 204, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, NumberUtil.floorAndAppendSuffix(resourceSoul, true) + "/" + NumberUtil.floorAndAppendSuffix(200, true), x + 166, y + 286, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.SELYAN), x + 50, y + 11, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.LUXON), x + 50, y + 41, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.EREBON), x + 50, y + 71, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.PLUTON), x + 50, y + 101, 1.25f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.RAGE_RESOURCE), x + 166, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.ENERGY_RESOURCE), x + 166, y + 67, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.CREATION_RESOURCE), x + 166, y + 149, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString(LocaleUtil.Constants.SOUL_RESOURCE), x + 166, y + 231, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, (int)resourceRage + "/" + 200, x + 166, y + 40, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, (int)resourceEnergy + "/" + 200, x + 166, y + 122, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.floorAndAppendSuffix(resourceCreation, true) + "/" + NumberUtil.floorAndAppendSuffix(200, true), x + 166, y + 204, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.floorAndAppendSuffix(resourceSoul, true) + "/" + NumberUtil.floorAndAppendSuffix(200, true), x + 166, y + 286, 1.125f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
 	}
 
-	private void renderSkills() {
+	private void renderSkills(MatrixStack matrix) {
 		int x;
 		int y;
 		Minecraft mc = Minecraft.getInstance();
-		mc.getTextureManager().bindTexture(skillsTextures);
+		mc.getTextureManager().bind(skillsTextures);
 		RenderSystem.enableAlphaTest();
 
 		for (Skills skill : Skills.values()) {
@@ -297,12 +288,12 @@ public class AdventGuiTabPlayer extends Screen {
 			}
 
 			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-			RenderUtil.renderScaledCustomSizedTexture(x, y, uvX, uvY, 50, 50, 62, 62, 450, 240);
-			RenderUtil.renderScaledCustomSizedTexture(x, y + 50, 0, 200, 100, 20, 62, 13, 450, 240);
-			RenderUtil.renderScaledCustomSizedTexture(x, y + 50, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 62, 13, 450, 240);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, x, y, uvX, uvY, 50, 50, 62, 62, 450, 240);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 50, 0, 200, 100, 20, 62, 13, 450, 240);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 50, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 62, 13, 450, 240);
 
 			if (optionalUvX >= 0)
-				RenderUtil.renderScaledCustomSizedTexture(x + 38, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, x + 38, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
 		}
 
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
@@ -401,71 +392,70 @@ public class AdventGuiTabPlayer extends Screen {
 			if (lvl >= 1000)
 				hitXpCap = true;
 
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, skillName, x + 31, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
-			RenderSystem.scalef(1.25f, 1.25f, 1.25f);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, skillName, x + 31, y - 15, 1.5625f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+			matrix.scale(1.25f, 1.25f, 1.25f);
 
-			mc.fontRenderer.drawStringWithShadow(LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.level", String.valueOf(lvl)), x * 0.8f, (y + 65) * 0.8f, NumberUtil.RGB(255, 255, 255));
+			mc.font.drawShadow(matrix, LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.level", String.valueOf(lvl)), x * 0.8f, (y + 65) * 0.8f, NumberUtil.RGB(255, 255, 255));
 
 			if (!hitXpCap)
-				mc.fontRenderer.drawStringWithShadow(LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.xp", NumberUtil.floorAndAppendSuffix(xp, true), NumberUtil.floorAndAppendSuffix(PlayerUtil.getXpRequiredForNextLevel(lvl), true)), x * 0.8f, (y + 77) * 0.8f, NumberUtil.RGB(255, 255, 255));
+				mc.font.drawShadow(matrix, LocaleUtil.getLocaleString("gui.aoa3.adventGui.stats.xp", NumberUtil.floorAndAppendSuffix(xp, true), NumberUtil.floorAndAppendSuffix(PlayerUtil.getXpRequiredForNextLevel(lvl), true)), x * 0.8f, (y + 77) * 0.8f, NumberUtil.RGB(255, 255, 255));
 
-			RenderSystem.scalef(0.8f, 0.8f, 0.8f);
+			matrix.scale(0.8f, 0.8f, 0.8f);
 		}
 
 		RenderSystem.disableAlphaTest();
 	}
 
-	private void drawPlayerBox(int posX, int posY, int mouseX, int mouseY, int scale) {
+	private void drawPlayerBox(MatrixStack matrix, int posX, int posY, int mouseX, int mouseY, int scale) {
+		matrix.pushPose();
+
 		if (entityToRender == null)
 			setRenderEntity();
 
-		RenderSystem.scalef(1.6f, 1.6f, 1.6f);
+		matrix.scale(1.6f, 1.6f, 1.6f);
 		Minecraft mc = Minecraft.getInstance();
 		
-		String name = mc.player.getDisplayName().getFormattedText();
-		RenderUtil.drawCenteredScaledString(mc.fontRenderer, name, (int)(posX * 0.625f), (int)((posY - 170) * 0.625f), 1.0f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-		RenderSystem.scalef(0.625f, 0.625f, 0.625f);
+		ITextComponent name = mc.player.getDisplayName();
+		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, name, (int)(posX * 0.625f), (int)((posY - 170) * 0.625f), 1.0f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+		matrix.scale(0.625f, 0.625f, 0.625f);
 
-		RenderSystem.pushMatrix();
-		RenderSystem.translatef((float)posX, (float)posY, 1050.0F);
-		RenderSystem.scalef(1.0F, 1.0F, -1.0F);
-
-		MatrixStack matrix = new MatrixStack();
+		matrix.translate((float)posX, (float)posY, 1050.0F);
+		matrix.scale(1.0F, 1.0F, -1.0F);
 
 		matrix.translate(0.0D, 0.0D, 1000.0D);
 		matrix.scale((float)scale, (float)scale, (float)scale);
 
 		Quaternion quaternion = Vector3f.XP.rotationDegrees(180f);
 
-		matrix.rotate(quaternion);
+		matrix.mulPose(quaternion);
 
-		float yawOffset = entityToRender.renderYawOffset;
-		float rotYaw = entityToRender.rotationYaw;
-		float rotPitch = entityToRender.rotationPitch;
-		float prevYawHead = entityToRender.prevRotationYawHead;
-		float rotYawHead = entityToRender.rotationYawHead;
-		entityToRender.renderYawOffset = 0;
-		entityToRender.rotationYaw = (float)Math.atan(((((AdventMainGui.scaledRootX + 264) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
-		entityToRender.rotationPitch = -((float)Math.atan(((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
-		entityToRender.rotationYawHead = entityToRender.rotationYaw;
-		entityToRender.prevRotationYawHead = entityToRender.rotationYaw;
-		EntityRendererManager renderManager = Minecraft.getInstance().getRenderManager();
+		float yawOffset = entityToRender.yBodyRot;
+		float rotYaw = entityToRender.yRot;
+		float rotPitch = entityToRender.xRot;
+		float prevYawHead = entityToRender.yHeadRotO;
+		float rotYawHead = entityToRender.yHeadRot;
+		entityToRender.yBodyRot = 0;
+		entityToRender.yRot = (float)Math.atan(((((AdventMainGui.scaledRootX + 264) / AdventMainGui.scaleInverse) - mouseX) / 40.0F)) * 40.0F;
+		entityToRender.xRot = -((float)Math.atan(((((AdventMainGui.scaledRootY + 465) / AdventMainGui.scaleInverse) - 50 - mouseY) / 40.0F))) * 20.0F;
+		entityToRender.yHeadRot = entityToRender.yRot;
+		entityToRender.yHeadRotO = entityToRender.yRot;
+		EntityRendererManager renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
 
 		renderManager.setRenderShadow(false);
 
-		IRenderTypeBuffer.Impl renderBuffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+		IRenderTypeBuffer.Impl renderBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 
-		renderManager.renderEntityStatic(entityToRender, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, 15728880);
-		renderBuffer.finish();
+		renderManager.render(entityToRender, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, 15728880);
+		renderBuffer.endBatch();
 		renderManager.setRenderShadow(true);
 
-		entityToRender.renderYawOffset = yawOffset;
-		entityToRender.rotationYaw = rotYaw;
-		entityToRender.rotationPitch = rotPitch;
-		entityToRender.prevRotationYawHead = prevYawHead;
-		entityToRender.rotationYawHead = rotYawHead;
+		entityToRender.yBodyRot = yawOffset;
+		entityToRender.yRot = rotYaw;
+		entityToRender.xRot = rotPitch;
+		entityToRender.yHeadRotO = prevYawHead;
+		entityToRender.yHeadRot = rotYawHead;
 
-		RenderSystem.popMatrix();
+		matrix.popPose();
 	}
 
 	public static void setSkillData(Skills skill, float xp, int lvl, int opt) {
@@ -738,8 +728,8 @@ public class AdventGuiTabPlayer extends Screen {
 	}
 
 	@Override
-	public void onClose() {
-		super.onClose();
+	public void removed() {
+		super.removed();
 
 		if (entityToRender != null && !(entityToRender instanceof PlayerEntity))
 			entityToRender.remove();
@@ -768,95 +758,32 @@ public class AdventGuiTabPlayer extends Screen {
 			Minecraft mc = Minecraft.getInstance();
 			
 			if (optExpedition >= 4) {
-				switch (RandomUtil.randomNumberUpTo(29)) {
-					case 0:
-						entityToRender = new ArcwormEntity(AoAEntities.Mobs.ARCWORM.get(), mc.world);
-						break;
-					case 1:
-						entityToRender = new ChargerEntity(AoAEntities.Mobs.CHARGER.get(), mc.world);
-						break;
-					case 2:
-						entityToRender = new DesertChargerEntity(AoAEntities.Mobs.DESERT_CHARGER.get(), mc.world);
-						break;
-					case 3:
-						entityToRender = new HillChargerEntity(AoAEntities.Mobs.HILL_CHARGER.get(), mc.world);
-						break;
-					case 4:
-						entityToRender = new OcculentEntity(AoAEntities.Mobs.OCCULENT.get(), mc.world);
-						break;
-					case 5:
-						entityToRender = new SeaChargerEntity(AoAEntities.Mobs.SEA_CHARGER.get(), mc.world);
-						break;
-					case 6:
-						entityToRender = new SnowChargerEntity(AoAEntities.Mobs.SNOW_CHARGER.get(), mc.world);
-						break;
-					case 7:
-						entityToRender = new SwampChargerEntity(AoAEntities.Mobs.SWAMP_CHARGER.get(), mc.world);
-						break;
-					case 8:
-						entityToRender = new VoidChargerEntity(AoAEntities.Mobs.VOID_CHARGER.get(), mc.world);
-						break;
-					case 9:
-						entityToRender = new FacelessRunnerEntity(AoAEntities.Mobs.FACELESS_RUNNER.get(), mc.world);
-						break;
-					case 10:
-						entityToRender = new GruntEntity(AoAEntities.Mobs.GRUNT.get(), mc.world);
-						break;
-					case 11:
-						entityToRender = new CyclopsEntity(AoAEntities.Mobs.CYCLOPS.get(), mc.world);
-						break;
-					case 12:
-						entityToRender = new BruteEntity(AoAEntities.Mobs.BRUTE.get(), mc.world);
-						break;
-					case 13:
-						entityToRender = new KrankyEntity(AoAEntities.Mobs.KRANKY.get(), mc.world);
-						break;
-					case 14:
-						entityToRender = new GingerbreadManEntity(AoAEntities.Mobs.GINGERBREAD_MAN.get(), mc.world);
-						break;
-					case 15:
-						entityToRender = new ShadeEntity(AoAEntities.Mobs.SHADE.get(), mc.world);
-						break;
-					case 16:
-						entityToRender = new BoboEntity(AoAEntities.Mobs.BOBO.get(), mc.world);
-						break;
-					case 17:
-						entityToRender = new ChockoEntity(AoAEntities.Mobs.CHOCKO.get(), mc.world);
-						break;
-					case 18:
-						entityToRender = new StitchesEntity(AoAEntities.Mobs.STITCHES.get(), mc.world);
-						break;
-					case 19:
-						entityToRender = new BugeyeEntity(AoAEntities.Mobs.BUGEYE.get(), mc.world);
-						break;
-					case 20:
-						entityToRender = new SeaTrollEntity(AoAEntities.Mobs.SEA_TROLL.get(), mc.world);
-						break;
-					case 21:
-						entityToRender = new ShyreTrollEntity(AoAEntities.Mobs.SHYRE_TROLL.get(), mc.world);
-						break;
-					case 22:
-						entityToRender = new EliteSkelePigEntity(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), mc.world);
-						break;
-					case 23:
-						entityToRender = new SpearmintSnailEntity(AoAEntities.Animals.SPEARMINT_SNAIL.get(), mc.world);
-						break;
-					case 24:
-						entityToRender = new ShadowEntity(AoAEntities.Mobs.SHADOW.get(), mc.world);
-						break;
-					case 25:
-						entityToRender = new SeaSkeletonEntity(AoAEntities.Mobs.SEA_SKELETON.get(), mc.world);
-						break;
-					case 26:
-						entityToRender = new AlarmoEntity(AoAEntities.Mobs.ALARMO.get(), mc.world);
-						break;
-					case 27:
-						entityToRender = new AncientGolemEntity(AoAEntities.Mobs.ANCIENT_GOLEM.get(), mc.world);
-						break;
-					case 28:
-						entityToRender = new StickyEntity(AoAEntities.Mobs.STICKY.get(), mc.world);
-						break;
-				}
+				entityToRender = RandomUtil.getRandomSelection(
+						AoAEntities.Mobs.ARCWORM,
+						AoAEntities.Mobs.CHARGER,
+						AoAEntities.Mobs.DESERT_CHARGER,
+						AoAEntities.Mobs.HILL_CHARGER,
+						AoAEntities.Mobs.OCCULENT,
+						AoAEntities.Mobs.SEA_CHARGER,
+						AoAEntities.Mobs.SNOW_CHARGER,
+						AoAEntities.Mobs.SWAMP_CHARGER,
+						AoAEntities.Mobs.VOID_CHARGER,
+						AoAEntities.Mobs.CYCLOPS,
+						AoAEntities.Mobs.STICKY,
+						AoAEntities.Mobs.KRANKY,
+						AoAEntities.Mobs.GINGERBREAD_MAN,
+						AoAEntities.Mobs.SHADE,
+						AoAEntities.Mobs.BOBO,
+						AoAEntities.Mobs.CHOCKO,
+						AoAEntities.Mobs.STITCHES,
+						AoAEntities.Mobs.BUGEYE,
+						AoAEntities.Mobs.SEA_TROLL,
+						AoAEntities.Mobs.ELITE_SKELE_PIG,
+						AoAEntities.Animals.SPEARMINT_SNAIL,
+						AoAEntities.Mobs.SHADOW,
+						AoAEntities.Mobs.ALARMO,
+						AoAEntities.Mobs.ANCIENT_GOLEM
+				).get().create(mc.level);
 			}
 			else {
 				entityToRender = mc.player;

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class OmniArmour extends AdventArmour {
 	public OmniArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:omni", 50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 3), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:omni", 50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
@@ -37,11 +37,11 @@ public class OmniArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots == null && DamageUtil.isMeleeDamage(event.getSource()))
-			WorldUtil.createExplosion(plData.player(), plData.player().world, plData.player().getPosition(), 1.75f);
+			WorldUtil.createExplosion(plData.player(), plData.player().level, plData.player().blockPosition(), 1.75f);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.omni_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

@@ -23,31 +23,31 @@ public class PrimordialBow extends BaseBow {
 
 	@Override
 	public void onBlockHit(CustomArrowEntity arrow, BlockRayTraceResult rayTrace, Entity shooter) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(arrow.world, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ());
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(arrow.level, arrow.getX(), arrow.getY(), arrow.getZ());
 
 		cloud.addEffect(new EffectInstance(Effects.WITHER, 40, 0, false, true));
-		cloud.setParticleData(ParticleTypes.SMOKE);
+		cloud.setParticle(ParticleTypes.SMOKE);
 		cloud.setRadius(2);
 		cloud.setDuration(200);
 
-		arrow.world.addEntity(cloud);
+		arrow.level.addFreshEntity(cloud);
 	}
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(arrow.world, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ());
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(arrow.level, arrow.getX(), arrow.getY(), arrow.getZ());
 
 		cloud.addEffect(new EffectInstance(Effects.WITHER, 40, 0, false, true));
-		cloud.setParticleData(ParticleTypes.SMOKE);
+		cloud.setParticle(ParticleTypes.SMOKE);
 		cloud.setRadius(2);
 		cloud.setDuration(200);
 
-		arrow.world.addEntity(cloud);
+		arrow.level.addFreshEntity(cloud);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -12,7 +12,7 @@ public class ArchmageEnchantment extends Enchantment {
 		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.STAFF, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseStaff;
@@ -23,12 +23,12 @@ public class ArchmageEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 24 + enchantmentLevel * 3;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 50;
+	public int getMaxCost(int enchantmentLevel) {
+		return getMinCost(enchantmentLevel) + 50;
 	}
 }

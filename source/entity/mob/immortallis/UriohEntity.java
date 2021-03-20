@@ -27,26 +27,6 @@ public class UriohEntity extends AoAMeleeMob {
 		return size.height * 0.6f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.0f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 35;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -67,24 +47,24 @@ public class UriohEntity extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (lastHealth != getHealth()) {
-			recalculateSize();
+			refreshDimensions();
 			lastHealth = getHealth();
 		}
 	}
 
 	@Override
-	public EntitySize getSize(Pose pose) {
+	public EntitySize getDimensions(Pose pose) {
 		float scale = Math.max(0.1f, getHealth() / getMaxHealth());
 
-		return super.getSize(pose).scale(0.5f * scale, 0.9375f * scale);
+		return super.getDimensions(pose).scale(0.5f * scale, 0.9375f * scale);
 	}
 }

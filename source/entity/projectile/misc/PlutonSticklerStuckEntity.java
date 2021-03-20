@@ -28,10 +28,10 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	public PlutonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), shooter.world);
+		super(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
-		setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 0);
+		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
@@ -40,15 +40,15 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.0f;
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {}
+	protected void onHit(RayTraceResult result) {}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
 	public void tick() {
@@ -56,25 +56,25 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 
 		age++;
 
-		if (world.isRemote)
+		if (level.isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
-			setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 360);
+			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(shooter, world, this, 2.0f);
+			WorldUtil.createExplosion(shooter, level, this, 2.0f);
 			explodeCoins();
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(shooter, world, getPosX(), getPosY() + 1, getPosZ(), 2.0f);
+			WorldUtil.createExplosion(shooter, level, getX(), getY() + 1, getZ(), 2.0f);
 			explodeCoins();
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 		}
 	}
@@ -83,19 +83,19 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 		for (float x = -0.5f; x <= 0.5f; x += 0.5f) {
 			for (float y = -0.5f; y <= 0.5f; y += 0.5f) {
 				for (float z = -0.5f; z <= 0.5f; z += 0.5f) {
-					ItemEntity coin = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(AoAItems.COPPER_COIN.get()));
+					ItemEntity coin = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(AoAItems.COPPER_COIN.get()));
 
-					coin.setPickupDelay(120);
-					coin.addVelocity(x, y, z);
+					coin.setPickUpDelay(120);
+					coin.push(x, y, z);
 					coin.lifespan = 140;
-					world.addEntity(coin);
+					level.addFreshEntity(coin);
 				}
 			}
 		}
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

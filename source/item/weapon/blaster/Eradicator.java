@@ -32,16 +32,16 @@ public class Eradicator extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new EradicatorShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new EradicatorShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity) {
-			EffectInstance poison = ((LivingEntity)target).getActivePotionEffect(Effects.POISON);
+			EffectInstance poison = ((LivingEntity)target).getEffect(Effects.POISON);
 
 			if (poison != null) {
-				poison.combine(new EffectInstance(Effects.POISON, poison.getDuration() + 5, 0, false, true));
+				poison.update(new EffectInstance(Effects.POISON, poison.getDuration() + 5, 0, false, true));
 			}
 			else {
 				EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 5));
@@ -50,8 +50,8 @@ public class Eradicator extends BaseBlaster {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

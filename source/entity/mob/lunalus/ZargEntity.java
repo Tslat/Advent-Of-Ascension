@@ -23,26 +23,6 @@ public class ZargEntity extends AoAMeleeMob {
 		return 1.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 120;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 15.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -62,13 +42,13 @@ public class ZargEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote && getAttackTarget() != null && RandomUtil.oneInNChance(350)) {
-			FakeZorpEntity fakeZorp = new FakeZorpEntity(getAttackTarget());
+		if (!level.isClientSide && getTarget() != null && RandomUtil.oneInNChance(350)) {
+			FakeZorpEntity fakeZorp = new FakeZorpEntity(getTarget());
 
-			world.addEntity(fakeZorp);
+			level.addFreshEntity(fakeZorp);
 		}
 	}
 }

@@ -24,12 +24,12 @@ public class HorizonMaul extends BaseMaul {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, PlayerEntity attacker, Entity target, float finalDmg, float attackCooldown) {
 		if (target instanceof LivingEntity && attackCooldown == 1f && !EntityUtil.isImmuneToSpecialAttacks(target, attacker))
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.LEVITATION, 35, 0, true, true));
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.LEVITATION, 35, 0, true, true));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }

@@ -19,7 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
@@ -41,12 +41,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class NethengeicWitherEntity extends MonsterEntity implements IRangedAttackMob, AoARangedAttacker {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>createKey(NethengeicWitherEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>createKey(NethengeicWitherEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>createKey(NethengeicWitherEntity.class, DataSerializers.VARINT);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
 	private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
-	private static final EntityPredicate NOT_UNDEAD = (new EntityPredicate()).setDistance(20.0D).setCustomPredicate((entity) -> entity.getCreatureAttribute() != CreatureAttribute.UNDEAD && entity.attackable());
+	private static final EntityPredicate NOT_UNDEAD = (new EntityPredicate()).range(20.0D).selector((entity) -> entity.getMobType() != CreatureAttribute.UNDEAD && entity.attackable());
 	private final float[] xRotationHeads = new float[2];
 	private final float[] yRotationHeads = new float[2];
 	private final float[] xRotOHeads = new float[2];
@@ -60,7 +60,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	public NethengeicWitherEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 
-		getNavigator().setCanSwim(true);
+		getNavigation().setCanFloat(true);
 	}
 
 	@Override
@@ -81,21 +81,12 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1100);
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.32);
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(52);
-	}
-
-	@Override
-	protected void registerData() {
-		super.registerData();
-
-		this.dataManager.register(FIRST_HEAD_TARGET, 0);
-		this.dataManager.register(SECOND_HEAD_TARGET, 0);
-		this.dataManager.register(THIRD_HEAD_TARGET, 0);
+		this.entityData.define(FIRST_HEAD_TARGET, 0);
+		this.entityData.define(SECOND_HEAD_TARGET, 0);
+		this.entityData.define(THIRD_HEAD_TARGET, 0);
 	}
 
 	@Nullable
@@ -115,41 +106,41 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
-	
-	@Override
-	public void livingTick() {
-		Vec3d motion = getMotion().mul(1, 0.6d, 1);
 
-		if (!world.isRemote && getWatchedTargetId(0) > 0) {
-			Entity primaryTarget = world.getEntityByID(getWatchedTargetId(0));
+	@Override
+	public void aiStep() {
+		Vector3d motion = getDeltaMovement().multiply(1, 0.6d, 1);
+
+		if (!level.isClientSide && getWatchedTargetId(0) > 0) {
+			Entity primaryTarget = level.getEntity(getWatchedTargetId(0));
 
 			if (primaryTarget != null) {
 				double yVelocity = motion.y;
 
-				if (getPosY() < primaryTarget.getPosY() || getPosY() < primaryTarget.getPosY() + 5) {
+				if (getY() < primaryTarget.getY() || getY() < primaryTarget.getY() + 5) {
 					yVelocity = Math.max(0.0D, yVelocity);
 					yVelocity = yVelocity + (0.3D - yVelocity * (double)0.6f);
 				}
 
-				motion = new Vec3d(motion.x, yVelocity, motion.z);
-				Vec3d targetVec = new Vec3d(primaryTarget.getPosX() - getPosX(), 00D, primaryTarget.getPosZ() - getPosZ());
+				motion = new Vector3d(motion.x, yVelocity, motion.z);
+				Vector3d targetVec = new Vector3d(primaryTarget.getX() - getX(), 00D, primaryTarget.getZ() - getZ());
 
-				if (horizontalMag(targetVec) > 9.0D) {
+				if (getHorizontalDistanceSqr(targetVec) > 9.0D) {
 					targetVec = targetVec.normalize();
 					motion = motion.add(targetVec.x * 0.3d - motion.x * 0.6d, 0, targetVec.z * 0.3d - motion.z * 0.6d);
 				}
 			}
 		}
 
-		setMotion(motion);
+		setDeltaMovement(motion);
 
-		if (horizontalMag(motion) > 0.05d)
-			rotationYaw = (float)MathHelper.atan2(motion.z, motion.x) * (180f / (float)Math.PI) - 90f;
+		if (getHorizontalDistanceSqr(motion) > 0.05d)
+			yRot = (float)MathHelper.atan2(motion.z, motion.x) * (180f / (float)Math.PI) - 90f;
 
-		super.livingTick();
+		super.aiStep();
 
 		for (int i = 0; i < 2; ++i) {
 			yRotOHeads[i] = yRotationHeads[i];
@@ -161,15 +152,15 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			Entity target = null;
 
 			if (nextTargetID > 0)
-				target = world.getEntityByID(nextTargetID);
+				target = level.getEntity(nextTargetID);
 
 			if (target != null) {
 				double headX = getHeadX(headId + 1);
 				double headY = getHeadY(headId + 1);
 				double headZ = getHeadZ(headId + 1);
-				double headTargetDistanceX = target.getPosX() - headX;
-				double headTargetDistanceY = target.getPosYEye() - headY;
-				double headTargetDistanceZ = target.getPosZ() - headZ;
+				double headTargetDistanceX = target.getX() - headX;
+				double headTargetDistanceY = target.getEyeY() - headY;
+				double headTargetDistanceZ = target.getZ() - headZ;
 				double targetDistance = MathHelper.sqrt(headTargetDistanceX * headTargetDistanceX + headTargetDistanceZ * headTargetDistanceZ);
 				float f = (float)(MathHelper.atan2(headTargetDistanceZ, headTargetDistanceX) * (double)(180f / (float)Math.PI)) - 90f;
 				float f1 = (float)(-(MathHelper.atan2(headTargetDistanceY, targetDistance) * (double)(180f / (float)Math.PI)));
@@ -177,7 +168,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], f, 10.0F);
 			}
 			else {
-				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], renderYawOffset, 10.0F);
+				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], yBodyRot, 10.0F);
 			}
 		}
 
@@ -186,7 +177,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			double nextHeadY = getHeadY(i);
 			double nextHeadZ = getHeadZ(i);
 
-			world.addParticle(ParticleTypes.SMOKE, nextHeadX - rand.nextGaussian() * 0.3, nextHeadY + rand.nextGaussian() * 0.3, nextHeadZ + rand.nextGaussian() * 0.3, 0, 0, 0);
+			level.addParticle(ParticleTypes.SMOKE, nextHeadX - random.nextGaussian() * 0.3, nextHeadY + random.nextGaussian() * 0.3, nextHeadZ + random.nextGaussian() * 0.3, 0, 0, 0);
 		}
 
 		if (getStage() > 1 && getHealth() > 0)
@@ -194,22 +185,22 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		for(int i = 1; i < 3; ++i) {
-			if (ticksExisted >= nextHeadUpdate[i - 1]) {
-				nextHeadUpdate[i - 1] = ticksExisted + 10 + rand.nextInt(10);
+			if (tickCount >= nextHeadUpdate[i - 1]) {
+				nextHeadUpdate[i - 1] = tickCount + 10 + random.nextInt(10);
 
-				if (world.getDifficulty() == Difficulty.NORMAL || world.getDifficulty() == Difficulty.HARD) {
+				if (level.getDifficulty() == Difficulty.NORMAL || level.getDifficulty() == Difficulty.HARD) {
 					int prevHeadId = i - 1;
 					int idleHeadUpdate = idleHeadUpdates[prevHeadId];
 					idleHeadUpdates[prevHeadId] = idleHeadUpdates[prevHeadId] + 1;
 
 					if (idleHeadUpdate > 15) {
-						double targetPosX = MathHelper.nextDouble(rand, getPosX() - 10, getPosX() + 10);
-						double targetPosY = MathHelper.nextDouble(rand, getPosY() - 5, getPosY() + 5);
-						double targetPosZ = MathHelper.nextDouble(rand, getPosZ() - 10, getPosZ() + 10);
+						double targetPosX = MathHelper.nextDouble(random, getX() - 10, getX() + 10);
+						double targetPosY = MathHelper.nextDouble(random, getY() - 5, getY() + 5);
+						double targetPosZ = MathHelper.nextDouble(random, getZ() - 10, getZ() + 10);
 
 						shootAtBlockPos(i + 1, targetPosX, targetPosY, targetPosZ);
 
@@ -220,15 +211,15 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 				int targetId = getWatchedTargetId(i);
 
 				if (targetId > 0) {
-					Entity entity = world.getEntityByID(targetId);
+					Entity entity = level.getEntity(targetId);
 
-					if (entity != null && entity.isAlive() && !(getDistanceSq(entity) > 900) && canEntityBeSeen(entity)) {
-						if (entity instanceof PlayerEntity && ((PlayerEntity)entity).abilities.disableDamage) {
+					if (entity != null && entity.isAlive() && !(distanceToSqr(entity) > 900) && canSee(entity)) {
+						if (entity instanceof PlayerEntity && ((PlayerEntity)entity).abilities.invulnerable) {
 							setWatchedTargetId(i, 0);
 						}
 						else {
 							shootAtTarget(i + 1, (LivingEntity)entity);
-							nextHeadUpdate[i - 1] = ticksExisted + 40 + rand.nextInt(20);
+							nextHeadUpdate[i - 1] = tickCount + 40 + random.nextInt(20);
 							idleHeadUpdates[i - 1] = 0;
 						}
 					}
@@ -237,18 +228,18 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 					}
 				}
 				else {
-					List<LivingEntity> list = world.getTargettableEntitiesWithinAABB(LivingEntity.class, NOT_UNDEAD, this, getBoundingBox().grow(20, 8, 20));
+					List<LivingEntity> list = level.getNearbyEntities(LivingEntity.class, NOT_UNDEAD, this, getBoundingBox().inflate(20, 8, 20));
 
 					for(int j2 = 0; j2 < 10 && !list.isEmpty(); ++j2) {
-						LivingEntity entity = list.get(rand.nextInt(list.size()));
+						LivingEntity entity = list.get(random.nextInt(list.size()));
 
-						if (entity != this && entity.isAlive() && !entity.isEntityUndead() && canEntityBeSeen(entity)) {
+						if (entity != this && entity.isAlive() && !entity.isInvertedHealAndHarm() && canSee(entity)) {
 							if (entity instanceof PlayerEntity) {
-								if (!((PlayerEntity)entity).abilities.disableDamage)
-									setWatchedTargetId(i, entity.getEntityId());
+								if (!((PlayerEntity)entity).abilities.invulnerable)
+									setWatchedTargetId(i, entity.getId());
 							}
 							else {
-								setWatchedTargetId(i, entity.getEntityId());
+								setWatchedTargetId(i, entity.getId());
 							}
 							break;
 						}
@@ -259,8 +250,8 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			}
 		}
 
-		if (getAttackTarget() != null) {
-			setWatchedTargetId(0, getAttackTarget().getEntityId());
+		if (getTarget() != null) {
+			setWatchedTargetId(0, getTarget().getId());
 		}
 		else {
 			setWatchedTargetId(0, 0);
@@ -271,20 +262,20 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 
 	private double getHeadX(int head) {
 		if (head <= 0)
-			return this.getPosX();
+			return this.getX();
 
-		return this.getPosX() + MathHelper.cos((this.renderYawOffset + (180 * (head - 1))) * 0.017453292F) * 1.3;
+		return this.getX() + MathHelper.cos((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
 	}
 
 	private double getHeadY(int head) {
-		return this.getPosY() + 3;
+		return this.getY() + 3;
 	}
 
 	private double getHeadZ(int head) {
 		if (head <= 0)
-			return this.getPosZ();
+			return this.getZ();
 
-		return this.getPosX() + MathHelper.sin((this.renderYawOffset + (180 * (head - 1))) * 0.017453292F) * 1.3;
+		return this.getX() + MathHelper.sin((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
 	}
 
 	private float clampRotation(float xRotationOld, float xRotationNew, float max) {
@@ -301,23 +292,23 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			attackCooldown = getAttackCooldown();
 			BaseMobProjectile projectile = new NethengeicWitherShotEntity(this, getStage() == 3);
 
-			double distanceFactorX = posX - projectile.getPosX();
-			double distanceFactorY = posY - projectile.getPosY();
-			double distanceFactorZ = posZ - projectile.getPosZ();
+			double distanceFactorX = posX - projectile.getX();
+			double distanceFactorY = posY - projectile.getY();
+			double distanceFactorZ = posZ - projectile.getZ();
 			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-			projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.world.getDifficulty().getId()));
-			world.addEntity(projectile);
+			projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
+			level.addFreshEntity(projectile);
 		}
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effectInstanceIn) {
+	public boolean addEffect(EffectInstance effectInstanceIn) {
 		return false;
 	}
 
@@ -346,30 +337,30 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	private void shootAtTarget(int head, LivingEntity target) {
-		shootAtBlockPos(head, target.getPosX(), target.getPosY() + target.getEyeHeight() + 0.5, target.getPosZ());
+		shootAtBlockPos(head, target.getX(), target.getY() + target.getEyeHeight() + 0.5, target.getZ());
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		this.shootAtTarget(0, target);
 	}
 
 	@Override
-	public void swingArm(Hand hand) {}
+	public void swing(Hand hand) {}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source.getTrueSource() instanceof NethengeicWitherEntity || DamageUtil.isMagicDamage(source, this, 1) || source.isExplosion() || source.isFireDamage() || super.isInvulnerableTo(source);
+		return source.getEntity() instanceof NethengeicWitherEntity || DamageUtil.isMagicDamage(source, this, 1) || source.isExplosion() || source.isFire() || super.isInvulnerableTo(source);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -383,39 +374,39 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	public int getWatchedTargetId(int head) {
-		return this.dataManager.get(HEAD_TARGETS[head]);
+		return this.entityData.get(HEAD_TARGETS[head]);
 	}
 
 	public void setWatchedTargetId(int head, int entityId) {
-		this.dataManager.set(HEAD_TARGETS[head], entityId);
+		this.entityData.set(HEAD_TARGETS[head], entityId);
 	}
 
 	@Override
-	protected boolean canBeRidden(Entity entityIn) {
+	protected boolean canRide(Entity entityIn) {
 		return false;
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.nethengeicWither.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.nethengeicWither.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
-		if (target.attackEntityFrom(DamageSource.causeIndirectDamage(projectile, this), projectile instanceof NethengeicWitherShotEntity ? ((NethengeicWitherShotEntity)projectile).cataclysmic ? 30 : 20 : 20))
+		if (target.hurt(DamageSource.indirectMobAttack(projectile, this), projectile instanceof NethengeicWitherShotEntity ? ((NethengeicWitherShotEntity)projectile).cataclysmic ? 30 : 20 : 20))
 			doProjectileImpactEffect(projectile, target);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
@@ -431,35 +422,35 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			}
 		}
 
-		WorldUtil.createExplosion(this, world, projectile, 2f);
+		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.NETHENGEIC_WITHER_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.NETHENGEIC_WITHER_MUSIC.getId()));
 		bossInfo.removePlayer(player);

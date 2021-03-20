@@ -15,6 +15,7 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
@@ -33,75 +34,55 @@ public class SkeledonEntity extends AoAMeleeMob {
 		return 1.1875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 120;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11.5f;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_SKELETON_AMBIENT;
+		return SoundEvents.SKELETON_AMBIENT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_SKELETON_DEATH;
+		return SoundEvents.SKELETON_DEATH;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_SKELETON_HURT;
+		return SoundEvents.SKELETON_HURT;
 	}
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		cloakCooldown--;
 
 		if (cloakCooldown == 0) {
 			cloakCooldown = 80;
 
-			setMotion(getMotion().mul(0.5f, 1, 0.5f));
+			setDeltaMovement(getDeltaMovement().multiply(0.5f, 1, 0.5f));
 			EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 20));
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-			Entity attacker = cause.getTrueSource();
+		if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+			Entity attacker = cause.getEntity();
 
 			if (attacker instanceof PlayerEntity || attacker instanceof TameableEntity) {
 				ServerPlayerEntity pl = null;

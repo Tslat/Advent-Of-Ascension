@@ -10,7 +10,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -55,11 +55,11 @@ public class MoonlightStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, BlockPos args) {
-		world.addEntity(new MoonlightFallEntity(caster, this, args.getX(), args.getY() + 30, args.getZ(), 3f));
+		world.addFreshEntity(new MoonlightFallEntity(caster, this, args.getX(), args.getY() + 30, args.getZ(), 3f));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity caster) {
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity caster) {
 		createCloud(shot, caster);
 	}
 
@@ -75,21 +75,21 @@ public class MoonlightStaff extends BaseStaff<BlockPos> {
 	}
 
 	private void createCloud(BaseEnergyShot shot, LivingEntity caster) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.world, shot.getPosX(), shot.getPosY(), shot.getPosZ());
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shot.level, shot.getX(), shot.getY(), shot.getZ());
 
 		cloud.setOwner(caster);
-		cloud.addEffect(new EffectInstance(Effects.SLOWNESS, 140, 1, false, true));
+		cloud.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 140, 1, false, true));
 		cloud.setRadius(0.1f);
 		cloud.setRadiusPerTick(1);
 		cloud.setDuration(10);
 		cloud.setWaitTime(0);
 
-		shot.world.addEntity(cloud);
+		shot.level.addFreshEntity(cloud);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

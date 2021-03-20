@@ -22,26 +22,6 @@ public class VoidWalkerEntity extends AoAMeleeMob {
 		return 0.75f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -59,18 +39,9 @@ public class VoidWalkerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected int getMaxSpawnHeight() {
-		return 50;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity)
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 200, 0, true, true));
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.BLINDNESS, 200, 0, true, true));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

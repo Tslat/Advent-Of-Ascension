@@ -39,27 +39,27 @@ public class FrameBenchRecipe implements IRecipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AoABlocks.FRAME_BENCH.get());
 	}
 
 	@Override
 	public boolean matches(Inventory inv, World world) {
-		return inv.getStackInSlot(0).getItem() == input.getItem();
+		return inv.getItem(0).getItem() == input.getItem();
 	}
 
 	@Override
-	public ItemStack getCraftingResult(Inventory inv) {
+	public ItemStack assemble(Inventory inv) {
 		return output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width * height == 1;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return output.copy();
 	}
 
@@ -87,7 +87,7 @@ public class FrameBenchRecipe implements IRecipe<Inventory> {
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> ingredients = NonNullList.<Ingredient>create();
 
-		ingredients.add(Ingredient.fromStacks(input));
+		ingredients.add(Ingredient.of(input));
 
 		return ingredients;
 	}

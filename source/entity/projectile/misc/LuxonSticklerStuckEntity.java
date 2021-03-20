@@ -28,10 +28,10 @@ public class LuxonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	public LuxonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.LUXON_STICKLER_STUCK.get(), shooter.world);
+		super(AoAEntities.Projectiles.LUXON_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
-		setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 0);
+		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
@@ -40,12 +40,12 @@ public class LuxonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.0f;
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {}
+	protected void onHit(RayTraceResult result) {}
 
 	@Override
 	public void tick() {
@@ -53,39 +53,39 @@ public class LuxonSticklerStuckEntity extends ThrowableEntity {
 
 		age++;
 
-		if (world.isRemote)
+		if (level.isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
-			setLocationAndAngles(target.getPosX(), target.getPosY() + target.getEyeHeight(), target.getPosZ(), 0, 360);
+			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(owner, world, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 
 			return;
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(owner, world, getPosX(), getPosY() + 1, getPosZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
 
-			if (!world.isRemote)
+			if (!level.isClientSide)
 				remove();
 
 			return;
 		}
 
-		if (world.getGameTime() % 40 == 0)
-			EntityUtil.applyPotions(world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(7), EntityUtil.Predicates.HOSTILE_MOB), new PotionUtil.EffectBuilder(Effects.GLOWING, 45));
+		if (level.getGameTime() % 40 == 0)
+			EntityUtil.applyPotions(level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(7), EntityUtil.Predicates.HOSTILE_MOB), new PotionUtil.EffectBuilder(Effects.GLOWING, 45));
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

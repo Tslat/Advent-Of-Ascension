@@ -25,7 +25,7 @@ import net.tslat.aoa3.util.*;
 import javax.annotation.Nullable;
 
 public class FlyeEntity extends AoAFlyingMeleeMob {
-	private static final DataParameter<BlockPos> ALTAR_POS = EntityDataManager.<BlockPos>createKey(FlyeEntity.class, DataSerializers.BLOCK_POS);
+	private static final DataParameter<BlockPos> ALTAR_POS = EntityDataManager.<BlockPos>defineId(FlyeEntity.class, DataSerializers.BLOCK_POS);
 	private BlockPos altarPos = null;
 
 	public FlyeEntity(EntityType<? extends FlyingEntity> entityType, World world) {
@@ -35,49 +35,29 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	public FlyeEntity(World world, BlockPos altarPos) {
 		this(AoAEntities.Mobs.FLYE.get(), world);
 
-		this.dataManager.set(ALTAR_POS, altarPos);
+		this.entityData.set(ALTAR_POS, altarPos);
 
 		BlockPos spawnPos;
 
 		do {
 			spawnPos = RandomUtil.getRandomPositionWithinRange(altarPos, 20, 20, 20);
 		}
-		while (world.getBlockState(spawnPos).getMaterial().blocksMovement());
+		while (world.getBlockState(spawnPos).getMaterial().blocksMotion());
 
-		setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+		setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 		EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.GLOWING, PotionUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(ALTAR_POS, BlockPos.ZERO);
+		entityData.define(ALTAR_POS, BlockPos.ZERO);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 1.375f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 50;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
 	}
 
 	@Nullable
@@ -99,11 +79,11 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 
 		if (key == ALTAR_POS) {
-			altarPos = dataManager.get(ALTAR_POS);
+			altarPos = entityData.get(ALTAR_POS);
 
 			if (altarPos == BlockPos.ZERO)
 				altarPos = null;
@@ -111,31 +91,31 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
 		if (altarPos != null)
-			compound.putLong("GrawAltarPos", altarPos.toLong());
+			compound.putLong("GrawAltarPos", altarPos.asLong());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("GrawAltarPos"))
-			altarPos = BlockPos.fromLong(compound.getLong("GrawAltarPos"));
+			altarPos = BlockPos.of(compound.getLong("GrawAltarPos"));
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote && altarPos != null && world.getGameTime() % 40 == 0 && !altarPos.withinDistance(getPosition(), 30)) {
-			double posX = ((altarPos.getX() + rand.nextFloat() * 2f - 1f) * 10f);
-			double posY = ((altarPos.getY() + rand.nextFloat() * 2f - 1f) * 10f);
-			double posZ = ((altarPos.getZ() + rand.nextFloat() * 2f - 1f) * 10f);
+		if (!level.isClientSide && altarPos != null && level.getGameTime() % 40 == 0 && !altarPos.closerThan(blockPosition(), 30)) {
+			double posX = ((altarPos.getX() + random.nextFloat() * 2f - 1f) * 10f);
+			double posY = ((altarPos.getY() + random.nextFloat() * 2f - 1f) * 10f);
+			double posZ = ((altarPos.getZ() + random.nextFloat() * 2f - 1f) * 10f);
 
-			getMoveHelper().setMoveTo(posX, posY, posZ, 1d);
+			getMoveControl().setWantedPosition(posX, posY, posZ, 1d);
 		}
 	}
 
@@ -153,19 +133,19 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			if (world.getDimension().getType() == AoADimensions.LELYETIA.type() && DamageUtil.isMeleeDamage(cause) && cause.getTrueSource() instanceof PlayerEntity) {
-				PlayerEntity pl = (PlayerEntity)cause.getTrueSource();
+		if (!level.isClientSide) {
+			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof PlayerEntity) {
+				PlayerEntity pl = (PlayerEntity)cause.getEntity();
 
-				if (pl.getPosY() >= 80 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.HAVEN_REALMSTONE.get()));
 			}
 
-			if (altarPos != null && recentlyHit > 0)
-				entityDropItem(new ItemStack(AoAItems.GUARDIANS_EYE.get()), 0);
+			if (altarPos != null && lastHurtByPlayerTime > 0)
+				spawnAtLocation(new ItemStack(AoAItems.GUARDIANS_EYE.get()), 0);
 		}
 	}
 }

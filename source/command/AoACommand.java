@@ -5,10 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.tslat.aoa3.util.LocaleUtil;
 
 public class AoACommand {
@@ -16,10 +13,9 @@ public class AoACommand {
 
 	public static void registerSubCommands(CommandDispatcher<CommandSource> dispatcher) {
 		LiteralArgumentBuilder<CommandSource> cmd = Commands.literal("aoa")
-				.then(EventCommand.register(dispatcher))
 				.then(PortalResetCommand.register(dispatcher))
 				.then(PlayerCommand.register(dispatcher))
-				.then(StructureCommand.register(dispatcher))
+				.then(StructuresCommand.register(dispatcher))
 				.then(WikiCommand.register(dispatcher));
 
 		dispatcher.register(cmd);
@@ -46,11 +42,11 @@ public class AoACommand {
 		}
 	}
 
-	protected static void feedback(CommandSource source, String commandName, String langKey, AoACommand.CommandFeedbackType type, String... args) {
-		source.sendFeedback(AoACommand.getCmdPrefix(commandName).appendSibling(LocaleUtil.getLocaleMessage(langKey, args).setStyle(new Style().setColor(type.getColour()))), true);
+	protected static void feedback(CommandSource source, String commandName, String langKey, AoACommand.CommandFeedbackType type, ITextComponent... args) {
+		source.sendSuccess(AoACommand.getCmdPrefix(commandName).append(LocaleUtil.getLocaleMessage(langKey, args).setStyle(Style.EMPTY.applyFormat(type.getColour()))), true);
 	}
 
-	protected static void error(CommandSource source, String commandName, String langKey, String... args) {
-		source.sendErrorMessage(AoACommand.getCmdPrefix(commandName).appendSibling(LocaleUtil.getLocaleMessage(langKey, args).setStyle(new Style().setColor(AoACommand.CommandFeedbackType.ERROR.getColour()))));
+	protected static void error(CommandSource source, String commandName, String langKey, ITextComponent... args) {
+		source.sendFailure(AoACommand.getCmdPrefix(commandName).append(LocaleUtil.getLocaleMessage(langKey, args).setStyle(Style.EMPTY.applyFormat(AoACommand.CommandFeedbackType.ERROR.getColour()))));
 	}
 }

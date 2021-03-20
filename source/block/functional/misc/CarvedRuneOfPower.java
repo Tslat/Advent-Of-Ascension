@@ -7,10 +7,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
@@ -23,26 +20,26 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class CarvedRuneOfPower extends Block {
 	public CarvedRuneOfPower() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLACK, 3f, 10f, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_BLACK, 3f, 10f, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
-			if (player.getHeldItem(hand).getItem() instanceof Realmstone) {
-				Realmstone realmstone = (Realmstone)player.getHeldItem(hand).getItem();
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide) {
+			if (player.getItemInHand(hand).getItem() instanceof Realmstone) {
+				Realmstone realmstone = (Realmstone)player.getItemInHand(hand).getItem();
 				PortalBlock portalBlock = (PortalBlock)realmstone.getPortalBlock().get();
-				AoAPortalFrame.PortalDirection direction = AoAPortalFrame.testFrameForActivation(world, pos, hit.getFace(), portalBlock);
+				AoAPortalFrame.PortalDirection direction = AoAPortalFrame.testFrameForActivation(world, pos, hit.getDirection(), portalBlock);
 
 				if (direction == AoAPortalFrame.PortalDirection.EXISTING) {
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.existing"));
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.existing"), Util.NIL_UUID);
 				}
 				else if (direction == AoAPortalFrame.PortalDirection.INVALID) {
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"));
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"), Util.NIL_UUID);
 				}
 				else {
 					AoAPortalFrame.lightPortalFrame(world, pos, direction, portalBlock);
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame." + realmstone.getPortalMessageSuffix()));
+					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame." + realmstone.getPortalMessageSuffix()), Util.NIL_UUID);
 
 					if (realmstone.getActivationSound() != null)
 						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), realmstone.getActivationSound().get(), SoundCategory.MASTER, 1.0f, 1.0f);
@@ -50,9 +47,9 @@ public class CarvedRuneOfPower extends Block {
 
 				return ActionResultType.SUCCESS;
 			}
-			else if (player.getHeldItem(hand).getItem() instanceof BlankRealmstone) {
-				if (world.getBlockState(pos.offset(Direction.UP)).getBlock() instanceof PortalBlock) {
-					world.setBlockState(pos.offset(Direction.UP), Blocks.AIR.getDefaultState());
+			else if (player.getItemInHand(hand).getItem() instanceof BlankRealmstone) {
+				if (world.getBlockState(pos.relative(Direction.UP)).getBlock() instanceof PortalBlock) {
+					world.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.AIR.defaultBlockState());
 
 					return ActionResultType.SUCCESS;
 				}

@@ -20,7 +20,7 @@ public class CorallusRenderer extends MobRenderer<CorallusEntity, EntityModel<Co
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(CorallusEntity corallus) {
+	public ResourceLocation getTextureLocation(CorallusEntity corallus) {
 		return corallus.isEnraged() ? ENRAGED_TEXTURE : TEXTURE;
 	}
 }

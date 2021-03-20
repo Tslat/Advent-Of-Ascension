@@ -25,41 +25,16 @@ public class PaladinEntity extends AoAMeleeMob {
 		return 1.71875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 109;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 16d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 18;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	@Override

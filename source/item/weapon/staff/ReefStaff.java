@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -42,17 +42,17 @@ public class ReefStaff extends BaseStaff<Boolean> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Boolean args) {
-		float velocityX = -MathHelper.sin(caster.rotationYaw * (float)Math.PI / 180f) * MathHelper.cos(caster.rotationPitch * (float)Math.PI / 180f);
-		float velocityY = -MathHelper.sin(caster.rotationPitch * (float)Math.PI / 180f);
-		float velocityZ = MathHelper.cos(caster.rotationYaw * (float)Math.PI / 180f) * MathHelper.cos(caster.rotationPitch * (float)Math.PI / 180f);
+		float velocityX = -MathHelper.sin(caster.yRot * (float)Math.PI / 180f) * MathHelper.cos(caster.xRot * (float)Math.PI / 180f);
+		float velocityY = -MathHelper.sin(caster.xRot * (float)Math.PI / 180f);
+		float velocityZ = MathHelper.cos(caster.yRot * (float)Math.PI / 180f) * MathHelper.cos(caster.xRot * (float)Math.PI / 180f);
 
-		caster.setMotion(new Vec3d(velocityX * 3, velocityY * 3, velocityZ * 3));
-		caster.velocityChanged = true;
+		caster.setDeltaMovement(new Vector3d(velocityX * 3, velocityY * 3, velocityZ * 3));
+		caster.hurtMarked = true;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

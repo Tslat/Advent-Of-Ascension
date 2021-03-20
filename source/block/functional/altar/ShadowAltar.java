@@ -16,15 +16,15 @@ import java.util.concurrent.TimeUnit;
 
 public class ShadowAltar extends BossAltarBlock {
 	public ShadowAltar() {
-		super(MaterialColor.BLACK);
+		super(MaterialColor.COLOR_BLACK);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		if (!player.world.isRemote) {
+		if (!player.level.isClientSide) {
 			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.isPotionActive(Effects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (player.hasEffect(Effects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.DUSTOPIA_REALMSTONE.get()));
 		}
 	}

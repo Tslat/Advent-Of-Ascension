@@ -13,11 +13,11 @@ public class TraderFaceCustomerGoal extends LookAtGoal {
 		this.trader = trader;
 	}
 
-	public boolean shouldExecute() {
+	public boolean canUse() {
 		if (!trader.isTrading())
 			return false;
 
-		closestEntity = trader.getCustomer();
+		lookAt = trader.getTradingPlayer();
 
 		return true;
 	}

@@ -22,26 +22,6 @@ public class DiocusEntity extends AoAMeleeMob {
 		return 0.84375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 64d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

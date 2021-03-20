@@ -24,13 +24,13 @@ public class CrystocoreRenderer extends MobRenderer<CrystocoreEntity, EntityMode
 	}
 
 	@Override
-	protected void preRenderCallback(CrystocoreEntity crystocore, MatrixStack matrix, float partialTicks) {
+	protected void scale(CrystocoreEntity crystocore, MatrixStack matrix, float partialTicks) {
 		matrix.scale(2, 2, 2);
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(CrystocoreEntity crystocore) {
+	public ResourceLocation getTextureLocation(CrystocoreEntity crystocore) {
 		switch (crystocore.getPhase()) {
 			case 0:
 				return POISON_PHASE_TEXTURE;

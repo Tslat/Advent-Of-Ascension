@@ -16,7 +16,7 @@ public abstract class PotionUtil {
 	public static final int AMBIENT_POTION_DURATION = -1;
 
 	public static boolean amplifyEffect(EffectInstance effect, int amplification) {
-		return effect.combine(new EffectInstance(effect.getPotion(), effect.getDuration(), effect.getAmplifier() + amplification, effect.isAmbient(), effect.doesShowParticles(), effect.isShowIcon()));
+		return effect.update(new EffectInstance(effect.getEffect(), effect.getDuration(), effect.getAmplifier() + amplification, effect.isAmbient(), effect.isVisible(), effect.showIcon()));
 	}
 
 	public static class EffectBuilder {
@@ -119,19 +119,19 @@ public abstract class PotionUtil {
 		public ItemStack build() {
 			ItemStack stack = new ItemStack(potionItem);
 			CompoundNBT nbt = stack.getOrCreateTag();
-			CompoundNBT displayTag = stack.getOrCreateChildTag("display");
+			CompoundNBT displayTag = stack.getOrCreateTagElement("display");
 
 			if (displayName != null)
-				stack.setDisplayName(translatable ? new TranslationTextComponent(displayName) : new StringTextComponent(displayName));
+				stack.setHoverName(translatable ? new TranslationTextComponent(displayName) : new StringTextComponent(displayName));
 
 			if (dynamicColour && effects != null)
-				colour = PotionUtils.getPotionColorFromEffectList(effects);
+				colour = PotionUtils.getColor(effects);
 
 			if (colour != null)
 				displayTag.putString("CustomPotionColor", Integer.toHexString(colour));
 
 			if (effects != null && !effects.isEmpty())
-				PotionUtils.appendEffects(stack, effects);
+				PotionUtils.setCustomEffects(stack, effects);
 
 			if (!displayTag.isEmpty())
 				nbt.put("display", displayTag);

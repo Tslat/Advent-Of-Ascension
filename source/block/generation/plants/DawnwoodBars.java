@@ -16,7 +16,7 @@ public class DawnwoodBars extends BidirectionalStackablePlant {
 	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 1D, 0.625D));
 
 	public DawnwoodBars() {
-		super(BlockUtil.generateBlockProperties(Material.TALL_PLANTS, MaterialColor.BLACK, 1, 0, SoundType.PLANT));
+		super(BlockUtil.generateBlockProperties(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_BLACK, 1, 0, SoundType.GRASS));
 	}
 
 	@Override

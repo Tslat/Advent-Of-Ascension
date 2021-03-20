@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class PrecasianLottomanEntity extends LottomanEntity {
 	public PrecasianLottomanEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -15,8 +16,8 @@ public class PrecasianLottomanEntity extends LottomanEntity {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.PRECASIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.PRECASIA.key);
 	}
 
 	@Override

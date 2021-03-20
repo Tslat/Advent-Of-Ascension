@@ -15,19 +15,20 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
 public class VoxLight extends LightBlock {
 	public VoxLight() {
-		super(MaterialColor.GREEN_TERRACOTTA, Material.GLASS, 0.6f, 1.2f, 8);
+		super(MaterialColor.TERRACOTTA_GREEN, Material.GLASS, 0.6f, 1.2f, 8);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get() && world.getDimension().getType() == AoADimensions.MYSTERIUM.type()) {
-			if (!world.isRemote) {
-				List<ItemEntity> itemsList = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get() && WorldUtil.isWorld(world, AoADimensions.MYSTERIUM.key)) {
+			if (!world.isClientSide) {
+				List<ItemEntity> itemsList = world.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
 
 				if (itemsList.size() > 1) {
 					ItemEntity realmstone = null;
@@ -44,7 +45,7 @@ public class VoxLight extends LightBlock {
 						}
 
 						if (realmstone != null && runicEnergy != null) {
-							player.getHeldItem(hand).shrink(1);
+							player.getItemInHand(hand).shrink(1);
 							realmstone.setItem(new ItemStack(AoAItems.RUNANDOR_REALMSTONE.get()));
 							runicEnergy.remove();
 

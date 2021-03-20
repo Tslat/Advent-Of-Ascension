@@ -1,7 +1,9 @@
 package net.tslat.aoa3.worldgen.worlds.lelyetia;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.library.misc.AoATeleporter;
@@ -24,5 +26,15 @@ public class LelyetiaTeleporter extends AoATeleporter {
 	@Override
 	public Block getBorderBlock() {
 		return AoABlocks.LELYETIAN_BRICKS.get();
+	}
+
+	@Override
+	public BlockPos findExistingPortal(World world, Entity entity) {
+		return super.findExistingPortal(world, entity);
+	}
+
+	@Override
+	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
+		return super.findSuitablePortalLocation(world, entity);
 	}
 }

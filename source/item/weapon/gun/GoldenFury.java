@@ -40,12 +40,12 @@ public class GoldenFury extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
 			LimoniteBulletEntity bullet = new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 
-			if (!player.world.isRemote) {
+			if (!player.level.isClientSide) {
 				for (int i = 0; i < 6; i++) {
-					((ServerWorld)player.world).spawnParticle(ParticleTypes.DRAGON_BREATH, bullet.getPosX() + random.nextGaussian() / 5d, bullet.getPosY() + random.nextGaussian() / 5d, bullet.getPosZ() + random.nextGaussian() / 5d, 1, 0, 0, 0, 0d);
+					((ServerWorld)player.level).sendParticles(ParticleTypes.DRAGON_BREATH, bullet.getX() + random.nextGaussian() / 5d, bullet.getY() + random.nextGaussian() / 5d, bullet.getZ() + random.nextGaussian() / 5d, 1, 0, 0, 0, 0d);
 				}
 			}
 
@@ -57,21 +57,21 @@ public class GoldenFury extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.world, (target.getPosX() + bullet.getPosX()) / 2d, (target.getPosY() + bullet.getPosY()) / 2d, (target.getPosZ() + bullet.getPosZ()) / 2d);
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 		cloud.setOwner(shooter);
-		cloud.setParticleData(ParticleTypes.DRAGON_BREATH);
+		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(1f);
 		cloud.setDuration(20);
 		cloud.setRadiusPerTick((5.0F - cloud.getRadius()) / (float)cloud.getDuration());
-		cloud.addEffect(new EffectInstance(Effects.INSTANT_DAMAGE, 1, 0));
+		cloud.addEffect(new EffectInstance(Effects.HARM, 1, 0));
 
-		bullet.world.addEntity(cloud);
+		bullet.level.addFreshEntity(cloud);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

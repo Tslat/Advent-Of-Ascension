@@ -23,7 +23,7 @@ public class BaronessRenderer extends AoAMobRenderer {
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(MobEntity baroness) {
+	public ResourceLocation getTextureLocation(MobEntity baroness) {
 		return baroness.isInvulnerable() ? INVULN_TEXTURE : TEXTURE;
 	}
 }

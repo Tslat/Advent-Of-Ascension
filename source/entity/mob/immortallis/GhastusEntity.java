@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
@@ -26,26 +27,6 @@ public class GhastusEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 0.5625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
 	}
 
 	@Nullable
@@ -68,28 +49,28 @@ public class GhastusEntity extends AoAMeleeMob {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		heal(1f);
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-			Entity attacker = cause.getTrueSource();
+	if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+			Entity attacker = cause.getEntity();
 
 			if (attacker instanceof PlayerEntity || attacker instanceof TameableEntity) {
 				PlayerEntity pl = null;

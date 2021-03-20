@@ -20,18 +20,20 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock;
+
 public abstract class BossAltarBlock extends Block {
-	public BossAltarBlock(Block.Properties properties) {
+	public BossAltarBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 
 	public BossAltarBlock(MaterialColor mapColour) {
-		this(BlockUtil.generateBlockProperties(Material.ROCK, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
+		this(BlockUtil.generateBlockProperties(Material.STONE, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
 			return ActionResultType.PASS;
@@ -64,6 +66,6 @@ public abstract class BossAltarBlock extends Block {
 	}
 
 	protected void sendSpawnMessage(PlayerEntity player, TranslationTextComponent msg, BlockPos pos) {
-		PlayerUtil.messageAllPlayersInRange(msg, player.world, pos, 50);
+		PlayerUtil.messageAllPlayersInRange(msg, player.level, pos, 50);
 	}
 }

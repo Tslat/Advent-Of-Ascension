@@ -26,7 +26,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class GrawEntity extends AoAFlyingRangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int pullCountdown = 400;
 
 	public GrawEntity(EntityType<? extends FlyingEntity> entityType, World world) {
@@ -36,26 +36,6 @@ public class GrawEntity extends AoAFlyingRangedMob {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 2f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 2500;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
 	}
 
 	@Nullable
@@ -83,7 +63,7 @@ public class GrawEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -94,9 +74,9 @@ public class GrawEntity extends AoAFlyingRangedMob {
 		if (!isAlive())
 			return;
 
-		if (!world.isRemote) {
-			if (getPosY() > 110)
-				setMotion(getMotion().add(-1.5 + rand.nextInt(3), -4.5, -1.5 + rand.nextInt(3)));
+		if (!level.isClientSide) {
+			if (getY() > 110)
+				setDeltaMovement(getDeltaMovement().add(-1.5 + random.nextInt(3), -4.5, -1.5 + random.nextInt(3)));
 
 			pullCountdown--;
 
@@ -104,18 +84,18 @@ public class GrawEntity extends AoAFlyingRangedMob {
 				if (pullCountdown <= 0)
 					pullCountdown = 400;
 
-				for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(85), PlayerUtil::shouldPlayerBeAffected)) {
-					if (!pl.isSneaking()) {
-						pl.addVelocity(Math.signum(getPosX() - pl.getPosX()) * 0.139, Math.signum(getPosY() - pl.getPosY()) * 0.04, Math.signum(getPosZ() - pl.getPosZ()) * 0.139);
-						pl.velocityChanged = true;
+				for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(85), PlayerUtil::shouldPlayerBeAffected)) {
+					if (!pl.isShiftKeyDown()) {
+						pl.push(Math.signum(getX() - pl.getX()) * 0.139, Math.signum(getY() - pl.getY()) * 0.04, Math.signum(getZ() - pl.getZ()) * 0.139);
+						pl.hurtMarked = true;
 					}
 				}
 			}
 			else {
-				for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, getBoundingBox().grow(85), PlayerUtil::shouldPlayerBeAffected)) {
-					if (!pl.isSneaking()) {
-						pl.addVelocity(Math.signum(getPosX() - pl.getPosX()) * 0.008, Math.signum(getPosY() - pl.getPosY()) * 0.005, Math.signum(getPosZ() - pl.getPosZ()) * 0.008);
-						pl.velocityChanged = true;
+				for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(85), PlayerUtil::shouldPlayerBeAffected)) {
+					if (!pl.isShiftKeyDown()) {
+						pl.push(Math.signum(getX() - pl.getX()) * 0.008, Math.signum(getY() - pl.getY()) * 0.005, Math.signum(getZ() - pl.getZ()) * 0.008);
+						pl.hurtMarked = true;
 					}
 				}
 			}
@@ -124,12 +104,12 @@ public class GrawEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 2.5f);
+		WorldUtil.createExplosion(this, level, projectile, 2.5f);
 	}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 2.5f);
+		WorldUtil.createExplosion(this, level, projectile, 2.5f);
 	}
 
 	@Override
@@ -138,50 +118,50 @@ public class GrawEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.graw.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.graw.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GRAW_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GRAW_MUSIC.getId()));
 		bossInfo.removePlayer(player);

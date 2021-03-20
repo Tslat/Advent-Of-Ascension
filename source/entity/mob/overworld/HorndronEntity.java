@@ -22,26 +22,6 @@ public class HorndronEntity extends AoAMeleeMob {
 		return 1.5625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -58,13 +38,4 @@ public class HorndronEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_HORNDRON_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

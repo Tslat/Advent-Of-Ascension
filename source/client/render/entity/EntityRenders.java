@@ -24,7 +24,8 @@ import net.tslat.aoa3.client.model.entity.mob.deeplands.*;
 import net.tslat.aoa3.client.model.entity.mob.dustopia.*;
 import net.tslat.aoa3.client.model.entity.mob.gardencia.*;
 import net.tslat.aoa3.client.model.entity.mob.greckon.*;
-import net.tslat.aoa3.client.model.entity.mob.haven.*;
+import net.tslat.aoa3.client.model.entity.mob.haven.SpiritGuardianModel;
+import net.tslat.aoa3.client.model.entity.mob.haven.SpiritProtectorModel;
 import net.tslat.aoa3.client.model.entity.mob.immortallis.*;
 import net.tslat.aoa3.client.model.entity.mob.iromine.*;
 import net.tslat.aoa3.client.model.entity.mob.lborean.*;
@@ -46,7 +47,6 @@ import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.client.render.entity.minion.AlluricornRenderer;
 import net.tslat.aoa3.client.render.entity.minion.FriendlyCreeperRenderer;
 import net.tslat.aoa3.client.render.entity.misc.*;
-import net.tslat.aoa3.client.render.entity.mob.PhantomRenderer;
 import net.tslat.aoa3.client.render.entity.mob.*;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.blasters.*;
@@ -56,17 +56,29 @@ import net.tslat.aoa3.client.render.entity.projectile.misc.*;
 import net.tslat.aoa3.client.render.entity.projectile.mob.*;
 import net.tslat.aoa3.client.render.entity.projectile.staff.*;
 import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.entity.animal.CorateeEntity;
+import net.tslat.aoa3.entity.boss.KrorEntity;
+import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
+import net.tslat.aoa3.entity.mob.lborean.MuncherEntity;
+import net.tslat.aoa3.entity.mob.lborean.NeptunoEntity;
+import net.tslat.aoa3.entity.mob.lborean.SeaViperEntity;
 import net.tslat.aoa3.entity.projectile.arrow.PopShotEntity;
 import net.tslat.aoa3.entity.projectile.blaster.*;
 import net.tslat.aoa3.entity.projectile.cannon.*;
 import net.tslat.aoa3.entity.projectile.gun.*;
-import net.tslat.aoa3.entity.projectile.mob.*;
+import net.tslat.aoa3.entity.projectile.mob.BulletShotEntity;
+import net.tslat.aoa3.entity.projectile.mob.ConstructTerrorShotEntity;
+import net.tslat.aoa3.entity.projectile.mob.ModuloShotEntity;
+import net.tslat.aoa3.entity.projectile.mob.SkyShotEntity;
 import net.tslat.aoa3.entity.projectile.staff.DestructionShotEntity;
 import net.tslat.aoa3.entity.projectile.thrown.*;
 import net.tslat.aoa3.util.NumberUtil;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
+import java.util.function.Function;
 
 public class EntityRenders {
-	private static final EntityRendererManager renderManager = Minecraft.getInstance().getRenderManager();
+	private static final EntityRendererManager renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
 
 	public static void registerEntityRenderers() {
 		registerMobRenderer(AoAEntities.NPCs.ABYSSAL_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/abyssal_lottoman.png"));
@@ -75,11 +87,11 @@ public class EntityRenders {
 		renderManager.register(AoAEntities.Minions.ALLURICORN.get(), new AlluricornRenderer(renderManager));
 		renderManager.register(AoAEntities.Animals.AMBIENT_PIXON.get(), new PixonRenderer(renderManager, NumberUtil.RGB(255, 255, 255)));
 		registerMobRenderer(AoAEntities.Mobs.AMPHIBIOR.get(), new AmphibiorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/amphibior.png"));
-		registerMobRenderer(AoAEntities.Mobs.AMPHIBIYTE.get(), new AmphibiyteModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/amphibiyte.png"));
+		registerMobRenderer(AoAEntities.Mobs.AMPHIBIYTE.get(), new AmphibiyteModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/amphibiyte.png"));
 		registerMobRenderer(AoAEntities.Mobs.ANCIENT_GOLEM.get(), new AncientGolemModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ancient_golem.png"));
-		registerMobRenderer(AoAEntities.Mobs.ANEMIA.get(), new AnemiaModel(), 3f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/anemia.png"));
-		registerMobRenderer(AoAEntities.Mobs.ANGELICA.get(), new AngelicaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/angelica.png"));
-		registerMobRenderer(AoAEntities.Mobs.ANGLER.get(), new AnglerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/angler.png"));
+		registerMobRenderer(AoAEntities.Mobs.ANEMIA.get(), new AnemiaModel(), 3f, new ResourceLocation("aoa3", "textures/entities/mobs/abyss/anemia.png"));
+		registerMobRenderer(AoAEntities.Animals.ANGELICA.get(), new AngelicaModel(), new ResourceLocation("aoa3", "textures/entities/animals/angelica.png"));
+		animatedMobRenderer(AoAEntities.Mobs.ANGLER.get(), shadow -> new AnimatedMobRenderer<AnglerEntity>(renderManager, new AnglerModel(), shadow));
 		registerMobRenderer(AoAEntities.NPCs.ANIMA_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/anima_master.png"));
 		registerMobRenderer(AoAEntities.Mobs.APPARITION.get(), new ApparitionModel(), new ResourceLocation("aoa3", "textures/entities/mobs/abyss/apparition.png"));
 		registerMobRenderer(AoAEntities.Mobs.ARC_FLOWER.get(), new ArcflowerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/arcworm.png"));
@@ -93,32 +105,27 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.AROCKNID.get(), new ArocknidModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/deeplands/arocknid.png"));
 		registerMobRenderer(AoAEntities.NPCs.ASSASSIN.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/assassin.png"));
 		registerMobRenderer(AoAEntities.NPCs.AUGURY_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/augury_master.png"));
-		renderManager.register(AoAEntities.Mobs.AUTOMATON.get(), new AutomatonRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.AXIOLIGHT.get(), new AxiolightModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/axiolight.png"));
 		registerMobRenderer(AoAEntities.Mobs.BANE.get(), new BaneModel(), new ResourceLocation("aoa3", "textures/entities/boss/bane/bane.png"));
 		registerMobRenderer(AoAEntities.Misc.BIG_BANE_CLONE.get(), new BaneModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/bane/bane.png"));
 		registerMobRenderer(AoAEntities.Misc.BANE_CLONE.get(), new BaneModel(), new ResourceLocation("aoa3", "textures/entities/boss/bane/bane.png"));
-		registerMobRenderer(AoAEntities.Mobs.BANSHEE.get(), new BansheeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/banshee.png"));
+		registerMobRenderer(AoAEntities.Mobs.BANSHEE.get(), new BansheeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/banshee.png"));
 		registerMobRenderer(AoAEntities.NPCs.BARON_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/baron_lottoman.png"));
 		renderManager.register(AoAEntities.Mobs.BARONESS.get(), new BaronessRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.BASILISK.get(), new BasiliskModel(), new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/basilisk.png"));
 		registerMobRenderer(AoAEntities.Mobs.BAUMBA.get(), new BaumbaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/baumba.png"));
-		registerMobRenderer(AoAEntities.Mobs.BLACK_URSA.get(), new UrsaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/black_ursa.png"));
 		registerMobRenderer(AoAEntities.Minions.BLISSARD.get(), new BlissardModel(), new ResourceLocation("aoa3", "textures/entities/minions/blissard.png"));
-		renderManager.register(AoAEntities.Mobs.BLOODMIST.get(), new BloodmistRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.BLOODSUCKER.get(), new BloodsuckerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/abyss/bloodsucker.png"));
 		renderManager.register(AoAEntities.Animals.BLOOMING_PIXON.get(), new PixonRenderer(renderManager, NumberUtil.RGB(193, 64, 215)));
 		registerMobRenderer(AoAEntities.Mobs.BLUE_FLOWER.get(), new FlowerfaceModel(), new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/blue_vine_minion.png"));
 		registerMobRenderer(AoAEntities.Mobs.BLUE_GUARDIAN.get(), new FourGuardiansModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/blue_guardian.png"));
 		registerMobRenderer(AoAEntities.Mobs.BOBO.get(), new BoboModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/bobo.png"));
 		registerMobRenderer(AoAEntities.Mobs.BOMB_CARRIER.get(), new BombCarrierModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/bomb_carrier.png"));
-		registerMobRenderer(AoAEntities.Mobs.BONE_CREATURE.get(), new BoneCreatureModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/bone_creature.png"));
 		renderManager.register(AoAEntities.Mobs.BONE_CREEPER.get(), new CreeponiaCreeperRenderer(renderManager, new BoneCreeperModel(), new BoneCreeperModel(0.5f), AoAEntities.Mobs.BONE_CREEPER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/bone_creeper.png")));
 		registerMobRenderer(AoAEntities.Mobs.BONEBACK.get(), new BonebackModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/boneback.png"));
 		registerMobRenderer(AoAEntities.NPCs.BOREIC_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/boreic_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.BOUNCER.get(), new BouncerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/runandor/bouncer.png"));
 		registerMobRenderer(AoAEntities.Mobs.BROCCOHEAD.get(), new BroccoheadModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/broccohead.png"));
-		registerMobRenderer(AoAEntities.Mobs.BRUTE.get(), new BruteModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/brute.png"));
 		registerMobRenderer(AoAEntities.Mobs.BUGEYE.get(), new BugeyeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/bugeye.png"));
 		registerMobRenderer(AoAEntities.Mobs.BUSH_BABY.get(), new BushBabyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/bush_baby.png"));
 		registerMobRenderer(AoAEntities.NPCs.BUTCHERY_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/butchery_master.png"));
@@ -132,15 +139,13 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.CELEVIAN_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/celevian_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.CENTINEL.get(), new CentinelModel(), new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/centinel.png"));
 		renderManager.register(AoAEntities.Mobs.CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger.png")));
-		registerMobRenderer(AoAEntities.Mobs.CHERRY_BARRAGER.get(), new CherryBarragerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/candyland/cherry_barrager.png"));
 		registerMobRenderer(AoAEntities.Mobs.CHERRY_BLASTER.get(), new CherryBlasterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/candyland/cherry_blaster.png"));
 		registerMobRenderer(AoAEntities.Mobs.CHIMERA.get(), new ChimeraModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/chimera.png"));
 		registerMobRenderer(AoAEntities.Mobs.CHOCKO.get(), new ChockoModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/chocko.png"));
 		registerMobRenderer(AoAEntities.Mobs.CHOMPER.get(), new ChomperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/chomper.png"));
-		renderManager.register(AoAEntities.Mobs.CLOWN.get(), new ClownRenderer(renderManager));
+		renderManager.register(AoAEntities.Mobs.HAPPY.get(), new HappyRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.CLUNKHEAD.get(), new ClunkheadModel(), new ResourceLocation("aoa3", "textures/entities/boss/clunkhead/clunkhead.png"));
 		registerMobRenderer(AoAEntities.Minions.COMPEER.get(), new CompeerModel(), new ResourceLocation("aoa3", "textures/entities/minions/compeer.png"));
-		registerMobRenderer(AoAEntities.Mobs.CONIFERON.get(), new ConiferonModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/boss/coniferon/coniferon.png"));
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_FLIGHT.get(), new ConstructOfFlightModel(), new ResourceLocation("aoa3", "textures/entities/mobs/crystevia/construct_of_flight.png"));
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_MIND.get(), new ConstructOfMindModel(), new ResourceLocation("aoa3", "textures/entities/mobs/crystevia/construct_of_mind.png"));
 		registerMobRenderer(AoAEntities.Minions.CONSTRUCT_OF_SERVILITY.get(), new ConstructOfServilityModel(), new ResourceLocation("aoa3", "textures/entities/minions/construct_of_servility.png"));
@@ -151,7 +156,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_TERROR.get(), new ConstructOfTerrorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/crystevia/construct_of_terror.png"));
 		renderManager.register(AoAEntities.Mobs.CORALLUS.get(), new CorallusRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.CORALON.get(), new CoralonModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/coralon.png"));
-		registerMobRenderer(AoAEntities.Animals.CORATEE.get(), new CorateeModel(), new ResourceLocation("aoa3", "textures/entities/animals/coratee.png"));
+		animatedMobRenderer(AoAEntities.Animals.CORATEE.get(), shadow -> new AnimatedMobRenderer<CorateeEntity>(renderManager, new CorateeModel(), shadow));
 		registerMobRenderer(AoAEntities.Minions.CORBY.get(), new CorbyModel(), new ResourceLocation("aoa3", "textures/entities/minions/corby.png"));
 		registerMobRenderer(AoAEntities.Mobs.CORNY.get(), new CornyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/corny.png"));
 		registerMobRenderer(AoAEntities.NPCs.CORRUPTED_TRAVELLER.get(), new CorruptedTravellerModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/corrupted_traveller.png"));
@@ -172,17 +177,13 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.CRYSTAL_TRADER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/crystal_trader.png"));
 		renderManager.register(AoAEntities.Mobs.CRYSTOCORE.get(), new CrystocoreRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.CYCLOPS.get(), new CyclopsModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/cyclops.png"));
-		registerMobRenderer(AoAEntities.Mobs.DARK_BEAST.get(), new DarkBeastModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/dark_beast.png"));
-		registerMobRenderer(AoAEntities.Mobs.DAWNLIGHT.get(), new DawnlightModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/dawnlight.png"));
+		registerMobRenderer(AoAEntities.Animals.DAWNLIGHT.get(), new DawnlightModel(), new ResourceLocation("aoa3", "textures/entities/animals/dawnlight.png"));
 		registerMobRenderer(AoAEntities.Mobs.DAYSEE.get(), new DayseeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/daysee.png"));
 		registerMobRenderer(AoAEntities.Mobs.DEAD_TREE.get(), new DeadTreeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/dead_tree.png"));
-		registerMobRenderer(AoAEntities.Mobs.DEATH_HUNTER.get(), new DeathHunterModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/death_hunter.png"));
 		registerMobRenderer(AoAEntities.Mobs.DEINOTHERIUM.get(), new DeinotheriumModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/deinotherium.png"));
-		registerMobRenderer(AoAEntities.Mobs.DEMON_REAPER.get(), new NightReaperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/demon_reaper.png"));
 		renderManager.register(AoAEntities.Mobs.DESERT_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/desert_charger.png")));
 		registerMobRenderer(AoAEntities.Mobs.DESTRUCTOR.get(), new DestructorModel(), 3.5f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/destructor.png"));
 		registerMobRenderer(AoAEntities.Mobs.DEVOURER.get(), new DevourerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/devourer.png"));
-		registerMobRenderer(AoAEntities.Mobs.DICER.get(), new DicerModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/dicer.png"));
 		registerMobRenderer(AoAEntities.Mobs.DIOCUS.get(), new DiocusModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/diocus.png"));
 		registerMobRenderer(AoAEntities.Mobs.DISTORTER.get(), new DistorterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/abyss/distorter.png"));
 		registerMobRenderer(AoAEntities.Mobs.DOUBLER.get(), new DoublerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/deeplands/doubler.png"));
@@ -196,8 +197,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.DWELLER.get(), new DwellerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/deeplands/dweller.png"));
 		registerMobRenderer(AoAEntities.Mobs.DYREHORN.get(), new DyrehornModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/dyrehorn.png"));
 		registerMobRenderer(AoAEntities.Mobs.ECHODAR.get(), new EchodarModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/echodar.png"));
-		registerMobRenderer(AoAEntities.Mobs.EEO.get(), new EeoModel(), new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/eeo.png"));
-		registerMobRenderer(AoAEntities.Mobs.EILOSAPIEN.get(), new EilosapienModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/eilosapien.png"));
+		registerMobRenderer(AoAEntities.Animals.EEO.get(), new EeoModel(), new ResourceLocation("aoa3", "textures/entities/animals/eeo.png"));
 		registerMobRenderer(AoAEntities.Mobs.ELITE_SKELE_HOPPER.get(), new EliteSkeleHopperModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skele_hopper.png"));
 		registerMobRenderer(AoAEntities.Mobs.ELITE_SKELE_PIG.get(), new EliteSkelePigModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skele_pig.png"));
 		registerMobRenderer(AoAEntities.Mobs.ELITE_SKELEMAN.get(), new EliteSkelemanModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skeleman.png"));
@@ -210,15 +210,11 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.ENFORCER.get(), new EnforcerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/iromine/enforcer.png"));
 		registerMobRenderer(AoAEntities.Mobs.EVERBEAST.get(), new EverbeastModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/everbeast.png"));
 		registerMobRenderer(AoAEntities.Mobs.EXOHEAD.get(), new ExoheadModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/exohead.png"));
-		registerMobRenderer(AoAEntities.Mobs.EXOID.get(), new ExoidModel(), new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/exoid.png"));
 		registerMobRenderer(AoAEntities.NPCs.EXPEDITION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/expedition_master.png"));
 		registerMobRenderer(AoAEntities.Mobs.EXPLODOT.get(), new ExplodotModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/explodot.png"));
 		registerMobRenderer(AoAEntities.NPCs.EXPLOSIVES_EXPERT.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/explosives_expert.png"));
 		registerMobRenderer(AoAEntities.NPCs.EXTRACTION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/extraction_master.png"));
-		registerMobRenderer(AoAEntities.Mobs.EYE_CREATURE.get(), new EyeCreatureModel(), new ResourceLocation("aoa3", "textures/entities/mobs/runandor/eye_creature.png"));
 		registerMobRenderer(AoAEntities.Mobs.FACELESS_FLOATER.get(), new FacelessFloaterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/faceless_floater.png"));
-		registerMobRenderer(AoAEntities.Mobs.FACELESS_RUNNER.get(), new FacelessRunnerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/faceless_runner.png"));
-		renderManager.register(AoAEntities.Mobs.FAKE_ZOMBIE_PIGMAN.get(), new FakeZombiePigmanRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.FAKE_ZORP.get(), new ZorpModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/zorp.png"));
 		registerMobRenderer(AoAEntities.Mobs.FENIX.get(), new FenixModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/fenix.png"));
 		registerMobRenderer(AoAEntities.Mobs.FIEND.get(), new FiendModel(), new ResourceLocation("aoa3", "textures/entities/mobs/abyss/fiend.png"));
@@ -241,13 +237,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.GADGETOID.get(), new GadgetoidModel(), new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/gadgetoid.png"));
 		registerMobRenderer(AoAEntities.Mobs.GHASTUS.get(), new GhastusModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/ghastus.png"));
 		registerMobRenderer(AoAEntities.Mobs.GHOST.get(), new GhostModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghost.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTINE_ANCIENT.get(), new GhostineAncientModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostine_ancient.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_BUGEYE.get(), new GhostlyBugeyeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_bugeye.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_CHARGER.get(), new GhostlyChargerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_charger.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_CYCLOPS.get(), new GhostlyCyclopsModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_cyclops.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_GOBLIN.get(), new GhostlyGoblinModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_goblin.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_NIGHT_REAPER.get(), new GhostlyNightReaperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_night_reaper.png"));
-		registerMobRenderer(AoAEntities.Mobs.GHOSTLY_SASQUATCH.get(), new GhostlySasquatchModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ghostly_sasquatch.png"));
 		registerMobRenderer(AoAEntities.Mobs.GIANT_SNAIL.get(), new GiantSnailModel(), 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/giant_snail.png"));
 		registerMobRenderer(AoAEntities.Mobs.GINGERBIRD.get(), new GingerbirdModel(), new ResourceLocation("aoa3", "textures/entities/mobs/candyland/gingerbird.png"));
 		registerMobRenderer(AoAEntities.Mobs.GINGERBREAD_MAN.get(), new GingerbreadManModel(), new ResourceLocation("aoa3", "textures/entities/mobs/candyland/gingerbread_man.png"));
@@ -259,7 +248,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.GOALBY.get(), new GoalbyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/goalby.png"));
 		registerMobRenderer(AoAEntities.Mobs.GOBLIN.get(), new GoblinModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/goblin.png"));
 		registerMobRenderer(AoAEntities.NPCs.GOLDEN_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/golden_lottoman.png"));
-		registerMobRenderer(AoAEntities.Mobs.GOLDORTH.get(), new GoldorthModel(), 1.2f, new ResourceLocation("aoa3", "textures/entities/boss/goldorth/goldorth.png"));
 		registerMobRenderer(AoAEntities.Mobs.GOLDUM.get(), new GoldCreatureModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/goldum.png"));
 		registerMobRenderer(AoAEntities.Mobs.GOLDUS.get(), new GoldCreatureModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/goldus.png"));
 		registerMobRenderer(AoAEntities.Minions.GOOFER.get(), new GooferModel(), new ResourceLocation("aoa3", "textures/entities/minions/goofer.png"));
@@ -271,20 +259,14 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.GREEN_GUARDIAN.get(), new FourGuardiansModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/green_guardian.png"));
 		registerMobRenderer(AoAEntities.Mobs.GRILLFACE.get(), new GrillfaceModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/grillface.png"));
 		registerMobRenderer(AoAEntities.Mobs.GROBBLER.get(), new GrobblerModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/grobbler.png"));
-		registerMobRenderer(AoAEntities.Mobs.GROCCULATE.get(), new GrocculateModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/grocculate.png"));
-		registerMobRenderer(AoAEntities.Mobs.GRUNT.get(), new GruntModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/grunt.png"));
 		registerMobRenderer(AoAEntities.Mobs.GYRO.get(), new GyroModel(), new ResourceLocation("aoa3", "textures/entities/boss/gyro/gyro.png"));
 		registerMobRenderer(AoAEntities.Mobs.HAG.get(), new HagModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hag.png"));
 		registerMobRenderer(AoAEntities.Animals.HALYCON.get(), new HalyconModel(), new ResourceLocation("aoa3", "textures/entities/animals/halycon.png"));
 		registerMobRenderer(AoAEntities.Mobs.HARKOS.get(), new HarkosModel(), new ResourceLocation("aoa3", "textures/entities/boss/primordialfive/harkos.png"));
 		registerMobRenderer(AoAEntities.NPCs.HAULING_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/hauling_master.png"));
 		registerMobRenderer(AoAEntities.NPCs.HAUNTED_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/haunted_lottoman.png"));
-		registerMobRenderer(AoAEntities.Mobs.HEADLESS_DESTROYER.get(), new HeadlessDestroyerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/headless_destroyer.png"));
-		registerMobRenderer(AoAEntities.Mobs.HEADLESS_HUNTER.get(), new HeadlessHunterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/headless_hunter.png"));
 		registerMobRenderer(AoAEntities.Minions.HEALING_GOLEM.get(), new HealingGolemModel(), new ResourceLocation("aoa3", "textures/entities/minions/healing_golem.png"));
-		registerMobRenderer(AoAEntities.Mobs.HELLCAT.get(), new HellcatModel(), 2.2f, new ResourceLocation("aoa3", "textures/entities/mobs/nether/hellcat.png"));
 		registerMobRenderer(AoAEntities.Minions.HELLQUIN.get(), new PenguinModel(), new ResourceLocation("aoa3", "textures/entities/minions/hellquin.png"));
-		registerMobRenderer(AoAEntities.Mobs.HELLSPOT.get(), new HellspotModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/hellspot.png"));
 		registerMobRenderer(AoAEntities.Mobs.HIDING_FUNGI.get(), new HidingFungiModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hiding_fungi.png"));
 		renderManager.register(AoAEntities.Mobs.HILL_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hill_charger.png")));
 		renderManager.register(AoAEntities.Mobs.HIVE_KING.get(), new HiveKingRenderer(renderManager));
@@ -292,13 +274,10 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.HIVE_WORKER.get(), new HiveSoldierModel(), new ResourceLocation("aoa3", "textures/entities/minions/hive_soldier.png"));
 		registerMobRenderer(AoAEntities.Mobs.HORNDRON.get(), new HorndronModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/horndron.png"));
 		registerMobRenderer(AoAEntities.Minions.HORNTAIL.get(), new HorntailModel(), new ResourceLocation("aoa3", "textures/entities/minions/horntail.png"));
-		registerMobRenderer(AoAEntities.Mobs.HORON.get(), new HoronModel(), 1.2f, new ResourceLocation("aoa3", "textures/entities/boss/horon/horon.png"));
-		registerMobRenderer(AoAEntities.Mobs.HOST.get(), new HostModel(), 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/host.png"));
-		registerMobRenderer(AoAEntities.Mobs.HUNCH.get(), new HunchModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/hunch.png"));
+		registerMobRenderer(AoAEntities.Mobs.HOST.get(), new HostModel(), 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/host.png"));
 		registerMobRenderer(AoAEntities.Mobs.HUNTER.get(), new HunterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/hunter.png"));
 		registerMobRenderer(AoAEntities.NPCs.HUNTER_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/hunter_master.png"));
-		renderManager.register(AoAEntities.Mobs.HYDROLISK.get(), new HydroliskRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.HYDROLON.get(), new CoralonModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/boss/hydrolisk/hydrolon.png"));
+		registerMobRenderer(AoAEntities.Mobs.HYDROLON.get(), new CoralonModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/lborean/hydrolon.png"));
 		registerMobRenderer(AoAEntities.Mobs.ICE_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ice_giant.png"));
 		registerMobRenderer(AoAEntities.Mobs.INFERNAL.get(), new InfernalModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/infernal.png"));
 		registerMobRenderer(AoAEntities.NPCs.INFUSION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/infusion_master.png"));
@@ -306,7 +285,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.INMATE_Y.get(), new InmateYModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/inmate_y.png"));
 		registerMobRenderer(AoAEntities.NPCs.INNERVATION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/innervation_master.png"));
 		registerMobRenderer(AoAEntities.Mobs.IOSAUR.get(), new IosaurModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/iosaur.png"));
-		registerMobRenderer(AoAEntities.Mobs.IRKLING.get(), new IrklingModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/irkling.png"));
 		registerMobRenderer(AoAEntities.Mobs.JAWE.get(), new JaweModel(), new ResourceLocation("aoa3", "textures/entities/mobs/abyss/jawe.png"));
 		registerMobRenderer(AoAEntities.Mobs.JUMBO.get(), new JumboModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/jumbo.png"));
 		registerMobRenderer(AoAEntities.Mobs.KAIYU.get(), new KaiyuModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/kaiyu.png"));
@@ -319,7 +297,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.KLOBBER.get(), new KlobberModel(), new ResourceLocation("aoa3", "textures/entities/boss/klobber/klobber.png"));
 		registerMobRenderer(AoAEntities.Mobs.KOKO.get(), new KokoModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/koko.png"));
 		registerMobRenderer(AoAEntities.Mobs.KRANKY.get(), new KrankyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/kranky.png"));
-		registerMobRenderer(AoAEntities.Mobs.KROR.get(), new KrorModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/kror/kror.png"));
+		animatedMobRenderer(AoAEntities.Mobs.KROR.get(), shadow -> new AnimatedMobRenderer<KrorEntity>(renderManager, new KrorModel(), shadow));
 		registerMobRenderer(AoAEntities.Mobs.LEAFY_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/leafy_giant.png"));
 		registerMobRenderer(AoAEntities.NPCs.LELYETIAN_BANKER.get(), new LelyetianNPCModel(), new ResourceLocation("aoa3", "textures/entities/npcs/banker/lelyetian_banker.png"));
 		registerMobRenderer(AoAEntities.Mobs.LELYETIAN_CASTER.get(), new LelyetianCasterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/lelyetian_caster.png"));
@@ -327,7 +305,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.LELYETIAN_TRADER.get(), new LelyetianNPCModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/lelyetian_trader.png"));
 		registerMobRenderer(AoAEntities.Mobs.LELYETIAN_WARRIOR.get(), new LelyetianWarriorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/lelyetian_warrior.png"));
 		registerMobRenderer(AoAEntities.Mobs.LIGHTWALKER.get(), new LightwalkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/lightwalker.png"));
-		registerMobRenderer(AoAEntities.Mobs.LINGER.get(), new LingerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/linger.png"));
 		registerMobRenderer(AoAEntities.Mobs.LITTLE_BAM.get(), new LittleBamModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/little_bam.png"));
 		registerMobRenderer(AoAEntities.Mobs.LIVING_FUNGI.get(), new LivingFungiModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/living_fungi.png"));
 		registerMobRenderer(AoAEntities.NPCs.LOGGING_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/logging_master.png"));
@@ -339,7 +316,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.LURKER.get(), new LurkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/lurker.png"));
 		registerMobRenderer(AoAEntities.Mobs.LUXOCRON.get(), new LuxocronModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/luxocron.png"));
 		renderManager.register(AoAEntities.Mobs.MAGICAL_CREEPER.get(), new CreeponiaCreeperRenderer(renderManager, new MagicalCreeperModel(0), new MagicalCreeperModel(0.5f), AoAEntities.Mobs.MAGICAL_CREEPER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/magical_creeper.png")));
-		registerMobRenderer(AoAEntities.Mobs.MAGICKE.get(), new MagickeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/magicke.png"));
 		registerMobRenderer(AoAEntities.Minions.MECHA_CYCLOPS.get(), new MechaCyclopsModel(), new ResourceLocation("aoa3", "textures/entities/minions/mecha_cyclops.png"));
 		registerMobRenderer(AoAEntities.Minions.MECHA_SKELLOX.get(), new MechaSkelloxModel(), new ResourceLocation("aoa3", "textures/entities/minions/mecha_skellox.png"));
 		registerMobRenderer(AoAEntities.Mobs.MECHACHRON.get(), new MechachronModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/iromine/mechachron.png"));
@@ -352,19 +328,18 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.METALLOID.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/metalloid.png"));
 		registerMobRenderer(AoAEntities.Mobs.MIRAGE.get(), new MirageModel(), new ResourceLocation("aoa3", "textures/entities/boss/mirage/mirage.png"));
 		registerMobRenderer(AoAEntities.Mobs.MISKEL.get(), new MiskelModel(), new ResourceLocation("aoa3", "textures/entities/boss/primordialfive/miskel.png"));
-		registerMobRenderer(AoAEntities.Mobs.MODULO.get(), new ModuloModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/modulo.png"));
+		registerMobRenderer(AoAEntities.Mobs.MODULO.get(), new ModuloModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/lunalus.png"));
 		registerMobRenderer(AoAEntities.Mobs.MOTHER_VOID_WALKER.get(), new MotherVoidWalkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_walker.png"));
 		registerMobRenderer(AoAEntities.Mobs.MUCKOPEDE.get(), new MuckopedeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/muckopede.png"));
-		registerMobRenderer(AoAEntities.Mobs.MUNCHER.get(), new MuncherModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/muncher.png"));
+		animatedMobRenderer(AoAEntities.Mobs.MUNCHER.get(), shadow -> new AnimatedMobRenderer<MuncherEntity>(renderManager, new MuncherModel(), shadow));
 		renderManager.register(AoAEntities.Mobs.MUSHROOM_SPIDER.get(), new AoASpiderRenderer(renderManager, new MushroomSpiderModel(), AoAEntities.Mobs.MUSHROOM_SPIDER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/mushroom_spider.png")));
 		registerMobRenderer(AoAEntities.NPCs.MYSTIC_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/mystic_lottoman.png"));
-		registerMobRenderer(AoAEntities.Mobs.NATURA.get(), new NaturaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/natura.png"));
 		registerMobRenderer(AoAEntities.NPCs.NATURALIST.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/naturalist.png"));
-		registerMobRenderer(AoAEntities.Mobs.NEPTUNO.get(), new NeptunoModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/neptuno.png"));
+		animatedMobRenderer(AoAEntities.Mobs.NEPTUNO.get(), shadow -> new AnimatedMobRenderer<NeptunoEntity>(renderManager, new NeptunoModel(), shadow));
 		registerMobRenderer(AoAEntities.Mobs.NETHENGEIC_BEAST.get(), new NethengeicBeastModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/nethengeic_beast.png"));
 		renderManager.register(AoAEntities.Mobs.NETHENGEIC_WITHER.get(), new NethengeicWitherRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.NIGHT_REAPER.get(), new NightReaperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/night_reaper.png"));
-		registerMobRenderer(AoAEntities.Mobs.NIGHT_WATCHER.get(), new NightWatcherModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/night_watcher.png"));
+		registerMobRenderer(AoAEntities.Animals.NIGHT_WATCHER.get(), new NightWatcherModel(), new ResourceLocation("aoa3", "textures/entities/animals/night_watcher.png"));
 		registerMobRenderer(AoAEntities.Mobs.NIGHTFLY.get(), new NightflyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/nightfly.png"));
 		renderManager.register(AoAEntities.Mobs.NIGHTMARE_SPIDER.get(), new AoASpiderRenderer(renderManager, new NightmareSpiderModel(), AoAEntities.Mobs.NIGHTMARE_SPIDER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/nightmare_spider.png")));
 		registerMobRenderer(AoAEntities.Mobs.NIGHTWING.get(), new NightwingModel(), new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/nightwing.png"));
@@ -375,20 +350,15 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.OMNILIGHT.get(), new OmnilightModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/omnilight.png"));
 		registerMobRenderer(AoAEntities.Mobs.OPTERYX.get(), new OpteryxModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/opteryx.png"));
 		registerMobRenderer(AoAEntities.Mobs.ORANGE_FLOWER.get(), new FlowerfaceModel(), new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/orange_vine_minion.png"));
-		registerMobRenderer(AoAEntities.Mobs.ORBITER.get(), new OrbiterModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/orbiter.png"));
 		registerMobRenderer(AoAEntities.Minions.ORBLING.get(), new OrblingModel(), new ResourceLocation("aoa3", "textures/entities/minions/orbling.png"));
 		registerMobRenderer(AoAEntities.Mobs.PALADIN.get(), new PaladinModel(), new ResourceLocation("aoa3", "textures/entities/mobs/runandor/paladin.png"));
 		registerMobRenderer(AoAEntities.Mobs.PARASECT.get(), new ParasectModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/parasect.png"));
 		registerMobRenderer(AoAEntities.Mobs.PARAVITE.get(), new ParaviteModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/paravite.png"));
 		registerMobRenderer(AoAEntities.Minions.PENGUIN.get(), new PenguinModel(), new ResourceLocation("aoa3", "textures/entities/minions/penguin.png"));
-		registerMobRenderer(AoAEntities.Mobs.PENUMBRA.get(), new PenumbraModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/boss/penumbra/penumbra.png"));
 		registerMobRenderer(AoAEntities.Animals.PEPPERMINT_SNAIL.get(), new SnailModel(), new ResourceLocation("aoa3", "textures/entities/passive/peppermint_snail.png"));
-		renderManager.register(AoAEntities.Mobs.PHANTOM.get(), new PhantomRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.PIGOTRON.get(), new PigotronModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/pigotron.png"));
 		registerMobRenderer(AoAEntities.Mobs.PINCHER.get(), new PincherModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/pincher.png"));
 		registerMobRenderer(AoAEntities.Minions.PLATEOSAUR.get(), new PlateosaurModel(), new ResourceLocation("aoa3", "textures/entities/minions/plateosaur.png"));
 		registerMobRenderer(AoAEntities.Mobs.POD_PLANT.get(), new PodPlantModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/pod_plant.png"));
-		registerMobRenderer(AoAEntities.Mobs.POLAR_URSA.get(), new UrsaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/polar_ursa.png"));
 		registerMobRenderer(AoAEntities.Mobs.POLYTOM.get(), new PolytomModel(), new ResourceLocation("aoa3", "textures/entities/mobs/iromine/polytom.png"));
 		registerMobRenderer(AoAEntities.NPCs.PORTAL_MASTER.get(), new PortalMasterModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/portal_master.png"));
 		registerMobRenderer(AoAEntities.NPCs.PRECASIAN_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/precasian_lottoman.png"));
@@ -401,16 +371,13 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.PROFESSOR.get(), new ProfessorModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/professor.png"));
 		registerMobRenderer(AoAEntities.Mobs.PROSHIELD.get(), new ProshieldModel(), new ResourceLocation("aoa3", "textures/entities/boss/proshield/proshield.png"));
 		registerMobRenderer(AoAEntities.Mobs.PURPLE_FLOWER.get(), new FlowerfaceModel(), new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/purple_vine_minion.png"));
-		registerMobRenderer(AoAEntities.Mobs.QUICKPOCKET.get(), new QuickpocketModel(), new ResourceLocation("aoa3", "textures/entities/mobs/iromine/quickpocket.png"));
 		renderManager.register(AoAEntities.Animals.RADIANT_PIXON.get(), new PixonRenderer(renderManager, NumberUtil.RGB(0, 0, 0)));
-		renderManager.register(AoAEntities.Mobs.RAINICORN.get(), new RainicornRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.RAMMERHEAD.get(), new RammerheadModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/rammerhead.png"));
+		renderManager.register(AoAEntities.Animals.RAINICORN.get(), new RainicornRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Minions.RAMMERHORN.get(), new RammerhornModel(), new ResourceLocation("aoa3", "textures/entities/minions/rammerhorn.png"));
 		registerMobRenderer(AoAEntities.Mobs.RAMRADON.get(), new RamradonModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/ramradon.png"));
 		registerMobRenderer(AoAEntities.Mobs.RAWBONE.get(), new RawboneModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lelyetia/rawbone.png"));
 		registerMobRenderer(AoAEntities.Mobs.RAXXAN.get(), new RaxxanModel(), new ResourceLocation("aoa3", "textures/entities/boss/primordialfive/raxxan.png"));
 		registerMobRenderer(AoAEntities.NPCs.REALMSHIFTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/realmshifter.png"));
-		registerMobRenderer(AoAEntities.Mobs.REAPER_TWINS.get(), new ReaperTwinsModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/reaper_twins.png"));
 		registerMobRenderer(AoAEntities.Mobs.REAVER.get(), new ReaverModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/reaver.png"));
 		registerMobRenderer(AoAEntities.Mobs.RED_GUARDIAN.get(), new FourGuardiansModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/fourguardians/red_guardian.png"));
 		registerMobRenderer(AoAEntities.Mobs.REFLUCT.get(), new RefluctModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/refluct.png"));
@@ -419,7 +386,6 @@ public class EntityRenders {
 		renderManager.register(AoAEntities.Mobs.ROCK_RIDER.get(), new RockRiderRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.ROCKBITER.get(), new RockbiterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/deeplands/rockbiter.png"));
 		registerMobRenderer(AoAEntities.NPCs.ROCKY_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/rocky_lottoman.png"));
-		registerMobRenderer(AoAEntities.Mobs.ROLOSCOPE.get(), new RoloscopeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/roloscope.png"));
 		registerMobRenderer(AoAEntities.Minions.ROSID.get(), new RosidModel(), new ResourceLocation("aoa3", "textures/entities/minions/rosid.png"));
 		registerMobRenderer(AoAEntities.NPCs.RUNATION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/runation_master.png"));
 		renderManager.register(AoAEntities.Mobs.BLUE_RUNE_TEMPLAR.get(), new RuneTemplarRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/runandor/blue_rune_templar.png"), new ResourceLocation("aoa3", "textures/entities/mobs/runandor/blue_rune_templar_disabled.png")));
@@ -439,13 +405,10 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.SAND_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sand_giant.png"));
 		registerMobRenderer(AoAEntities.Mobs.SAND_GOLEM.get(), new SandGolemModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sand_golem.png"));
 		registerMobRenderer(AoAEntities.Mobs.SASQUATCH.get(), new YetiModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sasquatch.png"));
-		registerMobRenderer(AoAEntities.Mobs.SCRUBBY.get(), new ScrubbyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/scrubby.png"));
+		registerMobRenderer(AoAEntities.Mobs.SCRUBBY.get(), new ScrubbyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/scrubby.png"));
 		renderManager.register(AoAEntities.Mobs.SEA_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sea_charger.png")));
-		renderManager.register(AoAEntities.Mobs.SEA_SKELETON.get(), new SeaSkeletonRenderer(renderManager));
-		renderManager.register(AoAEntities.Mobs.SEA_SPIDER.get(), new AoASpiderRenderer(renderManager, new SeaSpiderModel(), AoAEntities.Mobs.SEA_SPIDER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/misc/sea_spider.png")));
 		registerMobRenderer(AoAEntities.Mobs.SEA_TROLL.get(), new SeaTrollModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sea_troll.png"));
-		registerMobRenderer(AoAEntities.Mobs.SEA_VIPER.get(), new SeaViperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/sea_viper.png"));
-		registerMobRenderer(AoAEntities.Mobs.SEEKER.get(), new SeekerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/seeker.png"));
+		animatedMobRenderer(AoAEntities.Mobs.SEA_VIPER.get(), shadowSize -> new AnimatedMobRenderer<SeaViperEntity>(renderManager, new SeaViperModel(), shadowSize));
 		registerMobRenderer(AoAEntities.Minions.SHADDY.get(), new ShaddyModel(), new ResourceLocation("aoa3", "textures/entities/minions/shaddy.png"));
 		registerMobRenderer(AoAEntities.Mobs.SHADE.get(), new ShadeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/shade.png"));
 		renderManager.register(AoAEntities.Mobs.SHADOW.get(), new InvisibleEntityRenderer(renderManager));
@@ -458,10 +421,8 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.SHYRE_ARCHER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/shyre_archer.png"));
 		registerMobRenderer(AoAEntities.NPCs.SHYRE_BANKER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/banker/shyre_banker.png"));
 		registerMobRenderer(AoAEntities.Mobs.SHYRE_KNIGHT.get(), new ShyreKnightModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/shyre_knight.png"));
-		registerMobRenderer(AoAEntities.Mobs.SHYRE_TROLL.get(), new ShyreTrollModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/shyre_troll.png"));
 		registerMobRenderer(AoAEntities.NPCs.SHYRELANDS_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/shyrelands_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.SILENCER.get(), new SilencerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/silencer.png"));
-		registerMobRenderer(AoAEntities.Mobs.SILVERFOOT.get(), new SilverfootModel(), new ResourceLocation("aoa3", "textures/entities/boss/silverfoot/silverfoot.png"));
 		registerMobRenderer(AoAEntities.Mobs.SKELE_ELDER.get(), new SkeleElderModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skele_elder.png"));
 		registerMobRenderer(AoAEntities.Mobs.SKELE_HOPPER.get(), new SkeleHopperModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skele_hopper.png"));
 		registerMobRenderer(AoAEntities.Mobs.SKELE_PIG.get(), new SkelePigModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skele_pig.png"));
@@ -470,11 +431,8 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.SKELEMAN.get(), new SkelemanModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skeleman.png"));
 		renderManager.register(AoAEntities.Mobs.SKELETAL_COWMAN.get(), new SkeletalCowmanRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.SKELETRON.get(), new SkeletronModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skeletron.png"));
-		registerMobRenderer(AoAEntities.Mobs.SKELLOX.get(), new SkelloxModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/skellox.png"));
-		registerMobRenderer(AoAEntities.Mobs.SKIPPER.get(), new SkipperModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/skipper.png"));
-		registerMobRenderer(AoAEntities.Mobs.SKOLLE.get(), new SkolleModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/skolle.png"));
 		registerMobRenderer(AoAEntities.Mobs.SKULL_CREATURE.get(), new SkullCreatureModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/skull_creature.png"));
-		registerMobRenderer(AoAEntities.Mobs.SLIMER.get(), new SlimerModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/abyss/slimer.png"));
+		registerMobRenderer(AoAEntities.Mobs.SLIMER.get(), new SlimerModel(), 2f, new ResourceLocation("aoa3", "textures/entities/mobs/voxponds/slimer.png"));
 		registerMobRenderer(AoAEntities.Mobs.SMASH.get(), new SmashModel(), new ResourceLocation("aoa3", "textures/entities/boss/smash/smash.png"));
 		registerMobRenderer(AoAEntities.Mobs.SNAPPY.get(), new SnappyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/snappy.png"));
 		renderManager.register(AoAEntities.Mobs.SNOW_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/snow_charger.png")));
@@ -485,18 +443,15 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.SPHINX.get(), new SphinxModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/sphinx.png"));
 		registerMobRenderer(AoAEntities.Minions.SPIKEBACK.get(), new BlissardModel(), new ResourceLocation("aoa3", "textures/entities/minions/spikeback.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPINOLEDON.get(), new SpinoledonModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/spinoledon.png"));
-		registerMobRenderer(AoAEntities.Mobs.SPINUX.get(), new SpinuxModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/spinux.png"));
-		registerMobRenderer(AoAEntities.Mobs.SPIRIT_GUARDIAN.get(), new SpiritGuardianModel(), new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/spirit_guardian.png"));
-		registerMobRenderer(AoAEntities.Mobs.SPIRIT_PROTECTOR.get(), new SpiritProtectorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/spirit_guardian.png"));
+		registerMobRenderer(AoAEntities.Mobs.SPIRIT_GUARDIAN.get(), new SpiritGuardianModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/spirit_guardian.png"));
+		registerMobRenderer(AoAEntities.Mobs.SPIRIT_PROTECTOR.get(), new SpiritProtectorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/spirit_guardian.png"));
 		registerMobRenderer(AoAEntities.Minions.SPRAGGY.get(), new SpraggyModel(), new ResourceLocation("aoa3", "textures/entities/minions/spraggy.png"));
 		registerMobRenderer(AoAEntities.Mobs.SQUASHER.get(), new SquasherModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/squasher.png"));
 		registerMobRenderer(AoAEntities.Mobs.SQUIGGLER.get(), new SquigglerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/squiggler.png"));
 		registerMobRenderer(AoAEntities.Mobs.STALKER.get(), new StalkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/stalker.png"));
-		registerMobRenderer(AoAEntities.Mobs.STALKER_PRIME.get(), new StalkerPrimeModel(), new ResourceLocation("aoa3", "textures/entities/mobs/dustopia/stalker.png"));
 		registerMobRenderer(AoAEntities.Mobs.STICKY.get(), new StickyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/sticky.png"));
 		registerMobRenderer(AoAEntities.Mobs.STIMULO.get(), new StimuloModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/stimulo.png"));
 		registerMobRenderer(AoAEntities.Mobs.STIMULOSUS.get(), new StimulosusModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/stimulo.png"));
-		registerMobRenderer(AoAEntities.Mobs.STINGER.get(), new StingerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/stinger.png"));
 		registerMobRenderer(AoAEntities.Mobs.STITCHES.get(), new StitchesModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/stitches.png"));
 		registerMobRenderer(AoAEntities.Mobs.STONE_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/stone_giant.png"));
 		registerMobRenderer(AoAEntities.NPCs.STORE_KEEPER.get(), new StoreKeeperModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/store_keeper.png"));
@@ -505,11 +460,10 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.STRONG_SKELEMAN.get(), new StrongSkelemanModel(), new ResourceLocation("aoa3", "textures/entities/boss/skeletalarmy/skeleman.png"));
 		registerMobRenderer(AoAEntities.Mobs.SUGARFACE.get(), new SugarfaceModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/sugarface.png"));
 		registerMobRenderer(AoAEntities.Mobs.SUNNY.get(), new SunnyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/sunny.png"));
-		registerMobRenderer(AoAEntities.Mobs.SURVEYOR.get(), new SurveyorModel(), 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/surveyor.png"));
 		renderManager.register(AoAEntities.Mobs.SWAMP_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/swamp_charger.png")));
 		registerMobRenderer(AoAEntities.Mobs.SYSKER.get(), new SyskerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/shyrelands/sysker.png"));
 		renderManager.register(AoAEntities.Mobs.TERRADON.get(), new TerradonRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.TERRESTRIAL.get(), new TerrestrialModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/terrestrial.png"));
+		registerMobRenderer(AoAEntities.Mobs.TERRESTRIAL.get(), new TerrestrialModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/terrestrial.png"));
 		registerMobRenderer(AoAEntities.Mobs.THARAFLY.get(), new TharaflyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/barathos/tharafly.png"));
 		registerMobRenderer(AoAEntities.Mobs.TIPSY.get(), new TipsyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/celeve/tipsy.png"));
 		registerMobRenderer(AoAEntities.NPCs.TOKEN_COLLECTOR.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/token_collector.png"));
@@ -521,7 +475,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.TREE_SPIRIT.get(), new TreeSpiritModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/tree_spirit.png"));
 		registerMobRenderer(AoAEntities.Mobs.TRICKSTER.get(), new TricksterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/trickster.png"));
 		registerMobRenderer(AoAEntities.Mobs.TRICKSTER_CLONE.get(), new TricksterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/trickster.png"));
-		registerMobRenderer(AoAEntities.Mobs.TRICLOPS.get(), new TriclopsModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/triclops.png"));
 		registerMobRenderer(AoAEntities.NPCs.TROLL_TRADER.get(), new SeaTrollModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/troll_trader.png"));
 		registerMobRenderer(AoAEntities.Animals.TROTTER.get(), new TrotterModel(), new ResourceLocation("aoa3", "textures/entities/passive/trotter.png"));
 		registerMobRenderer(AoAEntities.NPCs.TWINKLING_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/twinkling_lottoman.png"));
@@ -529,10 +482,9 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.UNDEAD_HERALD.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/trader/undead_herald.png"));
 		registerMobRenderer(AoAEntities.Mobs.UNDEAD_TROLL.get(), new SeaTrollModel(), new ResourceLocation("aoa3", "textures/entities/mobs/mysterium/undead_troll.png"));
 		renderManager.register(AoAEntities.Mobs.URIOH.get(), new UriohRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.URKA.get(), new UrkaModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/urka.png"));
+		registerMobRenderer(AoAEntities.Animals.URKA.get(), new UrkaModel(), new ResourceLocation("aoa3", "textures/entities/animals/urka.png"));
 		registerMobRenderer(AoAEntities.Mobs.URV.get(), new UrvModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/urv.png"));
 		registerMobRenderer(AoAEntities.Mobs.VALKYRIE.get(), new ValkyrieModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/valkyrie.png"));
-		registerMobRenderer(AoAEntities.Mobs.VERTEBRON.get(), new VertebronModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/vertebron.png"));
 		registerMobRenderer(AoAEntities.Mobs.VINE_WIZARD.get(), new VineWizardModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/vine_wizard.png"));
 		registerMobRenderer(AoAEntities.Mobs.VINOCORNE.get(), new VinocorneModel(), new ResourceLocation("aoa3", "textures/entities/boss/vinocorne/vinocorne.png"));
 		registerMobRenderer(AoAEntities.Mobs.VISAGE.get(), new VisageModel(), new ResourceLocation("aoa3", "textures/entities/mobs/immortallis/visage.png"));
@@ -541,17 +493,12 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.VISULON.get(), new VisulonModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lunalus/visulon.png"));
 		renderManager.register(AoAEntities.Mobs.VOID_CHARGER.get(), new ChargerRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_charger.png")));
 		registerMobRenderer(AoAEntities.Mobs.VOID_WALKER.get(), new VoidWalkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/void_walker.png"));
-		registerMobRenderer(AoAEntities.Mobs.VOLAR.get(), new VolarModel(), new ResourceLocation("aoa3", "textures/entities/mobs/haven/volar.png"));
-		registerMobRenderer(AoAEntities.Mobs.VOLIANT.get(), new VoliantModel(), 4f, new ResourceLocation("aoa3", "textures/entities/mobs/haven/voliant.png"));
+		registerMobRenderer(AoAEntities.Animals.VOLIANT.get(), new VoliantModel(), 4f, new ResourceLocation("aoa3", "textures/entities/animals/voliant.png"));
 		registerMobRenderer(AoAEntities.Mobs.VOLTRON.get(), new VoltronModel(), new ResourceLocation("aoa3", "textures/entities/mobs/iromine/voltron.png"));
 		registerMobRenderer(AoAEntities.Mobs.VOXXULON.get(), new VoxxulonModel(), 2f, new ResourceLocation("aoa3", "textures/entities/boss/voxxulon/voxxulon.png"));
 		registerMobRenderer(AoAEntities.Minions.WAGGY.get(), new WaggyModel(), new ResourceLocation("aoa3", "textures/entities/minions/waggy.png"));
-		registerMobRenderer(AoAEntities.Mobs.WALKER.get(), new WalkerModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/walker.png"));
-		registerMobRenderer(AoAEntities.Mobs.WARCLOPS.get(), new WarclopsModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/warclops.png"));
 		renderManager.register(AoAEntities.Mobs.WEB_REAPER.get(), new WebReaperRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.WICKETT.get(), new WickettModel(), new ResourceLocation("aoa3", "textures/entities/mobs/overworld/wickett.png"));
 		renderManager.register(AoAEntities.Mobs.WINGED_CREEPER.get(), new CreeponiaCreeperRenderer(renderManager, new WingedCreeperModel(0), new WingedCreeperModel(0.5f), AoAEntities.Mobs.WINGED_CREEPER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/winged_creeper.png")));
-		registerMobRenderer(AoAEntities.Mobs.WITHER_WIZARD.get(), new WitherWizardModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/wither_wizard.png"));
 		registerMobRenderer(AoAEntities.NPCs.WITHERING_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/withering_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.WOOD_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/wood_giant.png"));
 		registerMobRenderer(AoAEntities.Mobs.XXEUS.get(), new XxeusModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/boss/craexxeus/craexxeus.png"));
@@ -586,7 +533,7 @@ public class EntityRenders {
 		renderManager.register(AoAEntities.Misc.SATIATION_TABLET.get(), new SoulTabletRenderer(renderManager, new SatiationTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/satiation_tablet.png"), ParticleTypes.AMBIENT_ENTITY_EFFECT));
 		renderManager.register(AoAEntities.Misc.SIGHT_TABLET.get(), new SoulTabletRenderer(renderManager, new SightTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/sight_tablet.png"), ParticleTypes.PORTAL));
 		renderManager.register(AoAEntities.Misc.VITALITY_TABLET.get(), new SoulTabletRenderer(renderManager, new VitalityTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/vitality_tablet.png"), ParticleTypes.WITCH));
-		renderManager.register(AoAEntities.Misc.STRENGTH_TABLET.get(), new SoulTabletRenderer(renderManager, new StrengthTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/strength_tablet.png"), RedstoneParticleData.REDSTONE_DUST));
+		renderManager.register(AoAEntities.Misc.STRENGTH_TABLET.get(), new SoulTabletRenderer(renderManager, new StrengthTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/strength_tablet.png"), RedstoneParticleData.REDSTONE));
 		renderManager.register(AoAEntities.Misc.UNTIRING_TABLET.get(), new SoulTabletRenderer(renderManager, new UntiringTabletModel(), new ResourceLocation("aoa3", "textures/entities/misc/tablets/untiring_tablet.png"), ParticleTypes.SMOKE));
 
 		renderManager.register(AoAEntities.Misc.ANIMA_STONE.get(), new AnimaStoneRenderer(renderManager));
@@ -599,7 +546,7 @@ public class EntityRenders {
 		renderManager.register(AoAEntities.Misc.LOTTO_TOTEM.get(), new LottoTotemRenderer(renderManager));
 		renderManager.register(AoAEntities.Misc.OCCULT_BLOCK.get(), new OccultBlockRenderer(renderManager));
 
-		for (PlayerRenderer plRenderer : Minecraft.getInstance().getRenderManager().getSkinMap().values()) {
+		for (PlayerRenderer plRenderer : Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().values()) {
 			plRenderer.addLayer(new PlayerHaloRenderLayer(plRenderer));
 		}
 	}
@@ -709,7 +656,6 @@ public class EntityRenders {
 		registerProjectileRenderer(AoAEntities.Projectiles.LUXON_STICKLER_STUCK.get(), new LuxonSticklerStuckRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/cannonshots/cannonball.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.LYONIC_SHOT.get(), new LyonicShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.MAGIC_BALL.get(), new MagicBallRenderer(renderManager));
-		registerProjectileRenderer(AoAEntities.Projectiles.MAGICKE_SHOT.get(), new MagickeShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.MECH_FALL.get(), new MechFallRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.MECH_SHOT.get(), new MechShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.METAL_SLUG.get(), new TexturedProjectileRenderer<MetalSlugEntity>(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/bullets/metal_slug.png")));
@@ -731,7 +677,6 @@ public class EntityRenders {
 		registerProjectileRenderer(AoAEntities.Projectiles.ORBOCRON_SHOT.get(), new OrbocronRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.PARALYZER_SHOT.get(), new ParalyzerShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.PARTY_POPPER_SHOT.get(), new TexturedProjectileRenderer<PartyPopperEntity>(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/bullets/party_popper_shot.png")));
-		registerProjectileRenderer(AoAEntities.Projectiles.PENUMBRA_SHOT.get(), new PenumbraShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.PHANTOM_SHOT.get(), new PhantomShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.PLUTON_STICKLER_SHOT.get(), new PlutonSticklerShotRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/cannonshots/cannonball.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), new PlutonSticklerStuckRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/cannonshots/cannonball.png")));
@@ -791,7 +736,6 @@ public class EntityRenders {
 		registerProjectileRenderer(AoAEntities.Projectiles.ULTIMATUM_SHOT.get(), new UltimatumShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.VALKYRIE_SHOT.get(), new ValkyrieShotRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.VINE_WIZARD_SHOT.get(), new VineWizardShotRenderer(renderManager));
-		registerProjectileRenderer(AoAEntities.Projectiles.VOLAR_SHOT.get(), new TexturedProjectileRenderer<VolarShotEntity>(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/mobshots/volar_shot.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.VORTEX_BLAST.get(), new VortexBlastRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.VOX_CANNON.get(), new VoxCannonShotRenderer(renderManager, new ResourceLocation("aoa3", "textures/entities/projectiles/cannonshots/cannonball.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.VOXXULON_METEOR.get(), new VoxxulonMeteorRenderer(renderManager));
@@ -810,7 +754,9 @@ public class EntityRenders {
 		registerProjectileRenderer(AoAEntities.Projectiles.YELLOW_GUARDIAN_SHOT.get(), new YellowGuardianShotRenderer(renderManager));
 	}
 
-
+	private static void animatedMobRenderer(EntityType<? extends MobEntity> entityType, Function<Float, GeoEntityRenderer> renderer) {
+		renderManager.register(entityType, renderer.apply(entityType.getWidth() / 3f));
+	}
 	
 	private static void registerMobRenderer(EntityType<? extends MobEntity> entityType, EntityModel<MobEntity> model, ResourceLocation texture) {
 		registerMobRenderer(entityType, model, 1f, texture);

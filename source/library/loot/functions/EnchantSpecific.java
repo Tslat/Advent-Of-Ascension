@@ -5,16 +5,19 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootFunction;
+import net.minecraft.loot.LootFunctionType;
+import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootFunction;
-import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoALootOperations;
 import org.apache.logging.log4j.Level;
 
 import java.util.*;
+
+import net.minecraft.loot.LootFunction.Builder;
 
 public class EnchantSpecific extends LootFunction {
 	private final HashMap<Enchantment, Integer> enchants;
@@ -25,26 +28,27 @@ public class EnchantSpecific extends LootFunction {
 		this.enchants = new HashMap<Enchantment, Integer>(enchantments.size());
 
 		for (EnchantmentData ench : enchantments) {
-			this.enchants.put(ench.enchantment, ench.enchantmentLevel);
+			this.enchants.put(ench.enchantment, ench.level);
 		}
 	}
 
 	@Override
-	protected ItemStack doApply(ItemStack stack, LootContext context) {
+	public LootFunctionType getType() {
+		return AoALootOperations.LootFunctions.ENCHANT_SPECIFIC;
+	}
+
+	@Override
+	protected ItemStack run(ItemStack stack, LootContext context) {
 		EnchantmentHelper.setEnchantments(enchants, stack);
 
 		return stack;
 	}
 
 	public static Builder<?> builder(EnchantmentData... enchantments) {
-		return builder((conditions) -> new EnchantSpecific(conditions, Arrays.asList(enchantments)));
+		return simpleBuilder((conditions) -> new EnchantSpecific(conditions, Arrays.asList(enchantments)));
 	}
 
 	public static class Serializer extends LootFunction.Serializer<EnchantSpecific> {
-		public Serializer() {
-			super(new ResourceLocation(AdventOfAscension.MOD_ID, "enchant_specific"), EnchantSpecific.class);
-		}
-
 		@Override
 		public void serialize(JsonObject object, EnchantSpecific function, JsonSerializationContext context) {
 			super.serialize(object, function, context);

@@ -24,12 +24,12 @@ import java.util.HashSet;
 
 public class LunarCreationTable extends Block {
 	public LunarCreationTable() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (!world.isRemote) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (!world.isClientSide) {
 			BlockPos lunarPos = null;
 			BlockPos moonlightPos = null;
 			BlockPos darklightPos = null;
@@ -38,7 +38,7 @@ public class LunarCreationTable extends Block {
 
 			for (int x = -2; x <= 2; x += 2) {
 				for (int z = -2; z <= 2; z += 2) {
-					BlockPos checkPos = pos.add(x, 0, z);
+					BlockPos checkPos = pos.offset(x, 0, z);
 					BlockState block = world.getBlockState(checkPos);
 
 					if (block.getBlock() == AoABlocks.LUNAR_ORB.get()) {
@@ -68,15 +68,15 @@ public class LunarCreationTable extends Block {
 					armours.add(AoAArmour.LUNAR_ARMOUR.chestplate.get());
 					armours.add(AoAArmour.LUNAR_ARMOUR.helmet.get());
 
-					for (ItemStack stack : player.inventory.mainInventory) {
+					for (ItemStack stack : player.inventory.items) {
 						armours.removeIf(item -> item == stack.getItem());
 					}
 
-					for (ItemStack stack : player.inventory.armorInventory) {
+					for (ItemStack stack : player.inventory.armor) {
 						armours.removeIf(item -> item == stack.getItem());
 					}
 
-					for (ItemStack stack : player.inventory.armorInventory) {
+					for (ItemStack stack : player.inventory.armor) {
 						armours.removeIf(item -> item == stack.getItem());
 					}
 
@@ -87,13 +87,13 @@ public class LunarCreationTable extends Block {
 						armours.add(AoAArmour.LUNAR_ARMOUR.helmet.get());
 					}
 
-					Item armourPiece = (Item)armours.toArray()[player.getRNG().nextInt(armours.size())];
+					Item armourPiece = (Item)armours.toArray()[player.getRandom().nextInt(armours.size())];
 
-					world.addEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(armourPiece)));
+					world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(armourPiece)));
 					WorldUtil.toAir(world, lunarPos, moonlightPos, duskPos, sunfirePos, darklightPos);
 				}
 				else {
-					world.addEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(AoAItems.OBSERVING_EYE.get())));
+					world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 1.5d, pos.getZ() + 0.5d, new ItemStack(AoAItems.OBSERVING_EYE.get())));
 					WorldUtil.toAir(world, lunarPos, moonlightPos);
 				}
 			}

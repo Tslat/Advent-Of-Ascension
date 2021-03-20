@@ -1,17 +1,14 @@
 package net.tslat.aoa3.block.tileentity;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoATileEntities;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -47,8 +44,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 		prevMobRotation = mobRotation;
 		mobRotation = (mobRotation + 0.05f) % 360;
 
-		if (trophyBlock == null && world != null)
-			trophyBlock = world.getBlockState(getPos()).getBlock();
+		if (trophyBlock == null && level != null)
+			trophyBlock = level.getBlockState(getBlockPos()).getBlock();
 	}
 
 	public float getMobRotation() {
@@ -80,8 +77,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public void handleUpdateTag(CompoundNBT tag) {
-		super.handleUpdateTag(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
+		super.handleUpdateTag(state, tag);
 
 		if (tag.contains("EntityID", 8)) {
 			entityId = tag.getString("EntityID");
@@ -90,8 +87,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 
 		if (entityId != null) {
 			compound.putString("EntityID", entityId);
@@ -102,8 +99,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void load(BlockState state, CompoundNBT compound) {
+		super.load(state, compound);
 
 		if (compound.contains("EntityID")) {
 			entityId = compound.getString("EntityID");
@@ -118,7 +115,7 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 			entityNBT.putString("id", entityId);
 
-			cachedEntity = EntityType.loadEntityAndExecute(entityNBT, getWorld(), Function.identity());
+			cachedEntity = EntityType.loadEntityRecursive(entityNBT, getLevel(), Function.identity());
 
 			if (cachedEntity == null) {
 				entityNBT = new CompoundNBT();
@@ -126,11 +123,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 				entityNBT.putString("id", entityId);
 
-				cachedEntity = EntityType.loadEntityAndExecute(entityNBT, getWorld(), Function.identity());
+				cachedEntity = EntityType.loadEntityRecursive(entityNBT, getLevel(), Function.identity());
 			}
-
-			if (entityNBT.size() == 1 && entityNBT.contains("id", 8) && this.cachedEntity instanceof MobEntity)
-				((MobEntity)cachedEntity).onInitialSpawn(getWorld(), this.getWorld().getDifficultyForLocation(new BlockPos(cachedEntity)), SpawnReason.SPAWNER, null, null);
 		}
 
 		return this.cachedEntity;
@@ -145,13 +139,13 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 			return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 
 		if (trophyBlock == AoABlocks.TROPHY.get())
-			return new TranslationTextComponent("block.aoa3.trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", cachedEntity.getName());
 
 		if (trophyBlock == AoABlocks.GOLD_TROPHY.get())
-			return new TranslationTextComponent("block.aoa3.gold_trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", cachedEntity.getName());
 
 		if (trophyBlock == AoABlocks.ORNATE_TROPHY.get())
-			return new TranslationTextComponent("block.aoa3.ornate_trophy.desc", LocaleUtil.getLocaleMessage(getCachedEntity().getType().getTranslationKey()));
+			return LocaleUtil.getLocaleMessage("block.aoa3.ornate_trophy.desc", cachedEntity.getName());
 
 		return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 	}

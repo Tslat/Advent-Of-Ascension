@@ -22,26 +22,6 @@ public class SquigglerEntity extends AoAMeleeMob {
 		return 1.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 76;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.27;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -59,15 +39,10 @@ public class SquigglerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public int getMaxSpawnHeight() {
-		return 27;
-	}
+	public void aiStep() {
+		super.aiStep();
 
-	@Override
-	public void livingTick() {
-		super.livingTick();
-
-		if (getAttackTarget() != null && getAttackTarget().getDistance(this) < 20 && getAttackTarget().canEntityBeSeen(this))
-			getAttackTarget().setFire(8);
+		if (getTarget() != null && getTarget().distanceTo(this) < 20 && getTarget().canSee(this))
+			getTarget().setSecondsOnFire(8);
 	}
 }

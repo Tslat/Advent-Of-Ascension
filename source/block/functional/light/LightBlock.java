@@ -8,6 +8,8 @@ import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock;
+
 public class LightBlock extends Block {
 	public LightBlock(MaterialColor mapColour, Material material, float hardness, float resistance, int lightLevel) {
 		this(mapColour, material, hardness, resistance, lightLevel, null, -1, null);
@@ -25,12 +27,12 @@ public class LightBlock extends Block {
 		super(generateBlockProperties(material, mapColour, hardness, resistance, lightLevel, harvestTool, harvestLevel, soundType));
 	}
 
-	private static Block.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, int lightLevel, @Nullable ToolType harvestTool, int harvestLevel, @Nullable SoundType soundType) {
-		Block.Properties blockProperties = Block.Properties.create(material, mapColour);
+	private static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, int lightLevel, @Nullable ToolType harvestTool, int harvestLevel, @Nullable SoundType soundType) {
+		AbstractBlock.Properties blockProperties = AbstractBlock.Properties.of(material, mapColour);
 
-		blockProperties.hardnessAndResistance(hardness, resistance);
+		blockProperties.strength(hardness, resistance);
 		blockProperties.harvestLevel(harvestLevel);
-		blockProperties.lightValue(lightLevel);
+		blockProperties.lightLevel(state -> lightLevel);
 
 		if (hardness == -1 && resistance == 999999999f)
 			blockProperties.noDrops();
@@ -42,14 +44,14 @@ public class LightBlock extends Block {
 			blockProperties.sound(soundType);
 		}
 		else {
-			if (material == null || material == Material.ROCK) {
+			if (material == null || material == Material.STONE) {
 				blockProperties.sound(SoundType.STONE);
 			}
 			else if (material == Material.WOOD) {
 				blockProperties.sound(SoundType.WOOD);
 			}
-			else if (material == Material.EARTH) {
-				blockProperties.sound(SoundType.GROUND);
+			else if (material == Material.DIRT) {
+				blockProperties.sound(SoundType.GRAVEL);
 			}
 			else if (material == Material.GLASS) {
 				blockProperties.sound(SoundType.GLASS);

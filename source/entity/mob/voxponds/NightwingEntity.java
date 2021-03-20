@@ -22,26 +22,6 @@ public class NightwingEntity extends AoAFlyingMeleeMob {
         return 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 78;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 10.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.1;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

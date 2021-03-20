@@ -27,8 +27,8 @@ public class ConfettiClusterEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (!world.isRemote)
+	protected void onHit(RayTraceResult result) {
+		if (!level.isClientSide)
 			remove();
 	}
 }

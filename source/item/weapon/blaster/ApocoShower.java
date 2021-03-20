@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -32,24 +32,24 @@ public class ApocoShower extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new ShowerShotEntity(shooter, this, 60));
-		shooter.world.addEntity(new WeightedShowerShotEntity(shooter, this, 60));
-		shooter.world.addEntity(new HeavyShowerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new ShowerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new WeightedShowerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new HeavyShowerShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.world, shot, 2.5f);
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
+		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.world, shot, 2.5f);
+		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

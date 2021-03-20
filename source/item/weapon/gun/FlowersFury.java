@@ -34,19 +34,19 @@ public class FlowersFury extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (EntityUtil.isHostileMob(target) && RandomUtil.oneInNChance(20)) {
-			RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.world);
+			RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.level);
 
 			if (shooter instanceof PlayerEntity)
-				rosid.setTamedBy((PlayerEntity)shooter);
+				rosid.tame((PlayerEntity)shooter);
 
-			rosid.setPosition(target.getPosX(), target.getPosY(), target.getPosZ());
-			shooter.world.addEntity(rosid);
+			rosid.setPos(target.getX(), target.getY(), target.getZ());
+			shooter.level.addFreshEntity(rosid);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -22,51 +22,26 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public class ArocknidEntity extends AoAMeleeMob {
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(ArocknidEntity.class, DataSerializers.BYTE);
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(ArocknidEntity.class, DataSerializers.BYTE);
 
     public ArocknidEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(CLIMBING, (byte)0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CLIMBING, (byte)0);
     }
 
     @Override
-    protected PathNavigator createNavigator(World world) {
+    protected PathNavigator createNavigation(World world) {
         return new ClimberPathNavigator(this, world);
     }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.59375f;
-    }
-
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.8d;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 2d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 75d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 8d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.295d;
     }
 
     @Nullable
@@ -90,38 +65,33 @@ public class ArocknidEntity extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-        return SoundEvents.ENTITY_SPIDER_STEP;
+        return SoundEvents.SPIDER_STEP;
     }
 
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
-
-    @Override
+	@Override
     public void tick() {
         super.tick();
 
-        if (!world.isRemote)
-            setBesideClimbableBlock(this.collidedHorizontally);
+        if (!level.isClientSide)
+            setBesideClimbableBlock(this.horizontalCollision);
     }
 
     @Override
-    public boolean isOnLadder() {
+    public boolean onClimbable() {
         return isBesideClimbableBlock();
     }
 
     public boolean isBesideClimbableBlock() {
-        return (this.dataManager.get(CLIMBING) & 1) != 0;
+        return (this.entityData.get(CLIMBING) & 1) != 0;
     }
 
     public void setBesideClimbableBlock(boolean climbing) {
-        byte climbingBit = this.dataManager.get(CLIMBING);
+        byte climbingBit = this.entityData.get(CLIMBING);
 
         if (climbing) {
             climbingBit = (byte)(climbingBit | 1);
@@ -130,7 +100,7 @@ public class ArocknidEntity extends AoAMeleeMob {
             climbingBit = (byte)(climbingBit & -2);
         }
 
-        this.dataManager.set(CLIMBING, climbingBit);
+        this.entityData.set(CLIMBING, climbingBit);
     }
 
     @Override

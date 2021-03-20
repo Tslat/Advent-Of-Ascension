@@ -23,26 +23,6 @@ public class FungungEntity extends AoAMeleeMob {
 		return 1.53125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.7;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

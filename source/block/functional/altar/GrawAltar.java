@@ -18,16 +18,16 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class GrawAltar extends BossAltarBlock {
 	public GrawAltar() {
-		super(MaterialColor.ORANGE_TERRACOTTA);
+		super(MaterialColor.TERRACOTTA_ORANGE);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (heldItem.getItem() == AoAItems.ORANGE_SPORES.get() || heldItem.getItem() == AoAItems.YELLOW_SPORES.get()) {
-			if (!world.isRemote) {
-				world.addEntity(new FlyeEntity(world, pos));
+			if (!world.isClientSide) {
+				world.addFreshEntity(new FlyeEntity(world, pos));
 
 				if (!player.isCreative())
 					heldItem.shrink(1);
@@ -36,17 +36,17 @@ public class GrawAltar extends BossAltarBlock {
 			return ActionResultType.SUCCESS;
 		}
 		else {
-			return super.onBlockActivated(state, world, pos, player, hand, hit);
+			return super.use(state, world, pos, player, hand, hit);
 		}
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		GrawEntity graw = new GrawEntity(AoAEntities.Mobs.GRAW.get(), player.world);
+		GrawEntity graw = new GrawEntity(AoAEntities.Mobs.GRAW.get(), player.level);
 
-		graw.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.addEntity(graw);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.graw.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		graw.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		player.level.addFreshEntity(graw);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.graw.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

@@ -34,9 +34,9 @@ public class Cyclone extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
 			if (RandomUtil.oneInNChance(5))
-				player.world.addEntity(new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
+				player.level.addFreshEntity(new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
 
 			return new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
 		}
@@ -45,8 +45,8 @@ public class Cyclone extends BaseGun {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

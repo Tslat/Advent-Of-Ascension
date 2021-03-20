@@ -12,6 +12,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,55 +38,55 @@ public abstract class BaseSniper extends BaseGun {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (hand != Hand.MAIN_HAND)
-			return ActionResult.resultFail(stack);
+			return ActionResult.fail(stack);
 
-		if (player.getCooledAttackStrength(0.0f) < 1)
-			return ActionResult.resultFail(stack);
+		if (player.getAttackStrengthScale(0.0f) < 1)
+			return ActionResult.fail(stack);
 
 		BaseBullet bullet = findAndConsumeAmmo(player, stack, hand);
 
 		if (bullet != null) {
-			if (!world.isRemote)
+			if (!world.isClientSide)
 				fireSniper(player, hand, bullet);
 
 			if (getFiringSound() != null)
-				player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
 			ItemUtil.damageItem(stack, player, hand);
-			player.addStat(Stats.ITEM_USED.get(this));
-			player.getCooldownTracker().setCooldown(this, getFiringDelay());
+			player.awardStat(Stats.ITEM_USED.get(this));
+			player.getCooldowns().addCooldown(this, getFiringDelay());
 
 
-			return ActionResult.resultPass(stack);
+			return ActionResult.pass(stack);
 		}
 
 		if (player instanceof ServerPlayerEntity)
-			((ServerPlayerEntity)player).sendContainerToPlayer(player.container);
+			((ServerPlayerEntity)player).refreshContainer(player.inventoryMenu);
 
-		return ActionResult.resultFail(stack);
+		return ActionResult.fail(stack);
 	}
 
 	public void fireSniper(LivingEntity shooter, Hand hand, BaseBullet bullet) {
-		if (shooter.isSneaking() && shooter.onGround) {
+		if (shooter.isShiftKeyDown() && shooter.onGround) {
 			if (shooter instanceof ServerPlayerEntity) {
-				int control = EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.CONTROL.get(), shooter.getHeldItem(hand));
-				float recoiling = getRecoilForShot(shooter.getHeldItem(hand), shooter) * (1 - control * 0.15f);
+				int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), shooter.getItemInHand(hand));
+				float recoiling = getRecoilForShot(shooter.getItemInHand(hand), shooter) * (1 - control * 0.15f);
 
 				AoAPackets.messagePlayer((ServerPlayerEntity)shooter, new GunRecoilPacket(recoiling, getFiringDelay()));
 			}
 		}
 		else {
-			bullet.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0f, 20.0f, 50.0f);
+			bullet.shootFromRotation(shooter, shooter.xRot, shooter.yRot, 0.0f, 20.0f, 50.0f);
 
 			if (shooter instanceof ServerPlayerEntity)
 				AoAPackets.messagePlayer((ServerPlayerEntity)shooter, new GunRecoilPacket(getRecoil() * 2f, getFiringDelay()));
 		}
 
-		shooter.world.addEntity(bullet);
+		shooter.level.addFreshEntity(bullet);
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public abstract class BaseSniper extends BaseGun {
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.METAL_SLUG.get()), true, 1 + EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.METAL_SLUG.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
 			return new SniperSlugEntity(player, (BaseGun)gunStack.getItem(), 0);
 
 		return null;
@@ -107,10 +108,10 @@ public abstract class BaseSniper extends BaseGun {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2)));
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.sniper.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Double.toString((2000 / getFiringDelay()) / (double)100)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getItemName(AoAItems.METAL_SLUG.get())));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getLocaleMessage(AoAItems.METAL_SLUG.get().getDescriptionId())));
 	}
 }

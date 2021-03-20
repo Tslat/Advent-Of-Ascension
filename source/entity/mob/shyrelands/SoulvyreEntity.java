@@ -26,26 +26,6 @@ public class SoulvyreEntity extends AoAMeleeMob {
         return 1.9375f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 178;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 18.5;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -62,11 +42,6 @@ public class SoulvyreEntity extends AoAMeleeMob {
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return AoASounds.ENTITY_SOULVYRE_HURT.get();
-    }
-
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
     }
 
     @Override

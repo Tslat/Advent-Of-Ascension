@@ -15,16 +15,6 @@ public class LottomanEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected boolean isOverworldNPC() {
 		return true;
 	}

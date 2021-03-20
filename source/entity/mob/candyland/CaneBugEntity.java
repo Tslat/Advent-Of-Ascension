@@ -23,26 +23,6 @@ public class CaneBugEntity extends AoAMeleeMob {
 		return 0.53125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 94d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.29d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -56,15 +36,15 @@ public class CaneBugEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (isInWater() && getHealth() > 0)
 			heal(0.4f);
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 }

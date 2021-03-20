@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.ShadowlordEntity;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class ShadowlordShotEntity extends BaseMobProjectile {
 	public boolean toggle = false;
 	public int counter = 0;
@@ -19,11 +21,11 @@ public class ShadowlordShotEntity extends BaseMobProjectile {
 	}
 
 	public ShadowlordShotEntity(ShadowlordEntity shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.SHADOWLORD_SHOT.get(), shooter.world, shooter, projectileType);
+		super(AoAEntities.Projectiles.SHADOWLORD_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.075f;
 	}
 }

@@ -17,15 +17,11 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.config.AoAConfig;
@@ -33,14 +29,15 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Random;
 
 public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
-	private static final DataParameter<Integer> STATE = EntityDataManager.createKey(AoACreeponiaCreeper.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> STATE = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.INT);
+	private static final DataParameter<Boolean> POWERED = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IGNITED = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
 	protected int fuseTime = 30;
 	protected int lastActiveTime;
 	protected int timeSinceIgnited;
@@ -50,8 +47,6 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 	public AoACreeponiaCreeper(EntityType<? extends AoACreeponiaCreeper> entityType, World world) {
 		super(entityType, world);
-
-		experienceValue = (int)(getBaseMaxHealth() / 10d);
 	}
 
 	@Override
@@ -64,110 +59,71 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 		goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, TameableEntity.class, 10, true, false, entity -> entity instanceof TameableEntity && ((TameableEntity)entity).isTamed()));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, TameableEntity.class, 10, true, false, entity -> entity instanceof TameableEntity && ((TameableEntity)entity).isTame()));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 		targetSelector.addGoal(3, new HurtByTargetGoal(this));
 	}
 
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth() * (AoAConfig.COMMON.hardcoreMode.get() ? 2f : 1f));
-		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
+		entityData.define(STATE, -1);
+		entityData.define(POWERED, false);
+		entityData.define(IGNITED, false);
 	}
-
-	protected void registerData() {
-		super.registerData();
-
-		dataManager.register(STATE, -1);
-		dataManager.register(POWERED, false);
-		dataManager.register(IGNITED, false);
-	}
-
-	protected abstract double getBaseKnockbackResistance();
-
-	protected abstract double getBaseMaxHealth();
-
-	protected abstract double getBaseMovementSpeed();
 
 	public abstract float getExplosionStrength();
-
-	protected int getMaxSpawnHeight() {
-		return -1;
-	}
 
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
 
-	public static boolean meetsSpawnConditions(EntityType<? extends MonsterEntity> type, IWorld world, SpawnReason reason, BlockPos pos, Random random) {
-		return world.getDifficulty() != Difficulty.PEACEFUL;
-	}
-
-	@Override
-	public boolean canSpawn(IWorld world, SpawnReason reason) {
-		return isValidLightLevel(reason) && canSpawnAt(reason, world.getBlockState(getPosition().down()));
-	}
-
-	protected boolean canSpawnAt(SpawnReason reason, BlockState blockState) {
-		if (getMaxSpawnHeight() >= 0 && getPosY() > getMaxSpawnHeight())
-			return false;
-
-		return blockState.canEntitySpawn(world, getPosition(), getType());
-	}
-
-	private boolean isValidLightLevel(SpawnReason reason) {
-		return WorldUtil.getLightLevel(world, getPosition(), true, false) <= RandomUtil.randomNumberUpTo(8);
-	}
-
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_CREEPER_HURT;
+		return SoundEvents.CREEPER_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_CREEPER_DEATH;
+		return SoundEvents.CREEPER_DEATH;
 	}
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	public int getCreeperState() {
-		return this.dataManager.get(STATE);
+		return this.entityData.get(STATE);
 	}
 
 	public void setCreeperState(int state) {
-		this.dataManager.set(STATE, state);
+		this.entityData.set(STATE, state);
 	}
 
 	@Override
-	public void onStruckByLightning(LightningBoltEntity lightningBolt) {
-		super.onStruckByLightning(lightningBolt);
+	public void thunderHit(ServerWorld world, LightningBoltEntity lightningBolt) {
+		super.thunderHit(world, lightningBolt);
 
-		dataManager.set(POWERED, true);
+		entityData.set(POWERED, true);
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getHeldItem(hand);
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (itemstack.getItem() == Items.FLINT_AND_STEEL) {
-			world.playSound(player, getPosX(), getPosY(), getPosZ(), SoundEvents.ITEM_FLINTANDSTEEL_USE, getSoundCategory(), 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+			level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
 
-			if (!world.isRemote) {
+			if (!level.isClientSide) {
 				ignite();
-				itemstack.damageItem(1, player, (p_213625_1_) -> {
-					p_213625_1_.sendBreakAnimation(hand);
+				itemstack.hurtAndBreak(1, player, (p_213625_1_) -> {
+					p_213625_1_.broadcastBreakEvent(hand);
 				});
 			}
 
-			return true;
+			return ActionResultType.sidedSuccess(level.isClientSide);
 		}
 		else {
-			return super.processInteract(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
@@ -182,7 +138,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			int creeperState = getCreeperState();
 
 			if (creeperState > 0 && timeSinceIgnited == 0)
-				playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1.0F, 0.5F);
+				playSound(SoundEvents.CREEPER_PRIMED, 1.0F, 0.5F);
 
 			timeSinceIgnited += creeperState;
 
@@ -197,71 +153,71 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 		}
 
 		if (!net.minecraftforge.common.ForgeHooks.onLivingUpdate(this)) {
-			if (!world.isRemote)
-				setFlag(6, isGlowing());
+			if (!level.isClientSide)
+				setSharedFlag(6, isGlowing());
 
 			baseTick();
 
 			lastSwimAnimation = swimAnimation;
 
-			if (isActualySwimming()) {
+			if (isVisuallySwimming()) {
 				swimAnimation = Math.min(1.0F, swimAnimation + 0.09F);
 			}
 			else {
 				swimAnimation = Math.max(0.0F, swimAnimation - 0.09F);
 			}
 
-			if (!world.isRemote) {
-				int arrowCount = getArrowCountInEntity();
+			if (!level.isClientSide) {
+				int arrowCount = getArrowCount();
 
 				if (arrowCount > 0) {
-					if (arrowHitTimer <= 0)
-						arrowHitTimer = 20 * (30 - arrowCount);
+					if (removeArrowTime <= 0)
+						removeArrowTime = 20 * (30 - arrowCount);
 
-					--arrowHitTimer;
+					--removeArrowTime;
 
-					if (arrowHitTimer <= 0)
-						setArrowCountInEntity(arrowCount - 1);
+					if (removeArrowTime <= 0)
+						setArrowCount(arrowCount - 1);
 				}
 
-				int beeStings = getBeeStingCount();
+				int beeStings = getStingerCount();
 
 				if (beeStings > 0) {
-					if (beeStingRemovalCooldown <= 0)
-						beeStingRemovalCooldown = 20 * (30 - beeStings);
+					if (removeStingerTime <= 0)
+						removeStingerTime = 20 * (30 - beeStings);
 
-					--beeStingRemovalCooldown;
+					--removeStingerTime;
 
-					if (beeStingRemovalCooldown <= 0)
-						setBeeStingCount(beeStings - 1);
+					if (removeStingerTime <= 0)
+						setStingerCount(beeStings - 1);
 				}
 
-				if (ticksExisted % 20 == 0)
-					getCombatTracker().reset();
+				if (tickCount % 20 == 0)
+					getCombatTracker().recheckStatus();
 
 				if (!glowing) {
-					boolean glowing = isPotionActive(Effects.GLOWING);
+					boolean glowing = hasEffect(Effects.GLOWING);
 
-					if (getFlag(6) != glowing)
-						setFlag(6, glowing);
+					if (getSharedFlag(6) != glowing)
+						setSharedFlag(6, glowing);
 				}
 			}
 
-			livingTick();
+			aiStep();
 
-			double diffX = getPosX() - prevPosX;
-			double diffZ = getPosZ() - prevPosZ;
+			double diffX = getX() - xo;
+			double diffZ = getZ() - zo;
 			float movementDiff = (float)(diffX * diffX + diffZ * diffZ);
-			float direction = renderYawOffset;
+			float direction = yBodyRot;
 			float distanceMoved = 0.0F;
-			prevOnGroundSpeedFactor = onGroundSpeedFactor;
+			oRun = run;
 			float moveSpeedBase = 0.0F;
 
 			if (movementDiff > 0.0025000002F) {
 				moveSpeedBase = 1.0F;
 				distanceMoved = (float)Math.sqrt(movementDiff) * 3.0F;
 				float f = (float)MathHelper.atan2(diffZ, diffX) * (180F / (float)Math.PI) - 90.0F;
-				float f1 = MathHelper.abs(MathHelper.wrapDegrees(rotationYaw) - f);
+				float f1 = MathHelper.abs(MathHelper.wrapDegrees(yRot) - f);
 
 				if (95.0F < f1 && f1 < 265.0F) {
 					direction = f - 180.0F;
@@ -271,81 +227,81 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 				}
 			}
 
-			if (swingProgress > 0.0F)
-				direction = rotationYaw;
+			if (attackAnim > 0.0F)
+				direction = yRot;
 
 			if (!onGround)
 				moveSpeedBase = 0.0F;
 
-			onGroundSpeedFactor += (moveSpeedBase - onGroundSpeedFactor) * 0.3F;
+			run += (moveSpeedBase - run) * 0.3F;
 
-			world.getProfiler().startSection("headTurn");
+			level.getProfiler().push("headTurn");
 
-			distanceMoved = updateDistance(direction, distanceMoved);
+			distanceMoved = tickHeadTurn(direction, distanceMoved);
 
-			world.getProfiler().endSection();
-			world.getProfiler().startSection("rangeChecks");
+			level.getProfiler().pop();
+			level.getProfiler().push("rangeChecks");
 
-			while (rotationYaw - prevRotationYaw < -180.0F) {
-				prevRotationYaw -= 360.0F;
+			while (yRot - yRotO < -180.0F) {
+				yRotO -= 360.0F;
 			}
 
-			while (rotationYaw - prevRotationYaw >= 180.0F) {
-				prevRotationYaw += 360.0F;
+			while (yRot - yRotO >= 180.0F) {
+				yRotO += 360.0F;
 			}
 
-			while (renderYawOffset - prevRenderYawOffset < -180.0F) {
-				prevRenderYawOffset -= 360.0F;
+			while (yBodyRot - yBodyRotO < -180.0F) {
+				yBodyRotO -= 360.0F;
 			}
 
-			while (renderYawOffset - prevRenderYawOffset >= 180.0F) {
-				prevRenderYawOffset += 360.0F;
+			while (yBodyRot - yBodyRotO >= 180.0F) {
+				yBodyRotO += 360.0F;
 			}
 
-			while (rotationPitch - prevRotationPitch < -180.0F) {
-				prevRotationPitch -= 360.0F;
+			while (xRot - xRotO < -180.0F) {
+				xRotO -= 360.0F;
 			}
 
-			while (rotationPitch - prevRotationPitch >= 180.0F) {
-				prevRotationPitch += 360.0F;
+			while (xRot - xRotO >= 180.0F) {
+				xRotO += 360.0F;
 			}
 
-			while (rotationYawHead - prevRotationYawHead < -180.0F) {
-				prevRotationYawHead -= 360.0F;
+			while (yHeadRot - yHeadRotO < -180.0F) {
+				yHeadRotO -= 360.0F;
 			}
 
-			while (rotationYawHead - prevRotationYawHead >= 180.0F) {
-				prevRotationYawHead += 360.0F;
+			while (yHeadRot - yHeadRotO >= 180.0F) {
+				yHeadRotO += 360.0F;
 			}
 
-			world.getProfiler().endSection();
+			level.getProfiler().pop();
 
-			movedDistance += distanceMoved;
+			animStep += distanceMoved;
 
-			if (isElytraFlying()) {
-				++ticksElytraFlying;
+			if (isFallFlying()) {
+				++fallFlyTicks;
 			}
 			else {
-				ticksElytraFlying = 0;
+				fallFlyTicks = 0;
 			}
 
 			if (isSleeping())
-				rotationPitch = 0.0F;
+				xRot = 0.0F;
 		}
 
-		if (!world.isRemote) {
-			updateLeashedState();
+		if (!level.isClientSide) {
+			tickLeash();
 
-			if (ticksExisted % 5 == 0)
-				updateMovementGoalFlags();
+			if (tickCount % 5 == 0)
+				updateControlFlags();
 		}
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
-		if (this.dataManager.get(POWERED))
+		if (this.entityData.get(POWERED))
 			compound.putBoolean("powered", true);
 
 		compound.putShort("Fuse", (short)this.fuseTime);
@@ -354,10 +310,10 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
-		dataManager.set(POWERED, compound.getBoolean("powered"));
+		entityData.set(POWERED, compound.getBoolean("powered"));
 
 		if (compound.contains("Fuse", 99))
 			fuseTime = compound.getShort("Fuse");
@@ -370,8 +326,8 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
-		boolean success = super.onLivingFall(distance, damageMultiplier);
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
+		boolean success = super.causeFallDamage(distance, damageMultiplier);
 
 		timeSinceIgnited = (int)((float)timeSinceIgnited + distance * 1.5F);
 
@@ -388,35 +344,35 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public float getSwimAnimation(float partialTicks) {
+	public float getSwimAmount(float partialTicks) {
 		return MathHelper.lerp(partialTicks, this.lastSwimAnimation, this.swimAnimation);
 	}
 
 	public boolean hasIgnited() {
-		return dataManager.get(IGNITED);
+		return entityData.get(IGNITED);
 	}
 
 	public void ignite() {
-		dataManager.set(IGNITED, true);
+		entityData.set(IGNITED, true);
 	}
 
 	public boolean isCharged() {
-		return dataManager.get(POWERED);
+		return entityData.get(POWERED);
 	}
 
 	protected void explode() {
-		if (!world.isRemote) {
-			WorldUtil.createExplosion(this, world, getExplosionStrength() * (isCharged() ? 2f : 1f));
+		if (!level.isClientSide) {
+			WorldUtil.createExplosion(this, level, getExplosionStrength() * (isCharged() ? 2f : 1f));
 			remove();
 			spawnLingeringCloud();
 		}
 	}
 
 	protected void spawnLingeringCloud() {
-		Collection<EffectInstance> activeEffects = getActivePotionEffects();
+		Collection<EffectInstance> activeEffects = getActiveEffects();
 
 		if (!activeEffects.isEmpty()) {
-			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(world, getPosX(), getPosY(), getPosZ());
+			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(level, getX(), getY(), getZ());
 			cloud.setRadius(2.5F);
 			cloud.setRadiusOnUse(-0.5F);
 			cloud.setWaitTime(10);
@@ -427,33 +383,33 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 				cloud.addEffect(new EffectInstance(effect));
 			}
 
-			world.addEntity(cloud);
+			level.addFreshEntity(cloud);
 		}
 	}
 
-	public class CustomCreeperSwellGoal extends Goal {
+	public static class CustomCreeperSwellGoal extends Goal {
 		private final AoACreeponiaCreeper swellingCreeper;
 		private LivingEntity target;
 
 		public CustomCreeperSwellGoal(AoACreeponiaCreeper entity) {
 			this.swellingCreeper = entity;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
-		public boolean shouldExecute() {
-			LivingEntity target = this.swellingCreeper.getAttackTarget();
-			return this.swellingCreeper.getCreeperState() > 0 || target != null && this.swellingCreeper.getDistanceSq(target) < 9.0D;
+		public boolean canUse() {
+			LivingEntity target = this.swellingCreeper.getTarget();
+			return this.swellingCreeper.getCreeperState() > 0 || target != null && this.swellingCreeper.distanceToSqr(target) < 9.0D;
 		}
 
 		@Override
-		public void startExecuting() {
-			this.swellingCreeper.getNavigator().clearPath();
-			this.target = this.swellingCreeper.getAttackTarget();
+		public void start() {
+			this.swellingCreeper.getNavigation().stop();
+			this.target = this.swellingCreeper.getTarget();
 		}
 
 
 		@Override
-		public void resetTask() {
+		public void stop() {
 			this.target = null;
 		}
 
@@ -462,10 +418,10 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			if (this.target == null) {
 				this.swellingCreeper.setCreeperState(-1);
 			}
-			else if (this.swellingCreeper.getDistanceSq(this.target) > 49.0D) {
+			else if (this.swellingCreeper.distanceToSqr(this.target) > 49.0D) {
 				this.swellingCreeper.setCreeperState(-1);
 			}
-			else if (!this.swellingCreeper.getEntitySenses().canSee(this.target)) {
+			else if (!this.swellingCreeper.getSensing().canSee(this.target)) {
 				this.swellingCreeper.setCreeperState(-1);
 			}
 			else {

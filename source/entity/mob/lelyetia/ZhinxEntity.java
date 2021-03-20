@@ -22,26 +22,6 @@ public class ZhinxEntity extends AoAMeleeMob {
 		return 0.59375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 60d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 6.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

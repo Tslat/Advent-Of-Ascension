@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -18,8 +19,8 @@ public class RosidianBow extends BaseBow {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && world.getGameTime() % 200 == 0 && stack.isDamaged() && WorldUtil.getLightLevel(world, entity.getPosition(), false, true) > 7)
-			stack.setDamage(stack.getDamage() - 1);
+		if (!world.isClientSide && world.getGameTime() % 200 == 0 && stack.isDamaged() && WorldUtil.getLightLevel((ServerWorld)world, entity.blockPosition(), false, true) > 7)
+			stack.setDamageValue(stack.getDamageValue() - 1);
 	}
 
 	@Override
@@ -28,8 +29,8 @@ public class RosidianBow extends BaseBow {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

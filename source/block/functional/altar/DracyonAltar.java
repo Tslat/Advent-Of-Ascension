@@ -13,16 +13,16 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class DracyonAltar extends BossAltarBlock {
 	public DracyonAltar() {
-		super(MaterialColor.BLUE);
+		super(MaterialColor.COLOR_BLUE);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		DracyonEntity dracyon = new DracyonEntity(AoAEntities.Mobs.DRACYON.get(), player.world);
+		DracyonEntity dracyon = new DracyonEntity(AoAEntities.Mobs.DRACYON.get(), player.level);
 
-		dracyon.setLocationAndAngles(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
-		player.world.addEntity(dracyon);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.dracyon.spawn", player.getDisplayName().getFormattedText()), blockPos);
+		dracyon.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
+		player.level.addFreshEntity(dracyon);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.dracyon.spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

@@ -27,18 +27,18 @@ public class GravityBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		for (LivingEntity mob : shooter.world.getEntitiesWithinAABB(LivingEntity.class, shooter.getBoundingBox().grow(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity mob : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.pushEntityAway(shooter, mob, 0.5f);
-			mob.attackEntityFrom(new DamageSource("blaster").setMagicDamage(), (float)baseDmg);
+			mob.hurt(new DamageSource("blaster").setMagic(), (float)baseDmg);
 		}
 
-		shooter.velocityChanged = true;
-		shooter.addVelocity(0, 2f, 0);
+		shooter.hurtMarked = true;
+		shooter.push(0, 2f, 0);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -30,7 +30,7 @@ public class FrameBenchContainer extends Container {
 	private Item currentSelection = AoAItems.HELMET_FRAME.get();
 
 	public FrameBenchContainer(int id, PlayerInventory inventory) {
-		this(id, inventory, IWorldPosCallable.DUMMY);
+		this(id, inventory, IWorldPosCallable.NULL);
 	}
 
 	public FrameBenchContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
@@ -40,32 +40,32 @@ public class FrameBenchContainer extends Container {
 		output = new CraftResultInventory();
 		input = new Inventory(1) {
 			@Override
-			public void markDirty() {
-				super.markDirty();
+			public void setChanged() {
+				super.setChanged();
 
-				FrameBenchContainer.this.onCraftMatrixChanged(this);
+				FrameBenchContainer.this.slotsChanged(this);
 			}
 
 			@Override
-			public boolean isItemValidForSlot(int index, ItemStack stack) {
+			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == AoAItems.SCRAP_METAL.get();
 			}
 		};
 
 		addSlot(new Slot(output, 0, 149, 34) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 
 			@Override
-			public boolean canTakeStack(PlayerEntity playerIn) {
-				return getHasStack();
+			public boolean mayPickup(PlayerEntity playerIn) {
+				return hasItem();
 			}
 
 			@Override
 			public ItemStack onTake(PlayerEntity player, ItemStack stack) {
-				FrameBenchContainer.this.input.decrStackSize(0, 1);
+				FrameBenchContainer.this.input.removeItem(0, 1);
 
 				return stack;
 			}
@@ -73,7 +73,7 @@ public class FrameBenchContainer extends Container {
 
 		addSlot(new Slot(input, 0, 11, 34) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return stack.getItem() == AoAItems.SCRAP_METAL.get();
 			}
 		});
@@ -90,15 +90,15 @@ public class FrameBenchContainer extends Container {
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventory) {
-		functionCaller.consume((world, pos) -> updateOutput());
+	public void slotsChanged(IInventory inventory) {
+		functionCaller.execute((world, pos) -> updateOutput());
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player) {
-		super.onContainerClosed(player);
+	public void removed(PlayerEntity player) {
+		super.removed(player);
 
-		functionCaller.consume((world, pos) -> clearContainer(player, world, input));
+		functionCaller.execute((world, pos) -> clearContainer(player, world, input));
 	}
 
 	public void changeSelection(String selection) {
@@ -142,44 +142,44 @@ public class FrameBenchContainer extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				slotStack.getItem().onCreated(slotStack, player.world, player);
+				slotStack.getItem().onCraftedBy(slotStack, player.level, player);
 
-				if (!mergeItemStack(slotStack, 2, 38, true))
+				if (!moveItemStackTo(slotStack, 2, 38, true))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 2 && index < 29) {
-				if (!mergeItemStack(slotStack, 1, 2, false) && !mergeItemStack(slotStack, 29, 38, false))
+				if (!moveItemStackTo(slotStack, 1, 2, false) && !moveItemStackTo(slotStack, 29, 38, false))
 					return ItemStack.EMPTY;
 			}
 			else if (index >= 29 && index < 38) {
-				if (!mergeItemStack(slotStack, 1, 2, false) && !mergeItemStack(slotStack, 2, 29, false))
+				if (!moveItemStackTo(slotStack, 1, 2, false) && !moveItemStackTo(slotStack, 2, 29, false))
 					return ItemStack.EMPTY;
 			}
-			else if (!mergeItemStack(slotStack, 2, 38, false)) {
+			else if (!moveItemStackTo(slotStack, 2, 38, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
 			if (index == 0)
-				player.dropItem(slot.onTake(player, slotStack), false);
+				player.drop(slot.onTake(player, slotStack), false);
 		}
 
 		return stack;
@@ -187,18 +187,18 @@ public class FrameBenchContainer extends Container {
 
 	private void updateOutput() {
 		if (input.isEmpty()) {
-			output.setInventorySlotContents(0, ItemStack.EMPTY);
+			output.setItem(0, ItemStack.EMPTY);
 		}
 		else {
-			output.setInventorySlotContents(0, new ItemStack(currentSelection, 1));
+			output.setItem(0, new ItemStack(currentSelection, 1));
 		}
 
-		detectAndSendChanges();
+		broadcastChanges();
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return isWithinUsableDistance(functionCaller, player, AoABlocks.FRAME_BENCH.get());
+	public boolean stillValid(PlayerEntity player) {
+		return stillValid(functionCaller, player, AoABlocks.FRAME_BENCH.get());
 	}
 
 	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
@@ -211,7 +211,7 @@ public class FrameBenchContainer extends Container {
 			@Nullable
 			@Override
 			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new FrameBenchContainer(windowId, inv, IWorldPosCallable.of(player.world, pos));
+				return new FrameBenchContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
 			}
 		}, pos);
 	}

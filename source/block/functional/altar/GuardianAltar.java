@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -27,28 +28,28 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class GuardianAltar extends Block {
 	public GuardianAltar() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.LIME, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GREEN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.VOLIANT_HEART.get()) {
-			if (!world.isRemote) {
+			if (!world.isClientSide) {
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
-					if (world.getRedstonePower(pos.offset(direction), direction) == 0)
+					if (world.getSignal(pos.relative(direction), direction) == 0)
 						return ActionResultType.FAIL;
 				}
 
-				if (!world.getEntitiesWithinAABB(MonsterEntity.class, new AxisAlignedBB(pos.getX() - 15, pos.getY() - 15, pos.getZ() - 15, pos.getX() + 15, pos.getY() + 15, pos.getZ() + 15), entity -> !entity.isNonBoss()).isEmpty())
+				if (!world.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(pos.getX() - 15, pos.getY() - 15, pos.getZ() - 15, pos.getX() + 15, pos.getY() + 15, pos.getZ() + 15), entity -> !entity.canChangeDimensions()).isEmpty())
 					return ActionResultType.FAIL;
 
 				if (!player.isCreative())
 					heldStack.shrink(1);
 
 				for (Direction direction : Direction.Plane.HORIZONTAL) {
-					BlockPos checkPos = pos.offset(direction);
+					BlockPos checkPos = pos.relative(direction);
 
 					if (world.getBlockState(checkPos).getBlock() == Blocks.REDSTONE_WIRE)
 						breakWire(world, checkPos, 0);
@@ -59,14 +60,14 @@ public class GuardianAltar extends Block {
 				GreenGuardianEntity greenGuardian = new GreenGuardianEntity(AoAEntities.Mobs.GREEN_GUARDIAN.get(), world);
 				RedGuardianEntity redGuardian = new RedGuardianEntity(AoAEntities.Mobs.RED_GUARDIAN.get(), world);
 
-				blueGuardian.setLocationAndAngles(pos.getX() + 8, pos.getY(), pos.getZ() + 8, 0, 0);
-				redGuardian.setLocationAndAngles(pos.getX() - 8, pos.getY(), pos.getZ() + 8, 0, 0);
-				yellowGuardian.setLocationAndAngles(pos.getX() - 8, pos.getY(), pos.getZ() - 8, 0, 0);
-				greenGuardian.setLocationAndAngles(pos.getX() + 8, pos.getY(), pos.getZ() - 8, 0, 0);
-				world.addEntity(blueGuardian);
-				world.addEntity(greenGuardian);
-				world.addEntity(yellowGuardian);
-				world.addEntity(redGuardian);
+				blueGuardian.moveTo(pos.getX() + 8, pos.getY(), pos.getZ() + 8, 0, 0);
+				redGuardian.moveTo(pos.getX() - 8, pos.getY(), pos.getZ() + 8, 0, 0);
+				yellowGuardian.moveTo(pos.getX() - 8, pos.getY(), pos.getZ() - 8, 0, 0);
+				greenGuardian.moveTo(pos.getX() + 8, pos.getY(), pos.getZ() - 8, 0, 0);
+				world.addFreshEntity(blueGuardian);
+				world.addFreshEntity(greenGuardian);
+				world.addFreshEntity(yellowGuardian);
+				world.addFreshEntity(redGuardian);
 				blueGuardian.setGreenGuardian(greenGuardian);
 				blueGuardian.setRedGuardian(redGuardian);
 				blueGuardian.setYellowGuardian(yellowGuardian);
@@ -80,8 +81,8 @@ public class GuardianAltar extends Block {
 				yellowGuardian.setGreenGuardian(greenGuardian);
 				yellowGuardian.setRedGuardian(redGuardian);
 
-				for (PlayerEntity pl : world.getEntitiesWithinAABB(PlayerEntity.class, new AxisAlignedBB(pos.getX() - 25, pos.getY() - 25, pos.getZ() - 25, pos.getX() + 26, pos.getY() + 26, pos.getZ() + 26))) {
-					pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.fourGuardians.spawn"));
+				for (PlayerEntity pl : world.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(pos.getX() - 25, pos.getY() - 25, pos.getZ() - 25, pos.getX() + 26, pos.getY() + 26, pos.getZ() + 26))) {
+					pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.fourGuardians.spawn"), Util.NIL_UUID);
 				}
 			}
 
@@ -92,12 +93,12 @@ public class GuardianAltar extends Block {
 	}
 
 	private int breakWire(World world, BlockPos curPos, int currentCount) {
-		world.addEntity(new ItemEntity(world, curPos.getX(), curPos.getY(), curPos.getZ(), new ItemStack(Blocks.REDSTONE_WIRE)));
-		world.setBlockState(curPos, Blocks.AIR.getDefaultState());
+		world.addFreshEntity(new ItemEntity(world, curPos.getX(), curPos.getY(), curPos.getZ(), new ItemStack(Blocks.REDSTONE_WIRE)));
+		world.setBlockAndUpdate(curPos, Blocks.AIR.defaultBlockState());
 		currentCount++;
 
 		for (Direction direction : Direction.Plane.HORIZONTAL) {
-			BlockPos newPos = curPos.offset(direction);
+			BlockPos newPos = curPos.relative(direction);
 
 			if (world.getBlockState(newPos).getBlock() == Blocks.REDSTONE_WIRE)
 				currentCount = breakWire(world, newPos, currentCount);

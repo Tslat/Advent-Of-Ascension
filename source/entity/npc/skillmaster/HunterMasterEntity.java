@@ -9,6 +9,7 @@ import net.tslat.aoa3.common.registration.AoAArmour;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class HunterMasterEntity extends AoASkillMaster {
 	public HunterMasterEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -16,8 +17,8 @@ public class HunterMasterEntity extends AoASkillMaster {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.LELYETIA.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.LELYETIA.key);
 	}
 
 	@Override

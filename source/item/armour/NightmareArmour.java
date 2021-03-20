@@ -14,7 +14,7 @@ import java.util.List;
 
 public class NightmareArmour extends AdventArmour {
 	public NightmareArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:nightmare", 63, new int[] {4, 9, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:nightmare", 63, new int[] {4, 9, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -23,7 +23,7 @@ public class NightmareArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.nightmare_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

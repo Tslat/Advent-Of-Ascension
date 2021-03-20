@@ -22,6 +22,6 @@ public class PersistentStackCapability implements PersistentStackCapabilityHandl
 
 	@Override
 	public void deserializeNBT(FloatNBT nbt) {
-		setValue(nbt.getFloat());
+		setValue(nbt.getAsFloat());
 	}
 }

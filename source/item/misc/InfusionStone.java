@@ -10,7 +10,7 @@ public class InfusionStone extends Item {
 	private final float xp;
 
 	public InfusionStone(int lvl, float xp, RegistryObject<Item> powerStone) {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 		this.lvl = lvl;
 		this.xp = xp;
 		this.powerStone = powerStone;

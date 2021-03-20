@@ -1,7 +1,6 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -23,10 +23,10 @@ public class Pickmax extends BasePickaxe {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
-		super.onBlockDestroyed(stack, world, state, pos, entity);
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+		super.mineBlock(stack, world, state, pos, entity);
 
-		if (!world.isRemote && entity instanceof PlayerEntity && !(entity instanceof FakePlayer) && state.getMaterial() == Material.ROCK && state.isNormalCube(world, pos)) {
+		if (!world.isClientSide && entity instanceof PlayerEntity && !(entity instanceof FakePlayer) && (state.is(Tags.Blocks.STONE) || state.is(Tags.Blocks.COBBLESTONE))) {
 			for (int i = pos.getX() - 1; i < pos.getX() + 2; i++) {
 				for (int j = pos.getY() - 1; j < pos.getY() + 2; j++) {
 					for (int k = pos.getZ() - 1; k < pos.getZ() + 2; k++) {
@@ -37,7 +37,7 @@ public class Pickmax extends BasePickaxe {
 						BlockPos breakPos = new BlockPos(i, j, k);
 						BlockState extraBlock = world.getBlockState(breakPos);
 
-						if (extraBlock.getMaterial() == Material.ROCK && state.isNormalCube(world, breakPos) && world.getBlockState(pos).getPlayerRelativeBlockHardness(pl, world, pos) / extraBlock.getPlayerRelativeBlockHardness(pl, world, breakPos) < 10f)
+						if ((extraBlock.is(Tags.Blocks.STONE) || extraBlock.is(Tags.Blocks.COBBLESTONE)) && world.getBlockState(pos).getDestroyProgress(pl, world, pos) / extraBlock.getDestroyProgress(pl, world, breakPos) < 10f)
 							WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, true);
 					}
 				}
@@ -48,7 +48,7 @@ public class Pickmax extends BasePickaxe {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

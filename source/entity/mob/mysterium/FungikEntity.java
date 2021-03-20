@@ -28,26 +28,6 @@ public class FungikEntity extends AoARangedMob {
 		return 1.96875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.7d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 110;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -68,7 +48,7 @@ public class FungikEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MINING_FATIGUE, 90).level(2));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.DIG_SLOWDOWN, 90).level(2));
 	}
 
 	@Nullable

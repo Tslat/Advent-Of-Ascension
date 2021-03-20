@@ -24,31 +24,6 @@ public class ConstructOfTerrorEntity extends AoAFlyingRangedMob {
 		return 0.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 53;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 9.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 3;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

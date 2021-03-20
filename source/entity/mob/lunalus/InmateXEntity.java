@@ -22,26 +22,6 @@ public class InmateXEntity extends AoAMeleeMob {
 		return 1.84375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 138;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 13.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

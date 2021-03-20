@@ -22,26 +22,6 @@ public class ArcbeastEntity extends AoAMeleeMob {
         return 1f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 170;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 15;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -60,8 +40,4 @@ public class ArcbeastEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_ARCBEAST_HURT.get();
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 35;
-    }
 }

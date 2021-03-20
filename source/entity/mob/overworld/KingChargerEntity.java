@@ -22,32 +22,12 @@ public class KingChargerEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.5f);
+		setSpeed(1.5f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 2.5625f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 75;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -67,17 +47,8 @@ public class KingChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.WEAKNESS, 45).level(5));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

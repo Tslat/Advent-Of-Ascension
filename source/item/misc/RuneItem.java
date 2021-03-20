@@ -7,7 +7,7 @@ public class RuneItem extends Item {
 	private final boolean charged;
 
 	public RuneItem(boolean isChargedRune) {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 
 		this.charged = isChargedRune;
 	}

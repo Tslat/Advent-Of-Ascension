@@ -1,9 +1,12 @@
 package net.tslat.aoa3.block.decoration.fence;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+
+import net.minecraft.block.AbstractBlock.Properties;
 
 public class TwinklestoneFence extends FenceBlock {
 	public TwinklestoneFence() {
@@ -11,9 +14,9 @@ public class TwinklestoneFence extends FenceBlock {
 	}
 
 	private static Properties generateBlockProperties() {
-		return Properties.create(Material.GLASS, MaterialColor.MAGENTA)
-				.hardnessAndResistance(0.3f)
+		return AbstractBlock.Properties.of(Material.GLASS, MaterialColor.COLOR_MAGENTA)
+				.strength(0.3f)
 				.sound(SoundType.GLASS)
-				.lightValue(15);
+				.lightLevel(state -> 15);
 	}
 }

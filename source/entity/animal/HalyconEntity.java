@@ -7,9 +7,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -24,46 +26,26 @@ public class HalyconEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 20d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2d;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected int getSpawnChanceFactor() {
-		return 15;
-	}
-
-	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == Items.BUCKET) {
 			if (!player.isCreative())
 				heldStack.shrink(1);
 
-			player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0f, 1.0f);
+			player.playSound(SoundEvents.COW_MILK, 1.0f, 1.0f);
 
 			if (heldStack.isEmpty()) {
-				player.setHeldItem(hand, new ItemStack(AoAItems.HALYCON_MILK.get()));
+				player.setItemInHand(hand, new ItemStack(AoAItems.HALYCON_MILK.get()));
 			}
 			else {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.HALYCON_MILK.get()));
 			}
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 		else {
-			return super.processInteract(player, hand);
+			return super.mobInteract(player, hand);
 		}
 	}
 
@@ -75,12 +57,12 @@ public class HalyconEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	protected Item getTemptItem() {
-		return Item.getItemFromBlock(AoABlocks.HAVEN_GRASS_PLANT.get());
+		return Item.byBlock(AoABlocks.HAVEN_GRASS_PLANT.get());
 	}
 
 	@Nullable
 	@Override
-	public AgeableEntity createChild(AgeableEntity mate) {
-		return new HalyconEntity(AoAEntities.Animals.HALYCON.get(), world);
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
+		return new HalyconEntity(AoAEntities.Animals.HALYCON.get(), this.level);
 	}
 }

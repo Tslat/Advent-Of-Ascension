@@ -13,11 +13,11 @@ public class CompeerSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		CompeerEntity compeer = new CompeerEntity(AoAEntities.Minions.COMPEER.get(), pl.world);
+		CompeerEntity compeer = new CompeerEntity(AoAEntities.Minions.COMPEER.get(), pl.level);
 
-		compeer.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		compeer.setTamedBy(pl);
-		pl.world.addEntity(compeer);
+		compeer.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		compeer.tame(pl);
+		pl.level.addFreshEntity(compeer);
 
 		return compeer;
 	}

@@ -15,11 +15,11 @@ public class WikiSearchPacket implements AoAPacket {
 
 	@Override
 	public void encode(PacketBuffer buffer) {
-		buffer.writeString(searchString);
+		buffer.writeUtf(searchString);
 	}
 
 	public static WikiSearchPacket decode(PacketBuffer buffer) {
-		return new WikiSearchPacket(buffer.readString(32767));
+		return new WikiSearchPacket(buffer.readUtf(32767));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

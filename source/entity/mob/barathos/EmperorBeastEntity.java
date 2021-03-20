@@ -37,26 +37,6 @@ public class EmperorBeastEntity extends AoAMeleeMob {
 		return 5.3125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 150;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -82,7 +62,7 @@ public class EmperorBeastEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.NAUSEA, 350).isAmbient());
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.CONFUSION, 350).isAmbient());
 			DamageUtil.doBodySlamKnockback((LivingEntity)target, this, 21, 1.6f, 21);
 		}
 	}

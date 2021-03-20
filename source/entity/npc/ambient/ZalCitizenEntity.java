@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoAAmbientNPC;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -23,18 +24,8 @@ public class ZalCitizenEntity extends AoAAmbientNPC {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
-	}
-
-	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return world.getDimension().getType() != AoADimensions.LUNALUS.type();
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
 	@Nullable
@@ -44,7 +35,7 @@ public class ZalCitizenEntity extends AoAAmbientNPC {
 			return "message.dialogue.zal_citizen.alienOrb";
 		}
 		else {
-			return "message.dialogue.zal_citizen." + rand.nextInt(5);
+			return "message.dialogue.zal_citizen." + random.nextInt(5);
 		}
 	}
 }

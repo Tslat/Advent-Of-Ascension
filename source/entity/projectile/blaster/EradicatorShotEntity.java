@@ -26,7 +26,7 @@ public class EradicatorShotEntity extends BaseEnergyShot {
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.3f;
 	}
 }

@@ -39,18 +39,18 @@ public class EmberStaff extends BaseStaff<Object> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
-		caster.extinguish();
+		caster.clearFire();
 
-		for (LivingEntity entity : world.getEntitiesWithinAABB(LivingEntity.class, caster.getBoundingBox().grow(5), entity -> entity instanceof PlayerEntity || entity instanceof TameableEntity)) {
-			entity.extinguish();
+		for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(5), entity -> entity instanceof PlayerEntity || entity instanceof TameableEntity)) {
+			entity.clearFire();
 		}
 
-		WorldUtil.operateOnMultipleBlocksInRange(world, caster.getPosition(), 5, state -> state.getBlock() == Blocks.FIRE, pos -> world.setBlockState(pos, Blocks.AIR.getDefaultState()));
+		WorldUtil.operateOnMultipleBlocksInRange(world, caster.blockPosition(), 5, state -> state.getBlock() == Blocks.FIRE, pos -> world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState()));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

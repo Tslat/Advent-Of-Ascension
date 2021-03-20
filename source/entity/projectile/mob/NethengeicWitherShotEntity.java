@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.NethengeicWitherEntity;
 
+import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile.Type;
+
 public class NethengeicWitherShotEntity extends BaseMobProjectile {
 	public final boolean cataclysmic;
 
@@ -16,7 +18,7 @@ public class NethengeicWitherShotEntity extends BaseMobProjectile {
 	}
 
 	public NethengeicWitherShotEntity(NethengeicWitherEntity wither, boolean cataclysmic) {
-		super(AoAEntities.Projectiles.NETHENGEIC_WITHER_SHOT.get(), wither.world, wither, Type.PHYSICAL);
+		super(AoAEntities.Projectiles.NETHENGEIC_WITHER_SHOT.get(), wither.level, wither, Type.PHYSICAL);
 
 		this.cataclysmic = cataclysmic;
 	}

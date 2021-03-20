@@ -1,6 +1,10 @@
 package net.tslat.aoa3.entity.minion;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -20,34 +24,19 @@ public class GooferEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.3d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 270.0d;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 10.0d;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (rand.nextInt(6) == 0) {
-			attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
+	public boolean doHurtTarget(Entity entity) {
+		if (random.nextInt(6) == 0) {
+			hurt(DamageSource.mobAttack(this), (float)getAttribute(Attributes.ATTACK_DAMAGE).getValue());
 
 			return true;
 		}
 		else {
-			return super.attackEntityAsMob(entity);
+			return super.doHurtTarget(entity);
 		}
 	}
 

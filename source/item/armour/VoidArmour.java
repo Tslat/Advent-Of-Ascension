@@ -22,7 +22,7 @@ import java.util.List;
 
 public class VoidArmour extends AdventArmour {
 	public VoidArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:void", 25, new int[] {3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:void", 25, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 
 	@Override
@@ -33,17 +33,17 @@ public class VoidArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType()) {
-			if (!plData.player().world.isRemote && event.getSource().getTrueSource() instanceof LivingEntity) {
-				LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
+			if (!plData.player().level.isClientSide && event.getSource().getEntity() instanceof LivingEntity) {
+				LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
 
 				if (DamageUtil.isMeleeDamage(event.getSource())) {
 					if (slots == null) {
 						if (RandomUtil.oneInNChance(5))
-							attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 30, 20, true, true));
+							attacker.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 30, 20, true, true));
 					}
 					else {
 						if (random.nextFloat() < 0.025f * slots.size())
-							attacker.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 30, 20, true, true));
+							attacker.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 30, 20, true, true));
 					}
 				}
 			}
@@ -51,7 +51,7 @@ public class VoidArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.void_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

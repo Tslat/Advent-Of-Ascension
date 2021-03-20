@@ -21,6 +21,6 @@ public class Froster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new BeamerShotEntity(shooter, this, 60, 0, 0, 0));
+		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0, 0));
 	}
 }

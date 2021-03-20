@@ -24,14 +24,14 @@ public class UpsideDownGenericPlant extends GenericPlantBlock {
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockState targetState = world.getBlockState(pos.up());
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockState targetState = world.getBlockState(pos.above());
 
-		return (growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isOpaqueCube(world, pos.down());
+		return (growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.below());
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
 	}
 }

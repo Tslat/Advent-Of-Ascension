@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.hud;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.EffectInstance;
@@ -29,65 +30,65 @@ public class ResourcesRenderer {
 	public static void onRenderTick(final TickEvent.RenderTickEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
 		
-		if (ev.phase == TickEvent.Phase.END && mc.currentScreen == null && !mc.gameSettings.hideGUI && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.resourcesEnabled.get()) {
-			RenderSystem.pushMatrix();
+		if (ev.phase == TickEvent.Phase.END && mc.screen == null && !mc.options.hideGui && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.resourcesEnabled.get()) {
+			MatrixStack matrix = new MatrixStack();
+
 			RenderSystem.disableDepthTest();
-			RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+			matrix.scale(0.5f, 0.5f, 0.5f);
 			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 			RenderSystem.enableAlphaTest();
 
-			int scaledWidth = mc.getMainWindow().getScaledWidth();
-			int scaledHeight = mc.getMainWindow().getScaledHeight();
+			int scaledWidth = mc.getWindow().getGuiScaledWidth();
+			int scaledHeight = mc.getWindow().getGuiScaledHeight();
 			
 			if (AoAConfig.CLIENT.hudResourcesHorizontal.get()) {
 				switch (AoAConfig.CLIENT.hudResourcesPosition.get()) {
 					case Bottom_Right:
-						renderHorizontalResources(mc, (int)((scaledWidth - 150) / 0.5f), (int)((scaledHeight - 25) / 0.5f));
+						renderHorizontalResources(matrix, mc, (int)((scaledWidth - 150) / 0.5f), (int)((scaledHeight - 25) / 0.5f));
 						break;
 					case Bottom_Left:
-						renderHorizontalResources(mc, 0, (int)((scaledHeight - 25) / 0.5f));
+						renderHorizontalResources(matrix, mc, 0, (int)((scaledHeight - 25) / 0.5f));
 						break;
 					case Top_Left:
-						renderHorizontalResources(mc, 0, 0);
+						renderHorizontalResources(matrix, mc, 0, 0);
 						break;
 					case Top_Right:
 					default:
-						renderHorizontalResources(mc, (int)((scaledWidth - 150) / 0.5f), getPotionGuiRenderOffset(mc));
+						renderHorizontalResources(matrix, mc, (int)((scaledWidth - 150) / 0.5f), getPotionGuiRenderOffset(mc));
 						break;
 				}
 			}
 			else {
 				switch (AoAConfig.CLIENT.hudResourcesPosition.get()) {
 					case Bottom_Right:
-						renderVerticalResources(mc, (int)((scaledWidth - 25) / 0.5f), (int)((scaledHeight - 150) / 0.5f));
+						renderVerticalResources(matrix, mc, (int)((scaledWidth - 25) / 0.5f), (int)((scaledHeight - 150) / 0.5f));
 						break;
 					case Bottom_Left:
-						renderVerticalResources(mc, 0, (int)((scaledHeight - 150) / 0.5f));
+						renderVerticalResources(matrix, mc, 0, (int)((scaledHeight - 150) / 0.5f));
 						break;
 					case Top_Left:
-						renderVerticalResources(mc, 0, 0);
+						renderVerticalResources(matrix, mc, 0, 0);
 						break;
 					case Top_Right:
 					default:
-						renderVerticalResources(mc, (int)((scaledWidth - 25) / 0.5f), getPotionGuiRenderOffset(mc));
+						renderVerticalResources(matrix, mc, (int)((scaledWidth - 25) / 0.5f), getPotionGuiRenderOffset(mc));
 						break;
 				}
 			}
 
 			RenderSystem.disableAlphaTest();
-			RenderSystem.popMatrix();
 		}
 	}
 
 	private static int getPotionGuiRenderOffset(Minecraft mc) {
-		if (mc.player.getActivePotionEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
+		if (mc.player.getActiveEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
 			return 0;
 
 		int effectRenderYOffset = 0;
 
-		for (EffectInstance effect : mc.player.getActivePotionEffects()) {
-			if (effect.getDuration() > 0 && effect.getPotion().shouldRenderHUD(effect) && effect.doesShowParticles()) {
-				if (!effect.getPotion().isBeneficial()) {
+		for (EffectInstance effect : mc.player.getActiveEffects()) {
+			if (effect.getDuration() > 0 && effect.getEffect().shouldRenderHUD(effect) && effect.isVisible()) {
+				if (!effect.getEffect().isBeneficial()) {
 					effectRenderYOffset = 100;
 					break;
 				}
@@ -107,117 +108,117 @@ public class ResourcesRenderer {
 		Bottom_Left
 	}
 
-	private static void renderHorizontalResources(Minecraft mc, int rootX, int rootY) {
+	private static void renderHorizontalResources(MatrixStack matrix, Minecraft mc, int rootX, int rootY) {
 		if (Keybinds.statusResourceGui) {
-			mc.getTextureManager().bindTexture(resources);
+			mc.getTextureManager().bind(resources);
 
 			if (revengeActive)
-				RenderUtil.renderScaledCustomSizedTexture(rootX, rootY, 100, 90, 50, 50, 50, 50, 400, 590);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY, 100, 90, 50, 50, 50, 50, 400, 590);
 
 			float percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceRage / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 50, rootY, 0, 190, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 50, rootY, AdventGuiTabPlayer.resourceRage >= 180 ? 50 : 0, 240, percentComplete, 50, percentComplete, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 50, rootY, 0, 190, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 50, rootY, AdventGuiTabPlayer.resourceRage >= 180 ? 50 : 0, 240, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeSelyan / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY, 0, 490, 50, 15, 50, 15, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY, 0, 540, percentComplete, 15, percentComplete, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY, 0, 490, 50, 15, 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY, 0, 540, percentComplete, 15, percentComplete, 15, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeLuxon / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 15, 0, 505, 50, 10, 50, 10, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 15, 0, 555, percentComplete, 10, percentComplete, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 15, 0, 505, 50, 10, 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 15, 0, 555, percentComplete, 10, percentComplete, 10, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributeErebon / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 25, 0, 515, 50, 10, 50, 10, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 25, 0, 565, percentComplete, 10, percentComplete, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 25, 0, 515, 50, 10, 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 25, 0, 565, percentComplete, 10, percentComplete, 10, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.tributePluton / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 35, 0, 525, 50, 15, 50, 15, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 100, rootY + 35, 0, 575, percentComplete, 15, percentComplete, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 35, 0, 525, 50, 15, 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 100, rootY + 35, 0, 575, percentComplete, 15, percentComplete, 15, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceEnergy / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 150, rootY, 0, 90, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 150, rootY, 0, 140, percentComplete, 50, percentComplete, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 150, rootY, 0, 90, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 150, rootY, 0, 140, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceCreation / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 200, rootY, 0, 290, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 200, rootY, 0, 340, percentComplete, 50, percentComplete, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 200, rootY, 0, 290, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 200, rootY, 0, 340, percentComplete, 50, percentComplete, 50, 400, 590);
 
 			percentComplete = (float)Math.floor(AdventGuiTabPlayer.resourceSoul / 200f * 50);
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 250, rootY, 0, 390, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX + 250, rootY, 0, 440, percentComplete, 50, percentComplete, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 250, rootY, 0, 390, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX + 250, rootY, 0, 440, percentComplete, 50, percentComplete, 50, 400, 590);
 
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceRage), rootX + 76, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceEnergy), rootX + 176, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceCreation), rootX + 226, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceSoul), rootX + 276, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceRage), rootX + 76, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceEnergy), rootX + 176, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceCreation), rootX + 226, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceSoul), rootX + 276, rootY + 28, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 		}
-		else if (Keybinds.statusResourceGuiMessage && Keybinds.keyResourceGui.getKey().getKeyCode() != -1) {
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString("gui.aoa3.resources.showtip", Keybinds.keyResourceGui.getLocalizedName()), rootX + 150, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+		else if (Keybinds.statusResourceGuiMessage && Keybinds.RESOURCE_GUI.getKey().getValue() != -1) {
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", Keybinds.RESOURCE_GUI.getTranslatedKeyMessage()), rootX + 150, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 		}
 	}
 
-	private static void renderVerticalResources(Minecraft mc, int rootX, int rootY) {
+	private static void renderVerticalResources(MatrixStack matrix, Minecraft mc, int rootX, int rootY) {
 		if (Keybinds.statusResourceGui) {
-			mc.getTextureManager().bindTexture(resources);
+			mc.getTextureManager().bind(resources);
 
 			if (revengeActive)
-				RenderUtil.renderScaledCustomSizedTexture(rootX, rootY, 0, 500, 50, 50, 50, 50, 400, 590);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY, 0, 500, 50, 50, 50, 50, 400, 590);
 
 			float percentComplete = AdventGuiTabPlayer.resourceRage / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 50, 0, 190, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 50, AdventGuiTabPlayer.resourceRage >= 180 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 50, 0, 190, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 50, AdventGuiTabPlayer.resourceRage >= 180 ? 50 : 0, 240, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.tributeSelyan / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 100, 0, 490, 50, 15, 50, 15, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 100, 0, 540, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 100, 0, 490, 50, 15, 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 100, 0, 540, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.tributeLuxon / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 115, 0, 505, 50, 10, 50, 10, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 115, 0, 555, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 115, 0, 505, 50, 10, 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 115, 0, 555, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.tributeErebon / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 125, 0, 515, 50, 10, 50, 10, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 125, 0, 565, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 125, 0, 515, 50, 10, 50, 10, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 125, 0, 565, percentComplete * 50, 10, percentComplete * 50, 10, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.tributePluton / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 135, 0, 525, 50, 15, 50, 15, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 135, 0, 575, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 135, 0, 525, 50, 15, 50, 15, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 135, 0, 575, percentComplete * 50, 15, percentComplete * 50, 15, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.resourceEnergy / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 150, 0, 90, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 150, 0, 140, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 150, 0, 90, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 150, 0, 140, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.resourceEnergy / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 200, 0, 290, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 200, 0, 340, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 200, 0, 290, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 200, 0, 340, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
 
 			percentComplete = AdventGuiTabPlayer.resourceEnergy / 200f;
 
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 250, 0, 390, 50, 50, 50, 50, 400, 590);
-			RenderUtil.renderScaledCustomSizedTexture(rootX, rootY + 250, 0, 440, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 250, 0, 390, 50, 50, 50, 50, 400, 590);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, rootX, rootY + 250, 0, 440, percentComplete * 50, 50, percentComplete * 50, 50, 400, 590);
 
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceRage), rootX + 26, rootY + 76, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceEnergy), rootX + 26, rootY + 176, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceCreation), rootX + 26, rootY + 226, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, String.valueOf((int)AdventGuiTabPlayer.resourceSoul), rootX + 26, rootY + 276, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceRage), rootX + 26, rootY + 76, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceEnergy), rootX + 26, rootY + 176, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceCreation), rootX + 26, rootY + 226, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf((int)AdventGuiTabPlayer.resourceSoul), rootX + 26, rootY + 276, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 		}
-		else if (Keybinds.statusResourceGuiMessage && Keybinds.keyResourceGui.getKey().getKeyCode() != -1) {
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString("gui.aoa3.resources.showtip", Keybinds.keyResourceGui.getLocalizedName()), rootX + 150, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+		else if (Keybinds.statusResourceGuiMessage && Keybinds.RESOURCE_GUI.getKey().getValue() != -1) {
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", Keybinds.RESOURCE_GUI.getTranslatedKeyMessage()), rootX + 150, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 		}
 	}
 }

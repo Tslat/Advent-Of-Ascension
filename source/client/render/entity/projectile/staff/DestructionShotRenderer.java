@@ -17,7 +17,7 @@ public class DestructionShotRenderer extends EntityRenderer<DestructionShotEntit
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(DestructionShotEntity entity) {
+	public ResourceLocation getTextureLocation(DestructionShotEntity entity) {
 		return texture;
 	}
 }

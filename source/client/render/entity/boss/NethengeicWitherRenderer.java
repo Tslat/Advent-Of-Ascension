@@ -21,13 +21,13 @@ public class NethengeicWitherRenderer extends MobRenderer<NethengeicWitherEntity
 	}
 
 	@Override
-	protected void preRenderCallback(NethengeicWitherEntity nethengeicWither, MatrixStack matrix, float partialTicks) {
+	protected void scale(NethengeicWitherEntity nethengeicWither, MatrixStack matrix, float partialTicks) {
 		matrix.scale(1.5f, 1.5f, 1.5f);
 	}
 
 	@Nullable
 	@Override
-	public ResourceLocation getEntityTexture(NethengeicWitherEntity nethengeicWither) {
+	public ResourceLocation getTextureLocation(NethengeicWitherEntity nethengeicWither) {
 		switch (nethengeicWither.getStage()) {
 			case 1:
 			default:

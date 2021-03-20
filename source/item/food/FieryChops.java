@@ -18,19 +18,19 @@ import java.util.List;
 
 public class FieryChops extends Item {
 	public FieryChops() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).food(new Food.Builder().hunger(5).saturation(0.5f).build()));
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(5).saturationMod(0.5f).build()));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entityLiving) {
 		if (entityLiving instanceof ServerPlayerEntity)
 			PlayerUtil.addResourceToPlayer((ServerPlayerEntity)entityLiving, Resources.RAGE, 20);
 
-		return super.onItemUseFinish(stack, world, entityLiving);
+		return super.finishUsingItem(stack, world, entityLiving);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -43,12 +43,12 @@ public class EverfightStaff extends BaseStaff<Float> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, Float args) {
-		EntityUtil.applyPotions(caster, new PotionUtil.EffectBuilder(Effects.RESISTANCE, (int)(1200f * (1 - args))));
+		EntityUtil.applyPotions(caster, new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, (int)(1200f * (1 - args))));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

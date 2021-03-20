@@ -37,27 +37,27 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 	}
 
 	@Override
-	public ItemStack getIcon() {
+	public ItemStack getToastSymbol() {
 		return new ItemStack(AoABlocks.DIVINE_STATION.get());
 	}
 
 	@Override
 	public boolean matches(DivineStationContainer.DivineStationInventory inv, World world) {
-		return ItemStack.areItemsEqual(input, inv.getStackInSlot(0)) && ItemStack.areItemsEqual(upgradeKit, inv.getStackInSlot(1));
+		return ItemStack.isSame(input, inv.getItem(0)) && ItemStack.isSame(upgradeKit, inv.getItem(1));
 	}
 
 	@Override
-	public ItemStack getCraftingResult(DivineStationContainer.DivineStationInventory inv) {
+	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv) {
 		return output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return width * height <= 3;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return output.copy();
 	}
 
@@ -78,10 +78,10 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(DivineStationContainer.DivineStationInventory inv) {
-		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
 		for (int i = 0; i < remainingItems.size(); i++) {
-			ItemStack stack = inv.getStackInSlot(i);
+			ItemStack stack = inv.getItem(i);
 
 			remainingItems.set(i, ForgeHooks.getContainerItem(stack));
 		}
@@ -93,8 +93,8 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> ingredients = NonNullList.<Ingredient>create();
 
-		ingredients.add(Ingredient.fromStacks(input));
-		ingredients.add(Ingredient.fromStacks(upgradeKit));
+		ingredients.add(Ingredient.of(input));
+		ingredients.add(Ingredient.of(upgradeKit));
 
 		return ingredients;
 	}
@@ -106,32 +106,32 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 
 	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<UpgradeKitRecipe> {
 		@Override
-		public UpgradeKitRecipe read(ResourceLocation recipeId, JsonObject json) {
-			String group = JSONUtils.getString(json, "group", "");
-			ItemStack inputItem = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "input"), false);
-			ItemStack upgradeKit = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "upgrade_kit"), false);
-			ItemStack output = CraftingHelper.getItemStack(JSONUtils.getJsonObject(json, "result"), true);
+		public UpgradeKitRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			String group = JSONUtils.getAsString(json, "group", "");
+			ItemStack inputItem = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "input"), false);
+			ItemStack upgradeKit = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "upgrade_kit"), false);
+			ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
 
 			return new UpgradeKitRecipe(recipeId, group, inputItem, upgradeKit, output);
 		}
 
 		@Nullable
 		@Override
-		public UpgradeKitRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			String group = buffer.readString(32767);
-			ItemStack inputItem = buffer.readItemStack();
-			ItemStack upgradeKit = buffer.readItemStack();
-			ItemStack output = buffer.readItemStack();
+		public UpgradeKitRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			String group = buffer.readUtf(32767);
+			ItemStack inputItem = buffer.readItem();
+			ItemStack upgradeKit = buffer.readItem();
+			ItemStack output = buffer.readItem();
 
 			return new UpgradeKitRecipe(recipeId, group, inputItem, upgradeKit, output);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, UpgradeKitRecipe recipe) {
-			buffer.writeString(recipe.getGroup(), 32767);
-			buffer.writeItemStack(recipe.input);
-			buffer.writeItemStack(recipe.upgradeKit);
-			buffer.writeItemStack(recipe.output);
+		public void toNetwork(PacketBuffer buffer, UpgradeKitRecipe recipe) {
+			buffer.writeUtf(recipe.getGroup(), 32767);
+			buffer.writeItem(recipe.input);
+			buffer.writeItem(recipe.upgradeKit);
+			buffer.writeItem(recipe.output);
 		}
 	}
 }

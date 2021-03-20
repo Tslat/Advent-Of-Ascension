@@ -22,26 +22,6 @@ public class ArielEntity extends AoAMeleeMob {
 		return 2f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 115;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 12;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -61,7 +41,7 @@ public class ArielEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 }

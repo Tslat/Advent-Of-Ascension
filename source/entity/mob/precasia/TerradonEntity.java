@@ -19,7 +19,7 @@ import net.tslat.aoa3.util.RandomUtil;
 import javax.annotation.Nullable;
 
 public class TerradonEntity extends AoAMeleeMob {
-	private static final DataParameter<Boolean> INVULNERABLE = EntityDataManager.<Boolean>createKey(TerradonEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> INVULNERABLE = EntityDataManager.<Boolean>defineId(TerradonEntity.class, DataSerializers.BOOLEAN);
 	private int invulnCooldown = 0;
 
 	public TerradonEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -27,7 +27,7 @@ public class TerradonEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		setAIMoveSpeed(1.8f);
+		setSpeed(1.8f);
 	}
 
 	@Override
@@ -36,30 +36,10 @@ public class TerradonEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(INVULNERABLE, false);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 105d;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
+		this.entityData.define(INVULNERABLE, false);
 	}
 
 	@Nullable
@@ -86,20 +66,15 @@ public class TerradonEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return super.isInvulnerableTo(source) || isInvulnerable();
-	}
-
-	@Override
 	public boolean isInvulnerable() {
-		return super.isInvulnerable() || dataManager.get(INVULNERABLE);
+		return super.isInvulnerable() || entityData.get(INVULNERABLE);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (invulnCooldown > 0)
 				invulnCooldown--;
 

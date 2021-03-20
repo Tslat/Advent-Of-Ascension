@@ -6,6 +6,6 @@ import net.minecraft.entity.MobEntity;
 
 public class CorruptedTravellerModel extends BipedModel<MobEntity> {
 	public CorruptedTravellerModel() {
-		super(RenderType::getEntityTranslucent, 0, 0, 64, 32);
+		super(RenderType::entityTranslucent, 0, 0, 64, 32);
 	}
 }

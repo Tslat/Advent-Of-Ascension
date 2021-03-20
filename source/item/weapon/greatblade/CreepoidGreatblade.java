@@ -23,17 +23,17 @@ public class CreepoidGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
 		if (EntityUtil.getAttackCooldown(attacker) > 0.85f) {
-			double offset = target.getWidth() / 1.99d;
-			double offsetX = MathHelper.clamp(attacker.getPosX() - target.getPosX(), -offset, offset);
-			double offsetY = MathHelper.clamp(attacker.getPosY() + attacker.getEyeHeight() - target.getPosY(), -0.1, target.getHeight() + 0.1);
-			double offsetZ = MathHelper.clamp(attacker.getPosZ() - target.getPosZ(), -offset, offset);
+			double offset = target.getBbWidth() / 1.99d;
+			double offsetX = MathHelper.clamp(attacker.getX() - target.getX(), -offset, offset);
+			double offsetY = MathHelper.clamp(attacker.getY() + attacker.getEyeHeight() - target.getY(), -0.1, target.getBbHeight() + 0.1);
+			double offsetZ = MathHelper.clamp(attacker.getZ() - target.getZ(), -offset, offset);
 
-			WorldUtil.createExplosion(attacker, attacker.world, target.getPosX() + offsetX, target.getPosY() + offsetY, target.getPosZ() + offsetZ, 1.5f);
+			WorldUtil.createExplosion(attacker, attacker.level, target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 1.5f);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.EXPLODES_ON_HIT, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

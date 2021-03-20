@@ -22,26 +22,6 @@ public class ChimeraEntity extends AoAMeleeMob {
 		return 1.05f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 3.5d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -59,18 +39,9 @@ public class ChimeraEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity)
-			((LivingEntity)target).addPotionEffect(new EffectInstance(Effects.WEAKNESS, 240, 1, true, true));
+			((LivingEntity)target).addEffect(new EffectInstance(Effects.WEAKNESS, 240, 1, true, true));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

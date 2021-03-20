@@ -25,74 +25,74 @@ public class FlyingMeleeAttackGoal extends Goal {
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		LivingEntity target = this.taskOwner.getAttackTarget();
+	public boolean canUse() {
+		LivingEntity target = this.taskOwner.getTarget();
 
 		if (target == null || !target.isAlive())
 			return false;
 
-		this.path = this.taskOwner.getNavigator().getPathToEntity(target, 0);
+		this.path = this.taskOwner.getNavigation().createPath(target, 0);
 
 		if (this.path != null) {
 			return true;
 		}
 		else {
-			return getAttackReach(target) >= this.taskOwner.getDistanceSq(target.getPosX(), target.getBoundingBox().minY, target.getPosZ());
+			return getAttackReach(target) >= this.taskOwner.distanceToSqr(target.getX(), target.getBoundingBox().minY, target.getZ());
 		}
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		LivingEntity target = this.taskOwner.getAttackTarget();
+	public boolean canContinueToUse() {
+		LivingEntity target = this.taskOwner.getTarget();
 
 		if (target == null || !target.isAlive())
 			return false;
 
 		if (!this.retainTarget)
-			return !this.taskOwner.getNavigator().noPath();
+			return !this.taskOwner.getNavigation().isDone();
 
 		return !(target instanceof PlayerEntity) || !target.isSpectator() && !((PlayerEntity)target).isCreative();
 	}
 
 	@Override
-	public void startExecuting() {
-		this.taskOwner.getNavigator().setPath(this.path, this.chargingSpeed);
+	public void start() {
+		this.taskOwner.getNavigation().moveTo(this.path, this.chargingSpeed);
 		this.delayTicks = 0;
 	}
 
 	@Override
-	public void resetTask() {
-		LivingEntity target = this.taskOwner.getAttackTarget();
+	public void stop() {
+		LivingEntity target = this.taskOwner.getTarget();
 
 		if (target instanceof PlayerEntity && (target.isSpectator() || ((PlayerEntity)target).isCreative()))
-			this.taskOwner.setAttackTarget(null);
+			this.taskOwner.setTarget(null);
 
-		this.taskOwner.getNavigator().clearPath();
+		this.taskOwner.getNavigation().stop();
 	}
 
 	@Override
 	public void tick() {
-		LivingEntity target = this.taskOwner.getAttackTarget();
+		LivingEntity target = this.taskOwner.getTarget();
 
 		if (target == null) {
-			resetTask();
+			stop();
 
 			return;
 		}
 
-		double attackDistance = this.taskOwner.getDistanceSq(target.getPosX(), target.getBoundingBox().minY, target.getPosZ());
+		double attackDistance = this.taskOwner.distanceToSqr(target.getX(), target.getBoundingBox().minY, target.getZ());
 
-		this.taskOwner.getLookController().setLookPositionWithEntity(target, 30, 30);
+		this.taskOwner.getLookControl().setLookAt(target, 30, 30);
 		this.delayTicks--;
 
-		if ((this.retainTarget || this.taskOwner.getEntitySenses().canSee(target)) &&
+		if ((this.retainTarget || this.taskOwner.getSensing().canSee(target)) &&
 				this.delayTicks <= 0 &&
-				(this.targetX == 0 && this.targetY == 0 && this.targetZ == 0 || target.getDistanceSq(this.targetX, this.targetY, this.targetZ) >= 1 ||
-						this.taskOwner.getRNG().nextFloat() < 0.05f)) {
-			this.targetX = target.getPosX();
+				(this.targetX == 0 && this.targetY == 0 && this.targetZ == 0 || target.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1 ||
+						this.taskOwner.getRandom().nextFloat() < 0.05f)) {
+			this.targetX = target.getX();
 			this.targetY = target.getBoundingBox().minY;
-			this.targetZ = target.getPosZ();
-			this.delayTicks = 4 + this.taskOwner.getRNG().nextInt(7);
+			this.targetZ = target.getZ();
+			this.delayTicks = 4 + this.taskOwner.getRandom().nextInt(7);
 
 			if (attackDistance > 1024) {
 				this.delayTicks += 10;
@@ -101,11 +101,11 @@ public class FlyingMeleeAttackGoal extends Goal {
 				this.delayTicks += 5;
 			}
 
-			if (!this.taskOwner.getNavigator().tryMoveToEntityLiving(target, this.chargingSpeed)) {
+			if (!this.taskOwner.getNavigation().moveTo(target, this.chargingSpeed)) {
 				this.delayTicks += 15;
 			}
 			else {
-				this.taskOwner.getMoveHelper().setMoveTo(this.targetX, this.targetY, this.targetZ, this.chargingSpeed);
+				this.taskOwner.getMoveControl().setWantedPosition(this.targetX, this.targetY, this.targetZ, this.chargingSpeed);
 			}
 
 		}
@@ -121,12 +121,12 @@ public class FlyingMeleeAttackGoal extends Goal {
 
 		if (attackDistance <= reach & this.attackCooldown <= 0) {
 			this.attackCooldown = 20;
-			this.taskOwner.swingArm(Hand.MAIN_HAND);
-			this.taskOwner.attackEntityAsMob(target);
+			this.taskOwner.swing(Hand.MAIN_HAND);
+			this.taskOwner.doHurtTarget(target);
 		}
 	}
 
 	private double getAttackReach(LivingEntity target) {
-		return this.taskOwner.getWidth() * 2D * this.taskOwner.getWidth() * 2D + target.getWidth();
+		return this.taskOwner.getBbWidth() * 2D * this.taskOwner.getBbWidth() * 2D + target.getBbWidth();
 	}
 }

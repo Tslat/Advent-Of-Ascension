@@ -22,31 +22,6 @@ public class RockbiterEntity extends AoAMeleeMob {
         return 0.96875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.2f;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 60;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
-    @Override
-    protected double getBaseArmour() {
-        return 1.5d;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -65,8 +40,4 @@ public class RockbiterEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_ROCKBITER_HURT.get();
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
 }

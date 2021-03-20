@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.hud;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.potion.EffectInstance;
@@ -28,14 +29,15 @@ public class SkillsRenderer {
 	public static void onRenderTick(final TickEvent.RenderTickEvent ev) {
 		Minecraft mc = Minecraft.getInstance();
 		
-		if (mc.currentScreen == null && !mc.gameSettings.hideGUI && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.skillsEnabled.get()) {
-			RenderSystem.pushMatrix();
+		if (mc.screen == null && !mc.options.hideGui && mc.player != null && !mc.player.isSpectator() && AoAConfig.COMMON.skillsEnabled.get()) {
+			MatrixStack matrix = new MatrixStack();
+
 			RenderSystem.disableDepthTest();
-			RenderSystem.scalef(0.5f, 0.5f, 0.5f);
+			matrix.scale(0.5f, 0.5f, 0.5f);
 			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 			RenderSystem.enableAlphaTest();
 
-			int scaledWidth = mc.getMainWindow().getScaledWidth();
+			int scaledWidth = mc.getWindow().getGuiScaledWidth();
 			int renderOffsetY = 1 + getPotionGuiRenderOffset(mc);
 			int renderOffsetX = (int)((scaledWidth - 200) / 0.5f);
 
@@ -54,20 +56,19 @@ public class SkillsRenderer {
 				}
 			}
 
-			renderSkills(mc, renderOffsetX, renderOffsetY);
+			renderSkills(matrix, mc, renderOffsetX, renderOffsetY);
 
 			RenderSystem.disableAlphaTest();
-			RenderSystem.popMatrix();
 		}
 	}
 
-	private static void renderSkills(Minecraft mc, int rootX, int rootY) {
+	private static void renderSkills(MatrixStack matrix, Minecraft mc, int rootX, int rootY) {
 		if (Keybinds.statusSkillGui) {
 			int x;
 			int y;
 
 			for (Skills skill : Skills.values()) {
-				mc.getTextureManager().bindTexture(skills);
+				mc.getTextureManager().bind(skills);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 
 				y = rootY + (int)Math.floor(skill.id / 8f) * 50;
@@ -157,30 +158,30 @@ public class SkillsRenderer {
 						break;
 				}
 
-				RenderUtil.renderScaledCustomSizedTexture(x, y, uvX, uvY, 50, 50, 50, 50, 450, 240);
-				RenderUtil.renderScaledCustomSizedTexture(x, y + 37, 0, 200, 100, 20, 50, 13, 450, 240);
-				RenderUtil.renderScaledCustomSizedTexture(x, y + 37, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 50f, 13, 450, 240);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, x, y, uvX, uvY, 50, 50, 50, 50, 450, 240);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 37, 0, 200, 100, 20, 50, 13, 450, 240);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, x, y + 37, 0, 220, progressBarPercent, 20, progressBarPercent / 100f * 50f, 13, 450, 240);
 
 				if (optionalUvX >= 0)
-					RenderUtil.renderScaledCustomSizedTexture(x, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
+					RenderUtil.renderScaledCustomSizedTexture(matrix, x, y, optionalUvX, optionalUvY, 24, 24, 24, 24, 450, 240);
 
-				RenderUtil.drawScaledString(mc.fontRenderer, String.valueOf(level), x + 45 - (int)(mc.fontRenderer.getStringWidth(String.valueOf(level)) * 1.5f), y, 1.5f, level < 100 ? NumberUtil.RGB(255, 255, 255) : NumberUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawScaledString(matrix, mc.font, String.valueOf(level), x + 45 - (int)(mc.font.width(String.valueOf(level)) * 1.5f), y, 1.5f, level < 100 ? NumberUtil.RGB(255, 255, 255) : NumberUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
-		else if (Keybinds.statusSkillGuiMessage && Keybinds.keySkillGui.getKey().getKeyCode() != -1) {
-			RenderUtil.drawCenteredScaledString(mc.fontRenderer, LocaleUtil.getLocaleString("gui.aoa3.skills.showtip", Keybinds.keySkillGui.getLocalizedName()), rootX + 228, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+		else if (Keybinds.statusSkillGuiMessage && Keybinds.SKILL_GUI.getKey().getValue() != -1) {
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", Keybinds.SKILL_GUI.getTranslatedKeyMessage()), rootX + 228, rootY + 2, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
 		}
 	}
 
 	private static int getPotionGuiRenderOffset(Minecraft mc) {
-		if (mc.player.getActivePotionEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
+		if (mc.player.getActiveEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
 			return 0;
 
 		int effectRenderYOffset = 0;
 
-		for (EffectInstance effect : mc.player.getActivePotionEffects()) {
-			if (effect.getDuration() > 0 && effect.getPotion().shouldRenderHUD(effect) && effect.doesShowParticles()) {
-				if (!effect.getPotion().isBeneficial()) {
+		for (EffectInstance effect : mc.player.getActiveEffects()) {
+			if (effect.getDuration() > 0 && effect.getEffect().shouldRenderHUD(effect) && effect.isVisible()) {
+				if (!effect.getEffect().isBeneficial()) {
 					effectRenderYOffset = 100;
 					break;
 				}

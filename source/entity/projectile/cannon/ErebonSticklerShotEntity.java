@@ -28,7 +28,7 @@ public class ErebonSticklerShotEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.015f;
 	}
 }

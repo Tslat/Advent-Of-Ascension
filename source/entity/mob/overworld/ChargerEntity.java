@@ -17,32 +17,12 @@ public class ChargerEntity extends AoAMeleeMob {
 		super(entityType, world);
 
 		isSlipperyMovement = true;
-		setAIMoveSpeed(1.275f);
+		setSpeed(1.275f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return size.height * 0.85f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.0f;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -61,13 +41,4 @@ public class ChargerEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_CHARGER_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

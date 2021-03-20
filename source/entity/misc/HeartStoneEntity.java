@@ -9,7 +9,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -30,7 +30,7 @@ public class HeartStoneEntity extends Entity {
     public HeartStoneEntity(World world, BlockPos spawnPosition) {
         this(AoAEntities.Misc.HEART_STONE.get(), world);
 
-        setPositionAndUpdate(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
+        teleportTo(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
     }
 
     @Override
@@ -39,68 +39,68 @@ public class HeartStoneEntity extends Entity {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
-    protected void registerData() {}
+    protected void defineSynchedData() {}
 
     @Override
-    protected void readAdditional(CompoundNBT compound) {}
+    protected void readAdditionalSaveData(CompoundNBT compound) {}
 
     @Override
-    protected void writeAdditional(CompoundNBT compound) {}
+    protected void addAdditionalSaveData(CompoundNBT compound) {}
 
     @Override
     public void tick() {
         super.tick();
 
-        if (ticksExisted >= 200) {
+        if (tickCount >= 200) {
             remove();
 
             return;
         }
 
-        boolean isFalling = getMotion().y <= 0.0D;
+        boolean isFalling = getDeltaMovement().y <= 0.0D;
         double gravity = 0.08d;
 
         if (!isInWater()) {
-            BlockPos groundPos = getPositionUnderneath();
-            float slipperiness = world.getBlockState(groundPos).getSlipperiness(world, groundPos, this);
+            BlockPos groundPos = getBlockPosBelowThatAffectsMyMovement();
+            float slipperiness = level.getBlockState(groundPos).getSlipperiness(level, groundPos, this);
             float friction = onGround ? slipperiness * 0.91F : 0.91F;
 
-            move(MoverType.SELF, getMotion());
+            move(MoverType.SELF, getDeltaMovement());
 
-            Vec3d motion = getMotion();
+            Vector3d motion = getDeltaMovement();
             double motionY = motion.y;
 
-            if (world.isRemote && !world.isBlockLoaded(groundPos)) {
-                if (getPosY() > 0.0D) {
+            if (level.isClientSide && !level.hasChunkAt(groundPos)) {
+                if (getY() > 0.0D) {
                     motionY = -0.1D;
                 }
                 else {
                     motionY = 0.0D;
                 }
             }
-            else if (!hasNoGravity()) {
+            else if (!isNoGravity()) {
                 motionY -= gravity;
             }
 
-            setMotion(motion.x * friction, motionY * 0.98F, motion.z * friction);
+            setDeltaMovement(motion.x * friction, motionY * 0.98F, motion.z * friction);
         }
         else {
-            double initialPosY = getPosY();
+            double initialPosY = getY();
             float waterDrag = 0.8f;
 
-            move(MoverType.SELF, getMotion());
+            move(MoverType.SELF, getDeltaMovement());
 
-            Vec3d motion = getMotion();
+            Vector3d motion = getDeltaMovement();
 
-            setMotion(motion.mul(waterDrag, 0.8F, waterDrag));
+            setDeltaMovement(motion.multiply(waterDrag, 0.8F, waterDrag));
 
-            if (!hasNoGravity()) {
-                motion = getMotion();
+            if (!isNoGravity()) {
+                motion = getDeltaMovement();
                 double motionY;
 
                 if (isFalling && Math.abs(motion.y - 0.005D) >= 0.003D && Math.abs(motion.y - gravity / 16.0D) < 0.003D) {
@@ -110,36 +110,36 @@ public class HeartStoneEntity extends Entity {
                     motionY = motion.y - gravity / 16.0D;
                 }
 
-                setMotion(motion.x, motionY, motion.z);
+                setDeltaMovement(motion.x, motionY, motion.z);
             }
 
-            motion = getMotion();
+            motion = getDeltaMovement();
 
-            if (collidedHorizontally && isOffsetPositionInLiquid(motion.x, motion.y + 0.6D - getPosY() + initialPosY, motion.z))
-                setMotion(motion.x, 0.3F, motion.z);
+            if (horizontalCollision && isFree(motion.x, motion.y + 0.6D - getY() + initialPosY, motion.z))
+                setDeltaMovement(motion.x, 0.3F, motion.z);
         }
     }
 
     @Override
-    public void onCollideWithPlayer(PlayerEntity player) {
+    public void playerTouch(PlayerEntity player) {
         if (player instanceof ServerPlayerEntity && isAlive()) {
             PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
             int lvl = plData.stats().getLevelForDisplay(Skills.INNERVATION);
 
             EntityUtil.healEntity(player, InnervationUtil.getHeartstoneHealAmount(lvl));
             plData.stats().addXp(Skills.INNERVATION, PlayerUtil.getXpRequiredForNextLevel(lvl) / InnervationUtil.getExpDenominator(lvl), false, false);
-            world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.HEART_STONE_COLLECT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+            level.playSound(null, getX(), getY(), getZ(), AoASounds.HEART_STONE_COLLECT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
             remove();
         }
     }
 
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return false;
     }
 

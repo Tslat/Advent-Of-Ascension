@@ -22,26 +22,6 @@ public class GingerbreadManEntity extends AoAMeleeMob {
 		return 1.875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {

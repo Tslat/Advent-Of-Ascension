@@ -18,19 +18,19 @@ import java.util.List;
 
 public class HotRod extends Item {
 	public HotRod() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD).food(new Food.Builder().hunger(9).saturation(0.9f).build()));
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.9f).build()));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity)
 			PlayerUtil.addResourceToPlayer((ServerPlayerEntity)entity, Resources.RAGE, 20);
 
-		return super.onItemUseFinish(stack, worldIn, entity);
+		return super.finishUsingItem(stack, worldIn, entity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

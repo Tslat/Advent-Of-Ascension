@@ -10,9 +10,9 @@ public class ShyregemBow extends BaseBow {
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack repairMaterial) {
+	public boolean isValidRepairItem(ItemStack stack, ItemStack repairMaterial) {
 		Item repairItem = repairMaterial.getItem();
 
-		return repairItem == AoAItems.SHYRESTONE_INGOT.get() || repairItem == AoAItems.SHYREGEM.get() || super.getIsRepairable(stack, repairMaterial);
+		return repairItem == AoAItems.SHYRESTONE_INGOT.get() || repairItem == AoAItems.SHYREGEM.get() || super.isValidRepairItem(stack, repairMaterial);
 	}
 }

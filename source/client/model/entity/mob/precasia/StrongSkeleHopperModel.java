@@ -17,46 +17,46 @@ public class StrongSkeleHopperModel extends EntityModel<MobEntity> {
 	private ModelRenderer head2;
 
 	public StrongSkeleHopperModel() {
-		textureWidth = 64;
-		textureHeight = 32;
+		texWidth = 64;
+		texHeight = 32;
 		(head = new ModelRenderer(this, 0, 0)).addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8);
-		head.setRotationPoint(6.0f, 13.0f, 0.0f);
-		head.setTextureSize(64, 32);
+		head.setPos(6.0f, 13.0f, 0.0f);
+		head.setTexSize(64, 32);
 		head.mirror = true;
 		setRotation(head, 0.0f, 0.0f, 0.0f);
 		(body = new ModelRenderer(this, 16, 16)).addBox(-4.0f, 0.0f, -2.0f, 8, 5, 4);
-		body.setRotationPoint(0.0f, 13.0f, 0.0f);
-		body.setTextureSize(64, 32);
+		body.setPos(0.0f, 13.0f, 0.0f);
+		body.setTexSize(64, 32);
 		body.mirror = true;
 		setRotation(body, 0.0f, 0.0f, 0.0f);
 		(rightArm = new ModelRenderer(this, 40, 16)).addBox(-3.0f, -2.0f, -2.0f, 4, 8, 4);
-		rightArm.setRotationPoint(-5.0f, 15.0f, 0.0f);
-		rightArm.setTextureSize(64, 32);
+		rightArm.setPos(-5.0f, 15.0f, 0.0f);
+		rightArm.setTexSize(64, 32);
 		rightArm.mirror = true;
 		setRotation(rightArm, 0.0f, 0.0f, 0.0f);
 		(leftArm = new ModelRenderer(this, 40, 16)).addBox(-1.0f, -2.0f, -2.0f, 4, 8, 4);
-		leftArm.setRotationPoint(5.0f, 15.0f, 0.0f);
-		leftArm.setTextureSize(64, 32);
+		leftArm.setPos(5.0f, 15.0f, 0.0f);
+		leftArm.setTexSize(64, 32);
 		leftArm.mirror = true;
 		setRotation(leftArm, 0.0f, 0.0f, 0.0f);
 		(rightLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
-		rightLeg.setRotationPoint(-2.0f, 18.0f, 0.0f);
-		rightLeg.setTextureSize(64, 32);
+		rightLeg.setPos(-2.0f, 18.0f, 0.0f);
+		rightLeg.setTexSize(64, 32);
 		rightLeg.mirror = true;
 		setRotation(rightLeg, 0.0f, 0.0f, 0.0f);
 		(leftLeg = new ModelRenderer(this, 0, 16)).addBox(-2.0f, 0.0f, -2.0f, 4, 6, 4);
-		leftLeg.setRotationPoint(2.0f, 18.0f, 0.0f);
-		leftLeg.setTextureSize(64, 32);
+		leftLeg.setPos(2.0f, 18.0f, 0.0f);
+		leftLeg.setTexSize(64, 32);
 		leftLeg.mirror = true;
 		setRotation(leftLeg, 0.0f, 0.0f, 0.0f);
 		(head2 = new ModelRenderer(this, 0, 0)).addBox(-4.0f, -8.0f, -4.0f, 8, 8, 8);
-		head2.setRotationPoint(-6.0f, 13.0f, 0.0f);
-		head2.setTextureSize(64, 32);
+		head2.setPos(-6.0f, 13.0f, 0.0f);
+		head2.setTexSize(64, 32);
 		head2.mirror = true;
 		setRotation(head2, 0.0f, 0.0f, 0.0f);
 	}
 
-	public void render(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
 		head.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		body.render(matrix, buffer, light, overlay, red, green, blue, alpha);
 		rightArm.render(matrix, buffer, light, overlay, red, green, blue, alpha);
@@ -67,22 +67,22 @@ public class StrongSkeleHopperModel extends EntityModel<MobEntity> {
 	}
 
 	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
+		model.xRot = x;
+		model.yRot = y;
+		model.zRot = z;
 	}
 
-	public void setRotationAngles(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		head.rotateAngleY = netHeadYaw / 57.295776f;
-		head.rotateAngleX = headPitch / 54.11268f;
-		head2.rotateAngleY = netHeadYaw / 57.295776f;
-		head2.rotateAngleX = headPitch / 54.11268f;
-		rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f;
-		rightArm.rotateAngleZ = 0.0f;
-		leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbSwingAmount * 0.5f;
-		leftArm.rotateAngleZ = 0.0f;
-		rightLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		rightLeg.rotateAngleY = 0.0f;
-		leftLeg.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		head.yRot = netHeadYaw / 57.295776f;
+		head.xRot = headPitch / 54.11268f;
+		head2.yRot = netHeadYaw / 57.295776f;
+		head2.xRot = headPitch / 54.11268f;
+		rightArm.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 2.0f * limbSwingAmount * 0.5f;
+		rightArm.zRot = 0.0f;
+		leftArm.xRot = MathHelper.cos(limbSwing * 0.6662f) * 2.0f * limbSwingAmount * 0.5f;
+		leftArm.zRot = 0.0f;
+		rightLeg.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
+		rightLeg.yRot = 0.0f;
+		leftLeg.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
 	}
 }

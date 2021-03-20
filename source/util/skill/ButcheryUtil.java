@@ -118,7 +118,7 @@ public class ButcheryUtil {
 
 	public static void tryBloodlustSpawn(PlayerEntity pl, LivingEntity target) {
 		if (AoAConfig.COMMON.skillsEnabled.get() && RandomUtil.oneInNChance(30) && canMobSpawnBloodlust(target))
-			pl.world.addEntity(new BloodlustEntity(pl.world, target.getPosition()));
+			pl.level.addFreshEntity(new BloodlustEntity(pl.level, target.blockPosition()));
 	}
 
 	public static void blacklistEntityFromBloodlusts(Entity entity) {

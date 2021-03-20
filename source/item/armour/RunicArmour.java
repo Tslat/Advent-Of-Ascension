@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RunicArmour extends AdventArmour {
 	public RunicArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:runic", 67, new int[] {5, 8, 9, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:runic", 67, new int[] {5, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -38,13 +38,13 @@ public class RunicArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots == null && plData.equipment().isCooledDown("runic_armour") && DamageUtil.isMagicDamage(event.getSource(), plData.player(), event.getAmount())) {
-			plData.player().addPotionEffect(new EffectInstance(Effects.ABSORPTION, 200, 0, false, false));
+			plData.player().addEffect(new EffectInstance(Effects.ABSORPTION, 200, 0, false, false));
 			plData.equipment().setCooldown("runic_armour", 6000);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.runic_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

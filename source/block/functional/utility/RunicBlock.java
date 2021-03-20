@@ -19,15 +19,15 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class RunicBlock extends Block {
 	public RunicBlock() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.BLUE_TERRACOTTA, 10, 15, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_BLUE, 10, 15, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get()) {
-			if (!world.isRemote()) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get()) {
+			if (!world.isClientSide()) {
 				if (!player.isCreative())
-					player.getHeldItem(hand).shrink(1);
+					player.getItemInHand(hand).shrink(1);
 
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAWeapons.RUNIC_BOMB.get()));
 			}

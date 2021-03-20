@@ -13,11 +13,11 @@ public class EnderCarrierSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		EnderCarrierEntity enderCarrier = new EnderCarrierEntity(AoAEntities.Minions.ENDER_CARRIER.get(), pl.world);
+		EnderCarrierEntity enderCarrier = new EnderCarrierEntity(AoAEntities.Minions.ENDER_CARRIER.get(), pl.level);
 
-		enderCarrier.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		enderCarrier.setTamedBy(pl);
-		pl.world.addEntity(enderCarrier);
+		enderCarrier.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		enderCarrier.tame(pl);
+		pl.level.addFreshEntity(enderCarrier);
 
 		return enderCarrier;
 	}

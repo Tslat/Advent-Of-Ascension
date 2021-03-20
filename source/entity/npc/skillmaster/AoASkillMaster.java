@@ -11,16 +11,6 @@ public abstract class AoASkillMaster extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 50;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected boolean isFixedTradesList() {
 		return true;
 	}

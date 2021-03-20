@@ -14,7 +14,9 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.server.command.EnumArgument;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.StringUtil;
 import net.tslat.aoa3.util.constant.Deities;
@@ -33,91 +35,91 @@ public class PlayerCommand implements Command<CommandSource> {
 			.then(Commands.literal("skills")
 				.then(Commands.argument("skill", EnumArgument.enumArgument(Skills.class))
 					.then(Commands.literal("level")
-						.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", IntegerArgumentType.integer(1, 999))
 								.executes((context) -> adjustSkills(context, "add"))))
-						.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", IntegerArgumentType.integer(1, 999))
 								.executes((context) -> adjustSkills(context, "subtract"))))
-						.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", IntegerArgumentType.integer(1, 1000))
 								.executes((context) -> adjustSkills(context, "set"))))
 						.then(Commands.literal("check").executes(PlayerCommand::checkSkill)))
 					.then(Commands.literal("xp")
-						.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", FloatArgumentType.floatArg(1, 544132359))
 								.executes((context) -> adjustXp(context, "add"))))
-						.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", FloatArgumentType.floatArg(1, 544132359))
 								.executes((context) -> adjustXp(context, "subtract"))))
-						.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", FloatArgumentType.floatArg(0, 544132358))
 								.executes((context) -> adjustXp(context, "set"))))
 						.then(Commands.literal("check").executes(PlayerCommand::checkXp)))))
 			.then(Commands.literal("resources")
 				.then(Commands.argument("resource", EnumArgument.enumArgument(Resources.class))
-					.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", FloatArgumentType.floatArg(1, 200))
 							.executes((context) -> adjustResources(context, "add"))))
-					.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", FloatArgumentType.floatArg(1, 200))
 							.executes((context) -> adjustResources(context, "subtract"))))
-					.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", FloatArgumentType.floatArg(0, 200))
 							.executes((context) -> adjustResources(context, "set"))))
 					.then(Commands.literal("check").executes(PlayerCommand::checkResource))))
 			.then(Commands.literal("tribute")
 				.then(Commands.argument("deity", EnumArgument.enumArgument(Deities.class))
-					.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", IntegerArgumentType.integer(1, 200))
 							.executes((context) -> adjustTribute(context, "add"))))
-					.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", IntegerArgumentType.integer(1, 200))
 							.executes((context) -> adjustTribute(context, "subtract"))))
-					.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", IntegerArgumentType.integer(0, 200))
 							.executes((context) -> adjustTribute(context, "set"))))
 					.then(Commands.literal("check").executes(PlayerCommand::checkTribute))))
 			.then(Commands.literal("stats")
 				.then(Commands.literal("experience")
-					.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("amount", IntegerArgumentType.integer(1, Integer.MAX_VALUE))
 							.executes((context) -> adjustVanillaXp(context, "add"))))
-					.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("amount", IntegerArgumentType.integer(1, Integer.MAX_VALUE))
 							.executes((context) -> adjustVanillaXp(context, "subtract"))))
 					.then(Commands.literal("check").executes(PlayerCommand::checkVanillaXp)))
 				.then(Commands.literal("food")
 					.then(Commands.literal("hunger")
-						.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(1, 20))
 								.executes((context) -> adjustFoodStats(context, "hunger", "add"))))
-						.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(1, 20))
 								.executes((context) -> adjustFoodStats(context, "hunger", "subtract"))))
-						.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(0, 20))
 								.executes((context) -> adjustFoodStats(context, "hunger", "set"))))
 						.then(Commands.literal("check").executes((context) -> checkFoodStats(context, "hunger"))))
 					.then(Commands.literal("saturation")
-						.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(1, 20))
 								.executes((context) -> adjustFoodStats(context, "saturation", "add"))))
-						.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(1, 20))
 								.executes((context) -> adjustFoodStats(context, "saturation", "subtract"))))
-						.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+						.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("amount", IntegerArgumentType.integer(1, 20))
 								.executes((context) -> adjustFoodStats(context, "saturation", "set"))))
 						.then(Commands.literal("check").executes((context) -> checkFoodStats(context, "saturation")))))
 				.then(Commands.literal("health")
-					.then(Commands.literal("add").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("amount", FloatArgumentType.floatArg(0, Integer.MAX_VALUE))
 							.executes((context) -> adjustHealth(context, "add"))))
-					.then(Commands.literal("subtract").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("subtract").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("amount", FloatArgumentType.floatArg(0, Integer.MAX_VALUE))
 							.executes((context) -> adjustHealth(context, "subtract"))))
-					.then(Commands.literal("set").requires(command -> command.hasPermissionLevel(4))
+					.then(Commands.literal("set").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("amount", FloatArgumentType.floatArg(0, Integer.MAX_VALUE))
 							.executes((context) -> adjustHealth(context, "set"))))
 					.then(Commands.literal("check").executes(PlayerCommand::checkHealth)))));
@@ -129,29 +131,29 @@ public class PlayerCommand implements Command<CommandSource> {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
 		if (subsection.equals("hunger")) {
-			if (pl != context.getSource().assertIsEntity()) {
-				if (!context.getSource().hasPermissionLevel(2))
+			if (pl != context.getSource().getEntityOrException()) {
+				if (!context.getSource().hasPermission(2))
 					throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.hunger.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(pl.getFoodStats().getFoodLevel()));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.hunger.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(pl.getFoodData().getFoodLevel()));
 			}
 			else {
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.hunger.check.self", AoACommand.CommandFeedbackType.SUCCESS, String.valueOf(pl.getFoodStats().getFoodLevel()));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.hunger.check.self", AoACommand.CommandFeedbackType.SUCCESS, LocaleUtil.numToComponent(pl.getFoodData().getFoodLevel()));
 			}
 		}
 		else {
-			if (pl != context.getSource().assertIsEntity()) {
-				if (!context.getSource().hasPermissionLevel(2))
+			if (pl != context.getSource().getEntityOrException()) {
+				if (!context.getSource().hasPermission(2))
 					throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), NumberUtil.roundToNthDecimalPlace(pl.getFoodStats().getSaturationLevel(), 2));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
 			}
 			else {
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.self", AoACommand.CommandFeedbackType.SUCCESS, NumberUtil.roundToNthDecimalPlace(pl.getFoodStats().getSaturationLevel(), 2));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
 			}
 		}
 
@@ -161,16 +163,16 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkVanillaXp(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(pl.experienceTotal), String.valueOf(pl.experienceLevel));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(pl.totalExperience), LocaleUtil.numToComponent(pl.experienceLevel));
 		}
 		else {
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.check.self", AoACommand.CommandFeedbackType.SUCCESS, String.valueOf(pl.experienceTotal), String.valueOf(pl.experienceLevel));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.check.self", AoACommand.CommandFeedbackType.SUCCESS, LocaleUtil.numToComponent(pl.totalExperience), LocaleUtil.numToComponent(pl.experienceLevel));
 		}
 
 		return 1;
@@ -179,16 +181,16 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkHealth(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2), NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 		}
 		else {
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.self", AoACommand.CommandFeedbackType.SUCCESS, NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2), NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 		}
 
 		return 1;
@@ -197,22 +199,22 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkSkill(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			Skills skill = context.getArgument("skill", Skills.class);
 			int level = PlayerUtil.getAdventPlayer(pl).stats().getLevel(skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(skill.toString()), String.valueOf(level));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(level));
 		}
 		else {
 			Skills skill = context.getArgument("skill", Skills.class);
 			int level = PlayerUtil.getAdventPlayer(pl).stats().getLevel(skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.check.self", AoACommand.CommandFeedbackType.SUCCESS, StringUtil.toTitleCase(skill.toString()), String.valueOf(level));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(level));
 		}
 
 		return 1;
@@ -221,22 +223,22 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkXp(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			Skills skill = context.getArgument("skill", Skills.class);
 			float xp = PlayerUtil.getAdventPlayer(pl).stats().getExp(skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(skill.toString()), String.valueOf(xp));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(xp));
 		}
 		else {
 			Skills skill = context.getArgument("skill", Skills.class);
 			float xp = PlayerUtil.getAdventPlayer(pl).stats().getExp(skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.check.self", AoACommand.CommandFeedbackType.SUCCESS, StringUtil.toTitleCase(skill.toString()), String.valueOf(xp));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(xp));
 		}
 
 		return 1;
@@ -245,22 +247,22 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkResource(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			Resources resource = context.getArgument("resource", Resources.class);
 			float value = PlayerUtil.getAdventPlayer(pl).stats().getResourceValue(resource);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(value), StringUtil.toTitleCase(resource.toString()));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(value), new StringTextComponent(StringUtil.toTitleCase(resource.toString())));
 		}
 		else {
 			Resources resource = context.getArgument("resource", Resources.class);
 			float value = PlayerUtil.getAdventPlayer(pl).stats().getResourceValue(resource);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.check.self", AoACommand.CommandFeedbackType.SUCCESS, StringUtil.toTitleCase(resource.toString()), String.valueOf(value));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(StringUtil.toTitleCase(resource.toString())), LocaleUtil.numToComponent(value));
 		}
 
 		return 1;
@@ -269,22 +271,22 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int checkTribute(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
 
-		if (pl != context.getSource().assertIsEntity()) {
-			if (!context.getSource().hasPermissionLevel(2))
+		if (pl != context.getSource().getEntityOrException()) {
+			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			Deities deity = context.getArgument("deity", Deities.class);
 			int value = PlayerUtil.getAdventPlayer(pl).stats().getTribute(deity);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(value), StringUtil.toTitleCase(deity.toString()));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(value), new StringTextComponent(StringUtil.toTitleCase(deity.toString())));
 		}
 		else {
 			Deities deity = context.getArgument("deity", Deities.class);
 			int value = PlayerUtil.getAdventPlayer(pl).stats().getTribute(deity);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.check.self", AoACommand.CommandFeedbackType.SUCCESS, StringUtil.toTitleCase(deity.toString()), String.valueOf(value));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.check.self", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(StringUtil.toTitleCase(deity.toString())), LocaleUtil.numToComponent(value));
 		}
 
 		return 1;
@@ -317,7 +319,7 @@ public class PlayerCommand implements Command<CommandSource> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(skill.toString()), String.valueOf(adjustment), String.valueOf(stats.getLevelForDisplay(skill)));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(stats.getLevelForDisplay(skill)));
 
 		return 1;
 	}
@@ -353,7 +355,7 @@ public class PlayerCommand implements Command<CommandSource> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(skill.toString()), String.valueOf(adjustment), String.valueOf(stats.getExp(skill)));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(skill.toString())), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(stats.getExp(skill)));
 
 		return 1;
 	}
@@ -389,7 +391,7 @@ public class PlayerCommand implements Command<CommandSource> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(resource.toString()), String.valueOf(adjustment), String.valueOf(stats.getResourceValue(resource)));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(resource.toString())), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(stats.getResourceValue(resource)));
 
 		return 1;
 	}
@@ -425,7 +427,7 @@ public class PlayerCommand implements Command<CommandSource> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), StringUtil.toTitleCase(deity.toString()), String.valueOf(adjustment), String.valueOf(stats.getTribute(deity)));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.tribute.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(StringUtil.toTitleCase(deity.toString())), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(stats.getTribute(deity)));
 
 		return 1;
 	}
@@ -455,7 +457,7 @@ public class PlayerCommand implements Command<CommandSource> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), NumberUtil.roundToNthDecimalPlace(adjustment, 2), NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2), NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(adjustment, 2)), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new StringTextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 
 		return 1;
 	}
@@ -467,24 +469,24 @@ public class PlayerCommand implements Command<CommandSource> {
 
 		switch (operation) {
 			case "add":
-				adjustment = Math.min(value, Integer.MAX_VALUE - pl.experienceTotal);
+				adjustment = Math.min(value, Integer.MAX_VALUE - pl.totalExperience);
 
 				pl.giveExperiencePoints(adjustment);
 				break;
 			case "subtract":
-				adjustment = -Math.min(value, pl.experienceTotal);
+				adjustment = -Math.min(value, pl.totalExperience);
 
 				pl.giveExperiencePoints(adjustment);
 				break;
 			case "set":
-				adjustment = value - pl.experienceTotal;
+				adjustment = value - pl.totalExperience;
 
 				pl.giveExperiencePoints(adjustment);
 				break;
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(adjustment), String.valueOf(pl.experienceTotal), String.valueOf(pl.experienceLevel));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.exp.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(pl.totalExperience), LocaleUtil.numToComponent(pl.experienceLevel));
 
 		return 1;
 	}
@@ -492,7 +494,7 @@ public class PlayerCommand implements Command<CommandSource> {
 	private static int adjustFoodStats(CommandContext<CommandSource> context, String operation, String subsection) throws CommandSyntaxException {
 		int value = IntegerArgumentType.getInteger(context, "amount");
 		ServerPlayerEntity pl = EntityArgument.getPlayer(context, "player");
-		FoodStats food = pl.getFoodStats();
+		FoodStats food = pl.getFoodData();
 
 		if (operation.equals("hunger")) {
 			int adjustment = 0;
@@ -501,7 +503,7 @@ public class PlayerCommand implements Command<CommandSource> {
 				case "add":
 					adjustment = Math.min(value, 20 - food.getFoodLevel());
 
-					food.addStats(adjustment, 0);
+					food.eat(adjustment, 0);
 					break;
 				case "subtract":
 					adjustment = -Math.min(value, food.getFoodLevel());
@@ -517,7 +519,7 @@ public class PlayerCommand implements Command<CommandSource> {
 			}
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(adjustment), String.valueOf(food.getFoodLevel()));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(food.getFoodLevel()));
 		}
 		else {
 			float adjustment = 0;
@@ -526,22 +528,22 @@ public class PlayerCommand implements Command<CommandSource> {
 				case "add":
 					adjustment = value;
 
-					food.addStats(0, value);
+					food.eat(0, value);
 					break;
 				case "subtract":
 					adjustment = -Math.min(value, food.getSaturationLevel());
 
-					food.addStats(0, adjustment);
+					food.eat(0, adjustment);
 					break;
 				case "set":
 					adjustment = value - food.getSaturationLevel();
 
-					food.addStats(0, adjustment);
+					food.eat(0, adjustment);
 					break;
 			}
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.saturation.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName().getFormattedText(), String.valueOf(adjustment), String.valueOf(food.getSaturationLevel()));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.saturation.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(adjustment), LocaleUtil.numToComponent(food.getSaturationLevel()));
 		}
 
 		return 1;

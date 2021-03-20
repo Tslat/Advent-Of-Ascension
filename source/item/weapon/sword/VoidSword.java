@@ -23,11 +23,11 @@ public class VoidSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (RandomUtil.percentChance(0.1f * attackCooldown))
-			target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 30,20));
+			target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 30,20));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

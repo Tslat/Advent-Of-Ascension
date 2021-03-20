@@ -22,25 +22,25 @@ import java.util.UUID;
 
 public class LottoTotem extends Item {
 	public LottoTotem() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
 
 		if (player == null)
 			return ActionResultType.FAIL;
 
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 		BlockState targetBlockState = world.getBlockState(pos);
 
-		if (context.getFace() != Direction.UP || !targetBlockState.isSolidSide(world, pos, Direction.UP))
+		if (context.getClickedFace() != Direction.UP || !targetBlockState.isFaceSturdy(world, pos, Direction.UP))
 			return ActionResultType.FAIL;
 
-		if (!world.isRemote) {
-			if (!world.getEntitiesWithinAABB(LottoTotemEntity.class, new AxisAlignedBB(pos).grow(4)).isEmpty()) {
+		if (!world.isClientSide) {
+			if (!world.getEntitiesOfClass(LottoTotemEntity.class, new AxisAlignedBB(pos).inflate(4)).isEmpty()) {
 				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.lottoTotem.nearby", TextFormatting.RED);
 
 				return ActionResultType.FAIL;
@@ -51,18 +51,18 @@ public class LottoTotem extends Item {
 			spawnPositions.add(pos);
 
 			if (populateSpawnPositions(world, pos, spawnPositions)) {
-				player.getHeldItem(context.getHand()).shrink(1);
+				player.getItemInHand(context.getHand()).shrink(1);
 
 				int selectedWinner = RandomUtil.randomNumberUpTo(5);
-				UUID winningUUID = MathHelper.getRandomUUID();
+				UUID winningUUID = MathHelper.createInsecureUUID();
 
 				for (BlockPos spawnPos : spawnPositions) {
-					LottoTotemEntity totem = new LottoTotemEntity(world, spawnPos, winningUUID, player.getUniqueID());
+					LottoTotemEntity totem = new LottoTotemEntity(world, spawnPos, winningUUID, player.getUUID());
 
 					if (selectedWinner == 0)
-						totem.setUniqueId(winningUUID);
+						totem.setUUID(winningUUID);
 
-					world.addEntity(totem);
+					world.addFreshEntity(totem);
 					selectedWinner--;
 				}
 
@@ -79,15 +79,15 @@ public class LottoTotem extends Item {
 	}
 
 	private boolean populateSpawnPositions(World world, BlockPos pos, ArrayList<BlockPos> spawnPositions) {
-		BlockPos.Mutable checkPos = new BlockPos.Mutable(pos);
+		BlockPos.Mutable checkPos = pos.mutable();
 
 		for (int x = pos.getX() - 1; x <= pos.getX() + 1; x += 2) {
 			for (int z = pos.getZ() - 1; z <= pos.getZ() + 1; z += 2) {
-				checkPos.setPos(x, pos.getY(), z);
+				checkPos.set(x, pos.getY(), z);
 
-				if (world.getBlockState(checkPos.up()).getMaterial().isReplaceable()) {
-					if (world.getBlockState(checkPos).isSolidSide(world, checkPos, Direction.UP)) {
-						spawnPositions.add(checkPos.toImmutable());
+				if (world.getBlockState(checkPos.above()).getMaterial().isReplaceable()) {
+					if (world.getBlockState(checkPos).isFaceSturdy(world, checkPos, Direction.UP)) {
+						spawnPositions.add(checkPos.immutable());
 
 						if (spawnPositions.size() >= 5)
 							return true;

@@ -16,26 +16,26 @@ public class RandomFlyingGoal extends Goal {
 		this.taskOwner = creature;
 		this.maintainTarget = maintainTarget;
 
-		setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		setFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		MovementController moveHelper = this.taskOwner.getMoveHelper();
+	public boolean canUse() {
+		MovementController moveHelper = this.taskOwner.getMoveControl();
 
-		if (!moveHelper.isUpdating()) {
+		if (!moveHelper.hasWanted()) {
 			return true;
 		}
-		else if (maintainTarget && taskOwner.getAttackTarget() != null) {
+		else if (maintainTarget && taskOwner.getTarget() != null) {
 			return false;
 		}
 		else if (taskOwner.onGround) {
 			return true;
 		}
 		else {
-			double distanceX = moveHelper.getX() - this.taskOwner.getPosX();
-			double distanceY = moveHelper.getY() - this.taskOwner.getPosY();
-			double distanceZ = moveHelper.getZ() - this.taskOwner.getPosZ();
+			double distanceX = moveHelper.getWantedX() - this.taskOwner.getX();
+			double distanceY = moveHelper.getWantedY() - this.taskOwner.getY();
+			double distanceZ = moveHelper.getWantedZ() - this.taskOwner.getZ();
 			double distanceSquared = distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ;
 
 			return distanceSquared < 1.0D || distanceSquared > 3600.0D;
@@ -43,18 +43,18 @@ public class RandomFlyingGoal extends Goal {
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
+	public boolean canContinueToUse() {
 		return false;
 	}
 
 	@Override
-	public void startExecuting() {
-		Random rand = this.taskOwner.getRNG();
-		float heightMod = (float)(taskOwner.getPosY() + 1) / (float)(taskOwner.world.getHeight(Heightmap.Type.MOTION_BLOCKING, (int)taskOwner.getPosX(), (int)taskOwner.getPosZ()) + 10);
-		double targetX = this.taskOwner.getPosX() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
-		double targetY = this.taskOwner.getPosY() + (double)((rand.nextFloat() * 2.0F - heightMod) * 16.0F);
-		double targetZ = this.taskOwner.getPosZ() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+	public void start() {
+		Random rand = this.taskOwner.getRandom();
+		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level.getHeight(Heightmap.Type.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
+		double targetX = this.taskOwner.getX() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
+		double targetY = this.taskOwner.getY() + (double)((rand.nextFloat() * 2.0F - heightMod) * 16.0F);
+		double targetZ = this.taskOwner.getZ() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
 
-		this.taskOwner.getMoveHelper().setMoveTo(targetX, targetY, targetZ, 1.0d);
+		this.taskOwner.getMoveControl().setWantedPosition(targetX, targetY, targetZ, 1.0d);
 	}
 }

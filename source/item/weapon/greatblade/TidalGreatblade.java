@@ -25,16 +25,16 @@ public class TidalGreatblade extends BaseGreatblade {
 		if (EntityUtil.getAttackCooldown(attacker) < 0.95f)
 			return;
 
-		double xOffset = MathHelper.cos(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
-		double zOffset = MathHelper.sin(attacker.rotationYaw / 180.0F * (float)Math.PI) * 0.7F;
+		double xOffset = MathHelper.cos(attacker.yRot / 180.0F * (float)Math.PI) * 0.7F;
+		double zOffset = MathHelper.sin(attacker.yRot / 180.0F * (float)Math.PI) * 0.7F;
 
-		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, xOffset, zOffset));
-		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, 0, 0));
-		attacker.world.addEntity(new TidalWaveEntity(attacker.world, attacker, -xOffset, -zOffset));
+		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, xOffset, zOffset));
+		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, 0, 0));
+		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, -xOffset, -zOffset));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

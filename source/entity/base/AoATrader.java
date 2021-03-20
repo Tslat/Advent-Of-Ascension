@@ -1,7 +1,9 @@
 package net.tslat.aoa3.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.INPC;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.IMerchant;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,26 +16,23 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
-import net.tslat.aoa3.common.registration.AoAEntitySpawns;
 import net.tslat.aoa3.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.entity.ai.trader.TraderPlayerTradeGoal;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 public abstract class AoATrader extends CreatureEntity implements INPC, IMerchant {
-	private static final DataParameter<String> TRADE_STATUSES = EntityDataManager.<String>createKey(AoATrader.class, DataSerializers.STRING);
-	private static final DataParameter<Integer> ADDITIONAL_TRADES = EntityDataManager.<Integer>createKey(AoATrader.class, DataSerializers.VARINT);
+	private static final DataParameter<String> TRADE_STATUSES = EntityDataManager.<String>defineId(AoATrader.class, DataSerializers.STRING);
+	private static final DataParameter<Integer> ADDITIONAL_TRADES = EntityDataManager.<Integer>defineId(AoATrader.class, DataSerializers.INT);
 
 	private MerchantOffers trades;
 	private int maxTradesCount = 0;
@@ -45,7 +44,7 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	public AoATrader(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
 
-		((GroundPathNavigator)getNavigator()).setBreakDoors(true);
+		((GroundPathNavigator)getNavigation()).setCanOpenDoors(true);
 	}
 
 	@Override
@@ -61,65 +60,53 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(TRADE_STATUSES, "");
-		dataManager.register(ADDITIONAL_TRADES, 0);
+		entityData.define(TRADE_STATUSES, "");
+		entityData.define(ADDITIONAL_TRADES, 0);
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(16);
-	}
-
-	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
-
-	protected abstract double getBaseMaxHealth();
-
-	protected abstract double getBaseMovementSpeed();
 
 	protected boolean isFixedTradesList() {
 		return false;
 	}
 
 	@Override
-	public boolean func_213705_dZ() {
+	public boolean showProgressBar() {
 		return false;
 	}
 
 	@Override
-	public void setClientSideOffers(@Nullable MerchantOffers offers) {
+	public void overrideOffers(@Nullable MerchantOffers offers) {
 		this.trades = offers;
 	}
 
 	@Override
-	public void setXP(int xpIn) {}
+	public void overrideXp(int xpIn) {}
 
 	@Override
-	public int getXp() {
+	public int getVillagerXp() {
 		return 0;
 	}
 
 	@Override
-	public SoundEvent getYesSound() {
+	public SoundEvent getNotifyTradeSound() {
 		return null;
 	}
 
 	@Override
-	public void setCustomer(@Nullable PlayerEntity player) {
+	public void setTradingPlayer(@Nullable PlayerEntity player) {
 		latestCustomer = player;
 	}
 
 	@Nullable
 	@Override
-	public PlayerEntity getCustomer() {
+	public PlayerEntity getTradingPlayer() {
 		return latestCustomer;
 	}
 
@@ -128,47 +115,28 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	}
 
 	@Override
-	public boolean canSpawn(IWorld world, SpawnReason reason) {
-		return checkSpawnChance(reason) && checkWorldRequirements(reason) && isValidLightLevel(reason) && canSpawnAt(reason, world.getBlockState(getPosition().down()));
-	}
-
-	protected boolean canSpawnAt(SpawnReason reason, BlockState blockState) {
-		return reason == SpawnReason.SPAWNER || blockState.canEntitySpawn(world, getPosition(), getType());
-	}
-
-	protected boolean checkWorldRequirements(SpawnReason reason) {
-		if (isOverworldNPC() && world.getDimension().getType() != DimensionType.OVERWORLD) {
-			AoAEntitySpawns.removeSpawn(getType(), world.getBiome(getPosition()));
-
-			return false;
-		}
-
-		return true;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !isOverworldNPC() || !WorldUtil.isWorld(level, World.OVERWORLD) || tickCount >= 72000;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || world.dimension.getType() != DimensionType.OVERWORLD || ticksExisted >= 72000;
-	}
-
-	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
 		compound.putString("TradeStatuses", currentTradesInfo);
 		compound.putInt("AdditionalTrades", additionalTrades);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		currentTradesInfo = compound.contains("TradeStatuses") ? compound.getString("TradeStatuses") : "";
 		additionalTrades = compound.contains("AdditionalTrades") ? compound.getInt("AdditionalTrades") : 0;
 
-		if (!world.isRemote) {
-			dataManager.set(TRADE_STATUSES, currentTradesInfo);
-			dataManager.set(ADDITIONAL_TRADES, additionalTrades);
+		if (!level.isClientSide) {
+			entityData.set(TRADE_STATUSES, currentTradesInfo);
+			entityData.set(ADDITIONAL_TRADES, additionalTrades);
 			deserializeTradeStatuses(currentTradesInfo);
 		}
 	}
@@ -177,12 +145,12 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	public void tick() {
 		super.tick();
 
-		if (world.isRemote) {
-			String currentInfo = dataManager.get(TRADE_STATUSES);
+		if (level.isClientSide) {
+			String currentInfo = entityData.get(TRADE_STATUSES);
 
 			if (!currentInfo.equals(currentTradesInfo)) {
 				currentTradesInfo = currentInfo;
-				int extraTrades = dataManager.get(ADDITIONAL_TRADES);
+				int extraTrades = entityData.get(ADDITIONAL_TRADES);
 
 				if (extraTrades != additionalTrades) {
 					additionalTrades = extraTrades;
@@ -204,50 +172,35 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	}
 
 	private boolean checkSpawnChance(SpawnReason reason) {
-		return EntityUtil.isNaturalSpawnReason(reason) || getSpawnChanceFactor() <= 1 || rand.nextInt(getSpawnChanceFactor()) == 0;
-	}
-
-	protected boolean isValidLightLevel(SpawnReason reason) {
-		if (world.getDimension().getType() != DimensionType.OVERWORLD)
-			return true;
-
-		BlockPos blockpos = new BlockPos(getPosX(), getBoundingBox().minY, getPosZ());
-
-		if (world.getLightFor(LightType.SKY, blockpos) > rand.nextInt(32)) {
-			return true;
-		}
-		else {
-			int light = world.isThundering() ? world.getNeighborAwareLightSubtracted(blockpos, 10) : (int)world.getBrightness(blockpos) * 15;
-
-			return light > rand.nextInt(8);
-		}
+		return EntityUtil.isNaturalSpawnReason(reason) || getSpawnChanceFactor() <= 1 || random.nextInt(getSpawnChanceFactor()) == 0;
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == Items.NAME_TAG) {
-			heldStack.interactWithEntity(player, this, hand);
+			ActionResultType result = heldStack.interactLivingEntity(player, this, hand);
 
-			return true;
+			if (result.consumesAction())
+				return result;
 		}
 
-		if (isAlive() && !player.isSneaking()) {
-			if (!world.isRemote) {
+		if (isAlive() && !player.isShiftKeyDown()) {
+			if (!level.isClientSide) {
 				getOffers();
-				setCustomer(player);
+				setTradingPlayer(player);
 				openGui(player);
 			}
 
-			return true;
+			return ActionResultType.sidedSuccess(level.isClientSide);
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	protected void openGui(PlayerEntity player) {
-		openMerchantContainer(player, getDisplayName(), 0);
+		openTradingScreen(player, getDisplayName(), 0);
 	}
 
 	@Override
@@ -259,7 +212,7 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	}
 
 	private void generateTrades() {
-		Random rand = new Random(1 + getUniqueID().getMostSignificantBits() + getUniqueID().getLeastSignificantBits());
+		Random rand = new Random(1 + getUUID().getMostSignificantBits() + getUUID().getLeastSignificantBits());
 		NonNullList<AoATraderRecipe> allTrades = NonNullList.<AoATraderRecipe>create();
 		trades = new MerchantOffers();
 
@@ -290,18 +243,18 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	public void setTrades(MerchantOffers trades) {}
 
 	@Override
-	public void onTrade(MerchantOffer recipe) {
+	public void notifyTrade(MerchantOffer recipe) {
 		if (isFixedTradesList() || trades.size() >= maxTradesCount)
 			return;
 
 		recipe.increaseUses();
 
-		if (!world.isRemote) {
-			if (recipe.getUses() >= recipe.func_222214_i()) {
+		if (!level.isClientSide) {
+			if (recipe.getUses() >= recipe.getMaxUses()) {
 				boolean tradesComplete = true;
 
 				for (MerchantOffer trade : trades) {
-					if (!trade.hasNoUsesLeft()) {
+					if (!trade.isOutOfStock()) {
 						tradesComplete = false;
 
 						break;
@@ -314,17 +267,17 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 
 			currentTradesInfo = serializeTradeStatuses();
 
-			dataManager.set(TRADE_STATUSES, currentTradesInfo);
-			dataManager.set(ADDITIONAL_TRADES, additionalTrades);
+			entityData.set(TRADE_STATUSES, currentTradesInfo);
+			entityData.set(ADDITIONAL_TRADES, additionalTrades);
 		}
 	}
 
 	@Override
-	public void verifySellingItem(ItemStack stack) {}
+	public void notifyTradeUpdated(ItemStack stack) {}
 
 	@Override
-	public World getWorld() {
-		return world;
+	public World getLevel() {
+		return level;
 	}
 
 	private void addNewTrade() {

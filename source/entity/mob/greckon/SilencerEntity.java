@@ -27,26 +27,6 @@ public class SilencerEntity extends AoAMeleeMob {
         return 1.84375f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 124;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 12;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -72,10 +52,10 @@ public class SilencerEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
-        if (world.isRemote() && !isAIDisabled())
+        if (level.isClientSide() && !isNoAi())
             ClientOperations.doSilencerSilence(this);
     }
 }

@@ -12,26 +12,26 @@ public class TraderPlayerTradeGoal extends Goal {
 	public TraderPlayerTradeGoal(AoATrader trader) {
 		this.trader = trader;
 
-		setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+		setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
 	}
 
-	public boolean shouldExecute() {
-		if (!trader.isAlive() || trader.isInWater() || !trader.onGround || trader.velocityChanged)
+	public boolean canUse() {
+		if (!trader.isAlive() || trader.isInWater() || !trader.onGround || trader.hurtMarked)
 			return false;
 
-		PlayerEntity customer = trader.getCustomer();
+		PlayerEntity customer = trader.getTradingPlayer();
 
-		if (customer == null || trader.getDistanceSq(customer) > 16.0D)
+		if (customer == null || trader.distanceToSqr(customer) > 16.0D)
 			return false;
 
-		return customer.openContainer != null;
+		return customer.containerMenu != null;
 	}
 
-	public void startExecuting() {
-		trader.getNavigator().clearPath();
+	public void start() {
+		trader.getNavigation().stop();
 	}
 
-	public void resetTask() {
-		trader.setCustomer(null);
+	public void stop() {
+		trader.setTradingPlayer(null);
 	}
 }

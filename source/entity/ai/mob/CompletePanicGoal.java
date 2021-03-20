@@ -3,7 +3,7 @@ package net.tslat.aoa3.entity.ai.mob;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 import java.util.EnumSet;
 
@@ -23,21 +23,21 @@ public class CompletePanicGoal extends Goal {
 		this.timeToPanic = timeToPanic;
 		this.speed = speed;
 
-		setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		setFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		return taskOwner.getRevengeTarget() != null && getRandomPosition();
+	public boolean canUse() {
+		return taskOwner.getLastHurtByMob() != null && getRandomPosition();
 	}
 
 	@Override
-	public boolean isPreemptible() {
+	public boolean isInterruptable() {
 		return false;
 	}
 
 	protected boolean getRandomPosition() {
-		Vec3d targetPos = RandomPositionGenerator.findRandomTarget(this.taskOwner, 20, 4);
+		Vector3d targetPos = RandomPositionGenerator.getPos(this.taskOwner, 20, 4);
 
 		if (targetPos != null) {
 			this.randomTargetX = targetPos.x;
@@ -52,17 +52,17 @@ public class CompletePanicGoal extends Goal {
 	}
 
 	@Override
-	public void resetTask() {
+	public void stop() {
 		panicTimer = 0;
 	}
 
 	@Override
-	public void startExecuting() {
-		this.taskOwner.getNavigator().tryMoveToXYZ(this.randomTargetX, this.randomTargetY, this.randomTargetZ, this.speed);
+	public void start() {
+		this.taskOwner.getNavigation().moveTo(this.randomTargetX, this.randomTargetY, this.randomTargetZ, this.speed);
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
+	public boolean canContinueToUse() {
 		return panicTimer < timeToPanic;
 	}
 
@@ -70,7 +70,7 @@ public class CompletePanicGoal extends Goal {
 	public void tick() {
 		panicTimer++;
 
-		if (taskOwner.getNavigator().noPath() && getRandomPosition())
-			taskOwner.getNavigator().tryMoveToXYZ(randomTargetX, randomTargetY, randomTargetZ, speed);
+		if (taskOwner.getNavigation().isDone() && getRandomPosition())
+			taskOwner.getNavigation().moveTo(randomTargetX, randomTargetY, randomTargetZ, speed);
 	}
 }

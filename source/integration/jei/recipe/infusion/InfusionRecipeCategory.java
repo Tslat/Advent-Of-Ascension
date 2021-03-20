@@ -1,6 +1,7 @@
 package net.tslat.aoa3.integration.jei.recipe.infusion;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
@@ -68,7 +70,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public void setIngredients(InfusionRecipe recipe, IIngredients ingredients) {
 		List<List<ItemStack>> ingredientsCollection = new ArrayList<List<ItemStack>>();
 		List<ItemStack> inputStackList = new ArrayList<ItemStack>(1);
-		ItemStack output = recipe.getRecipeOutput();
+		ItemStack output = recipe.getResultItem();
 
 		if (recipe.isEnchanting())
 			output = recipe.getEnchantmentAsBook();
@@ -77,7 +79,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		ingredientsCollection.add(inputStackList);
 
 		for (Ingredient ing : recipe.getIngredients()) {
-			ingredientsCollection.add(Lists.newArrayList(ing.getMatchingStacks()));
+			ingredientsCollection.add(Lists.newArrayList(ing.getItems()));
 		}
 
 		ingredients.setInputLists(VanillaTypes.ITEM, ingredientsCollection);
@@ -109,17 +111,17 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 			guiStacks.addTooltipCallback(((slotIndex, input, ingredient, tooltip) -> {
 				if (slotIndex == 0) {
 					if (!recipeRegistryName.getNamespace().equals("aoa3"))
-						tooltip.add(TextFormatting.GRAY + LocaleUtil.getLocaleString("jei.tooltip.recipe.by", recipeRegistryName.getNamespace()));
+						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.by", TextFormatting.GRAY, new StringTextComponent(recipeRegistryName.getNamespace())));
 
-					if (Minecraft.getInstance().gameSettings.advancedItemTooltips || Screen.hasShiftDown())
-						tooltip.add(TextFormatting.DARK_GRAY + LocaleUtil.getLocaleString("jei.tooltip.recipe.id", recipeRegistryName.toString()));
+					if (Minecraft.getInstance().options.advancedItemTooltips || Screen.hasShiftDown())
+						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", TextFormatting.DARK_GRAY, new StringTextComponent(recipeRegistryName.toString())));
 				}
 			}));
 		}
 	}
 
 	@Override
-	public void draw(InfusionRecipe recipe, double mouseX, double mouseY) {
+	public void draw(InfusionRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
 		if (recipe == null)
 			return;
 
@@ -135,28 +137,28 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 			message = LocaleUtil.getLocaleString(LocaleUtil.Constants.INFUSION) + ": " + recipe.getInfusionReq();
 			textColour = AdventGuiTabPlayer.getSkillLevel(Skills.INFUSION) < recipe.getInfusionReq() ? 0xFFFF6060 : 0xFF80FF20;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
-			width = mc.fontRenderer.getStringWidth(message);
+			width = mc.font.width(message);
 			posX = 150 - width;
 			posY = 10;
 
-			mc.fontRenderer.drawString(message, posX + 1, posY, shadowColour);
-			mc.fontRenderer.drawString(message, posX, posY + 1, shadowColour);
-			mc.fontRenderer.drawString(message, posX + 1, posY + 1, shadowColour);
-			mc.fontRenderer.drawString(message, posX, posY, textColour);
+			mc.font.draw(matrix, message, posX + 1, posY, shadowColour);
+			mc.font.draw(matrix, message, posX, posY + 1, shadowColour);
+			mc.font.draw(matrix, message, posX + 1, posY + 1, shadowColour);
+			mc.font.draw(matrix, message, posX, posY, textColour);
 		}
 
 		if (recipe.getMaxXp() > 0) {
 			message = LocaleUtil.getLocaleString("gui.misc.skills.xp", String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp())));
 			textColour = 0xFF8F8F8F;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
-			width = mc.fontRenderer.getStringWidth(message);
+			width = mc.font.width(message);
 			posX = 150 - width;
 			posY = 50;
 
-			mc.fontRenderer.drawString(message, posX + 1, posY, shadowColour);
-			mc.fontRenderer.drawString(message, posX, posY + 1, shadowColour);
-			mc.fontRenderer.drawString(message, posX + 1, posY + 1, shadowColour);
-			mc.fontRenderer.drawString(message, posX, posY, textColour);
+			mc.font.draw(matrix, message, posX + 1, posY, shadowColour);
+			mc.font.draw(matrix, message, posX, posY + 1, shadowColour);
+			mc.font.draw(matrix, message, posX + 1, posY + 1, shadowColour);
+			mc.font.draw(matrix, message, posX, posY, textColour);
 		}
 	}
 }

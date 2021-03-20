@@ -10,20 +10,11 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class UndeadHeraldEntity extends AoATrader {
 	public UndeadHeraldEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Override
@@ -37,13 +28,18 @@ public class UndeadHeraldEntity extends AoATrader {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return ticksExisted > 72000;
+	public boolean canBreatheUnderwater() {
+		return WorldUtil.isWorld(level, AoADimensions.LBOREAN.key);
+	}
+
+	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return tickCount > 72000;
 	}
 
 	@Override
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		switch (AoADimensions.AoADimension.fromDimType(world.getDimension().getType())) {
+		switch (AoADimensions.getDim(level.dimension())) {
 			case ABYSS:
 				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.ABYSS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.SHADOW_BANNER.get(), 1), 0, 9999));
 				break;
@@ -79,9 +75,6 @@ public class UndeadHeraldEntity extends AoATrader {
 				break;
 			case IROMINE:
 				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.IROMINE_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.MECHA_BANNER.get(), 1), 0, 9999));
-				break;
-			case LBOREAN:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.BOREAN_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.BOREIC_BANNER.get(), 1), 0, 9999));
 				break;
 			case LELYETIA:
 				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LELYETIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.LELYETIAN_BANNER.get(), 1), 0, 9999));

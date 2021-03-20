@@ -13,11 +13,11 @@ public class RammerhornSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		RammerhornEntity rammerhorn = new RammerhornEntity(AoAEntities.Minions.RAMMERHORN.get(), pl.world);
+		RammerhornEntity rammerhorn = new RammerhornEntity(AoAEntities.Minions.RAMMERHORN.get(), pl.level);
 
-		rammerhorn.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		rammerhorn.setTamedBy(pl);
-		pl.world.addEntity(rammerhorn);
+		rammerhorn.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		rammerhorn.tame(pl);
+		pl.level.addFreshEntity(rammerhorn);
 
 		return rammerhorn;
 	}

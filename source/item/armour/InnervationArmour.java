@@ -1,12 +1,14 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.item.SkillItem;
 import net.tslat.aoa3.util.EntityUtil;
@@ -23,7 +25,7 @@ public class InnervationArmour extends AdventArmour implements SkillItem {
 	private static final AttributeModifier INNERVATION_ARMOUR_BUFF = new AttributeModifier(UUID.fromString("bc07e37c-9b4b-4bc3-8aa5-a613b8d3c257"), "AoAInnervationArmourSet", 10d, AttributeModifier.Operation.ADDITION);
 
 	public InnervationArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:innervation", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:innervation", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -56,20 +58,20 @@ public class InnervationArmour extends AdventArmour implements SkillItem {
 	@Override
 	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.applyAttributeModifierSafely(plData.player(), SharedMonsterAttributes.MAX_HEALTH, INNERVATION_ARMOUR_BUFF);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, INNERVATION_ARMOUR_BUFF);
 	}
 
 	@Override
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.removeAttributeModifier(plData.player(), SharedMonsterAttributes.MAX_HEALTH, INNERVATION_ARMOUR_BUFF);
+			EntityUtil.removeAttributeModifier(plData.player(), Attributes.MAX_HEALTH, INNERVATION_ARMOUR_BUFF);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.innervation_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.BENEFICIAL, "30", LocaleUtil.getLocaleString(LocaleUtil.Constants.INNERVATION)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.BENEFICIAL, new StringTextComponent("30"), new TranslationTextComponent(LocaleUtil.Constants.INNERVATION)));
 		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.INNERVATION, 100));
 	}
 }

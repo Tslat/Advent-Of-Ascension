@@ -13,11 +13,11 @@ public class MechaCyclopsSlab extends BaseSlab {
 
 	@Override
 	public AoAMinion activateSlab(PlayerEntity pl, ItemStack stack) {
-		MechaCyclopsEntity mechaCyclops = new MechaCyclopsEntity(AoAEntities.Minions.MECHA_CYCLOPS.get(), pl.world);
+		MechaCyclopsEntity mechaCyclops = new MechaCyclopsEntity(AoAEntities.Minions.MECHA_CYCLOPS.get(), pl.level);
 
-		mechaCyclops.setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
-		mechaCyclops.setTamedBy(pl);
-		pl.world.addEntity(mechaCyclops);
+		mechaCyclops.teleportTo(pl.getX(), pl.getY(), pl.getZ());
+		mechaCyclops.tame(pl);
+		pl.level.addFreshEntity(mechaCyclops);
 
 		return mechaCyclops;
 	}

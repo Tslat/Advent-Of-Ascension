@@ -12,7 +12,7 @@ public class AoASpiderRenderer extends AoAMobRenderer {
 	}
 
 	@Override
-	protected float getDeathMaxRotation(MobEntity LivingEntityIn) {
+	protected float getFlipDegrees(MobEntity LivingEntityIn) {
 		return 180f;
 	}
 }

@@ -36,31 +36,6 @@ public class ArkbackEntity extends AoAMeleeMob {
 		return 2.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 200;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 14;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 6d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

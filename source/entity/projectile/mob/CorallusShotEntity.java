@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -24,7 +24,7 @@ public class CorallusShotEntity extends FlyingEntity {
 	private final float dmg;
 
 	public CorallusShotEntity(CorallusEntity corallus, LivingEntity target, int dmg) {
-		super(AoAEntities.Projectiles.CORALLUS_SHOT.get(), corallus.world);
+		super(AoAEntities.Projectiles.CORALLUS_SHOT.get(), corallus.level);
 		this.corallus = corallus;
 		this.target = target;
 		this.dmg = dmg;
@@ -40,7 +40,7 @@ public class CorallusShotEntity extends FlyingEntity {
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
@@ -50,17 +50,17 @@ public class CorallusShotEntity extends FlyingEntity {
 	}
 
 	@Override
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	protected boolean canBeRidden(Entity entityIn) {
+	protected boolean canRide(Entity entityIn) {
 		return false;
 	}
 
@@ -70,7 +70,7 @@ public class CorallusShotEntity extends FlyingEntity {
 	}
 
 	@Override
-	public boolean doesEntityNotTriggerPressurePlate() {
+	public boolean isIgnoringBlockTriggers() {
 		return true;
 	}
 
@@ -93,23 +93,23 @@ public class CorallusShotEntity extends FlyingEntity {
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!world.isRemote)
+	public boolean hurt(DamageSource source, float amount) {
+		if (!level.isClientSide)
 			remove();
 
 		return true;
 	}
 
 	@Override
-	protected void collideWithEntity(Entity entityIn) {
-		if (!world.isRemote && entityIn == target) {
-			target.attackEntityFrom(DamageSource.causeMobDamage(this), dmg);
-			WorldUtil.createExplosion(corallus, world, this, 1.0f);
+	protected void doPush(Entity entityIn) {
+		if (!level.isClientSide && entityIn == target) {
+			target.hurt(DamageSource.mobAttack(this), dmg);
+			WorldUtil.createExplosion(corallus, level, this, 1.0f);
 			remove();
 		}
 	}
@@ -118,7 +118,7 @@ public class CorallusShotEntity extends FlyingEntity {
 	public void tick() {
 		super.tick();
 
-		if (world.getDifficulty() == Difficulty.PEACEFUL)
+		if (level.getDifficulty() == Difficulty.PEACEFUL)
 			remove();
 	}
 
@@ -130,44 +130,44 @@ public class CorallusShotEntity extends FlyingEntity {
 		}
 
 		@Override
-		public boolean isPreemptible() {
+		public boolean isInterruptable() {
 			return false;
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return true;
 		}
 
 		@Override
-		public void startExecuting() {
-			if (!world.isRemote && (this.shot.target == null || !this.shot.target.isAlive()))
+		public void start() {
+			if (!level.isClientSide && (this.shot.target == null || !this.shot.target.isAlive()))
 				remove();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean canContinueToUse() {
 			return true;
 		}
 
 		@Override
 		public void tick() {
 			if (this.shot.target == null || !this.shot.target.isAlive()) {
-				if (!world.isRemote) {
-					WorldUtil.createExplosion(corallus, world, shot, 1.0f);
+				if (!level.isClientSide) {
+					WorldUtil.createExplosion(corallus, level, shot, 1.0f);
 					remove();
 				}
 			}
 			else {
-				final double distanceX = this.shot.target.getPosX() - shot.getPosX();
-				final double distanceY = this.shot.target.getPosY() - shot.getPosY();
-				final double distanceZ = this.shot.target.getPosZ() - shot.getPosZ();
+				final double distanceX = this.shot.target.getX() - shot.getX();
+				final double distanceY = this.shot.target.getY() - shot.getY();
+				final double distanceZ = this.shot.target.getZ() - shot.getZ();
 
 				if (Math.signum(distanceX) != 0 || Math.signum(distanceY) != 0 || Math.signum(distanceZ) != 0) {
-					Vec3d motion = shot.getMotion();
+					Vector3d motion = shot.getDeltaMovement();
 
-					shot.setMotion(motion.add((Math.signum(distanceX) * 0.3 - motion.getX()) * 0.10000000149011612, (Math.signum(distanceY) * 0.3 - motion.getY()) * 0.10000000149011612, (Math.signum(distanceZ) * 0.3 -motion.getZ()) * 0.10000000149011612));
-					shot.rotationYaw += MathHelper.wrapDegrees(((float)(Math.atan2(shot.getMotion().getZ(), shot.getMotion().getX()) * 180.0 / 3.141592653589793) - 90.0f) - this.shot.rotationYaw);
+					shot.setDeltaMovement(motion.add((Math.signum(distanceX) * 0.3 - motion.x()) * 0.10000000149011612, (Math.signum(distanceY) * 0.3 - motion.y()) * 0.10000000149011612, (Math.signum(distanceZ) * 0.3 -motion.z()) * 0.10000000149011612));
+					shot.yRot += MathHelper.wrapDegrees(((float)(Math.atan2(shot.getDeltaMovement().z(), shot.getDeltaMovement().x()) * 180.0 / 3.141592653589793) - 90.0f) - this.shot.yRot);
 				}
 			}
 		}

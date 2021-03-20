@@ -4,6 +4,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
@@ -19,32 +20,22 @@ public class AssassinEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected boolean isOverworldNPC() {
 		return true;
 	}
 
 	@Override
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.ROCK_BONES.get()) {
-			if (!world.isRemote)
-				player.setHeldItem(hand, ((ReservedItem)AoAItems.MILLENNIUM_UPGRADER.get()).newValidStack());
+			if (!level.isClientSide)
+				player.setItemInHand(hand, ((ReservedItem)AoAItems.MILLENNIUM_UPGRADER.get()).newValidStack());
 
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override

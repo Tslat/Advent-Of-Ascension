@@ -25,26 +25,6 @@ public class BombCarrierEntity extends AoAMeleeMob {
 		return 1.2f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 2;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -62,13 +42,8 @@ public class BombCarrierEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (!isAlive())
 			return;
@@ -76,20 +51,16 @@ public class BombCarrierEntity extends AoAMeleeMob {
 		if (cooldown > 0)
 			--cooldown;
 
-		if (cooldown < 3 && !world.isRemote) {
-			if (getAttackTarget() == null && getRevengeTarget() == null)
+		if (cooldown < 3 && !level.isClientSide) {
+			if (getTarget() == null && getLastHurtByMob() == null)
 				return;
 
 			cooldown = 150;
-			FakeTntEntity tnt = new FakeTntEntity(world, getPosition(), this);
+			FakeTntEntity tnt = new FakeTntEntity(level, blockPosition(), this);
 
 			tnt.setFuse(80);
-			world.addEntity(tnt);
+			level.addFreshEntity(tnt);
 		}
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

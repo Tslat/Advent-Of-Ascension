@@ -15,11 +15,12 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
-import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMoveHelper;
+import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMovementController;
 import net.tslat.aoa3.entity.base.AoAAnimal;
 
 import javax.annotation.Nullable;
@@ -27,11 +28,13 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.entity.ai.goal.Goal.Flag;
+
 public class MeganeuropsisEntity extends AoAAnimal {
-	private static final DataParameter<Boolean> LANDED = EntityDataManager.<Boolean>createKey(MeganeuropsisEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> START_LANDING_TICKS = EntityDataManager.<Integer>createKey(MeganeuropsisEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Direction> LANDING_DIRECTION = EntityDataManager.<Direction>createKey(MeganeuropsisEntity.class, DataSerializers.DIRECTION);
-	private static final DataParameter<Optional<UUID>> LANDED_PLAYER = EntityDataManager.<Optional<UUID>>createKey(MeganeuropsisEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	private static final DataParameter<Boolean> LANDED = EntityDataManager.<Boolean>defineId(MeganeuropsisEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> START_LANDING_TICKS = EntityDataManager.<Integer>defineId(MeganeuropsisEntity.class, DataSerializers.INT);
+	private static final DataParameter<Direction> LANDING_DIRECTION = EntityDataManager.<Direction>defineId(MeganeuropsisEntity.class, DataSerializers.DIRECTION);
+	private static final DataParameter<Optional<UUID>> LANDED_PLAYER = EntityDataManager.<Optional<UUID>>defineId(MeganeuropsisEntity.class, DataSerializers.OPTIONAL_UUID);
 
 	private PlayerEntity clientRidingPlayer = null;
 	private int clientStartLandingTicks = 0;
@@ -39,17 +42,17 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	public MeganeuropsisEntity(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
 
-		moveController = new RoamingFlightMoveHelper(this);
+		moveControl = new RoamingFlightMovementController(this);
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(LANDED, false);
-		dataManager.register(START_LANDING_TICKS, 0);
-		dataManager.register(LANDING_DIRECTION, Direction.DOWN);
-		dataManager.register(LANDED_PLAYER, Optional.empty());
+		entityData.define(LANDED, false);
+		entityData.define(START_LANDING_TICKS, 0);
+		entityData.define(LANDING_DIRECTION, Direction.DOWN);
+		entityData.define(LANDED_PLAYER, Optional.empty());
 	}
 
 	@Override
@@ -59,7 +62,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World world) {
+	protected PathNavigator createNavigation(World world) {
 		return new FlyingPathNavigator(this, world);
 	}
 
@@ -68,31 +71,16 @@ public class MeganeuropsisEntity extends AoAAnimal {
 		return 0.3125f;
 	}
 
-	@Override
-	protected double getBaseMaxHealth() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.5;
-	}
-
-	@Override
-	protected double getBaseArmor() {
-		return 1;
-	}
-
 	public int getStartLandingTicks() {
-		return world.isRemote ? clientStartLandingTicks : dataManager.get(START_LANDING_TICKS);
+		return level.isClientSide ? clientStartLandingTicks : entityData.get(START_LANDING_TICKS);
 	}
 
 	public boolean isLanded() {
-		return dataManager.get(LANDED);
+		return entityData.get(LANDED);
 	}
 
 	public Direction getLandingDirection() {
-		return dataManager.get(LANDING_DIRECTION);
+		return entityData.get(LANDING_DIRECTION);
 	}
 
 	@Nullable
@@ -119,37 +107,37 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {}
+	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {}
 
 	@Override
-	public boolean isOnLadder() {
+	public boolean onClimbable() {
 		return false;
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key) {
-		super.notifyDataManagerChange(key);
+	public void onSyncedDataUpdated(DataParameter<?> key) {
+		super.onSyncedDataUpdated(key);
 
-		if (world.isRemote && key == START_LANDING_TICKS)
-			clientStartLandingTicks = ticksExisted;
+		if (level.isClientSide && key == START_LANDING_TICKS)
+			clientStartLandingTicks = tickCount;
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
 
 	@Override
-	public void travel(Vec3d motion) {
+	public void travel(Vector3d motion) {
 		if (isLanded()) {
-			if (world.isRemote && getLandingDirection() == Direction.DOWN && !isPassenger()) {
-				if (dataManager.get(LANDED_PLAYER).isPresent()) {
-					PlayerEntity pl = world.getPlayerByUuid(dataManager.get(LANDED_PLAYER).get());
+			if (level.isClientSide && getLandingDirection() == Direction.DOWN && !isPassenger()) {
+				if (entityData.get(LANDED_PLAYER).isPresent()) {
+					PlayerEntity pl = level.getPlayerByUUID(entityData.get(LANDED_PLAYER).get());
 
 					if (pl != null) {
 						clientRidingPlayer = pl;
@@ -160,55 +148,55 @@ public class MeganeuropsisEntity extends AoAAnimal {
 
 			return;
 		}
-		else if (world.isRemote && isPassenger() && clientRidingPlayer != null) {
+		else if (level.isClientSide && isPassenger() && clientRidingPlayer != null) {
 			clientRidingPlayer = null;
 			stopRiding();
 		}
 
 		if (isInWater()) {
 			moveRelative(0.02f, motion);
-			move(MoverType.SELF, getMotion());
+			move(MoverType.SELF, getDeltaMovement());
 
-			setMotion(getMotion().scale(0.8d));
+			setDeltaMovement(getDeltaMovement().scale(0.8d));
 		}
 		else if (isInLava()) {
 			moveRelative(0.02f, motion);
-			move(MoverType.SELF, getMotion());
+			move(MoverType.SELF, getDeltaMovement());
 
-			setMotion(getMotion().scale(0.5d));
+			setDeltaMovement(getDeltaMovement().scale(0.5d));
 		}
 		else {
 			float friction = 0.91F;
 
 			if (onGround) {
-				BlockPos underPos = new BlockPos(MathHelper.floor(getPosX()), MathHelper.floor(getBoundingBox().minY) - 1, MathHelper.floor(getPosZ()));
-				BlockState underState = world.getBlockState(underPos);
-				friction = underState.getBlock().getSlipperiness(underState, world, underPos, this) * 0.91F;
+				BlockPos underPos = new BlockPos(MathHelper.floor(getX()), MathHelper.floor(getBoundingBox().minY) - 1, MathHelper.floor(getZ()));
+				BlockState underState = level.getBlockState(underPos);
+				friction = underState.getBlock().getSlipperiness(underState, level, underPos, this) * 0.91F;
 			}
 
 			moveRelative(onGround ? 0.1F * (0.16277136F / (friction * friction * friction)) : 0.02F, motion);
 			friction = 0.91F;
 
 			if (onGround) {
-				BlockPos underPos = new BlockPos(MathHelper.floor(getPosX()), MathHelper.floor(getBoundingBox().minY) - 1, MathHelper.floor(getPosZ()));
-				BlockState underState = world.getBlockState(underPos);
-				friction = underState.getBlock().getSlipperiness(underState, world, underPos, this) * 0.91F;
+				BlockPos underPos = new BlockPos(MathHelper.floor(getX()), MathHelper.floor(getBoundingBox().minY) - 1, MathHelper.floor(getZ()));
+				BlockState underState = level.getBlockState(underPos);
+				friction = underState.getBlock().getSlipperiness(underState, level, underPos, this) * 0.91F;
 			}
 
-			move(MoverType.SELF, getMotion());
-			setMotion(getMotion().scale(friction));
+			move(MoverType.SELF, getDeltaMovement());
+			setDeltaMovement(getDeltaMovement().scale(friction));
 		}
 
-		prevLimbSwingAmount = limbSwingAmount;
-		double movedX = getPosZ() - prevPosX;
-		double movedZ = getPosZ() - prevPosZ;
+		animationSpeedOld = animationSpeed;
+		double movedX = getZ() - xo;
+		double movedZ = getZ() - zo;
 		float totalMotion = MathHelper.sqrt(movedX * movedX + movedZ * movedZ) * 4.0F;
 
 		if (totalMotion > 1.0F)
 			totalMotion = 1.0F;
 
-		limbSwingAmount += (totalMotion - limbSwingAmount) * 0.4F;
-		limbSwing += limbSwingAmount;
+		animationSpeed += (totalMotion - animationSpeed) * 0.4F;
+		animationPosition += animationSpeed;
 	}
 
 	private class EntityAIMeganeuropsisLand extends Goal {
@@ -220,20 +208,20 @@ public class MeganeuropsisEntity extends AoAAnimal {
 		public EntityAIMeganeuropsisLand(MeganeuropsisEntity creature) {
 			this.taskOwner = creature;
 
-			setMutexFlags(EnumSet.of(Flag.LOOK, Flag.MOVE, Flag.TARGET));
+			setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE, Flag.TARGET));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			if (taskOwner.getRevengeTarget() != null)
+		public boolean canUse() {
+			if (taskOwner.getLastHurtByMob() != null)
 				return false;
 
-			if (landingPos == null && landingPlayer == null && taskOwner.getRNG().nextFloat() <= 0.01f) {
-				if (rand.nextBoolean()) {
-					PlayerEntity nearestPlayer = taskOwner.world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 10, false);
+			if (landingPos == null && landingPlayer == null && taskOwner.getRandom().nextFloat() <= 0.01f) {
+				if (random.nextBoolean()) {
+					PlayerEntity nearestPlayer = taskOwner.level.getNearestPlayer(getX(), getY(), getZ(), 10, false);
 
-					if (nearestPlayer != null && !nearestPlayer.isBeingRidden()) {
-						taskOwner.navigator.clearPath();
+					if (nearestPlayer != null && !nearestPlayer.isVehicle()) {
+						taskOwner.navigation.stop();
 						landingPlayer = nearestPlayer;
 
 						return true;
@@ -241,33 +229,33 @@ public class MeganeuropsisEntity extends AoAAnimal {
 				}
 				else {
 					for (int i = 0; i < 3; i ++) {
-						int x = (int)(taskOwner.getPosX() + taskOwner.getRNG().nextGaussian() * 10);
-						int z = (int)(taskOwner.getPosZ() + taskOwner.getRNG().nextGaussian() * 10);
-						int y = taskOwner.world.getHeight(Heightmap.Type.MOTION_BLOCKING, new BlockPos(x, taskOwner.getPosY(), z)).getY();
+						int x = (int)(taskOwner.getX() + taskOwner.getRandom().nextGaussian() * 10);
+						int z = (int)(taskOwner.getZ() + taskOwner.getRandom().nextGaussian() * 10);
+						int y = taskOwner.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, new BlockPos(x, taskOwner.getY(), z)).getY();
 
-						if (taskOwner.getPosY() - y > 10)
+						if (taskOwner.getY() - y > 10)
 							continue;
 
-						if (y > taskOwner.getPosY()) {
+						if (y > taskOwner.getY()) {
 							if (true) // TODO Alternate landing pattern
 								return false;
 
-							BlockRayTraceResult trace = taskOwner.world.rayTraceBlocks(new RayTraceContext(getPositionVec(), new Vec3d(x + 0.5d, y + 0.5d, z + 0.5d), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null));
+							BlockRayTraceResult trace = taskOwner.level.clip(new RayTraceContext(position(), new Vector3d(x + 0.5d, y + 0.5d, z + 0.5d), RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, null));
 
 							if (trace.getType() == RayTraceResult.Type.MISS)
 								return false;
 
-							if (trace.getFace() == Direction.DOWN)
+							if (trace.getDirection() == Direction.DOWN)
 								return false;
 
-							taskOwner.navigator.clearPath();
-							landingPos = trace.getPos();
-							blockFace = trace.getFace();
+							taskOwner.navigation.stop();
+							landingPos = trace.getBlockPos();
+							blockFace = trace.getDirection();
 
 							return true;
 						}
 						else {
-							taskOwner.navigator.clearPath();
+							taskOwner.navigation.stop();
 							landingPos = new BlockPos(x, y, z);
 							blockFace = Direction.UP;
 
@@ -281,35 +269,35 @@ public class MeganeuropsisEntity extends AoAAnimal {
 		}
 
 		@Override
-		public void startExecuting() {
+		public void start() {
 			if (landingPos != null) {
-				taskOwner.getNavigator().tryMoveToXYZ(landingPos.getX(), landingPos.getY() + 1, landingPos.getZ(), 1f);
+				taskOwner.getNavigation().moveTo(landingPos.getX(), landingPos.getY() + 1, landingPos.getZ(), 1f);
 			}
 			else if (landingPlayer != null) {
-				taskOwner.getNavigator().tryMoveToEntityLiving(landingPlayer, 1f);
+				taskOwner.getNavigation().moveTo(landingPlayer, 1f);
 			}
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			if ((landingPos == null && (landingPlayer == null || !landingPlayer.isAlive() || (landingPlayer.isBeingRidden() && !landingPlayer.isPassenger(taskOwner))) || taskOwner.getRevengeTarget() != null))
+		public boolean canContinueToUse() {
+			if ((landingPos == null && (landingPlayer == null || !landingPlayer.isAlive() || (landingPlayer.isVehicle() && !landingPlayer.hasPassenger(taskOwner))) || taskOwner.getLastHurtByMob() != null))
 				return false;
 
-			return !taskOwner.getNavigator().noPath() || (taskOwner.getStartLandingTicks() > 0 && taskOwner.ticksExisted - taskOwner.getStartLandingTicks() < 240);
+			return !taskOwner.getNavigation().isDone() || (taskOwner.getStartLandingTicks() > 0 && taskOwner.tickCount - taskOwner.getStartLandingTicks() < 240);
 		}
 
 		@Override
 		public void tick() {
-			BlockPos targetPos = landingPos != null ? landingPos : landingPlayer.getPosition().up();
+			BlockPos targetPos = landingPos != null ? landingPos : landingPlayer.blockPosition().above();
 
 			if (!taskOwner.isLanded()) {
-				if (taskOwner.getPosition().distanceSq(targetPos.getX(), targetPos.getY(), targetPos.getZ(), true) <= 4) {
-					taskOwner.getNavigator().clearPath();
+				if (taskOwner.blockPosition().distSqr(targetPos.getX(), targetPos.getY(), targetPos.getZ(), true) <= 4) {
+					taskOwner.getNavigation().stop();
 
-					Vec3d actualLandingLocation = getActualLandingLocation();
+					Vector3d actualLandingLocation = getActualLandingLocation();
 					BlockPos actualLandingBlockPos = new BlockPos(actualLandingLocation);
 
-					if (taskOwner.world.getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.world, actualLandingBlockPos) != VoxelShapes.empty()) {
+					if (taskOwner.level.getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.level, actualLandingBlockPos) != VoxelShapes.empty()) {
 						landingPos = null;
 						landingPlayer = null;
 
@@ -317,76 +305,76 @@ public class MeganeuropsisEntity extends AoAAnimal {
 					}
 
 					if (taskOwner.getStartLandingTicks() == 0)
-						taskOwner.dataManager.set(START_LANDING_TICKS, taskOwner.ticksExisted);
+						taskOwner.entityData.set(START_LANDING_TICKS, taskOwner.tickCount);
 
-					if (taskOwner.getPosition().distanceSq(targetPos.getX(), targetPos.getY(), targetPos.getZ(), true) <= 1d) {
-						double vecX = actualLandingLocation.x - taskOwner.getPosX();
-						double vecZ = actualLandingLocation.z - taskOwner.getPosZ();
+					if (taskOwner.blockPosition().distSqr(targetPos.getX(), targetPos.getY(), targetPos.getZ(), true) <= 1d) {
+						double vecX = actualLandingLocation.x - taskOwner.getX();
+						double vecZ = actualLandingLocation.z - taskOwner.getZ();
 						float rotYaw = (float)(MathHelper.atan2(vecZ, vecX) * (180 / Math.PI)) - 90f;
 
-						taskOwner.setLocationAndAngles(actualLandingLocation.x, actualLandingLocation.y, actualLandingLocation.z, rotYaw, 0);
+						taskOwner.moveTo(actualLandingLocation.x, actualLandingLocation.y, actualLandingLocation.z, rotYaw, 0);
 
-						taskOwner.dataManager.set(LANDED, true);
+						taskOwner.entityData.set(LANDED, true);
 
 						if (landingPlayer != null) {
-							taskOwner.dataManager.set(LANDING_DIRECTION, Direction.DOWN);
-							taskOwner.dataManager.set(LANDED_PLAYER, Optional.of(landingPlayer.getUniqueID()));
+							taskOwner.entityData.set(LANDING_DIRECTION, Direction.DOWN);
+							taskOwner.entityData.set(LANDED_PLAYER, Optional.of(landingPlayer.getUUID()));
 							taskOwner.startRiding(landingPlayer, true);
 						}
 						else {
-							taskOwner.dataManager.set(LANDING_DIRECTION, blockFace);
+							taskOwner.entityData.set(LANDING_DIRECTION, blockFace);
 						}
 					}
 					else {
-						double vecX = (actualLandingLocation.x - taskOwner.getPosX()) * 0.5d;
-						double vecZ = (actualLandingLocation.z - taskOwner.getPosZ()) * 0.5d;
-						double vecY = (actualLandingLocation.y - taskOwner.getPosY()) * 0.5d;
+						double vecX = (actualLandingLocation.x - taskOwner.getX()) * 0.5d;
+						double vecZ = (actualLandingLocation.z - taskOwner.getZ()) * 0.5d;
+						double vecY = (actualLandingLocation.y - taskOwner.getY()) * 0.5d;
 
-						taskOwner.move(MoverType.SELF, new Vec3d(vecX, vecY, vecZ));
+						taskOwner.move(MoverType.SELF, new Vector3d(vecX, vecY, vecZ));
 					}
 				}
 			}
 			else {
 				if (landingPlayer == null) {
-					Vec3d actualLandingLocation = getActualLandingLocation();
+					Vector3d actualLandingLocation = getActualLandingLocation();
 
-					taskOwner.setMotion(new Vec3d(0, 0, 0));
-					taskOwner.velocityChanged = true;
+					taskOwner.setDeltaMovement(new Vector3d(0, 0, 0));
+					taskOwner.hurtMarked = true;
 
-					taskOwner.setPositionAndUpdate(actualLandingLocation.x, actualLandingLocation.y - 0.5d, actualLandingLocation.z);
+					taskOwner.teleportTo(actualLandingLocation.x, actualLandingLocation.y - 0.5d, actualLandingLocation.z);
 				}
 			}
 		}
 
 		@Override
-		public void resetTask() {
+		public void stop() {
 			landingPos = null;
 			blockFace = null;
 			landingPlayer = null;
-			taskOwner.dataManager.set(START_LANDING_TICKS, 0);
-			taskOwner.dataManager.set(LANDED, false);
-			taskOwner.dataManager.set(LANDING_DIRECTION, Direction.DOWN);
-			taskOwner.dataManager.set(LANDED_PLAYER, Optional.empty());
+			taskOwner.entityData.set(START_LANDING_TICKS, 0);
+			taskOwner.entityData.set(LANDED, false);
+			taskOwner.entityData.set(LANDING_DIRECTION, Direction.DOWN);
+			taskOwner.entityData.set(LANDED_PLAYER, Optional.empty());
 			taskOwner.stopRiding();
 		}
 
-		private Vec3d getActualLandingLocation() {
+		private Vector3d getActualLandingLocation() {
 			if (landingPlayer != null) {
-				return new Vec3d(landingPlayer.getPosX(), landingPlayer.getPosY() + landingPlayer.getHeight() + taskOwner.getHeight() + 0.1d, landingPlayer.getPosZ());
+				return new Vector3d(landingPlayer.getX(), landingPlayer.getY() + landingPlayer.getBbHeight() + taskOwner.getBbHeight() + 0.1d, landingPlayer.getZ());
 			}
 			else {
 				switch (blockFace) {
 					case NORTH:
-						return new Vec3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() - taskOwner.getWidth() / 2d);
+						return new Vector3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() - taskOwner.getBbWidth() / 2d);
 					case SOUTH:
-						return new Vec3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 1 + taskOwner.getWidth() / 2d);
+						return new Vector3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 1 + taskOwner.getBbWidth() / 2d);
 					case EAST:
-						return new Vec3d(landingPos.getX() + 1 + taskOwner.getWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
+						return new Vector3d(landingPos.getX() + 1 + taskOwner.getBbWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
 					case WEST:
-						return new Vec3d(landingPos.getX() - taskOwner.getWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
+						return new Vector3d(landingPos.getX() - taskOwner.getBbWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
 					default:
 					case UP:
-						return new Vec3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
+						return new Vector3d(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
 				}
 			}
 		}

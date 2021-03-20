@@ -21,14 +21,14 @@ public class Ultraflame extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (attackCooldown > 0.75) {
-			for (LivingEntity entity : target.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(3), EntityUtil.Predicates.HOSTILE_MOB)) {
-				entity.setFire(3);
+			for (LivingEntity entity : target.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(3), EntityUtil.Predicates.HOSTILE_MOB)) {
+				entity.setSecondsOnFire(3);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

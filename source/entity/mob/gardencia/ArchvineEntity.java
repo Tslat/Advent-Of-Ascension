@@ -4,15 +4,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
@@ -37,26 +37,6 @@ public class ArchvineEntity extends AoAMeleeMob {
         return 1.1875f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.3;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 105;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 13;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.275;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -79,7 +59,7 @@ public class ArchvineEntity extends AoAMeleeMob {
     protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;
@@ -88,44 +68,44 @@ public class ArchvineEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
 
         if (candiedWater)
             compound.putBoolean("AoACandiedWater", true);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
 
         candiedWater = compound.contains("AoACandiedWater");
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (isAlive() && getHealth() < getMaxHealth()) {
             if (isInWater()) {
                 heal(0.2f);
             }
-            else if (world.isRainingAt(getPosition())) {
+            else if (level.isRainingAt(blockPosition())) {
                 heal(0.1f);
             }
 
-            Vec3d motion = getMotion();
+            Vector3d motion = getDeltaMovement();
 
-            if (motion.getX() == 0 && motion.getZ() == 0)
+            if (motion.x() == 0 && motion.z() == 0)
                 heal(0.05f);
         }
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (!world.isRemote && candiedWater && cause.getTrueSource() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-            ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
+        if (!level.isClientSide && candiedWater && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+            ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
     }
 }

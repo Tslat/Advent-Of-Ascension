@@ -17,6 +17,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoAGameRules;
@@ -28,9 +29,9 @@ import java.util.Collection;
 import java.util.EnumSet;
 
 public class FriendlyCreeperEntity extends AoAMinion {
-	private static final DataParameter<Integer> STATE = EntityDataManager.<Integer>createKey(FriendlyCreeperEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>createKey(FriendlyCreeperEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.<Boolean>createKey(FriendlyCreeperEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> STATE = EntityDataManager.<Integer>defineId(FriendlyCreeperEntity.class, DataSerializers.INT);
+	private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>defineId(FriendlyCreeperEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IGNITED = EntityDataManager.<Boolean>defineId(FriendlyCreeperEntity.class, DataSerializers.BOOLEAN);
 
 	private int lastActiveTime;
 	private int timeSinceIgnited;
@@ -42,12 +43,12 @@ public class FriendlyCreeperEntity extends AoAMinion {
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		dataManager.register(STATE, -1);
-		dataManager.register(POWERED, false);
-		dataManager.register(IGNITED, false);
+		entityData.define(STATE, -1);
+		entityData.define(POWERED, false);
+		entityData.define(IGNITED, false);
 	}
 
 	@Override
@@ -63,32 +64,18 @@ public class FriendlyCreeperEntity extends AoAMinion {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25d);
-		getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0d);
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(8d);
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	public int getMaxFallHeight() {
-		return getAttackTarget() == null ? 3 : 3 + (int)getHealth() - 1;
+	public int getMaxFallDistance() {
+		return getTarget() == null ? 3 : 3 + (int)getHealth() - 1;
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
-		boolean result = super.onLivingFall(distance, damageMultiplier);
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
+		boolean result = super.causeFallDamage(distance, damageMultiplier);
 
 		timeSinceIgnited = (int)((float)timeSinceIgnited + distance * 1.5f);
 
@@ -99,10 +86,10 @@ public class FriendlyCreeperEntity extends AoAMinion {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 
-		if (dataManager.get(POWERED))
+		if (entityData.get(POWERED))
 			compound.putBoolean("powered", true);
 
 		compound.putShort("Fuse", (short)fuseTime);
@@ -111,10 +98,10 @@ public class FriendlyCreeperEntity extends AoAMinion {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
-		dataManager.set(POWERED, compound.getBoolean("powered"));
+		entityData.set(POWERED, compound.getBoolean("powered"));
 
 		if (compound.contains("Fuse", 99))
 			fuseTime = compound.getShort("Fuse");
@@ -137,7 +124,7 @@ public class FriendlyCreeperEntity extends AoAMinion {
 			int state = getCreeperState();
 
 			if (state > 0 && timeSinceIgnited == 0)
-				playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1.0f, 0.5f);
+				playSound(SoundEvents.CREEPER_PRIMED, 1.0f, 0.5f);
 
 			timeSinceIgnited += state;
 
@@ -156,30 +143,30 @@ public class FriendlyCreeperEntity extends AoAMinion {
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.ENTITY_CREEPER_HURT;
+		return SoundEvents.CREEPER_HURT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_CREEPER_DEATH;
+		return SoundEvents.CREEPER_DEATH;
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entity) {
+	public boolean doHurtTarget(Entity entity) {
 		return true;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.isExplosion() && source.getTrueSource() != null && source.getTrueSource().getUniqueID().equals(getOwnerId()))
+	public boolean hurt(DamageSource source, float amount) {
+		if (source.isExplosion() && source.getEntity() != null && source.getEntity().getUUID().equals(getOwnerUUID()))
 			return false;
 
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 
 	public boolean getPowered() {
-		return dataManager.get(POWERED);
+		return entityData.get(POWERED);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -189,56 +176,56 @@ public class FriendlyCreeperEntity extends AoAMinion {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getLootTable() {
+	protected ResourceLocation getDefaultLootTable() {
 		return null;
 	}
 
 	public int getCreeperState() {
-		return dataManager.get(STATE);
+		return entityData.get(STATE);
 	}
 
 	public void setCreeperState(int state) {
-		dataManager.set(STATE, state);
+		entityData.set(STATE, state);
 	}
 
 	@Override
-	public void onStruckByLightning(LightningBoltEntity lightningBolt) {
-		super.onStruckByLightning(lightningBolt);
+	public void thunderHit(ServerWorld world, LightningBoltEntity lightningBolt) {
+		super.thunderHit(world, lightningBolt);
 
-		this.dataManager.set(POWERED, true);
+		this.entityData.set(POWERED, true);
 	}
 
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getHeldItem(hand);
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() instanceof FlintAndSteelItem) {
-			world.playSound(player, getPosX(), getPosY(), getPosZ(), SoundEvents.ITEM_FLINTANDSTEEL_USE, getSoundCategory(), 1.0f, rand.nextFloat() * 0.4F + 0.8F);
-			player.swingArm(hand);
+			level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0f, random.nextFloat() * 0.4F + 0.8F);
+			player.swing(hand);
 
-			if (!world.isRemote) {
+			if (!level.isClientSide) {
 				ignite();
 				ItemUtil.damageItem(heldStack, player, hand);
 			}
 		}
 
-		return super.processInteract(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	public void explode() {
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			LivingEntity owner = getOwner();
 
-			world.createExplosion(owner == null ? this : owner, getPosX(), getPosY(), getPosZ(), explosionRadius, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+			level.explode(owner == null ? this : owner, getX(), getY(), getZ(), explosionRadius, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
 			spawnLingeringCloud();
 			remove();
 		}
 	}
 
 	private void spawnLingeringCloud() {
-		Collection<EffectInstance> collection = this.getActivePotionEffects();
+		Collection<EffectInstance> collection = this.getActiveEffects();
 		if (!collection.isEmpty()) {
-			AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ());
+			AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(), this.getZ());
 			areaeffectcloudentity.setRadius(2.5F);
 			areaeffectcloudentity.setRadiusOnUse(-0.5F);
 			areaeffectcloudentity.setWaitTime(10);
@@ -249,16 +236,16 @@ public class FriendlyCreeperEntity extends AoAMinion {
 				areaeffectcloudentity.addEffect(new EffectInstance(effectinstance));
 			}
 
-			this.world.addEntity(areaeffectcloudentity);
+			this.level.addFreshEntity(areaeffectcloudentity);
 		}
 	}
 
 	public boolean hasIgnited() {
-		return dataManager.get(IGNITED);
+		return entityData.get(IGNITED);
 	}
 
 	public void ignite() {
-		dataManager.set(IGNITED, true);
+		entityData.set(IGNITED, true);
 	}
 
 	private class EntityAIFriendlyCreeperSwell extends Goal {
@@ -268,31 +255,31 @@ public class FriendlyCreeperEntity extends AoAMinion {
 		public EntityAIFriendlyCreeperSwell(FriendlyCreeperEntity creeper) {
 			this.swellingCreeper = creeper;
 
-			setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			LivingEntity livingentity = swellingCreeper.getAttackTarget();
+		public boolean canUse() {
+			LivingEntity livingentity = swellingCreeper.getTarget();
 
-			return swellingCreeper.getCreeperState() > 0 || livingentity != null && swellingCreeper.getDistanceSq(livingentity) < 9.0D;
+			return swellingCreeper.getCreeperState() > 0 || livingentity != null && swellingCreeper.distanceToSqr(livingentity) < 9.0D;
 		}
 
 		@Override
-		public void startExecuting() {
-			swellingCreeper.getNavigator().clearPath();
+		public void start() {
+			swellingCreeper.getNavigation().stop();
 
-			target = this.swellingCreeper.getAttackTarget();
+			target = this.swellingCreeper.getTarget();
 		}
 
 		@Override
-		public void resetTask() {
+		public void stop() {
 			target = null;
 		}
 
 		@Override
 		public void tick() {
-			if (target == null || swellingCreeper.getDistanceSq(target) > 49.0D || !swellingCreeper.getEntitySenses().canSee(target)) {
+			if (target == null || swellingCreeper.distanceToSqr(target) > 49.0D || !swellingCreeper.getSensing().canSee(target)) {
 				swellingCreeper.setCreeperState(-1);
 			}
 			else {

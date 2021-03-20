@@ -24,14 +24,14 @@ public class CaramelCarver extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		final int multiplier = attacker.world.getEntitiesWithinAABB(LivingEntity.class, attacker.getBoundingBox().grow(5.0f), EntityUtil.Predicates.HOSTILE_MOB).size();
+		final int multiplier = attacker.level.getEntitiesOfClass(LivingEntity.class, attacker.getBoundingBox().inflate(5.0f), EntityUtil.Predicates.HOSTILE_MOB).size();
 
-		target.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int)(multiplier * 15 * attackCooldown), 1));
+		target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int)(multiplier * 15 * attackCooldown), 1));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SLOWS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}

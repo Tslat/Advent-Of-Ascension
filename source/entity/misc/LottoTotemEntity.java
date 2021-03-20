@@ -12,8 +12,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -37,44 +37,44 @@ public class LottoTotemEntity extends Entity {
 		this.ownerUUID = ownerUUID;
 		VoxelShape floorShape = world.getBlockState(pos).getShape(world, pos);
 
-		setPosition(pos.getX() + 0.5d, pos.getY() + floorShape.getEnd(Direction.Axis.Y), pos.getZ() + 0.5d);
+		setPos(pos.getX() + 0.5d, pos.getY() + floorShape.max(Direction.Axis.Y), pos.getZ() + 0.5d);
 	}
 
 	public LottoTotemEntity(EntityType<? extends Entity> entityType, World world) {
 		super(entityType, world);
 
-		preventEntitySpawning = true;
+		blocksBuilding = true;
 	}
 
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		return ticksExisted >= 12000 || (!world.isRemote && (ownerUUID == null || player.getUniqueID().equals(ownerUUID)));
+	public ActionResultType interact(PlayerEntity player, Hand hand) {
+		return tickCount >= 12000 || (!level.isClientSide && (ownerUUID == null || player.getUUID().equals(ownerUUID))) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
 	}
 
 	@Override
-	public ActionResultType applyPlayerInteraction(PlayerEntity player, Vec3d vec, Hand hand) {
-		if (isAlive() && (ownerUUID == null || player.getUniqueID().equals(ownerUUID))) {
+	public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
 			if (player instanceof ServerPlayerEntity) {
-				if (winnerUUID != null && winnerUUID.equals(getUniqueID())) {
+				if (winnerUUID != null && winnerUUID.equals(getUUID())) {
 
-					for (ItemStack stack : LootUtil.generateLoot((ServerWorld)world,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext((ServerWorld)world, getPosition(), 5, player))) {
-						ItemEntity drop = entityDropItem(stack, 0);
+					for (ItemStack stack : LootUtil.generateLoot((ServerWorld)level,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext((ServerWorld)level, position(), 5, player))) {
+						ItemEntity drop = spawnAtLocation(stack, 0);
 
 						if (drop != null)
-							drop.setOwnerId(player.getUniqueID());
+							drop.setOwner(player.getUUID());
 
 						AdvancementUtil.completeAdvancement((ServerPlayerEntity)player, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/winner_winner"), "lotto_win");
 					}
 
-					ItemEntity drop = entityDropItem(new ItemStack(AoABlocks.LOTTO_BANNER.get()), 0);
+					ItemEntity drop = spawnAtLocation(new ItemStack(AoABlocks.LOTTO_BANNER.get()), 0);
 
 					if (drop != null)
-						drop.setOwnerId(player.getUniqueID());
+						drop.setOwner(player.getUUID());
 
-					world.playSound(null, getPosition(), AoASounds.LOTTO_WIN.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+					level.playSound(null, blockPosition(), AoASounds.LOTTO_WIN.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 				}
 
-				for (LottoTotemEntity totem : world.getEntitiesWithinAABB(LottoTotemEntity.class, new AxisAlignedBB(getPosition()).grow(2d))) {
+				for (LottoTotemEntity totem : level.getEntitiesOfClass(LottoTotemEntity.class, new AxisAlignedBB(blockPosition()).inflate(2d))) {
 					totem.remove();
 				}
 			}
@@ -86,7 +86,7 @@ public class LottoTotemEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -94,46 +94,46 @@ public class LottoTotemEntity extends Entity {
 	public void onRemovedFromWorld() {
 		super.onRemovedFromWorld();
 
-		if (world.isRemote && !isAlive()) {
+		if (level.isClientSide && !isAlive()) {
 			for (int i = 0; i < 3; i++) {
-				world.addParticle(ParticleTypes.LARGE_SMOKE, getPosX(), getPosY() + 0.3d, getPosZ(), 0, 0.1, 0);
+				level.addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 0.3d, getZ(), 0, 0.1, 0);
 			}
 		}
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {
-		if (compound.hasUniqueId("WinningUUID"))
-			winnerUUID = compound.getUniqueId("WinningUUID");
+	protected void addAdditionalSaveData(CompoundNBT compound) {
+		if (compound.hasUUID("WinningUUID"))
+			winnerUUID = compound.getUUID("WinningUUID");
 
-		if (compound.hasUniqueId("OwnerUUID"))
-			ownerUUID = compound.getUniqueId("OwnerUUID");
+		if (compound.hasUUID("OwnerUUID"))
+			ownerUUID = compound.getUUID("OwnerUUID");
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundNBT compound) {
 		if (winnerUUID != null)
-			compound.putUniqueId("WinningUUID", winnerUUID);
+			compound.putUUID("WinningUUID", winnerUUID);
 
 		if (ownerUUID != null)
-			compound.putUniqueId("OwnerUUID", ownerUUID);
+			compound.putUUID("OwnerUUID", ownerUUID);
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
 	}
 
 	@Override
-	public boolean isPushedByWater() {
+	public boolean isPushedByFluid() {
 		return false;
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return true;
 	}
 
@@ -149,11 +149,11 @@ public class LottoTotemEntity extends Entity {
 
 	@Override
 	public void baseTick() {
-		this.world.getProfiler().startSection("entityBaseTick");
+		this.level.getProfiler().push("entityBaseTick");
 
-		if (getPosY() < -64.0D)
+		if (getY() < -64.0D)
 			outOfWorld();
 
-		this.world.getProfiler().endSection();
+		this.level.getProfiler().pop();
 	}
 }

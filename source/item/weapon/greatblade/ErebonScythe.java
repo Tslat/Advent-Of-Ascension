@@ -24,11 +24,11 @@ public class ErebonScythe extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
-		if (!attacker.world.isRemote) {
+		if (!attacker.level.isClientSide) {
 			float damagePercent = dmgDealt / (float)getAttackDamage();
 
-			for (LivingEntity entity : target.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.getPosX() - 1.5, target.getBoundingBox().minY, target.getPosZ() - 1.5, target.getPosX() + 1.5, target.getBoundingBox().minY + 1, target.getPosZ() + 1.5), EntityUtil.Predicates.HOSTILE_MOB)) {
-				entity.setFire((int)(5 * damagePercent));
+			for (LivingEntity entity : target.level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(target.getX() - 1.5, target.getBoundingBox().minY, target.getZ() - 1.5, target.getX() + 1.5, target.getBoundingBox().minY + 1, target.getZ() + 1.5), EntityUtil.Predicates.HOSTILE_MOB)) {
+				entity.setSecondsOnFire((int)(5 * damagePercent));
 			}
 
 			PlayerDataManager.PlayerStats targetStats = target instanceof ServerPlayerEntity ? PlayerUtil.getAdventPlayer((ServerPlayerEntity)target).stats() : null;
@@ -45,7 +45,7 @@ public class ErebonScythe extends BaseGreatblade {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.scythe", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}

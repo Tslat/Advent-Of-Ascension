@@ -28,8 +28,8 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class BaronessEntity extends AoARangedMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
-	private static final DataParameter<Boolean> INVULNERABLE = EntityDataManager.<Boolean>createKey(BaronessEntity.class, DataSerializers.BOOLEAN);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
+	private static final DataParameter<Boolean> INVULNERABLE = EntityDataManager.<Boolean>defineId(BaronessEntity.class, DataSerializers.BOOLEAN);
 	private int invulnerableTicks = 0;
 	private int bombCoolown = 150;
 
@@ -38,55 +38,20 @@ public class BaronessEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-
-		getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50);
-		getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(getBaseKnockbackResistance());
-		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getBaseMaxHealth());
-		getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getBaseMovementSpeed());
-	}
-
-	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.71875f;
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 
-		this.dataManager.register(INVULNERABLE, false);
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 2000;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
+		this.entityData.define(INVULNERABLE, false);
 	}
 
 	@Override
 	public boolean isInvulnerable() {
-		return super.isInvulnerable() || this.dataManager.get(INVULNERABLE);
-	}
-
-	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		return isInvulnerable() || super.isInvulnerableTo(source);
+		return this.entityData.get(INVULNERABLE);
 	}
 
 	@Nullable
@@ -114,7 +79,7 @@ public class BaronessEntity extends AoARangedMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -130,7 +95,7 @@ public class BaronessEntity extends AoARangedMob {
 	}
 
 	private void changeStage(boolean invulnerable) {
-		this.dataManager.set(INVULNERABLE, invulnerable);
+		this.entityData.set(INVULNERABLE, invulnerable);
 	}
 
 	@Override
@@ -142,7 +107,7 @@ public class BaronessEntity extends AoARangedMob {
 	public void tick() {
 		super.tick();
 
-		if (isAIDisabled() || !isAlive())
+		if (isNoAi() || !isAlive())
 			return;
 
 		if (invulnerableTicks > 0) {
@@ -156,17 +121,17 @@ public class BaronessEntity extends AoARangedMob {
 			bombCoolown--;
 
 			if (bombCoolown == 0) {
-				bombCoolown = 50 + rand.nextInt(50);
-				LivingEntity target = getAttackTarget();
+				bombCoolown = 50 + random.nextInt(50);
+				LivingEntity target = getTarget();
 
 				if (target != null)
-					addVelocity(Math.signum((target.getPosX() - getPosX()) * 2.329), Math.signum((target.getPosY() + 1 - getPosY()) * 0.929), Math.signum(target.getPosZ() - getPosZ()) * 2.329);
+					push(Math.signum((target.getX() - getX()) * 2.329), Math.signum((target.getY() + 1 - getY()) * 0.929), Math.signum(target.getZ() - getZ()) * 2.329);
 
-				if (!world.isRemote) {
+				if (!level.isClientSide) {
 					BaronBombEntity bomb = new BaronBombEntity(this);
 
-					world.addEntity(bomb);
-					world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.BARON_BOMB_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+					level.addFreshEntity(bomb);
+					level.playSound(null, getX(), getY(), getZ(), AoASounds.BARON_BOMB_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 				}
 			}
 		}
@@ -174,55 +139,55 @@ public class BaronessEntity extends AoARangedMob {
 
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.baroness.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.baroness.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.BARONESS_MUSIC.getId()));
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.BARONESS_MUSIC.getId()));
 		bossInfo.removePlayer(player);

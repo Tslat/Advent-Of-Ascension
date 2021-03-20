@@ -18,7 +18,7 @@ public class FakeTntEntity extends TNTEntity {
 
 		this.owner = owner;
 
-		setLocationAndAngles(position.getX(), position.getY(), position.getZ(), rand.nextFloat() * 360.0f, 0.0f);
+		moveTo(position.getX(), position.getY(), position.getZ(), random.nextFloat() * 360.0f, 0.0f);
 	}
 
 	public FakeTntEntity(EntityType<? extends TNTEntity> entityType, World world) {
@@ -28,11 +28,11 @@ public class FakeTntEntity extends TNTEntity {
 	}
 
 	protected void explode() {
-		WorldUtil.createExplosion(this.owner, world, this, 4.0f);
+		WorldUtil.createExplosion(this.owner, level, this, 4.0f);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

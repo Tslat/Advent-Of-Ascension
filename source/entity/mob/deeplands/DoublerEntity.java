@@ -27,26 +27,6 @@ public class DoublerEntity extends AoAMeleeMob {
         return 2f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 70;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 8d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -66,15 +46,10 @@ public class DoublerEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
+    public void aiStep() {
+        super.aiStep();
 
-    @Override
-    public void livingTick() {
-        super.livingTick();
-
-        PlayerEntity closestPlayer = world.getClosestPlayer(getPosX(), getPosY(), getPosZ(), 10, pl -> PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl));
+        PlayerEntity closestPlayer = level.getNearestPlayer(getX(), getY(), getZ(), 10, pl -> PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl));
 
         if (closestPlayer != null)
             EntityUtil.applyPotions(closestPlayer, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 30));

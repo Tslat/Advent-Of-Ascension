@@ -10,22 +10,22 @@ public class InterventionEnchantment extends Enchantment {
 		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.UNSTACKABLE, new EquipmentSlotType[] {});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		return stack.getMaxStackSize() == 1;
 	}
 
 	@Override
-	public boolean isTreasureEnchantment() {
+	public boolean isTreasureOnly() {
 		return true;
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 32;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 100;
 	}
 }

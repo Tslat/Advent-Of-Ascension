@@ -13,6 +13,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -21,15 +22,14 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ITeleporter;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.library.misc.CustomisableParticleType;
 import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
@@ -61,27 +61,26 @@ import net.tslat.aoa3.worldgen.worlds.voxponds.VoxPondsTeleporter;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class PortalBlock extends Block {
 	private static final VoxelShape X_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.375, 0, 0, 0.625, 1, 1));
 	private static final VoxelShape Z_SHAPE = VoxelShapes.create(new AxisAlignedBB(0, 0, 0.375, 1, 1, 0.625));
 
 	private final int particleColour;
-	private final Supplier<DimensionType> dimension;
+	private final RegistryKey<World> world;
 
-	public PortalBlock(Supplier<DimensionType> dimType, MaterialColor mapColour, int particleColour) {
-		super(BlockUtil.generateBlockProperties(Material.PORTAL, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 11).sound(SoundType.GLASS).doesNotBlockMovement());
+	public PortalBlock(RegistryKey<World> world, MaterialColor mapColour, int particleColour) {
+		super(BlockUtil.generateBlockProperties(Material.PORTAL, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 11).sound(SoundType.GLASS).noCollission());
 
-		setDefaultState(getStateContainer().getBaseState().with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
+		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
 
 		this.particleColour = particleColour;
-		this.dimension = dimType;
+		this.world = world;
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		switch(state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+		switch(state.getValue(BlockStateProperties.HORIZONTAL_AXIS)) {
 			case Z:
 				return Z_SHAPE;
 			case X:
@@ -93,31 +92,31 @@ public class PortalBlock extends Block {
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return getDefaultState().with(BlockStateProperties.HORIZONTAL_AXIS, EntityUtil.getDirectionFacing(context.getPlayer(), true).getAxis());
+		return defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_AXIS, EntityUtil.getDirectionFacing(context.getPlayer(), true).getAxis());
 	}
 
 	private boolean isCompatibleNeighbour(World world, BlockPos pos) {
 		BlockState block = world.getBlockState(pos);
 
-		return block.getBlock() == this || !block.isAir(world, pos);
+		return block.getBlock() == this || !block.getBlock().isAir(block, world, pos);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacent, Direction side) {
+	public boolean skipRendering(BlockState state, BlockState adjacent, Direction side) {
 		if (adjacent.getBlock() == this) {
 			Direction.Axis axis;
 
-			switch (state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+			switch (state.getValue(BlockStateProperties.HORIZONTAL_AXIS)) {
 				case X:
-					axis = adjacent.get(BlockStateProperties.HORIZONTAL_AXIS);
+					axis = adjacent.getValue(BlockStateProperties.HORIZONTAL_AXIS);
 
 					if (axis == Direction.Axis.X)
 						return true;
 
 					break;
 				case Z:
-					axis = adjacent.get(BlockStateProperties.HORIZONTAL_AXIS);
+					axis = adjacent.getValue(BlockStateProperties.HORIZONTAL_AXIS);
 
 					if (axis == Direction.Axis.Z)
 						return true;
@@ -152,55 +151,58 @@ public class PortalBlock extends Block {
 				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.PORTAL_FLOATER.get(), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+			world.addParticle(new PortalFloaterParticleType.Data(new BlockPos(pos.getX(), pos.getY(), pos.getZ()), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
 		}
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (!world.isRemote() && entity.getRidingEntity() == null && !entity.isBeingRidden()) {
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (!world.isClientSide() && entity.getVehicle() == null && !entity.isVehicle()) {
 			if (!AoAConfig.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof PlayerEntity))
 				return;
 
-			if (entity.timeUntilPortal > 0) {
-				entity.timeUntilPortal = 30;
+			if (entity.portalTime > 0) {
+				entity.portalTime = 30;
 
 				return;
 			}
 
-			if (dimension.get() == null)
+			if (this.world == null)
 				return;
 
-			ITeleporter teleporter = dimension.get() == DimensionType.THE_NETHER ? new NetherTeleporter() : getTeleporterForWorld(world.getServer().getWorld(dimension.get()));
+			ITeleporter teleporter = this.world == World.NETHER ? new NetherTeleporter() : getTeleporterForWorld(world.getServer().getLevel(this.world));
 			PortalCoordinatesContainer portalLoc = null;
 
 			if (entity instanceof PlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
-				portalLoc = plData.getPortalReturnLocation(world.getDimension().getType());
+				portalLoc = plData.getPortalReturnLocation(world.dimension());
 
-				((ServerPlayerEntity)entity).connection.setPlayerLocation(pos.getX(), pos.getY(), pos.getZ(), entity.rotationYaw, entity.rotationPitch);
+				((ServerPlayerEntity)entity).connection.teleport(pos.getX(), pos.getY(), pos.getZ(), entity.yRot, entity.xRot);
+
+				if (portalLoc != null && world.getServer().getLevel(portalLoc.fromDim) == null)
+					portalLoc = null;
 			}
 			else {
-				entity.setPositionAndUpdate(pos.getX(), pos.getY(), pos.getZ());
+				entity.teleportTo(pos.getX(), pos.getY(), pos.getZ());
 			}
 
 			if (portalLoc == null) {
-				if (world.getDimension().getType() == dimension.get()) {
-					entity = entity.changeDimension(DimensionType.OVERWORLD, teleporter);
+				if (world.dimension() == this.world) {
+					entity = entity.changeDimension(world.getServer().getLevel(World.OVERWORLD), teleporter);
 				}
 				else {
-					entity = entity.changeDimension(dimension.get(), teleporter);
+					entity = entity.changeDimension(world.getServer().getLevel(this.world), teleporter);
 				}
 			}
-			else if (world.getDimension().getType() != dimension.get()) {
-				entity = entity.changeDimension(dimension.get(), teleporter);
+			else if (world.dimension() != this.world) {
+				entity = entity.changeDimension(world.getServer().getLevel(this.world), teleporter);
 			}
 			else {
-				entity = entity.changeDimension(portalLoc.fromDim, teleporter);
+				entity = entity.changeDimension(world.getServer().getLevel(portalLoc.fromDim), teleporter);
 			}
 
 			if (entity != null)
-				entity.timeUntilPortal = 100;
+				entity.portalTime = 100;
 		}
 	}
 
@@ -209,11 +211,11 @@ public class PortalBlock extends Block {
 		switch(rot) {
 			case COUNTERCLOCKWISE_90:
 			case CLOCKWISE_90:
-				switch(state.get(BlockStateProperties.HORIZONTAL_AXIS)) {
+				switch(state.getValue(BlockStateProperties.HORIZONTAL_AXIS)) {
 					case Z:
-						return state.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
+						return state.setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X);
 					case X:
-						return state.with(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z);
+						return state.setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z);
 					default:
 						return state;
 				}
@@ -223,52 +225,54 @@ public class PortalBlock extends Block {
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.HORIZONTAL_AXIS);
 	}
 
 	@Override
-	public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-		if (world.isAirBlock(pos.up()) || world.isAirBlock(pos.down())) {
-			world.setBlockState(pos, Blocks.AIR.getDefaultState());
+	public void attack(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+		if (world.isEmptyBlock(pos.above()) || world.isEmptyBlock(pos.below())) {
+			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 
 			return;
 		}
 
-		switch (world.getBlockState(pos).get(BlockStateProperties.HORIZONTAL_AXIS)) {
+		switch (world.getBlockState(pos).getValue(BlockStateProperties.HORIZONTAL_AXIS)) {
 			case Z:
-				if (world.isAirBlock(pos.east()) || world.isAirBlock(pos.west()))
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				if (world.isEmptyBlock(pos.east()) || world.isEmptyBlock(pos.west()))
+					world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				break;
 			case X:
-				if (world.isAirBlock(pos.north()) || world.isAirBlock(pos.south()))
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				if (world.isEmptyBlock(pos.north()) || world.isEmptyBlock(pos.south()))
+					world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				break;
 		}
 	}
 
 	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-		Direction.Axis facing = state.get(BlockStateProperties.HORIZONTAL_AXIS);
+		Direction.Axis facing = state.getValue(BlockStateProperties.HORIZONTAL_AXIS);
 
 		switch (facing) {
 			case Z:
-				if (!isCompatibleNeighbour(world, pos.up()) || !isCompatibleNeighbour(world, pos.down()) || !isCompatibleNeighbour(world, pos.east()) || !isCompatibleNeighbour(world, pos.west()))
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				if (!isCompatibleNeighbour(world, pos.above()) || !isCompatibleNeighbour(world, pos.below()) || !isCompatibleNeighbour(world, pos.east()) || !isCompatibleNeighbour(world, pos.west()))
+					world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				break;
 			case X:
-				if (!isCompatibleNeighbour(world, pos.up()) || !isCompatibleNeighbour(world, pos.down()) || !isCompatibleNeighbour(world, pos.north()) || !isCompatibleNeighbour(world, pos.south()))
-					world.setBlockState(pos, Blocks.AIR.getDefaultState());
+				if (!isCompatibleNeighbour(world, pos.above()) || !isCompatibleNeighbour(world, pos.below()) || !isCompatibleNeighbour(world, pos.north()) || !isCompatibleNeighbour(world, pos.south()))
+					world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				break;
 		}
 	}
 
 	public static ITeleporter getTeleporterForWorld(ServerWorld world) {
-		DimensionType dimType = world.dimension.getType();
-		AoADimensions.AoADimension aoaDim = AoADimensions.AoADimension.fromDimType(dimType);
+		if (!world.dimension().location().getNamespace().equals(AdventOfAscension.MOD_ID))
+			return world.getPortalForcer();
 
-		if (dimType.isVanilla() || aoaDim == AoADimensions.AoADimension.NONE || aoaDim == null)
-			return world.getDefaultTeleporter();
+		AoADimensions.AoADimension aoaDim = AoADimensions.getDim(world.dimension());
+
+		if (aoaDim == null)
+			return world.getPortalForcer();
 
 		switch (aoaDim) {
 			case ABYSS:
@@ -316,7 +320,7 @@ public class PortalBlock extends Block {
 			case VOX_PONDS:
 				return new VoxPondsTeleporter();
 			default:
-				return world.getDefaultTeleporter();
+				return world.getPortalForcer();
 		}
 	}
 }

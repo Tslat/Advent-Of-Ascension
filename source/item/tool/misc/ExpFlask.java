@@ -10,8 +10,8 @@ import net.minecraft.item.UseAction;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
@@ -26,13 +26,7 @@ import java.util.List;
 
 public class ExpFlask extends Item {
 	public ExpFlask() {
-		super(new Item.Properties().group(AoAItemGroups.TOOLS).maxStackSize(1));
-
-		addPropertyOverride(new ResourceLocation("filled"), (stack, world, entity) -> {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-			return cap.getValue() <= 0 ? 0 : 1;
-		});
+		super(new Item.Properties().tab(AoAItemGroups.TOOLS).stacksTo(1));
 	}
 
 	@Override
@@ -41,7 +35,7 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
@@ -51,19 +45,19 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() <= 0)
-				return ActionResult.resultFail(stack);
+				return ActionResult.fail(stack);
 
-			player.setActiveHand(hand);
+			player.startUsingItem(hand);
 		}
 
-		return ActionResult.resultPass(stack);
+		return ActionResult.pass(stack);
 	}
 
 	@Override
@@ -79,7 +73,7 @@ public class ExpFlask extends Item {
 				cap.setValue(cap.getValue() - xpChange);
 
 				if (cap.getValue() == 0)
-					player.resetActiveHand();
+					player.stopUsingItem();
 			}
 		}
 	}
@@ -134,11 +128,11 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		int storedValue = (int)PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue();
 
 		if (storedValue > 0)
-			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : "")));
+			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, new StringTextComponent(NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : ""))));
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 3));

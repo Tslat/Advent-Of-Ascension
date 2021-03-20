@@ -23,11 +23,11 @@ public class BossItemEntity extends ItemEntity {
 
 		this.lifespan = lifetime;
 		this.player = player;
-		this.rotationYaw = rand.nextFloat() * 360f;
+		this.yRot = random.nextFloat() * 360f;
 
-		setPosition(x, y, z);
+		setPos(x, y, z);
 		setItem(stack);
-		setMotion(rand.nextDouble() * 0.2d - 0.1d, 0.2d, rand.nextDouble() * 0.2d - 0.1d);
+		setDeltaMovement(random.nextDouble() * 0.2d - 0.1d, 0.2d, random.nextDouble() * 0.2d - 0.1d);
 	}
 
 	public BossItemEntity(EntityType<? extends ItemEntity> entityType, World world) {
@@ -38,8 +38,8 @@ public class BossItemEntity extends ItemEntity {
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity player) {
-		if (!world.isRemote && !cannotPickup() && player.getUniqueID().equals(getOwnerId())) {
+	public void playerTouch(PlayerEntity player) {
+		if (!level.isClientSide && !hasPickUpDelay() && player.getUUID().equals(getOwner())) {
 			ItemStack stack = this.getItem();
 			int stackSize = stack.getCount();
 
@@ -50,17 +50,17 @@ public class BossItemEntity extends ItemEntity {
 
 			ItemStack stackCopy = stack.copy();
 
-			if (hookResult == 1 || stackSize <= 0 || player.inventory.addItemStackToInventory(stack) || stackCopy.getCount() > getItem().getCount()) {
+			if (hookResult == 1 || stackSize <= 0 || player.inventory.add(stack) || stackCopy.getCount() > getItem().getCount()) {
 				stackCopy.setCount(stackCopy.getCount() - getItem().getCount());
 				BasicEventHooks.firePlayerItemPickupEvent(player, this, stackCopy);
 
 				if (stack.isEmpty()) {
-					player.onItemPickup(this, stackSize);
+					player.take(this, stackSize);
 					remove();
 					stack.setCount(stackSize);
 				}
 
-				player.addStat(Stats.ITEM_USED.get(getItem().getItem()), stackSize);
+				player.awardStat(Stats.ITEM_USED.get(getItem().getItem()), stackSize);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class BossItemEntity extends ItemEntity {
 		if (lifespan == 6000)
 			return;
 
-		if (!world.isRemote && (player == null || !(getItem().getItem() instanceof BossSpawningItem))) {
+		if (!level.isClientSide && (player == null || !(getItem().getItem() instanceof BossSpawningItem))) {
 			remove();
 
 			return;
@@ -81,9 +81,9 @@ public class BossItemEntity extends ItemEntity {
 		BossSpawningItem bossItem = (BossSpawningItem)getItem().getItem();
 
 		if (player instanceof ServerPlayerEntity) {
-			if (ticksExisted == lifespan - 1) {
-				if (bossItem.canSpawnHere(world, (ServerPlayerEntity)player, getPosX(), getPosY(), getPosZ())) {
-					bossItem.spawnBoss(world, (ServerPlayerEntity)player, getPosX(), getPosY(), getPosZ());
+			if (tickCount == lifespan - 1) {
+				if (bossItem.canSpawnHere(level, (ServerPlayerEntity)player, getX(), getY(), getZ())) {
+					bossItem.spawnBoss(level, (ServerPlayerEntity)player, getX(), getY(), getZ());
 
 					remove();
 				}
@@ -95,12 +95,12 @@ public class BossItemEntity extends ItemEntity {
 			return;
 		}
 
-		if (ticksExisted < lifespan)
-			bossItem.handleTimerParticles(this, getPosX(), getPosY(), getPosZ(), lifespan, ticksExisted);
+		if (tickCount < lifespan)
+			bossItem.handleTimerParticles(this, getX(), getY(), getZ(), lifespan, tickCount);
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

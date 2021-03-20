@@ -15,37 +15,38 @@ import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.constant.Skills;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("ConfusingArgumentToVarargsMethod")
 public abstract class LocaleUtil {
-	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, String... args) {
+	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, ITextComponent... args) {
 		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
 	}
 
-	public static ITextComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, String... args) {
-		return new TranslationTextComponent(langKey, args).applyTextStyle(type.format);
+
+	public static ITextComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, ITextComponent... args) {
+		return new TranslationTextComponent(langKey, args).withStyle(type.format);
 	}
 
 	public static TranslationTextComponent getLocaleMessage(String langKey) {
 		return getLocaleMessage(langKey, (TextFormatting)null);
 	}
 
-	public static TranslationTextComponent getLocaleMessage(String langKey, TextFormatting colour) {
-		return getLocaleMessage(langKey, colour, new String[] {});
-	}
-
-	public static TranslationTextComponent getLocaleMessage(String langKey, String... args) {
+	public static TranslationTextComponent getLocaleMessage(String langKey, ITextComponent... args) {
 		return getLocaleMessage(langKey, null, args);
 	}
 
-	public static TranslationTextComponent getLocaleMessage(String langKey, @Nullable TextFormatting colour, @Nonnull String... args) {
+	public static TranslationTextComponent getLocaleMessage(String langKey, @Nullable TextFormatting format, ITextComponent... args) {
 		TranslationTextComponent localeMessage = new TranslationTextComponent(langKey, args);
 
-		if (colour != null)
-			localeMessage.getStyle().setColor(colour);
+		if (format != null)
+			localeMessage.withStyle(format);
 
 		return localeMessage;
+	}
+
+	public static StringTextComponent numToComponent(Number number) {
+		return new StringTextComponent(String.valueOf(number));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -55,7 +56,7 @@ public abstract class LocaleUtil {
 
 	@OnlyIn(Dist.CLIENT)
 	public static String getItemName(IItemProvider object) {
-		return object.asItem().getName().getFormattedText();
+		return I18n.get(object.asItem().getDescriptionId());
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -65,7 +66,7 @@ public abstract class LocaleUtil {
 
 	@OnlyIn(Dist.CLIENT)
 	public static String getLocaleString(String langKey, @Nullable TextFormatting colour, String... args) {
-		return (colour != null ? colour : "") + I18n.format(langKey, args);
+		return (colour != null ? colour : "") + I18n.get(langKey, args);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -76,7 +77,7 @@ public abstract class LocaleUtil {
 		PlayerEntity player = Minecraft.getInstance().player;
 		boolean meetsReq = (player != null && player.isCreative()) || AdventGuiTabPlayer.getSkillLevel(skill) >= levelReq;
 
-		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, Integer.toString(levelReq), getLocaleString("skills." + skill.toString().toLowerCase() + ".name"));
+		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), new TranslationTextComponent("skills." + skill.toString().toLowerCase() + ".name"));
 	}
 
 	public enum ItemDescriptionType {

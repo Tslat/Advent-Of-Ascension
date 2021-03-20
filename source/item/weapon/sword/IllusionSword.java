@@ -24,8 +24,8 @@ public class IllusionSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.world.isRemote && !EntityUtil.isImmuneToSpecialAttacks(target, attacker) && RandomUtil.percentChance(0.1f * attackCooldown)) {
-			List<LivingEntity> nearbyMobs = target.world.getEntitiesWithinAABB(LivingEntity.class, target.getBoundingBox().grow(5), EntityUtil.Predicates.HOSTILE_MOB);
+		if (!attacker.level.isClientSide && !EntityUtil.isImmuneToSpecialAttacks(target, attacker) && RandomUtil.percentChance(0.1f * attackCooldown)) {
+			List<LivingEntity> nearbyMobs = target.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(5), EntityUtil.Predicates.HOSTILE_MOB);
 
 			if (nearbyMobs.size() > 1) {
 				LivingEntity newTarget = null;
@@ -38,18 +38,18 @@ public class IllusionSword extends BaseSword {
 				if (newTarget == null)
 					return;
 
-				target.setRevengeTarget(newTarget);
+				target.setLastHurtByMob(newTarget);
 
 				if (target instanceof CreatureEntity)
-					((CreatureEntity)target).setAttackTarget(newTarget);
+					((CreatureEntity)target).setTarget(newTarget);
 
-				target.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60, 0, false, true));
+				target.addEffect(new EffectInstance(Effects.BLINDNESS, 60, 0, false, true));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

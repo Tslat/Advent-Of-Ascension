@@ -22,26 +22,6 @@ public class VisularEntity extends AoAFlyingMeleeMob {
 		return 1.4375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 110;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 12;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.1;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

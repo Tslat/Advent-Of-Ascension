@@ -26,13 +26,13 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class XxeusEntity extends AoAMeleeMob {
-	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getName().deepCopy().appendSibling(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenSky(false).setCreateFog(false);
+	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int jumpCooldown = 60;
 
 	public XxeusEntity(CraexxeusEntity craexxeus) {
-		this(AoAEntities.Mobs.XXEUS.get(), craexxeus.world);
+		this(AoAEntities.Mobs.XXEUS.get(), craexxeus.level);
 
-		setLocationAndAngles(craexxeus.getPosX(), craexxeus.getPosY() + 1, craexxeus.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(craexxeus.getX(), craexxeus.getY() + 1, craexxeus.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public XxeusEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -40,32 +40,12 @@ public class XxeusEntity extends AoAMeleeMob {
 
 		isSlipperyMovement = true;
 
-		this.setAIMoveSpeed(2.1f);
+		this.setSpeed(2.1f);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 2.55f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 3000;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Nullable
@@ -93,7 +73,7 @@ public class XxeusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
@@ -101,69 +81,69 @@ public class XxeusEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (getAttackTarget() != null) {
+		if (getTarget() != null) {
 			if (jumpCooldown > 0) {
 				jumpCooldown--;
 			}
 			else {
 				jumpCooldown = 60;
-				LivingEntity target = getAttackTarget();
-				setMotion((target.getPosX() - getPosX()) * 0.165, target.getPosY() > getPosY() ? 0.85 : 0.449, (target.getPosZ() - getPosZ()) * 0.165);
+				LivingEntity target = getTarget();
+				setDeltaMovement((target.getX() - getX()) * 0.165, target.getY() > getY() ? 0.85 : 0.449, (target.getZ() - getZ()) * 0.165);
 
-				world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.ENTITY_XXEUS_DASH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_XXEUS_DASH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 		}
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote && !isAIDisabled()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getTrueSource());
+		if (!level.isClientSide && !isNoAi()) {
+			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.xxeus.kill", killer.getDisplayName().getFormattedText()), world, getPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.xxeus.kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier) {
 		return false;
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
-			bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+			bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
 	public void setCustomName(@Nullable ITextComponent name) {
 		super.setCustomName(name);
 
-		bossInfo.setName(getType().getName().deepCopy().appendSibling(getDisplayName()));
+		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	protected void updateAITasks() {
-		super.updateAITasks();
+	protected void customServerAiStep() {
+		super.customServerAiStep();
 
 		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayerEntity player) {
+		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayerEntity player) {
+		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
 	}

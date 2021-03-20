@@ -28,13 +28,13 @@ public class ConfettiCannon extends BaseBlaster {
 	public void fire(ItemStack blaster, LivingEntity shooter) {
 		ConfettiShotEntity shot = new ConfettiShotEntity(shooter, this, 1);
 
-		shot.setMotion(shot.getMotion().mul(0.25d, 0.25d, 0.25d));
-		shooter.world.addEntity(shot);
+		shot.setDeltaMovement(shot.getDeltaMovement().multiply(0.25d, 0.25d, 0.25d));
+		shooter.level.addFreshEntity(shot);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

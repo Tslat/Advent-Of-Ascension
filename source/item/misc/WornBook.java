@@ -9,13 +9,14 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.library.resourcemanager.MiscTextFileManager;
+import net.tslat.aoa3.data.client.MiscTextFileManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.ClientOperations;
@@ -24,7 +25,7 @@ public class WornBook extends WrittenBookItem {
 	private static final CompoundNBT contents = new CompoundNBT();
 
 	public WornBook() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -34,20 +35,20 @@ public class WornBook extends WrittenBookItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack bookStack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack bookStack = player.getItemInHand(hand);
 
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
-				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"));
+				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"), Util.NIL_UUID);
 			}
 		}
 		else {
 			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayWornBookGui);
 		}
 
-		return ActionResult.resultSuccess(bookStack);
+		return ActionResult.success(bookStack);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -73,7 +74,7 @@ public class WornBook extends WrittenBookItem {
 	}
 
 	@Override
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return false;
 	}
 }

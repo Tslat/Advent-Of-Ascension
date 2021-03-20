@@ -16,25 +16,25 @@ public class OccultBlockEntity extends Entity {
 	public OccultBlockEntity(EntityType<? extends Entity> entityType, World world) {
 		super(entityType, world);
 
-		this.highlightingBlock = world.getBlockState(getPosition());
+		this.highlightingBlock = world.getBlockState(blockPosition());
 	}
 
 	public OccultBlockEntity(World world, BlockPos pos) {
 		super(AoAEntities.Misc.OCCULT_BLOCK.get(), world);
 
-		setPosition(pos.getX(), pos.getY(), pos.getZ());
+		setPos(pos.getX(), pos.getY(), pos.getZ());
 
-		this.highlightingBlock = world.getBlockState(getPosition());
+		this.highlightingBlock = world.getBlockState(blockPosition());
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		ticksExisted++;
+		tickCount++;
 
-		if (ticksExisted > 150 || highlightingBlock == null || highlightingBlock.getBlock() != world.getBlockState(getPosition()).getBlock()) {
+		if (tickCount > 150 || highlightingBlock == null || highlightingBlock.getBlock() != level.getBlockState(blockPosition()).getBlock()) {
 			remove();
-			setPositionAndUpdate(0, 0, 0);
+			teleportTo(0, 0, 0);
 		}
 	}
 
@@ -48,16 +48,16 @@ public class OccultBlockEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {}
+	protected void readAdditionalSaveData(CompoundNBT compound) {}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {}
+	protected void addAdditionalSaveData(CompoundNBT compound) {}
 }

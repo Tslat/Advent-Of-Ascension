@@ -20,7 +20,7 @@ import java.util.List;
 
 public class GhastlyArmour extends AdventArmour {
 	public GhastlyArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:ghastly", 62, new int[] {5, 8, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:ghastly", 62, new int[] {5, 8, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -30,15 +30,15 @@ public class GhastlyArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		if (slots != null && plData.player().world.getGameTime() % 5 == 0 && plData.player().isSneaking()) {
-			for (LivingEntity entity : plData.player().world.getEntitiesWithinAABB(LivingEntity.class, plData.player().getBoundingBox().grow(4 * slots.size()), EntityUtil.Predicates.HOSTILE_MOB)) {
-				entity.addPotionEffect(new EffectInstance(Effects.GLOWING, 6, 0, true, false));
+		if (slots != null && plData.player().level.getGameTime() % 5 == 0 && plData.player().isShiftKeyDown()) {
+			for (LivingEntity entity : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(4 * slots.size()), EntityUtil.Predicates.HOSTILE_MOB)) {
+				entity.addEffect(new EffectInstance(Effects.GLOWING, 6, 0, true, false));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.ghastly_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.ghastly_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

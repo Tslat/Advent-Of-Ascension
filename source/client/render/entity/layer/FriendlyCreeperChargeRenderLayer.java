@@ -24,16 +24,16 @@ public class FriendlyCreeperChargeRenderLayer extends LayerRenderer<MobEntity, E
 	@Override
 	public void render(MatrixStack matrix, IRenderTypeBuffer buffer, int packedLightIn, MobEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float age, float netHeadYaw, float headPitch) {
 		if (entity.isInvulnerable()) {
-			float ageOffset = entity.ticksExisted + partialTicks;
-			EntityModel<MobEntity> model = this.getEntityModel();
+			float ageOffset = entity.tickCount + partialTicks;
+			EntityModel<MobEntity> model = this.getParentModel();
 
-			model.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
-			getEntityModel().copyModelAttributesTo(model);
+			model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
+			getParentModel().copyPropertiesTo(model);
 
-			IVertexBuilder ivertexbuilder = buffer.getBuffer(RenderType.getEnergySwirl(getEntityTexture(entity), getAuraU(ageOffset), ageOffset * 0.01F));
+			IVertexBuilder ivertexbuilder = buffer.getBuffer(RenderType.energySwirl(getTextureLocation(entity), getAuraU(ageOffset), ageOffset * 0.01F));
 
-			model.setRotationAngles(entity, limbSwing, limbSwingAmount, age, netHeadYaw, headPitch);
-			model.render(matrix, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			model.setupAnim(entity, limbSwing, limbSwingAmount, age, netHeadYaw, headPitch);
+			model.renderToBuffer(matrix, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
 	}
 
@@ -42,12 +42,12 @@ public class FriendlyCreeperChargeRenderLayer extends LayerRenderer<MobEntity, E
 	}
 
 	@Override
-	public EntityModel<MobEntity> getEntityModel() {
+	public EntityModel<MobEntity> getParentModel() {
 		return expandedModel;
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(MobEntity entityIn) {
+	protected ResourceLocation getTextureLocation(MobEntity entityIn) {
 		return texture;
 	}
 }

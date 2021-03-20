@@ -22,23 +22,23 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class CreationForge extends Block {
 	public CreationForge() {
-		super(BlockUtil.generateBlockProperties(Material.ROCK, MaterialColor.PURPLE, 10, 15, SoundType.STONE));
+		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, 10, 15, SoundType.STONE));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() instanceof BaseSlab) {
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() instanceof BaseSlab) {
 			if (player instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
-				BaseSlab slab = (BaseSlab)player.getHeldItem(hand).getItem();
+				BaseSlab slab = (BaseSlab)player.getItemInHand(hand).getItem();
 
 				if (plData.stats().getLevel(Skills.CREATION) >= slab.sacrificeLvl) {
 					if (!player.isCreative())
-						player.getHeldItem(hand).shrink(1);
+						player.getItemInHand(hand).shrink(1);
 
 					plData.stats().addXp(Skills.CREATION, slab.sacrificeXp, false, false);
 					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_CREATION_FORGE_SACRIFICE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
-					player.container.detectAndSendChanges();
+					player.inventoryMenu.broadcastChanges();
 				}
 				else {
 					if (player instanceof ServerPlayerEntity)

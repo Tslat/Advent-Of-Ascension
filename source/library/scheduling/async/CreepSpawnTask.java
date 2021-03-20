@@ -57,8 +57,8 @@ public class CreepSpawnTask implements Runnable {
         if (count >= 4) {
             CreepEntity creep = new CreepEntity(AoAEntities.Mobs.CREEP.get(), world);
 
-            creep.setPosition(x, centerY, z);
-            world.addEntity(creep);
+            creep.setPos(x, centerY, z);
+            world.addFreshEntity(creep);
 
             return;
         }

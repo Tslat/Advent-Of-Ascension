@@ -5,8 +5,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.tslat.aoa3.util.BlockUtil;
 
+import net.minecraft.block.PressurePlateBlock.Sensitivity;
+
 public class PressurePlateBlock extends net.minecraft.block.PressurePlateBlock {
 	public PressurePlateBlock(Sensitivity sensitivity, MaterialColor mapColour) {
-		super(sensitivity, BlockUtil.generateBlockProperties(Material.WOOD, mapColour, 0.5f, 0.5f, SoundType.WOOD).doesNotBlockMovement());
+		super(sensitivity, BlockUtil.generateBlockProperties(Material.WOOD, mapColour, 0.5f, 0.5f, SoundType.WOOD).noCollission());
 	}
 }

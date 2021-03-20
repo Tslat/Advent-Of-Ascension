@@ -23,26 +23,6 @@ public class FishixEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 30;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
 	protected float getWaterSlowDown() {
 		return 1;
 	}
@@ -63,13 +43,4 @@ public class FishixEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_FISHIX_HURT.get();
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

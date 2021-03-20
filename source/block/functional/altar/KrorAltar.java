@@ -19,21 +19,21 @@ import java.util.concurrent.TimeUnit;
 
 public class KrorAltar extends BossAltarBlock {
 	public KrorAltar() {
-		super(MaterialColor.GRAY);
+		super(MaterialColor.COLOR_GRAY);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player.getHeldItem(hand).getItem() == Item.getItemFromBlock(AoABlocks.CHARGING_TABLE.get()))
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		if (player.getItemInHand(hand).getItem() == Item.byBlock(AoABlocks.CHARGING_TABLE.get()))
 			return ActionResultType.FAIL;
 
-		return super.onBlockActivated(state, world, pos, player, hand, hit);
+		return super.use(state, world, pos, player, hand, hit);
 	}
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		if (player instanceof ServerPlayerEntity) {
-			new KrorSpawnTask((ServerPlayerEntity)player, blockPos.up()).schedule(1, TimeUnit.SECONDS);
+			new KrorSpawnTask((ServerPlayerEntity)player, blockPos.above()).schedule(1, TimeUnit.SECONDS);
 
 			PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).sendThrottledChatMessage("message.mob.kror.spawn.start");
 		}
@@ -41,7 +41,7 @@ public class KrorAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		if (player.world.getBlockState(pos.up()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayerEntity) {
+		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayerEntity) {
 			PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).sendThrottledChatMessage("message.feedback.krorAltar.chargingTable");
 
 			return false;

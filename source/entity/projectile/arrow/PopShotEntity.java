@@ -29,7 +29,7 @@ public class PopShotEntity extends CustomArrowEntity {
 
 		this.isExplosive = true;
 
-		setPosition(x, y, z);
+		setPos(x, y, z);
 	}
 
 	public PopShotEntity(World world, BaseBow bow, LivingEntity shooter, double damageBase) {
@@ -37,29 +37,29 @@ public class PopShotEntity extends CustomArrowEntity {
 
 		this.isExplosive = true;
 
-		setShooter(shooter);
-		setDamage(damageBase);
+		setOwner(shooter);
+		setBaseDamage(damageBase);
 
 		this.bow = bow;
 
-		setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
 	public PopShotEntity(World world, BaseBow bow, LivingEntity shooter, double damageBase, boolean isExplosive) {
 		super(AoAEntities.Projectiles.POP_SHOT.get(), world);
 
-		setShooter(shooter);
-		setDamage(damageBase);
+		setOwner(shooter);
+		setBaseDamage(damageBase);
 
 		this.bow = bow;
 		this.isExplosive = isExplosive;
 
-		setPosition(shooter.getPosX(), shooter.getPosYEye() - 0.1f, shooter.getPosZ());
+		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
-	protected void arrowHit(LivingEntity target) {}
+	protected void doPostHurtEffects(LivingEntity target) {}
 
-	protected ItemStack getArrowStack() {
+	protected ItemStack getPickupItem() {
 		return new ItemStack(AoAItems.POP_SHOT.get());
 	}
 }

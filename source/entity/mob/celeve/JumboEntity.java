@@ -23,26 +23,6 @@ public class JumboEntity extends AoAMeleeMob {
 		return 2.15625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.35d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 100;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 10;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

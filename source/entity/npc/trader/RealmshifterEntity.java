@@ -16,16 +16,6 @@ public class RealmshifterEntity extends AoATrader {
 	}
 
 	@Override
-	protected double getBaseMaxHealth() {
-		return 25;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
-	}
-
-	@Override
 	protected boolean isOverworldNPC() {
 		return true;
 	}

@@ -10,12 +10,13 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -24,16 +25,6 @@ public class CorruptedTravellerEntity extends AoATrader {
 		super(entityType, world);
 
 		setGlowing(AoAConfig.SERVER.easyCorruptedTravellers.get());
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 50;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.329;
 	}
 
 	@Override
@@ -47,8 +38,8 @@ public class CorruptedTravellerEntity extends AoATrader {
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || world.dimension.getType() != DimensionType.OVERWORLD;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !isOverworldNPC() || !WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key);
 	}
 
 	@Override
@@ -64,7 +55,7 @@ public class CorruptedTravellerEntity extends AoATrader {
 			public Container createMenu(int screenId, PlayerInventory inv, PlayerEntity player) {
 				return new CorruptedTravellerContainer(screenId, player.inventory, CorruptedTravellerEntity.this);
 			}
-		}, buffer -> buffer.writeInt(getEntityId()));
+		}, buffer -> buffer.writeInt(getId()));
 	}
 
 	@Override

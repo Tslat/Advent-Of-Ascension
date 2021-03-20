@@ -9,6 +9,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -18,17 +19,17 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class VoxStoreCrate extends Block {
 	public VoxStoreCrate() {
-		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.GREEN_TERRACOTTA, 5, 3, SoundType.WOOD));
+		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.TERRACOTTA_GREEN, 5, 3, SoundType.WOOD));
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!world.isRemote && EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(Hand.MAIN_HAND)) == 0) {
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(Hand.MAIN_HAND)) == 0) {
 			StoreKeeperEntity storeKeeper = new StoreKeeperEntity(AoAEntities.NPCs.STORE_KEEPER.get(), world);
 
-			storeKeeper.setLocationAndAngles(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
-			world.addEntity(storeKeeper);
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxStoreKeeper.spawn"));
+			storeKeeper.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
+			world.addFreshEntity(storeKeeper);
+			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxStoreKeeper.spawn"), Util.NIL_UUID);
 		}
 	}
 }

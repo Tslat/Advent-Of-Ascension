@@ -30,24 +30,24 @@ public class PoisonPlunger extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		float x = (-MathHelper.sin(shooter.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.rotationPitch / 180.0F * (float)Math.PI)) * 5;
-		float y = (-MathHelper.sin(shooter.rotationPitch / 180.0F * (float)Math.PI)) * 5;
-		float z = (MathHelper.cos(shooter.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.rotationPitch / 180.0F * (float)Math.PI)) * 5;
+		float x = (-MathHelper.sin(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI)) * 5;
+		float y = (-MathHelper.sin(shooter.xRot / 180.0F * (float)Math.PI)) * 5;
+		float z = (MathHelper.cos(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI)) * 5;
 
-		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shooter.world, shooter.getPosX() + x, shooter.getPosY() + shooter.getEyeHeight() + y, shooter.getPosZ() + z);
+		AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(shooter.level, shooter.getX() + x, shooter.getY() + shooter.getEyeHeight() + y, shooter.getZ() + z);
 
 		cloud.setRadius(4);
 		cloud.setWaitTime(0);
 		cloud.setDuration(100);
-		cloud.setColor(NumberUtil.RGB(51, 102, 0));
+		cloud.setFixedColor(NumberUtil.RGB(51, 102, 0));
 		cloud.addEffect(new EffectInstance(Effects.POISON, 200, 1, false, true));
 		cloud.setOwner(shooter);
-		shooter.world.addEntity(cloud);
+		shooter.level.addFreshEntity(cloud);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

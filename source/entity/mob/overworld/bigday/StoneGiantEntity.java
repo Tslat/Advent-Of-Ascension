@@ -10,12 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.event.dimension.OverworldEvents;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
-
-import javax.annotation.Nonnull;
 
 public class StoneGiantEntity extends AoAMeleeMob {
 	public StoneGiantEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -25,31 +22,6 @@ public class StoneGiantEntity extends AoAMeleeMob {
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
 		return 5.7f;
-	}
-
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 95;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11.5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.28d;
-	}
-
-	@Override
-	protected double getBaseArmour() {
-		return 4d;
 	}
 
 	@Override
@@ -68,24 +40,8 @@ public class StoneGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return false;
-	}
-
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
-
-	@Nonnull
-	@Override
-	protected OverworldEvents.Event getEventRequirement() {
-		return OverworldEvents.Event.BIG_DAY;
 	}
 
 	@Override
@@ -93,6 +49,6 @@ public class StoneGiantEntity extends AoAMeleeMob {
 		if (target instanceof LivingEntity)
 			DamageUtil.doBodySlamKnockback((LivingEntity)target, this, 21f, 1.6f, 21f);
 
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 50));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50));
 	}
 }

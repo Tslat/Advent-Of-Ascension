@@ -29,26 +29,6 @@ public class CherryBlasterEntity extends AoARangedMob {
 		return 0.65625f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 87;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 9;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
@@ -63,17 +43,17 @@ public class CherryBlasterEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, world, projectile, 3f);
+		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 
 	@Override
 	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, world, projectile, 3f);
+		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (isInWater() && getHealth() > 0)
 			heal(0.4f);

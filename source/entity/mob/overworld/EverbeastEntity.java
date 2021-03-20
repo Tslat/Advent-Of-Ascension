@@ -23,26 +23,6 @@ public class EverbeastEntity extends AoAMeleeMob {
 		return 1.65f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 8;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.25;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -60,17 +40,8 @@ public class EverbeastEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected int getMaxSpawnHeight() {
-		return 25;
-	}
-
-	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.NAUSEA, 140));
+		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.CONFUSION, 140));
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

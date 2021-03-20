@@ -51,26 +51,26 @@ public class GooBallEntity extends BaseBullet implements HardProjectile, IRender
 	}
 
 	@Override
-	public float getGravityVelocity() {
+	public float getGravity() {
 		return 0.05f;
 	}
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.attackEntityFrom(DamageSource.causeThrownDamage(this, null), GooBall.dmg);
+		target.hurt(DamageSource.thrown(this, null), GooBall.dmg);
 
 		if (target instanceof LivingEntity)
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 60).level(2));
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 60).level(2));
 
-		world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+		level.playSound(null, getX(), getY(), getZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && ticksExisted <= 1 && getThrower() == null)
+	protected void onHit(RayTraceResult result) {
+		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
 			return;
 
-		super.onImpact(result);
+		super.onHit(result);
 	}
 
 	@Override

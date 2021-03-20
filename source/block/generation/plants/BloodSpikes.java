@@ -14,11 +14,11 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class BloodSpikes extends StackablePlant {
 	public BloodSpikes() {
-		super(MaterialColor.RED, Material.ORGANIC, Material.EARTH);
+		super(MaterialColor.COLOR_RED, Material.GRASS, Material.DIRT);
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entity) {
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entity) {
 		if (entity instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)entity))
 			EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 100), new PotionUtil.EffectBuilder(Effects.POISON, 100).level(3));
 	}

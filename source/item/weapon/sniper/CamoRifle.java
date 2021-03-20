@@ -35,13 +35,13 @@ public class CamoRifle extends BaseSniper {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity holder, int itemSlot, boolean isSelected) {
-		if (!world.isRemote && isSelected && holder.isSneaking() && holder instanceof LivingEntity)
+		if (!world.isClientSide && isSelected && holder.isShiftKeyDown() && holder instanceof LivingEntity)
 			EntityUtil.applyPotions(holder, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 5));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -18,14 +18,14 @@ public class BreedingTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		for (AnimalEntity animal : getTargetsWithinRadius(AnimalEntity.class, animal -> animal != null && animal.isAlive() && !animal.isInLove() && animal.getGrowingAge() >= 0)) {
-			int growingAge = animal.getGrowingAge();
+		for (AnimalEntity animal : getTargetsWithinRadius(AnimalEntity.class, animal -> animal != null && animal.isAlive() && !animal.isInLove() && animal.getAge() >= 0)) {
+			int growingAge = animal.getAge();
 
 			if (growingAge == 0) {
 				animal.setInLove(owner);
 			}
 			else if (growingAge > 10){
-				animal.setGrowingAge(growingAge - 10);
+				animal.setAge(growingAge - 10);
 			}
 		}
 	}

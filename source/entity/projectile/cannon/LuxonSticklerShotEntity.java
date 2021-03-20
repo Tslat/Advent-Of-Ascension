@@ -28,7 +28,7 @@ public class LuxonSticklerShotEntity extends BaseBullet implements HardProjectil
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.015f;
 	}
 }

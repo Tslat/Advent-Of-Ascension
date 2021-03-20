@@ -24,28 +24,13 @@ public class ConstructOfServilityEntity extends AoAMinion {
 	}
 
 	@Override
-	protected double getBaseMoveSpeed() {
-		return 0.41618d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 260;
-	}
-
-	@Override
 	protected boolean isHostile() {
 		return true;
 	}
 
 	@Override
-	protected double getBaseMeleeDamage() {
-		return 15.0d;
-	}
-
-	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (super.attackEntityAsMob(entity)) {
+	public boolean doHurtTarget(Entity entity) {
+		if (super.doHurtTarget(entity)) {
 			if (getOwner() != null)
 				EntityUtil.healEntity(getOwner(), 2.0f);
 

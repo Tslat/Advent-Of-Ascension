@@ -117,7 +117,7 @@ public abstract class FileUtil {
 		}
 
 		try {
-			for (IResource resource : resourceManager.getAllResources(path)) {
+			for (IResource resource : resourceManager.getResources(path)) {
 				if (filePredicate.test(resource.getLocation()))
 					fileConsumer.accept(resource.getInputStream());
 			}

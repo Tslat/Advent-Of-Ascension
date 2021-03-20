@@ -8,6 +8,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.tslat.aoa3.block.tileentity.TrophyTileEntity;
@@ -17,7 +19,7 @@ public class GoldTrophyBlock extends TrophyBlock {
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		ItemStack stack = new ItemStack(asItem());
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 		TrophyTileEntity trophyTile;
 
 		if (tile instanceof TrophyTileEntity && ((trophyTile = (TrophyTileEntity)tile).getEntityId() != null)) {
@@ -32,8 +34,8 @@ public class GoldTrophyBlock extends TrophyBlock {
 
 			if (trophyTile.getCachedEntity() != null) {
 				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				String entityName = cachedEntity == null ? "" : LocaleUtil.getLocaleString(cachedEntity.getType().getTranslationKey());
-				stack.setDisplayName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", TextFormatting.GOLD, entityName));
+				ITextComponent entityName = cachedEntity == null ? new StringTextComponent("") : cachedEntity.getType().getDescription();
+				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", TextFormatting.GOLD, entityName));
 			}
 		}
 

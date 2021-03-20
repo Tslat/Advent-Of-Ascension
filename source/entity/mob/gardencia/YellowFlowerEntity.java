@@ -14,9 +14,9 @@ import net.tslat.aoa3.util.PotionUtil;
 
 public class YellowFlowerEntity extends AoAMeleeMob {
 	public YellowFlowerEntity(VinocorneEntity vinocorne) {
-		this(AoAEntities.Mobs.YELLOW_FLOWER.get(), vinocorne.world);
+		this(AoAEntities.Mobs.YELLOW_FLOWER.get(), vinocorne.level);
 
-		setLocationAndAngles(vinocorne.getPosX(), vinocorne.getPosY(), vinocorne.getPosZ(), rand.nextFloat() * 360, 0);
+		moveTo(vinocorne.getX(), vinocorne.getY(), vinocorne.getZ(), random.nextFloat() * 360, 0);
 	}
 
 	public YellowFlowerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -29,30 +29,10 @@ public class YellowFlowerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.8;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 40;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
 	public void tick() {
 		super.tick();
 
-		if (rand.nextInt(100) == 0)
+		if (random.nextInt(100) == 0)
 			EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 35));
 	}
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class YetiFingernails extends Item {
 	public YetiFingernails() {
-		super(new Item.Properties().group(null).rarity(Rarity.RARE).food(new Food.Builder().hunger(0).saturation(0).setAlwaysEdible().build()));
+		super(new Item.Properties().tab(null).rarity(Rarity.RARE).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
 	}
 
 	@Override
@@ -26,15 +26,15 @@ public class YetiFingernails extends Item {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity)
 			PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.yetiFingernails.eat");
 
-		return super.onItemUseFinish(stack, worldIn, entity);
+		return super.finishUsingItem(stack, worldIn, entity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

@@ -24,26 +24,6 @@ public class CreepupleEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.1d;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 60d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.28d;
-    }
-
-    @Override
 	public float getExplosionStrength() {
         return 2.4f;
     }
@@ -66,12 +46,12 @@ public class CreepupleEntity extends AoACreeponiaCreeper {
 
     @Override
     protected void explode() {
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             for (int i = 0; i < 3; i++) {
-                WorldUtil.createExplosion(this, world, getPosX() + (rand.nextDouble() * 3) - 1, getPosY() + (rand.nextDouble() * 3) - 1, getPosZ() + (rand.nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+                WorldUtil.createExplosion(this, level, getX() + (random.nextDouble() * 3) - 1, getY() + (random.nextDouble() * 3) - 1, getZ() + (random.nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
             }
 
-            world.createExplosion(this, getPosX(), getPosY(), getPosZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
             remove();
             spawnLingeringCloud();
         }

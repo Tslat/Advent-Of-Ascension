@@ -8,7 +8,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -33,18 +33,18 @@ public class BaronBombEntity extends Entity {
 	}
 
 	public BaronBombEntity(PlayerEntity pl) {
-		this(AoAEntities.Misc.BARON_BOMB.get(), pl.world);
+		this(AoAEntities.Misc.BARON_BOMB.get(), pl.level);
 
-		ownerUUID = pl.getUniqueID();
-		setPositionAndUpdate(pl.getPosX(), pl.getPosY(), pl.getPosZ());
+		ownerUUID = pl.getUUID();
+		teleportTo(pl.getX(), pl.getY(), pl.getZ());
 	}
 
 	public BaronBombEntity(BaronessEntity baroness) {
-		this(AoAEntities.Misc.BARON_BOMB.get(), baroness.world);
+		this(AoAEntities.Misc.BARON_BOMB.get(), baroness.level);
 
 		this.baroness = baroness;
 
-		setPositionAndUpdate(baroness.getPosX(), baroness.getPosY(), baroness.getPosZ());
+		teleportTo(baroness.getX(), baroness.getY(), baroness.getZ());
 	}
 
 	@Override
@@ -53,24 +53,24 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
-	public void addVelocity(double x, double y, double z) {}
+	public void push(double x, double y, double z) {}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return isAlive();
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity entity) {
-		if (!world.isRemote && checkEntityCollision(entity)) {
+	public void playerTouch(PlayerEntity entity) {
+		if (!level.isClientSide && checkEntityCollision(entity)) {
 			if (ownerUUID == null) {
-				WorldUtil.createExplosion(baroness, world, getPosX(), getPosY() + 1, getPosZ(), 3.5f, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 			}
 			else {
-				WorldUtil.createExplosion(ownerPlayer, world, getPosX(), getPosY() + 1, getPosZ(), 2f);
+				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
 			}
 
 			remove();
@@ -78,18 +78,18 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return isAlive();
 	}
 
 	@Override
-	public void applyEntityCollision(Entity entity) {
-		if (!world.isRemote && checkEntityCollision(entity)) {
+	public void push(Entity entity) {
+		if (!level.isClientSide && checkEntityCollision(entity)) {
 			if (ownerPlayer != null) {
-				WorldUtil.createExplosion(ownerPlayer, world, getPosX(), getPosY() + 1, getPosZ(), 2f);
+				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
 			}
 			else {
-				WorldUtil.createExplosion(baroness, world, getPosX(), getPosY() + 1, getPosZ(), 3.5f, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 			}
 
 			remove();
@@ -97,28 +97,28 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!world.isRemote) {
+	public boolean hurt(DamageSource source, float amount) {
+		if (!level.isClientSide) {
 			remove();
 
-			if (!source.isExplosion() && source.getTrueSource() != baroness && source.getTrueSource() != ownerPlayer) {
+			if (!source.isExplosion() && source.getEntity() != baroness && source.getEntity() != ownerPlayer) {
 				if (ownerPlayer != null) {
-					WorldUtil.createExplosion(ownerPlayer, world, getPosX(), getPosY() + 1, getPosZ(), 2f);
+					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
 				}
 				else {
-					WorldUtil.createExplosion(baroness, world, getPosX(), getPosY() + 1, getPosZ(), 3.5f, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 				}
 			}
 
 			return false;
 		}
 
-		return super.attackEntityFrom(source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
-	public boolean hitByEntity(Entity attacker) {
-		if (!world.isRemote && checkEntityCollision(attacker))
+	public boolean skipAttackInteraction(Entity attacker) {
+		if (!level.isClientSide && checkEntityCollision(attacker))
 			remove();
 
 		return true;
@@ -136,7 +136,7 @@ public class BaronBombEntity extends Entity {
 					return false;
 			}
 			else if (target instanceof TameableEntity) {
-				UUID ownerUUID = ((TameableEntity)target).getOwnerId();
+				UUID ownerUUID = ((TameableEntity)target).getOwnerUUID();
 
 				if (ownerUUID != null && ownerUUID.equals(this.ownerUUID))
 					return false;
@@ -147,24 +147,24 @@ public class BaronBombEntity extends Entity {
 	}
 
 	private void updateOwner() {
-		ownerPlayer = ownerPlayer == null ? world.getServer().getPlayerList().getPlayerByUUID(ownerUUID) : ownerPlayer;
+		ownerPlayer = ownerPlayer == null ? level.getServer().getPlayerList().getPlayer(ownerUUID) : ownerPlayer;
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		BlockPos pos = new BlockPos(getPosX(), 0, getPosZ());
-		Vec3d motion = getMotion();
-		double motionX = motion.getX();
-		double motionY = motion.getY();
-		double motionZ = motion.getZ();
+		BlockPos pos = new BlockPos(getX(), 0, getZ());
+		Vector3d motion = getDeltaMovement();
+		double motionX = motion.x();
+		double motionY = motion.y();
+		double motionZ = motion.z();
 
-		if (!world.isRemote || world.isBlockLoaded(pos) && world.isAreaLoaded(pos, 1)) {
-			if (!hasNoGravity())
+		if (!level.isClientSide || level.hasChunkAt(pos) && level.isAreaLoaded(pos, 1)) {
+			if (!isNoGravity())
 				motionY -= 0.08D;
 		}
-		else if (this.getPosY() > 0.0D) {
+		else if (this.getY() > 0.0D) {
 			motionY = -0.1D;
 		}
 		else {
@@ -174,10 +174,10 @@ public class BaronBombEntity extends Entity {
 		motionX = 0;
 		motionZ = 0;
 
-		move(MoverType.SELF, new Vec3d(motionX, motionY, motionZ));
+		move(MoverType.SELF, new Vector3d(motionX, motionY, motionZ));
 
-		if (!world.isRemote) {
-			if (ownerUUID == null && world.getDifficulty() == Difficulty.PEACEFUL) {
+		if (!level.isClientSide) {
+			if (ownerUUID == null && level.getDifficulty() == Difficulty.PEACEFUL) {
 				remove();
 
 				return;
@@ -186,16 +186,16 @@ public class BaronBombEntity extends Entity {
 			timer--;
 
 			if (timer == 16) {
-				world.playSound(null, getPosX(), getPosY(), getPosZ(), AoASounds.BARON_BOMB_PRIME.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.BARON_BOMB_PRIME.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 			}
 			else if (timer <= 0) {
 				updateOwner();
 
 				if (ownerPlayer != null) {
-					WorldUtil.createExplosion(ownerPlayer, world, getPosX(), getPosY() + 1, getPosZ(), 2f);
+					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
 				}
 				else {
-					WorldUtil.createExplosion(baroness, world, getPosX(), getPosY() + 1, getPosZ(), 4f);
+					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 4f);
 				}
 
 				remove();
@@ -204,13 +204,13 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {}
+	protected void readAdditionalSaveData(CompoundNBT compound) {}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {}
+	protected void addAdditionalSaveData(CompoundNBT compound) {}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

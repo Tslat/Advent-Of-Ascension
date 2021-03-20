@@ -12,12 +12,12 @@ import net.tslat.aoa3.util.NumberUtil;
 
 public class ImmortallisPortalBlock extends PortalBlock {
 	public ImmortallisPortalBlock() {
-		super(AoADimensions.IMMORTALLIS::type, MaterialColor.GOLD, NumberUtil.RGB(214, 189, 0));
+		super(AoADimensions.IMMORTALLIS.key, MaterialColor.GOLD, NumberUtil.RGB(214, 189, 0));
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).isTamed()))
-			super.onEntityCollision(state, world, pos, entity);
+	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).isTame()))
+			super.entityInside(state, world, pos, entity);
 	}
 }

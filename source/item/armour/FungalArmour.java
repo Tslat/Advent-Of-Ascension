@@ -20,7 +20,7 @@ import java.util.List;
 
 public class FungalArmour extends AdventArmour {
 	public FungalArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:fungal", 50, new int[] {5, 6, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:fungal", 50, new int[] {5, 6, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class FungalArmour extends AdventArmour {
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots != null && DamageUtil.isMeleeDamage(event.getSource())) {
 			if (RandomUtil.percentChance(0.2f * slots.size())) {
-				if (event.getSource().getTrueSource() instanceof LivingEntity)
-					((LivingEntity)event.getSource().getTrueSource()).addPotionEffect(new EffectInstance(Effects.POISON, 60, 1, true, true));
+				if (event.getSource().getEntity() instanceof LivingEntity)
+					((LivingEntity)event.getSource().getEntity()).addEffect(new EffectInstance(Effects.POISON, 60, 1, true, true));
 
 				if (PlayerUtil.isWearingFullSet(plData.player(), this.setType()) && RandomUtil.oneInNChance(4)) {
-					for (LivingEntity mob : plData.player().world.getEntitiesWithinAABB(LivingEntity.class, plData.player().getBoundingBox().grow(5), EntityUtil.Predicates.HOSTILE_MOB)) {
-						mob.addPotionEffect(new EffectInstance(Effects.POISON, 60, 0, true, true));
+					for (LivingEntity mob : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(5), EntityUtil.Predicates.HOSTILE_MOB)) {
+						mob.addEffect(new EffectInstance(Effects.POISON, 60, 0, true, true));
 					}
 				}
 			}
@@ -45,7 +45,7 @@ public class FungalArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.fungal_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.fungal_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

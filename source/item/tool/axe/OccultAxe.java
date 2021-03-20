@@ -24,22 +24,22 @@ public class OccultAxe extends BaseAxe {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
-		if (entity instanceof PlayerEntity && state.isIn(BlockTags.LOGS)) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+		if (entity instanceof PlayerEntity && state.is(BlockTags.LOGS)) {
 			BlockPos breakPos = pos;
 			Block originBlock = state.getBlock();
-			ItemStack toolStack = entity.getHeldItem(Hand.MAIN_HAND);
+			ItemStack toolStack = entity.getItemInHand(Hand.MAIN_HAND);
 
-			while (world.getBlockState(breakPos = breakPos.up()).getBlock() == originBlock && !toolStack.isEmpty()) {
+			while (world.getBlockState(breakPos = breakPos.above()).getBlock() == originBlock && !toolStack.isEmpty()) {
 				WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, true);
 			}
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entity);
+		return super.mineBlock(stack, world, state, pos, entity);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.entity.projectile.staff;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +10,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -26,96 +28,95 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
-		super(entityType, shooter.world);
+		super(entityType, shooter.level);
 		this.age = 0;
 		this.lifespan = 60;
 		this.weapon = weapon;
-		this.owner = shooter;
-		this.ignoreEntity = shooter;
 
-		setLocationAndAngles(posX, posY, posZ, 0, 360);
-		setMotion(new Vec3d(motionX, motionY, motionZ));
+		setOwner(shooter);
+		moveTo(posX, posY, posZ, 0, 360);
+		setDeltaMovement(new Vector3d(motionX, motionY, motionZ));
 	}
 
-	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
-		super(entityType, shooter.world);
+	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, Entity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
+		super(entityType, shooter.level);
 		this.age = 0;
 		this.lifespan = 120;
 		this.weapon = weapon;
-		this.owner = shooter;
-		this.ignoreEntity = shooter;
-		setLocationAndAngles(posX, posY, posZ, 0, 360);
 
-		setMotion(new Vec3d(rand.nextGaussian() / 33 + 0.03D, -velocity, rand.nextGaussian() / 33 + 0.03D));
+		setOwner(shooter);
+		moveTo(posX, posY, posZ, 0, 360);
+
+		setDeltaMovement(new Vector3d(random.nextGaussian() / 33 + 0.03D, -velocity, random.nextGaussian() / 33 + 0.03D));
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge, float xMod, float yMod, float zMod) {
-		super(entityType, shooter.world);
+		super(entityType, shooter.level);
 		this.age = 0;
 		this.lifespan = maxAge;
 		this.weapon = weapon;
-		this.owner = shooter;
-		this.ignoreEntity = shooter;
-		setLocationAndAngles(shooter.getPosX(), shooter.getPosY() + shooter.getEyeHeight(), shooter.getPosZ(), shooter.rotationYaw, shooter.rotationPitch);
+
+		setOwner(shooter);
+		moveTo(shooter.getX(), shooter.getY() + shooter.getEyeHeight(), shooter.getZ(), shooter.yRot, shooter.xRot);
 
 		boolean right = true;
 
 		if (shooter instanceof PlayerEntity) {
 			if (weapon.getWeaponHand(shooter) == Hand.MAIN_HAND) {
-				if (shooter.getPrimaryHand() == HandSide.LEFT)
+				if (shooter.getMainArm() == HandSide.LEFT)
 					right = false;
 			}
 			else {
-				if (shooter.getPrimaryHand() == HandSide.RIGHT)
+				if (shooter.getMainArm() == HandSide.RIGHT)
 					right = false;
 			}
 		}
 
-		shoot(((double)(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)) + xMod),
-				((double)(-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI)) + yMod),
-				((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI)) + zMod),
+		shoot(((double)(-MathHelper.sin(yRot / 180.0F * (float)Math.PI) * MathHelper.cos(xRot / 180.0F * (float)Math.PI)) + xMod),
+				((double)(-MathHelper.sin(xRot / 180.0F * (float)Math.PI)) + yMod),
+				((double)(MathHelper.cos(yRot / 180.0F * (float)Math.PI) * MathHelper.cos(xRot / 180.0F * (float)Math.PI)) + zMod),
 				3.0f,1.0f);
 
 		if (right) {
-			setPosition(getMotion().getX() * 0.5f + getPosX() - ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4f)), getMotion().getY() * 0.5f + getPosY() - 0.3D, getMotion().getZ() * 0.5f + getPosZ() + ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4f)));
+			setPos(getDeltaMovement().x() * 0.5f + getX() - ((double)(MathHelper.cos(yRot / 180.0F * (float)Math.PI) * 0.4f)), getDeltaMovement().y() * 0.5f + getY() - 0.3D, getDeltaMovement().z() * 0.5f + getZ() + ((double)(MathHelper.sin(yRot / 180.0F * (float)Math.PI) * 0.4f)));
 		}
 		else {
-			setPosition(getMotion().getX() * 0.5f + getPosX() + ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4f)), getMotion().getY() * 0.5f + getPosY() - 0.3D, getMotion().getZ() * 0.5f + getPosZ() - ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4f)));
+			setPos(getDeltaMovement().x() * 0.5f + getX() + ((double)(MathHelper.cos(yRot / 180.0F * (float)Math.PI) * 0.4f)), getDeltaMovement().y() * 0.5f + getY() - 0.3D, getDeltaMovement().z() * 0.5f + getZ() - ((double)(MathHelper.sin(yRot / 180.0F * (float)Math.PI) * 0.4f)));
 		}
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(entityType, shooter.world);
+		super(entityType, shooter.level);
 		this.age = 0;
 		this.lifespan = maxAge;
 		this.weapon = weapon;
-		this.owner = shooter;
-		this.ignoreEntity = shooter;
-		setLocationAndAngles(shooter.getPosX(), shooter.getPosY() + shooter.getEyeHeight(), shooter.getPosZ(), shooter.rotationYaw, shooter.rotationPitch);
 
-		boolean right = shooter.getPrimaryHand() == HandSide.RIGHT;
+		setOwner(shooter);
+		moveTo(shooter.getX(), shooter.getY() + shooter.getEyeHeight(), shooter.getZ(), shooter.yRot, shooter.xRot);
+
+		boolean right = shooter.getMainArm() == HandSide.RIGHT;
 
 		if (shooter instanceof PlayerEntity) {
 			if (weapon.getWeaponHand(shooter) == Hand.MAIN_HAND) {
-				if (shooter.getPrimaryHand() == HandSide.LEFT)
+				if (shooter.getMainArm() == HandSide.LEFT)
 					right = false;
 			}
 			else {
-				if (shooter.getPrimaryHand() == HandSide.RIGHT)
+				if (shooter.getMainArm() == HandSide.RIGHT)
 					right = false;
 			}
 		}
 
-		shoot(-MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI),
-				-MathHelper.sin(rotationPitch / 180.0F * (float)Math.PI),
-				MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(rotationPitch / 180.0F * (float)Math.PI),
+		shoot(-MathHelper.sin(yRot / 180.0F * (float)Math.PI) * MathHelper.cos(xRot / 180.0F * (float)Math.PI),
+				-MathHelper.sin(xRot / 180.0F * (float)Math.PI),
+				MathHelper.cos(yRot / 180.0F * (float)Math.PI) * MathHelper.cos(xRot / 180.0F * (float)Math.PI),
 				3.0f,1.0f);
 
 		if (right) {
-			setPosition(getMotion().getX() * 0.5f + getPosX() - ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)), getMotion().getY() * 0.5f + getPosY() - 0.3D, getMotion().getZ() * 0.5f + getPosZ() + ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)));
+			setPos(getDeltaMovement().x() * 0.5f + getX() - ((double)(MathHelper.cos(yRot / 180.0F * (float)Math.PI) * 0.4F)), getDeltaMovement().y() * 0.5f + getY() - 0.3D, getDeltaMovement().z() * 0.5f + getZ() + ((double)(MathHelper.sin(yRot / 180.0F * (float)Math.PI) * 0.4F)));
 		}
 		else {
-			setPosition(getMotion().getX() * 0.5f + getPosX() + ((double)(MathHelper.cos(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)), getMotion().getY() * 0.5f + getPosY() - 0.3D, getMotion().getZ() * 0.5f + getPosZ() - ((double)(MathHelper.sin(rotationYaw / 180.0F * (float)Math.PI) * 0.4F)));
+			setPos(getDeltaMovement().x() * 0.5f + getX() + ((double)(MathHelper.cos(yRot / 180.0F * (float)Math.PI) * 0.4F)), getDeltaMovement().y() * 0.5f + getY() - 0.3D, getDeltaMovement().z() * 0.5f + getZ() - ((double)(MathHelper.sin(yRot / 180.0F * (float)Math.PI) * 0.4F)));
 		}
 	}
 
@@ -125,14 +126,18 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (!world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+		if (!level.isClientSide) {
 			if (weapon != null && isAlive()) {
-				if (result.getType() == RayTraceResult.Type.BLOCK) {
-					weapon.doBlockImpact(this, result.getHitVec(), owner);
-				}
-				else if (result.getType() == RayTraceResult.Type.ENTITY) {
-					weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), owner);
+				Entity shooter = getOwner();
+
+				if (shooter instanceof LivingEntity) {
+					if (result.getType() == RayTraceResult.Type.BLOCK) {
+						weapon.doBlockImpact(this, result.getLocation(), (LivingEntity)shooter);
+					}
+					else if (result.getType() == RayTraceResult.Type.ENTITY) {
+						weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), (LivingEntity)shooter);
+					}
 				}
 			}
 
@@ -141,10 +146,10 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	}
 
 	@Override
-	protected void registerData() {}
+	protected void defineSynchedData() {}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
@@ -153,34 +158,35 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 		if (!isAlive())
 			return;
 
-		Vec3d motion = getMotion();
-		Vec3d position = new Vec3d(getPosX() - motion.getX() * 0.5f, getPosY() - motion.getY() * 0.5f, getPosZ() - motion.getZ() * 0.5f);
-		Vec3d velocityAdjustedPosition = new Vec3d(getPosX() + motion.getX(), getPosY() + motion.getY(), getPosZ() + motion.getZ());
-		RayTraceResult raytraceresult = world.rayTraceBlocks(new RayTraceContext(position, velocityAdjustedPosition, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, null));
+		Vector3d motion = getDeltaMovement();
+		Vector3d position = new Vector3d(getX() - motion.x() * 0.5f, getY() - motion.y() * 0.5f, getZ() - motion.z() * 0.5f);
+		Vector3d velocityAdjustedPosition = new Vector3d(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
+		RayTraceResult raytraceresult = level.clip(new RayTraceContext(position, velocityAdjustedPosition, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, null));
 
 		if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-			velocityAdjustedPosition = new Vec3d(raytraceresult.getHitVec().x, raytraceresult.getHitVec().y, raytraceresult.getHitVec().z);
+			velocityAdjustedPosition = new Vector3d(raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
 		}
 		else {
-			velocityAdjustedPosition = new Vec3d(getPosX() + motion.getX(), getPosY() + motion.getY(), getPosZ() + motion.getZ());
+			velocityAdjustedPosition = new Vector3d(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
 		}
 
-		EntityRayTraceResult entityTrace = ProjectileHelper.rayTraceEntities(world, this, position, velocityAdjustedPosition, getBoundingBox().expand(motion.getX(), motion.getY(), motion.getZ()).grow(0.5D), entity -> entity.isAlive() && entity.canBeCollidedWith() && !entity.isSpectator() && entity != ignoreEntity);
+		Entity shooter = getOwner();
+		EntityRayTraceResult entityTrace = ProjectileHelper.getEntityHitResult(level, this, position, velocityAdjustedPosition, getBoundingBox().expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5D), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter);
 
 		if (entityTrace != null)
 			raytraceresult = entityTrace;
 
 		if (raytraceresult.getType() != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, raytraceresult))
-			onImpact(raytraceresult);
+			onHit(raytraceresult);
 
-		lastTickPosX = getPosX();
-		lastTickPosY = getPosY();
-		lastTickPosZ = getPosZ();
+		xOld = getX();
+		yOld = getY();
+		zOld = getZ();
 
 		super.tick();
 
-		if (!world.isRemote) {
-			if (inGround || age > lifespan) {
+		if (!level.isClientSide) {
+			if (age > lifespan) {
 				remove();
 			}
 			else {
@@ -190,7 +196,7 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.0f;
 	}
 
@@ -199,7 +205,7 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

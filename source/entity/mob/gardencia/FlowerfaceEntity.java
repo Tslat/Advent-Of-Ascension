@@ -1,8 +1,12 @@
 package net.tslat.aoa3.entity.mob.gardencia;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,6 +23,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -38,26 +43,6 @@ public class FlowerfaceEntity extends AoAMeleeMob {
         return 1.5f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 88;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 9;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.2875;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
@@ -74,7 +59,7 @@ public class FlowerfaceEntity extends AoAMeleeMob {
     protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, SharedMonsterAttributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;
@@ -83,41 +68,41 @@ public class FlowerfaceEntity extends AoAMeleeMob {
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
 
         if (candiedWater)
             compound.putBoolean("AoACandiedWater", true);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
 
         candiedWater = compound.contains("AoACandiedWater");
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
+    public void aiStep() {
+        super.aiStep();
 
         if (isAlive() && getHealth() < getMaxHealth()) {
             if (isInWater()) {
                 heal(0.2f);
             }
-            else if (world.isRainingAt(getPosition())) {
+            else if (level.isRainingAt(blockPosition())) {
                 heal(0.1f);
             }
         }
     }
 
     @Override
-    public void onDeath(DamageSource cause) {
-        super.onDeath(cause);
+    public void die(DamageSource cause) {
+        super.die(cause);
 
-        if (!world.isRemote) {
-            if (world.getDimension().getType() == AoADimensions.ANCIENT_CAVERN.type()) {
-                Entity source = cause.getTrueSource();
+        if (!level.isClientSide) {
+            if (WorldUtil.isWorld(level, AoADimensions.ANCIENT_CAVERN.key)) {
+                Entity source = cause.getEntity();
                 PlayerEntity killer = null;
 
                 if (source != null) {
@@ -133,8 +118,8 @@ public class FlowerfaceEntity extends AoAMeleeMob {
                     PlayerUtil.addTributeToPlayer((ServerPlayerEntity)killer, Deities.SELYAN, 8);
             }
 
-            if (candiedWater && cause.getTrueSource() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-                ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getTrueSource(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
+            if (candiedWater && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+                ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
         }
     }
 }

@@ -31,31 +31,6 @@ public class TricksterEntity extends AoAMeleeMob {
 		return 1.65f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 35;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 4;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	public int getMaxSpawnHeight() {
-		return 20;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -73,8 +48,8 @@ public class TricksterEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
 		if (!isAlive())
 			return;
@@ -85,7 +60,7 @@ public class TricksterEntity extends AoAMeleeMob {
 		if (cloneCooldown > 1)
 			--cloneCooldown;
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (invisCooldown == 0) {
 				cloneCooldown = 60;
 				invisCooldown = 240;
@@ -94,12 +69,12 @@ public class TricksterEntity extends AoAMeleeMob {
 				playSound(AoASounds.ENTITY_TRICKSTER_HIDE.get(), 1.0f, 1.0f);
 			}
 
-			if (cloneCooldown == 1 && world.getEntitiesWithinAABB(TricksterCloneEntity.class, getBoundingBox().grow(10)).size() < 5) {
-				TricksterCloneEntity clone = new TricksterCloneEntity(AoAEntities.Mobs.TRICKSTER_CLONE.get(), world);
+			if (cloneCooldown == 1 && level.getEntitiesOfClass(TricksterCloneEntity.class, getBoundingBox().inflate(10)).size() < 5) {
+				TricksterCloneEntity clone = new TricksterCloneEntity(AoAEntities.Mobs.TRICKSTER_CLONE.get(), level);
 
-				clone.setPosition(getPosX(), getPosY(), getPosZ());
+				clone.setPos(getX(), getY(), getZ());
 
-				world.addEntity(clone);
+				level.addFreshEntity(clone);
 				clones.add(clone);
 				cloneCooldown = 0;
 			}
@@ -107,18 +82,14 @@ public class TricksterEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
+	public void die(DamageSource cause) {
+		super.die(cause);
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			for (TricksterCloneEntity clone : clones) {
 				clone.remove();
 			}
 		}
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

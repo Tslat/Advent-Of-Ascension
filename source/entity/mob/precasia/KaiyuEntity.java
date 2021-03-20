@@ -38,26 +38,6 @@ public class KaiyuEntity extends AoARangedMob {
 		return 0.96875f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 70d;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 9d;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.23d;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

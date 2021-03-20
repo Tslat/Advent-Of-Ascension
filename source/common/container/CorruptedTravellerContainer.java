@@ -30,22 +30,22 @@ public class CorruptedTravellerContainer extends Container {
 
 		input = new Inventory(1) {
 			@Override
-			public boolean isItemValidForSlot(int index, ItemStack stack) {
-				return stack.getItem().getFood() != null;
+			public boolean canPlaceItem(int index, ItemStack stack) {
+				return stack.getItem().getFoodProperties() != null;
 			}
 		};
 
 		addSlot(new Slot(input, 0, 80, 34) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
-				return stack.getItem().getFood() != null;
+			public boolean mayPlace(ItemStack stack) {
+				return stack.getItem().getFoodProperties() != null;
 			}
 
 			@Override
-			public void onSlotChanged() {
-				super.onSlotChanged();
+			public void setChanged() {
+				super.setChanged();
 
-				if (getHasStack())
+				if (hasItem())
 					handleFoodInput();
 			}
 		});
@@ -63,9 +63,9 @@ public class CorruptedTravellerContainer extends Container {
 
 	private void handleFoodInput() {
 		if (!handledFood) {
-			ItemStack stack = inventorySlots.get(0).inventory.getStackInSlot(0);
+			ItemStack stack = slots.get(0).container.getItem(0);
 
-			if (!stack.isEmpty() && stack.getItem().getFood() != null && player.inventory.addItemStackToInventory(new ItemStack(AoAItems.WORN_BOOK.get())))
+			if (!stack.isEmpty() && stack.getItem().getFoodProperties() != null && player.inventory.add(new ItemStack(AoAItems.WORN_BOOK.get())))
 				stack.shrink(1);
 
 			handledFood = true;
@@ -76,42 +76,42 @@ public class CorruptedTravellerContainer extends Container {
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player) {
-		super.onContainerClosed(player);
+	public void removed(PlayerEntity player) {
+		super.removed(player);
 
-		if (!player.world.isRemote)
-			clearContainer(player, player.world, input);
+		if (!player.level.isClientSide)
+			clearContainer(player, player.level, input);
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index != 0) {
 				if (index < 28) {
-					if (!mergeItemStack(slotStack, 28, 36, true))
+					if (!moveItemStackTo(slotStack, 28, 36, true))
 						return ItemStack.EMPTY;
 
-					slot.onSlotChange(slotStack, stack);
+					slot.onQuickCraft(slotStack, stack);
 				}
-				else if (index < 37 && !mergeItemStack(slotStack, 1, 27, false)) {
+				else if (index < 37 && !moveItemStackTo(slotStack, 1, 27, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
-			else if (!mergeItemStack(slotStack, 1, 36, false)) {
+			else if (!moveItemStackTo(slotStack, 1, 36, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())
@@ -124,7 +124,7 @@ public class CorruptedTravellerContainer extends Container {
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return traveller != null && traveller.isAlive() && this.player.getDistanceSq(traveller) <= 64;
+	public boolean stillValid(PlayerEntity player) {
+		return traveller != null && traveller.isAlive() && this.player.distanceToSqr(traveller) <= 64;
 	}
 }

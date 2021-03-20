@@ -1,11 +1,12 @@
 package net.tslat.aoa3.library.advancement.trigger;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.util.constant.Skills;
@@ -14,6 +15,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import net.minecraft.advancements.ICriterionTrigger.Listener;
 
 public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Instance> {
 	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "gain_xp");
@@ -25,7 +28,7 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 	}
 
 	@Override
-	public void addListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+	public void addPlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
 		Listeners playerListeners = this.listeners.get(playerAdvancements);
 
 		if (playerListeners == null)
@@ -35,7 +38,7 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 	}
 
 	@Override
-	public void removeListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
+	public void removePlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
 		Listeners playerListeners = this.listeners.get(playerAdvancements);
 
 		if (playerListeners != null) {
@@ -47,14 +50,14 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 	}
 
 	@Override
-	public void removeAllListeners(PlayerAdvancements playerAdvancements) {
+	public void removePlayerListeners(PlayerAdvancements playerAdvancements) {
 		this.listeners.remove(playerAdvancements);
 	}
 
 	@Override
-	public Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		Skills skill = json.has("skill") ? Skills.valueOf(JSONUtils.getString(json, "skill").toUpperCase()) : null;
-		int xp = json.has("xp") ? JSONUtils.getInt(json, "xp") : 0;
+	public Instance createInstance(JsonObject json, ConditionArrayParser conditions) {
+		Skills skill = json.has("skill") ? Skills.valueOf(JSONUtils.getAsString(json, "skill").toUpperCase()) : null;
+		int xp = json.has("xp") ? JSONUtils.getAsInt(json, "xp") : 0;
 
 		return new Instance(skill, xp);
 	}
@@ -71,11 +74,15 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 		private final Skills skill;
 		private final int xp;
 
-		public Instance(@Nullable Skills skill, int xp) {
-			super(triggerId);
+		public Instance(@Nullable Skills skill, int xp, EntityPredicate.AndPredicate playerPredicate) {
+			super(triggerId, playerPredicate);
 
 			this.skill = skill;
 			this.xp = xp;
+		}
+
+		public Instance(@Nullable Skills skill, int xp) {
+			this(skill, xp, EntityPredicate.AndPredicate.ANY);
 		}
 
 		public boolean test(Skills skill, int xp) {
@@ -107,7 +114,7 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 			ArrayList<Listener<Instance>> list = null;
 
 			for (Listener<Instance> listener : this.listeners) {
-				if (listener.getCriterionInstance().test(skill, xp)) {
+				if (listener.getTriggerInstance().test(skill, xp)) {
 					if (list == null)
 						list = new ArrayList<Listener<Instance>>();
 
@@ -117,7 +124,7 @@ public class AoAXpGainTrigger implements ICriterionTrigger<AoAXpGainTrigger.Inst
 
 			if (list != null) {
 				for (Listener<Instance> listener : list) {
-					listener.grantCriterion(this.advancements);
+					listener.run(this.advancements);
 				}
 			}
 		}

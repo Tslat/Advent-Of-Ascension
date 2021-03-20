@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -30,32 +30,32 @@ public class DarkDestroyer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.world.addEntity(new DestroyerShotEntity(shooter, this, 60));
+		shooter.level.addFreshEntity(new DestroyerShotEntity(shooter, this, 60));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vec3d hitPos, LivingEntity shooter) {
-		doExplosions(shot, shooter, shot.getPosX(), shot.getPosY(), shot.getPosZ());
+	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
+		doExplosions(shot, shooter, shot.getX(), shot.getY(), shot.getZ());
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		doExplosions(shot, shooter, shot.getPosX(), shot.getPosY(), shot.getPosZ());
+		doExplosions(shot, shooter, shot.getX(), shot.getY(), shot.getZ());
 	}
 
 	private void doExplosions(BaseEnergyShot shot, LivingEntity shooter, double posX, double posY, double posZ) {
 		for (double x = posX - 5; x <= posX + 5; x += 2.5) {
 			for (double y = posY - 5; y <= posY + 5; y += 2.5) {
 				for (double z = posZ - 5; z <= posZ + 5; z += 2.5) {
-					WorldUtil.createExplosion(shooter, shot.world, x, y, z, 2f);
+					WorldUtil.createExplosion(shooter, shot.level, x, y, z, 2f);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

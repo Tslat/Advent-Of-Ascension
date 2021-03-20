@@ -19,19 +19,19 @@ public class BraceEnchantment extends Enchantment {
 		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.LIGHT_GUN, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon);
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 29;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 80;
 	}
 }

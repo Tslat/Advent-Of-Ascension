@@ -24,26 +24,6 @@ public class GoblinEntity extends AoARangedMob {
 		return 1.59375f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 20;
-	}
-
-	@Override
-	public double getBaseProjectileDamage() {
-		return 5;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.207;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -73,13 +53,4 @@ public class GoblinEntity extends AoARangedMob {
 		return new MagicBallEntity(this, BaseMobProjectile.Type.MAGIC);
 	}
 
-	@Override
-	protected boolean isDaylightMob() {
-		return true;
-	}
-
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

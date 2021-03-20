@@ -28,31 +28,6 @@ public class GhostEntity extends AoAMeleeMob {
 		return 1.8125f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 1d;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 15;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 3;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.2875;
-	}
-
-	@Override
-	public int getMaxSpawnHeight() {
-		return 50;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -70,35 +45,31 @@ public class GhostEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addPotionEffect(EffectInstance effect) {
-		if (effect.getPotion() != Effects.INVISIBILITY)
+	public boolean addEffect(EffectInstance effect) {
+		if (effect.getEffect() != Effects.INVISIBILITY)
 			return false;
 
-		return super.addPotionEffect(effect);
+		return super.addEffect(effect);
 	}
 
 	@Override
-	public boolean canBeHitWithPotion() {
+	public boolean isAffectedByPotions() {
 		return false;
 	}
 
 	@Override
-	public void livingTick() {
-		super.livingTick();
+	public void aiStep() {
+		super.aiStep();
 
-		if (!world.isRemote && getAttackTarget() instanceof PlayerEntity) {
-			if (EntityUtil.isPlayerLookingAtEntity(((PlayerEntity)getAttackTarget()), this) && canEntityBeSeen(getAttackTarget()))
+		if (!level.isClientSide && getTarget() instanceof PlayerEntity) {
+			if (EntityUtil.isPlayerLookingAtEntity(((PlayerEntity)getTarget()), this) && canSee(getTarget()))
 				EntityUtil.applyPotions(this, new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 200).isAmbient());
 		}
 	}
 
 	@Override
-	public CreatureAttribute getCreatureAttribute() {
+	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
 	}
 
-	@Override
-	protected boolean isOverworldMob() {
-		return true;
-	}
 }

@@ -11,34 +11,36 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 
+import net.minecraft.client.renderer.entity.model.BipedModel.ArmPose;
+
 public class ThinBipedShootingModel extends BipedModel<MobEntity> {
 	public ThinBipedShootingModel() {
 		super(0f, 0f, 64, 32);
 
-		this.bipedRightArm = new ModelRenderer(this, 40, 16);
-		this.bipedRightArm.addBox(-1.0F, -2.0F, -1.0F, 2, 12, 2, 0);
-		this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
-		this.bipedLeftArm = new ModelRenderer(this, 40, 16);
-		this.bipedLeftArm.mirror = true;
-		this.bipedLeftArm.addBox(-1.0F, -2.0F, -1.0F, 2, 12, 2, 0);
-		this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
-		this.bipedRightLeg = new ModelRenderer(this, 0, 16);
-		this.bipedRightLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 12, 2, 0);
-		this.bipedRightLeg.setRotationPoint(-2.0F, 12.0F, 0.0F);
-		this.bipedLeftLeg = new ModelRenderer(this, 0, 16);
-		this.bipedLeftLeg.mirror = true;
-		this.bipedLeftLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 12, 2, 0);
-		this.bipedLeftLeg.setRotationPoint(2.0F, 12.0F, 0.0F);
+		this.rightArm = new ModelRenderer(this, 40, 16);
+		this.rightArm.addBox(-1.0F, -2.0F, -1.0F, 2, 12, 2, 0);
+		this.rightArm.setPos(-5.0F, 2.0F, 0.0F);
+		this.leftArm = new ModelRenderer(this, 40, 16);
+		this.leftArm.mirror = true;
+		this.leftArm.addBox(-1.0F, -2.0F, -1.0F, 2, 12, 2, 0);
+		this.leftArm.setPos(5.0F, 2.0F, 0.0F);
+		this.rightLeg = new ModelRenderer(this, 0, 16);
+		this.rightLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 12, 2, 0);
+		this.rightLeg.setPos(-2.0F, 12.0F, 0.0F);
+		this.leftLeg = new ModelRenderer(this, 0, 16);
+		this.leftLeg.mirror = true;
+		this.leftLeg.addBox(-1.0F, 0.0F, -1.0F, 2, 12, 2, 0);
+		this.leftLeg.setPos(2.0F, 12.0F, 0.0F);
 	}
 
 	@Override
-	public void setLivingAnimations(MobEntity entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
+	public void prepareMobModel(MobEntity entity, float limbSwing, float limbSwingAmount, float partialTickTime) {
 		this.rightArmPose = ArmPose.EMPTY;
 		this.leftArmPose = ArmPose.EMPTY;
-		ItemStack itemstack = entity.getHeldItem(Hand.MAIN_HAND);
+		ItemStack itemstack = entity.getItemInHand(Hand.MAIN_HAND);
 
 		if (itemstack.getItem() instanceof BowItem && entity.isAggressive()) {
-			if (entity.getPrimaryHand() == HandSide.RIGHT) {
+			if (entity.getMainArm() == HandSide.RIGHT) {
 				this.rightArmPose = ArmPose.BOW_AND_ARROW;
 			}
 			else {
@@ -46,40 +48,40 @@ public class ThinBipedShootingModel extends BipedModel<MobEntity> {
 			}
 		}
 
-		super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTickTime);
+		super.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTickTime);
 	}
 
 	@Override
-	public void setRotationAngles(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	public void setupAnim(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-		ItemStack itemstack = entity.getHeldItemMainhand();
+		ItemStack itemstack = entity.getMainHandItem();
 		AoARangedMob shooter = (AoARangedMob)entity;
 
 		if (shooter.isAggressive() && (itemstack.isEmpty() || !(itemstack.getItem() instanceof BowItem))) {
-			float f = MathHelper.sin(this.swingProgress * (float)Math.PI);
-			float f1 = MathHelper.sin((1.0F - (1.0F - this.swingProgress) * (1.0F - this.swingProgress)) * (float)Math.PI);
-			this.bipedRightArm.rotateAngleZ = 0.0F;
-			this.bipedLeftArm.rotateAngleZ = 0.0F;
-			this.bipedRightArm.rotateAngleY = -(0.1F - f * 0.6F);
-			this.bipedLeftArm.rotateAngleY = 0.1F - f * 0.6F;
-			this.bipedRightArm.rotateAngleX = -((float)Math.PI / 2F);
-			this.bipedLeftArm.rotateAngleX = -((float)Math.PI / 2F);
-			this.bipedRightArm.rotateAngleX -= f * 1.2F - f1 * 0.4F;
-			this.bipedLeftArm.rotateAngleX -= f * 1.2F - f1 * 0.4F;
-			this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-			this.bipedLeftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-			this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
-			this.bipedLeftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+			float f = MathHelper.sin(this.attackTime * (float)Math.PI);
+			float f1 = MathHelper.sin((1.0F - (1.0F - this.attackTime) * (1.0F - this.attackTime)) * (float)Math.PI);
+			this.rightArm.zRot = 0.0F;
+			this.leftArm.zRot = 0.0F;
+			this.rightArm.yRot = -(0.1F - f * 0.6F);
+			this.leftArm.yRot = 0.1F - f * 0.6F;
+			this.rightArm.xRot = -((float)Math.PI / 2F);
+			this.leftArm.xRot = -((float)Math.PI / 2F);
+			this.rightArm.xRot -= f * 1.2F - f1 * 0.4F;
+			this.leftArm.xRot -= f * 1.2F - f1 * 0.4F;
+			this.rightArm.zRot += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+			this.leftArm.zRot -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+			this.rightArm.xRot += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+			this.leftArm.xRot -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 		}
 	}
 
 	@Override
-	public void translateHand(HandSide sideIn, MatrixStack matrixStackIn) {
+	public void translateToHand(HandSide sideIn, MatrixStack matrixStackIn) {
 		float rot = sideIn == HandSide.RIGHT ? 1.0F : -1.0F;
-		ModelRenderer modelrenderer = this.getArmForSide(sideIn);
-		modelrenderer.rotationPointX += rot;
-		modelrenderer.translateRotate(matrixStackIn);
-		modelrenderer.rotationPointX -= rot;
+		ModelRenderer modelrenderer = this.getArm(sideIn);
+		modelrenderer.x += rot;
+		modelrenderer.translateAndRotate(matrixStackIn);
+		modelrenderer.x -= rot;
 	}
 }

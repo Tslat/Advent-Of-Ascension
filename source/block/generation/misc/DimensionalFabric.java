@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class DimensionalFabric extends Block {
 	public DimensionalFabric() {
-		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, null));
+		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.COLOR_BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, null).isValidSpawn((state, blockReader, pos, entityType) -> false));
 	}
 
 	@Override
@@ -30,12 +30,12 @@ public class DimensionalFabric extends Block {
 
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return VoxelShapes.fullCube();
+		return VoxelShapes.block();
 	}
 
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return VoxelShapes.fullCube();
+	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return VoxelShapes.block();
 	}
 
 	@Override
@@ -44,12 +44,12 @@ public class DimensionalFabric extends Block {
 	}
 
 	@Override
-	public boolean canEntitySpawn(BlockState state, IBlockReader worldIn, BlockPos pos, EntityType<?> type) {
+	public boolean isPossibleToRespawnInThis() {
 		return false;
 	}
 
 	@Override
-	public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, Entity projectile) {
+	public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile) {
 		projectile.remove();
 	}
 }

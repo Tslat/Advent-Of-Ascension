@@ -24,19 +24,19 @@ public class IceBow extends BaseBow {
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
 		if (target instanceof LivingEntity) {
-			EffectInstance slowEffect = ((LivingEntity)target).getActivePotionEffect(Effects.SLOWNESS);
+			EffectInstance slowEffect = ((LivingEntity)target).getEffect(Effects.MOVEMENT_SLOWDOWN);
 			int amp = 0;
 
 			if (slowEffect != null)
 				amp = Math.min(slowEffect.getAmplifier(), 2);
 
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 40).level(amp + 1));
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 40).level(amp + 1));
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

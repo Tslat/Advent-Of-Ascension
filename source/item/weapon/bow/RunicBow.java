@@ -21,16 +21,16 @@ public class RunicBow extends BaseBow {
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		if (target != null && arrow.getIsCritical() && shooter instanceof LivingEntity) {
-			for (LivingEntity entity : arrow.world.getEntitiesWithinAABB(LivingEntity.class, arrow.getBoundingBox().grow(3), EntityUtil.Predicates.HOSTILE_MOB)) {
+		if (target != null && arrow.isCritArrow() && shooter instanceof LivingEntity) {
+			for (LivingEntity entity : arrow.level.getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(3), EntityUtil.Predicates.HOSTILE_MOB)) {
 				DamageUtil.dealMagicDamage(null, (LivingEntity)shooter, entity, 2, false);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class PhantasmArmour extends AdventArmour {
 	public PhantasmArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:phantasm", 51, new int[] {3, 8, 8, 5}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 5), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:phantasm", 51, new int[] {3, 8, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
@@ -29,11 +29,11 @@ public class PhantasmArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots != null)
-			plData.player().addPotionEffect(new EffectInstance(Effects.LUCK, -1, slots.size() - 1, true, false));
+			plData.player().addEffect(new EffectInstance(Effects.LUCK, -1, slots.size() - 1, true, false));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.phantasm_armour.desc.1", LocaleUtil.ItemDescriptionType.UNIQUE));
 	}
 }

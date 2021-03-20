@@ -32,8 +32,8 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 
 	@Override
 	public void render(MatrixStack matrix, IRenderTypeBuffer buffer, int packedLightIn, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (player.hasPlayerInfo() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
-			AoAHalos.Type chosenHalo = AoAHalos.getHalo(player.getUniqueID());
+		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
+			AoAHalos.Type chosenHalo = AoAHalos.getHalo(player.getUUID());
 			float red = 0;
 			float green = 0;
 			float blue = 0;
@@ -64,19 +64,19 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 					break;
 			}
 
-			getEntityModel().halo.copyModelAngles(renderer.getEntityModel().bipedHead);
-			IVertexBuilder vertexBuilder = buffer.getBuffer(getRenderType(getEntityTexture(player)));
-			getEntityModel().render(matrix, vertexBuilder, 15728640, OverlayTexture.NO_OVERLAY, red, green, blue, 1f);
+			getParentModel().halo.copyFrom(renderer.getModel().head);
+			IVertexBuilder vertexBuilder = buffer.getBuffer(getRenderType(getTextureLocation(player)));
+			getParentModel().renderToBuffer(matrix, vertexBuilder, 15728640, OverlayTexture.NO_OVERLAY, red, green, blue, 1f);
 		}
 	}
 
 	@Override
-	public PlayerHaloModel getEntityModel() {
+	public PlayerHaloModel getParentModel() {
 		return MODEL;
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(AbstractClientPlayerEntity entityIn) {
+	protected ResourceLocation getTextureLocation(AbstractClientPlayerEntity entityIn) {
 		return TEXTURE;
 	}
 
@@ -93,10 +93,10 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 			RenderSystem.fog(2918, 0.0F, 0.0F, 0.0F, 1.0F);
 			RenderSystem.enableFog();
 		}, () -> {
-			FogRenderer.applyFog();
+			FogRenderer.levelFogColor();
 			RenderSystem.disableFog();
 		});
 
-		return RenderType.makeType("halo", DefaultVertexFormats.ENTITY, 7, 256, false, true, RenderType.State.getBuilder().texture(renderState).transparency(transparencyState).writeMask(new RenderState.WriteMaskState(true, false)).depthTest(new RenderState.DepthTestState(515)).diffuseLighting(new RenderState.DiffuseLightingState(true)).fog(fogState).build(false));
+		return RenderType.create("halo", DefaultVertexFormats.NEW_ENTITY, 7, 256, false, true, RenderType.State.builder().setTextureState(renderState).setTransparencyState(transparencyState).setWriteMaskState(new RenderState.WriteMaskState(true, false)).setDepthTestState(new RenderState.DepthTestState("==", 515)).setDiffuseLightingState(new RenderState.DiffuseLightingState(true)).setFogState(fogState).createCompositeState(false));
 	}
 }

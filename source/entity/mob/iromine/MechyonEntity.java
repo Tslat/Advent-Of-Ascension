@@ -24,26 +24,6 @@ public class MechyonEntity extends AoAMeleeMob {
 		return 1.45f;
 	}
 
-	@Override
-	protected double getBaseKnockbackResistance() {
-		return 0.15;
-	}
-
-	@Override
-	protected double getBaseMaxHealth() {
-		return 85;
-	}
-
-	@Override
-	protected double getBaseMeleeDamage() {
-		return 11;
-	}
-
-	@Override
-	protected double getBaseMovementSpeed() {
-		return 0.295;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
@@ -65,6 +45,6 @@ public class MechyonEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (RandomUtil.oneInNChance(5))
-			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.SLOWNESS, 40).level(50));
+			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 40).level(50));
 	}
 }

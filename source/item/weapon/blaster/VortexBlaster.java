@@ -27,18 +27,18 @@ public class VortexBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		float x = -MathHelper.sin(shooter.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.rotationPitch / 180.0F * (float)Math.PI);
-		float y = -MathHelper.sin(shooter.rotationPitch / 180.0F * (float)Math.PI);
-		float z = MathHelper.cos(shooter.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.rotationPitch / 180.0F * (float)Math.PI);
+		float x = -MathHelper.sin(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI);
+		float y = -MathHelper.sin(shooter.xRot / 180.0F * (float)Math.PI);
+		float z = MathHelper.cos(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI);
 
-		for (LivingEntity entity : shooter.world.getEntitiesWithinAABB(LivingEntity.class, shooter.getBoundingBox().grow(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
-			DamageUtil.doScaledKnockback(entity, shooter, 4f, shooter.getPosX() - entity.getPosX(), shooter.getPosZ() - entity.getPosZ());
+		for (LivingEntity entity : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
+			DamageUtil.doScaledKnockback(entity, shooter, 4f, shooter.getX() - entity.getX(), shooter.getZ() - entity.getZ());
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

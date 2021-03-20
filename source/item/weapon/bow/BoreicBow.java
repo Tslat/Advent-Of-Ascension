@@ -20,16 +20,16 @@ public class BoreicBow extends BaseBow {
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
 		if (arrow.isInWater()) {
-			if (!arrow.world.isRemote)
-				WorldUtil.createExplosion(shooter, arrow.world, arrow, arrow.getIsCritical() ? 2.0f : 1.0f);
+			if (!arrow.level.isClientSide)
+				WorldUtil.createExplosion(shooter, arrow.level, arrow, arrow.isCritArrow() ? 2.0f : 1.0f);
 
 			arrow.remove();
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

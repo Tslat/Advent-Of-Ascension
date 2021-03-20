@@ -37,7 +37,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 	private final PlayerEntity player;
 
 	public DivineStationContainer(int id, PlayerInventory inventory) {
-		this(id, inventory, IWorldPosCallable.DUMMY);
+		this(id, inventory, IWorldPosCallable.NULL);
 	}
 
 	public DivineStationContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
@@ -62,86 +62,86 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 	}
 
 	@Override
-	public void onCraftMatrixChanged(IInventory inventory) {
-		functionCaller.consume((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
+	public void slotsChanged(IInventory inventory) {
+		functionCaller.execute((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity player) {
-		return isWithinUsableDistance(functionCaller, player, AoABlocks.DIVINE_STATION.get());
+	public boolean stillValid(PlayerEntity player) {
+		return stillValid(functionCaller, player, AoABlocks.DIVINE_STATION.get());
 	}
 
 	@Override
-	public void onContainerClosed(PlayerEntity player) {
-		super.onContainerClosed(player);
+	public void removed(PlayerEntity player) {
+		super.removed(player);
 
-		functionCaller.consume((world, pos) -> clearContainer(player, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(player, world, inputs));
 	}
 
 	@Override
-	public boolean canMergeSlot(ItemStack stack, Slot slot) {
-		return slot.inventory != output && super.canMergeSlot(stack, slot);
+	public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
+		return slot.container != output && super.canTakeItemForPickAll(stack, slot);
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(PlayerEntity player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = inventorySlots.get(index);
+		Slot slot = slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			ItemStack slotStack = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			ItemStack slotStack = slot.getItem();
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				functionCaller.consume((world, pos) -> slotStack.getItem().onCreated(slotStack, player.world, player));
+				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level, player));
 
-				if (!mergeItemStack(slotStack, 3, 39, true))
+				if (!moveItemStackTo(slotStack, 3, 39, true))
 					return ItemStack.EMPTY;
 
-				slot.onSlotChange(slotStack, stack);
+				slot.onQuickCraft(slotStack, stack);
 			}
 			else if (index > 2) {
-				if (index < 39 && !mergeItemStack(slotStack, 1, 3, false))
+				if (index < 39 && !moveItemStackTo(slotStack, 1, 3, false))
 					return ItemStack.EMPTY;
 			}
-			else if (!mergeItemStack(slotStack, 3, 39, false)) {
+			else if (!moveItemStackTo(slotStack, 3, 39, false)) {
 				return ItemStack.EMPTY;
 			}
 
 			if (slotStack.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
 			if (index == 0)
-				player.dropItem(slot.onTake(player, slotStack), false);
+				player.drop(slot.onTake(player, slotStack), false);
 		}
 
 		return stack;
 	}
 
 	protected void slotChangedCraftingGrid(World world, PlayerEntity player, DivineStationInventory inv, CraftResultInventory craftResult) {
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
-			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipe(AoARecipes.UPGRADE_KIT.getA(), inv, world);
+			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.getA(), inv, world);
 
 			if (recipeMatch.isPresent()) {
 				UpgradeKitRecipe recipe = recipeMatch.get();
 
-				if (recipe.isDynamic() || !world.getGameRules().getBoolean(GameRules.DO_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().isUnlocked(recipe)) {
+				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(recipe)) {
 					craftResult.setRecipeUsed(recipe);
 
-					resultStack = recipe.getCraftingResult(inv);
+					resultStack = recipe.assemble(inv);
 				}
 			}
 
-			craftResult.setInventorySlotContents(0, resultStack);
-			((ServerPlayerEntity)player).connection.sendPacket(new SSetSlotPacket(this.windowId, 0, resultStack));
+			craftResult.setItem(0, resultStack);
+			((ServerPlayerEntity)player).connection.send(new SSetSlotPacket(this.containerId, 0, resultStack));
 		}
 	}
 
@@ -155,7 +155,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 			@Nullable
 			@Override
 			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new DivineStationContainer(windowId, inv, IWorldPosCallable.of(player.world, pos));
+				return new DivineStationContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
 			}
 		}, pos);
 	}
@@ -172,7 +172,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 		}
 
 		@Override
-		public int getSizeInventory() {
+		public int getContainerSize() {
 			return 2;
 		}
 
@@ -187,33 +187,33 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 		}
 
 		@Override
-		public ItemStack getStackInSlot(int index) {
-			return index >= getSizeInventory() || index < 0 ? ItemStack.EMPTY : stackList.get(index);
+		public ItemStack getItem(int index) {
+			return index >= getContainerSize() || index < 0 ? ItemStack.EMPTY : stackList.get(index);
 		}
 
 		@Override
-		public ItemStack removeStackFromSlot(int index) {
-			return ItemStackHelper.getAndRemove(stackList, index);
+		public ItemStack removeItemNoUpdate(int index) {
+			return ItemStackHelper.takeItem(stackList, index);
 		}
 
 		@Override
-		public ItemStack decrStackSize(int index, int count) {
-			ItemStack stack = ItemStackHelper.getAndSplit(stackList, index, count);
+		public ItemStack removeItem(int index, int count) {
+			ItemStack stack = ItemStackHelper.removeItem(stackList, index, count);
 
 			if (!stack.isEmpty())
-				eventListener.onCraftMatrixChanged(this);
+				eventListener.slotsChanged(this);
 
 			return stack;
 		}
 
 		@Override
-		public void setInventorySlotContents(int index, ItemStack stack) {
+		public void setItem(int index, ItemStack stack) {
 			stackList.set(index, stack);
-			eventListener.onCraftMatrixChanged(this);
+			eventListener.slotsChanged(this);
 		}
 
 		@Override
-		public void clear() {
+		public void clearContent() {
 			stackList.clear();
 		}
 

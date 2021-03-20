@@ -17,7 +17,7 @@ public final class MusicPlayer {
 
 	public static void playMusic(ResourceLocation id) {
 		if (playingSounds.containsKey(id)) {
-			if (!Minecraft.getInstance().getSoundHandler().isPlaying(playingSounds.get(id))) {
+			if (!Minecraft.getInstance().getSoundManager().isActive(playingSounds.get(id))) {
 				playingSounds.remove(id);
 			}
 			else {
@@ -33,8 +33,8 @@ public final class MusicPlayer {
 			return;
 		}
 
-		ISound sound = SimpleSound.music(soundEvent);
-		Minecraft.getInstance().getSoundHandler().play(sound);
+		ISound sound = SimpleSound.forMusic(soundEvent);
+		Minecraft.getInstance().getSoundManager().play(sound);
 		playingSounds.put(id, sound);
 	}
 
@@ -42,9 +42,9 @@ public final class MusicPlayer {
 		ISound sound = playingSounds.get(id);
 
 		if (sound != null) {
-			SoundHandler soundHandler = Minecraft.getInstance().getSoundHandler();
+			SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
 
-			if (soundHandler.isPlaying(sound))
+			if (soundHandler.isActive(sound))
 				soundHandler.stop(sound);
 
 			playingSounds.remove(id);

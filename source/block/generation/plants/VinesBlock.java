@@ -12,40 +12,40 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class VinesBlock extends VineBlock {
 	public VinesBlock(MaterialColor mapColour) {
-		super(BlockUtil.generateBlockProperties(Material.TALL_PLANTS, mapColour, 0.2f, 0, SoundType.PLANT).doesNotBlockMovement().tickRandomly());
+		super(BlockUtil.generateBlockProperties(Material.REPLACEABLE_PLANT, mapColour, 0.2f, 0, SoundType.GRASS).noCollission().randomTicks());
 	}
 
 	public BlockState getStateForPosition(IWorld world, BlockPos pos) {
-		BlockState state = getDefaultState();
+		BlockState state = defaultBlockState();
 		boolean attached = false;
 
-		 if (VineBlock.canAttachTo(world, pos.offset(Direction.UP), Direction.UP)) {
-			 state = state.with(UP, true);
+		 if (VineBlock.isAcceptableNeighbour(world, pos.relative(Direction.UP), Direction.UP)) {
+			 state = state.setValue(UP, true);
 			 attached = true;
 		 }
 
-		 if (VineBlock.canAttachTo(world, pos.offset(Direction.NORTH), Direction.NORTH)) {
-		 	state = state.with(NORTH, true);
+		 if (VineBlock.isAcceptableNeighbour(world, pos.relative(Direction.NORTH), Direction.NORTH)) {
+		 	state = state.setValue(NORTH, true);
 			 attached = true;
 		 }
 
-		 if (VineBlock.canAttachTo(world, pos.offset(Direction.SOUTH), Direction.SOUTH)) {
-		 	state = state.with(SOUTH, true);
+		 if (VineBlock.isAcceptableNeighbour(world, pos.relative(Direction.SOUTH), Direction.SOUTH)) {
+		 	state = state.setValue(SOUTH, true);
 			 attached = true;
 		 }
 
-		 if (VineBlock.canAttachTo(world, pos.offset(Direction.EAST), Direction.EAST)) {
-		 	state = state.with(EAST, true);
+		 if (VineBlock.isAcceptableNeighbour(world, pos.relative(Direction.EAST), Direction.EAST)) {
+		 	state = state.setValue(EAST, true);
 			 attached = true;
 		 }
 
-		 if (VineBlock.canAttachTo(world, pos.offset(Direction.WEST), Direction.WEST)) {
-		 	state = state.with(WEST, true);
+		 if (VineBlock.isAcceptableNeighbour(world, pos.relative(Direction.WEST), Direction.WEST)) {
+		 	state = state.setValue(WEST, true);
 			 attached = true;
 		 }
 
 		 if (!attached) {
-		 	BlockState upState = world.getBlockState(pos.up());
+		 	BlockState upState = world.getBlockState(pos.above());
 
 		 	if (upState.getBlock() == this)
 		 		return upState;

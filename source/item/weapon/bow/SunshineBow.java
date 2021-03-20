@@ -26,31 +26,31 @@ public class SunshineBow extends BaseBow {
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		if (arrow.getIsCritical()) {
-			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(target.world, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ());
+		if (arrow.isCritArrow()) {
+			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(target.level, arrow.getX(), arrow.getY(), arrow.getZ());
 
 			cloud.addEffect(new EffectInstance(Effects.GLOWING, 200, 0, true, false));
 			cloud.setRadius(0.5f);
 			cloud.setRadiusPerTick(30);
 			cloud.setDuration(2);
 			cloud.setWaitTime(0);
-			cloud.setColor(NumberUtil.RGB(255, 255, 255));
-			cloud.setParticleData(ParticleTypes.ENTITY_EFFECT);
+			cloud.setFixedColor(NumberUtil.RGB(255, 255, 255));
+			cloud.setParticle(ParticleTypes.ENTITY_EFFECT);
 
 			if (shooter instanceof LivingEntity)
 				cloud.setOwner((LivingEntity)shooter);
 
-			target.world.addEntity(cloud);
+			target.level.addFreshEntity(cloud);
 
-			for (LivingEntity entity : arrow.world.getEntitiesWithinAABB(LivingEntity.class, arrow.getBoundingBox().grow(30, 1, 30), EntityUtil.Predicates.HOSTILE_MOB)) {
+			for (LivingEntity entity : arrow.level.getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(30, 1, 30), EntityUtil.Predicates.HOSTILE_MOB)) {
 				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.GLOWING, 200));
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, world, tooltip, flag);
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

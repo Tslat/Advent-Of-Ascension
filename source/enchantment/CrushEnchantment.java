@@ -12,7 +12,7 @@ public class CrushEnchantment extends Enchantment {
 		super(Enchantment.Rarity.UNCOMMON, AoAEnchantments.MAUL, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
 	}
 
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseMaul;
@@ -23,12 +23,12 @@ public class CrushEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 10 + 10 * (enchantmentLevel - 1);
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return getMinEnchantability(enchantmentLevel) + 20;
+	public int getMaxCost(int enchantmentLevel) {
+		return getMinCost(enchantmentLevel) + 20;
 	}
 }

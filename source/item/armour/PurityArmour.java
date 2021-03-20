@@ -19,7 +19,7 @@ import java.util.List;
 
 public class PurityArmour extends AdventArmour {
 	public PurityArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:purity", 61, new int[] {5, 8, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:purity", 61, new int[] {5, 8, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
@@ -29,19 +29,19 @@ public class PurityArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		if (slots == null && !plData.player().getActivePotionMap().isEmpty())
-			checkAndRemoveEffects(plData.player(), Effects.WEAKNESS, Effects.SLOWNESS, Effects.MINING_FATIGUE, Effects.BLINDNESS, Effects.NAUSEA);
+		if (slots == null && !plData.player().getActiveEffectsMap().isEmpty())
+			checkAndRemoveEffects(plData.player(), Effects.WEAKNESS, Effects.MOVEMENT_SLOWDOWN, Effects.DIG_SLOWDOWN, Effects.BLINDNESS, Effects.CONFUSION);
 	}
 
 	private void checkAndRemoveEffects(PlayerEntity pl, Effect... effects) {
 		for (Effect effect : effects) {
-			if (pl.isPotionActive(effect))
-				pl.removePotionEffect(effect);
+			if (pl.hasEffect(effect))
+				pl.removeEffect(effect);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.purity_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}

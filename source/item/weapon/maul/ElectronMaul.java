@@ -30,22 +30,22 @@ public class ElectronMaul extends BaseMaul {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, PlayerEntity attacker, Entity target, float finalDmg, float attackCooldown) {
 		if (attacker instanceof ServerPlayerEntity) {
-			final float crushMod = 1 + 0.15f * EnchantmentHelper.getEnchantmentLevel(AoAEnchantments.CRUSH.get(), stack);
+			final float crushMod = 1 + 0.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CRUSH.get(), stack);
 			PlayerDataManager.PlayerStats plStats = PlayerUtil.getAdventPlayer((ServerPlayerEntity)attacker).stats();
 			final float energyMultiplier = 1 + (plStats.getResourceValue(Resources.ENERGY) / 100f);
 
 			if (plStats.consumeResource(Resources.ENERGY, plStats.getResourceValue(Resources.ENERGY), false)) {
-				DamageUtil.doScaledKnockback((LivingEntity)target, attacker, (float)knockback * crushMod * attackCooldown * energyMultiplier, attacker.getPosX() - target.getPosX(), attacker.getPosZ() - target.getPosZ());
+				DamageUtil.doScaledKnockback((LivingEntity)target, attacker, (float)knockback * crushMod * attackCooldown * energyMultiplier, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
 
 				if (energyMultiplier >= 2.33)
-					WorldUtil.spawnLightning((ServerWorld)attacker.world, (ServerPlayerEntity)attacker, target.getPosX(), target.getPosY(), target.getPosZ(), false);
+					WorldUtil.spawnLightning((ServerWorld)attacker.level, (ServerPlayerEntity)attacker, target.getX(), target.getY(), target.getZ(), false);
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }

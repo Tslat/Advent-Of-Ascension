@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -24,11 +25,11 @@ import java.util.List;
 
 public class ReturnCrystal extends Item {
 	public ReturnCrystal() {
-		super(new Item.Properties().group(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.EAT;
 	}
 
@@ -38,21 +39,21 @@ public class ReturnCrystal extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		if (world.getDimension().getType() == AoADimensions.IMMORTALLIS.type()) {
-			player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if (WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
+			player.startUsingItem(hand);
 
-			return ActionResult.resultConsume(player.getHeldItem(hand));
+			return ActionResult.consume(player.getItemInHand(hand));
 		}
 		else {
-			return ActionResult.resultPass(player.getHeldItem(hand));
+			return ActionResult.pass(player.getItemInHand(hand));
 		}
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity) {
-			if (world.getDimension().getType() != AoADimensions.IMMORTALLIS.type()) {
+			if (!WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
 				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.item.returnCrystal.wrongDim");
 
 				return stack;
@@ -65,14 +66,14 @@ public class ReturnCrystal extends Item {
 
 			plData.stats().resetAllTribute();
 			ItemUtil.clearInventoryOfItems((ServerPlayerEntity)entity, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-			entity.setPositionAndUpdate(-5, 20, 3);
+			entity.teleportTo(-5, 20, 3);
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

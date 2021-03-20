@@ -20,34 +20,34 @@ import java.util.List;
 
 public class Lunarade extends Item {
 	public Lunarade() {
-		super(new Item.Properties().group(AoAItemGroups.FOOD)
-				.containerItem(AoAItems.LUNARADE_MUG.get())
+		super(new Item.Properties().tab(AoAItemGroups.FOOD)
+				.craftRemainder(AoAItems.LUNARADE_MUG.get())
 				.food(new Food.Builder()
-						.hunger(0)
-						.saturation(0)
-						.setAlwaysEdible()
+						.nutrition(0)
+						.saturationMod(0)
+						.alwaysEat()
 						.effect(new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 40).level(2).build(), 1)
-						.effect(new PotionUtil.EffectBuilder(Effects.JUMP_BOOST, 40).build(), 1)
+						.effect(new PotionUtil.EffectBuilder(Effects.JUMP, 40).build(), 1)
 						.build()));
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity user) {
-		if (!world.isRemote)
-			user.removePotionEffect(Effects.BLINDNESS);
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity user) {
+		if (!world.isClientSide)
+			user.removeEffect(Effects.BLINDNESS);
 
-		ItemStack consumedStack = super.onItemUseFinish(stack, world, user);
+		ItemStack consumedStack = super.finishUsingItem(stack, world, user);
 
-		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.isCreativeMode ? consumedStack : getContainerItem(stack);
+		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.instabuild ? consumedStack : getContainerItem(stack);
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

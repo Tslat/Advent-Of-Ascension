@@ -23,26 +23,6 @@ public class CaveCreepEntity extends AoAMeleeMob {
         return sizeIn.height * 0.85f;
     }
 
-    @Override
-    protected double getBaseKnockbackResistance() {
-        return 0.6d;
-    }
-
-    @Override
-    protected double getBaseMaxHealth() {
-        return 65;
-    }
-
-    @Override
-    protected double getBaseMeleeDamage() {
-        return 7.5d;
-    }
-
-    @Override
-    protected double getBaseMovementSpeed() {
-        return 0.295d;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
@@ -62,12 +42,8 @@ public class CaveCreepEntity extends AoAMeleeMob {
     }
 
     @Override
-    public CreatureAttribute getCreatureAttribute() {
+    public CreatureAttribute getMobType() {
         return CreatureAttribute.ARTHROPOD;
     }
 
-    @Override
-    protected int getMaxSpawnHeight() {
-        return 120;
-    }
 }
