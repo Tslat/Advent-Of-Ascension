@@ -145,7 +145,7 @@ https://help.github.com/articles/editing-files-in-another-user-s-repository/
 # Advent of Ascension
 これはAdvent of Ascensionの公式Githubです。
 
-このブランチは最新の1.15.2向けのmodです。
+このブランチは最新の1.16.5向けのmodのものです。
 
 ## 免責事項
 このgithubで提供されているソースは閲覧のみを目的としています。ライセンスの元、「個人利用に限り」コードを変更することが許可されています。
