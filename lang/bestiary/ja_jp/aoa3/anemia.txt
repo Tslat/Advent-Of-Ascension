@@ -1,5 +1,5 @@
-Anemias are somewhat uncommonly-found creatures that roam the dark skies of the Abyss.
-They are enormous sky predators who use their large size and powerful energy blasts to overpower even the toughest creatures.
+アネミアは幾分か見つけづらい生き物で、アビスの暗黒の空を徘徊しています。
+彼らは巨大な空の捕食者であり、巨大で強力なエネルギー爆発を使って、最もタフな生き物さえも圧倒します。
 
 彼らのお気に入りの娯楽は、近くの土地を渡り、血が広がることを期待してランダムなターゲットの方向に爆発的なエネルギーのボールを発射することです。
-幸いにも、彼らの単一の目は、あまり良い知覚を与えていないので、通常は可能な限り少しだけ静止していることによって、彼らの爆発を避けることができます。
+幸いにも、彼らの単一の目はあまり良い知覚を与えていないので、通常は可能な限り少しだけ静止していることによって、彼らの爆発を避けることができます。
