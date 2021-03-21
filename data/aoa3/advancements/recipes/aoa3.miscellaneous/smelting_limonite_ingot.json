@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_limonite_ingot"
+    ]
+  },
+  "criteria": {
+    "has_limonite_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_limonite_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_limonite_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

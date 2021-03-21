@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_bayonette_rifle"
+    ]
+  },
+  "criteria": {
+    "has_gun_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gun_frame"
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_ingot"
+          }
+        ]
+      }
+    },
+    "has_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:gunpowder"
+          }
+        ]
+      }
+    },
+    "has_skeletal_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skeletal_ingot"
+          }
+        ]
+      }
+    },
+    "has_sharp_claw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:sharp_claw"
+          }
+        ]
+      }
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_bayonette_rifle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gun_frame",
+      "has_iron_ingot",
+      "has_gunpowder",
+      "has_skeletal_ingot",
+      "has_sharp_claw",
+      "has_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

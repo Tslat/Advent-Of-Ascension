@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_gilded_deep_banner"
+    ]
+  },
+  "criteria": {
+    "has_deep_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:deep_banner"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_gilded_deep_banner"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_deep_banner",
+      "has_the_recipe"
+    ]
+  ]
+}

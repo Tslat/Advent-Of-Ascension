@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:lyon_ingot"
+    }
+  },
+  "result": {
+    "item": "aoa3:lyon_block"
+  }
+}

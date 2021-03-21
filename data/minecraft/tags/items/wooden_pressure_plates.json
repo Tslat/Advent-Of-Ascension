@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:achony_pressure_plate",
+    "aoa3:bloodwood_pressure_plate",
+    "aoa3:churry_pressure_plate",
+    "aoa3:creep_pressure_plate",
+    "aoa3:dawnwood_pressure_plate",
+    "aoa3:hauntedwood_pressure_plate",
+    "aoa3:irowood_pressure_plate",
+    "aoa3:lucalus_pressure_plate",
+    "aoa3:lunide_pressure_plate",
+    "aoa3:runic_pressure_plate",
+    "aoa3:shadow_pressure_plate",
+    "aoa3:shyre_pressure_plate",
+    "aoa3:stranglewood_pressure_plate",
+    "aoa3:toxicwood_pressure_plate"
+  ]
+}

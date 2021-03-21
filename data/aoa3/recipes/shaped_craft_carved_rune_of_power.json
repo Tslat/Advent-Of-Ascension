@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BCB",
+    "BAB",
+    "BBB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:ancient_rock"
+    },
+    "B": {
+      "item": "aoa3:unpowered_rune"
+    },
+    "C": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "aoa3:carved_rune_of_power"
+  }
+}

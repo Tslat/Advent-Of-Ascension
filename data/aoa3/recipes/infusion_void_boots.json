@@ -1,0 +1,20 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:void_scales"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:void_boots"
+  }
+}

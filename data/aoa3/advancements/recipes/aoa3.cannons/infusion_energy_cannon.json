@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_energy_cannon"
+    ]
+  },
+  "criteria": {
+    "has_elecanium_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:elecanium_ingot"
+          }
+        ]
+      }
+    },
+    "has_cannon_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:cannon_frame"
+          }
+        ]
+      }
+    },
+    "has_power_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:power_core"
+          }
+        ]
+      }
+    },
+    "has_runic_energy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:runic_energy"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_energy_cannon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_elecanium_ingot",
+      "has_cannon_frame",
+      "has_power_core",
+      "has_runic_energy",
+      "has_the_recipe"
+    ]
+  ]
+}

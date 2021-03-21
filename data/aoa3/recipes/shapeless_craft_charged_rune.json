@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:charged_runium_chunk"
+    }
+  ],
+  "result": {
+    "item": "aoa3:charged_rune",
+    "count": 16
+  }
+}

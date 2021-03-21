@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_fungal_rock_stairs"
+    ]
+  },
+  "criteria": {
+    "has_fungal_rock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:fungal_rock"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_fungal_rock_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fungal_rock",
+      "has_the_recipe"
+    ]
+  ]
+}

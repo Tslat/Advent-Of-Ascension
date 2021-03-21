@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    " A ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:ghoulish_ingot"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:sapphire"
+    },
+    "D": {
+      "item": "aoa3:ghoulasm"
+    }
+  },
+  "result": {
+    "item": "aoa3:moonlight_staff"
+  }
+}

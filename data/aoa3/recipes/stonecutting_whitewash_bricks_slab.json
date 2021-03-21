@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:whitewash_bricks"
+  },
+  "result": "aoa3:whitewash_bricks_slab",
+  "count": 2
+}

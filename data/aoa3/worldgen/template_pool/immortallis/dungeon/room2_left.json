@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:immortallis/dungeon/room2_left",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:immortallis/dungeon/room2_left",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

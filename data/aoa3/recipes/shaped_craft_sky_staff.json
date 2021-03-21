@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "ACA",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:floating_stone"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:crystallite"
+    }
+  },
+  "result": {
+    "item": "aoa3:sky_staff"
+  }
+}

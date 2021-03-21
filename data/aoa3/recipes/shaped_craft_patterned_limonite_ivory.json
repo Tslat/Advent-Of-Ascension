@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X  ",
+    " X ",
+    "  X"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:natural_limonite_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:patterned_limonite_ivory",
+    "count": 3
+  }
+}

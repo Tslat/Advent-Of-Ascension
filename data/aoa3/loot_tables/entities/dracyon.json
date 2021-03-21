@@ -1,0 +1,216 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "name": "rares",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:hydroplate_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:hydroplate_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:hydroplate_legs"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:hydroplate_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 28,
+          "name": "aoa3:draco"
+        }
+      ]
+    },
+    {
+      "name": "supplies",
+      "rolls": {
+        "min": 1.0,
+        "max": 2.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:magic_repair_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 35,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:silver_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 2.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:gold_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 36,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 5.0,
+                "max": 32.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:borean_tokens"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6.0,
+                "max": 20.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:water_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 40,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6.0,
+                "max": 20.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:storm_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 8.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:ivory"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 23,
+          "name": "aoa3:sharp_claw"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 35,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 5.0,
+                "max": 12.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:lily_pad"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{CustomPotionEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:13000,Id:13b,Amplifier:0b}],display:{CustomPotionColor:\"7263218\",Name:'{\"translate\":\"item.aoa3.potion.gills\"}'}}"
+            }
+          ],
+          "name": "minecraft:potion"
+        }
+      ],
+      "bonus_rolls": 1.0
+    },
+    {
+      "name": "statue",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BlockEntityTag:{EntityID:\"aoa3:dracyon\",OriginalTrophy:1b},display:{Name:'{\"translate\":\"block.aoa3.trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.dracyon\"}]}'}}"
+            }
+          ],
+          "name": "aoa3:trophy"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/lborean"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "config": {
+    "min": 5,
+    "max": 20,
+    "ignore_obstructions": true
+  },
+  "type": "aoa3:iosaur_den"
+}

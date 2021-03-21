@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_iro_planks"
+    ]
+  },
+  "criteria": {
+    "has_irolog": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:irolog"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_iro_planks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_irolog",
+      "has_the_recipe"
+    ]
+  ]
+}

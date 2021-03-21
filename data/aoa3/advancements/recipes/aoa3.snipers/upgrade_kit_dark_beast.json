@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_dark_beast"
+    ]
+  },
+  "criteria": {
+    "has_darkly_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:darkly_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_monster": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:monster"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_dark_beast"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_darkly_upgrade_kit",
+      "has_monster",
+      "has_the_recipe"
+    ]
+  ]
+}

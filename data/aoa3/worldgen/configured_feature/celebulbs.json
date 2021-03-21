@@ -1,0 +1,60 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "max_stem_size": 5,
+                "stem_block": {
+                  "state": {
+                    "Name": "aoa3:celebulbs_stem"
+                  },
+                  "type": "minecraft:simple_state_provider"
+                },
+                "cap_block": {
+                  "entries": [
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:green_celebulbs"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:yellow_celebulbs"
+                      }
+                    }
+                  ],
+                  "type": "minecraft:weighted_state_provider"
+                },
+                "min_stem_size": 1
+              },
+              "type": "aoa3:capped_column"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_spread_double"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 300,
+        "max": 300
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_natural_sapphire_ivory"
+    ]
+  },
+  "criteria": {
+    "has_ivory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ivory"
+          }
+        ]
+      }
+    },
+    "has_sapphire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:sapphire"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_natural_sapphire_ivory"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ivory",
+      "has_sapphire",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "aoa3:raw_crimson_stripefish"
+  },
+  "result": "aoa3:cooked_crimson_stripefish",
+  "experience": 3.0,
+  "cookingtime": 100
+}

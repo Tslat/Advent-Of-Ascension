@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_surge_staff"
+    ]
+  },
+  "criteria": {
+    "has_power_rune": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:power_rune"
+          }
+        ]
+      }
+    },
+    "has_hardened_confetti_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:hardened_confetti_ball"
+          }
+        ]
+      }
+    },
+    "has_limonite_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_rod"
+          }
+        ]
+      }
+    },
+    "has_sapphire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:sapphire"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_surge_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_power_rune",
+      "has_hardened_confetti_ball",
+      "has_limonite_rod",
+      "has_sapphire",
+      "has_the_recipe"
+    ]
+  ]
+}

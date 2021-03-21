@@ -1,0 +1,94 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "can_replace": false,
+                "project": false,
+                "need_water": false,
+                "xspread": 8,
+                "yspread": 3,
+                "zspread": 8,
+                "whitelist": [],
+                "blacklist": [
+                  {
+                    "Name": "aoa3:dimensional_fabric"
+                  }
+                ],
+                "tries": 16,
+                "state_provider": {
+                  "entries": [
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:blue_crystal_plant"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:green_crystal_plant"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:red_crystal_plant"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:white_crystal_plant"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:yellow_crystal_plant"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Name": "aoa3:purple_crystal_plant"
+                      }
+                    }
+                  ],
+                  "type": "minecraft:weighted_state_provider"
+                },
+                "block_placer": {
+                  "type": "minecraft:simple_block_placer"
+                }
+              },
+              "type": "minecraft:random_patch"
+            },
+            "decorator": {
+              "config": {
+                "max": 128
+              },
+              "type": "aoa3:up_to_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 50,
+        "max": 50
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

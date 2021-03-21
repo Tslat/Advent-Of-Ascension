@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:crush"
+  },
+  "infusion_level": 24,
+  "ingredients": [
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

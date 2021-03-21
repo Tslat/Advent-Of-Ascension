@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:lelyetia/lelyetian_tower/top",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:lelyetia/lelyetian_tower/top",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

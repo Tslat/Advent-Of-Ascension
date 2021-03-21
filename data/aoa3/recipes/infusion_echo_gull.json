@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:baronyte_ingot"
+    },
+    {
+      "item": "aoa3:baronyte_ingot"
+    },
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:echo_gull"
+  }
+}

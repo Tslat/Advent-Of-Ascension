@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_spine_gun"
+    ]
+  },
+  "criteria": {
+    "has_squad_gun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:squad_gun"
+          }
+        ]
+      }
+    },
+    "has_precasian_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:precasian_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_spine_gun"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_squad_gun",
+      "has_precasian_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

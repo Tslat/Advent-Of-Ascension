@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:candyland/cotton_candy_tower/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:candyland/cotton_candy_tower/cotton_candy_tower",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

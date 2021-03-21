@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    "EAE",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:crystallite"
+    },
+    "D": {
+      "item": "aoa3:shyregem"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "aoa3:shyre_staff"
+  }
+}

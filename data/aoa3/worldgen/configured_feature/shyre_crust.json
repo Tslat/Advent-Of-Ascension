@@ -1,0 +1,39 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "state": {
+                  "Name": "aoa3:shyre_crust"
+                }
+              },
+              "type": "aoa3:no_context_block"
+            },
+            "decorator": {
+              "config": {
+                "maximum": 55,
+                "on_ceiling": true,
+                "bottom_offset": 45
+              },
+              "type": "aoa3:underground_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "aoa3:all_x"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {},
+      "type": "aoa3:all_z"
+    }
+  },
+  "type": "minecraft:decorated"
+}

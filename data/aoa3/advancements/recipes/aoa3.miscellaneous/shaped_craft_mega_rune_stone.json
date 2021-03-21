@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_mega_rune_stone"
+    ]
+  },
+  "criteria": {
+    "has_yellow_mega_rune_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_mega_rune_fragment"
+          }
+        ]
+      }
+    },
+    "has_blue_mega_rune_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blue_mega_rune_fragment"
+          }
+        ]
+      }
+    },
+    "has_green_mega_rune_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:green_mega_rune_fragment"
+          }
+        ]
+      }
+    },
+    "has_red_mega_rune_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:red_mega_rune_fragment"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_mega_rune_stone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_yellow_mega_rune_fragment",
+      "has_blue_mega_rune_fragment",
+      "has_green_mega_rune_fragment",
+      "has_red_mega_rune_fragment",
+      "has_the_recipe"
+    ]
+  ]
+}

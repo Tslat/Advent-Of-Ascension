@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:creeponia_bricks"
+    }
+  },
+  "result": {
+    "item": "aoa3:creeponia_bricks_slab",
+    "count": 6
+  }
+}

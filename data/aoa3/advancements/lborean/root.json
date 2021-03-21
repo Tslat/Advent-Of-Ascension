@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:coral_stone"
+    },
+    "title": {
+      "color": "dark_aqua",
+      "translate": "advancements.aoa3.lborean.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.lborean.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/coral_rock.png"
+  },
+  "criteria": {
+    "enter_block_borean_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:borean_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_borean_portal"
+    ]
+  ]
+}

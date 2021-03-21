@@ -1,0 +1,41 @@
+{
+  "parent": "aoa3:immortallis/klobbered",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.immortallis.shields_are_for_cowards.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.immortallis.shields_are_for_cowards.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_proshield": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:proshield"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_proshield"
+    ]
+  ]
+}

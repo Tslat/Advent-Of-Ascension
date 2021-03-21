@@ -1,0 +1,98 @@
+{
+  "type": "aoa3:runandor",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": -20,
+      "sea_level": 15,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "aoa3:runic_stone"
+      },
+      "default_fluid": {
+        "Name": "minecraft:water",
+        "Properties": {
+          "level": "0"
+        }
+      },
+      "structures": {
+        "structures": {
+          "aoa3:clunkhead_arena": {
+            "spacing": 36,
+            "separation": 10,
+            "salt": 34023133
+          },
+          "aoa3:yellow_rune_templar_bunker": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1522210389
+          },
+          "aoa3:green_rune_templar_bunker": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 333757444
+          },
+          "aoa3:blue_rune_templar_bunker": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 96435605
+          },
+          "aoa3:rune_randomisation_station": {
+            "spacing": 26,
+            "separation": 8,
+            "salt": 886260245
+          },
+          "aoa3:runic_tower": {
+            "spacing": 30,
+            "separation": 8,
+            "salt": 1506520994
+          },
+          "aoa3:spectral_cage": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 1856977535
+          },
+          "aoa3:red_rune_templar_bunker": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1104476880
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": -30,
+          "size": 0,
+          "offset": 0
+        },
+        "sampling": {
+          "xz_scale": 0.25,
+          "y_scale": 1.0,
+          "xz_factor": 40.0,
+          "y_factor": 160.0
+        },
+        "size_vertical": 4,
+        "size_horizontal": 1,
+        "height": 256,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "random_density_offset": true,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:runic_cliffs"
+    }
+  }
+}

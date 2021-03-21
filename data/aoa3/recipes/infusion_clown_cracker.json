@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:confetti_pile"
+    },
+    {
+      "item": "aoa3:confetti_pile"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:clown_cracker"
+  }
+}

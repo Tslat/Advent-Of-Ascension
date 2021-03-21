@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_lunar_crossbow"
+    ]
+  },
+  "criteria": {
+    "has_crossbow_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:crossbow_frame"
+          }
+        ]
+      }
+    },
+    "has_orbulon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:orbulon"
+          }
+        ]
+      }
+    },
+    "has_floating_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:floating_stone"
+          }
+        ]
+      }
+    },
+    "has_ghostly_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ghostly_powder"
+          }
+        ]
+      }
+    },
+    "has_lunar_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:lunar_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_lunar_crossbow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crossbow_frame",
+      "has_orbulon",
+      "has_floating_stone",
+      "has_ghostly_powder",
+      "has_lunar_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

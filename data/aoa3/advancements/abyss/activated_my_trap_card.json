@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:abyss/unwavering_eyes",
+  "display": {
+    "icon": {
+      "item": "minecraft:splash_potion"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.abyss.activated_my_trap_card.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.abyss.activated_my_trap_card.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "invisible_armourless_elusive_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "invisible_armourless_elusive_kill"
+    ]
+  ]
+}

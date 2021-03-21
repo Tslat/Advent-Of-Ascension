@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "condition": "aoa3:is_specific_table",
+      "table_ids": [
+        "minecraft:chests/jungle_temple_dispenser"
+      ]
+    }
+  ],
+  "tables": [
+    "aoa3:misc/dispenser_loot"
+  ],
+  "type": "aoa3:roll_extra_tables"
+}

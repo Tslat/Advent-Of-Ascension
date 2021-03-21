@@ -1,0 +1,34 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:recharge",
+    "level": 6
+  },
+  "infusion_level": 79,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    }
+  ]
+}

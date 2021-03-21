@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:precasia/kaiyu_temple/top",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:precasia/kaiyu_temple/top",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "spawn_entities": false,
+            "templates": [
+              "aoa3:candyland/decorations/swirl_pop",
+              "aoa3:candyland/decorations/giant_candy_cane",
+              "aoa3:candyland/decorations/lollypop1",
+              "aoa3:candyland/decorations/lollypop2"
+            ]
+          },
+          "type": "aoa3:structure_piece"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:heightmap_world_surface"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {},
+      "type": "minecraft:square"
+    }
+  },
+  "type": "minecraft:decorated"
+}

@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:mystite_ingot"
+    },
+    {
+      "item": "aoa3:mystite_ingot"
+    },
+    {
+      "item": "aoa3:mushroom_spores"
+    },
+    {
+      "item": "minecraft:iron_sword"
+    },
+    {
+      "item": "aoa3:amethyst"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:bayonette_sr"
+  }
+}

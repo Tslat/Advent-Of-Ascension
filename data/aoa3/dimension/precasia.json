@@ -1,0 +1,90 @@
+{
+  "type": "aoa3:precasia",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": -20,
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "aoa3:precasian_lower_rock"
+      },
+      "default_fluid": {
+        "Name": "minecraft:air"
+      },
+      "structures": {
+        "structures": {
+          "aoa3:skeletal_army_arena": {
+            "spacing": 36,
+            "separation": 10,
+            "salt": 648746229
+          },
+          "aoa3:diocus_den": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 178397498
+          },
+          "aoa3:kaiyu_temple": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1633316088
+          },
+          "aoa3:spinoledon_den": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 2016120471
+          },
+          "aoa3:opteryx_nest": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 1202932561
+          },
+          "aoa3:iosaur_den": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 1453574494
+          },
+          "aoa3:jungle_lotto_hut": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 490409238
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": -30,
+          "size": 0,
+          "offset": 0
+        },
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 1.0,
+          "xz_factor": 80.0,
+          "y_factor": 160.0
+        },
+        "size_vertical": 2,
+        "size_horizontal": 1,
+        "height": 256,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "random_density_offset": true,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:precasian_tall_forest"
+    }
+  }
+}

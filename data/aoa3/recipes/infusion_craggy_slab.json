@@ -1,0 +1,17 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:draggy_slab"
+    },
+    {
+      "item": "aoa3:fire_rune"
+    }
+  ],
+  "result": {
+    "item": "aoa3:craggy_slab"
+  }
+}

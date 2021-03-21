@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "aoa3:gemenyte_ore"
+  },
+  "result": "aoa3:gemenyte",
+  "experience": 2.0,
+  "cookingtime": 100
+}

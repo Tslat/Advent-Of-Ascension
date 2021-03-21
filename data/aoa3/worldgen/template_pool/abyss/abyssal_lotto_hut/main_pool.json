@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:abyss/abyssal_lotto_hut/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:abyss/abyssal_lotto_hut/abyssal_lotto_hut",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

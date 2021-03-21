@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BAB",
+    "DCD"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:dense_rock"
+    },
+    "B": {
+      "item": "aoa3:rosite_ingot"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    },
+    "D": {
+      "item": "minecraft:spider_eye"
+    }
+  },
+  "result": {
+    "item": "aoa3:underworld_greatblade"
+  }
+}

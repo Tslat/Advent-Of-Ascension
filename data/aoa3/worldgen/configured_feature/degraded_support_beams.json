@@ -1,0 +1,42 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "spawn_entities": false,
+                "templates": [
+                  "aoa3:vox_ponds/decorations/degraded_support_beam"
+                ]
+              },
+              "type": "aoa3:structure_piece"
+            },
+            "decorator": {
+              "config": {
+                "bottom_offset": 6,
+                "top_offset": 0,
+                "maximum": 1
+              },
+              "type": "minecraft:range"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 50
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

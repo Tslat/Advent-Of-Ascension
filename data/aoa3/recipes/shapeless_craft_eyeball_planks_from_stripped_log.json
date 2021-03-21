@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_eyeball_log"
+    }
+  ],
+  "result": {
+    "item": "aoa3:bloodwood_planks",
+    "count": 4
+  }
+}

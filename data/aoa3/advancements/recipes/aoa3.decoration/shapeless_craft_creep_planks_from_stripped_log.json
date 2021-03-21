@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_creep_planks_from_stripped_log"
+    ]
+  },
+  "criteria": {
+    "has_stripped_creep_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:stripped_creep_log"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_creep_planks_from_stripped_log"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stripped_creep_log",
+      "has_the_recipe"
+    ]
+  ]
+}

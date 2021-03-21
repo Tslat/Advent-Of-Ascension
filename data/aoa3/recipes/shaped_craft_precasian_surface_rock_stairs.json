@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:precasian_surface_rock"
+    }
+  },
+  "result": {
+    "item": "aoa3:precasian_surface_rock_stairs",
+    "count": 4
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:runandor/rune_templar_bunker/red",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:runandor/rune_templar_bunker/red",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

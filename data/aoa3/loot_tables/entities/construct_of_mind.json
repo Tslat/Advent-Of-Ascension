@@ -1,0 +1,54 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "name": "loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:blue_druse"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:green_druse"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:purple_druse"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:red_druse"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:white_druse"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:yellow_druse"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/crystevia"
+        }
+      ]
+    }
+  ]
+}

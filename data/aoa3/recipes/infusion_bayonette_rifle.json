@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:sharp_claw"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "result": {
+    "item": "aoa3:bayonette_rifle"
+  }
+}

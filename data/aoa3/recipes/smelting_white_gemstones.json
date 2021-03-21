@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:white_gemstone_ore"
+  },
+  "result": "aoa3:white_gemstones",
+  "experience": 3.0,
+  "cookingtime": 200
+}

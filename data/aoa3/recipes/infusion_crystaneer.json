@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:rainbow_druse"
+    },
+    {
+      "item": "aoa3:rainbow_druse"
+    },
+    {
+      "item": "aoa3:rainbow_druse"
+    },
+    {
+      "item": "aoa3:amethyst"
+    },
+    {
+      "item": "aoa3:amethyst"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:crystaneer"
+  }
+}

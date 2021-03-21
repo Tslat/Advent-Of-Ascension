@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:creeponia/explosives_tower/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:creeponia/explosives_tower/explosives_tower",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

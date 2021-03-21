@@ -1,0 +1,126 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.75,
+  "scale": 0.0,
+  "temperature": 0.4,
+  "temperature_modifier": "none",
+  "downfall": 0.3,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 3694080,
+    "water_color": 6787840,
+    "water_fog_color": 6787840,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:vox_ponds",
+  "carvers": {},
+  "features": [
+    [
+      "aoa3:dimensional_fabric_floor"
+    ],
+    [
+      "aoa3:toxic_lakes"
+    ],
+    [
+      "aoa3:green_vox_roots",
+      "aoa3:green_vox_tentacles",
+      "aoa3:fallen_vox_logs"
+    ],
+    [
+      "aoa3:degraded_support_beams",
+      "aoa3:degraded_signal_beacons"
+    ],
+    [
+      "aoa3:poison_rune_shrine"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:vox_ponds_plants",
+      "aoa3:vox_tentacles",
+      "aoa3:vox_shrooms"
+    ],
+    []
+  ],
+  "starts": [
+    "aoa3:cell_tower",
+    "aoa3:destroyed_store",
+    "aoa3:vox_lotto_outpost",
+    "aoa3:voxxulon_beacon",
+    "aoa3:control_tower",
+    "aoa3:nightwing_island",
+    "aoa3:observation_tower"
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aoa3:centinel",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:destructor",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:slimer",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:gadgetoid",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:alarmo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:toxxulous",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fischer",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "aoa3:night_watcher",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "ambient": [
+      {
+        "type": "aoa3:undead_herald",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      }
+    ],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

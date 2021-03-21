@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:nightmare_flakes"
+    },
+    {
+      "item": "aoa3:nightmare_flakes"
+    },
+    {
+      "item": "aoa3:bloodstone"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:shadow_blaster"
+  }
+}

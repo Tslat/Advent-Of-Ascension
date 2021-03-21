@@ -1,0 +1,117 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "name": "main_loot",
+      "rolls": {
+        "min": 1.0,
+        "max": 4.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:amethyst"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:jade"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:limonite_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:sapphire"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:rosite_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "name": "aoa3:rusted_iron_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:shyrestone_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:crystallite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:bloodstone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:ornamyte"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:gemenyte"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:jewelyte"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:shyregem"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:varsium_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:mystite_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:lyon_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:ghoulish_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:ghastly_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:emberstone_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:elecanium_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:blazium_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:baronyte_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:skeletal_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:lunar_ingot"
+        }
+      ]
+    }
+  ]
+}

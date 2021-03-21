@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:small_blue_petal"
+    },
+    {
+      "item": "aoa3:small_green_petal"
+    },
+    {
+      "item": "aoa3:small_orange_petal"
+    },
+    {
+      "item": "aoa3:small_purple_petal"
+    },
+    {
+      "item": "aoa3:small_red_petal"
+    }
+  ],
+  "result": {
+    "item": "aoa3:petals"
+  }
+}

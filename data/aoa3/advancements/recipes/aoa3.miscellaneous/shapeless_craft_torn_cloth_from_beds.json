@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_torn_cloth_from_beds"
+    ]
+  },
+  "criteria": {
+    "has_beds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:beds"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_torn_cloth_from_beds"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_beds",
+      "has_the_recipe"
+    ]
+  ]
+}

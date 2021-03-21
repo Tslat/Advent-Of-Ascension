@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    " C ",
+    "A A"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:runium_chunk"
+    },
+    "B": {
+      "item": "aoa3:baronyte_ingot"
+    },
+    "C": {
+      "item": "aoa3:sapphire"
+    }
+  },
+  "result": {
+    "item": "aoa3:warlock_gem"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:candy_corn"
+    },
+    {
+      "item": "aoa3:candy_corn"
+    },
+    {
+      "item": "aoa3:candy_cane"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:chocolate_block"
+    },
+    {
+      "item": "aoa3:gingerbread_cookie"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "aoa3:sweet_tooth"
+  }
+}

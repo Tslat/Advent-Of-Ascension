@@ -1,0 +1,98 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_core_rifle"
+    ]
+  },
+  "criteria": {
+    "has_gun_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gun_frame"
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_ingot"
+          }
+        ]
+      }
+    },
+    "has_lelyetian_leaves": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:lelyetian_leaves"
+          }
+        ]
+      }
+    },
+    "has_limonite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ingot"
+          }
+        ]
+      }
+    },
+    "has_yellow_spores": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_spores"
+          }
+        ]
+      }
+    },
+    "has_power_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:power_core"
+          }
+        ]
+      }
+    },
+    "has_scrap_metal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:scrap_metal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_core_rifle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gun_frame",
+      "has_iron_ingot",
+      "has_lelyetian_leaves",
+      "has_limonite_ingot",
+      "has_yellow_spores",
+      "has_power_core",
+      "has_scrap_metal",
+      "has_the_recipe"
+    ]
+  ]
+}

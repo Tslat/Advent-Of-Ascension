@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " A ",
+    "BCD"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:bloodstone"
+    },
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    },
+    "D": {
+      "item": "minecraft:spider_eye"
+    }
+  },
+  "result": {
+    "item": "aoa3:bloodlurker"
+  }
+}

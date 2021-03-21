@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:precasia/you_and_what_army",
+  "display": {
+    "icon": {
+      "item": "aoa3:skeletal_sword",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.precasia.spooky_scary_skeletons.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.precasia.spooky_scary_skeletons.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "full_skeletal_set_skeletron_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "full_skeletal_set_skeletron_kill"
+    ]
+  ]
+}

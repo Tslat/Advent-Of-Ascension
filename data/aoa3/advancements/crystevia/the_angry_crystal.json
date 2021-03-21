@@ -1,0 +1,41 @@
+{
+  "parent": "aoa3:crystevia/bigger_than_your_average_crystal",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.crystevia.the_angry_crystal.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.crystevia.the_angry_crystal.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_crystocore": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:crystocore"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_crystocore"
+    ]
+  ]
+}

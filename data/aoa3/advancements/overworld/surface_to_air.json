@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:rpg",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.surface_to_air.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.surface_to_air.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "rpg_air_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "rpg_air_kill"
+    ]
+  ]
+}

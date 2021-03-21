@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    " B ",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:crystallite"
+    },
+    "B": {
+      "item": "aoa3:sapphire"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "aoa3:gemcracker"
+  }
+}

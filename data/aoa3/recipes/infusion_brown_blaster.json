@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:leather"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:spreadshot"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:brown_blaster"
+  }
+}

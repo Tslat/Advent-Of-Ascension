@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:ghoulish_ingot"
+    },
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:primordial_skull"
+    },
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:sabbath"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "aoa3:crystevia/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:giant_crystal"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.crystevia.bigger_than_your_average_crystal.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.crystevia.bigger_than_your_average_crystal.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_giant_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:giant_crystal"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_giant_crystal"
+    ]
+  ]
+}

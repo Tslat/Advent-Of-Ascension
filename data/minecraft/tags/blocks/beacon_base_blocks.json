@@ -1,0 +1,27 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:amethyst_block",
+    "aoa3:baronyte_block",
+    "aoa3:blazium_block",
+    "aoa3:bloodstone_block",
+    "aoa3:crystallite_block",
+    "aoa3:elecanium_block",
+    "aoa3:emberstone_block",
+    "aoa3:gemenyte_block",
+    "aoa3:ghastly_block",
+    "aoa3:ghoulish_block",
+    "aoa3:jade_block",
+    "aoa3:jewelyte_block",
+    "aoa3:lunar_block",
+    "aoa3:lyon_block",
+    "aoa3:mystite_block",
+    "aoa3:ornamyte_block",
+    "aoa3:rosite_block",
+    "aoa3:sapphire_block",
+    "aoa3:shyregem_block",
+    "aoa3:shyrestone_block",
+    "aoa3:skeletal_ingot_block",
+    "aoa3:varsium_block"
+  ]
+}

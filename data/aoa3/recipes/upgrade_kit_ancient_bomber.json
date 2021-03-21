@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:boom_cannon"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:ancient_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:ancient_bomber"
+  }
+}

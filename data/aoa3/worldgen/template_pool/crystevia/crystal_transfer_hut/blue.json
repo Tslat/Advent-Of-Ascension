@@ -1,0 +1,24 @@
+{
+  "name": "aoa3:crystevia/crystal_transfer_hut/blue",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:crystevia/crystal_transfer_hut/blue",
+        "processors": {
+          "processors": [
+            {
+              "pillar_block": {
+                "Name": "aoa3:blue_crystal_block"
+              },
+              "processor_type": "aoa3:crystevia_pillar"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

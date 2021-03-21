@@ -1,0 +1,104 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.125,
+  "scale": 0.1,
+  "temperature": 0.4,
+  "temperature_modifier": "none",
+  "downfall": 0.85,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 9437439,
+    "water_color": 5780366,
+    "water_fog_color": 5780366,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:mysterium",
+  "carvers": {
+    "air": [
+      "aoa3:mysterium_caves"
+    ]
+  },
+  "features": [
+    [
+      "aoa3:dimensional_fabric_floor"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:distortion_rune_shrine"
+    ],
+    [],
+    [
+      "aoa3:ore_mystite"
+    ],
+    [],
+    [
+      "aoa3:mixed_mushroom_patches",
+      "aoa3:tiny_shrooms",
+      "aoa3:underground_big_mushrooms",
+      "aoa3:mini_cave_shrooms",
+      "aoa3:mysterium_plants"
+    ],
+    []
+  ],
+  "starts": [],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aoa3:fungat",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungung",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungik",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungback",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "aoa3:blooming_pixon",
+        "weight": 12,
+        "minCount": 1,
+        "maxCount": 4
+      },
+      {
+        "type": "aoa3:undead_herald",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:runation_master",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      }
+    ],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

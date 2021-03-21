@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:coral_stone"
+    },
+    {
+      "item": "aoa3:coral_stone"
+    },
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "aoa3:sticky_slime"
+    }
+  ],
+  "result": {
+    "item": "aoa3:bubble_horn"
+  }
+}

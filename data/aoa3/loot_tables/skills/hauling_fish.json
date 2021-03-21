@@ -1,0 +1,360 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "name": "main",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 15.0
+            }
+          ],
+          "name": "minecraft:cod"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 70.0
+            }
+          ],
+          "name": "minecraft:salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 75.0
+            }
+          ],
+          "name": "minecraft:tropical_fish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 26,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 75.0
+            }
+          ],
+          "name": "minecraft:pufferfish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 85.0
+            }
+          ],
+          "name": "aoa3:raw_fingerfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 3
+            }
+          ],
+          "weight": 19,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 100.0
+            }
+          ],
+          "name": "aoa3:raw_pearl_stripefish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 5
+            }
+          ],
+          "weight": 18,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 130.0
+            }
+          ],
+          "name": "aoa3:raw_limefish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 9
+            }
+          ],
+          "weight": 17,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 180.0
+            }
+          ],
+          "name": "aoa3:raw_sailback"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 14
+            }
+          ],
+          "weight": 16,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 250.0
+            }
+          ],
+          "name": "aoa3:raw_golden_gullfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 18
+            }
+          ],
+          "weight": 15,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 380.0
+            }
+          ],
+          "name": "aoa3:raw_turquoise_stripefish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 30
+            }
+          ],
+          "weight": 14,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 600.0
+            }
+          ],
+          "name": "aoa3:raw_violet_skipper"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 35
+            }
+          ],
+          "weight": 13,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 840.0
+            }
+          ],
+          "name": "aoa3:raw_rocketfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 42
+            }
+          ],
+          "weight": 12,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 1090.0
+            }
+          ],
+          "name": "aoa3:raw_crimson_stripefish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 56
+            }
+          ],
+          "weight": 11,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 1900.0
+            }
+          ],
+          "name": "aoa3:raw_crimson_skipper"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 61
+            }
+          ],
+          "weight": 10,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 2420.0
+            }
+          ],
+          "name": "aoa3:raw_sapphire_strider"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 65
+            }
+          ],
+          "weight": 9,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 3010.0
+            }
+          ],
+          "name": "aoa3:raw_candlefish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 74
+            }
+          ],
+          "weight": 8,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 5260.0
+            }
+          ],
+          "name": "aoa3:raw_dark_hatchetfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 79
+            }
+          ],
+          "weight": 7,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 7800.0
+            }
+          ],
+          "name": "aoa3:raw_ironback"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 90
+            }
+          ],
+          "weight": 6,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 11950.0
+            }
+          ],
+          "name": "aoa3:raw_rainbowfish"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 98
+            }
+          ],
+          "weight": 5,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 18030.0
+            }
+          ],
+          "name": "aoa3:raw_razorfish"
+        }
+      ]
+    }
+  ]
+}

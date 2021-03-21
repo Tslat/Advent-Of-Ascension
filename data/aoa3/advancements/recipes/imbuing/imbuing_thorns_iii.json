@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_thorns_iii"
+    ]
+  },
+  "criteria": {
+    "has_shining_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shining_power_stone"
+          }
+        ]
+      }
+    },
+    "has_damage_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:damage_enhancer"
+          }
+        ]
+      }
+    },
+    "has_resistance_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:resistance_enhancer"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_thorns_iii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shining_power_stone",
+      "has_damage_enhancer",
+      "has_resistance_enhancer",
+      "has_the_recipe"
+    ]
+  ]
+}

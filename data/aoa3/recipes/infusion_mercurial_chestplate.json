@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "aoa3:gemenyte"
+    },
+    {
+      "item": "aoa3:gemenyte"
+    },
+    {
+      "item": "aoa3:jewelyte"
+    },
+    {
+      "item": "aoa3:jewelyte"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mercurial_chestplate"
+  }
+}

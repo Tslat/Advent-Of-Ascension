@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:gardencia/weed_killing",
+  "display": {
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.gardencia.no_more_hayfever.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.gardencia.no_more_hayfever.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_ornate_vinocorne_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:vinocorne\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.vinocorne\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_vinocorne_trophy"
+    ]
+  ]
+}

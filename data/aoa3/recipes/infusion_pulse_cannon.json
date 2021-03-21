@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:purple_druse"
+    },
+    {
+      "item": "aoa3:red_druse"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:pulse_cannon"
+  }
+}

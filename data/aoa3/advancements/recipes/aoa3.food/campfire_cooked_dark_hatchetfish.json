@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:campfire_cooked_dark_hatchetfish"
+    ]
+  },
+  "criteria": {
+    "has_raw_dark_hatchetfish": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_dark_hatchetfish"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:campfire_cooked_dark_hatchetfish"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_dark_hatchetfish",
+      "has_the_recipe"
+    ]
+  ]
+}

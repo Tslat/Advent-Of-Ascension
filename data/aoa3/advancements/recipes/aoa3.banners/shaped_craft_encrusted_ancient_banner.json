@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_encrusted_ancient_banner"
+    ]
+  },
+  "criteria": {
+    "has_gilded_ancient_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gilded_ancient_banner"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_encrusted_ancient_banner"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gilded_ancient_banner",
+      "has_the_recipe"
+    ]
+  ]
+}

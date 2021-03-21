@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "DAD",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "minecraft:golden_apple"
+    },
+    "D": {
+      "item": "aoa3:rosid_root"
+    }
+  },
+  "result": {
+    "item": "aoa3:rejuvenation_staff"
+  }
+}

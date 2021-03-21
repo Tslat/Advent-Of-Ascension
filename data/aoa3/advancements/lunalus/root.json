@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:orbulon"
+    },
+    "title": {
+      "color": "dark_blue",
+      "translate": "advancements.aoa3.lunalus.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.lunalus.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/lunalyte_dirt.png"
+  },
+  "criteria": {
+    "enter_block_lunalus_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:lunalus_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_lunalus_portal"
+    ]
+  ]
+}

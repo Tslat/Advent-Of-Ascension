@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:crystevia/two_million_carat",
+  "display": {
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.crystevia.colour_clarity_cut_carat.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.crystevia.colour_clarity_cut_carat.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_ornate_crystocore_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:crystocore\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.crystocore\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_crystocore_trophy"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:trilliad_leaves"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.near_death_experience.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.near_death_experience.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "consume_trilliad_leaves": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:trilliad_leaves"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "consume_trilliad_leaves"
+    ]
+  ]
+}

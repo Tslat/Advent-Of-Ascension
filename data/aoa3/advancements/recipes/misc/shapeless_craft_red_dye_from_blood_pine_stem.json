@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_red_dye_from_blood_pine_stem"
+    ]
+  },
+  "criteria": {
+    "has_blood_pine_stem": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blood_pine_stem"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_red_dye_from_blood_pine_stem"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blood_pine_stem",
+      "has_the_recipe"
+    ]
+  ]
+}

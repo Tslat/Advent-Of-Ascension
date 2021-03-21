@@ -1,0 +1,47 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:confetti_cannon",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.party_time.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.party_time.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "use_confetti_cluster": {
+      "trigger": "minecraft:item_durability_changed",
+      "conditions": {
+        "item": {
+          "item": "aoa3:confetti_cluster"
+        }
+      }
+    },
+    "use_confetti_cannon": {
+      "trigger": "minecraft:item_durability_changed",
+      "conditions": {
+        "item": {
+          "item": "aoa3:confetti_cannon"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "use_confetti_cluster"
+    ],
+    [
+      "use_confetti_cannon"
+    ]
+  ]
+}

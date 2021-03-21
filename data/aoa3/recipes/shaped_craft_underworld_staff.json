@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:bloodstone"
+    },
+    "B": {
+      "item": "aoa3:nightmare_flakes"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:underworld_staff"
+  }
+}

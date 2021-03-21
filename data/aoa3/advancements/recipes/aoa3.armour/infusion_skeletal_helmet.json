@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_skeletal_helmet"
+    ]
+  },
+  "criteria": {
+    "has_skullbone_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skullbone_fragment"
+          }
+        ]
+      }
+    },
+    "has_helmet_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:helmet_frame"
+          }
+        ]
+      }
+    },
+    "has_padded_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:padded_cloth"
+          }
+        ]
+      }
+    },
+    "has_skeletal_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skeletal_ingot"
+          }
+        ]
+      }
+    },
+    "has_food": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:food"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_skeletal_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_skullbone_fragment",
+      "has_helmet_frame",
+      "has_padded_cloth",
+      "has_skeletal_ingot",
+      "has_food",
+      "has_the_recipe"
+    ]
+  ]
+}

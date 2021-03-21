@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:toxic_lump"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:jade"
+    }
+  },
+  "result": {
+    "item": "aoa3:toxin_bow"
+  }
+}

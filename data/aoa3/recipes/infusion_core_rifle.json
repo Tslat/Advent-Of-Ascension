@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:lelyetian_leaves"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:yellow_spores"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:scrap_metal"
+    }
+  ],
+  "result": {
+    "item": "aoa3:core_rifle"
+  }
+}

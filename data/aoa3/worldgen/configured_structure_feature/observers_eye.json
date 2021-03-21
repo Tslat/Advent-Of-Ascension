@@ -1,0 +1,7 @@
+{
+  "config": {
+    "min": 5,
+    "max": 220
+  },
+  "type": "aoa3:observers_eye"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:lunalus/lunar_herbal_house/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:lunalus/lunar_herbal_house/lunar_herbal_house",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

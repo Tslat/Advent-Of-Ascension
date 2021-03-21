@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_lyndamyte_boots"
+    ]
+  },
+  "criteria": {
+    "has_limonite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ingot"
+          }
+        ]
+      }
+    },
+    "has_boots_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:boots_frame"
+          }
+        ]
+      }
+    },
+    "has_emberstone_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:emberstone_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_lyndamyte_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_limonite_ingot",
+      "has_boots_frame",
+      "has_emberstone_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

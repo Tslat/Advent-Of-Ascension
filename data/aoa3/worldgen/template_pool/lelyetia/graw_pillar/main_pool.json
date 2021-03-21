@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:lelyetia/graw_pillar/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:lelyetia/graw_pillar/graw_pillar",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_carrot_cannon"
+    ]
+  },
+  "criteria": {
+    "has_small_orange_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_orange_petal"
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_ingot"
+          }
+        ]
+      }
+    },
+    "has_limonite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ingot"
+          }
+        ]
+      }
+    },
+    "has_cannon_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:cannon_frame"
+          }
+        ]
+      }
+    },
+    "has_rosid_root": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosid_root"
+          }
+        ]
+      }
+    },
+    "has_carrot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:carrot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_carrot_cannon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_small_orange_petal",
+      "has_iron_ingot",
+      "has_limonite_ingot",
+      "has_cannon_frame",
+      "has_rosid_root",
+      "has_carrot",
+      "has_the_recipe"
+    ]
+  ]
+}

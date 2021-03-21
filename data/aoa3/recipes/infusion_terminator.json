@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:bloodstone"
+    }
+  ],
+  "result": {
+    "item": "aoa3:terminator"
+  }
+}

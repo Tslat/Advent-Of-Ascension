@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_bone_blaster"
+    ]
+  },
+  "criteria": {
+    "has_jungle_thorns": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:jungle_thorns"
+          }
+        ]
+      }
+    },
+    "has_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:bone"
+          }
+        ]
+      }
+    },
+    "has_skeletal_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skeletal_ingot"
+          }
+        ]
+      }
+    },
+    "has_blaster_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blaster_frame"
+          }
+        ]
+      }
+    },
+    "has_precasian_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "aoa3:precasian_bone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_bone_blaster"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_jungle_thorns",
+      "has_bone",
+      "has_skeletal_ingot",
+      "has_blaster_frame",
+      "has_precasian_bone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "conditions": [
+    {
+      "condition": "aoa3:is_specific_table",
+      "table_ids": [
+        "minecraft:chests/abandoned_mineshaft",
+        "minecraft:chests/buried_treasure",
+        "minecraft:chests/desert_pyramid",
+        "minecraft:chests/desert_treasure",
+        "minecraft:chests/igloo_chest",
+        "minecraft:chests/jungle_temple",
+        "minecraft:chests/pillager_outpost",
+        "minecraft:chests/ruined_portal",
+        "minecraft:chests/shipwreck_treasure",
+        "minecraft:chests/simple_dungeon",
+        "minecraft:chests/spawn_bonus_chest",
+        "minecraft:chests/stronghold_corridor",
+        "minecraft:chests/stronghold_crossing",
+        "minecraft:chests/stronghold_library",
+        "minecraft:chests/underwater_ruin_big",
+        "minecraft:chests/stronghold_ruin_small",
+        "minecraft:chests/woodland_mansion",
+        "minecraft:chests/village/village_temple"
+      ]
+    }
+  ],
+  "tables": [
+    "aoa3:misc/carved_rune_blocks",
+    "aoa3:misc/generic_chest_loot"
+  ],
+  "type": "aoa3:roll_extra_tables"
+}

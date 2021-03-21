@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "aoa3:raw_charger_shank"
+  },
+  "result": "aoa3:cooked_charger_shank",
+  "experience": 3.0,
+  "cookingtime": 100
+}

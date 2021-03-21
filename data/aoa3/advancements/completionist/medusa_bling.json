@@ -1,0 +1,584 @@
+{
+  "parent": "aoa3:completionist/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.medusa_bling.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.medusa_bling.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_gold_king_shroomus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:king_shroomus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.king_shroomus\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_cotton_candor_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:cotton_candor\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.cotton_candor\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_red_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:red_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.red_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_flash_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:flash\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.flash\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_blue_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:blue_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.blue_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_shadowlord_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:shadowlord\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.shadowlord\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_raxxan_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:raxxan\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.raxxan\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_baroness_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:baroness\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.baroness\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_kajaros_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:kajaros\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.kajaros\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_kror_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:kror\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.kror\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_miskel_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:miskel\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.miskel\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_xxeus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:xxeus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.xxeus\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_voxxulon_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:voxxulon\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.voxxulon\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_proshield_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:proshield\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.proshield\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_king_bambambam_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:king_bambambam\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.king_bambambam\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_okazor_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:okazor\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.okazor\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_graw_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:graw\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.graw\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_green_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:green_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.green_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_crystocore_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:crystocore\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.crystocore\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_gyro_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:gyro\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.gyro\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_visualent_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:visualent\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.visualent\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_craexxeus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:craexxeus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.craexxeus\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_nethengeic_wither_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:nethengeic_wither\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.nethengeic_wither\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_clunkhead_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:clunkhead\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.clunkhead\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_mirage_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:mirage\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.mirage\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_corallus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:corallus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.corallus\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_mechbot_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:mechbot\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.mechbot\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_smash_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:smash\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.smash\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_elusive_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:elusive\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.elusive\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_skeletron_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:skeletron\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.skeletron\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_creep_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:creep\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.creep\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_vinocorne_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:vinocorne\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.vinocorne\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_harkos_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:harkos\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.harkos\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_rock_rider_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:rock_rider\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.rock_rider\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_yellow_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:yellow_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.yellow_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_dracyon_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:dracyon\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.dracyon\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_bane_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:bane\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.bane\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_hive_king_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:hive_king\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.hive_king\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_klobber_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:klobber\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.klobber\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_tyrosaur_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:tyrosaur\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.tyrosaur\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_king_shroomus_trophy"
+    ],
+    [
+      "obtain_gold_cotton_candor_trophy"
+    ],
+    [
+      "obtain_gold_red_guardian_trophy"
+    ],
+    [
+      "obtain_gold_flash_trophy"
+    ],
+    [
+      "obtain_gold_blue_guardian_trophy"
+    ],
+    [
+      "obtain_gold_shadowlord_trophy"
+    ],
+    [
+      "obtain_gold_raxxan_trophy"
+    ],
+    [
+      "obtain_gold_baroness_trophy"
+    ],
+    [
+      "obtain_gold_kajaros_trophy"
+    ],
+    [
+      "obtain_gold_kror_trophy"
+    ],
+    [
+      "obtain_gold_miskel_trophy"
+    ],
+    [
+      "obtain_gold_xxeus_trophy"
+    ],
+    [
+      "obtain_gold_voxxulon_trophy"
+    ],
+    [
+      "obtain_gold_proshield_trophy"
+    ],
+    [
+      "obtain_gold_king_bambambam_trophy"
+    ],
+    [
+      "obtain_gold_okazor_trophy"
+    ],
+    [
+      "obtain_gold_graw_trophy"
+    ],
+    [
+      "obtain_gold_green_guardian_trophy"
+    ],
+    [
+      "obtain_gold_crystocore_trophy"
+    ],
+    [
+      "obtain_gold_gyro_trophy"
+    ],
+    [
+      "obtain_gold_visualent_trophy"
+    ],
+    [
+      "obtain_gold_craexxeus_trophy"
+    ],
+    [
+      "obtain_gold_nethengeic_wither_trophy"
+    ],
+    [
+      "obtain_gold_clunkhead_trophy"
+    ],
+    [
+      "obtain_gold_mirage_trophy"
+    ],
+    [
+      "obtain_gold_corallus_trophy"
+    ],
+    [
+      "obtain_gold_mechbot_trophy"
+    ],
+    [
+      "obtain_gold_smash_trophy"
+    ],
+    [
+      "obtain_gold_elusive_trophy"
+    ],
+    [
+      "obtain_gold_skeletron_trophy"
+    ],
+    [
+      "obtain_gold_creep_trophy"
+    ],
+    [
+      "obtain_gold_vinocorne_trophy"
+    ],
+    [
+      "obtain_gold_harkos_trophy"
+    ],
+    [
+      "obtain_gold_rock_rider_trophy"
+    ],
+    [
+      "obtain_gold_yellow_guardian_trophy"
+    ],
+    [
+      "obtain_gold_dracyon_trophy"
+    ],
+    [
+      "obtain_gold_bane_trophy"
+    ],
+    [
+      "obtain_gold_hive_king_trophy"
+    ],
+    [
+      "obtain_gold_klobber_trophy"
+    ],
+    [
+      "obtain_gold_tyrosaur_trophy"
+    ]
+  ]
+}

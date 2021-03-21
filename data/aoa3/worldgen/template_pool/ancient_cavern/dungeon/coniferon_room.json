@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:ancient_cavern/dungeon/coniferon_room",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:ancient_cavern/dungeon/coniferon_room",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

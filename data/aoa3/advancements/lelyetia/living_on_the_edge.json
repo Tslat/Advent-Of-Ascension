@@ -1,0 +1,42 @@
+{
+  "parent": "aoa3:lelyetia/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:elytra",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.lelyetia.living_on_the_edge.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.lelyetia.living_on_the_edge.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bottom_of_lelyetia": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "position": {
+            "y": {
+              "min": 0.0,
+              "max": 2.0
+            }
+          },
+          "dimension": "aoa3:lelyetia"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bottom_of_lelyetia"
+    ]
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "fluid": {
+                  "Properties": {
+                    "falling": "true"
+                  },
+                  "Name": "minecraft:water"
+                }
+              },
+              "type": "aoa3:liquid_drain"
+            },
+            "decorator": {
+              "config": {
+                "max": 256
+              },
+              "type": "aoa3:up_to_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 10
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

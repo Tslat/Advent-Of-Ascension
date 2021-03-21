@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:fire_protection",
+    "level": 2
+  },
+  "infusion_level": 10,
+  "ingredients": [
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "minecraft:lava_bucket"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

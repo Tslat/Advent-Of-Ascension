@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:achony_planks"
+    }
+  },
+  "result": {
+    "item": "aoa3:achony_slab",
+    "count": 6
+  }
+}

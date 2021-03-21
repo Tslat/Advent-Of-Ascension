@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:dustopia/crusilisk_cage/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:dustopia/crusilisk_cage/crusilisk_cage",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

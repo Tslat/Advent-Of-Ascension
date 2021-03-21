@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "BDB",
+    "CBA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:diamond"
+    },
+    "B": {
+      "item": "minecraft:redstone"
+    },
+    "C": {
+      "item": "aoa3:runium_chunk"
+    },
+    "D": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "aoa3:damage_enhancer"
+  }
+}

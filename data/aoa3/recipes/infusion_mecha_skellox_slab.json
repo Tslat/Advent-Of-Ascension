@@ -1,0 +1,24 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "aoa3:mecha_gear"
+    },
+    {
+      "item": "minecraft:leather"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mecha_skellox_slab",
+    "count": 4
+  }
+}

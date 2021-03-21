@@ -1,0 +1,60 @@
+{
+  "type": "aoa3:structure",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": -20,
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "minecraft:air"
+      },
+      "default_fluid": {
+        "Name": "minecraft:air"
+      },
+      "structures": {
+        "structures": {
+          "aoa3:immortallis": {
+            "spacing": 1,
+            "separation": 0,
+            "salt": 1
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": -30,
+          "size": 0,
+          "offset": 0
+        },
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 1.0,
+          "xz_factor": 80.0,
+          "y_factor": 160.0
+        },
+        "size_vertical": 2,
+        "size_horizontal": 1,
+        "height": 256,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "random_density_offset": true,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:immortallis"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:dense_stone"
+    }
+  },
+  "result": {
+    "item": "aoa3:dense_stone_stairs",
+    "count": 4
+  }
+}

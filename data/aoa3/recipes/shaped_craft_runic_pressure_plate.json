@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:runic_planks"
+    }
+  },
+  "result": {
+    "item": "aoa3:runic_pressure_plate"
+  }
+}

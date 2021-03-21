@@ -1,0 +1,15 @@
+{
+  "type": "aoa3:oceanless",
+  "config": {
+    "surface_block": {
+      "Name": "minecraft:stone_slab",
+      "Properties": {
+        "type": "bottom",
+        "waterlogged": "false"
+      }
+    },
+    "subsurface_block": {
+      "Name": "minecraft:stone"
+    }
+  }
+}

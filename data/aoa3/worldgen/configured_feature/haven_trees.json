@@ -1,0 +1,103 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "features": [
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:blue_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:blue_haven_tree"
+                  },
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:pink_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:pink_haven_tree"
+                  },
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:purple_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:purple_haven_tree"
+                  },
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:red_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:red_haven_tree"
+                  },
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:turquoise_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:turquoise_haven_tree"
+                  },
+                  {
+                    "config": {
+                      "state": {
+                        "Properties": {
+                          "stage": "0"
+                        },
+                        "Name": "aoa3:yellow_haven_sapling"
+                      }
+                    },
+                    "type": "aoa3:yellow_haven_tree"
+                  }
+                ]
+              },
+              "type": "minecraft:simple_random_selector"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 3,
+        "max": 3
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

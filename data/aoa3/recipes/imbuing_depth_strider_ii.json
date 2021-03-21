@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:depth_strider",
+    "level": 2
+  },
+  "infusion_level": 27,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:ambient_power_stone"
+    }
+  ]
+}

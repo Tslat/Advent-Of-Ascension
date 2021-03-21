@@ -1,0 +1,28 @@
+{
+  "config": {
+    "deep_filler_block": {
+      "Properties": {
+        "level": "0"
+      },
+      "Name": "minecraft:water"
+    },
+    "carved_floor_block": {
+      "Properties": {
+        "snowy": "false"
+      },
+      "Name": "aoa3:fungal_grass"
+    },
+    "max_height": 120,
+    "radius_modifier": 4.0,
+    "carvable_fluids": [],
+    "deep_floor_height": 10,
+    "min_height": 5,
+    "carve_chance": 0.7,
+    "carvable_blocks": [
+      "aoa3:fungal_grass",
+      "aoa3:fungal_dirt",
+      "aoa3:fungal_rock"
+    ]
+  },
+  "type": "aoa3:configurable_carver"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:ancient_cavern/dungeon/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:ancient_cavern/dungeon/north_east_corner",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

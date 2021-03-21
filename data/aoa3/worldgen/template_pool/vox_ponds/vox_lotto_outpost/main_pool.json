@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:vox_ponds/vox_lotto_outpost/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:vox_ponds/vox_lotto_outpost/vox_lotto_outpost",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

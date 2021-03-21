@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_hauntedwood_slab"
+    ]
+  },
+  "criteria": {
+    "has_hauntedwood_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:hauntedwood_planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_hauntedwood_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hauntedwood_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

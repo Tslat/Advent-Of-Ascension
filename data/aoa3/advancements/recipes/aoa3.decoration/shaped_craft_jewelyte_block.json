@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_jewelyte_block"
+    ]
+  },
+  "criteria": {
+    "has_jewelyte": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:jewelyte"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_jewelyte_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_jewelyte",
+      "has_the_recipe"
+    ]
+  ]
+}

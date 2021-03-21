@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ACA",
+    "BDB",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:gemenyte"
+    },
+    "B": {
+      "item": "aoa3:ornamyte"
+    },
+    "C": {
+      "item": "aoa3:jewelyte"
+    },
+    "D": {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  },
+  "result": {
+    "item": "aoa3:explosive_gems"
+  }
+}

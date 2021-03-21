@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:respiration",
+    "level": 2
+  },
+  "infusion_level": 23,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:bubble_berries"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

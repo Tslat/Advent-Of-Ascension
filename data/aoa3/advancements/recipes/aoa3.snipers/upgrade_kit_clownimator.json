@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_clownimator"
+    ]
+  },
+  "criteria": {
+    "has_clown_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:clown_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_decimator": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:decimator"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_clownimator"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_clown_upgrade_kit",
+      "has_decimator",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:magnet_shard"
+    },
+    {
+      "item": "aoa3:magnet_shard"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:lyonic_chestplate"
+  }
+}

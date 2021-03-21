@@ -1,0 +1,17 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:limonite_rod"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:divine_enhancer"
+    }
+  ],
+  "result": {
+    "item": "aoa3:vulcane"
+  }
+}

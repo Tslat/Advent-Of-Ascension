@@ -1,0 +1,18 @@
+{
+  "config": {
+    "deep_filler_block": {
+      "Properties": {
+        "level": "0"
+      },
+      "Name": "minecraft:water"
+    },
+    "carvable_fluids": [],
+    "min_height": 5,
+    "carvable_blocks": [
+      "aoa3:precasian_grass",
+      "aoa3:precasian_surface_rock",
+      "aoa3:precasian_lower_rock"
+    ]
+  },
+  "type": "aoa3:configurable_carver"
+}

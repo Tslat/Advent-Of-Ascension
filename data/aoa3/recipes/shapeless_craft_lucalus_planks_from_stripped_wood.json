@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_lucalus_wood"
+    }
+  ],
+  "result": {
+    "item": "aoa3:lucalus_planks",
+    "count": 4
+  }
+}

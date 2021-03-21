@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:gemenyte"
+    }
+  },
+  "result": {
+    "item": "aoa3:gemenyte_block"
+  }
+}

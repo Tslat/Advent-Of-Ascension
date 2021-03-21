@@ -1,0 +1,8 @@
+{
+  "config": {
+    "min": 30,
+    "max": 40,
+    "ignore_obstructions": true
+  },
+  "type": "aoa3:kaiyu_temple"
+}

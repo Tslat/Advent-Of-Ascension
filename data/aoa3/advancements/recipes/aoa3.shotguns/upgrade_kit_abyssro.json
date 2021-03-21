@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_abyssro"
+    ]
+  },
+  "criteria": {
+    "has_mechyro": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mechyro"
+          }
+        ]
+      }
+    },
+    "has_abyssal_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:abyssal_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_abyssro"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mechyro",
+      "has_abyssal_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:hellstone"
+  },
+  "result": "aoa3:hellstone_wall",
+  "count": 1
+}

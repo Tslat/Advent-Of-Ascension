@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:footbone_fragment"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:food"
+    }
+  ],
+  "result": {
+    "item": "aoa3:skeletal_boots"
+  }
+}

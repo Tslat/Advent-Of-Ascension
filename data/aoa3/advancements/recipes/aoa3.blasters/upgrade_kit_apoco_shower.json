@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_apoco_shower"
+    ]
+  },
+  "criteria": {
+    "has_spirit_shower": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:spirit_shower"
+          }
+        ]
+      }
+    },
+    "has_apoco_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:apoco_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_apoco_shower"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_spirit_shower",
+      "has_apoco_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

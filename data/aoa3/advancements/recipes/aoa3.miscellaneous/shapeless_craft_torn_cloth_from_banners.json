@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_torn_cloth_from_banners"
+    ]
+  },
+  "criteria": {
+    "has_banners": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:banners"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_torn_cloth_from_banners"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_banners",
+      "has_the_recipe"
+    ]
+  ]
+}

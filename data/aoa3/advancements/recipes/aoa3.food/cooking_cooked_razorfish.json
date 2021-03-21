@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:cooking_cooked_razorfish"
+    ]
+  },
+  "criteria": {
+    "has_raw_razorfish": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_razorfish"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:cooking_cooked_razorfish"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_razorfish",
+      "has_the_recipe"
+    ]
+  ]
+}

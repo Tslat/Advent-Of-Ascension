@@ -1,0 +1,17 @@
+{
+  "config": {
+    "deep_filler_block": {
+      "Properties": {
+        "level": "0"
+      },
+      "Name": "minecraft:water"
+    },
+    "carvable_fluids": [],
+    "min_height": 5,
+    "carvable_blocks": [
+      "aoa3:greckon_grass",
+      "aoa3:greckon_stone"
+    ]
+  },
+  "type": "aoa3:configurable_carver"
+}

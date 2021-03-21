@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_abyssal_stone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_abyssal_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:abyssal_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_abyssal_stone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_abyssal_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

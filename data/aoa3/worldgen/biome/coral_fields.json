@@ -1,0 +1,121 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.01,
+  "scale": 0.1,
+  "temperature": 0.2,
+  "temperature_modifier": "none",
+  "downfall": 0.9,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 255,
+    "water_color": 255,
+    "water_fog_color": 255,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:lborean",
+  "carvers": {},
+  "features": [
+    [
+      "aoa3:dimensional_fabric_floor"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:water_rune_shrine"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:lborean_plants",
+      "aoa3:giant_coral_trees"
+    ],
+    [
+      "aoa3:lborean_barrier_roof"
+    ]
+  ],
+  "starts": [
+    "aoa3:dracyon_fountain",
+    "aoa3:amphibiyte_cove",
+    "aoa3:aquatic_castle",
+    "aoa3:drowned_lotto_stand"
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aoa3:neptuno",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:angler",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:muncher",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sea_viper",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:coralon",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "aoa3:glowing_pixon",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 4
+      }
+    ],
+    "water_creature": [],
+    "water_ambient": [
+      {
+        "type": "aoa3:coratee",
+        "weight": 7,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:tropical_fish",
+        "weight": 10,
+        "minCount": 3,
+        "maxCount": 7
+      },
+      {
+        "type": "minecraft:cod",
+        "weight": 13,
+        "minCount": 1,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:salmon",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 5
+      }
+    ],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

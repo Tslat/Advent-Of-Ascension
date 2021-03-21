@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:protection",
+    "level": 3
+  },
+  "infusion_level": 33,
+  "ingredients": [
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:ambient_power_stone"
+    }
+  ]
+}

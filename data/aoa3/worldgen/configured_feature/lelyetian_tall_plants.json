@@ -1,0 +1,95 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "features": [
+          {
+            "config": {
+              "feature": {
+                "config": {
+                  "feature": {
+                    "config": {
+                      "max_stem_size": 14,
+                      "uniform_height_distribution": false,
+                      "stem_block": {
+                        "state": {
+                          "Name": "aoa3:lelyetian_wiggler"
+                        },
+                        "type": "minecraft:simple_state_provider"
+                      },
+                      "cap_block": {
+                        "state": {
+                          "Name": "aoa3:lelyetian_wiggler_top"
+                        },
+                        "type": "minecraft:simple_state_provider"
+                      },
+                      "min_stem_size": 2
+                    },
+                    "type": "aoa3:capped_column"
+                  },
+                  "decorator": {
+                    "config": {},
+                    "type": "minecraft:heightmap_world_surface"
+                  }
+                },
+                "type": "minecraft:decorated"
+              },
+              "decorator": {
+                "config": {},
+                "type": "minecraft:square"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          {
+            "config": {
+              "feature": {
+                "config": {
+                  "feature": {
+                    "config": {
+                      "max_stem_size": 14,
+                      "uniform_height_distribution": false,
+                      "stem_block": {
+                        "state": {
+                          "Name": "aoa3:lelyetian_stem"
+                        },
+                        "type": "minecraft:simple_state_provider"
+                      },
+                      "cap_block": {
+                        "state": {
+                          "Name": "aoa3:lelyetian_stem_cap"
+                        },
+                        "type": "minecraft:simple_state_provider"
+                      },
+                      "min_stem_size": 2
+                    },
+                    "type": "aoa3:capped_column"
+                  },
+                  "decorator": {
+                    "config": {},
+                    "type": "minecraft:heightmap_world_surface"
+                  }
+                },
+                "type": "minecraft:decorated"
+              },
+              "decorator": {
+                "config": {},
+                "type": "minecraft:square"
+              }
+            },
+            "type": "minecraft:decorated"
+          }
+        ]
+      },
+      "type": "minecraft:simple_random_selector"
+    },
+    "decorator": {
+      "config": {
+        "min": 6,
+        "max": 6
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

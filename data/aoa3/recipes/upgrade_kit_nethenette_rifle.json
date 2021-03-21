@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:bayonette_rifle"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:nether_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:nethenette_rifle"
+  }
+}

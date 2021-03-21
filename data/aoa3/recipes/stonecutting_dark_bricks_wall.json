@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:dark_bricks"
+  },
+  "result": "aoa3:dark_bricks_wall",
+  "count": 1
+}

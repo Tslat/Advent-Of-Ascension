@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:sapphire"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:floating_stone"
+    }
+  },
+  "result": {
+    "item": "aoa3:speed_bow"
+  }
+}

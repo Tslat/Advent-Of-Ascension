@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:minigun"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:predator_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:predigun"
+  }
+}

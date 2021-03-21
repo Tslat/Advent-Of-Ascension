@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:rosidian_banner"
+    }
+  },
+  "result": {
+    "item": "aoa3:gilded_rosidian_banner"
+  }
+}

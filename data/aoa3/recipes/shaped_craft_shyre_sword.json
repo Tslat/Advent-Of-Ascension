@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BDB",
+    "ACA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    "B": {
+      "item": "aoa3:shyregem"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    },
+    "D": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "aoa3:shyre_sword"
+  }
+}

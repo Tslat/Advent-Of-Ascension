@@ -1,0 +1,31 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "state": {
+              "Name": "aoa3:toxic_waste"
+            }
+          },
+          "type": "aoa3:biome_friendly_lake"
+        },
+        "decorator": {
+          "config": {
+            "chance": 2
+          },
+          "type": "minecraft:water_lake"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 4,
+        "max": 4
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

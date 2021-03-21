@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_varsium_ingot"
+    ]
+  },
+  "criteria": {
+    "has_varsium_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:varsium_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_varsium_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_varsium_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:recharge",
+    "level": 5
+  },
+  "infusion_level": 63,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:radiant_power_stone"
+    }
+  ]
+}

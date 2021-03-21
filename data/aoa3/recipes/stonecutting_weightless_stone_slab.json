@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:weightless_stone"
+  },
+  "result": "aoa3:weightless_stone_slab",
+  "count": 2
+}

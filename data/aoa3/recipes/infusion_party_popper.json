@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:confetti_pile"
+    },
+    {
+      "item": "aoa3:confetti_pile"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:sapphire"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "result": {
+    "item": "aoa3:party_popper"
+  }
+}

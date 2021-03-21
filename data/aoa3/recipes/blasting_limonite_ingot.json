@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "aoa3:limonite_ore"
+  },
+  "result": "aoa3:limonite_ingot",
+  "experience": 3.0,
+  "cookingtime": 100
+}

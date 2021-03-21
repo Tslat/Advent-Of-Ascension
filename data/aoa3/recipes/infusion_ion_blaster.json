@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:white_druse"
+    },
+    {
+      "item": "aoa3:white_druse"
+    },
+    {
+      "item": "aoa3:blue_druse"
+    },
+    {
+      "item": "aoa3:sapphire"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ion_blaster"
+  }
+}

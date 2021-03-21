@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_runic_construct_bricks_wall"
+    ]
+  },
+  "criteria": {
+    "has_runic_construct_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:runic_construct_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_runic_construct_bricks_wall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_runic_construct_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

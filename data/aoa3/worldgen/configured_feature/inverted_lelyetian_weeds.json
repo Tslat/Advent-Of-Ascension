@@ -1,0 +1,58 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "can_replace": false,
+                "project": true,
+                "need_water": false,
+                "xspread": 5,
+                "yspread": 3,
+                "zspread": 5,
+                "whitelist": [],
+                "blacklist": [],
+                "tries": 16,
+                "state_provider": {
+                  "state": {
+                    "Name": "aoa3:lelyetian_weeds_down"
+                  },
+                  "type": "minecraft:simple_state_provider"
+                },
+                "block_placer": {
+                  "type": "minecraft:simple_block_placer"
+                }
+              },
+              "type": "minecraft:random_patch"
+            },
+            "decorator": {
+              "config": {
+                "maximum": 45,
+                "on_surface": true,
+                "on_ceiling": true,
+                "bottom_offset": 45
+              },
+              "type": "aoa3:underground_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 5,
+        "max": 5
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DAB",
+    "C B",
+    "DAB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:elecanium_ingot"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:runic_energy"
+    },
+    "D": {
+      "item": "aoa3:ghostly_powder"
+    }
+  },
+  "result": {
+    "item": "aoa3:soulfire_bow"
+  }
+}

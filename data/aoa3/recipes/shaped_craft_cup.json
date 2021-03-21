@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A A",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:cup",
+    "count": 3
+  }
+}

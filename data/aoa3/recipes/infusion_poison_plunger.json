@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:mushroom_spores"
+    },
+    {
+      "item": "aoa3:mushroom_spores"
+    },
+    {
+      "item": "aoa3:mystite_ingot"
+    },
+    {
+      "item": "aoa3:jade"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    }
+  ],
+  "result": {
+    "item": "aoa3:poison_plunger"
+  }
+}

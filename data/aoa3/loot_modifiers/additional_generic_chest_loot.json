@@ -1,0 +1,18 @@
+{
+  "conditions": [
+    {
+      "condition": "aoa3:is_specific_table",
+      "table_ids": [
+        "minecraft:chests/bastion_bridge",
+        "minecraft:chests/bastion_hoglin_stable",
+        "minecraft:chests/bastion_other",
+        "minecraft:chests/end_city_treasure",
+        "minecraft:chests/nether_bridge"
+      ]
+    }
+  ],
+  "tables": [
+    "aoa3:misc/generic_chest_loot"
+  ],
+  "type": "aoa3:roll_extra_tables"
+}

@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_lyonic_helmet"
+    ]
+  },
+  "criteria": {
+    "has_magnet_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:magnet_shard"
+          }
+        ]
+      }
+    },
+    "has_helmet_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:helmet_frame"
+          }
+        ]
+      }
+    },
+    "has_padded_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:padded_cloth"
+          }
+        ]
+      }
+    },
+    "has_lyon_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:lyon_ingot"
+          }
+        ]
+      }
+    },
+    "has_armour_plating": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:armour_plating"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_lyonic_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magnet_shard",
+      "has_helmet_frame",
+      "has_padded_cloth",
+      "has_lyon_ingot",
+      "has_armour_plating",
+      "has_the_recipe"
+    ]
+  ]
+}

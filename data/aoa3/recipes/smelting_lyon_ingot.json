@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:lyon_ore"
+  },
+  "result": "aoa3:lyon_ingot",
+  "experience": 3.0,
+  "cookingtime": 200
+}

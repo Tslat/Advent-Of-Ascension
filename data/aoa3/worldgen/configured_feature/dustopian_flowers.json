@@ -1,0 +1,107 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "features": [
+          {
+            "config": {
+              "feature": {
+                "config": {
+                  "feature": {
+                    "config": {
+                      "to_place": {
+                        "Name": "aoa3:dawn_flower"
+                      },
+                      "place_on": [
+                        {
+                          "Properties": {
+                            "snowy": "false"
+                          },
+                          "Name": "aoa3:faded_grass"
+                        }
+                      ],
+                      "place_in": [
+                        {
+                          "Name": "minecraft:air"
+                        }
+                      ],
+                      "place_under": [
+                        {
+                          "Name": "minecraft:air"
+                        }
+                      ]
+                    },
+                    "type": "minecraft:simple_block"
+                  },
+                  "decorator": {
+                    "config": {},
+                    "type": "minecraft:heightmap_world_surface"
+                  }
+                },
+                "type": "minecraft:decorated"
+              },
+              "decorator": {
+                "config": {},
+                "type": "minecraft:square"
+              }
+            },
+            "type": "minecraft:decorated"
+          },
+          {
+            "config": {
+              "feature": {
+                "config": {
+                  "feature": {
+                    "config": {
+                      "to_place": {
+                        "Name": "aoa3:dawn_bush"
+                      },
+                      "place_on": [
+                        {
+                          "Properties": {
+                            "snowy": "false"
+                          },
+                          "Name": "aoa3:faded_grass"
+                        }
+                      ],
+                      "place_in": [
+                        {
+                          "Name": "minecraft:air"
+                        }
+                      ],
+                      "place_under": [
+                        {
+                          "Name": "minecraft:air"
+                        }
+                      ]
+                    },
+                    "type": "minecraft:simple_block"
+                  },
+                  "decorator": {
+                    "config": {},
+                    "type": "minecraft:heightmap_world_surface"
+                  }
+                },
+                "type": "minecraft:decorated"
+              },
+              "decorator": {
+                "config": {},
+                "type": "minecraft:square"
+              }
+            },
+            "type": "minecraft:decorated"
+          }
+        ]
+      },
+      "type": "minecraft:simple_random_selector"
+    },
+    "decorator": {
+      "config": {
+        "min": 20,
+        "max": 20
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

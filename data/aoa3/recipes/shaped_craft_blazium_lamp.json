@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "RXR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "aoa3:blazium_ingot"
+    }
+  },
+  "result": {
+    "item": "aoa3:blazium_lamp"
+  }
+}

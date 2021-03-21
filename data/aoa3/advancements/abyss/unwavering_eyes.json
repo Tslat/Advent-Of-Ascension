@@ -1,0 +1,41 @@
+{
+  "parent": "aoa3:abyss/the_staring_eye",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.abyss.unwavering_eyes.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.abyss.unwavering_eyes.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_elusive": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:elusive"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_elusive"
+    ]
+  ]
+}

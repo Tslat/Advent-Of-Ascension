@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_golder_bomber"
+    ]
+  },
+  "criteria": {
+    "has_boulder_bomber": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:boulder_bomber"
+          }
+        ]
+      }
+    },
+    "has_golden_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:golden_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_golder_bomber"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_boulder_bomber",
+      "has_golden_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

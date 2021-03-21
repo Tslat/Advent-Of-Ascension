@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:candyland/candy_lotto_platform/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:candyland/candy_lotto_platform/candy_lotto_platform",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

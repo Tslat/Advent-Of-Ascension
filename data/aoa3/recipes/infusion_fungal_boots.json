@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:mushroom_spores"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:mushrooms"
+    }
+  ],
+  "result": {
+    "item": "aoa3:fungal_boots"
+  }
+}

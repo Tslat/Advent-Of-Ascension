@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:flammable_dust"
+    },
+    {
+      "item": "aoa3:flammable_dust"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:hot_shot"
+  }
+}

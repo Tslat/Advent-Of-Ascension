@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:tiered",
+  "config": {
+    "surface_block": {
+      "Name": "aoa3:baron_ground"
+    },
+    "subsurface_block": {
+      "Name": "aoa3:baron_stone"
+    },
+    "filler_block_tiers": [
+      {
+        "block": {
+          "Name": "aoa3:hellstone"
+        },
+        "max_y": 25
+      }
+    ]
+  }
+}

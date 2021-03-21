@@ -1,0 +1,105 @@
+{
+  "type": "aoa3:crystevia",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": -20,
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "aoa3:crystallised_rock"
+      },
+      "default_fluid": {
+        "Name": "minecraft:air"
+      },
+      "structures": {
+        "structures": {
+          "aoa3:purple_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 880010300
+          },
+          "aoa3:yellow_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1002737725
+          },
+          "aoa3:crystal_extension_station": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 884667507
+          },
+          "aoa3:green_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1953548779
+          },
+          "aoa3:blue_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 526846634
+          },
+          "aoa3:crystal_trading_post": {
+            "spacing": 24,
+            "separation": 6,
+            "salt": 886556553
+          },
+          "aoa3:crystal_lotto_overlook": {
+            "spacing": 24,
+            "separation": 6,
+            "salt": 1667083058
+          },
+          "aoa3:power_station": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 812141596
+          },
+          "aoa3:red_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1535248444
+          },
+          "aoa3:white_crystal_transfer_hut": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 2009487343
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": 120,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": 320,
+          "size": 4,
+          "offset": -1
+        },
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 3.0,
+          "xz_factor": 80.0,
+          "y_factor": 60.0
+        },
+        "size_vertical": 2,
+        "size_horizontal": 1,
+        "height": 128,
+        "density_factor": 0.0,
+        "density_offset": 0.019921875,
+        "random_density_offset": false,
+        "simplex_surface_noise": false,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:crystevian_caverns"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ACA",
+    "ADA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:stone_bricks"
+    },
+    "B": {
+      "item": "minecraft:iron_trapdoor"
+    },
+    "C": {
+      "item": "minecraft:glass"
+    },
+    "D": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "aoa3:extraction_device"
+  }
+}

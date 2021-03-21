@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:yellow_spores"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:weaken_helmet"
+  }
+}

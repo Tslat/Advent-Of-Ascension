@@ -1,0 +1,56 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "to_place": {
+                  "Name": "aoa3:haunted_flower"
+                },
+                "place_on": [
+                  {
+                    "Properties": {
+                      "snowy": "false"
+                    },
+                    "Name": "aoa3:greckon_grass"
+                  }
+                ],
+                "place_in": [
+                  {
+                    "Name": "minecraft:air"
+                  }
+                ],
+                "place_under": [
+                  {
+                    "Name": "minecraft:air"
+                  }
+                ]
+              },
+              "type": "minecraft:simple_block"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 25,
+        "max": 25
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

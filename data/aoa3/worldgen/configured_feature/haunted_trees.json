@@ -1,0 +1,29 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "state": {
+              "Properties": {
+                "stage": "0"
+              },
+              "Name": "aoa3:haunted_sapling"
+            }
+          },
+          "type": "aoa3:haunted_tree"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:heightmap_world_surface"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {},
+      "type": "minecraft:square"
+    }
+  },
+  "type": "minecraft:decorated"
+}

@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:toxic_lump"
+    },
+    {
+      "item": "aoa3:toxic_lump"
+    },
+    {
+      "item": "aoa3:jade"
+    },
+    {
+      "item": "aoa3:jade"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "result": {
+    "item": "aoa3:eradicator"
+  }
+}

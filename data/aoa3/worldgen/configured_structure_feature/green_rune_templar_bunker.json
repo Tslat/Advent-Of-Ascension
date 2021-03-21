@@ -1,0 +1,8 @@
+{
+  "config": {
+    "min": 3,
+    "max": 20,
+    "ignore_obstructions": true
+  },
+  "type": "aoa3:green_rune_templar_bunker"
+}

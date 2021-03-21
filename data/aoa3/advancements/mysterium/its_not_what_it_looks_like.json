@@ -1,0 +1,37 @@
+{
+  "parent": "aoa3:mysterium/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:shroom_stone"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.mysterium.its_not_what_it_looks_like.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.mysterium.its_not_what_it_looks_like.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_shroom_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shroom_stone"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_shroom_stone"
+    ]
+  ]
+}

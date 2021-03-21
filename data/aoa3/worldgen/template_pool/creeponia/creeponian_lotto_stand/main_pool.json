@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:creeponia/creeponian_lotto_stand/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:creeponia/creeponian_lotto_stand/creeponian_lotto_stand",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

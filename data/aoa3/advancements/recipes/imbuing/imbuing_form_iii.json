@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_form_iii"
+    ]
+  },
+  "criteria": {
+    "has_damage_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:damage_enhancer"
+          }
+        ]
+      }
+    },
+    "has_ambient_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ambient_power_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_form_iii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_damage_enhancer",
+      "has_ambient_power_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

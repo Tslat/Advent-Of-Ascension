@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:scrap_metal"
+  },
+  "result": "minecraft:iron_nugget",
+  "experience": 1.0,
+  "cookingtime": 200
+}

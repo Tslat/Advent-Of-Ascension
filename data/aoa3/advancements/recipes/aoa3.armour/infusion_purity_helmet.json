@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_purity_helmet"
+    ]
+  },
+  "criteria": {
+    "has_helmet_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:helmet_frame"
+          }
+        ]
+      }
+    },
+    "has_milk_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:milk_bucket"
+          }
+        ]
+      }
+    },
+    "has_padded_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:padded_cloth"
+          }
+        ]
+      }
+    },
+    "has_iron_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_helmet"
+          }
+        ]
+      }
+    },
+    "has_runic_energy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:runic_energy"
+          }
+        ]
+      }
+    },
+    "has_armour_plating": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:armour_plating"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_purity_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_helmet_frame",
+      "has_milk_bucket",
+      "has_padded_cloth",
+      "has_iron_helmet",
+      "has_runic_energy",
+      "has_armour_plating",
+      "has_the_recipe"
+    ]
+  ]
+}

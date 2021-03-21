@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:rainbow_druse"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.crystevia.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.crystevia.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/crystallised_rock.png"
+  },
+  "criteria": {
+    "enter_block_crystevia_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:crystevia_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_crystevia_portal"
+    ]
+  ]
+}

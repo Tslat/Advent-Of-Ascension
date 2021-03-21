@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_smelting_skeletal_ingot_from_skullbone"
+    ]
+  },
+  "criteria": {
+    "has_skullbone_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skullbone_fragment"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_smelting_skeletal_ingot_from_skullbone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_skullbone_fragment",
+      "has_the_recipe"
+    ]
+  ]
+}

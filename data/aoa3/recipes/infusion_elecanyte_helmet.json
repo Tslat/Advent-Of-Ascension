@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:runic_energy"
+    },
+    {
+      "item": "aoa3:mystite_ingot"
+    },
+    {
+      "item": "aoa3:elecanium_ingot"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:elecanyte_helmet"
+  }
+}

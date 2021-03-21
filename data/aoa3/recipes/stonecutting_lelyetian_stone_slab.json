@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:lelyetian_stone"
+  },
+  "result": "aoa3:lelyetian_stone_slab",
+  "count": 2
+}

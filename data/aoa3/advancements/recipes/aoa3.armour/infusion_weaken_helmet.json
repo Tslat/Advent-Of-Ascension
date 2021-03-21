@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_weaken_helmet"
+    ]
+  },
+  "criteria": {
+    "has_diamond": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:diamond"
+          }
+        ]
+      }
+    },
+    "has_helmet_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:helmet_frame"
+          }
+        ]
+      }
+    },
+    "has_yellow_spores": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_spores"
+          }
+        ]
+      }
+    },
+    "has_padded_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:padded_cloth"
+          }
+        ]
+      }
+    },
+    "has_poisonous_potato": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:poisonous_potato"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_weaken_helmet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_diamond",
+      "has_helmet_frame",
+      "has_yellow_spores",
+      "has_padded_cloth",
+      "has_poisonous_potato",
+      "has_the_recipe"
+    ]
+  ]
+}

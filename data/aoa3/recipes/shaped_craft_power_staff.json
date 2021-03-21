@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    " A ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:dense_rock"
+    },
+    "D": {
+      "item": "aoa3:deep_crystal"
+    }
+  },
+  "result": {
+    "item": "aoa3:power_staff"
+  }
+}

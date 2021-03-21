@@ -1,0 +1,44 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "block": {
+                  "state": {
+                    "Name": "aoa3:garden_grass"
+                  },
+                  "type": "minecraft:simple_state_provider"
+                },
+                "min_size": 1,
+                "max_size": 5,
+                "uniform_height_distribution": false
+              },
+              "type": "aoa3:column"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "min": 10,
+        "max": 10
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_satiation_tablet"
+    ]
+  },
+  "criteria": {
+    "has_fragmented_anima_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:fragmented_anima_stone"
+          }
+        ]
+      }
+    },
+    "has_golden_apple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:golden_apple"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_satiation_tablet"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fragmented_anima_stone",
+      "has_golden_apple",
+      "has_the_recipe"
+    ]
+  ]
+}

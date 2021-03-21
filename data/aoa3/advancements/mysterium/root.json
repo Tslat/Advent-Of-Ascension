@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:mystic_shrooms"
+    },
+    "title": {
+      "color": "dark_purple",
+      "translate": "advancements.aoa3.mysterium.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.mysterium.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/fungal_rock.png"
+  },
+  "criteria": {
+    "enter_block_mysterium_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:mysterium_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_mysterium_portal"
+    ]
+  ]
+}

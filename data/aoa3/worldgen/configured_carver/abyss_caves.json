@@ -1,0 +1,15 @@
+{
+  "config": {
+    "deep_filler_block": {
+      "Name": "aoa3:toxic_block"
+    },
+    "carvable_fluids": [],
+    "deep_floor_height": 10,
+    "min_height": 5,
+    "carvable_blocks": [
+      "aoa3:abyssal_grass",
+      "aoa3:abyssal_stone"
+    ]
+  },
+  "type": "aoa3:configurable_carver"
+}

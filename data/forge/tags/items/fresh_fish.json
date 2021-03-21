@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:raw_candlefish",
+    "aoa3:raw_crimson_skipper",
+    "aoa3:raw_crimson_stripefish",
+    "aoa3:raw_dark_hatchetfish",
+    "aoa3:raw_fingerfish",
+    "aoa3:raw_golden_gullfish",
+    "aoa3:raw_ironback",
+    "aoa3:raw_limefish",
+    "aoa3:raw_pearl_stripefish",
+    "aoa3:raw_rainbowfish",
+    "aoa3:raw_razorfish",
+    "aoa3:raw_rocketfish",
+    "aoa3:raw_sailback",
+    "aoa3:raw_sapphire_strider",
+    "aoa3:raw_turquoise_stripefish",
+    "aoa3:raw_violet_skipper",
+    "minecraft:cod",
+    "minecraft:salmon",
+    "minecraft:pufferfish",
+    "minecraft:tropical_fish"
+  ]
+}

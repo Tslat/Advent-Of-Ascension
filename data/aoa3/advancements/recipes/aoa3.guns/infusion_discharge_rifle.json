@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_discharge_rifle"
+    ]
+  },
+  "criteria": {
+    "has_gun_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gun_frame"
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_ingot"
+          }
+        ]
+      }
+    },
+    "has_discharge_capsule": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:discharge_capsule"
+          }
+        ]
+      }
+    },
+    "has_unstable_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:unstable_gunpowder"
+          }
+        ]
+      }
+    },
+    "has_rosite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosite_ingot"
+          }
+        ]
+      }
+    },
+    "has_ornamyte": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornamyte"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_discharge_rifle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gun_frame",
+      "has_iron_ingot",
+      "has_discharge_capsule",
+      "has_unstable_gunpowder",
+      "has_rosite_ingot",
+      "has_ornamyte",
+      "has_the_recipe"
+    ]
+  ]
+}

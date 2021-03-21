@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:dustopia/they_dont_seem_that_old",
+  "display": {
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.dustopia.kajaros_documented.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.dustopia.kajaros_documented.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_gold_kajaros_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:kajaros\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.kajaros\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_kajaros_trophy"
+    ]
+  ]
+}

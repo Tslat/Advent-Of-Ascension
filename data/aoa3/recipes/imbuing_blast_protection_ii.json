@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:blast_protection",
+    "level": 2
+  },
+  "infusion_level": 9,
+  "ingredients": [
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

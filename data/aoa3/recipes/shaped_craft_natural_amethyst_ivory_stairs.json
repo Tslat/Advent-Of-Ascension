@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:natural_amethyst_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:natural_amethyst_ivory_stairs",
+    "count": 4
+  }
+}

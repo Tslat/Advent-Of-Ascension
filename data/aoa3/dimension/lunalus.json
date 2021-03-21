@@ -1,0 +1,120 @@
+{
+  "type": "aoa3:lunalus",
+  "generator": {
+    "type": "aoa3:asteroids",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": -20,
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "minecraft:stone"
+      },
+      "default_fluid": {
+        "Name": "minecraft:air"
+      },
+      "structures": {
+        "structures": {
+          "aoa3:spellbinder_house": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 180902932
+          },
+          "aoa3:zarg_planetoid": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 662014983
+          },
+          "aoa3:space_arena": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 733665647
+          },
+          "aoa3:lunar_maze": {
+            "spacing": 40,
+            "separation": 14,
+            "salt": 220850375
+          },
+          "aoa3:lunarade_stand": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 71685813
+          },
+          "aoa3:lunar_creation_platform": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 580143683
+          },
+          "aoa3:lunar_herbal_house": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1898918911
+          },
+          "aoa3:lunar_lotto_platform": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 355656489
+          },
+          "aoa3:lunar_bank": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1659681006
+          },
+          "aoa3:lunar_garden": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 594661699
+          },
+          "aoa3:observers_eye": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1439139198
+          },
+          "aoa3:lunar_food_market": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 1808474371
+          },
+          "aoa3:lunar_prison": {
+            "spacing": 40,
+            "separation": 16,
+            "salt": 1258766953
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": -30,
+          "size": 0,
+          "offset": 0
+        },
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 1.0,
+          "xz_factor": 80.0,
+          "y_factor": 160.0
+        },
+        "size_vertical": 2,
+        "size_horizontal": 1,
+        "height": 256,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "random_density_offset": true,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:asteroid_belt"
+    }
+  }
+}

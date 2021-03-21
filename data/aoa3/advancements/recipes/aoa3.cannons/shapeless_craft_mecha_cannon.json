@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_mecha_cannon"
+    ]
+  },
+  "criteria": {
+    "has_incomplete_mecha_cannon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:incomplete_mecha_cannon"
+          }
+        ]
+      }
+    },
+    "has_mecha_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mecha_gear"
+          }
+        ]
+      }
+    },
+    "has_power_core": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:power_core"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_mecha_cannon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_incomplete_mecha_cannon",
+      "has_mecha_gear",
+      "has_power_core",
+      "has_the_recipe"
+    ]
+  ]
+}

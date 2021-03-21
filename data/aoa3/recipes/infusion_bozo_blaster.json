@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:confetti_pile"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:sapphire"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:bozo_blaster"
+  }
+}

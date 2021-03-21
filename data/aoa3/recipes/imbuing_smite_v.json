@@ -1,0 +1,31 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:smite",
+    "level": 5
+  },
+  "infusion_level": 37,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:luck_enhancer"
+    },
+    {
+      "item": "aoa3:glaring_power_stone"
+    }
+  ]
+}

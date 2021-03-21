@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "C B",
+    "DAB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:lunar_ingot"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:orbulon"
+    },
+    "D": {
+      "item": "aoa3:floating_stone"
+    }
+  },
+  "result": {
+    "item": "aoa3:lunar_bow"
+  }
+}

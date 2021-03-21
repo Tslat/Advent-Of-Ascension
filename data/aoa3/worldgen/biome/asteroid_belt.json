@@ -1,0 +1,68 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.0,
+  "scale": 0.0,
+  "temperature": -1.0,
+  "temperature_modifier": "none",
+  "downfall": 0.0,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 0,
+    "water_color": 20,
+    "water_fog_color": 20,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:lunalus",
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [
+      "aoa3:stone_blobs",
+      "aoa3:stone_noise"
+    ],
+    [],
+    [
+      "aoa3:lunar_decorations",
+      "aoa3:lunar_rune_shrine"
+    ],
+    [],
+    [
+      "aoa3:full_height_iron",
+      "aoa3:full_height_diamond",
+      "aoa3:full_height_coal"
+    ],
+    [],
+    [],
+    []
+  ],
+  "starts": [
+    "aoa3:spellbinder_house",
+    "aoa3:zarg_planetoid",
+    "aoa3:space_arena",
+    "aoa3:lunar_maze",
+    "aoa3:lunarade_stand",
+    "aoa3:lunar_creation_platform",
+    "aoa3:lunar_herbal_house",
+    "aoa3:lunar_lotto_platform",
+    "aoa3:lunar_bank",
+    "aoa3:lunar_garden",
+    "aoa3:observers_eye",
+    "aoa3:lunar_food_market",
+    "aoa3:lunar_prison"
+  ],
+  "spawners": {
+    "monster": [],
+    "creature": [],
+    "ambient": [],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_creeponia_bricks_stairs"
+    ]
+  },
+  "criteria": {
+    "has_creeponia_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:creeponia_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_creeponia_bricks_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_creeponia_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

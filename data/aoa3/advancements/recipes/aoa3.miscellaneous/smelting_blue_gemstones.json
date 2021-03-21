@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_blue_gemstones"
+    ]
+  },
+  "criteria": {
+    "has_blue_gemstone_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blue_gemstone_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_blue_gemstones"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blue_gemstone_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

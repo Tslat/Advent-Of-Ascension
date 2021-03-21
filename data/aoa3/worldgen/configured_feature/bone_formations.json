@@ -1,0 +1,43 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "spawn_entities": false,
+                "templates": [
+                  "aoa3:deeplands/decorations/fossilised_ribs",
+                  "aoa3:deeplands/decorations/bone_circle"
+                ]
+              },
+              "type": "aoa3:structure_piece"
+            },
+            "decorator": {
+              "config": {
+                "maximum": 40,
+                "on_surface": true,
+                "bottom_offset": 35
+              },
+              "type": "aoa3:underground_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 25
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

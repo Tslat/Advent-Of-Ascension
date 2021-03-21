@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_archmage_ii"
+    ]
+  },
+  "criteria": {
+    "has_blooming_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blooming_power_stone"
+          }
+        ]
+      }
+    },
+    "has_durability_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:durability_enhancer"
+          }
+        ]
+      }
+    },
+    "has_magic_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:magic_enhancer"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_archmage_ii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blooming_power_stone",
+      "has_durability_enhancer",
+      "has_magic_enhancer",
+      "has_the_recipe"
+    ]
+  ]
+}

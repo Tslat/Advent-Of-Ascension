@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "name": "supplies",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:sharp_claw"
+        }
+      ]
+    },
+    {
+      "name": "loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 110
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "aoa3:spirit_shower"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 24,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:rotten_flesh"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 17,
+          "name": "aoa3:ivory"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 7,
+          "name": "aoa3:bloodstone"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/abyss"
+        }
+      ]
+    }
+  ]
+}

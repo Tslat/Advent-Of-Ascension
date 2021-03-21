@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:cooking_cooked_fingerfish"
+    ]
+  },
+  "criteria": {
+    "has_raw_fingerfish": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_fingerfish"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:cooking_cooked_fingerfish"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_fingerfish",
+      "has_the_recipe"
+    ]
+  ]
+}

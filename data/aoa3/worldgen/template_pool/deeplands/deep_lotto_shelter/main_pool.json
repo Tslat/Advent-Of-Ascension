@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:deeplands/deep_lotto_shelter/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:deeplands/deep_lotto_shelter/deep_lotto_shelter",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

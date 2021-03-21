@@ -1,0 +1,93 @@
+{
+  "type": "aoa3:vox_ponds",
+  "generator": {
+    "type": "minecraft:noise",
+    "seed": 0,
+    "settings": {
+      "bedrock_roof_position": -20,
+      "bedrock_floor_position": 4,
+      "sea_level": 14,
+      "disable_mob_generation": false,
+      "default_block": {
+        "Name": "aoa3:polluted_stone"
+      },
+      "default_fluid": {
+        "Name": "minecraft:water",
+        "Properties": {
+          "level": "0"
+        }
+      },
+      "structures": {
+        "structures": {
+          "aoa3:cell_tower": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 99621781
+          },
+          "aoa3:destroyed_store": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 1418572817
+          },
+          "aoa3:vox_lotto_outpost": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 511731424
+          },
+          "aoa3:voxxulon_beacon": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1099200659
+          },
+          "aoa3:control_tower": {
+            "spacing": 28,
+            "separation": 8,
+            "salt": 1201335404
+          },
+          "aoa3:nightwing_island": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 281582215
+          },
+          "aoa3:observation_tower": {
+            "spacing": 26,
+            "separation": 8,
+            "salt": 1558877075
+          }
+        }
+      },
+      "noise": {
+        "top_slide": {
+          "target": -10,
+          "size": 3,
+          "offset": 0
+        },
+        "bottom_slide": {
+          "target": -100,
+          "size": 35,
+          "offset": 1
+        },
+        "sampling": {
+          "xz_scale": 1.0,
+          "y_scale": 1.0,
+          "xz_factor": 80.0,
+          "y_factor": 160.0
+        },
+        "size_vertical": 2,
+        "size_horizontal": 1,
+        "height": 256,
+        "density_factor": 1.0,
+        "density_offset": -0.46875,
+        "random_density_offset": true,
+        "simplex_surface_noise": true,
+        "island_noise_override": false,
+        "amplified": false
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "seed": 0,
+      "biome": "aoa3:vox_wastes"
+    }
+  }
+}

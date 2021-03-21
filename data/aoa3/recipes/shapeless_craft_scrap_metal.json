@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:scrap_metal"
+  }
+}

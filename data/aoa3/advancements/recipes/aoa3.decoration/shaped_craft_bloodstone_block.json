@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_bloodstone_block"
+    ]
+  },
+  "criteria": {
+    "has_bloodstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bloodstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_bloodstone_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bloodstone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "condition": "aoa3:is_specific_table",
+      "table_ids": [
+        "minecraft:gameplay/fishing/treasure"
+      ]
+    }
+  ],
+  "tables": [
+    "aoa3:skills/hauling_treasure"
+  ],
+  "type": "aoa3:inject_or_replace"
+}

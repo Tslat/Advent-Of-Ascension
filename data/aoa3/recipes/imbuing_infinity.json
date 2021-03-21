@@ -1,0 +1,24 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:infinity"
+  },
+  "infusion_level": 62,
+  "ingredients": [
+    {
+      "item": "aoa3:divine_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "minecraft:arrow"
+    },
+    {
+      "item": "aoa3:shining_power_stone"
+    }
+  ]
+}

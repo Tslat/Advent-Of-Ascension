@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/celeve"
+        }
+      ]
+    },
+    {
+      "name": "mob_specific_loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:circus_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "aoa3:confetti_cannon"
+        }
+      ]
+    }
+  ]
+}

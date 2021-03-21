@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_mark_maker"
+    ]
+  },
+  "criteria": {
+    "has_ka_500": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ka_500"
+          }
+        ]
+      }
+    },
+    "has_weapon_parts": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:weapon_parts"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_mark_maker"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ka_500",
+      "has_weapon_parts",
+      "has_the_recipe"
+    ]
+  ]
+}

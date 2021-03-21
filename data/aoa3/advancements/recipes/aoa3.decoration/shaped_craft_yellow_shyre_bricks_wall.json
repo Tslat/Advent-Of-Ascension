@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_yellow_shyre_bricks_wall"
+    ]
+  },
+  "criteria": {
+    "has_yellow_shyre_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_shyre_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_yellow_shyre_bricks_wall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_yellow_shyre_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

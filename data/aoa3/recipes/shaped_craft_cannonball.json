@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:limonite_ingot"
+    }
+  },
+  "result": {
+    "item": "aoa3:cannonball",
+    "count": 12
+  }
+}

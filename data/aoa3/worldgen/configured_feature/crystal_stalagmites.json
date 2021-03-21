@@ -1,0 +1,89 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "z": {},
+                "states": {
+                  "entries": [
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:blue_crystal_block"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:green_crystal_block"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:red_crystal_block"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:purple_crystal_block"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:white_crystal_block"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:yellow_crystal_block"
+                      }
+                    }
+                  ],
+                  "type": "minecraft:weighted_state_provider"
+                },
+                "count": {
+                  "min": 6,
+                  "max": 12
+                },
+                "x": {
+                  "min": 1,
+                  "max": 4
+                },
+                "y": {}
+              },
+              "type": "aoa3:stalagmite"
+            },
+            "decorator": {
+              "config": {
+                "maximum": 120,
+                "on_surface": true,
+                "bottom_offset": 10
+              },
+              "type": "aoa3:underground_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 3
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

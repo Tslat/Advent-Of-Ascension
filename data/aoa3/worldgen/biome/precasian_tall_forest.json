@@ -1,0 +1,119 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.0,
+  "scale": 0.4,
+  "temperature": 1.9,
+  "temperature_modifier": "none",
+  "downfall": 0.95,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 7907327,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:precasia",
+  "carvers": {
+    "air": [
+      "aoa3:precasia_caves"
+    ]
+  },
+  "features": [
+    [
+      "aoa3:dimensional_fabric_floor"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:life_rune_shrine"
+    ],
+    [],
+    [
+      "aoa3:ore_legbone_fragments",
+      "aoa3:ore_footbone_fragments",
+      "aoa3:ore_skullbone_fragments",
+      "aoa3:ore_chestbone_fragments"
+    ],
+    [],
+    [
+      "aoa3:precasian_plants",
+      "aoa3:precasia_trees"
+    ],
+    []
+  ],
+  "starts": [
+    "aoa3:skeletal_army_arena",
+    "aoa3:kaiyu_temple",
+    "aoa3:diocus_den",
+    "aoa3:spinoledon_den",
+    "aoa3:opteryx_nest",
+    "aoa3:jungle_lotto_hut",
+    "aoa3:iosaur_den"
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aoa3:tortione",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:dyrehorn",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:deinotherium",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sabretooth",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:giant_snail",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:terradon",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [
+      {
+        "type": "aoa3:meganeuropsis",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 2
+      }
+    ],
+    "ambient": [
+      {
+        "type": "aoa3:undead_herald",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      }
+    ],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

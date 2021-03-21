@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_atlantic_bow"
+    ]
+  },
+  "criteria": {
+    "has_seaside_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:seaside_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_predatious_bow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:predatious_bow"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_atlantic_bow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_seaside_upgrade_kit",
+      "has_predatious_bow",
+      "has_the_recipe"
+    ]
+  ]
+}

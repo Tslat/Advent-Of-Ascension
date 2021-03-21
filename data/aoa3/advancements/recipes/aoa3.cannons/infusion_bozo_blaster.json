@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_bozo_blaster"
+    ]
+  },
+  "criteria": {
+    "has_limonite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ingot"
+          }
+        ]
+      }
+    },
+    "has_cannon_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:cannon_frame"
+          }
+        ]
+      }
+    },
+    "has_hardened_confetti_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:hardened_confetti_ball"
+          }
+        ]
+      }
+    },
+    "has_confetti_pile": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:confetti_pile"
+          }
+        ]
+      }
+    },
+    "has_gunpowder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:gunpowder"
+          }
+        ]
+      }
+    },
+    "has_sapphire": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:sapphire"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_bozo_blaster"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_limonite_ingot",
+      "has_cannon_frame",
+      "has_hardened_confetti_ball",
+      "has_confetti_pile",
+      "has_gunpowder",
+      "has_sapphire",
+      "has_the_recipe"
+    ]
+  ]
+}

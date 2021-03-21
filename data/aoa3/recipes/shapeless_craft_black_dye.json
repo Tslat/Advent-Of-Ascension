@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:deep_blooms"
+    }
+  ],
+  "result": {
+    "item": "minecraft:black_dye"
+  }
+}

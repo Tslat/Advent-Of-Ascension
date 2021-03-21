@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "item": "aoa3:spreadshot"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "tag": "forge:gingerbread"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ginger_blaster"
+  }
+}

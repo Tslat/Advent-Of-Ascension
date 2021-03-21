@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:purple_gemstone_ore"
+  },
+  "result": "aoa3:purple_gemstones",
+  "experience": 3.0,
+  "cookingtime": 200
+}

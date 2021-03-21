@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_petals"
+    ]
+  },
+  "criteria": {
+    "has_small_orange_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_orange_petal"
+          }
+        ]
+      }
+    },
+    "has_small_green_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_green_petal"
+          }
+        ]
+      }
+    },
+    "has_small_blue_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_blue_petal"
+          }
+        ]
+      }
+    },
+    "has_small_red_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_red_petal"
+          }
+        ]
+      }
+    },
+    "has_small_purple_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_purple_petal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_petals"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_small_orange_petal",
+      "has_small_green_petal",
+      "has_small_blue_petal",
+      "has_small_red_petal",
+      "has_small_purple_petal",
+      "has_the_recipe"
+    ]
+  ]
+}

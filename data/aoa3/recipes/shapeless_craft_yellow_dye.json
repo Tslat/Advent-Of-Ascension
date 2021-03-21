@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:yellow_celebulbs"
+    }
+  ],
+  "result": {
+    "item": "minecraft:yellow_dye"
+  }
+}

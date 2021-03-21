@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "aoa3:bloodstone"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:magnet_shard"
+    }
+  ],
+  "result": {
+    "item": "aoa3:odious"
+  }
+}

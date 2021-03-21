@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:achony_fence_gate",
+    "aoa3:bloodwood_fence_gate",
+    "aoa3:churry_fence_gate",
+    "aoa3:creep_fence_gate",
+    "aoa3:dawnwood_fence_gate",
+    "aoa3:hauntedwood_fence_gate",
+    "aoa3:irowood_fence_gate",
+    "aoa3:lucalus_fence_gate",
+    "aoa3:lunide_fence_gate",
+    "aoa3:runic_fence_gate",
+    "aoa3:shadow_fence_gate",
+    "aoa3:shyre_fence_gate",
+    "aoa3:stranglewood_fence_gate",
+    "aoa3:toxicwood_fence_gate",
+    "aoa3:twinklestone_fence_gate"
+  ]
+}

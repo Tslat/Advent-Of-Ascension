@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_ornamyte_block"
+    ]
+  },
+  "criteria": {
+    "has_ornamyte": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornamyte"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_ornamyte_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ornamyte",
+      "has_the_recipe"
+    ]
+  ]
+}

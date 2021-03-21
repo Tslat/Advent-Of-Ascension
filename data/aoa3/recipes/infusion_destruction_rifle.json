@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:rosite_ingot"
+    },
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:destruction_rifle"
+  }
+}

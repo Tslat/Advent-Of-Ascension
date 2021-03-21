@@ -1,0 +1,126 @@
+{
+  "precipitation": "none",
+  "category": "none",
+  "depth": 0.1,
+  "scale": 0.1,
+  "temperature": 0.35,
+  "temperature_modifier": "none",
+  "downfall": 0.25,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 26880,
+    "water_color": 255,
+    "water_fog_color": 255,
+    "grass_color_modifier": "none"
+  },
+  "surface_builder": "aoa3:celeve",
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:compass_rune_shrine"
+    ],
+    [],
+    [],
+    [],
+    [
+      "aoa3:celevus_trees",
+      "aoa3:celebulbs",
+      "aoa3:celevians"
+    ],
+    []
+  ],
+  "starts": [
+    "aoa3:celevian_lotto_balloon"
+  ],
+  "spawners": {
+    "monster": [
+      {
+        "type": "aoa3:koko",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:kranky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:snappy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:jumbo",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:happy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stitches",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tipsy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:chocko",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:bobo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sticky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "creature": [],
+    "ambient": [
+      {
+        "type": "aoa3:innervation_master",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:undead_herald",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      }
+    ],
+    "water_creature": [],
+    "water_ambient": [],
+    "misc": []
+  },
+  "player_spawn_friendly": false,
+  "creature_spawn_probability": 0.1,
+  "spawn_costs": {}
+}

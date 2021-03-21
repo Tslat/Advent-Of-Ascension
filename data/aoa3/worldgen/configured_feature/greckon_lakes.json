@@ -1,0 +1,22 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "state": {
+          "Properties": {
+            "level": "0"
+          },
+          "Name": "minecraft:water"
+        }
+      },
+      "type": "aoa3:biome_friendly_lake"
+    },
+    "decorator": {
+      "config": {
+        "chance": 16
+      },
+      "type": "minecraft:water_lake"
+    }
+  },
+  "type": "minecraft:decorated"
+}

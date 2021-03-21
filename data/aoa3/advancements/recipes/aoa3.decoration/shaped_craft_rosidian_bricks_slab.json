@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_rosidian_bricks_slab"
+    ]
+  },
+  "criteria": {
+    "has_rosidian_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosidian_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_rosidian_bricks_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rosidian_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/barathos"
+        }
+      ]
+    },
+    {
+      "name": "mob_specific_loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 21,
+          "name": "aoa3:chitin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:hive_chunk"
+        }
+      ]
+    }
+  ]
+}

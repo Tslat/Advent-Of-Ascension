@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:control",
+    "level": 2
+  },
+  "infusion_level": 34,
+  "ingredients": [
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:glowing_power_stone"
+    }
+  ]
+}

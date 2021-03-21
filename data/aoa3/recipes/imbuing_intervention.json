@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:intervention"
+  },
+  "infusion_level": 97,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    },
+    {
+      "item": "aoa3:radiant_power_stone"
+    }
+  ]
+}

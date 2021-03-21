@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:revolution"
+  }
+}

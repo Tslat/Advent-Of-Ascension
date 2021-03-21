@@ -1,0 +1,28 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:unbreaking",
+    "level": 4
+  },
+  "infusion_level": 83,
+  "ingredients": [
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    }
+  ]
+}

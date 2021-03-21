@@ -1,0 +1,86 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "max_stem_size": 2,
+                "stem_block": {
+                  "state": {
+                    "Properties": {
+                      "waterlogged": "false"
+                    },
+                    "Name": "aoa3:shroom_stem"
+                  },
+                  "type": "minecraft:simple_state_provider"
+                },
+                "cap_block": {
+                  "entries": [
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Properties": {
+                          "waterlogged": "false"
+                        },
+                        "Name": "aoa3:yellow_shroom"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Properties": {
+                          "waterlogged": "false"
+                        },
+                        "Name": "aoa3:green_shroom"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Properties": {
+                          "waterlogged": "false"
+                        },
+                        "Name": "aoa3:orange_shroom"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Properties": {
+                          "waterlogged": "false"
+                        },
+                        "Name": "aoa3:blue_shroom"
+                      }
+                    }
+                  ],
+                  "type": "minecraft:weighted_state_provider"
+                },
+                "min_stem_size": 1
+              },
+              "type": "aoa3:capped_column"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "max": 3
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

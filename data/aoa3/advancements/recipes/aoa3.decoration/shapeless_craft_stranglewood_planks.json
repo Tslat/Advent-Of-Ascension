@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_stranglewood_planks"
+    ]
+  },
+  "criteria": {
+    "has_stranglewood_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:stranglewood_log"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_stranglewood_planks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stranglewood_log",
+      "has_the_recipe"
+    ]
+  ]
+}

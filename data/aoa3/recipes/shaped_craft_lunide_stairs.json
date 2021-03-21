@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:lunide_planks"
+    }
+  },
+  "result": {
+    "item": "aoa3:lunide_stairs",
+    "count": 4
+  }
+}

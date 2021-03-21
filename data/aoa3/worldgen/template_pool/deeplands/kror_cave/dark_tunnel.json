@@ -1,0 +1,36 @@
+{
+  "name": "aoa3:deeplands/kror_cave/dark_tunnel",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:deeplands/kror_cave/tunnel/dark_tunnel",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:deep_case"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:dense_stone",
+                    "probability": 0.008,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

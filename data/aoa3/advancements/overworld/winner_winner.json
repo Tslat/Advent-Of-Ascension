@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:lotto_totem"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.winner_winner.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.winner_winner.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "lotto_win": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "lotto_win"
+    ]
+  ]
+}

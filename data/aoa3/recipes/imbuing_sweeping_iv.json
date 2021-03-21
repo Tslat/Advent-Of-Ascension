@@ -1,0 +1,28 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:sweeping",
+    "level": 4
+  },
+  "infusion_level": 68,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:shining_power_stone"
+    }
+  ]
+}

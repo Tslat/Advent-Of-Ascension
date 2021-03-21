@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_skeletal_boots"
+    ]
+  },
+  "criteria": {
+    "has_footbone_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:footbone_fragment"
+          }
+        ]
+      }
+    },
+    "has_padded_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:padded_cloth"
+          }
+        ]
+      }
+    },
+    "has_boots_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:boots_frame"
+          }
+        ]
+      }
+    },
+    "has_skeletal_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:skeletal_ingot"
+          }
+        ]
+      }
+    },
+    "has_food": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:food"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_skeletal_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_footbone_fragment",
+      "has_padded_cloth",
+      "has_boots_frame",
+      "has_skeletal_ingot",
+      "has_food",
+      "has_the_recipe"
+    ]
+  ]
+}

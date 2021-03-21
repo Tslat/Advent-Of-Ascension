@@ -1,0 +1,160 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:raw_charger_shank"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.charger_safari.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.charger_safari.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "kill_king_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:king_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_hill_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:hill_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_sea_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:sea_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_snow_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:snow_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_swamp_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:swamp_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_void_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:void_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kill_desert_charger": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "aoa3:desert_charger"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_king_charger"
+    ],
+    [
+      "kill_hill_charger"
+    ],
+    [
+      "kill_sea_charger"
+    ],
+    [
+      "kill_snow_charger"
+    ],
+    [
+      "kill_charger"
+    ],
+    [
+      "kill_swamp_charger"
+    ],
+    [
+      "kill_void_charger"
+    ],
+    [
+      "kill_desert_charger"
+    ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:dawn_wood"
+    }
+  ],
+  "result": {
+    "item": "aoa3:dawnwood_planks",
+    "count": 4
+  }
+}

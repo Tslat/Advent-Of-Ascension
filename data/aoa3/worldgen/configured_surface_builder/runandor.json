@@ -1,0 +1,14 @@
+{
+  "type": "aoa3:oceanless",
+  "config": {
+    "surface_block": {
+      "Name": "aoa3:runic_grass",
+      "Properties": {
+        "snowy": "false"
+      }
+    },
+    "subsurface_block": {
+      "Name": "aoa3:runic_stone"
+    }
+  }
+}

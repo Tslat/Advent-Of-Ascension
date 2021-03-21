@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    },
+    {
+      "item": "aoa3:ghastly_nugget"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ghastly_ingot"
+  }
+}

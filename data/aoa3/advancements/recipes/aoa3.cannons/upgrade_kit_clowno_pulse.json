@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_clowno_pulse"
+    ]
+  },
+  "criteria": {
+    "has_clown_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:clown_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_pulse_cannon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:pulse_cannon"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_clowno_pulse"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_clown_upgrade_kit",
+      "has_pulse_cannon",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    {
+      "item": "aoa3:enchanted_gunpowder"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:shyregem"
+    }
+  ],
+  "result": {
+    "item": "aoa3:amplifier"
+  }
+}

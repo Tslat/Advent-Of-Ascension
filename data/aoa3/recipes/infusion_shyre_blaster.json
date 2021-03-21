@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    {
+      "item": "aoa3:shyregem"
+    },
+    {
+      "item": "aoa3:shyregem"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:shyre_blaster"
+  }
+}

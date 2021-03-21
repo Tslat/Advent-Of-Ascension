@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:abyssal_stone"
+  },
+  "result": "aoa3:abyssal_stone_stairs",
+  "count": 1
+}

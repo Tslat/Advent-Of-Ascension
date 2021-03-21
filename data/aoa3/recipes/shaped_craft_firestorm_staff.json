@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DCD",
+    " A ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:bloodstone"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:flammable_dust"
+    },
+    "D": {
+      "item": "aoa3:nightmare_flakes"
+    }
+  },
+  "result": {
+    "item": "aoa3:firestorm_staff"
+  }
+}

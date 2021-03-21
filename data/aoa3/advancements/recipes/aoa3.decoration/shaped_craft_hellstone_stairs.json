@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_hellstone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_hellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:hellstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_hellstone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hellstone",
+      "has_the_recipe"
+    ]
+  ]
+}

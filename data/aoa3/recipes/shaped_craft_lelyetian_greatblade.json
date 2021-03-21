@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BAB",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:gold_ingot"
+    },
+    "B": {
+      "item": "aoa3:orange_spores"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:lelyetian_greatblade"
+  }
+}

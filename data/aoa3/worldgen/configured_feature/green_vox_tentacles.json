@@ -1,0 +1,64 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "z": {},
+                "states": {
+                  "entries": [
+                    {
+                      "weight": 30,
+                      "data": {
+                        "Name": "aoa3:tentacle_green"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:tentacle_dots_right"
+                      }
+                    },
+                    {
+                      "weight": 1,
+                      "data": {
+                        "Name": "aoa3:tentacle_dots_left"
+                      }
+                    }
+                  ],
+                  "type": "minecraft:weighted_state_provider"
+                },
+                "count": {
+                  "min": 10,
+                  "max": 15
+                },
+                "x": {},
+                "y": {}
+              },
+              "type": "aoa3:bendy_column"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "max": 5
+      },
+      "type": "aoa3:n_times"
+    }
+  },
+  "type": "minecraft:decorated"
+}

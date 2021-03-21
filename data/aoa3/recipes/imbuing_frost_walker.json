@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:frost_walker"
+  },
+  "infusion_level": 55,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:divine_enhancer"
+    },
+    {
+      "item": "aoa3:glowing_power_stone"
+    }
+  ]
+}

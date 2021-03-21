@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:red_druse"
+    },
+    {
+      "item": "aoa3:green_druse"
+    },
+    {
+      "item": "aoa3:purple_druse"
+    },
+    {
+      "item": "aoa3:blue_druse"
+    },
+    {
+      "item": "aoa3:white_druse"
+    },
+    {
+      "item": "aoa3:yellow_druse"
+    }
+  ],
+  "result": {
+    "item": "aoa3:rainbow_druse"
+  }
+}

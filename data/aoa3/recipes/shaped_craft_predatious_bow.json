@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:skeletal_ingot"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:skullbone_fragment"
+    }
+  },
+  "result": {
+    "item": "aoa3:predatious_bow"
+  }
+}

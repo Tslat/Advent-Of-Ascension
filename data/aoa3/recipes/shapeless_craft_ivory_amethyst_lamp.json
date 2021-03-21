@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:amethyst_lamp"
+    },
+    {
+      "item": "aoa3:ivory"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ivory_amethyst_lamp"
+  }
+}

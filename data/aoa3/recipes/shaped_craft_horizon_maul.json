@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    " C ",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:floating_stone"
+    },
+    "B": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:horizon_maul"
+  }
+}

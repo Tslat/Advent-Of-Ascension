@@ -1,0 +1,103 @@
+{
+  "parent": "aoa3:iromine/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:mecha_crossbow",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.iromine.should_be_a_mechanic.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.iromine.should_be_a_mechanic.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_mecha_crossbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mecha_crossbow"
+          }
+        ]
+      }
+    },
+    "obtain_mecha_bow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mecha_bow"
+          }
+        ]
+      }
+    },
+    "obtain_mechanical_assault_rifle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mechanical_assault_rifle"
+          }
+        ]
+      }
+    },
+    "obtain_mecha_staff": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mecha_staff"
+          }
+        ]
+      }
+    },
+    "obtain_mechyro": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mechyro"
+          }
+        ]
+      }
+    },
+    "obtain_mecha_cannon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mecha_cannon"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_mecha_crossbow"
+    ],
+    [
+      "obtain_mecha_bow"
+    ],
+    [
+      "obtain_mechanical_assault_rifle"
+    ],
+    [
+      "obtain_mecha_staff"
+    ],
+    [
+      "obtain_mechyro"
+    ],
+    [
+      "obtain_mecha_cannon"
+    ]
+  ]
+}
