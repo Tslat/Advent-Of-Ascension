@@ -133,7 +133,7 @@ public class StructureCommand implements Command<CommandSource> {
 			BlockPos spawnPos = cmd.getArgument("position", ILocationArgument.class).getBlockPos(cmd.getSource());
 
 			if (template == null) {
-				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structure.invalidStructure", AoACommand.CommandFeedbackType.WARN, id.toString());
+				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.invalidStructure", AoACommand.CommandFeedbackType.WARN, id.toString());
 
 				return 1;
 			}
@@ -141,7 +141,7 @@ public class StructureCommand implements Command<CommandSource> {
 				template.addBlocksToWorld(cmd.getSource().getWorld(), spawnPos, new PlacementSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setChunk(null));
 			}
 
-			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structure.spawn", AoACommand.CommandFeedbackType.SUCCESS, id.toString(), spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ());
+			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, id.toString(), spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ());
 		}
 		catch (ResourceLocationException ex) {
 			AoACommand.error(cmd.getSource(), "Structures", ex.getLocalizedMessage());
@@ -157,7 +157,7 @@ public class StructureCommand implements Command<CommandSource> {
 			AoAStructure structure = StructuresHandler.getStructure(structureName);
 
 			if (structure == StructuresHandler.EMPTY_STRUCTURE) {
-				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structure.invalidStructure", AoACommand.CommandFeedbackType.WARN, structureName);
+				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.invalidStructure", AoACommand.CommandFeedbackType.WARN, structureName);
 
 				return 1;
 			}
@@ -165,7 +165,7 @@ public class StructureCommand implements Command<CommandSource> {
 				structure.generate(cmd.getSource().getWorld(), new Random(), spawnPos);
 			}
 
-			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structure.spawn", AoACommand.CommandFeedbackType.SUCCESS, structureName, spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ());
+			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, structureName, spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ());
 		}
 		catch (ResourceLocationException ex) {
 			AoACommand.error(cmd.getSource(), "Structures", ex.getLocalizedMessage());
@@ -378,7 +378,7 @@ public class StructureCommand implements Command<CommandSource> {
 
 	private static class StructureIdArgument implements ArgumentType<ResourceLocation> {
 		private static final Collection<String> EXAMPLES = Arrays.asList("minecraft:bastion/starts", "aoa3:nether/nethengeic_pit/main_pool");
-		private static final DynamicCommandExceptionType UNKNOWN_STRUCTURE_EXCEPTION = new DynamicCommandExceptionType(arg -> new TranslationTextComponent("command.aoa.structure.invalidStructure", arg));
+		private static final DynamicCommandExceptionType UNKNOWN_STRUCTURE_EXCEPTION = new DynamicCommandExceptionType(arg -> new TranslationTextComponent("command.aoa.structures.invalidStructure", arg));
 		private static MinecraftServer server = null;
 
 		private static StructureIdArgument instance() {

@@ -561,7 +561,7 @@
   "advancements.aoa3.vox_ponds.root.title": "Это не кажется полезным для здоровья",
   "advancements.aoa3.vox_ponds.spray_and_wipe.description": "Победить Вокуслона, неизвестного",
   "advancements.aoa3.vox_ponds.spray_and_wipe.title": "Распылить и протереть",
-  "attribute.name.generic.reach_distance": "Reach Distance",
+  "attribute.name.generic.reachDistance": "Reach Distance",
   "biome.aoa3.abyss": "Бездна",
   "biome.aoa3.ancient_cavern": "Древняя пещера",
   "biome.aoa3.barathos": "Баратос",

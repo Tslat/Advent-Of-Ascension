@@ -77,7 +77,7 @@ public class CelevusTreeGenerator extends TreeGenerator {
 				case 0:
 					placeBlock(world, pos.add(0, i, 0), leavesBlock, true);
 
-					if (thickTwist && i > 0)
+					if (thickTwist)
 						placeBlock(world, pos.add(0, i - 1, 0), leavesBlock, true);
 
 					break;

@@ -49,7 +49,12 @@ public class FragmentedAnimaStone extends Item {
 				Block block = state.getBlock();
 
 				if (block instanceof SaplingBlock) {
-					((SaplingBlock)block).placeTree((ServerWorld)world, pos, state, world.rand);
+					int backupCounter = 10;
+
+					while (world.getBlockState(pos).getBlock() == state.getBlock() && backupCounter > 0) {
+						backupCounter--;
+						((SaplingBlock)block).placeTree((ServerWorld)world, pos, world.getBlockState(pos), world.getRandom());
+					}
 				}
 				else if (block instanceof CropsBlock) {
 					world.setBlockState(pos, ((CropsBlock)block).withAge(((CropsBlock)block).getMaxAge()), 2);

@@ -561,7 +561,7 @@
   "advancements.aoa3.vox_ponds.root.title": "This Doesn't Seem Healthy",
   "advancements.aoa3.vox_ponds.spray_and_wipe.description": "Defeat Voxxulon, the unknown",
   "advancements.aoa3.vox_ponds.spray_and_wipe.title": "Spray And Wipe",
-  "attribute.name.generic.reach_distance": "Reach Distance",
+  "attribute.name.generic.reachDistance": "Reach Distance",
   "biome.aoa3.abyss": "Abyss",
   "biome.aoa3.ancient_cavern": "Ancient Cavern",
   "biome.aoa3.barathos": "Barathos",

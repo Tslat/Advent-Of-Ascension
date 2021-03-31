@@ -134,7 +134,7 @@ public class BlankRealmstoneScreen extends Screen {
 			if (hoverTextKey != null) {
 				FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
 
-				hoverTexts.add(fontRenderer.trimStringToWidth(LocaleUtil.getLocaleString(hoverTextKey), 200));
+				hoverTexts.addAll(fontRenderer.listFormattedStringToWidth(LocaleUtil.getLocaleString(hoverTextKey), 200));
 			}
 
 			this.posX = posX;

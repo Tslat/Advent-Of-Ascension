@@ -561,7 +561,7 @@
   "advancements.aoa3.vox_ponds.root.title": "Mauvais pour la santé",
   "advancements.aoa3.vox_ponds.spray_and_wipe.description": "Éliminez Voxxulon, l'inconnu",
   "advancements.aoa3.vox_ponds.spray_and_wipe.title": "Asperger et nettoyer",
-  "attribute.name.generic.reach_distance": "Portée",
+  "attribute.name.generic.reachDistance": "Portée",
   "biome.aoa3.abyss": " Les Abysses",
   "biome.aoa3.ancient_cavern": "Caverne Antique",
   "biome.aoa3.barathos": "Barathos",

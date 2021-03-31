@@ -21,7 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public abstract class WebUtil {
-	private static boolean isUpdateAvailable = false;
+	private static Boolean isUpdateAvailable = null;
 	private static String latestVersion = AdventOfAscension.VERSION;
 
 	public static void doHTTPTasks() {
@@ -31,6 +31,9 @@ public abstract class WebUtil {
 		if (updateCheckResult.status == VersionChecker.Status.OUTDATED) {
 			isUpdateAvailable = true;
 			latestVersion = updateCheckResult.target.toString();
+		}
+		else {
+			isUpdateAvailable = false;
 		}
 	}
 
@@ -120,6 +123,9 @@ public abstract class WebUtil {
 	}
 
 	public static boolean isUpdateAvailable() {
+		if (isUpdateAvailable == null)
+			WebUtil.doHTTPTasks();
+
 		return isUpdateAvailable;
 	}
 

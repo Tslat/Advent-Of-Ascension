@@ -1,7 +1,6 @@
 package net.tslat.aoa3.entity.projectile.cannon;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -44,8 +43,8 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 	public void doImpactEffect() {
 		WorldUtil.createExplosion(owner, world, this, 1.5f);
 
-		if (!world.isRemote && WorldUtil.checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && world.isAirBlock(getPosition()) && !world.getDimension().doesWaterVaporize()) {
-			if (!WorldUtil.canModifyBlock(world, getPosition(), owner instanceof PlayerEntity ? owner : null))
+		if (!world.isRemote && WorldUtil.checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && world.getBlockState(getPosition().up()).getMaterial().isReplaceable() && !world.getDimension().doesWaterVaporize()) {
+			if (!WorldUtil.canModifyBlock(world, getPosition().up(), owner instanceof PlayerEntity ? owner : null))
 				return;
 
 			int i = 1;
@@ -57,7 +56,7 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 			if (getPosition().getY() - i <= 0)
 				return;
 
-			world.setBlockState(getPosition().down(i - 1), Blocks.WATER.getDefaultState().with(FlowingFluidBlock.LEVEL, 7));
+			world.setBlockState(getPosition().down(i - 1), Blocks.WATER.getDefaultState());
 		}
 	}
 }

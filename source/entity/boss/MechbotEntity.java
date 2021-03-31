@@ -112,7 +112,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 				jumpIntervalTimer--;
 
 				if (jumpIntervalTimer <= 0) {
-					setMotion(0.699, (target.getPosX() - getPosX()) * 0.045, (target.getPosZ() - getPosZ()) * 0.045);
+					setMotion((target.getPosX() - getPosX()) * 0.0459, 0.69, (target.getPosZ() - getPosZ()) * 0.045);
 					velocityChanged = true;
 
 					if (!world.isRemote) {
