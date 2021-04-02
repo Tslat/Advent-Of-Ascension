@@ -109,7 +109,7 @@ public class RockCritterEntity extends AoAMeleeMob {
     public void die(DamageSource cause) {
         super.die(cause);
 
-        if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.ANCIENT_CAVERN.key)) {
+        if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
             Entity source = cause.getEntity();
             ServerPlayerEntity killer = null;
 

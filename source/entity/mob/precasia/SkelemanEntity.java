@@ -71,7 +71,5 @@ public class SkelemanEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return null;
-	}
+	protected void playStepSound(BlockPos pos, BlockState block) {}
 }

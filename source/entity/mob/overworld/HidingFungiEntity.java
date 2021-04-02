@@ -16,6 +16,8 @@ import net.tslat.aoa3.util.skill.HunterUtil;
 public class HidingFungiEntity extends AoAMeleeMob {
 	public HidingFungiEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
+
+		xpReward = 0;
 	}
 
 	@Override

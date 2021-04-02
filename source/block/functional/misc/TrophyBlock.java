@@ -32,6 +32,7 @@ import net.tslat.aoa3.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -88,6 +89,9 @@ public class TrophyBlock extends WaterloggableBlock {
 	@Override
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getItemInHand(hand);
+
+		if (!WorldUtil.canModifyBlock(world, pos, player))
+			return ActionResultType.FAIL;
 
 		if (heldStack.getItem() instanceof SpawnEggItem) {
 			TileEntity tile = world.getBlockEntity(pos);

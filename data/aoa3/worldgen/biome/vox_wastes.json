@@ -8,8 +8,6 @@
   "downfall": 0.3,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 3694080,
     "water_color": 6787840,
     "water_fog_color": 6787840,
@@ -58,14 +56,20 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:alarmo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:centinel",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:destructor",
-        "weight": 1,
+        "type": "aoa3:toxxulous",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -76,19 +80,13 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:destructor",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:gadgetoid",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:alarmo",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:toxxulous",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

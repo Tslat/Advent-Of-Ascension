@@ -31,9 +31,7 @@ public class RunicGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return null;
-	}
+	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	@Override
 	public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {

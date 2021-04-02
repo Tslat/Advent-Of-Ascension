@@ -1,0 +1,16 @@
+{
+  "type": "thermal:sawmill",
+  "input": {
+    "item": "aoa3:irolog"
+  },
+  "energy": 1000,
+  "result": {
+    "item": "thermal:sawdust"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

@@ -15,7 +15,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -65,8 +64,21 @@ public abstract class AoAAnimal extends AnimalEntity {
 		return null;
 	}
 
+	@Nullable
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.COW_STEP;
+		return null;
+	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState block) {
+		SoundEvent stepSound = getStepSound(pos, block);
+
+		if (stepSound == null) {
+			super.playStepSound(pos, block);
+		}
+		else {
+			playSound(stepSound, 0.55f, 1.0F);
+		}
 	}
 
 	@Override
@@ -81,12 +93,6 @@ public abstract class AoAAnimal extends AnimalEntity {
 	@Nullable
 	protected Item getTemptItem() {
 		return null;
-	}
-
-	@Override
-	protected void playStepSound(BlockPos pos, BlockState block) {
-		if (getStepSound(pos, block) != null)
-			playSound(getStepSound(pos, block), 0.55f, 1.0F);
 	}
 
 	@Nullable

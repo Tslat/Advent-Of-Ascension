@@ -28,11 +28,11 @@ import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
 
 import java.util.Arrays;
 
-import net.minecraft.entity.projectile.AbstractArrowEntity.PickupStatus;
-
 public class CustomArrowEntity extends ArrowEntity {
 	protected BaseBow bow;
 	protected BaseCrossbow crossbow;
+
+	private boolean ignoreExplosions = false;
 
 	public CustomArrowEntity(EntityType<? extends ArrowEntity> type, World world) {
 		super(type, world);
@@ -135,6 +135,14 @@ public class CustomArrowEntity extends ArrowEntity {
 		super.tick();
 	}
 
+	@Override
+	public boolean ignoreExplosion() {
+		return ignoreExplosions;
+	}
+
+	public void setIgnoreExplosions() {
+		this.ignoreExplosions = true;
+	}
 
 	@Override
 	protected void onHit(RayTraceResult rayTrace) {

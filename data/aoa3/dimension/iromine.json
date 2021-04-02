@@ -26,6 +26,11 @@
             "separation": 6,
             "salt": 1802598006
           },
+          "aoa3:professors_lab": {
+            "spacing": 24,
+            "separation": 8,
+            "salt": 188192396
+          },
           "aoa3:charging_pads": {
             "spacing": 36,
             "separation": 10,

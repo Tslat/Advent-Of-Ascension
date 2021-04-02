@@ -21,7 +21,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
-import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityHandles;
 import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -33,7 +32,6 @@ import net.tslat.aoa3.util.*;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.List;
 
 public class BlankRealmstone extends Item {
@@ -97,30 +95,6 @@ public class BlankRealmstone extends Item {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
 		return new VolatileStackCapabilityProvider();
-	}
-
-	public static void handleAncientCavernTask(ItemStack stack, LivingEntity construct, PlayerEntity player) {
-		VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
-		HashMap<Class<? extends LivingEntity>, Long> constructKillMap;
-		long currentWorldTime = construct.level.getGameTime();
-
-		if (cap.getObject() == null) {
-			constructKillMap = new HashMap<Class<? extends LivingEntity>, Long>(5);
-		}
-		else {
-			constructKillMap = (HashMap<Class<? extends LivingEntity>, Long>)cap.getObject();
-		}
-
-		constructKillMap.entrySet().removeIf(entry -> entry.getValue() < currentWorldTime - 600);
-		constructKillMap.put(construct.getClass(), currentWorldTime);
-
-		if (constructKillMap.size() >= 5) {
-			stack.shrink(1);
-			ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.ANCIENT_CAVERN_REALMSTONE.get()));
-		}
-		else {
-			cap.setObject(constructKillMap);
-		}
 	}
 
 	@Override

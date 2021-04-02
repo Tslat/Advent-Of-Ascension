@@ -10,7 +10,6 @@
     "aoa3:overworld_chest_loot",
     "aoa3:additional_generic_chest_loot",
     "aoa3:dispenser_loot",
-    "aoa3:hauling_fish",
-    "aoa3:hauling_treasure"
+    "aoa3:hauling"
   ]
 }

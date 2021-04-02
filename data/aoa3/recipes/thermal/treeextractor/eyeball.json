@@ -1,0 +1,15 @@
+{
+  "type": "thermal:tree_extractor",
+  "trunk": "aoa3:eyeball_log",
+  "leaves": "aoa3:blood_leaves",
+  "result": {
+    "fluid": "thermal:resin",
+    "amount": 75
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

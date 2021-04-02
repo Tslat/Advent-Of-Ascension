@@ -8,8 +8,6 @@
   "downfall": 0.25,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 26880,
     "water_color": 255,
     "water_fog_color": 255,
@@ -41,13 +39,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:koko",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:kranky",
+        "type": "aoa3:tipsy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -59,25 +51,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:jumbo",
-        "weight": 2,
+        "type": "aoa3:kranky",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:happy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:stitches",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tipsy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -89,13 +69,31 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:bobo",
+        "type": "aoa3:koko",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
+        "type": "aoa3:jumbo",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sticky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stitches",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:bobo",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

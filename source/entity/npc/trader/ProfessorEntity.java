@@ -40,7 +40,6 @@ public class ProfessorEntity extends AoATrader {
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 1), new ItemStack(AoAItems.LYON_INGOT.get(), 5), new ItemStack(AoAItems.MECHA_GEAR.get(), 1), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 1), new ItemStack(Items.IRON_NUGGET, 5), new ItemStack(AoAItems.DISCHARGE_CAPSULE.get(), 8), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAItems.MAGNET_SHARD.get(), 2), new ItemStack(AoAItems.SILVRO_COIN.get(), 1), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 15), ItemStack.EMPTY, new ItemStack(AoAItems.SCRAP_METAL.get(), 1), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoABlocks.IRO_CRATE.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.GOLD_SPRING.get(), 1), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAWeapons.MINI_CANNON.get(), 1), new ItemStack(AoAWeapons.SUPER_CANNON.get(), 1), 0, 9999));

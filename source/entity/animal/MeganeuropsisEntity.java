@@ -28,8 +28,6 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 
-import net.minecraft.entity.ai.goal.Goal.Flag;
-
 public class MeganeuropsisEntity extends AoAAnimal {
 	private static final DataParameter<Boolean> LANDED = EntityDataManager.<Boolean>defineId(MeganeuropsisEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> START_LANDING_TICKS = EntityDataManager.<Integer>defineId(MeganeuropsisEntity.class, DataSerializers.INT);
@@ -102,9 +100,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return null;
-	}
+	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	@Override
 	public boolean causeFallDamage(float distance, float damageMultiplier) {

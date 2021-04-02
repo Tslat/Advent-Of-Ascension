@@ -2,6 +2,7 @@ package net.tslat.aoa3.worldgen.feature.features;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -19,10 +20,13 @@ public class RuneShrineFeature extends Feature<BlockStateFeatureConfig> {
 	@Override
 	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockStateFeatureConfig config) {
 		BlockState darkBricks = AoABlocks.DARK_BRICKS.get().defaultBlockState();
+		BlockPos.Mutable testPos = new BlockPos.Mutable().set(pos);
 
 		for (int x = 0; x <= 6; x++) {
 			for (int z = 0; z <= 6; z++) {
-				if (!reader.isEmptyBlock(new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z)))
+				BlockState state = reader.getBlockState(testPos.setWithOffset(pos, x, 0, z));
+
+				if (state.getBlock() != Blocks.WATER && !state.isAir(reader, testPos))
 					return false;
 			}
 		}

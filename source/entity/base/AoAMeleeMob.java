@@ -93,6 +93,14 @@ public abstract class AoAMeleeMob extends MonsterEntity {
 	protected void onHit(DamageSource source, float amount) {}
 
 	@Override
+	protected void playStepSound(BlockPos pos, BlockState blockIn) {
+		SoundEvent stepSound = getStepSound(pos, blockIn);
+
+		if (stepSound != null)
+			playSound(stepSound, 0.15F, 1.0F);
+	}
+
+	@Override
 	public boolean doHurtTarget(Entity target) {
 		if (super.doHurtTarget(target)) {
 			onAttack(target);
@@ -271,13 +279,5 @@ public abstract class AoAMeleeMob extends MonsterEntity {
 		}
 
 		calculateEntityAnimation(this, this instanceof IFlyingAnimal);
-	}
-
-	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-		SoundEvent stepSound = getStepSound(pos, blockIn);
-
-		if (stepSound != null)
-			playSound(stepSound, 0.15F, 1.0F);
 	}
 }

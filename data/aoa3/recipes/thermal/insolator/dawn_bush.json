@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:dawn_bush"
+  },
+  "result": {
+    "item": "aoa3:dawn_bush"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

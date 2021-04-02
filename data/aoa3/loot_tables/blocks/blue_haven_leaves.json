@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:alternatives",
@@ -35,6 +35,7 @@
                   ]
                 }
               ],
+              "weight": 100,
               "name": "aoa3:blue_haven_leaves"
             },
             {
@@ -54,6 +55,7 @@
                   ]
                 }
               ],
+              "weight": 100,
               "name": "aoa3:blue_haven_sapling"
             }
           ]
@@ -61,7 +63,7 @@
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
@@ -77,6 +79,7 @@
               ]
             }
           ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",

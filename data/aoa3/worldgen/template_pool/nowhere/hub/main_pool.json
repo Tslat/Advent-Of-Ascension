@@ -1,0 +1,48 @@
+{
+  "name": "aoa3:nowhere/hub/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:nowhere/hub/hub",
+        "processors": {
+          "processors": [
+            {
+              "trophy": {
+                "Properties": {
+                  "waterlogged": "false"
+                },
+                "Name": "aoa3:trophy"
+              },
+              "entity": "minecraft:shulker_bullet",
+              "processor_type": "aoa3:trophy_processor"
+            },
+            {
+              "trophy": {
+                "Properties": {
+                  "waterlogged": "false"
+                },
+                "Name": "aoa3:gold_trophy"
+              },
+              "entity": "minecraft:fireball",
+              "processor_type": "aoa3:trophy_processor"
+            },
+            {
+              "trophy": {
+                "Properties": {
+                  "waterlogged": "false"
+                },
+                "Name": "aoa3:ornate_trophy"
+              },
+              "entity": "minecraft:dragon_fireball",
+              "processor_type": "aoa3:trophy_processor"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

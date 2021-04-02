@@ -37,9 +37,11 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.*;
+import net.minecraftforge.event.entity.player.ItemFishedEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,7 +56,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.data.server.EntityStatsManager;
 import net.tslat.aoa3.entity.misc.AnimaStoneEntity;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
@@ -62,7 +63,6 @@ import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.ShyrelandsEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
 import net.tslat.aoa3.item.armour.AdventArmour;
-import net.tslat.aoa3.item.misc.BlankRealmstone;
 import net.tslat.aoa3.item.misc.ReservedItem;
 import net.tslat.aoa3.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.item.tool.misc.ExpFlask;
@@ -233,14 +233,6 @@ public class PlayerEvents {
 					if (ev.getEntityLiving() instanceof FlyingEntity)
 						ev.getEntityLiving().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
 				}
-				else if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.CRYSTEVIA.key)) {
-					if (ev.getEntity().getClass().toString().contains("Construct")) {
-						ItemStack blankRealmstoneStack = ItemUtil.getStackFromInventory((ServerPlayerEntity)ev.getSource().getEntity(), AoAItems.BLANK_REALMSTONE.get());
-
-						if (blankRealmstoneStack != null)
-							BlankRealmstone.handleAncientCavernTask(blankRealmstoneStack, ev.getEntityLiving(), (ServerPlayerEntity)ev.getSource().getEntity());
-					}
-				}
 			}
 		}
 	}
@@ -272,17 +264,11 @@ public class PlayerEvents {
 			ev.getEntityLiving().setNoGravity(false);
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onBlockBreak(final BlockEvent.BreakEvent ev) {
 		PlayerEntity pl = ev.getPlayer();
 		World world = pl.level;
 		BlockPos pos = ev.getPos();
-
-		if (!WorldUtil.canModifyBlock(world, pos, pl)) {
-			ev.setCanceled(true);
-
-			return;
-		}
 
 		if (pl instanceof ServerPlayerEntity) {
 			BlockState block = world.getBlockState(pos);
@@ -312,14 +298,8 @@ public class PlayerEvents {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onBlockPlace(final BlockEvent.EntityPlaceEvent ev) {
-		if (!WorldUtil.canModifyBlock(ev.getWorld(), ev.getPos(), ev.getEntity())) {
-			ev.setCanceled(true);
-
-			return;
-		}
-
 		if (ev.getEntity() instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)ev.getEntity();
 
@@ -328,18 +308,6 @@ public class PlayerEvents {
 					ev.getWorld().levelEvent(2005, ev.getPos(), 0);
 					pl.inventory.hurtArmor(DamageSource.GENERIC, 16);
 				}
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onEmptyBucketUse(final FillBucketEvent ev) {
-		if (WorldUtil.isWorld(ev.getWorld(), AoADimensions.ANCIENT_CAVERN.key, AoADimensions.IMMORTALLIS.key)) {
-			PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntity());
-
-			if (relevantPlayer == null || !relevantPlayer.isCreative()) {
-				ev.setCanceled(true);
-				ev.setResult(Event.Result.DENY);
 			}
 		}
 	}
@@ -388,7 +356,6 @@ public class PlayerEvents {
 			}
 
 			AoAHalos.syncWithNewClient(pl);
-			EntityStatsManager.syncWithClient(pl);
 
 			PlayerAdvancements plAdvancements = pl.getAdvancements();
 			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));

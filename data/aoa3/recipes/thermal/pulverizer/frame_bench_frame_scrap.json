@@ -1,0 +1,14 @@
+{
+  "type": "thermal:pulverizer",
+  "input": {
+    "tag": "aoa3:frame_bench_frame"
+  },
+  "energy": 3000,
+  "result": [],
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

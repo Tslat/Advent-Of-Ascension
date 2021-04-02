@@ -45,8 +45,6 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> SHADOWLORD_PLATFORM = register("shadowlord_platform", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/shadowlord_platform/main_pool"), 10, 40);
 	public static final RegistryObject<GenericAoAStructure> ILLUSION_TREE = register("illusion_tree", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/illusion_tree/main_pool"), 20, 40);
 
-	public static final RegistryObject<OneTimeStructure> ANCIENT_CAVERN = register("ancient_cavern", () -> new OneTimeStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "ancient_cavern/dungeon/main_pool"), 0, 1, 1);
-
 	public static final RegistryObject<GenericAoAStructure> BARON_CASTLE = register("baron_castle", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baron_castle/main_pool"), 11, 32);
 	public static final RegistryObject<GenericAoAStructure> BARONESS_ARENA = register("baroness_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baroness_arena/main_pool"), 12, 40);
 	public static final RegistryObject<GenericAoAStructure> BARONESS_HOUSE = register("baroness_house", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baroness_house/main_pool"), 8, 32);
@@ -81,7 +79,7 @@ public class AoAStructures {
 	public static final RegistryObject<UndergroundSurfaceStructure> DEEP_LOTTO_SHELTER = register("deep_lotto_shelter", () -> new UndergroundSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "deeplands/deep_lotto_shelter/main_pool"), 6, 18);
 	public static final RegistryObject<KrorCaveStructure> KROR_CAVE = register("kror_cave", () -> new KrorCaveStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "deeplands/kror_cave/main_pool"), 10, 26, 934827456);
 
-	public static final RegistryObject<GenericAoAStructure> PRIMORDIAL_SHRINE = register("primordial_shrine", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "dustopia/primordial_shrine/main_pool"), 8, 32);
+	public static final RegistryObject<FixedRotationStructure> PRIMORDIAL_SHRINE = register("primordial_shrine", () -> new FixedRotationStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "dustopia/primordial_shrine/main_pool"), 8, 32);
 	public static final RegistryObject<GenericAoAStructure> CRUSILISK_CAGE = register("crusilisk_cage", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "dustopia/crusilisk_cage/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> MERKYRE_TOWER = register("merkyre_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "dustopia/merkyre_tower/main_pool"), 8, 28);
 	public static final RegistryObject<GenericAoAStructure> ARKZYNE_OUTPOST = register("arkzyne_outpost", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "dustopia/arkzyne_outpost/main_pool"), 8, 28);
@@ -101,13 +99,11 @@ public class AoAStructures {
 	public static final RegistryObject<YPosStructure> FLOATING_LOTTO_FOUNTAIN = register("floating_lotto_fountain", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "haven/floating_lotto_fountain/main_pool"), 10, 26);
 	public static final RegistryObject<GenericAoAStructure> GUARDIAN_TOWER = register("guardian_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "haven/guardian_tower/main_pool"), 12, 40);
 
-	public static final RegistryObject<OneTimeStructure> IMMORTALLIS = register("immortallis", () -> new OneTimeStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "immortallis/dungeon/main_pool"), 0, 1, 1);
-
 	public static final RegistryObject<GenericAoAStructure> CHARGING_PADS = register("charging_pads", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/charging_pads/main_pool"), 10, 36);
 	public static final RegistryObject<GenericAoAStructure> ENFORCER_TOWER = register("enforcer_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/enforcer_tower/main_pool"), 6, 26);
 	public static final RegistryObject<GenericAoAStructure> IRO_PASSAGE = register("iro_passage", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/iro_passage/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> IRO_PILLAR = register("iro_pillar", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/iro_pillar/main_pool"), 6, 20);
-	public static final RegistryObject<GenericAoAStructure> MECHYON_TEMPLE = register("mecyhon_temple", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/mechyon_temple/main_pool"), 6, 20);
+	public static final RegistryObject<GenericAoAStructure> MECHYON_TEMPLE = register("mechyon_temple", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/mechyon_temple/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> PROFESSORS_LAB = register("professors_lab", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/professors_lab/main_pool"), 8, 24);
 
 	public static final RegistryObject<OceanFloorStructure> AMPHIBIYTE_COVE = register("amphibiyte_cove", () -> new OceanFloorStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/amphibiyte_cove/main_pool"), 8, 32);
@@ -159,6 +155,8 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> OBSERVATION_TOWER = register("observation_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/observation_tower/main_pool"), 8, 26);
 	public static final RegistryObject<GenericAoAStructure> VOX_LOTTO_OUTPOST = register("vox_lotto_outpost", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/vox_lotto_outpost/main_pool"), 8, 24);
 	public static final RegistryObject<GenericAoAStructure> VOXXULON_BEACON = register("voxxulon_beacon", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/voxxulon_beacon/main_pool"), 10, 32);
+
+	public static final RegistryObject<OneTimeStructure> NOWHERE_HUB = register("nowhere_hub", () -> new OneTimeStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "nowhere/hub/main_pool"), 0, 1);
 
 	private static <T extends net.minecraft.world.gen.feature.structure.Structure<?>> RegistryObject<T> register(String id, Supplier<T> structure, int minSeparation, int averageSpacing) {
 		return register(id, structure, minSeparation, averageSpacing, new Random(id.hashCode()).nextInt(Integer.MAX_VALUE), false, false);

@@ -1,8 +1,10 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.Block;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
@@ -11,6 +13,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 public final class AoATags {
 	public static class Blocks {
 		public static final Tags.IOptionalNamedTag<Block> GRASS = tag("grass");
+		public static final Tags.IOptionalNamedTag<Block> MUSHROOMS = tag("mushrooms");
 
 		public static final Tags.IOptionalNamedTag<Block> AMETHYST_ORE = tag("ores/amethyst");
 		public static final Tags.IOptionalNamedTag<Block> BARONYTE_ORE = tag("ores/baronyte");
@@ -79,6 +82,14 @@ public final class AoATags {
 
 		private static Tags.IOptionalNamedTag<Block> tag(String id) {
 			return BlockTags.createOptional(new ResourceLocation("forge", id));
+		}
+	}
+
+	public static class Fluids {
+		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = aoaTag("candied_water");
+
+		private static Tags.IOptionalNamedTag<Fluid> aoaTag(String id) {
+			return FluidTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));
 		}
 	}
 
@@ -191,16 +202,23 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> SKILL_CRYSTAL = aoaTag("skill_crystal");
 
 		public static final Tags.IOptionalNamedTag<Item> CURRENCY = tag("currency");
-		public static final Tags.IOptionalNamedTag<Item> COOKED_MEAT = tag("cooked_meat");
-		public static final Tags.IOptionalNamedTag<Item> RAW_MEAT = tag("raw_meat");
-		public static final Tags.IOptionalNamedTag<Item> FRESH_FISH = tag("fresh_fish");
 		public static final Tags.IOptionalNamedTag<Item> CANDY = tag("candy");
-		public static final Tags.IOptionalNamedTag<Item> COOKIE = tag("cookie");
 		public static final Tags.IOptionalNamedTag<Item> FRUIT = tag("fruit");
 		public static final Tags.IOptionalNamedTag<Item> MILK = tag("milk");
 		public static final Tags.IOptionalNamedTag<Item> GINGERBREAD = tag("gingerbread");
 		public static final Tags.IOptionalNamedTag<Item> MINTS = tag("mints");
 		public static final Tags.IOptionalNamedTag<Item> FOOD = tag("food");
+
+		public static final Tags.IOptionalNamedTag<Item> COOKIES = tag("cookies");
+		public static final Tags.IOptionalNamedTag<Item> RAWMEATS = tag("rawmeats");
+		public static final Tags.IOptionalNamedTag<Item> RAWBEEF = tag("rawbeef");
+		public static final Tags.IOptionalNamedTag<Item> RAWPORK = tag("rawpork");
+		public static final Tags.IOptionalNamedTag<Item> RAWCHICKEN = tag("rawchicken");
+		public static final Tags.IOptionalNamedTag<Item> RAWFISH = tag("rawfish");
+		public static final Tags.IOptionalNamedTag<Item> COOKEDFISH = tag("cookedfish");
+		public static final Tags.IOptionalNamedTag<Item> COOKEDCHICKEN = tag("cookedchicken");
+		public static final Tags.IOptionalNamedTag<Item> COOKEDPORK = tag("cookedpork");
+		public static final Tags.IOptionalNamedTag<Item> COOKEDBEEF = tag("cookedbeef");
 
 		private static Tags.IOptionalNamedTag<Item> aoaTag(String id) {
 			return ItemTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));

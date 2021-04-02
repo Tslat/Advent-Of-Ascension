@@ -1,0 +1,16 @@
+{
+  "type": "thermal:pulverizer",
+  "input": {
+    "item": "aoa3:armour_plating"
+  },
+  "result": {
+    "item": "aoa3:chitin",
+    "count": 4
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

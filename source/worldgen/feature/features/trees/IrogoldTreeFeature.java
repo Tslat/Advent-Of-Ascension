@@ -2,7 +2,8 @@ package net.tslat.aoa3.worldgen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SaplingBlock;
+import net.minecraft.block.Blocks;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -21,11 +22,11 @@ public class IrogoldTreeFeature extends AoATreeFeature {
 	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 
-		if ((sapling == null && rand.nextBoolean()) || multiSaplingPos == null) {
+		if ((isWorldGen && rand.nextBoolean()) || multiSaplingPos == null) {
 			return generateTree1(reader, rand, pos, isWorldGen);
 		}
 		else {
-			return generateTree2(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
+			return generateTree2(reader, rand, multiSaplingPos, isWorldGen);
 		}
 	}
 
@@ -71,6 +72,17 @@ public class IrogoldTreeFeature extends AoATreeFeature {
 
 		if (!checkAndPrepSoil(reader, pos, 2, isWorldGen))
 			return false;
+
+		BlockState baseSoil = reader.getBlockState(pos.below());
+
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
+				BlockPos testPos = pos.offset(x, -1, z);
+
+				if (reader.getBlockState(testPos).is(Blocks.AIR))
+					reader.setBlock(testPos, baseSoil, 2);
+			}
+		}
 
 		BlockState log = AoABlocks.IROLOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.IROGOLD_LEAVES.get().defaultBlockState();

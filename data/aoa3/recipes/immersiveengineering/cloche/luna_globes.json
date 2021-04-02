@@ -1,0 +1,29 @@
+{
+  "type": "immersiveengineering:cloche",
+  "results": [
+    {
+      "item": "aoa3:luna_globe"
+    },
+    {
+      "item": "aoa3:luna_globe_seeds",
+      "count": 2
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "immersiveengineering",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "input": {
+    "item": "aoa3:luna_globe_seeds"
+  },
+  "soil": {
+    "item": "minecraft:dirt"
+  },
+  "time": 480,
+  "render": {
+    "type": "crop",
+    "block": "aoa3:luna_globe_crop"
+  }
+}

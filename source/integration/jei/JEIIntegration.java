@@ -18,6 +18,7 @@ import net.tslat.aoa3.common.container.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.jei.ingredient.subtype.TrophySubtypeInterpreter;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeTransferInfo;
@@ -42,6 +43,9 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+		if (!IntegrationManager.isJEIActive())
+			return;
+
 		registration.addRecipeCatalyst(new ItemStack(AoABlocks.DIVINE_STATION.get()), UpgradeKitRecipeCategory.ID);
 		registration.addRecipeCatalyst(new ItemStack(AoABlocks.INFUSION_TABLE.get()), InfusionRecipeCategory.ID, ImbuingRecipeCategory.ID);
 		registration.addRecipeCatalyst(new ItemStack(AoABlocks.FRAME_BENCH.get()), FrameBenchRecipeCategory.ID);
@@ -50,6 +54,9 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+		if (!IntegrationManager.isJEIActive())
+			return;
+
 		registration.addRecipeTransferHandler(new UpgradeKitRecipeTransferInfo());
 		registration.addRecipeTransferHandler(new ImbuingRecipeTransferInfo());
 		registration.addRecipeTransferHandler(new InfusionRecipeTransferInfo());
@@ -59,7 +66,7 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		if (Minecraft.getInstance().getConnection() == null)
+		if (Minecraft.getInstance().getConnection() == null || !IntegrationManager.isJEIActive())
 			return;
 
 		RecipeManager recipeManager = Minecraft.getInstance().getConnection().getRecipeManager();
@@ -73,6 +80,9 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registration) {
+		if (!IntegrationManager.isJEIActive())
+			return;
+
 		registration.addRecipeCategories(
 				new UpgradeKitRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
 				new ImbuingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
@@ -84,6 +94,9 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration registration) {
+		if (!IntegrationManager.isJEIActive())
+			return;
+
 		registration.registerSubtypeInterpreter(AoABlocks.TROPHY.get().asItem(), TrophySubtypeInterpreter.INSTANCE);
 		registration.registerSubtypeInterpreter(AoABlocks.GOLD_TROPHY.get().asItem(), TrophySubtypeInterpreter.INSTANCE);
 		registration.registerSubtypeInterpreter(AoABlocks.ORNATE_TROPHY.get().asItem(), TrophySubtypeInterpreter.INSTANCE);

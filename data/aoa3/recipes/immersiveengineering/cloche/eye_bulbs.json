@@ -1,0 +1,26 @@
+{
+  "type": "immersiveengineering:cloche",
+  "results": [
+    {
+      "item": "aoa3:eye_bulb",
+      "count": 3
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "immersiveengineering",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "input": {
+    "item": "aoa3:eye_bulb"
+  },
+  "soil": {
+    "item": "minecraft:dirt"
+  },
+  "time": 560,
+  "render": {
+    "type": "crop",
+    "block": "aoa3:eye_bulb_crop"
+  }
+}

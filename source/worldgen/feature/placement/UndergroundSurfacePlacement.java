@@ -34,12 +34,12 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 			return Stream.empty();
 
 		if (config.onCeiling)
-			return Stream.of(findRoofPosition(helper, checkPos, config, x, z).immutable());
+			return findRoofPosition(helper, checkPos, config, x, z);
 
-		return Stream.of(findFloorPosition(helper, checkPos, config, x, z).immutable());
+		return findFloorPosition(helper, checkPos, config, x, z);
 	}
 
-	private BlockPos findRoofPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
+	private Stream<BlockPos> findRoofPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
 		int roofPos = helper.getGenDepth();
 
 		if (!isEmptyPosition(helper, startPos)) {
@@ -50,22 +50,25 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 			}
 
 			if (startPos.getY() < 0)
-				return new BlockPos(x, roofPos - 1, z);
+				return Stream.of(new BlockPos(x, roofPos - 1, z));
 
-			return startPos.immutable();
+			return Stream.of(startPos.immutable());
 		}
 
 		while (startPos.getY() < roofPos && isEmptyPosition(helper, startPos)) {
 			startPos.move(Direction.UP);
 		}
 
+		if (startPos.getY() >= roofPos)
+			return Stream.empty();
+
 		if (config.onSurface)
 			startPos.move(Direction.DOWN);
 
-		return startPos.immutable();
+		return Stream.of(startPos.immutable());
 	}
 
-	private BlockPos findFloorPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
+	private Stream<BlockPos> findFloorPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
 		int roofPos = helper.getGenDepth();
 
 		if (!isEmptyPosition(helper, startPos)) {
@@ -76,19 +79,22 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 			}
 
 			if (startPos.getY() >= roofPos)
-				return new BlockPos(x, 1, z);
+				return Stream.of(new BlockPos(x, 1, z));
 
-			return startPos.immutable();
+			return Stream.of(startPos.immutable());
 		}
 
 		while (startPos.getY() > 0 && isEmptyPosition(helper, startPos)) {
 			startPos.move(Direction.DOWN);
 		}
 
+		if (startPos.getY() <= 0)
+			return Stream.empty();
+
 		if (config.onSurface)
 			startPos.move(Direction.UP);
 
-		return startPos.immutable();
+		return Stream.of(startPos.immutable());
 	}
 
 	private boolean isEmptyPosition(WorldDecoratingHelper helper, BlockPos pos) {

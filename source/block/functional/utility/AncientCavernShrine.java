@@ -30,7 +30,7 @@ public class AncientCavernShrine extends Block {
 
 	@Override
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player instanceof ServerPlayerEntity && !player.isShiftKeyDown() && WorldUtil.isWorld(world, AoADimensions.ANCIENT_CAVERN.key)) {
+		if (player instanceof ServerPlayerEntity && !player.isShiftKeyDown() && WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 			BlockPos teleportPos = new BlockPos(0, 17, 0);
 

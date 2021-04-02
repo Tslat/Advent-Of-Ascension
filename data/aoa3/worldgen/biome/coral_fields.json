@@ -8,8 +8,6 @@
   "downfall": 0.9,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 255,
     "water_color": 255,
     "water_fog_color": 255,
@@ -47,31 +45,31 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:neptuno",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:angler",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:muncher",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sea_viper",
-        "weight": 20,
+        "type": "aoa3:neptuno",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:coralon",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:muncher",
+        "weight": 8,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sea_viper",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -89,6 +87,12 @@
     "water_creature": [],
     "water_ambient": [
       {
+        "type": "minecraft:cod",
+        "weight": 13,
+        "minCount": 1,
+        "maxCount": 4
+      },
+      {
         "type": "aoa3:coratee",
         "weight": 7,
         "minCount": 2,
@@ -99,12 +103,6 @@
         "weight": 10,
         "minCount": 3,
         "maxCount": 7
-      },
-      {
-        "type": "minecraft:cod",
-        "weight": 13,
-        "minCount": 1,
-        "maxCount": 4
       },
       {
         "type": "minecraft:salmon",

@@ -8,8 +8,6 @@
   "downfall": 0.95,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 7907327,
     "water_color": 4159204,
     "water_fog_color": 329011,
@@ -57,25 +55,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:tortione",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:dyrehorn",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:deinotherium",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sabretooth",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -87,8 +67,26 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:deinotherium",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:terradon",
         "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sabretooth",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tortione",
+        "weight": 3,
         "minCount": 1,
         "maxCount": 1
       }

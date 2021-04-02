@@ -66,7 +66,7 @@ public class FlashEntity extends AoAMeleeMob {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (!level.isClientSide && DamageUtil.isMeleeDamage(source)) {
-			if (WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+			if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
 				switch (random.nextInt(3)) {
 					case 0:
 						teleportTo(235, 22, 10);
@@ -92,7 +92,7 @@ public class FlashEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (!level.isClientSide) {
-			if (WorldUtil.isWorld(level, AoADimensions.IMMORTALLIS.key)) {
+			if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
 				switch (random.nextInt(3)) {
 					case 0:
 						teleportTo(235, 22, 10);

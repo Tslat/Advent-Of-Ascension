@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 10,
+          "quality": -2
+        },
+        {
+          "type": "minecraft:loot_table",
+          "conditions": [
+            {
+              "condition": "minecraft:entity_properties",
+              "predicate": {
+                "fishing_hook": {
+                  "in_open_water": true
+                }
+              },
+              "entity": "this"
+            }
+          ],
+          "weight": 100,
+          "quality": 2,
+          "name": "aoa3:skills/hauling_treasure"
+        },
+        {
+          "type": "minecraft:loot_table",
+          "weight": 85,
+          "quality": -1,
+          "name": "aoa3:skills/hauling_fish"
+        }
+      ]
+    }
+  ]
+}

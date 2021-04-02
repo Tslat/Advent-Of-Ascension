@@ -2,7 +2,7 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "main_loot",
+      "name": "main",
       "rolls": 1,
       "entries": [
         {

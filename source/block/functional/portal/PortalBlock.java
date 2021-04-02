@@ -36,7 +36,6 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
 import net.tslat.aoa3.worldgen.worlds.abyss.AbyssTeleporter;
-import net.tslat.aoa3.worldgen.worlds.ancientcavern.AncientCavernTeleporter;
 import net.tslat.aoa3.worldgen.worlds.barathos.BarathosTeleporter;
 import net.tslat.aoa3.worldgen.worlds.candyland.CandylandTeleporter;
 import net.tslat.aoa3.worldgen.worlds.celeve.CeleveTeleporter;
@@ -47,13 +46,13 @@ import net.tslat.aoa3.worldgen.worlds.dustopia.DustopiaTeleporter;
 import net.tslat.aoa3.worldgen.worlds.gardencia.GardenciaTeleporter;
 import net.tslat.aoa3.worldgen.worlds.greckon.GreckonTeleporter;
 import net.tslat.aoa3.worldgen.worlds.haven.HavenTeleporter;
-import net.tslat.aoa3.worldgen.worlds.immortallis.ImmortallisTeleporter;
 import net.tslat.aoa3.worldgen.worlds.iromine.IromineTeleporter;
 import net.tslat.aoa3.worldgen.worlds.lborean.LBoreanTeleporter;
 import net.tslat.aoa3.worldgen.worlds.lelyetia.LelyetiaTeleporter;
 import net.tslat.aoa3.worldgen.worlds.lunalus.LunalusTeleporter;
 import net.tslat.aoa3.worldgen.worlds.mysterium.MysteriumTeleporter;
 import net.tslat.aoa3.worldgen.worlds.nether.NetherTeleporter;
+import net.tslat.aoa3.worldgen.worlds.nowhere.NowhereTeleporter;
 import net.tslat.aoa3.worldgen.worlds.precasia.PrecasiaTeleporter;
 import net.tslat.aoa3.worldgen.worlds.runandor.RunandorTeleporter;
 import net.tslat.aoa3.worldgen.worlds.shyrelands.ShyrelandsTeleporter;
@@ -277,8 +276,6 @@ public class PortalBlock extends Block {
 		switch (aoaDim) {
 			case ABYSS:
 				return new AbyssTeleporter();
-			case ANCIENT_CAVERN:
-				return new AncientCavernTeleporter();
 			case BARATHOS:
 				return new BarathosTeleporter();
 			case CANDYLAND:
@@ -299,8 +296,6 @@ public class PortalBlock extends Block {
 				return new GreckonTeleporter();
 			case HAVEN:
 				return new HavenTeleporter();
-			case IMMORTALLIS:
-				return new ImmortallisTeleporter();
 			case IROMINE:
 				return new IromineTeleporter();
 			case LBOREAN:
@@ -311,6 +306,8 @@ public class PortalBlock extends Block {
 				return new LunalusTeleporter();
 			case MYSTERIUM:
 				return new MysteriumTeleporter();
+			case NOWHERE:
+				return new NowhereTeleporter();
 			case PRECASIA:
 				return new PrecasiaTeleporter();
 			case RUNANDOR:

@@ -32,8 +32,6 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 
-import net.minecraft.entity.ai.goal.Goal.Flag;
-
 public class ShikEntity extends AoAAnimal {
 	private static final DataParameter<Boolean> SCARED = EntityDataManager.<Boolean>defineId(ShikEntity.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> DANCING = EntityDataManager.<Boolean>defineId(ShikEntity.class, DataSerializers.BOOLEAN);
@@ -78,9 +76,7 @@ public class ShikEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return null;
-	}
+	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	public boolean isScared() {
 		return entityData.get(SCARED);

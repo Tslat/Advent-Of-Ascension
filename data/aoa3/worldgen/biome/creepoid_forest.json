@@ -8,8 +8,6 @@
   "downfall": 0.6,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 7645696,
     "water_color": 28679,
     "water_fog_color": 28679,
@@ -53,20 +51,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:creepuple",
-        "weight": 40,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:creeperlock",
+        "type": "aoa3:magical_creeper",
         "weight": 25,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:creepird",
-        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       },
@@ -77,8 +63,32 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:creeperlock",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:bone_creeper",
         "weight": 40,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:creepird",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:host",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:cave_creepoid",
+        "weight": 25,
         "minCount": 1,
         "maxCount": 1
       },
@@ -89,27 +99,15 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:cave_creepoid",
-        "weight": 25,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "minecraft:creeper",
         "weight": 40,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:magical_creeper",
-        "weight": 25,
+        "type": "aoa3:creepuple",
+        "weight": 40,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:host",
-        "weight": 1,
-        "minCount": 0,
         "maxCount": 1
       }
     ],

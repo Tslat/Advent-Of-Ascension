@@ -13,12 +13,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.container.recipe.FrameBenchRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RenderUtil;
 
 public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecipe> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench");
@@ -61,26 +61,26 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	public void draw(FrameBenchRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 
-		drawButton(mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
-		drawButton(mc, AoAItems.BLASTER_FRAME.get(), recipe, 65, 1);
-		drawButton(mc, AoAItems.CANNON_FRAME.get(), recipe, 85, 1);
-		drawButton(mc, AoAItems.HELMET_FRAME.get(), recipe, 35, 21);
-		drawButton(mc, AoAItems.CHESTPLATE_FRAME.get(), recipe, 55, 21);
-		drawButton(mc, AoAItems.LEGGINGS_FRAME.get(), recipe, 75, 21);
-		drawButton(mc, AoAItems.BOOTS_FRAME.get(), recipe, 95, 21);
-		drawButton(mc, AoAItems.GUN_FRAME.get(), recipe, 45, 41);
-		drawButton(mc, AoAItems.SHOTGUN_FRAME.get(), recipe, 65, 41);
-		drawButton(mc, AoAItems.SNIPER_FRAME.get(), recipe, 85, 41);
+		drawButton(matrix, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
+		drawButton(matrix, mc, AoAItems.BLASTER_FRAME.get(), recipe, 65, 1);
+		drawButton(matrix, mc, AoAItems.CANNON_FRAME.get(), recipe, 85, 1);
+		drawButton(matrix, mc, AoAItems.HELMET_FRAME.get(), recipe, 35, 21);
+		drawButton(matrix, mc, AoAItems.CHESTPLATE_FRAME.get(), recipe, 55, 21);
+		drawButton(matrix, mc, AoAItems.LEGGINGS_FRAME.get(), recipe, 75, 21);
+		drawButton(matrix, mc, AoAItems.BOOTS_FRAME.get(), recipe, 95, 21);
+		drawButton(matrix, mc, AoAItems.GUN_FRAME.get(), recipe, 45, 41);
+		drawButton(matrix, mc, AoAItems.SHOTGUN_FRAME.get(), recipe, 65, 41);
+		drawButton(matrix, mc, AoAItems.SNIPER_FRAME.get(), recipe, 85, 41);
 	}
 
-	private void drawButton(Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
+	private void drawButton(MatrixStack matrix, Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
 		mc.getTextureManager().bind(texture);
-		RenderSystem.pushMatrix();
+		matrix.pushPose();
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		GuiUtils.drawTexturedModalRect(x, y, 176, recipe.getResultItem().getItem() == frame ? 21 : 39, 18, 18, 0);
-		RenderSystem.translatef(0, 0, 32);
-		mc.getItemRenderer().renderGuiItem(new ItemStack(frame), x + 1, y + 1);
-		RenderSystem.popMatrix();
+		RenderUtil.renderCustomSizedTexture(matrix, x, y, 176, recipe.getResultItem().getItem() == frame ? 21 : 39, 18, 18, 256, 256);
+		matrix.translate(0, 0, 32);
+		RenderUtil.renderItemInGui(matrix, mc, new ItemStack(frame), x + 1, y + 1);
+		matrix.popPose();
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 	}
 

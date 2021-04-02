@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
@@ -17,7 +18,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.tslat.aoa3.common.registration.AoAArmour;
 import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.util.player.PlayerUtil;
 import net.tslat.aoa3.util.skill.HunterUtil;
@@ -340,6 +340,8 @@ public abstract class DamageUtil {
 	}
 
 	public static boolean isPlayerEnvironmentallyProtected(ServerPlayerEntity player) {
-		return PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HAZMAT) || player.inventory.armor.get(EquipmentSlotType.HEAD.getIndex()).getItem() == AoAArmour.FACE_MASK.get();
+		Item helmet = player.inventory.armor.get(EquipmentSlotType.HEAD.getIndex()).getItem();
+
+		return helmet instanceof AdventArmour && ((AdventArmour)helmet).isHelmetAirTight(player);
 	}
 }

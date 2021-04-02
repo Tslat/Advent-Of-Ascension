@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "aoa3:abyss_portal",
-    "aoa3:ancient_cavern_portal",
     "aoa3:barathos_portal",
     "aoa3:borean_portal",
     "aoa3:candyland_portal",
@@ -14,15 +13,16 @@
     "aoa3:gardencia_portal",
     "aoa3:greckon_portal",
     "aoa3:haven_portal",
-    "aoa3:immortallis_portal",
     "aoa3:iromine_portal",
     "aoa3:lelyetia_portal",
     "aoa3:lunalus_portal",
     "aoa3:mysterium_portal",
     "aoa3:nether_portal",
+    "aoa3:nowhere_portal",
     "aoa3:precasia_portal",
     "aoa3:runandor_portal",
     "aoa3:shyrelands_portal",
-    "aoa3:vox_ponds_portal"
+    "aoa3:vox_ponds_portal",
+    "aoa3:nowhere_activity_portal"
   ]
 }

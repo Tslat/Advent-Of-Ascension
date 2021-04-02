@@ -1,14 +1,21 @@
 package net.tslat.aoa3.event.dimension;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class LunalusEvents {
 	public static void doPlayerTick(PlayerEntity pl) {
-		if (!pl.level.isClientSide()) {
+		if (!pl.level.isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
 			if (pl.getY() <= -25)
 				pl.teleportTo(pl.getX(), 350, pl.getZ());
+
+			if (!DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)pl))
+				pl.hurt(new DamageSource("suffocation").bypassArmor().bypassMagic(), 1f);
 		}
 
 		if (pl.flyingSpeed < 0.05f)

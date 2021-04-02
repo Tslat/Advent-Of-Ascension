@@ -18,7 +18,6 @@ public final class AoABiomes {
 	public static void registerBiomeTypes() {
 		applyBiomeTypes("abyss", BiomeDictionary.Type.DEAD, BiomeDictionary.Type.COLD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY);
 		applyBiomeTypes("abyssal_vents", BiomeDictionary.Type.DEAD, BiomeDictionary.Type.HOT, BiomeDictionary.Type.WASTELAND);
-		applyBiomeTypes("ancient_cavern", BiomeDictionary.Type.VOID);
 		applyBiomeTypes("barathos", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.DRY);
 		applyBiomeTypes("candyland", BiomeDictionary.Type.MAGICAL);
 		applyBiomeTypes("celeve", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.VOID);
@@ -29,12 +28,12 @@ public final class AoABiomes {
 		applyBiomeTypes("gardencia", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.WET, BiomeDictionary.Type.HILLS);
 		applyBiomeTypes("greckon", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.MAGICAL);
 		applyBiomeTypes("haven", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID);
-		applyBiomeTypes("immortallis", BiomeDictionary.Type.VOID);
 		applyBiomeTypes("iromine", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE);
 		applyBiomeTypes("lborean", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.WATER);
 		applyBiomeTypes("lelyetia", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT, BiomeDictionary.Type.VOID);
 		applyBiomeTypes("lunalus", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID, BiomeDictionary.Type.SPARSE);
 		applyBiomeTypes("mysterium", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MUSHROOM);
+		applyBiomeTypes("nowhere", BiomeDictionary.Type.VOID);
 		applyBiomeTypes("precasia", BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPARSE);
 		applyBiomeTypes("runandor", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.MOUNTAIN);
 		applyBiomeTypes("shyrelands", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT);

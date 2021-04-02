@@ -1,0 +1,14 @@
+{
+  "type": "thermal:pulverizer",
+  "input": {
+    "item": "aoa3:chocolate_block"
+  },
+  "energy": 3000,
+  "result": [],
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

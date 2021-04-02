@@ -8,8 +8,6 @@
   "downfall": 0.65,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 7907327,
     "water_color": 13158600,
     "water_fog_color": 13158600,
@@ -50,14 +48,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:rock_crawler",
+        "type": "aoa3:rockbiter",
         "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:case_construct",
-        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -68,25 +60,31 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:case_construct",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:cave_creep",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:rock_critter",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:rockbiter",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:dweller",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:rock_crawler",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:rock_critter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -102,13 +100,13 @@
     ],
     "ambient": [
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:extraction_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:extraction_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

@@ -26,12 +26,19 @@ public class LiquidDrainFeature extends Feature<LiquidDrainConfig> {
 
 		BlockState fillState = config.fill ? config.fluid.createLegacyBlock() : Blocks.AIR.defaultBlockState();
 
-		reader.setBlock(placementPos, config.fluid.createLegacyBlock(), 1 | 2 | 16); // Water not flowing, find fix
+		reader.setBlock(placementPos, config.fluid.createLegacyBlock(), 2);
 		placementPos.move(config.inverseDirection ? Direction.UP : Direction.DOWN);
 
 		while ((config.inverseDirection ? placementPos.getY() < reader.getMaxBuildHeight() : placementPos.getY() >= 0) && !config.stopBlocks.contains(reader.getBlockState(placementPos))) {
 			reader.setBlock(placementPos, fillState, 2);
 			placementPos.move(config.inverseDirection ? Direction.UP : Direction.DOWN);
+		}
+
+		if (config.fill) {
+			reader.getLiquidTicks().scheduleTick(placementPos.move(config.inverseDirection ? Direction.DOWN : Direction.UP), config.fluid.getType(), 0);
+		}
+		else {
+			reader.getLiquidTicks().scheduleTick(pos, config.fluid.getType(), 0);
 		}
 
 		return true;

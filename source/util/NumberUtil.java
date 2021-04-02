@@ -57,4 +57,21 @@ public abstract class NumberUtil {
 
 		return String.valueOf(val);
 	}
+
+	public static boolean isWithinArea(int x, int y, int minX, int minY, int maxX, int maxY) {
+		return isWithinArea(x, y, 0, minX, minY, 0, maxX, maxY, 0);
+	}
+
+	public static boolean isWithinArea(int x, int y, int z, int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+		if (x != 0 && x < minX || x > maxX)
+			return false;
+
+		if (y != 0 && y < minY || y > maxY)
+			return false;
+
+		if (z != 0 && z < minZ || z > maxZ)
+			return false;
+
+		return true;
+	}
 }

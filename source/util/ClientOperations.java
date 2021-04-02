@@ -25,6 +25,7 @@ import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.data.client.BestiaryManager;
 import net.tslat.aoa3.data.client.GuidesManager;
 import net.tslat.aoa3.data.client.MiscTextFileManager;
+import net.tslat.aoa3.data.client.RealmstoneInsertsManager;
 import net.tslat.aoa3.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.item.misc.WornBook;
 import net.tslat.aoa3.util.constant.Deities;
@@ -79,6 +80,7 @@ public abstract class ClientOperations {
 		resourceManager.registerReloadListener(new GuidesManager());
 		resourceManager.registerReloadListener(new BestiaryManager());
 		resourceManager.registerReloadListener(new MiscTextFileManager());
+		resourceManager.registerReloadListener(new RealmstoneInsertsManager());
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
@@ -117,9 +119,9 @@ public abstract class ClientOperations {
 			if (mc.getSoundManager().soundEngine.getVolume(SoundCategory.MASTER) > 0) {
 				if (silencer.distanceToSqr(mc.player) < 8 * 8) {
 					SilencerEntity.isClientNearby = true;
-					SilencerEntity.prevVolume = mc.getSoundManager().soundEngine.getVolume(SoundCategory.MASTER);
+					SilencerEntity.previousGain = mc.getSoundManager().soundEngine.listener.getGain();
 
-					mc.getSoundManager().updateSourceVolume(SoundCategory.MASTER, 0);
+					mc.getSoundManager().soundEngine.listener.setGain(0);
 				}
 			}
 		}

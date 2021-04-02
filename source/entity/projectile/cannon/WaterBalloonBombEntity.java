@@ -1,7 +1,6 @@
 package net.tslat.aoa3.entity.projectile.cannon;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -59,7 +58,7 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 			if (blockPosition().getY() - i <= 0)
 				return;
 
-			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.WATER.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, 7));
+			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.WATER.defaultBlockState());
 		}
 	}
 }

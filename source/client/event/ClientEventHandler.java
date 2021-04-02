@@ -11,7 +11,6 @@ import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -201,7 +200,7 @@ public class ClientEventHandler {
 
 			if (player == null || player.level.getEntitiesOfClass(SilencerEntity.class, player.getBoundingBox().inflate(8)).isEmpty()) {
 				SilencerEntity.isClientNearby = false;
-				Minecraft.getInstance().getSoundManager().updateSourceVolume(SoundCategory.MASTER, SilencerEntity.prevVolume);
+				Minecraft.getInstance().getSoundManager().soundEngine.listener.setGain(SilencerEntity.previousGain);
 			}
 		}
 	}

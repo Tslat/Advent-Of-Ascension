@@ -41,10 +41,8 @@ public class VineWizardEntity extends AoARangedMob {
         return 1.875f;
     }
 
-	@Override
-    protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-        return null;
-    }
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState block) {}
 
     @Nullable
     @Override

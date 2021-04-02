@@ -8,8 +8,6 @@
   "downfall": 0.95,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 0,
     "water_color": 13369446,
     "water_fog_color": 13369446,
@@ -60,13 +58,19 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:construct_of_range",
+        "type": "aoa3:construct_of_strength",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_terror",
+        "type": "aoa3:construct_of_mind",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:construct_of_range",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -84,19 +88,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_mind",
-        "weight": 2,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:construct_of_speed",
+        "type": "aoa3:construct_of_terror",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_strength",
+        "type": "aoa3:construct_of_speed",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

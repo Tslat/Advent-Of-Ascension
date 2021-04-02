@@ -24,11 +24,11 @@ public class UpToSurfacePlacement extends HeightmapBasedPlacement<IntRangeConfig
 	public Stream<BlockPos> getPositions(WorldDecoratingHelper helper, Random rand, IntRangeConfig config, BlockPos pos) {
 		int x = pos.getX();
 		int z = pos.getZ();
-		int y = helper.getHeight(type(config), x, z);
+		int y = rand.nextInt(1 + helper.getHeight(type(config), x, z));
 
 		if (y < Math.max(0, config.min) || y > config.max)
 			return Stream.empty();
 
-		return Stream.of(new BlockPos(x, rand.nextInt(y), z));
+		return Stream.of(new BlockPos(x, y, z));
 	}
 }

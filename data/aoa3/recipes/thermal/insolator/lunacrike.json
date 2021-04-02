@@ -1,0 +1,13 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:lunacrike_seeds"
+  },
+  "result": [],
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

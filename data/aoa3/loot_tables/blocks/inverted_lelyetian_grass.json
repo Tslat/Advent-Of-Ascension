@@ -24,6 +24,7 @@
                   }
                 }
               ],
+              "weight": 100,
               "name": "aoa3:inverted_lelyetian_grass"
             },
             {
@@ -33,6 +34,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
+              "weight": 100,
               "name": "aoa3:lelyetian_stone"
             }
           ]

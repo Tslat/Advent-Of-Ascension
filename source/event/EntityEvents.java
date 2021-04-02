@@ -73,8 +73,12 @@ public class EntityEvents {
 
 					float hunterXp = HunterUtil.getHunterXp(entity);
 
-					if (hunterXp == -1 && !PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)killerPlayer, Skills.HUNTER, 10))
-						hunterXp = (float)RandomUtil.randomValueBetween(2, 10);
+					if (hunterXp == -1) {
+						int lvl = PlayerUtil.getAdventPlayer((ServerPlayerEntity)killerPlayer).stats().getLevel(Skills.HUNTER);
+
+						if (AoAConfig.COMMON.skillsEnabled.get() && lvl < 15)
+							hunterXp = (float)RandomUtil.randomValueBetween(1, 5) * lvl / 2f;
+					}
 
 					if (hunterXp > 0)
 						PlayerUtil.giveXpToPlayer((ServerPlayerEntity)killerPlayer, Skills.HUNTER, hunterXp);
@@ -156,13 +160,6 @@ public class EntityEvents {
 	@SubscribeEvent
 	public static void onLootDrops(LivingDropsEvent ev) {
 		if (!ev.getEntityLiving().level.isClientSide) {
-			if (WorldUtil.isWorld(ev.getEntityLiving().level, AoADimensions.ANCIENT_CAVERN.key) && ev.getEntityLiving().canChangeDimensions()) {
-				ev.getDrops().clear();
-				ev.setCanceled(true);
-
-				return;
-			}
-
 			if (HunterUtil.isHunterCreature(ev.getEntityLiving())) {
 				if (!ev.isRecentlyHit() || !(ev.getSource().getEntity() instanceof PlayerEntity) || (!HunterUtil.canAttackTarget(ev.getEntityLiving(), ev.getSource().getEntity(), false))) {
 					ev.getDrops().clear();

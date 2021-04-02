@@ -6,6 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 100,
           "name": "aoa3:mystite_ore"
         }
       ],

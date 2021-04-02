@@ -19,7 +19,7 @@
                 "decorator": {
                   "config": {
                     "direction": "down",
-                    "amount": 5
+                    "amount": 4
                   },
                   "type": "aoa3:offset"
                 }

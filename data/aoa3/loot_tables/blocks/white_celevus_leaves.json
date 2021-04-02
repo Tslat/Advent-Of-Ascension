@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
@@ -32,12 +32,13 @@
               ]
             }
           ],
+          "weight": 100,
           "name": "aoa3:white_celevus_leaves"
         }
       ]
     },
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
@@ -53,6 +54,7 @@
               ]
             }
           ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",

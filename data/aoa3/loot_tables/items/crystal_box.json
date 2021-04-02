@@ -2,26 +2,27 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "main_loot",
+      "name": "crystals",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 10,
           "name": "aoa3:giant_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 40,
           "name": "aoa3:large_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 13,
+          "weight": 130,
           "name": "aoa3:medium_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 28,
+          "weight": 280,
           "name": "aoa3:small_skill_crystal"
         }
       ]

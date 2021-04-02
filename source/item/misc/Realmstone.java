@@ -12,14 +12,14 @@ public class Realmstone extends Item {
 	private final RegistryObject<Block> portalBlock;
 	@Nullable
 	private final RegistryObject<SoundEvent> activationSound;
-	private final String portalMessageSuffix;
+	private final String dimensionMsgSuffix;
 
-	public Realmstone(RegistryObject<Block> portalBlock, @Nullable RegistryObject<SoundEvent> activationSound, String portalMessageSuffix) {
+	public Realmstone(RegistryObject<Block> portalBlock, @Nullable RegistryObject<SoundEvent> activationSound, String dimension) {
 		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
 
 		this.portalBlock = portalBlock;
 		this.activationSound = activationSound;
-		this.portalMessageSuffix = portalMessageSuffix;
+		this.dimensionMsgSuffix = dimension;
 	}
 
 	public RegistryObject<Block> getPortalBlock() {
@@ -31,7 +31,7 @@ public class Realmstone extends Item {
 		return activationSound;
 	}
 
-	public String getPortalMessageSuffix() {
-		return portalMessageSuffix;
+	public String getDimensionMsgSuffix() {
+		return dimensionMsgSuffix;
 	}
 }

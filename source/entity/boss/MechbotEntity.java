@@ -92,7 +92,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 				jumpIntervalTimer--;
 
 				if (jumpIntervalTimer <= 0) {
-					setDeltaMovement(0.699, (target.getX() - getX()) * 0.045, (target.getZ() - getZ()) * 0.045);
+					setDeltaMovement((target.getX() - getX()) * 0.045, 0.699, (target.getZ() - getZ()) * 0.045);
 
 					hurtMarked = true;
 

@@ -8,8 +8,6 @@
   "downfall": 0.0,
   "effects": {
     "fog_color": 16773825,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 12356653,
     "water_color": 16773825,
     "water_fog_color": 16773825,
@@ -52,43 +50,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:squiggler",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:keeler",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:parasect",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:cryptid",
-        "weight": 30,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:echodar",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:arkback",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:ramradon",
+        "type": "aoa3:keeler",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -110,18 +78,48 @@
         "weight": 15,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:cryptid",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:parasect",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:ramradon",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arkback",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:squiggler",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:creation_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:creation_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

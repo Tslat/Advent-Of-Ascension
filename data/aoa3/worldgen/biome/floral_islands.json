@@ -8,8 +8,6 @@
   "downfall": 0.75,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 7907327,
     "water_color": 1692534,
     "water_fog_color": 1692534,
@@ -49,25 +47,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:sunny",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:squasher",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:flowerface",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:broccohead",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -79,7 +59,25 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:flowerface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:corny",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sunny",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:broccohead",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

@@ -2,15 +2,21 @@ package net.tslat.aoa3.entity.mob.overworld;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.WaterMobEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -21,6 +27,22 @@ public class PincherEntity extends AoAWaterMeleeMob {
 		super(entityType, world);
 
 		this.moveControl = new UnderwaterWalkingMovementController(this);
+	}
+
+	@Nullable
+	@Override
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+		if (EntityUtil.isNaturalSpawnReason(reason)) {
+			BlockPos.Mutable spawnPos = new BlockPos.Mutable().set(blockPosition());
+
+			while (!world.getBlockState(spawnPos).getMaterial().blocksMotion() && spawnPos.getY() > 0) {
+				spawnPos.move(Direction.DOWN);
+			}
+
+			setPos(spawnPos.getX(), spawnPos.getY() + 1, spawnPos.getZ());
+		}
+
+		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override

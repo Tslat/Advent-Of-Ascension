@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
@@ -160,6 +161,10 @@ public abstract class AdventArmour extends ArmorItem {
 
 	protected TranslationTextComponent anySetEffectHeader() {
 		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_ANY_SET_HEADER, TextFormatting.DARK_AQUA);
+	}
+
+	public boolean isHelmetAirTight(ServerPlayerEntity player) {
+		return false;
 	}
 
 	public enum Type {

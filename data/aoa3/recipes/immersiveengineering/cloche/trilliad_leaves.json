@@ -1,0 +1,29 @@
+{
+  "type": "immersiveengineering:cloche",
+  "results": [
+    {
+      "item": "aoa3:trilliad_leaves"
+    },
+    {
+      "item": "aoa3:trilliad_seeds",
+      "count": 2
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "immersiveengineering",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "input": {
+    "item": "aoa3:trilliad_seeds"
+  },
+  "soil": {
+    "item": "minecraft:dirt"
+  },
+  "time": 640,
+  "render": {
+    "type": "crop",
+    "block": "aoa3:trilliad_crop"
+  }
+}

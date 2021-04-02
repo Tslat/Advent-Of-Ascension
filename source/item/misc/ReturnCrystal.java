@@ -40,7 +40,7 @@ public class ReturnCrystal extends Item {
 
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-		if (WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
+		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 			player.startUsingItem(hand);
 
 			return ActionResult.consume(player.getItemInHand(hand));
@@ -53,7 +53,7 @@ public class ReturnCrystal extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity) {
-			if (!WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
+			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.item.returnCrystal.wrongDim");
 
 				return stack;
@@ -66,7 +66,7 @@ public class ReturnCrystal extends Item {
 
 			plData.stats().resetAllTribute();
 			ItemUtil.clearInventoryOfItems((ServerPlayerEntity)entity, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-			entity.teleportTo(-5, 20, 3);
+			entity.teleportTo(0, 212, 0);
 		}
 
 		return stack;

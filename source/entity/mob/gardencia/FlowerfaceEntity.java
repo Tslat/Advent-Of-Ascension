@@ -101,7 +101,7 @@ public class FlowerfaceEntity extends AoAMeleeMob {
         super.die(cause);
 
         if (!level.isClientSide) {
-            if (WorldUtil.isWorld(level, AoADimensions.ANCIENT_CAVERN.key)) {
+            if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
                 Entity source = cause.getEntity();
                 PlayerEntity killer = null;
 

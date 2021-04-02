@@ -1,0 +1,20 @@
+{
+  "type": "thermal:refinery",
+  "fluid": {
+    "fluid": "aoa3:candied_water",
+    "amount": 200
+  },
+  "energy": 4000,
+  "result": [
+    {
+      "fluid": "minecraft:water",
+      "amount": 100
+    }
+  ],
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

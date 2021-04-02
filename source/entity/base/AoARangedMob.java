@@ -80,7 +80,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 
 	@Nullable
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return SoundEvents.PIG_STEP;
+		return null;
 	}
 
 	protected abstract BaseMobProjectile getNewProjectileInstance();
@@ -88,6 +88,18 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState block) {
+		SoundEvent stepSound = getStepSound(pos, block);
+
+		if (stepSound == null) {
+			super.playStepSound(pos, block);
+		}
+		else {
+			playSound(stepSound, 0.15F, 1.0F);
+		}
+	}
 
 	@Override
 	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
@@ -319,13 +331,5 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 		}
 
 		calculateEntityAnimation(this, this instanceof IFlyingAnimal);
-	}
-
-	@Override
-	protected void playStepSound(BlockPos pos, BlockState blockIn) {
-		SoundEvent stepSound = getStepSound(pos, blockIn);
-
-		if (stepSound != null)
-			playSound(stepSound, 0.15F, 1.0F);
 	}
 }

@@ -87,20 +87,20 @@ public final class AoAEntitySpawns {
         new SpawnEntry(AoAEntities.Mobs.BUGEYE.get(), 90).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.OVERWORLD).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.NIGHT_REAPER.get(), 55).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.OVERWORLD).placeMonster();
 
-        new SpawnEntry(AoAEntities.Mobs.WOOD_GIANT.get(), 1).groupSize(-10, 1).matchBiomes(BiomeDictionary.Type.OVERWORLD).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.WOOD_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.FOREST).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.GOALBY.get(), 80).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.MOUNTAIN).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.STONE_GIANT.get(), 1).groupSize(-10, 1).matchBiomes(BiomeDictionary.Type.MOUNTAIN).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.STONE_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.MOUNTAIN).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.YETI.get(), 70).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.SNOW_CHARGER.get(), 70).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.ICE_GIANT.get(), 1).groupSize(-10, 1).matchBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.ICE_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.DESERT_CHARGER.get(), 30).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.FURLION.get(), 30).groupSize(1, 3).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.SAND_GOLEM.get(), 30).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.SPHINX.get(), 30).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.SAND_GIANT.get(), 1).groupSize(-10, 1).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.SAND_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.SANDY).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.CHIMERA.get(), 75).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SAVANNA).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.BONEBACK.get(), 75).groupSize(1, 2).matchBiomes(BiomeDictionary.Type.SAVANNA).placeMonster();
@@ -292,12 +292,12 @@ public final class AoAEntitySpawns {
     }
 
     public static void populateNetherSpawnEntries() {
-        new SpawnEntry(AoAEntities.Mobs.EMBRAKE.get(), 60).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.FLAMEWALKER.get(), 60).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.INFERNAL.get(), 10).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.LITTLE_BAM.get(), 20).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.SKELETAL_COWMAN.get(), 45).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.SCRUBBY.get(), 30).groupSize(1, 3).matchBiomes(BiomeDictionary.Type.NETHER).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.EMBRAKE.get(), 60).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.FLAMEWALKER.get(), 60).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.INFERNAL.get(), 10).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.LITTLE_BAM.get(), 20).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.SKELETAL_COWMAN.get(), 45).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest")).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.SCRUBBY.get(), 30).groupSize(1, 3).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
 
         new SpawnEntry(AoAEntities.NPCs.WITHERING_LOTTOMAN.get(), 1).groupSize(0, 1).matchBiomes(BiomeDictionary.Type.NETHER).placeNPC();
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).groupSize(0, 1).matchBiomes(BiomeDictionary.Type.NETHER).placeNPC();
@@ -387,7 +387,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.ALARMO.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.CENTINEL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.DESTRUCTOR.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.Mobs.FISCHER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
+        setSpawnPlacement(AoAEntities.Mobs.FISCHER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.GADGETOID.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SLIMER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TOXXULOUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
@@ -418,6 +418,8 @@ public final class AoAEntitySpawns {
         private HashSet<BiomeDictionary.Type> blacklistedBiomeTypes = null;
         @Nullable
         private HashSet<RegistryKey<Biome>> matchingBiomes = null;
+        @Nullable
+        private HashSet<RegistryKey<Biome>> ignoringBiomes = null;
 
         public SpawnEntry(EntityType<T> entityType, int weight) {
             this.entityType = entityType;
@@ -471,15 +473,33 @@ public final class AoAEntitySpawns {
             return this;
         }
 
+        private SpawnEntry<T> ignoreExactBiomes(ResourceLocation... biomeIds) {
+            ignoringBiomes = new HashSet<RegistryKey<Biome>>();
+
+            for (ResourceLocation id : biomeIds) {
+                ignoringBiomes.add(RegistryKey.create(Registry.BIOME_REGISTRY, id));
+            }
+
+            return this;
+        }
+
         private boolean shouldSpawnInBiome(RegistryKey<Biome> biomeKey) {
     	    if (matchingBiomes != null)
     	        return matchingBiomes.contains(biomeKey);
 
+    	    if (ignoringBiomes != null && ignoringBiomes.contains(biomeKey))
+    	        return false;
+
     	    if (matchingBiomeTypes != null) {
     	        Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(biomeKey);
 
-    	        if (!types.contains(BiomeDictionary.Type.OVERWORLD) || (matchingBiomeTypes.contains(BiomeDictionary.Type.NETHER) && !types.contains(BiomeDictionary.Type.NETHER)))
+    	        if (matchingBiomeTypes.contains(BiomeDictionary.Type.NETHER)) {
+    	            if (!types.contains(BiomeDictionary.Type.NETHER))
+    	                return false;
+                }
+    	        else if (!types.contains(BiomeDictionary.Type.OVERWORLD)) {
     	            return false;
+                }
 
     	        if (blacklistedBiomeTypes != null) {
     	            for (BiomeDictionary.Type type : blacklistedBiomeTypes) {

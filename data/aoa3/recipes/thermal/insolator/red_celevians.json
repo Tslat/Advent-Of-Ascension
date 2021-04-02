@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:red_celevians"
+  },
+  "result": {
+    "item": "aoa3:red_celevians"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

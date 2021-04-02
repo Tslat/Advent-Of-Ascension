@@ -67,6 +67,6 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
     @Override
     protected void onAttack(Entity target) {
         if (!level.isClientSide && target instanceof PlayerEntity && ((PlayerEntity)target).getHealth() > 0 && hasEffect(Effects.DAMAGE_BOOST) && ItemUtil.findInventoryItem((PlayerEntity)target, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-            ItemUtil.givePlayerItemOrDrop((PlayerEntity)target, new ItemStack(AoAItems.IMMORTALLIS_REALMSTONE.get()));
+            ItemUtil.givePlayerItemOrDrop((PlayerEntity)target, new ItemStack(AoAItems.NOWHERE_REALMSTONE.get()));
     }
 }

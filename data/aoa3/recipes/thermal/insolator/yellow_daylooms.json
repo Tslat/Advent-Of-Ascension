@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:yellow_daylooms"
+  },
+  "result": {
+    "item": "aoa3:yellow_daylooms"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

@@ -11,28 +11,18 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 18,
+          "weight": 25,
           "name": "aoa3:coral_staff"
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 15,
           "name": "aoa3:reef_staff"
         },
         {
           "type": "minecraft:item",
-          "weight": 18,
+          "weight": 10,
           "name": "aoa3:achelos_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 18,
-          "name": "aoa3:sealord_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 18,
-          "name": "aoa3:oceanus_helmet"
         }
       ]
     },

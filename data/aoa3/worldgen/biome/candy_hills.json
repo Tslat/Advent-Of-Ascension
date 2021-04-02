@@ -8,8 +8,6 @@
   "downfall": 0.5,
   "effects": {
     "fog_color": 9961727,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 12255471,
     "water_color": 10040115,
     "water_fog_color": 10040115,
@@ -47,19 +45,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:candy_corny",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:airhead",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:cherry_blaster",
+        "type": "aoa3:candy_corny",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -69,17 +61,23 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:cherry_blaster",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [
       {
-        "type": "aoa3:peppermint_snail",
+        "type": "aoa3:spearmint_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 3
       },
       {
-        "type": "aoa3:spearmint_snail",
+        "type": "aoa3:peppermint_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 3

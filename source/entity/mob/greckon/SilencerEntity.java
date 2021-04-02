@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class SilencerEntity extends AoAMeleeMob {
     public static boolean isClientNearby = false;
-    public static float prevVolume = 1;
+    public static float previousGain = 1;
 
     public SilencerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);

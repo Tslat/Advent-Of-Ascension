@@ -17,7 +17,6 @@ import net.tslat.aoa3.util.constant.Skills;
 
 import javax.annotation.Nullable;
 
-@SuppressWarnings("ConfusingArgumentToVarargsMethod")
 public abstract class LocaleUtil {
 	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, ITextComponent... args) {
 		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
@@ -25,7 +24,7 @@ public abstract class LocaleUtil {
 
 
 	public static ITextComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, ITextComponent... args) {
-		return new TranslationTextComponent(langKey, args).withStyle(type.format);
+		return new TranslationTextComponent(langKey, (Object[])args).withStyle(type.format);
 	}
 
 	public static TranslationTextComponent getLocaleMessage(String langKey) {
@@ -37,7 +36,7 @@ public abstract class LocaleUtil {
 	}
 
 	public static TranslationTextComponent getLocaleMessage(String langKey, @Nullable TextFormatting format, ITextComponent... args) {
-		TranslationTextComponent localeMessage = new TranslationTextComponent(langKey, args);
+		TranslationTextComponent localeMessage = new TranslationTextComponent(langKey, (Object[])args);
 
 		if (format != null)
 			localeMessage.withStyle(format);
@@ -66,7 +65,7 @@ public abstract class LocaleUtil {
 
 	@OnlyIn(Dist.CLIENT)
 	public static String getLocaleString(String langKey, @Nullable TextFormatting colour, String... args) {
-		return (colour != null ? colour : "") + I18n.get(langKey, args);
+		return (colour != null ? colour : "") + I18n.get(langKey, (Object[])args);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -99,7 +98,6 @@ public abstract class LocaleUtil {
 
 	public static class Constants {
 		public static final String ABYSS = "dimension.aoa3.abyss";
-		public static final String ANCIENT_CAVERN = "dimension.aoa3.ancient_cavern";
 		public static final String BARATHOS = "dimension.aoa3.barathos";
 		public static final String CANDYLAND = "dimension.aoa3.candyland";
 		public static final String CELEVE = "dimension.aoa3.celeve";
@@ -110,13 +108,13 @@ public abstract class LocaleUtil {
 		public static final String GARDENCIA = "dimension.aoa3.gardencia";
 		public static final String GRECKON = "dimension.aoa3.greckon";
 		public static final String HAVEN = "dimension.aoa3.haven";
-		public static final String IMMORTALLIS = "dimension.aoa3.immortallis";
 		public static final String IROMINE = "dimension.aoa3.iromine";
 		public static final String LBOREAN = "dimension.aoa3.lborean";
 		public static final String LELYETIA = "dimension.aoa3.lelyetia";
 		public static final String LUNALUS = "dimension.aoa3.lunalus";
 		public static final String MYSTERIUM = "dimension.aoa3.mysterium";
 		public static final String NETHER = "dimension.aoa3.nether";
+		public static final String NOWHERE = "dimension.aoa3.nowhere";
 		public static final String OVERWORLD = "dimension.aoa3.overworld";
 		public static final String PRECASIA = "dimension.aoa3.precasia";
 		public static final String RUNANDOR = "dimension.aoa3.runandor";

@@ -2,14 +2,11 @@ package net.tslat.aoa3.event;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.data.server.EntityStatsManager;
 import net.tslat.aoa3.library.scheduling.AoAScheduler;
 
 import java.util.HashMap;
@@ -25,21 +22,16 @@ public class GlobalEvents {
 
 	@SubscribeEvent
 	public static void serverTick(final TickEvent.ServerTickEvent ev) {
-		if (ev.phase == TickEvent.Phase.END)
+		if (ev.phase == TickEvent.Phase.END) {
 			tick++;
 
-		AoAScheduler.handleSyncScheduledTasks(tick);
+			AoAScheduler.handleSyncScheduledTasks(tick);
+		}
 	}
 
 	@SubscribeEvent
 	public static void getBurnTime(final FurnaceFuelBurnTimeEvent ev) {
 		ev.setBurnTime(FURNACE_FUELS.getOrDefault(ev.getItemStack().getItem(), ev.getBurnTime()));
-	}
-
-	@SubscribeEvent
-	public void resourceListeners(final AddReloadListenerEvent ev) {
-		if (!FMLEnvironment.dist.isClient())
-			ev.addListener(new EntityStatsManager());
 	}
 
 	public static void init() {

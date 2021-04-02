@@ -24,6 +24,7 @@
                   }
                 }
               ],
+              "weight": 100,
               "name": "aoa3:polluted_grass"
             },
             {
@@ -33,6 +34,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
+              "weight": 100,
               "name": "aoa3:polluted_soil"
             }
           ]

@@ -34,10 +34,11 @@ import net.tslat.aoa3.block.functional.misc.LadderBlock;
 import net.tslat.aoa3.block.functional.misc.PressurePlateBlock;
 import net.tslat.aoa3.block.functional.misc.WoodButtonBlock;
 import net.tslat.aoa3.block.functional.misc.*;
-import net.tslat.aoa3.block.functional.portal.AncientCavernPortalBlock;
-import net.tslat.aoa3.block.functional.portal.ImmortallisPortalBlock;
+import net.tslat.aoa3.block.functional.portal.NowhereActivityPortal;
+import net.tslat.aoa3.block.functional.portal.NowherePortalBlock;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.block.functional.sapling.DarkGrowingSapling;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.tslat.aoa3.block.functional.utility.*;
 import net.tslat.aoa3.block.generation.grass.GrassBlock;
 import net.tslat.aoa3.block.generation.grass.UpsideDownGrassBlock;
@@ -366,8 +367,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> TOXICWOOD_PLANKS = registerBlock("toxicwood_planks", () -> new Block(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.COLOR_BROWN, 2f, 3f)), AoAItemGroups.DECORATION_BLOCKS);
 
 	public static final RegistryObject<Block> ANCIENT_LIGHT = registerBlock("ancient_light", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 15)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_LIGHT = registerBlock("archaic_light", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 15)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> BREAKABLE_ARCHAIC_LIGHT = registerBlock("breakable_archaic_light", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, 0.5f, 0.3f, 15)), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_LIGHT = registerBlock("archaic_light", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, 0.5f, 0.3f, 15)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CREEP_CRYSTAL = registerBlock("creep_crystal", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, 0.5f, 0.3f, 15)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> DARKSTONE = registerBlock("darkstone", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, 0.5f, 0.3f, 15)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> DEEP_CRYSTAL = registerBlock("deep_crystal", () -> new Block(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_RED, 0.5f, 0.3f, 15)), AoAItemGroups.DECORATION_BLOCKS);
@@ -429,8 +429,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> ABYSSAL_GLASS = customRender(registerBlock("abyssal_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> ANCIENT_GLASS = customRender(registerBlock("ancient_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> AQUATIC_GLASS = customRender(registerBlock("aquatic_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> ARCHAIC_GLASS = customRender(registerBlock("archaic_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> BREAKABLE_ARCHAIC_GLASS = customRender(registerBlock("breakable_archaic_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> ARCHAIC_GLASS = customRender(registerBlock("archaic_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> BARON_GLASS = customRender(registerBlock("baron_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> DECAYED_GLASS = customRender(registerBlock("decayed_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> GARDENCIAN_GLASS = customRender(registerBlock("gardencian_glass", () -> new GlassBlock(MaterialColor.COLOR_RED, 0.3f, 0.3f), AoAItemGroups.DECORATION_BLOCKS), TRANSLUCENT);
@@ -792,19 +791,13 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GREEN_ANCIENT_TILE = registerBlock("green_ancient_tile", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ANCIENT_TILE_SHRINE = registerBlock("ancient_tile_shrine", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> WHITE_ANCIENT_TILE = registerBlock("white_ancient_tile", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_DIRT = registerBlock("archaic_dirt", () -> new Block(BlockUtil.generateBlockProperties(Material.DIRT, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_HORIZONTAL = registerBlock("archaic_stream_horizontal", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_RECTANGLES = registerBlock("archaic_rectangles", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_SQUARES = registerBlock("archaic_squares", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_TILES = registerBlock("archaic_tiles", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_VERTICAL = registerBlock("archaic_stream_vertical", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_DIRT = registerBlock("archaic_dirt", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 1.5f, 10f)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_STREAM_HORIZONTAL = registerBlock("archaic_stream_horizontal", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_RECTANGLES = registerBlock("archaic_rectangles", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_SQUARES = registerBlock("archaic_squares", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_TILES = registerBlock("archaic_tiles", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_STREAM_VERTICAL = registerBlock("archaic_stream_vertical", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ANCIENT_ROCK = registerBlock("ancient_rock", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 1.5f, 10f)), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_DIRT_BREAKABLE = registerBlock("archaic_dirt_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.DIRT, MaterialColor.COLOR_RED, 0.5f, 0.0f)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_HORIZONTAL_BREAKABLE = registerBlock("archaic_stream_horizontal_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_RECTANGLES_BREAKABLE = registerBlock("archaic_rectangles_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_SQUARES_BREAKABLE = registerBlock("archaic_squares_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_TILES_BREAKABLE = registerBlock("archaic_tiles_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.DECORATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_VERTICAL_BREAKABLE = registerBlock("archaic_stream_vertical_breakable", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 2.0f, 10.0f)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_CASTLE_WALL = registerBlock("baron_castle_wall", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 1.5f, 10f)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_CUBE = registerBlock("baron_cube", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_RED, 1.5f, 10f)), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_GROUND = registerBlock("baron_ground", () -> new Block(BlockUtil.generateBlockProperties(Material.CLAY, MaterialColor.COLOR_RED, 1.5f, 10f)), AoAItemGroups.GENERATION_BLOCKS);
@@ -928,8 +921,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> RESISTANCE_ENHANCER = registerBlock("resistance_enhancer", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_GRAY, 10f, 10f, SoundType.STONE)), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> SPEED_ENHANCER = registerBlock("speed_enhancer", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_GRAY, 10f, 10f, SoundType.STONE)), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> WEIGHT_ENHANCER = registerBlock("weight_enhancer", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_GRAY, 10f, 10f, SoundType.STONE)), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_LADDER = customRender(registerBlock("archaic_ladder", () -> new LadderBlock(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.TERRACOTTA_BROWN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.LADDER).noOcclusion()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> BREAKABLE_ARCHAIC_LADDER = customRender(registerBlock("breakable_archaic_ladder", () -> new LadderBlock(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.TERRACOTTA_BROWN, 1f, 0.5f, SoundType.LADDER).noOcclusion()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> ARCHAIC_LADDER = customRender(registerBlock("archaic_ladder", () -> new LadderBlock(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.TERRACOTTA_BROWN, 1f, 0.5f, SoundType.LADDER).noOcclusion()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 
 	public static final RegistryObject<Block> ARMY_BLOCK = registerBlock("army_block", ArmyBlock::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> BARONESS_ALTAR = registerBlock("baroness_altar", BaronessAltar::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -951,9 +943,8 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> VOXXULON_ALTAR = registerBlock("voxxulon_altar", VoxxulonAltar::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	
 	public static final RegistryObject<Block> ABYSS_PORTAL =  customRender(registerBlock("abyss_portal", () -> new PortalBlock(AoADimensions.ABYSS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(229, 0, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> ANCIENT_CAVERN_PORTAL = customRender(registerBlock("ancient_cavern_portal", AncientCavernPortalBlock::new, AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> BARATHOS_PORTAL = customRender(registerBlock("barathos_portal", () -> new PortalBlock(AoADimensions.BARATHOS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(239, 137, 119)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> BOREAN_PORTAL = customRender(registerBlock("borean_portal", () -> new PortalBlock(AoADimensions.LBOREAN.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 173, 216)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> LBOREAN_PORTAL = customRender(registerBlock("borean_portal", () -> new PortalBlock(AoADimensions.LBOREAN.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 173, 216)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> CANDYLAND_PORTAL = customRender(registerBlock("candyland_portal", () -> new PortalBlock(AoADimensions.CANDYLAND.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 232, 232)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> CELEVE_PORTAL = customRender(registerBlock("celeve_portal", () -> new PortalBlock(AoADimensions.CELEVE.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(247, 239, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> CREEPONIA_PORTAL = customRender(registerBlock("creeponia_portal", () -> new PortalBlock(AoADimensions.CREEPONIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(132, 188, 124)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
@@ -963,16 +954,18 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GARDENCIA_PORTAL = customRender(registerBlock("gardencia_portal", () -> new PortalBlock(AoADimensions.GARDENCIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 0, 114)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> GRECKON_PORTAL = customRender(registerBlock("greckon_portal", () -> new PortalBlock(AoADimensions.GRECKON.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(130, 178, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> HAVEN_PORTAL = customRender(registerBlock("haven_portal", () -> new PortalBlock(AoADimensions.HAVEN.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 229, 237)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> IMMORTALLIS_PORTAL = customRender(registerBlock("immortallis_portal", ImmortallisPortalBlock::new, AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> IROMINE_PORTAL = customRender(registerBlock("iromine_portal", () -> new PortalBlock(AoADimensions.IROMINE.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(232, 208, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> LELYETIA_PORTAL = customRender(registerBlock("lelyetia_portal", () -> new PortalBlock(AoADimensions.LELYETIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(221, 103, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> LUNALUS_PORTAL = customRender(registerBlock("lunalus_portal", () -> new PortalBlock(AoADimensions.LUNALUS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 226, 251)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> MYSTERIUM_PORTAL = customRender(registerBlock("mysterium_portal", () -> new PortalBlock(AoADimensions.MYSTERIUM.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(107, 0, 82)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> NETHER_PORTAL = customRender(registerBlock("nether_portal", () -> new PortalBlock(World.NETHER, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(193, 64, 215)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> NOWHERE_PORTAL = customRender(registerBlock("nowhere_portal", NowherePortalBlock::new, AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> PRECASIA_PORTAL = customRender(registerBlock("precasia_portal", () -> new PortalBlock(AoADimensions.PRECASIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(207, 221, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> RUNANDOR_PORTAL = customRender(registerBlock("runandor_portal", () -> new PortalBlock(AoADimensions.RUNANDOR.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(124, 255, 255)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> SHYRELANDS_PORTAL = customRender(registerBlock("shyrelands_portal", () -> new PortalBlock(AoADimensions.SHYRELANDS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 255, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> VOX_PONDS_PORTAL = customRender(registerBlock("vox_ponds_portal", () -> new PortalBlock(AoADimensions.VOX_PONDS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(90, 104, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+
+	public static final RegistryObject<Block> NOWHERE_ACTIVITY_PORTAL = customRender(registerItemlessBlock("nowhere_activity_portal", NowhereActivityPortal::new), TRANSLUCENT);
 
 	public static final RegistryObject<Block> EREBON_SHRINE = registerBlock("erebon_shrine", () -> new AncientCavernShrine(Deities.EREBON), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> LUXON_SHRINE = registerBlock("luxon_shrine", () -> new AncientCavernShrine(Deities.LUXON), AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -995,7 +988,6 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> FRAME_BENCH = registerBlock("frame_bench", FrameBench::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> GOLD_ACCUMULATOR = registerBlock("gold_accumulator", GoldAccumulator::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> HAUNTING_TABLE = registerBlock("haunting_table", HauntingTable::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> IMMORTALLIS_PROGRESSOR = registerBlock("immortallis_progressor", ImmortallisProgressor::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> INFUSION_TABLE = registerBlock("infusion_table", InfusionTable::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> IRO_CRATE = registerBlock("iro_crate", () -> new Block(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_LIGHT_GRAY, 5, 3, SoundType.METAL)), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> LUNAR_CREATION_TABLE = registerBlock("lunar_creation_table", LunarCreationTable::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -1017,7 +1009,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> BLUE_CELEVIANS = customRender(registerBlock("blue_celevians", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> BLUE_CRYSTAL_PLANT = customRender(registerBlock("blue_crystal_plant", () -> new GenericPlantBlock(Material.GLASS, MaterialColor.COLOR_BLUE, SoundType.GLASS, 5, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> BLUE_DAYLOOMS = customRender(registerBlock("blue_daylooms", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> BLUE_GLOWSHROOM = customRender(registerBlock("blue_glowshroom", () -> new MushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> BLUE_GLOWSHROOM = customRender(registerBlock("blue_glowshroom", () -> new StaticMushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> BLUE_OCEALITES = customRender(registerBlock("blue_ocealites", () -> new GenericWaterPlant(Material.REPLACEABLE_WATER_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> BUREAL_STOCKS = customRender(registerBlock("bureal_stocks", () -> new GenericWaterPlant(Material.REPLACEABLE_WATER_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> CANDYCANE = customRender(registerBlock("candycane", () -> new GenericPlantBlock(Material.STONE, MaterialColor.PLANT, SoundType.STONE, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
@@ -1031,7 +1023,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> DEEP_BLOOMS = customRender(registerBlock("deep_blooms", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> DEEP_GRASS = customRender(registerBlock("deep_grass", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> GREEN_CRYSTAL_PLANT = customRender(registerBlock("green_crystal_plant", () -> new GenericPlantBlock(Material.GLASS, MaterialColor.COLOR_BLUE, SoundType.GLASS, 5, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> GREEN_GLOWSHROOM = customRender(registerBlock("green_glowshroom", () -> new MushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> GREEN_GLOWSHROOM = customRender(registerBlock("green_glowshroom", () -> new StaticMushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> GREEN_WATERWEEDS = customRender(registerBlock("green_waterweeds", () -> new GenericWaterPlant(Material.REPLACEABLE_WATER_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> HAUNTED_FLOWER = customRender(registerBlock("haunted_flower", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> HAVEN_GRASS_PLANT = customRender(registerBlock("haven_grass_plant", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
@@ -1048,12 +1040,12 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> MAGIAS = customRender(registerBlock("magias", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> MYSTIC_BUSH = customRender(registerBlock("mystic_bush", MysticBush::new, AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> MYSTIC_FERNS = customRender(registerBlock("mystic_ferns", MysticFerns::new, AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> ORANGE_GLOWSHROOM = customRender(registerBlock("orange_glowshroom", () -> new MushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> ORANGE_GLOWSHROOM = customRender(registerBlock("orange_glowshroom", () -> new StaticMushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> PINK_CANDY_GRASS = customRender(registerBlock("pink_candy_grass", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> PINK_DAYLOOMS = customRender(registerBlock("pink_daylooms", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> PURPLE_CELEVIANS = customRender(registerBlock("purple_celevians", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> PURPLE_CRYSTAL_PLANT = customRender(registerBlock("purple_crystal_plant", () -> new GenericPlantBlock(Material.GLASS, MaterialColor.COLOR_BLUE, SoundType.GLASS, 5, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> PURPLE_GLOWSHROOM = customRender(registerBlock("purple_glowshroom", () -> new MushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> PURPLE_GLOWSHROOM = customRender(registerBlock("purple_glowshroom", () -> new StaticMushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> RAINBOW_GRASS = customRender(registerBlock("rainbow_grass", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> RAINBOW_GRASS2 = customRender(registerBlock("rainbow_grass2", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> RAINBOW_GRASS3 = customRender(registerBlock("rainbow_grass3", () -> new GenericPlantBlock(Material.REPLACEABLE_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
@@ -1071,7 +1063,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> WHITE_WATERWEEDS = customRender(registerBlock("white_waterweeds", () -> new GenericWaterPlant(Material.REPLACEABLE_WATER_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> YELLOW_CRYSTAL_PLANT = customRender(registerBlock("yellow_crystal_plant", () -> new GenericPlantBlock(Material.GLASS, MaterialColor.COLOR_BLUE, SoundType.GLASS, 5, Material.STONE), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> YELLOW_DAYLOOMS = customRender(registerBlock("yellow_daylooms", () -> new GenericPlantBlock(Material.PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
-	public static final RegistryObject<Block> YELLOW_GLOWSHROOM = customRender(registerBlock("yellow_glowshroom", () -> new MushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
+	public static final RegistryObject<Block> YELLOW_GLOWSHROOM = customRender(registerBlock("yellow_glowshroom", () -> new StaticMushroomBlock(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.PLANT, 0, 0, null, SoundType.GRASS, 4, -1).noCollission()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 	public static final RegistryObject<Block> YELLOW_WATERWEEDS = customRender(registerBlock("yellow_waterweeds", () -> new GenericWaterPlant(Material.REPLACEABLE_WATER_PLANT, MaterialColor.PLANT, Material.GRASS, Material.DIRT), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
 
 	public static final RegistryObject<Block> BLUE_LOLLYPOP = customRender(registerBlock("blue_lollypop", () -> new MultiStackablePlant(Material.GLASS, MaterialColor.COLOR_BLUE, SoundType.GLASS, Material.GRASS, Material.DIRT).addStemBlock(AoABlocks.RED_LOLLYPOP, AoABlocks.YELLOW_LOLLYPOP), AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
@@ -1213,10 +1205,6 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GILDED_CREATION_BANNER = customRender(registerBlock("gilded_creation_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_CREATION_BANNER = customRender(registerBlock("encrusted_creation_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_CREATION_BANNER = customRender(registerBlock("bejewelled_creation_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> CREEPOID_BANNER = customRender(registerBlock("creepoid_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_CREEPOID_BANNER = customRender(registerBlock("gilded_creepoid_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_CREEPOID_BANNER = customRender(registerBlock("encrusted_creepoid_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_CREEPOID_BANNER = customRender(registerBlock("bejewelled_creepoid_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> CREEPY_BANNER = customRender(registerBlock("creepy_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_CREEPY_BANNER = customRender(registerBlock("gilded_creepy_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_CREEPY_BANNER = customRender(registerBlock("encrusted_creepy_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
@@ -1241,26 +1229,10 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GILDED_FUNGAL_BANNER = customRender(registerBlock("gilded_fungal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_FUNGAL_BANNER = customRender(registerBlock("encrusted_fungal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_FUNGAL_BANNER = customRender(registerBlock("bejewelled_fungal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> GHOSTLY_BANNER = customRender(registerBlock("ghostly_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_GHOSTLY_BANNER = customRender(registerBlock("gilded_ghostly_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_GHOSTLY_BANNER = customRender(registerBlock("encrusted_ghostly_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_GHOSTLY_BANNER = customRender(registerBlock("bejewelled_ghostly_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> GHOUL_BANNER = customRender(registerBlock("ghoul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_GHOUL_BANNER = customRender(registerBlock("gilded_ghoul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_GHOUL_BANNER = customRender(registerBlock("encrusted_ghoul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_GHOUL_BANNER = customRender(registerBlock("bejewelled_ghoul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> GINGERBREAD_BANNER = customRender(registerBlock("gingerbread_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_GINGERBREAD_BANNER = customRender(registerBlock("gilded_gingerbread_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_GINGERBREAD_BANNER = customRender(registerBlock("encrusted_gingerbread_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_GINGERBREAD_BANNER = customRender(registerBlock("bejewelled_gingerbread_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> HAUNTED_BANNER = customRender(registerBlock("haunted_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_HAUNTED_BANNER = customRender(registerBlock("gilded_haunted_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_HAUNTED_BANNER = customRender(registerBlock("encrusted_haunted_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_HAUNTED_BANNER = customRender(registerBlock("bejewelled_haunted_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ILLUSION_BANNER = customRender(registerBlock("illusion_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_ILLUSION_BANNER = customRender(registerBlock("gilded_illusion_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_ILLUSION_BANNER = customRender(registerBlock("encrusted_illusion_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_ILLUSION_BANNER = customRender(registerBlock("bejewelled_illusion_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> IMMORTAL_BANNER = customRender(registerBlock("immortal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_IMMORTAL_BANNER = customRender(registerBlock("gilded_immortal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_IMMORTAL_BANNER = customRender(registerBlock("encrusted_immortal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
@@ -1269,10 +1241,6 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GILDED_LELYETIAN_BANNER = customRender(registerBlock("gilded_lelyetian_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_LELYETIAN_BANNER = customRender(registerBlock("encrusted_lelyetian_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_LELYETIAN_BANNER = customRender(registerBlock("bejewelled_lelyetian_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> LIGHT_BANNER = customRender(registerBlock("light_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_LIGHT_BANNER = customRender(registerBlock("gilded_light_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_LIGHT_BANNER = customRender(registerBlock("encrusted_light_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_LIGHT_BANNER = customRender(registerBlock("bejewelled_light_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> LOTTO_BANNER = customRender(registerBlock("lotto_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_LOTTO_BANNER = customRender(registerBlock("gilded_lotto_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_LOTTO_BANNER = customRender(registerBlock("encrusted_lotto_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
@@ -1285,10 +1253,6 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GILDED_MECHA_BANNER = customRender(registerBlock("gilded_mecha_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_MECHA_BANNER = customRender(registerBlock("encrusted_mecha_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_MECHA_BANNER = customRender(registerBlock("bejewelled_mecha_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> NETHENGEIC_BANNER = customRender(registerBlock("nethengeic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> GILDED_NETHENGEIC_BANNER = customRender(registerBlock("gilded_nethengeic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_NETHENGEIC_BANNER = customRender(registerBlock("encrusted_nethengeic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_NETHENGEIC_BANNER = customRender(registerBlock("bejewelled_nethengeic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> NETHER_BANNER = customRender(registerBlock("nether_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_NETHER_BANNER = customRender(registerBlock("gilded_nether_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_NETHER_BANNER = customRender(registerBlock("encrusted_nether_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
@@ -1301,26 +1265,14 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GILDED_RUNIC_BANNER = customRender(registerBlock("gilded_runic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_RUNIC_BANNER = customRender(registerBlock("encrusted_runic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_RUNIC_BANNER = customRender(registerBlock("bejewelled_runic_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> SEA_BANNER = customRender(registerBlock("sea_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_SEA_BANNER = customRender(registerBlock("gilded_sea_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_SEA_BANNER = customRender(registerBlock("encrusted_sea_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_SEA_BANNER = customRender(registerBlock("bejewelled_sea_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> SHADOW_BANNER = customRender(registerBlock("shadow_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_SHADOW_BANNER = customRender(registerBlock("gilded_shadow_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_SHADOW_BANNER = customRender(registerBlock("encrusted_shadow_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_SHADOW_BANNER = customRender(registerBlock("bejewelled_shadow_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> SHINY_BANNER = customRender(registerBlock("shiny_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT); // TODO Obtain method
-	public static final RegistryObject<Block> GILDED_SHINY_BANNER = customRender(registerBlock("gilded_shiny_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_SHINY_BANNER = customRender(registerBlock("encrusted_shiny_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_SHINY_BANNER = customRender(registerBlock("bejewelled_shiny_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> SHYRE_BANNER = customRender(registerBlock("shyre_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_SHYRE_BANNER = customRender(registerBlock("gilded_shyre_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_SHYRE_BANNER = customRender(registerBlock("encrusted_shyre_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> BEJEWELLED_SHYRE_BANNER = customRender(registerBlock("bejewelled_shyre_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> SKELETAL_BANNER = customRender(registerBlock("skeletal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> GILDED_SKELETAL_BANNER = customRender(registerBlock("gilded_skeletal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> ENCRUSTED_SKELETAL_BANNER = customRender(registerBlock("encrusted_skeletal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
-	public static final RegistryObject<Block> BEJEWELLED_SKELETAL_BANNER = customRender(registerBlock("bejewelled_skeletal_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> SOUL_BANNER = customRender(registerBlock("soul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> GILDED_SOUL_BANNER = customRender(registerBlock("gilded_soul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);
 	public static final RegistryObject<Block> ENCRUSTED_SOUL_BANNER = customRender(registerBlock("encrusted_soul_banner", BannerBlock::new, AoAItemGroups.BANNERS), CUTOUT);

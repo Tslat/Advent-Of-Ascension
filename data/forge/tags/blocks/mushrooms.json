@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:blue_glowshroom",
+    "aoa3:green_glowshroom",
+    "aoa3:orange_glowshroom",
+    "aoa3:purple_glowshroom",
+    "aoa3:yellow_glowshroom",
+    "minecraft:brown_mushroom",
+    "minecraft:red_mushroom",
+    "minecraft:warped_fungus",
+    "minecraft:crimson_fungus"
+  ]
+}

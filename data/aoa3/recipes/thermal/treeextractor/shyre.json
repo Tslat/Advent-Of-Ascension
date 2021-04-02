@@ -1,0 +1,15 @@
+{
+  "type": "thermal:tree_extractor",
+  "trunk": "aoa3:shyre_log",
+  "leaves": "aoa3:shyre_leaves",
+  "result": {
+    "fluid": "thermal:resin",
+    "amount": 50
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

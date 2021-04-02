@@ -66,7 +66,7 @@ public class BouncerEntity extends AoAMeleeMob {
 		if (jumpCooldown > 0) {
 			jumpCooldown--;
 		}
-		else {
+		else if (isOnGround()) {
 			jumpFromGround();
 			jumpCooldown = 70;
 		}

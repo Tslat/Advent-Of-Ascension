@@ -8,8 +8,6 @@
   "downfall": 0.5,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 16756655,
     "water_color": 10040012,
     "water_fog_color": 10040012,
@@ -59,19 +57,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:grillface",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:skull_creature",
-        "weight": 20,
+        "type": "aoa3:silencer",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:sugarface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:grillface",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -83,8 +81,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:silencer",
-        "weight": 1,
+        "type": "aoa3:skull_creature",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }
@@ -92,13 +90,13 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:infusion_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:infusion_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

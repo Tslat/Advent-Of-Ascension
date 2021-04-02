@@ -18,7 +18,7 @@ import java.util.Set;
 public class PlayerHasResource implements ILootCondition {
 	private final Resources resource;
 	private final float amount;
-	private boolean consume;
+	private final boolean consume;
 
 	public PlayerHasResource(Resources resource, float amount, boolean consume) {
 		this.resource = resource;

@@ -28,7 +28,7 @@ public class Rosidons extends Item {
 		if (!world.isClientSide) {
 			PlayerDataManager plData = entity instanceof ServerPlayerEntity ? PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity) : null;
 
-			if (WorldUtil.isWorld(world, AoADimensions.ANCIENT_CAVERN.key) || WorldUtil.isWorld(world, AoADimensions.IMMORTALLIS.key)) {
+			if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 				if (plData != null)
 					plData.sendThrottledChatMessage("message.feedback.item.rosidons.dimFail");
 

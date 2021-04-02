@@ -8,8 +8,6 @@
   "downfall": 0.25,
   "effects": {
     "fog_color": 16449466,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 16449466,
     "water_color": 44799,
     "water_fog_color": 44799,
@@ -51,16 +49,16 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:dawnlight",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 3
-      },
-      {
         "type": "aoa3:halycon",
         "weight": 3,
         "minCount": 1,
         "maxCount": 3
+      },
+      {
+        "type": "aoa3:angelica",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
       },
       {
         "type": "aoa3:voliant",
@@ -69,14 +67,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:eeo",
-        "weight": 3,
-        "minCount": 0,
-        "maxCount": 1
+        "type": "aoa3:dawnlight",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 3
       },
       {
-        "type": "aoa3:angelica",
-        "weight": 1,
+        "type": "aoa3:eeo",
+        "weight": 3,
         "minCount": 0,
         "maxCount": 1
       }

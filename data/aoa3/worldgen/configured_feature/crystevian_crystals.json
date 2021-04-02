@@ -68,7 +68,7 @@
             },
             "decorator": {
               "config": {
-                "max": 128
+                "max": 120
               },
               "type": "aoa3:up_to_surface"
             }

@@ -21,8 +21,7 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.worldgen.worlds.ancientcavern.AncientCavernTeleporter;
-import net.tslat.aoa3.worldgen.worlds.immortallis.ImmortallisTeleporter;
+import net.tslat.aoa3.worldgen.worlds.nowhere.NowhereTeleporter;
 
 import java.util.HashMap;
 import java.util.function.Function;
@@ -69,12 +68,8 @@ public abstract class AoATeleporter implements ITeleporter {
 		BlockPos pos = null;
 
 		if (failedPortalReturn) {
-			if (WorldUtil.isWorld((World)destWorld, AoADimensions.ANCIENT_CAVERN.key) && !(this instanceof AncientCavernTeleporter)) {
+			if (WorldUtil.isWorld((World)destWorld, AoADimensions.NOWHERE.key) && !(this instanceof NowhereTeleporter))
 				pos = new BlockPos(0.5, 18.5, 0.5);
-			}
-			else if (WorldUtil.isWorld((World)destWorld, AoADimensions.IMMORTALLIS.key) && !(this instanceof ImmortallisTeleporter)) {
-				pos = new BlockPos(-5, 20, 3);
-			}
 		}
 
 		if (pos == null)
@@ -597,7 +592,12 @@ public abstract class AoATeleporter implements ITeleporter {
 		if (planBPos != null)
 			return planBPos;
 
-		return entity.blockPosition().above(2).immutable();
+		BlockPos placementPos = entity.blockPosition().above(2).immutable();
+
+		if (placementPos.getY() >= worldHeight - 10)
+			return new BlockPos(placementPos.getX(), worldHeight - 10, placementPos.getZ());
+
+		return placementPos;
 	}
 	
 	public BlockPos makePortal(World world, Entity entity, BlockPos pos) {

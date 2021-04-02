@@ -2,7 +2,8 @@ package net.tslat.aoa3.worldgen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SaplingBlock;
+import net.minecraft.block.Blocks;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
@@ -30,6 +31,17 @@ public class LucalusTreeFeature extends AoATreeFeature {
 
 		if (!checkAndPrepSoil(reader, pos, 2, isWorldGen))
 			return false;
+
+		BlockState baseSoil = reader.getBlockState(pos.below());
+
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
+				BlockPos testPos = pos.offset(x, -1, z);
+
+				if (reader.getBlockState(testPos).is(Blocks.AIR))
+					reader.setBlock(testPos, baseSoil, 2);
+			}
+		}
 
 		BlockState log = AoABlocks.LUCALUS_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUCALUS_LEAVES.get().defaultBlockState();

@@ -253,13 +253,10 @@ public abstract class WorldUtil {
 		if (!(world instanceof World))
 			return true;
 
-		RegistryKey<World> worldKey = ((World)world).dimension();
 		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
-		if (WorldUtil.isWorld((World)world, AoADimensions.IMMORTALLIS.key, AoADimensions.ANCIENT_CAVERN.key)) {
-			if (relevantPlayer == null || !relevantPlayer.isCreative())
-				return false;
-		}
+		if (WorldUtil.isWorld((World)world, AoADimensions.NOWHERE.key))
+			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		return true;
 	}

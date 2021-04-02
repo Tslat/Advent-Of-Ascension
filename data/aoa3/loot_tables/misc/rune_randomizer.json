@@ -1,4 +1,5 @@
 {
+  "type": "minecraft:gift",
   "pools": [
     {
       "name": "powered_runes",
@@ -6,15 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -29,15 +22,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -52,15 +37,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -75,15 +52,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -98,15 +67,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -121,15 +82,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -144,15 +97,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -167,15 +112,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -190,15 +127,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -213,15 +142,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -236,15 +157,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -259,15 +172,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -282,15 +187,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -305,15 +202,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:charged_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -326,6 +215,15 @@
           ],
           "name": "aoa3:wither_rune"
         }
+      ],
+      "conditions": [
+        {
+          "condition": "aoa3:holding_item",
+          "target": "this",
+          "predicate": {
+            "item": "aoa3:charged_rune"
+          }
+        }
       ]
     },
     {
@@ -334,15 +232,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -357,15 +247,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -380,15 +262,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -403,15 +277,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -426,15 +292,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -449,15 +307,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -472,15 +322,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -495,15 +337,7 @@
         },
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "aoa3:holding_item",
-              "target": "this",
-              "predicate": {
-                "item": "aoa3:unpowered_rune"
-              }
-            }
-          ],
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -517,7 +351,16 @@
           "name": "aoa3:wither_rune"
         }
       ],
-      "bonus_rolls": 1.0
+      "bonus_rolls": 1.0,
+      "conditions": [
+        {
+          "condition": "aoa3:holding_item",
+          "target": "this",
+          "predicate": {
+            "item": "aoa3:unpowered_rune"
+          }
+        }
+      ]
     }
   ]
 }

@@ -26,7 +26,7 @@ public class GuidesManager implements ISelectiveResourceReloadListener {
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
-		if (resourcePredicate.test(VanillaResourceType.LANGUAGES)) {
+		if (resourcePredicate.test(getResourceType())) {
 			try {
 				GUIDES.clear();
 				Minecraft mc = Minecraft.getInstance();

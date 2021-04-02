@@ -63,6 +63,7 @@ public class EmberstoneShovel extends BaseShovel implements LootModifyingItem {
 				ItemStack smeltedStack = smeltRecipe.get().getResultItem();
 				int xp = (int)smeltRecipe.get().getExperience();
 
+				smeltedStack.setCount(blockDrop.getCount());
 				existingLoot.set(blockDropIndex, smeltedStack.copy());
 				block.popExperience(world, pos, xp);
 

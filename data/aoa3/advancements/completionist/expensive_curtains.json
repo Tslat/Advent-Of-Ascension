@@ -18,16 +18,6 @@
     "hidden": true
   },
   "criteria": {
-    "obtain_bejewelled_creepoid_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_creepoid_banner"
-          }
-        ]
-      }
-    },
     "obtain_bejewelled_soul_banner": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -68,36 +58,6 @@
         ]
       }
     },
-    "obtain_bejewelled_gingerbread_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_gingerbread_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_nethengeic_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_nethengeic_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_light_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_light_banner"
-          }
-        ]
-      }
-    },
     "obtain_bejewelled_fungal_banner": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -114,16 +74,6 @@
         "items": [
           {
             "item": "aoa3:bejewelled_lunar_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_ghostly_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_ghostly_banner"
           }
         ]
       }
@@ -164,26 +114,6 @@
         "items": [
           {
             "item": "aoa3:bejewelled_nether_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_illusion_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_illusion_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_shiny_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_shiny_banner"
           }
         ]
       }
@@ -258,16 +188,6 @@
         ]
       }
     },
-    "obtain_bejewelled_ghoul_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_ghoul_banner"
-          }
-        ]
-      }
-    },
     "obtain_bejewelled_mecha_banner": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -304,16 +224,6 @@
         "items": [
           {
             "item": "aoa3:bejewelled_energy_banner"
-          }
-        ]
-      }
-    },
-    "obtain_bejewelled_sea_banner": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "aoa3:bejewelled_sea_banner"
           }
         ]
       }
@@ -391,9 +301,6 @@
   },
   "requirements": [
     [
-      "obtain_bejewelled_creepoid_banner"
-    ],
-    [
       "obtain_bejewelled_soul_banner"
     ],
     [
@@ -406,22 +313,10 @@
       "obtain_bejewelled_dustopian_banner"
     ],
     [
-      "obtain_bejewelled_gingerbread_banner"
-    ],
-    [
-      "obtain_bejewelled_nethengeic_banner"
-    ],
-    [
-      "obtain_bejewelled_light_banner"
-    ],
-    [
       "obtain_bejewelled_fungal_banner"
     ],
     [
       "obtain_bejewelled_lunar_banner"
-    ],
-    [
-      "obtain_bejewelled_ghostly_banner"
     ],
     [
       "obtain_bejewelled_creation_banner"
@@ -434,12 +329,6 @@
     ],
     [
       "obtain_bejewelled_nether_banner"
-    ],
-    [
-      "obtain_bejewelled_illusion_banner"
-    ],
-    [
-      "obtain_bejewelled_shiny_banner"
     ],
     [
       "obtain_bejewelled_candy_banner"
@@ -463,9 +352,6 @@
       "obtain_bejewelled_ancient_banner"
     ],
     [
-      "obtain_bejewelled_ghoul_banner"
-    ],
-    [
       "obtain_bejewelled_mecha_banner"
     ],
     [
@@ -476,9 +362,6 @@
     ],
     [
       "obtain_bejewelled_energy_banner"
-    ],
-    [
-      "obtain_bejewelled_sea_banner"
     ],
     [
       "obtain_bejewelled_shadow_banner"

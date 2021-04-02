@@ -2,7 +2,7 @@ package net.tslat.aoa3.worldgen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SaplingBlock;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;

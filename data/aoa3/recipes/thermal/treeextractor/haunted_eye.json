@@ -1,0 +1,15 @@
+{
+  "type": "thermal:tree_extractor",
+  "trunk": "aoa3:haunted_eye_log",
+  "leaves": "aoa3:haunted_leaves",
+  "result": {
+    "fluid": "thermal:resin",
+    "amount": 75
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

@@ -8,8 +8,6 @@
   "downfall": 0.85,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 9437439,
     "water_color": 5780366,
     "water_fog_color": 5780366,
@@ -49,12 +47,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:fungat",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:fungung",
         "weight": 1,
         "minCount": 1,
@@ -69,6 +61,12 @@
       {
         "type": "aoa3:fungback",
         "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungat",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

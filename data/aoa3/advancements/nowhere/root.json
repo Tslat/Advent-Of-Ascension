@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:nowhere_portal"
+    },
+    "title": {
+      "color": "gray",
+      "translate": "advancements.aoa3.nowhere.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nowhere.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/dimensional_fabric.png"
+  },
+  "criteria": {
+    "enter_block_nowhere_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:nowhere_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_nowhere_portal"
+    ]
+  ]
+}

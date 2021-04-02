@@ -2,7 +2,8 @@ package net.tslat.aoa3.worldgen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SaplingBlock;
+import net.minecraft.block.Blocks;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -22,7 +23,7 @@ public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 		boolean success;
 
-		if (multiSaplingPos == null || (sapling == null && rand.nextInt(6) != 0)) {
+		if (multiSaplingPos == null || (isWorldGen && rand.nextInt(6) != 0)) {
 			success = genSmallTree(reader, rand, pos, leafBlock, isWorldGen);
 		}
 		else {
@@ -40,6 +41,17 @@ public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
 
 		if (!checkAndPrepSoil(reader, pos, 2, isWorldGen))
 			return false;
+
+		BlockState baseSoil = reader.getBlockState(pos.below());
+
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
+				BlockPos testPos = pos.offset(x, -1, z);
+
+				if (reader.getBlockState(testPos).is(Blocks.AIR))
+					reader.setBlock(testPos, baseSoil, 2);
+			}
+		}
 
 		BlockState log = AoABlocks.CELEVE_STEM.get().defaultBlockState();
 		boolean clockwise = rand.nextBoolean();

@@ -25,7 +25,7 @@ public class FlickeringSparklerParticle extends SpriteTexturedParticle {
 		this.alpha = alpha;
 
 		if (alpha == 0)
-			alpha = 1f;
+			this.alpha = 1f;
 
 		setSpriteFromAge(sprite);
 	}

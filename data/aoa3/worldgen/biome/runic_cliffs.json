@@ -8,8 +8,6 @@
   "downfall": 0.2,
   "effects": {
     "fog_color": 0,
-    "foliage_color": 0,
-    "grass_color": 0,
     "sky_color": 8048895,
     "water_color": 6006271,
     "water_fog_color": 6006271,
@@ -49,13 +47,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:ariel",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:paladin",
+        "type": "aoa3:bouncer",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -67,13 +59,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:ariel",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:runicorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:bouncer",
+        "type": "aoa3:paladin",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

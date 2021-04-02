@@ -3,7 +3,7 @@ package net.tslat.aoa3.worldgen.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SaplingBlock;
+import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
@@ -270,6 +270,17 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 2, isWorldGen))
 			return false;
 
+		BlockState baseSoil = reader.getBlockState(pos.below());
+
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
+				BlockPos testPos = pos.offset(x, -1, z);
+
+				if (reader.getBlockState(testPos).is(Blocks.AIR))
+					reader.setBlock(testPos, baseSoil, 2);
+			}
+		}
+
 		BlockState log = Blocks.OAK_LOG.defaultBlockState();
 
 		for (int i = 0; i < trunkHeight; i++) {
@@ -371,6 +382,17 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 
 		if (!checkAndPrepSoil(reader, pos, 2, isWorldGen))
 			return false;
+
+		BlockState baseSoil = reader.getBlockState(pos.below());
+
+		for (int x = 0; x < 2; x++) {
+			for (int z = 0; z < 2; z++) {
+				BlockPos testPos = pos.offset(x, -1, z);
+
+				if (reader.getBlockState(testPos).is(Blocks.AIR))
+					reader.setBlock(testPos, baseSoil, 2);
+			}
+		}
 
 		BlockState log = Blocks.OAK_LOG.defaultBlockState();
 		int leafRingGap = 0;

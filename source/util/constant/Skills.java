@@ -1,10 +1,5 @@
 package net.tslat.aoa3.util.constant;
 
-import net.tslat.aoa3.advent.Logging;
-import org.apache.logging.log4j.Level;
-
-import javax.annotation.Nullable;
-
 public enum Skills {
 	ALCHEMY(0),
 	ANIMA(1),
@@ -63,21 +58,5 @@ public enum Skills {
 			default:
 				return null;
 		}
-	};
-
-	@Nullable
-	public static Skills fromString(String skillName) {
-		Skills skill;
-
-		try {
-			skill = valueOf(skillName.toUpperCase().replace(" ", "_"));
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.WARN, "Unable to find skill with name: \"" + skillName + "\"", ex);
-
-			return null;
-		}
-
-		return skill;
 	}
 }

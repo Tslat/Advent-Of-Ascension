@@ -17,9 +17,11 @@
             },
             "decorator": {
               "config": {
-                "max": 256
+                "bottom_offset": 40,
+                "top_offset": 0,
+                "maximum": 80
               },
-              "type": "aoa3:up_to_surface"
+              "type": "minecraft:range"
             }
           },
           "type": "minecraft:decorated"

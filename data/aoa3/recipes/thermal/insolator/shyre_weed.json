@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:shyre_weed"
+  },
+  "result": {
+    "item": "aoa3:shyre_weed"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

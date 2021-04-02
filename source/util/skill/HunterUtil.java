@@ -22,11 +22,11 @@ public class HunterUtil {
 	static {
 		hunterCreatureMap.put(AoAEntities.Mobs.VOID_WALKER.get(), new Tuple<Integer, Float>(1, 6.4f));
 		hunterCreatureMap.put(AoAEntities.Mobs.MOTHER_VOID_WALKER.get(), new Tuple<Integer, Float>(5, 9.9f));
-		hunterCreatureMap.put(AoAEntities.Mobs.ICE_GIANT.get(), new Tuple<Integer, Float>(9, 8.6f));
-		hunterCreatureMap.put(AoAEntities.Mobs.LEAFY_GIANT.get(), new Tuple<Integer, Float>(9, 7.4f));
-		hunterCreatureMap.put(AoAEntities.Mobs.SAND_GIANT.get(), new Tuple<Integer, Float>(9, 10.2f));
-		hunterCreatureMap.put(AoAEntities.Mobs.STONE_GIANT.get(), new Tuple<Integer, Float>(9, 15.5f));
-		hunterCreatureMap.put(AoAEntities.Mobs.WOOD_GIANT.get(), new Tuple<Integer, Float>(9, 12.4f));
+		hunterCreatureMap.put(AoAEntities.Mobs.ICE_GIANT.get(), new Tuple<Integer, Float>(9, 38.6f));
+		hunterCreatureMap.put(AoAEntities.Mobs.LEAFY_GIANT.get(), new Tuple<Integer, Float>(9, 37.4f));
+		hunterCreatureMap.put(AoAEntities.Mobs.SAND_GIANT.get(), new Tuple<Integer, Float>(9, 40.2f));
+		hunterCreatureMap.put(AoAEntities.Mobs.STONE_GIANT.get(), new Tuple<Integer, Float>(9, 45.5f));
+		hunterCreatureMap.put(AoAEntities.Mobs.WOOD_GIANT.get(), new Tuple<Integer, Float>(9, 42.4f));
 		hunterCreatureMap.put(AoAEntities.Mobs.SKELETAL_COWMAN.get(), new Tuple<Integer, Float>(13, 12.8f));
 		hunterCreatureMap.put(AoAEntities.Mobs.KAIYU.get(), new Tuple<Integer, Float>(17, 10.5f));
 		hunterCreatureMap.put(AoAEntities.Mobs.HOST.get(), new Tuple<Integer, Float>(18, 25f));

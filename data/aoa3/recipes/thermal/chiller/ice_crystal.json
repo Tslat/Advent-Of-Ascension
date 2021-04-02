@@ -1,0 +1,16 @@
+{
+  "type": "thermal:chiller",
+  "fluid": {
+    "fluid": "minecraft:water",
+    "amount": 6000
+  },
+  "result": {
+    "item": "aoa3:ice_crystal"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

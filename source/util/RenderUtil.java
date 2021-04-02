@@ -1,13 +1,17 @@
 package net.tslat.aoa3.util;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.ITextComponent;
@@ -176,6 +180,41 @@ public abstract class RenderUtil {
 
 			y += fontRenderer.lineHeight;
 		}
+	}
+
+	public static void renderItemInGui(MatrixStack matrix, Minecraft mc, ItemStack stack, int x, int y) {
+		IBakedModel model = mc.getItemRenderer().getModel(stack, null, null);
+
+		matrix.pushPose();
+		mc.getTextureManager().bind(AtlasTexture.LOCATION_BLOCKS);
+		mc.getTextureManager().getTexture(AtlasTexture.LOCATION_BLOCKS).setFilter(false, false);
+		RenderSystem.enableRescaleNormal();
+		RenderSystem.enableAlphaTest();
+		RenderSystem.defaultAlphaFunc();
+		RenderSystem.enableBlend();
+		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		RenderSystem.color4f(1, 1, 1, 1);
+		matrix.translate((float)x, (float)y, 100.0F + mc.getItemRenderer().blitOffset);
+		matrix.translate(8, 8, 0);
+		matrix.scale(1, -1, 1);
+		matrix.scale(16, 16, 16);
+
+		IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
+		boolean useItemLight = !model.usesBlockLight();
+
+		if (useItemLight)
+			RenderHelper.setupForFlatItems();
+
+		mc.getItemRenderer().render(stack, ItemCameraTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 15728880, OverlayTexture.NO_OVERLAY, model);
+		renderTypeBuffer.endBatch();
+		RenderSystem.enableDepthTest();
+
+		if (useItemLight)
+			RenderHelper.setupFor3DItems();
+
+		RenderSystem.disableAlphaTest();
+		RenderSystem.disableRescaleNormal();
+		matrix.popPose();
 	}
 
 	public enum StringRenderType {

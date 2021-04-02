@@ -1,0 +1,15 @@
+{
+  "type": "thermal:insolator",
+  "input": {
+    "item": "aoa3:blue_ocealites"
+  },
+  "result": {
+    "item": "aoa3:blue_ocealites"
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

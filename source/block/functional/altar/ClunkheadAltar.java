@@ -53,7 +53,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		ClunkheadEntity clunkhead = new ClunkheadEntity(AoAEntities.Mobs.CLUNKHEAD.get(), player.level);
 
-		clunkhead.teleportTo(blockPos.getX() - 4, blockPos.above().getY(), blockPos.getZ() + 5);
+		clunkhead.teleportTo(blockPos.getX() - 1, blockPos.above().getY() + 1, blockPos.getZ() - 1);
 		player.level.addFreshEntity(clunkhead);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName()), blockPos);
 	}

@@ -103,8 +103,7 @@ public class UndeadHeraldEntity extends AoATrader {
 			case VOX_PONDS:
 				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.VOX_PONDS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.VOX_BANNER.get(), 1), 0, 9999));
 				break;
-			case ANCIENT_CAVERN:
-			case IMMORTALLIS:
+			case NOWHERE:
 			default:
 				break;
 		}

@@ -16,7 +16,6 @@ public final class AoADimensions {
 	private static final HashBiMap<RegistryKey<World>, AoADimension> dimTypeMap = HashBiMap.create(25);
 
 	public static final DimensionContainer ABYSS = new DimensionContainer("abyss", AoADimension.ABYSS);
-	public static final DimensionContainer ANCIENT_CAVERN = new DimensionContainer("ancient_cavern", AoADimension.ANCIENT_CAVERN);
 	public static final DimensionContainer BARATHOS = new DimensionContainer("barathos", AoADimension.BARATHOS);
 	public static final DimensionContainer CANDYLAND = new DimensionContainer("candyland", AoADimension.CANDYLAND);
 	public static final DimensionContainer CELEVE = new DimensionContainer("celeve", AoADimension.CELEVE);
@@ -28,13 +27,13 @@ public final class AoADimensions {
 	public static final DimensionContainer GARDENCIA = new DimensionContainer("gardencia", AoADimension.GARDENCIA);
 	public static final DimensionContainer GRECKON = new DimensionContainer("greckon", AoADimension.GRECKON);
 	public static final DimensionContainer HAVEN = new DimensionContainer("haven", AoADimension.HAVEN);
-	public static final DimensionContainer IMMORTALLIS = new DimensionContainer("immortallis", AoADimension.IMMORTALLIS);
 	public static final DimensionContainer IROMINE = new DimensionContainer("iromine", AoADimension.IROMINE);
 	public static final DimensionContainer LBOREAN = new DimensionContainer("lborean", AoADimension.LBOREAN);
 	public static final DimensionContainer LELYETIA = new DimensionContainer("lelyetia", AoADimension.LELYETIA);
 	public static final DimensionContainer LUNALUS = new DimensionContainer("lunalus", AoADimension.LUNALUS);
 	public static final DimensionContainer MYSTERIUM = new DimensionContainer("mysterium", AoADimension.MYSTERIUM);
 	public static final DimensionContainer NETHER = new DimensionContainer(World.NETHER, AoADimension.NETHER);
+	public static final DimensionContainer NOWHERE = new DimensionContainer("nowhere", AoADimension.NOWHERE);
 	public static final DimensionContainer OVERWORLD = new DimensionContainer(World.OVERWORLD, AoADimension.OVERWORLD);
 	public static final DimensionContainer PRECASIA = new DimensionContainer("precasia", AoADimension.PRECASIA);
 	public static final DimensionContainer RUNANDOR = new DimensionContainer("runandor", AoADimension.RUNANDOR);
@@ -69,7 +68,6 @@ public final class AoADimensions {
 
 	public enum AoADimension {
 		ABYSS,
-		ANCIENT_CAVERN,
 		BARATHOS,
 		CANDYLAND,
 		CELEVE,
@@ -81,13 +79,13 @@ public final class AoADimensions {
 		GARDENCIA,
 		GRECKON,
 		HAVEN,
-		IMMORTALLIS,
 		IROMINE,
 		LBOREAN,
 		LELYETIA,
 		LUNALUS,
 		MYSTERIUM,
 		NETHER,
+		NOWHERE,
 		OVERWORLD,
 		PRECASIA,
 		RUNANDOR,

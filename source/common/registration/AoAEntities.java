@@ -31,7 +31,7 @@ import net.tslat.aoa3.entity.mob.dustopia.*;
 import net.tslat.aoa3.entity.mob.gardencia.*;
 import net.tslat.aoa3.entity.mob.greckon.*;
 import net.tslat.aoa3.entity.mob.haven.*;
-import net.tslat.aoa3.entity.mob.immortallis.*;
+import net.tslat.aoa3.entity.mob.nowhere.*;
 import net.tslat.aoa3.entity.mob.iromine.*;
 import net.tslat.aoa3.entity.mob.lborean.*;
 import net.tslat.aoa3.entity.mob.lelyetia.*;

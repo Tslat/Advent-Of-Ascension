@@ -632,8 +632,6 @@ public final class AoASounds {
 
 	public static final RegistryObject<SoundEvent> SHYRELANDS_WIND = registerSound("shyrelands_wind", "world.shyrelands.wind");
 
-	public static final RegistryObject<SoundEvent> BIG_DAY_START = registerSound("big_day_start", "event.big_day.start");
-
 	public static final RegistryObject<SoundEvent> ITEM_ABOMINATOR_FIRE = registerSound("abominator_fire", "item.abominator.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ARTIFACT_FIRE = registerSound("artifact_fire", "item.artifact.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ATLANTIC_STAFF_CAST = registerSound("atlantic_staff_cast", "item.atlantic_staff.cast");
@@ -739,17 +737,16 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_WOOD_RIFLE_FIRE = registerSound("wood_rifle_fire", "item.wood_rifle.fire");
 
 	public static final RegistryObject<SoundEvent> ABYSS_PORTAL_ACTIVATE = registerSound("abyss_portal_activate", "portal.abyss.activate");
-	public static final RegistryObject<SoundEvent> ANCIENT_CAVERN_PORTAL_ACTIVATE = registerSound("ancient_cavern_portal_activate", "portal.ancient_cavern.activate");
 	public static final RegistryObject<SoundEvent> BARREN_PORTAL_ACTIVATE = registerSound("barren_portal_activate", "portal.barren.activate");
 	public static final RegistryObject<SoundEvent> CANDYLAND_PORTAL_ACTIVATE = registerSound("candyland_portal_activate", "portal.candyland.activate");
 	public static final RegistryObject<SoundEvent> CELEVE_PORTAL_ACTIVATE = registerSound("celeve_portal_activate", "portal.celeve.activate");
 	public static final RegistryObject<SoundEvent> CREEPONIA_PORTAL_ACTIVATE = registerSound("creeponia_portal_activate", "portal.creeponia.activate");
 	public static final RegistryObject<SoundEvent> CRYSTEVIA_PORTAL_ACTIVATE = registerSound("crystevia_portal_activate", "portal.crystevia.activate");
 	public static final RegistryObject<SoundEvent> DARK_PORTAL_ACTIVATE = registerSound("dark_portal_activate", "portal.dark.activate");
-	public static final RegistryObject<SoundEvent> IMMORTALLIS_PORTAL_ACTIVATE = registerSound("immortallis_portal_activate", "portal.immortallis.activate");
 	public static final RegistryObject<SoundEvent> IROMINE_PORTAL_ACTIVATE = registerSound("iromine_portal_activate", "portal.iromine.activate");
 	public static final RegistryObject<SoundEvent> LIGHT_PORTAL_ACTIVATE = registerSound("light_portal_activate", "portal.light.activate");
 	public static final RegistryObject<SoundEvent> NATURAL_PORTAL_ACTIVATE = registerSound("natural_portal_activate", "portal.natural.activate");
+	public static final RegistryObject<SoundEvent> NOWHERE_PORTAL_ACTIVATE = registerSound("nowhere_portal_activate", "portal.nowhere.activate");
 	public static final RegistryObject<SoundEvent> SHYRELANDS_PORTAL_ACTIVATE = registerSound("shyrelands_portal_activate", "portal.shyrelands.activate");
 
 	public static final RegistryObject<SoundEvent> BLOCK_CREATION_FORGE_SACRIFICE = registerSound("creation_forge_sacrifice", "block.creation_forge.sacrifice");
@@ -799,7 +796,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> VISUALENT_MUSIC = registerSound("visualent_music", "entity.visualent.music");
 	public static final RegistryObject<SoundEvent> VOXXULON_MUSIC = registerSound("voxxulon_music", "entity.voxxulon.music");
 	public static final RegistryObject<SoundEvent> YELLOW_GUARDIAN_MUSIC = registerSound("yellow_guardian_music", "entity.yellow_guardian.music");
-
 
 	private static RegistryObject<SoundEvent> registerSound(String registryName, String soundPath) {
 		return SOUNDS.register(registryName, () -> createSoundEvent(soundPath));

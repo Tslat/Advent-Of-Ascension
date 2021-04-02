@@ -57,6 +57,9 @@ public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 			}
 		}
 
+		if (blockDrop == ItemStack.EMPTY)
+			blockDrop = existingLoot.get(0);
+
 		if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayerEntity)harvestingPlayer, Resources.SOUL, 1, false)) {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 

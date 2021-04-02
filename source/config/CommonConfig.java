@@ -17,13 +17,13 @@ public final class CommonConfig {
 		skillsEnabled = specBuilder
 				.comment("Set this to false to disable AoA's skills functionality.",
 						"WARNING: AoA makes no guarantees for completely stable or balanced gameplay with skills disabled.")
-				.translation("config.aoa3.skillsEnabled")
+				.translation("config.aoa3.common.skillsEnabled")
 				.define("skillsEnabled", true);
 
 		resourcesEnabled = specBuilder
 				.comment("Set this to false to disable AoA's resources functionality.",
 						"WARNING: AoA makes no guarantees for completely stable or balanced gameplay with resources disabled.")
-				.translation("config.aoa3.resourcesEnabled")
+				.translation("config.aoa3.common.resourcesEnabled")
 				.define("resourcesEnabled", true);
 
 		specBuilder.pop();
@@ -32,7 +32,7 @@ public final class CommonConfig {
 		doVerboseDebugging = specBuilder
 				.comment("Set this to true to enable more detailed debugging.",
 						"If you don't mind your logs having a bit more info, or you are trying to figure out a bug or crash, this can be very helpful to have")
-				.translation("config.aoa3.doVerboseDebugging")
+				.translation("config.aoa3.common.doVerboseDebugging")
 				.define("doVerboseDebugging", false);
 
 		specBuilder.pop();
@@ -40,7 +40,7 @@ public final class CommonConfig {
 
 		hardcoreMode = specBuilder
 				.comment("Set this to true to enable AoA hardcore mode.")
-				.translation("config.aoa3.hardcoreMode")
+				.translation("config.aoa3.common.hardcoreMode")
 				.worldRestart()
 				.define("hardcoreMode", false);
 

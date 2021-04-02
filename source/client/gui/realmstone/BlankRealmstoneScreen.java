@@ -1,33 +1,42 @@
 package net.tslat.aoa3.client.gui.realmstone;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.common.util.Lazy;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.data.client.RealmstoneInsertsManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class BlankRealmstoneScreen extends Screen {
-	private static final ResourceLocation background = new ResourceLocation("aoa3", "textures/gui/realmstonegui/background.png");
-	private static final ResourceLocation windowFrame = new ResourceLocation("aoa3", "textures/gui/realmstonegui/window_frame.png");
-	private static final int backgroundHeight = 1515;
-	private static final int backgroundWidth = 1889;
-	private static final int viewSpaceWidth = 234;
-	private static final int viewSpaceHeight = 155;
+	private static final ResourceLocation background = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/background.png");
+	private static final ResourceLocation windowFrame = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/window_frame.png");
+	private static final ResourceLocation widgets = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/widgets.png");
+	private static final Random rand = new Random(0);
+	private static final int backgroundHeight = 2000;
+	private static final int backgroundWidth = 2000;
+	private static final int viewSpaceWidth = 238;
+	private static final int viewSpaceHeight = 166;
 	private static float scale = 0.5f;
 
-	private final ArrayList<RealmstoneWorldInsert> worldInserts = new ArrayList<RealmstoneWorldInsert>(23);
+	private final HashMap<String, RealmstoneWorldInsert> worldInserts = new HashMap<String, RealmstoneWorldInsert>(23);
 
 	private static RealmstoneWorldInsert currentlyHoveredInsert = null;
 	private boolean isPanning = false;
@@ -40,30 +49,7 @@ public class BlankRealmstoneScreen extends Screen {
 		super(LocaleUtil.getLocaleMessage("gui.aoa3.realmstone.title"));
 		scale = 0.5f;
 
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.ABYSS, "gui.realmstoneMenu.hover.abyss", 1228, 694, 100, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.ANCIENT_CAVERN, "gui.realmstoneMenu.hover.ancient_cavern", 727, 1295, 300, 300));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.BARATHOS, "gui.realmstoneMenu.hover.barathos", 627, 895, 400, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.CANDYLAND, "gui.realmstoneMenu.hover.candyland", 427, 595, 200, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.CELEVE, "gui.realmstoneMenu.hover.celeve", 1252, 970, 500, 300));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.CREEPONIA, "gui.realmstoneMenu.hover.creeponia", 827, 495, 0, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.CRYSTEVIA, "gui.realmstoneMenu.hover.crystevia", 827, 1095, 300, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.DEEPLANDS, "gui.realmstoneMenu.hover.deeplands", 827, 895, 300, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.DUSTOPIA, "gui.realmstoneMenu.hover.dustopia", 1428, 795, 100, 400));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.GARDENCIA, "gui.realmstoneMenu.hover.gardencia", 427, 795, 200, 300));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.GRECKON, "gui.realmstoneMenu.hover.greckon", 1428, 595, 100, 300));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.HAVEN, "gui.realmstoneMenu.hover.haven", 1102, 1120, 500, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.IMMORTALLIS, "gui.realmstoneMenu.hover.immortallis", 927, 1295, 300, 400));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.IROMINE, "gui.realmstoneMenu.hover.iromine", 427, 1095, 400, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.LBOREAN, "gui.realmstoneMenu.hover.lborean", 227, 695, 200, 400));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.LELYETIA, "gui.realmstoneMenu.hover.lelyetia", 1027, 895, 500, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.LUNALUS, "gui.realmstoneMenu.hover.lunalus", 1327, 1195, 500, 400));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.MYSTERIUM, "gui.realmstoneMenu.hover.mysterium", 927, 295, 0, 200));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.NETHER, "gui.realmstoneMenu.hover.nether", 1027, 695, 100, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.OVERWORLD, "gui.realmstoneMenu.hover.overworld", 827, 695, 200, 0));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.PRECASIA, "gui.realmstoneMenu.hover.precasia", 627, 695, 200, 100));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.RUNANDOR, "gui.realmstoneMenu.hover.runandor", 827, 95, 0, 400));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.SHYRELANDS, "gui.realmstoneMenu.hover.shyrelands", 1628, 695, 100, 500));
-		worldInserts.add(new RealmstoneWorldInsert(LocaleUtil.Constants.VOX_PONDS, "gui.realmstoneMenu.hover.vox_ponds", 727, 295, 0, 300));
+		worldInserts.putAll(RealmstoneInsertsManager.INSERTS);
 	}
 
 	@Override
@@ -97,10 +83,10 @@ public class BlankRealmstoneScreen extends Screen {
 		matrix.pushPose();
 		matrix.scale(scale, scale, scale);
 		minecraft.getTextureManager().bind(background);
-		RenderUtil.renderCustomSizedTexture(matrix, (int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(234 / scale), (int)(155 / scale), backgroundWidth, backgroundHeight);
+		RenderUtil.renderCustomSizedTexture(matrix, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(viewSpaceWidth / scale), (int)(viewSpaceHeight / scale), backgroundWidth, backgroundHeight);
 
-		for (RealmstoneWorldInsert insert : worldInserts) {
-			insert.render(matrix, minecraft, (int)((x + 9) / scale), (int)((y + 18) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
+		for (RealmstoneWorldInsert insert : worldInserts.values()) {
+			insert.render(matrix, minecraft, worldInserts, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
 		}
 
 		matrix.popPose();
@@ -119,81 +105,252 @@ public class BlankRealmstoneScreen extends Screen {
 		minecraft.font.draw(matrix, title, x + 8, y + 6, NumberUtil.RGB(181, 181, 181));
 	}
 
-	private static class RealmstoneWorldInsert {
-		private static final ResourceLocation worldImages = new ResourceLocation("aoa3", "textures/gui/realmstonegui/world_images.png");
+	public static class RealmstoneWorldInsert {
 		private static final int iconSize = 100;
+		private final String id;
+		private final ResourceLocation texture;
 
-		private final int uvX;
-		private final int uvY;
 		private final int posX;
 		private final int posY;
+		private final String[] parentNodes;
 
-		private final ArrayList<IReorderingProcessor> hoverTexts = new ArrayList<IReorderingProcessor>(2);
+		private final Lazy<ArrayList<IReorderingProcessor>> hoverTexts;
 
-		private RealmstoneWorldInsert(String worldNameKey, @Nullable String hoverTextKey, int posX, int posY, int uvX, int uvY) {
-			hoverTexts.add(LocaleUtil.getLocaleMessage(worldNameKey, TextFormatting.BLUE).getVisualOrderText());
-
-			if (hoverTextKey != null) {
-				FontRenderer fontRenderer = Minecraft.getInstance().font;
-
-				hoverTexts.addAll(fontRenderer.split(LocaleUtil.getLocaleMessage(hoverTextKey), 200));
-			}
-
+		public RealmstoneWorldInsert(String id, int posX, int posY, String... parentNodes) {
+			this.id = id;
 			this.posX = posX;
 			this.posY = posY;
-			this.uvX = uvX;
-			this.uvY = uvY;
+			this.parentNodes = parentNodes;
+			this.texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/worlds/" + id + ".png");
+
+			hoverTexts = Lazy.of(() -> {
+				ArrayList<IReorderingProcessor> texts = new ArrayList<IReorderingProcessor>(2);
+
+				texts.add(LocaleUtil.getLocaleMessage("dimension." + AdventOfAscension.MOD_ID + "." + id, TextFormatting.BLUE).getVisualOrderText());
+				texts.addAll(Minecraft.getInstance().font.split(LocaleUtil.getLocaleMessage("gui.realmstoneMenu.hover." + id), 200));
+
+				return texts;
+			});
 		}
 
-		private void render(MatrixStack matrix, Minecraft mc, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
+		public String getId() {
+			return this.id;
+		}
+
+		public String[] getParents() {
+			return this.parentNodes;
+		}
+
+		public JsonObject toJson() {
+			JsonObject obj = new JsonObject();
+
+			obj.addProperty("id", id);
+			obj.addProperty("gui_x", posX);
+			obj.addProperty("gui_y", posY);
+
+			if (parentNodes.length > 0) {
+				JsonArray parentNodes = new JsonArray();
+
+				for (String str : this.parentNodes) {
+					parentNodes.add(str);
+				}
+
+				obj.add("parents", parentNodes);
+			}
+
+			return obj;
+		}
+
+		public static RealmstoneWorldInsert fromJson(JsonObject jsonObject) {
+			String[] parentNodes;
+
+			if (jsonObject.has("parents")) {
+				JsonArray parents = jsonObject.get("parents").getAsJsonArray();
+				parentNodes = new String[parents.size()];
+
+				int i = 0;
+
+				for (JsonElement element : parents) {
+					parentNodes[i] = element.getAsString();
+					i++;
+				}
+			}
+			else {
+				parentNodes = new String[] {};
+			}
+
+			return new RealmstoneWorldInsert(jsonObject.get("id").getAsString(), jsonObject.get("gui_x").getAsInt(), jsonObject.get("gui_y").getAsInt(), parentNodes);
+		}
+
+		private void render(MatrixStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> worldInserts, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
 			int renderX = baseX + posX - scrollX;
 			int renderY = baseY + posY - scrollY;
 			int overlapLeft = MathHelper.clamp(baseX - renderX, 0, iconSize);
 
-			if (overlapLeft >= 100)
-				return;
+			if (overlapLeft < 100) {
+				int overlapTop = MathHelper.clamp(baseY - renderY, 0, iconSize);
 
-			int overlapTop = MathHelper.clamp(baseY - renderY, 0, iconSize);
+				if (overlapTop < 100) {
+					int overlapRight = MathHelper.clamp(renderX + 100 - (baseX + (int)(viewSpaceWidth / scale)), 0, iconSize);
 
-			if (overlapTop >= 100)
-				return;
+					if (overlapRight < 100) {
+						int overlapBottom = MathHelper.clamp(renderY + 100 - (baseY + (int)(viewSpaceHeight / scale)), 0, iconSize);
 
-			int overlapRight = MathHelper.clamp(renderX + 100 - (baseX + (int)(234 / scale)), 0, iconSize);
+						if (overlapBottom < 100) {
+							renderX += overlapLeft;
+							renderY += overlapTop;
+							int width = iconSize - overlapLeft - overlapRight;
+							int height = iconSize - overlapTop - overlapBottom;
 
-			if (overlapRight >= 100)
-				return;
+							GlStateManager._enableBlend();
+							mc.getTextureManager().bind(texture);
+							RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 100, 100);
+							mc.getTextureManager().bind(widgets);
+							RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 210, 100);
+							GlStateManager._disableBlend();
 
-			int overlapBottom = MathHelper.clamp(renderY + 100 - (baseY + (int)(155 / scale)), 0, iconSize);
+							if (currentlyHoveredInsert == null && NumberUtil.isWithinArea(mouseX, mouseY, renderX + 5, renderY + 5, renderX + width - 5, renderY + height - 5))
+								currentlyHoveredInsert = this;
+						}
+					}
+				}
+			}
 
-			if (overlapBottom >= 100)
-				return;
+			renderLinks(matrix, mc, worldInserts, baseX, baseY, scrollX, scrollY);
+		}
 
-			renderX += overlapLeft;
-			renderY += overlapTop;
-			int width = iconSize - overlapLeft - overlapRight;
-			int height = iconSize - overlapTop - overlapBottom;
-
+		private void renderLinks(MatrixStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> nodes, int baseX, int baseY, int scrollX, int scrollY) {
+			rand.setSeed(0);
 			GlStateManager._enableBlend();
-			mc.getTextureManager().bind(RealmstoneWorldInsert.worldImages);
-			RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, uvX + overlapLeft, uvY + overlapTop, width, height, 1000, 1000);
-			RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 1000, 1000);
-			GlStateManager._disableBlend();
+			mc.getTextureManager().bind(widgets);
 
-			if (currentlyHoveredInsert == null && mouseX > renderX + 5 && mouseX < renderX + width - 5 && mouseY > renderY + 5 && mouseY < renderY + height - 5)
-				currentlyHoveredInsert = this;
+			int minX = baseX - (int)(1.5f / scale);
+			int minY = baseY - (int)(3 / scale);
+			int maxX = baseX + (int)((viewSpaceWidth + 8.5f) / scale);
+			int maxY = baseY + (int)((viewSpaceHeight + 8.5f) / scale);
+
+			for (String id : parentNodes) {
+				rand.setSeed(posX + (long)posY * parentNodes.length * id.length());
+
+				RealmstoneWorldInsert parent = nodes.get(id);
+				int x = baseX + parent.posX + 50 - scrollX;
+				int y = baseY + parent.posY + 50 - scrollY;
+				int x2 = baseX + posX + 50 - scrollX;
+				int y2 = baseY + posY + 50 - scrollY;
+				int distX = x - x2;
+				int distY = y - y2;
+				float originalWidth = (float)Math.sqrt(distX * distX + distY * distY) - 80;
+				int startClipVal = calcLineCornerCutoff(x, y, minX, minY, maxX, maxY);
+				int endClipVal = calcLineCornerCutoff(x2, y2, minX, minY, maxX, maxY);
+				boolean shouldRender = false;
+				boolean trimStart = false;
+				int i = 3;
+
+				while(i > 0) {
+					if (startClipVal + endClipVal == 0) {
+						shouldRender = true;
+
+						break;
+					}
+
+					if (startClipVal != 0 && endClipVal != 0)
+						break;
+
+					double testX = x;
+					double testY = y;
+					int testVal = Math.max(endClipVal, startClipVal);
+
+					if (startClipVal > endClipVal)
+						trimStart = true;
+
+					if ((testVal & 8) == 8) {
+						testX = x + (x2 - x) * (maxY - y) / (float)(y2 - y);
+						testY = maxY;
+					}
+					else if ((testVal & 4) == 4) {
+						testX = x + (x2 - x) * (baseY - y) / (float)(y2 - y);
+						testY = baseY;
+					}
+					else if ((testVal & 2) == 2) {
+						testX = maxX;
+						testY = y + (y2 - y) * (maxX - x) / (float)(x2 - x);
+					}
+					else if ((testVal & 1) == 1) {
+						testX = baseX;
+						testY = y + (y2 - y) * (baseX - x) / (float)(x2 - x);
+					}
+
+					if (testVal == startClipVal) {
+						x = (int)testX;
+						y = (int)testY;
+						startClipVal = calcLineCornerCutoff(x, y, minX, minY, maxX, maxY);
+
+					}
+					else {
+						x2 = (int)testX;
+						y2 = (int)testY;
+						endClipVal = calcLineCornerCutoff(x2, y2, minX, minY, maxX, maxY);
+					}
+
+					i--;
+				}
+
+				if (!shouldRender)
+					continue;
+
+				distX = x - x2;
+				distY = y - y2;
+				double angle = Math.atan2(distY, distX) + Math.PI;
+				float renderWidth = (float)Math.sqrt(distX * distX + distY * distY) - 80;
+				float uWidth = 110 * (renderWidth / originalWidth);
+				float u = 100;
+
+				if (uWidth < 110 && trimStart)
+					u += 110 - uWidth;
+
+				matrix.pushPose();
+				matrix.translate(x, y, 0);
+				GlStateManager._color4f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1);
+				matrix.mulPose(new Quaternion(0, 0, (float)angle, false));
+				RenderUtil.renderScaledCustomSizedTexture(matrix, 40, -7.5f, u, rand.nextInt(5) * 15, uWidth, 15, renderWidth, 15, 210, 100);
+				GlStateManager._color4f(1, 1, 1, 1);
+				matrix.popPose();
+			}
+
+			GlStateManager._disableBlend();
 		}
 
 		private ArrayList<IReorderingProcessor> getHoverTexts() {
-			return hoverTexts;
+			return hoverTexts.get();
+		}
+
+		private int calcLineCornerCutoff(int x, int y, int minX, int minY, int maxX, int maxY) {
+			int val = 0;
+
+			if (x < minX) {
+				val = 1;
+			}
+			else if (x > maxX) {
+				val = 2;
+			}
+
+			if (y < minY) {
+				val += 4;
+			}
+			else if (y > maxY) {
+				val += 8;
+			}
+
+			return val;
 		}
 	}
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		int left = (this.width - 252) / 2;
-		int bottom = (this.height - 182) / 2;
+		int left = (this.width - 256) / 2;
+		int bottom = (this.height - 186) / 2;
 
-		if (mouseX >= left && mouseX <= left + 252 && mouseY >= bottom && mouseY <= bottom + 182) {
+		if (mouseX >= left && mouseX <= left + 256 && mouseY >= bottom && mouseY <= bottom + 186) {
 			setDragging(true);
 
 			return true;
@@ -216,8 +373,6 @@ public class BlankRealmstoneScreen extends Screen {
 
 		offsetX = Math.min(offsetX, backgroundWidth - (int)(viewSpaceWidth / scale));
 		offsetY = Math.min(offsetY, backgroundHeight - (int)(viewSpaceHeight / scale));
-
-
 
 		return true;
 	}

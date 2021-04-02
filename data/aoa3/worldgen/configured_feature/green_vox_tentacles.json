@@ -6,38 +6,54 @@
           "config": {
             "feature": {
               "config": {
-                "z": {},
-                "states": {
-                  "entries": [
-                    {
-                      "weight": 30,
-                      "data": {
-                        "Name": "aoa3:tentacle_green"
-                      }
+                "feature": {
+                  "config": {
+                    "z": {},
+                    "states": {
+                      "entries": [
+                        {
+                          "weight": 30,
+                          "data": {
+                            "Name": "aoa3:tentacle_green"
+                          }
+                        },
+                        {
+                          "weight": 1,
+                          "data": {
+                            "Name": "aoa3:tentacle_dots_right"
+                          }
+                        },
+                        {
+                          "weight": 1,
+                          "data": {
+                            "Name": "aoa3:tentacle_dots_left"
+                          }
+                        }
+                      ],
+                      "type": "minecraft:weighted_state_provider"
                     },
-                    {
-                      "weight": 1,
-                      "data": {
-                        "Name": "aoa3:tentacle_dots_right"
-                      }
+                    "count": {
+                      "min": 10,
+                      "max": 15
                     },
-                    {
-                      "weight": 1,
-                      "data": {
-                        "Name": "aoa3:tentacle_dots_left"
-                      }
+                    "x": {},
+                    "y": {}
+                  },
+                  "type": "aoa3:bendy_column"
+                },
+                "decorator": {
+                  "config": {
+                    "block": {
+                      "Properties": {
+                        "snowy": "false"
+                      },
+                      "Name": "aoa3:polluted_grass"
                     }
-                  ],
-                  "type": "minecraft:weighted_state_provider"
-                },
-                "count": {
-                  "min": 10,
-                  "max": 15
-                },
-                "x": {},
-                "y": {}
+                  },
+                  "type": "aoa3:only_on"
+                }
               },
-              "type": "aoa3:bendy_column"
+              "type": "minecraft:decorated"
             },
             "decorator": {
               "config": {},

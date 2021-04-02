@@ -1,0 +1,15 @@
+{
+  "type": "thermal:tree_extractor",
+  "trunk": "aoa3:pink_cotton_candy",
+  "leaves": "aoa3:pink_cotton_candy",
+  "result": {
+    "fluid": "aoa3:candied_water",
+    "amount": 200
+  },
+  "conditions": [
+    {
+      "modid": "thermal_expansion",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}
