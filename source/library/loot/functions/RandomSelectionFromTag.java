@@ -14,7 +14,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoALootOperations;
+import org.apache.logging.log4j.Level;
 
 public class RandomSelectionFromTag extends LootFunction {
 	private final String tagType;
@@ -46,8 +48,15 @@ public class RandomSelectionFromTag extends LootFunction {
 				break;
 		}
 
-		if (tag.getValues().isEmpty())
+		try {
+			if (tag.getValues().isEmpty())
+				return stack;
+		}
+		catch (IllegalStateException ex) { // Catch early population error because JER is stupid
+			Logging.logMessage(Level.ERROR, "Someone is attempting to parse a loot table before they should be. It's probably JER.", ex);
+
 			return stack;
+		}
 
 		return new ItemStack(tag.getRandomElement(context.getRandom()), stack.getCount(), stack.getTag());
 	}

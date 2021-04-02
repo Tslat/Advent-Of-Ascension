@@ -47,24 +47,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:squasher",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:archvine",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:flowerface",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:corny",
         "weight": 20,
         "minCount": 1,
@@ -77,13 +59,31 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:carrotop",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:flowerface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:archvine",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:broccohead",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:carrotop",
+        "type": "aoa3:squasher",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

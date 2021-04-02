@@ -51,7 +51,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:candy_corny",
+        "type": "aoa3:cherry_blaster",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -63,7 +63,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:cherry_blaster",
+        "type": "aoa3:candy_corny",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

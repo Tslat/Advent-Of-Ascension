@@ -39,8 +39,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:tipsy",
-        "weight": 20,
+        "type": "aoa3:jumbo",
+        "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
@@ -51,7 +51,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:kranky",
+        "type": "aoa3:tipsy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -75,13 +75,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:jumbo",
-        "weight": 2,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sticky",
+        "type": "aoa3:kranky",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -97,18 +91,24 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:sticky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:innervation_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:innervation_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

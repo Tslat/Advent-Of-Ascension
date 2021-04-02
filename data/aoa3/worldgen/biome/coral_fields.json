@@ -45,14 +45,14 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:angler",
-        "weight": 20,
+        "type": "aoa3:muncher",
+        "weight": 8,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:neptuno",
-        "weight": 1,
+        "type": "aoa3:sea_viper",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -63,14 +63,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:muncher",
-        "weight": 8,
+        "type": "aoa3:angler",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:sea_viper",
-        "weight": 20,
+        "type": "aoa3:neptuno",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }

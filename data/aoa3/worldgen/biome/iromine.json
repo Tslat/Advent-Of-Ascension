@@ -59,6 +59,12 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:polytom",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:mechamaton",
         "weight": 20,
         "minCount": 1,
@@ -69,24 +75,18 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
-      },
-      {
-        "type": "aoa3:polytom",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:metalloid",
+        "type": "aoa3:foraging_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:foraging_master",
+        "type": "aoa3:metalloid",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

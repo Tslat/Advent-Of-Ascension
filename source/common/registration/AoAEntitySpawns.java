@@ -114,7 +114,7 @@ public final class AoAEntitySpawns {
         new SpawnEntry(AoAEntities.Mobs.HAG.get(), 70).matchBiomes(BiomeDictionary.Type.SWAMP).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.HIDING_FUNGI.get(), 40).matchBiomes(BiomeDictionary.Type.CONIFEROUS).ignoreBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.LEAFY_GIANT.get(), 1).groupSize(-10, 1).matchBiomes(BiomeDictionary.Type.CONIFEROUS).ignoreBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
+        new SpawnEntry(AoAEntities.Mobs.LEAFY_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.CONIFEROUS).ignoreBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
 
         new SpawnEntry(AoAEntities.Mobs.HILL_CHARGER.get(), 50).groupSize(1, 3).matchBiomes(BiomeDictionary.Type.MESA).placeMonster();
         new SpawnEntry(AoAEntities.Mobs.MUCKOPEDE.get(), 50).matchBiomes(BiomeDictionary.Type.MESA).placeMonster();
@@ -304,7 +304,7 @@ public final class AoAEntitySpawns {
     }
 
     public static void setLboreanSpawnPlacements() {
-        setSpawnPlacement(AoAEntities.Animals.CORATEE.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true));
+        setSpawnPlacement(AoAEntities.Animals.CORATEE.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true));
         setSpawnPlacement(AoAEntities.Animals.GLOWING_PIXON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true));
         setSpawnPlacement(AoAEntities.Mobs.ANGLER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.CORALON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
@@ -607,9 +607,9 @@ public final class AoAEntitySpawns {
             return WorldUtil.getLightLevel(world, pos, true, false) <= RandomUtil.randomNumberUpTo(8);
         };
 
-        private static <T extends MobEntity> EntitySpawnPlacementRegistry.IPlacementPredicate<T> animalPredicate(ITag<Block> blockTag, boolean spawnsInDarkness) {
+        private static <T extends MobEntity> EntitySpawnPlacementRegistry.IPlacementPredicate<T> animalPredicate(@Nullable ITag<Block> blockTag, boolean spawnsInDarkness) {
             return (EntityType<T> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> {
-                if (!world.getBlockState(pos.below()).is(blockTag))
+                if (blockTag == null || !world.getBlockState(pos.below()).is(blockTag))
                     return false;
 
                 return spawnsInDarkness || world.getRawBrightness(pos, 0) >= 8;

@@ -38,6 +38,8 @@ public class CarvedRuneOfPower extends Block {
 					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"), Util.NIL_UUID);
 				}
 				else {
+					AoAPortalFrame.lightPortalFrame(world, pos, direction, portalBlock);
+
 					if (realmstone.getActivationSound() != null)
 						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), realmstone.getActivationSound().get(), SoundCategory.MASTER, 1.0f, 1.0f);
 				}

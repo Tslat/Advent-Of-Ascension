@@ -56,7 +56,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:keeler",
+        "type": "aoa3:parasect",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -74,19 +74,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:tharafly",
-        "weight": 15,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:cryptid",
-        "weight": 30,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:parasect",
+        "type": "aoa3:keeler",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -98,14 +86,26 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:squiggler",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:arkback",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:squiggler",
-        "weight": 1,
+        "type": "aoa3:cryptid",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tharafly",
+        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       }
@@ -113,13 +113,13 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:creation_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:creation_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
