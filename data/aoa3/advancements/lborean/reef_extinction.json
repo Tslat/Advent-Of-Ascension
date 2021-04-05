@@ -1,16 +1,16 @@
 {
-  "parent": "aoa3:overworld/hardened_coral",
+  "parent": "aoa3:lborean/hardened_coral",
   "display": {
     "icon": {
       "item": "aoa3:ornate_trophy"
     },
     "title": {
       "color": "dark_green",
-      "translate": "advancements.aoa3.overworld.reef_extinction.title"
+      "translate": "advancements.aoa3.lborean.reef_extinction.title"
     },
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.reef_extinction.description"
+      "translate": "advancements.aoa3.lborean.reef_extinction.description"
     },
     "frame": "task",
     "show_toast": true,

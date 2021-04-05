@@ -1,16 +1,16 @@
 {
-  "parent": "aoa3:overworld/reef_bleach",
+  "parent": "aoa3:lborean/reef_bleach",
   "display": {
     "icon": {
       "item": "aoa3:gold_trophy"
     },
     "title": {
       "color": "dark_green",
-      "translate": "advancements.aoa3.overworld.hardened_coral.title"
+      "translate": "advancements.aoa3.lborean.hardened_coral.title"
     },
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.hardened_coral.description"
+      "translate": "advancements.aoa3.lborean.hardened_coral.description"
     },
     "frame": "task",
     "show_toast": true,

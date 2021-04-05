@@ -57,6 +57,7 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> INFESTED_CANDY_CANE = register("infested_candy_cane", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "candyland/infested_candy_cane/main_pool"), 8, 32);
 
 	public static final RegistryObject<YPosStructure> CELEVIAN_LOTTO_BALLOON = register("celevian_lotto_balloon", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "celeve/celevian_lotto_balloon/main_pool"), 6, 26);
+	public static final RegistryObject<GenericAoAStructure> TOY_TOWER = register("toy_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "celeve/toy_tower/main_pool"), 10, 32);
 
 	public static final RegistryObject<GenericAoAStructure> CREEPER_HQ = register("creeper_hq", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "creeponia/creeper_hq/main_pool"), 12, 37);
 	public static final RegistryObject<GenericAoAStructure> CREEPONIA_BANK = register("creeponia_bank", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "creeponia/creeponia_bank/main_pool"), 8, 32);

@@ -2,15 +2,20 @@ package net.tslat.aoa3.entity.misc.pixon;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -33,6 +38,16 @@ public abstract class PixonEntity extends CreatureEntity {
         goalSelector.addGoal(1, new PanicGoal(this, 0.75d));
         goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.55d));
         goalSelector.addGoal(3, new LookRandomlyGoal(this));
+    }
+
+    @Nullable
+    @Override
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        this.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier("Random spawn health bonus", this.random.nextInt(30), AttributeModifier.Operation.ADDITION));
+
+        setHealth(getMaxHealth());
+
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override

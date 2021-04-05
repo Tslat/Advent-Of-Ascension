@@ -1,5 +1,5 @@
 {
-  "parent": "aoa3:lelyetia/root",
+  "parent": "aoa3:overworld/root",
   "display": {
     "icon": {
       "item": "minecraft:elytra",
@@ -7,11 +7,11 @@
     },
     "title": {
       "color": "light_purple",
-      "translate": "advancements.aoa3.lelyetia.living_on_the_edge.title"
+      "translate": "advancements.aoa3.overworld.living_on_the_edge.title"
     },
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.lelyetia.living_on_the_edge.description"
+      "translate": "advancements.aoa3.overworld.living_on_the_edge.description"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -25,11 +25,10 @@
         "location": {
           "position": {
             "y": {
-              "min": 0.0,
-              "max": 2.0
+              "min": -40.0,
+              "max": -1.0
             }
-          },
-          "dimension": "aoa3:lelyetia"
+          }
         }
       }
     }

@@ -1,6 +1,9 @@
 package net.tslat.aoa3.entity.boss;
 
-import net.minecraft.entity.*;
+import net.minecraft.entity.CreatureAttribute;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -12,7 +15,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.*;
+import net.minecraft.world.BossInfo;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -30,9 +34,9 @@ import javax.annotation.Nullable;
 
 public class HiveKingEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-	private static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>defineId(HiveKingEntity.class, DataSerializers.INT);
+	public static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>defineId(HiveKingEntity.class, DataSerializers.INT);
 
-	private int growthPercent = 0;
+	public int growthPercent = 100;
 
 	public HiveKingEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -49,19 +53,10 @@ public class HiveKingEntity extends AoAMeleeMob {
 
 		this.growthPercent = growthPercent;
 
-		entityData.set(GROWTH_PERCENT, growthPercent);
-		setHealth(Math.max(1, getMaxHealth() / (100 / (float)growthPercent)));
+		entityData.set(GROWTH_PERCENT, this.growthPercent);
+		setHealth(Math.max(1, getMaxHealth() / (100 / (float)this.growthPercent)));
 		refreshDimensions();
 		setNoAi(true);
-	}
-
-	@Nullable
-	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
-		if (world.isClientSide())
-			growthPercent = 100;
-
-		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
@@ -154,10 +149,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 		if (growthPercent >= 100)
 			return super.hurt(source, amount);
 
-		if (!level.isClientSide)
-			remove();
-
-		return true;
+		return false;
 	}
 
 	private void incrementGrowth() {

@@ -270,6 +270,9 @@ public class PlayerEvents {
 		World world = pl.level;
 		BlockPos pos = ev.getPos();
 
+		if (pl.isCreative())
+			return;
+
 		if (pl instanceof ServerPlayerEntity) {
 			BlockState block = world.getBlockState(pos);
 			boolean crop = block.is(BlockTags.CROPS);

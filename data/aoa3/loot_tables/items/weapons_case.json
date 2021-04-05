@@ -154,21 +154,6 @@
             }
           ],
           "name": "aoa3:spreadshot"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 8.0,
-                "max": 40.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:pop_shot"
         }
       ]
     }

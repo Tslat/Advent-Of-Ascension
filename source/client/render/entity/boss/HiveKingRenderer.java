@@ -19,6 +19,9 @@ public class HiveKingRenderer extends MobRenderer<HiveKingEntity, EntityModel<Hi
 	@Override
 	protected void scale(HiveKingEntity hiveKing, MatrixStack matrix, float partialTicks) {
 		if (hiveKing.tickCount < 1000) {
+			if (hiveKing.tickCount == 0 && hiveKing.getY() != -1 && hiveKing.growthPercent == 100)
+				hiveKing.growthPercent = hiveKing.getEntityData().get(HiveKingEntity.GROWTH_PERCENT);
+
 			float scaleFactor = hiveKing.getGrowthPercent() / 100f;
 
 			matrix.scale(scaleFactor, scaleFactor, scaleFactor);

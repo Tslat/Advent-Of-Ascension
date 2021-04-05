@@ -1,16 +1,16 @@
 {
-  "parent": "aoa3:overworld/root",
+  "parent": "aoa3:lborean/breathless",
   "display": {
     "icon": {
       "item": "aoa3:trophy"
     },
     "title": {
       "color": "dark_green",
-      "translate": "advancements.aoa3.overworld.reef_bleach.title"
+      "translate": "advancements.aoa3.lborean.reef_bleach.title"
     },
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.reef_bleach.description"
+      "translate": "advancements.aoa3.lborean.reef_bleach.description"
     },
     "frame": "challenge",
     "show_toast": true,

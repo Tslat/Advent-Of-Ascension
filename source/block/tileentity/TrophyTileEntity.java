@@ -125,6 +125,9 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 				cachedEntity = EntityType.loadEntityRecursive(entityNBT, getLevel(), Function.identity());
 			}
+
+			if (cachedEntity != null)
+				cachedEntity.tickCount = 1;
 		}
 
 		return this.cachedEntity;

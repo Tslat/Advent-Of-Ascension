@@ -103,7 +103,7 @@
             {
               "function": "aoa3:random_selection_from_tag",
               "tag_type": "item",
-              "tag": "forge:fresh_fish"
+              "tag": "forge:rawfish"
             }
           ],
           "name": "minecraft:cod"

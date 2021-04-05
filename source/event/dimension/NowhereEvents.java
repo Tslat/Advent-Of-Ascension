@@ -1,11 +1,11 @@
 package net.tslat.aoa3.event.dimension;
 
-import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.LeverBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -16,8 +16,10 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -55,6 +57,14 @@ public class NowhereEvents {
 		if (ev.getFrom() == AoADimensions.NOWHERE.key) {
 			ItemUtil.clearInventoryOfItems(ev.getPlayer(), new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 		}
+		else if (ev.getTo() == AoADimensions.NOWHERE.key) {
+			GameRules gameRules = AoADimensions.NOWHERE.getWorld().getGameRules();
+
+			gameRules.getRule(GameRules.RULE_DOFIRETICK).set(false, ServerLifecycleHooks.getCurrentServer());
+			gameRules.getRule(GameRules.RULE_MOBGRIEFING).set(false, ServerLifecycleHooks.getCurrentServer());
+			gameRules.getRule(AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS).set(false, ServerLifecycleHooks.getCurrentServer());
+			gameRules.getRule(AoAGameRules.STRONGER_MOB_GRIEFING).set(false, ServerLifecycleHooks.getCurrentServer());
+		}
 	}
 
 	@SubscribeEvent
@@ -64,7 +74,7 @@ public class NowhereEvents {
 
 		BlockState block = ev.getWorld().getBlockState(ev.getPos());
 
-		if (block.getBlock() instanceof LeverBlock || block.getBlock() instanceof AbstractButtonBlock) {
+		if (block.getBlock() == Blocks.JUKEBOX || block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
 			ev.setUseBlock(Event.Result.ALLOW);
 			ev.setUseItem(Event.Result.DENY);
 		}

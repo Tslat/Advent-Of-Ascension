@@ -53,8 +53,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:mechachron",
-        "weight": 1,
+        "type": "aoa3:mechamaton",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -65,14 +65,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:mechamaton",
+        "type": "aoa3:voltron",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:voltron",
-        "weight": 20,
+        "type": "aoa3:mechachron",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }
@@ -80,13 +80,13 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:foraging_master",
+        "type": "aoa3:metalloid",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:metalloid",
+        "type": "aoa3:foraging_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

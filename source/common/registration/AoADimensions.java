@@ -5,7 +5,9 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 import javax.annotation.Nonnull;
@@ -53,6 +55,7 @@ public final class AoADimensions {
 	public static class DimensionContainer {
 		public final RegistryKey<World> key;
 		public final AoADimension dim;
+		private ServerWorld world = null;
 
 		private DimensionContainer(RegistryKey<World> key, AoADimension dim) {
 			this.key = key;
@@ -63,6 +66,19 @@ public final class AoADimensions {
 
 		private DimensionContainer(String dimId, AoADimension dim) {
 			this(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, dimId)), dim);
+		}
+
+		@Nullable
+		public ServerWorld getWorld() {
+			if (this.world != null)
+				return this.world;
+
+			if (ServerLifecycleHooks.getCurrentServer() == null)
+				return null;
+
+			this.world = ServerLifecycleHooks.getCurrentServer().getLevel(key);
+
+			return this.world;
 		}
 	}
 

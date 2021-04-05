@@ -20,6 +20,11 @@
             "spacing": 26,
             "separation": 6,
             "salt": 1173032449
+          },
+          "aoa3:toy_tower": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1815266944
           }
         }
       },

@@ -9,8 +9,6 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
-import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
-
 public abstract class AoAStructureBase<T extends IFeatureConfig> extends Structure<T> {
 	private final GenerationStage.Decoration decorationStage;
 	private final ResourceLocation templatePoolPath;
