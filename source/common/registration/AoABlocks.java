@@ -54,7 +54,6 @@ import net.tslat.aoa3.common.registration.worldgen.AoAFeatures;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.worldgen.feature.features.trees.AoATree;
 
 import java.util.HashMap;
@@ -967,10 +966,6 @@ public final class AoABlocks {
 
 	public static final RegistryObject<Block> NOWHERE_ACTIVITY_PORTAL = customRender(registerItemlessBlock("nowhere_activity_portal", NowhereActivityPortal::new), TRANSLUCENT);
 
-	public static final RegistryObject<Block> EREBON_SHRINE = registerBlock("erebon_shrine", () -> new AncientCavernShrine(Deities.EREBON), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> LUXON_SHRINE = registerBlock("luxon_shrine", () -> new AncientCavernShrine(Deities.LUXON), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> PLUTON_SHRINE = registerBlock("pluton_shrine", () -> new AncientCavernShrine(Deities.PLUTON), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> SELYAN_SHRINE = registerBlock("selyan_shrine", () -> new AncientCavernShrine(Deities.SELYAN), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> VOX_CRATE = registerBlock("vox_crate", VoxCrate::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> CREATION_FORGE = registerBlock("creation_forge", CreationForge::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> BLUE_CRYSTAL_CREATOR = registerBlock("blue_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_BLUE, AoAItems.BLUE_GEMSTONES, AoAItems.BLUE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);

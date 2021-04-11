@@ -3,10 +3,7 @@ package net.tslat.aoa3.item.armour;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.*;
@@ -19,7 +16,15 @@ import java.util.HashSet;
 
 public abstract class AdventArmour extends ArmorItem {
 	public AdventArmour(IArmorMaterial material, EquipmentSlotType slot) {
-		super(material, slot, new Item.Properties().tab(AoAItemGroups.ARMOUR).durability(material.getDurabilityForSlot(slot)));
+		this(material, slot, Rarity.COMMON);
+	}
+
+	public AdventArmour(IArmorMaterial material, EquipmentSlotType slot, Rarity rarity) {
+		this(material, slot, new Item.Properties().tab(AoAItemGroups.ARMOUR).durability(material.getDurabilityForSlot(slot)).rarity(rarity));
+	}
+
+	public AdventArmour(IArmorMaterial material, EquipmentSlotType slot, Item.Properties properties) {
+		super(material, slot, properties);
 	}
 
 	@Nullable

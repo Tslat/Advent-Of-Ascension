@@ -30,7 +30,11 @@ public class BaseSword extends SwordItem {
 	protected final double speed;
 
 	public BaseSword(IItemTier itemStats) {
-		super(itemStats, 0, itemStats.getSpeed(), new Item.Properties().durability(itemStats.getUses()).tab(AoAItemGroups.SWORDS).addToolType(ToolType.get("sword"), itemStats.getLevel()));
+		this(itemStats, new Item.Properties().durability(itemStats.getUses()).tab(AoAItemGroups.SWORDS).addToolType(ToolType.get("sword"), itemStats.getLevel()));
+	}
+
+	public BaseSword(IItemTier itemStats, Item.Properties properties) {
+		super(itemStats, 0, itemStats.getSpeed(), properties);
 		this.dmg = itemStats.getAttackDamageBonus();
 		this.speed = itemStats.getSpeed();
 

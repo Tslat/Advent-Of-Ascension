@@ -130,7 +130,6 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> CONSTRUCT_OF_STRENGTH = registerMob("construct_of_strength", ConstructOfStrengthEntity::new, 1f, 2.375f, 11021588, 3354157);
 		public static final RegistryObject<EntityType<FlyingEntity>> CONSTRUCT_OF_TERROR = registerMob("construct_of_terror", ConstructOfTerrorEntity::new, 1.0f, 1.0f, 4299043, 3354157);
 		public static final RegistryObject<EntityType<CorallusEntity>> CORALLUS = registerMob("corallus", CorallusEntity::new, 0.75f, 2.875f, 36307, 11862175);
-		public static final RegistryObject<EntityType<WaterMobEntity>> CORALON = registerMob("coralon", CoralonEntity::new, 0.75f, 1.375f, 32221, 16120064);
 		public static final RegistryObject<EntityType<MonsterEntity>> CORNY = registerMob("corny", CornyEntity::new, 0.625f, 2f, 35104, 13551360);
 		public static final RegistryObject<EntityType<CottonCandorEntity>> COTTON_CANDOR = registerMob("cotton_candor", CottonCandorEntity::new, 1.5f, 2.375f, 13990125, 12926954);
 		public static final RegistryObject<EntityType<FlyingEntity>> CRAEXXEUS = registerMob("craexxeus", CraexxeusEntity::new, 3.5f, 4.4375f, 14847254, 2876115);
@@ -214,7 +213,6 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> HORNDRON = registerMob("horndron", HorndronEntity::new, 1.7f, 2.2f, 3482377, 11377022);
 		public static final RegistryObject<EntityType<MonsterEntity>> HOST = registerMob("host", HostEntity::new, 2.1875f, 2.0625f, 4629316, 11321260);
 		public static final RegistryObject<EntityType<MonsterEntity>> HUNTER = registerMob("hunter", HunterEntity::new, 1.3f, 1.3f, 3152742, 4007949);
-		public static final RegistryObject<EntityType<MonsterEntity>> HYDROLON = registerMob("hydrolon", HydrolonEntity::new, 1.125f, 2.0625f, 16711896, 53503);
 		public static final RegistryObject<EntityType<MonsterEntity>> ICE_GIANT = registerMob("ice_giant", IceGiantEntity::new, 1.125f, 6.5f, 9149372, 7045549);
 		public static final RegistryObject<EntityType<MonsterEntity>> INFERNAL = registerMob("infernal", InfernalEntity::new, true, 1.125f, 1.875f, 7151133, 14848287);
 		public static final RegistryObject<EntityType<MonsterEntity>> INMATE_X = registerMob("inmate_x", InmateXEntity::new, 0.6f, 2f, 14165970, 15138567);
@@ -475,7 +473,6 @@ public final class AoAEntities {
 		public static final DeferredRegister<EntityType<?>> NPCS = DeferredRegister.create(ForgeRegistries.ENTITIES, AdventOfAscension.MOD_ID);
 
 		public static final RegistryObject<EntityType<CreatureEntity>> GORB_CITIZEN = registerNPC("gorb_citizen", GorbCitizenEntity::new, 0.5625f, 1.6875f, 3233315, 4744746);
-		public static final RegistryObject<EntityType<CreatureEntity>> PORTAL_MASTER = registerNPC("portal_master", PortalMasterEntity::new, 0.5625f, 2.0f, 8325930, 460294);
 		public static final RegistryObject<EntityType<CreatureEntity>> PRIMORDIAL_GUIDE = registerNPC("primordial_guide", PrimordialGuideEntity::new, 0.5625f, 2.0f, 7037281, 2960171);
 		public static final RegistryObject<EntityType<CreatureEntity>> ZAL_CHILD = registerNPC("zal_child", ZalChildEntity::new, 0.16875f, 0.5625f, 15395546, 2631715);
 		public static final RegistryObject<EntityType<CreatureEntity>> ZAL_CITIZEN = registerNPC("zal_citizen", ZalCitizenEntity::new, 0.5625f, 1.875f, 15921894, 3487025);

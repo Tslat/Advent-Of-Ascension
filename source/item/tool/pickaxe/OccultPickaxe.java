@@ -2,7 +2,9 @@ package net.tslat.aoa3.item.tool.pickaxe;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -10,17 +12,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.misc.OccultBlockEntity;
+import net.tslat.aoa3.util.ClientOperations;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.ClientOperations;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class OccultPickaxe extends BasePickaxe {
 	public OccultPickaxe() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null),
+				new Item.Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override

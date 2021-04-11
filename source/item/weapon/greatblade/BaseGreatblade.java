@@ -16,6 +16,7 @@ import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.item.UseAction;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -45,7 +46,11 @@ public class BaseGreatblade extends Item implements LongReachItem {
 	private final double attackSpeed;
 
 	public BaseGreatblade(final double baseDmg, final double attackSpeed, final int durability) {
-		this(baseDmg, attackSpeed, new Item.Properties().durability(durability).tab(AoAItemGroups.GREATBLADES).addToolType(ToolType.get("sword"), 4));
+		this(baseDmg, attackSpeed, durability, Rarity.COMMON);
+	}
+
+	public BaseGreatblade(final double baseDmg, final double attackSpeed, final int durability, Rarity rarity) {
+		this(baseDmg, attackSpeed, new Item.Properties().durability(durability).tab(AoAItemGroups.GREATBLADES).addToolType(ToolType.get("sword"), 4).rarity(rarity));
 
 		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackDamage(), AttributeModifier.Operation.ADDITION));
 		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));

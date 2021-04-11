@@ -2,17 +2,11 @@ package net.tslat.aoa3.worldgen.structure.structures;
 
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
-import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.structure.VillageConfig;
-import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.tslat.aoa3.worldgen.feature.features.config.IntRangeConfig;
 
 import java.util.Random;
@@ -34,6 +28,8 @@ public class HangingStructure extends AoAStructureBase<IntRangeConfig> {
 			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, IntRangeConfig config) {
 				IBlockReader blockReader = chunkGenerator.getBaseColumn(chunkCenter.getX(), chunkCenter.getZ());
 
+				chunkCenter.setY(config.getValue(random));
+
 				if (blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable()) {
 					while (chunkCenter.getY() < blockReader.getMaxBuildHeight() && blockReader.getBlockState(chunkCenter.move(Direction.UP)).getMaterial().isReplaceable()) {
 						;
@@ -48,19 +44,7 @@ public class HangingStructure extends AoAStructureBase<IntRangeConfig> {
 			}
 
 			@Override
-			protected void generateStructurePieces(DynamicRegistries registries, int maxDepth, ChunkGenerator chunkGenerator, TemplateManager templateManager, BlockPos chunkCenter, Random rand, boolean bool1, boolean generateOnSurface) {
-				JigsawManager.addPieces(
-						registries,
-						new VillageConfig(() -> registries.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(getFeature().getTemplatePoolPath()), 10),
-						AbstractVillagePiece::new,
-						chunkGenerator,
-						templateManager,
-						chunkCenter,
-						pieces,
-						random,
-						false,
-						false);
-
+			protected void doPostPlacementOperations(int maxDepth, ChunkGenerator chunkGenerator, BlockPos originPos, Random rand) {
 				int topY = 0;
 
 				for (StructurePiece piece : pieces) {
@@ -68,7 +52,7 @@ public class HangingStructure extends AoAStructureBase<IntRangeConfig> {
 						topY = piece.getBoundingBox().y1;
 				}
 
-				int offset = chunkCenter.getY() - topY;
+				int offset = originPos.getY() - topY;
 
 				for (StructurePiece piece : pieces) {
 					piece.move(0, offset, 0);

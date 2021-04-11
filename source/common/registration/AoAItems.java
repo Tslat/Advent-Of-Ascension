@@ -269,24 +269,24 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SHYRELANDS_TOKENS = registerItem("shyrelands_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> VOX_PONDS_TOKENS = registerItem("vox_ponds_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 
-	public static final RegistryObject<Item> ABYSSAL_UPGRADE_KIT = registerItem("abyssal_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> ANCIENT_UPGRADE_KIT = registerItem("ancient_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS))); // TODO Obtain Method
-	public static final RegistryObject<Item> APOCO_UPGRADE_KIT = registerItem("apoco_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> CLOWN_UPGRADE_KIT = registerItem("clown_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> DARKLY_UPGRADE_KIT = registerItem("darkly_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> FLORO_UPGRADE_KIT = registerItem("floro_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> GOLDEN_UPGRADE_KIT = registerItem("golden_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> HAUNTED_UPGRADE_KIT = registerItem("haunted_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LELYETIAN_UPGRADE_KIT = registerItem("lelyetian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LIGHT_UPGRADE_KIT = registerItem("light_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LUNAR_UPGRADE_KIT = registerItem("lunar_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> NETHER_UPGRADE_KIT = registerItem("nether_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> PRECASIAN_UPGRADE_KIT = registerItem("precasian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> PREDATOR_UPGRADE_KIT = registerItem("predator_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS))); // TODO Precasia event placement
-	public static final RegistryObject<Item> ROCKY_UPGRADE_KIT = registerItem("rocky_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> RUNIC_UPGRADE_KIT = registerItem("runic_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> SEASIDE_UPGRADE_KIT = registerItem("seaside_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> SMILEY_UPGRADE_KIT = registerItem("smiley_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> ABYSSAL_UPGRADE_KIT = registerItem("abyssal_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> ANCIENT_UPGRADE_KIT = registerItem("ancient_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE))); // TODO Obtain Method
+	public static final RegistryObject<Item> APOCO_UPGRADE_KIT = registerItem("apoco_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> CLOWN_UPGRADE_KIT = registerItem("clown_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> DARKLY_UPGRADE_KIT = registerItem("darkly_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> FLORO_UPGRADE_KIT = registerItem("floro_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> GOLDEN_UPGRADE_KIT = registerItem("golden_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> HAUNTED_UPGRADE_KIT = registerItem("haunted_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> LELYETIAN_UPGRADE_KIT = registerItem("lelyetian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> LIGHT_UPGRADE_KIT = registerItem("light_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> LUNAR_UPGRADE_KIT = registerItem("lunar_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> NETHER_UPGRADE_KIT = registerItem("nether_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> PRECASIAN_UPGRADE_KIT = registerItem("precasian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> PREDATOR_UPGRADE_KIT = registerItem("predator_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE))); // TODO Precasia event placement
+	public static final RegistryObject<Item> ROCKY_UPGRADE_KIT = registerItem("rocky_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> RUNIC_UPGRADE_KIT = registerItem("runic_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> SEASIDE_UPGRADE_KIT = registerItem("seaside_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> SMILEY_UPGRADE_KIT = registerItem("smiley_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 
 	public static final RegistryObject<Item> WATERLOGGED_AQUA_CANNON = registerItem("waterlogged_aqua_cannon", () -> new WaterloggedItem(AoAWeapons.AQUA_CANNON, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> WATERLOGGED_CORAL_CANNON = registerItem("waterlogged_coral_cannon", () -> new WaterloggedItem(AoAWeapons.CORAL_CANNON, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
@@ -361,9 +361,9 @@ public final class AoAItems {
 	public static final RegistryObject<Item> RADIANT_INFUSION_STONE = registerItem("radiant_infusion_stone", () -> new InfusionStone(70, 220.0f, RADIANT_POWER_STONE));
 	public static final RegistryObject<Item> SHINING_INFUSION_STONE = registerItem("shining_infusion_stone", () -> new InfusionStone(60, 150.0f, SHINING_POWER_STONE));
 	
-	public static final RegistryObject<Item> GIANT_SKILL_CRYSTAL = registerItem("giant_skill_crystal", () -> new SkillCrystal(4));
-	public static final RegistryObject<Item> LARGE_SKILL_CRYSTAL = registerItem("large_skill_crystal", () -> new SkillCrystal(8));
-	public static final RegistryObject<Item> MEDIUM_SKILL_CRYSTAL = registerItem("medium_skill_crystal", () -> new SkillCrystal(12));
+	public static final RegistryObject<Item> GIANT_SKILL_CRYSTAL = registerItem("giant_skill_crystal", () -> new SkillCrystal(4, Rarity.EPIC));
+	public static final RegistryObject<Item> LARGE_SKILL_CRYSTAL = registerItem("large_skill_crystal", () -> new SkillCrystal(8, Rarity.RARE));
+	public static final RegistryObject<Item> MEDIUM_SKILL_CRYSTAL = registerItem("medium_skill_crystal", () -> new SkillCrystal(12, Rarity.UNCOMMON));
 	public static final RegistryObject<Item> SMALL_SKILL_CRYSTAL = registerItem("small_skill_crystal", () -> new SkillCrystal(15));
 
 	public static final RegistryObject<Item> CRYSTAL_BOX = registerItem("crystal_box", CrystalBox::new);

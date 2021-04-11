@@ -5,9 +5,13 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ToolType;
@@ -21,6 +25,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.misc.MutableSupplier;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
@@ -121,5 +126,127 @@ public abstract class BlockUtil {
 
 	public static Vector3d posToVec(BlockPos pos) {
 		return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	public static class SpawnerBuilder {
+		private short initialSpawnDelay = 20;
+		private short minSpawnDelay = 200;
+		private short maxSpawnDelay = 800;
+
+		private short spawnsPerGroup = 4;
+		private short maxNearbyEntities = 6;
+		private short requiredPlayerRange = 16;
+		private short spawnRange = 4;
+
+		private WeightedSpawnerEntity nextSpawn = null;
+		private final ArrayList<WeightedSpawnerEntity> mobs = new ArrayList<WeightedSpawnerEntity>(1);
+
+		public SpawnerBuilder initialSpawnDelay(short ticks) {
+			this.initialSpawnDelay = ticks;
+
+			return this;
+		}
+
+		public SpawnerBuilder minSpawnDelay(short ticks) {
+			this.minSpawnDelay = ticks;
+
+			return this;
+		}
+
+		public SpawnerBuilder maxSpawnDelay(short ticks) {
+			this.maxNearbyEntities = ticks;
+
+			return this;
+		}
+
+		public SpawnerBuilder spawnsPerGroup(short amount) {
+			this.spawnsPerGroup = amount;
+
+			return this;
+		}
+
+		public SpawnerBuilder maxNearbyEntities(short amount) {
+			this.maxNearbyEntities = 6;
+
+			return this;
+		}
+
+		public SpawnerBuilder whenPlayerWithin(short distance) {
+			this.requiredPlayerRange = distance;
+
+			return this;
+		}
+
+		public SpawnerBuilder spawnWithinXBlocks(short distance) {
+			this.spawnRange = distance;
+
+			return this;
+		}
+
+		public SpawnerBuilder withSpawns(EntityType<?>... entities) {
+			for (EntityType<?> entity : entities) {
+				withSpawn(1, entity);
+			}
+
+			return this;
+		}
+
+		public SpawnerBuilder withSpawns(RegistryObject<EntityType<?>>... entities) {
+			for (RegistryObject<EntityType<?>> registryEntry : entities) {
+				withSpawn(1, registryEntry.get());
+			}
+
+			return this;
+		}
+
+		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity) {
+			CompoundNBT tag = new CompoundNBT();
+
+			tag.putString("id", entity.getRegistryName().toString());
+
+			return withSpawn(weight, tag);
+		}
+
+		public SpawnerBuilder withSpawn(int weight, CompoundNBT nbt) {
+			if (this.nextSpawn == null) {
+				this.nextSpawn = new WeightedSpawnerEntity(weight, nbt);
+
+				return this;
+			}
+
+			this.mobs.add(new WeightedSpawnerEntity(weight, nbt));
+
+			return this;
+		}
+
+		public CompoundNBT build() {
+			CompoundNBT nbt = new CompoundNBT();
+
+			if (nextSpawn == null)
+				throw new IllegalStateException("Attempted to create spawner data with no mobs listed.");
+
+			nbt.putShort("Delay", this.initialSpawnDelay);
+			nbt.putShort("MinSpawnDelay", this.minSpawnDelay);
+			nbt.putShort("MaxSpawnDelay", this.maxSpawnDelay);
+			nbt.putShort("SpawnCount", this.spawnsPerGroup);
+			nbt.putShort("MaxNearbyEntities", this.maxNearbyEntities);
+			nbt.putShort("RequiredPlayerRange", this.requiredPlayerRange);
+			nbt.putShort("SpawnRange", this.spawnRange);
+			nbt.put("SpawnData", this.nextSpawn.getTag().copy());
+
+			ListNBT mobs = new ListNBT();
+
+			if (this.mobs.isEmpty()) {
+				mobs.add(this.nextSpawn.save());
+			}
+			else {
+				for (WeightedSpawnerEntity entry : this.mobs) {
+					mobs.add(entry.save());
+				}
+			}
+			nbt.put("SpawnPotentials", mobs);
+
+			return nbt;
+		}
 	}
 }

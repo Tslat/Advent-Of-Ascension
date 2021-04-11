@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -29,7 +30,7 @@ public class HunterArmour extends AdventArmour implements SkillItem {
 	private static final AttributeModifier HUNTER_ARMOUR_KNOCKBACK = new AttributeModifier(UUID.fromString("a794717e-8b9b-4d20-b224-0a7571ddd012"), "AoAHunterArmourBuff", 0.5, AttributeModifier.Operation.ADDITION);
 
 	public HunterArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:hunter", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:hunter", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot, Rarity.RARE);
 	}
 
 	@Override

@@ -4,7 +4,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.MusicDiscItem;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
@@ -74,8 +77,16 @@ public class NowhereEvents {
 
 		BlockState block = ev.getWorld().getBlockState(ev.getPos());
 
-		if (block.getBlock() == Blocks.JUKEBOX || block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
-			ev.setUseBlock(Event.Result.ALLOW);
+		if (block.getBlock() == Blocks.JUKEBOX) {
+			Item heldItem = ev.getPlayer().getItemInHand(ev.getHand()).getItem();
+
+			if (heldItem == Items.AIR || heldItem instanceof MusicDiscItem) {
+				ev.setUseItem(Event.Result.ALLOW);
+				ev.setUseBlock(Event.Result.ALLOW);
+				ev.getPlayer().abilities.mayBuild = true;
+			}
+		}
+		else if (block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
 			ev.setUseItem(Event.Result.DENY);
 		}
 		else {

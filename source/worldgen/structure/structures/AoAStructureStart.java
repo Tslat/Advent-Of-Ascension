@@ -85,5 +85,8 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 			JigsawManager.addPieces(registries, villagePiece, config.maxDepth(), factory, chunkGenerator, templateManager, pieces, rand);
 
 		calculateBoundingBox();
+		doPostPlacementOperations(maxDepth, chunkGenerator, chunkCenter, rand);
 	}
+
+	protected void doPostPlacementOperations(int maxDepth, ChunkGenerator chunkGenerator, BlockPos originPos, Random rand) {}
 }

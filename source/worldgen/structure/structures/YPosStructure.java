@@ -24,6 +24,8 @@ public class YPosStructure extends AoAStructureBase<IntRangeConfig> {
 			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, IntRangeConfig config) {
 				IBlockReader blockReader = chunkGenerator.getBaseColumn(chunkCenter.getX(), chunkCenter.getZ());
 
+				chunkCenter.setY(config.getValue(random));
+
 				return config.ignoreObstructions || blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable();
 			}
 		};

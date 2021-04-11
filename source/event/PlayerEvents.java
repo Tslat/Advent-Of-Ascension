@@ -60,7 +60,6 @@ import net.tslat.aoa3.entity.misc.AnimaStoneEntity;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
-import net.tslat.aoa3.event.dimension.ShyrelandsEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
 import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.item.misc.ReservedItem;
@@ -92,11 +91,7 @@ public class PlayerEvents {
 					ExpeditionUtil.handleRunningTick(ev, (ServerPlayerEntity)ev.player);
 			}
 
-			if (WorldUtil.isWorld(ev.player.level, AoADimensions.SHYRELANDS.key)) {
-				if (!ev.player.level.isClientSide())
-					ShyrelandsEvents.doPlayerTick(ev.player);
-			}
-			else if (WorldUtil.isWorld(ev.player.level, AoADimensions.LELYETIA.key)) {
+			if (WorldUtil.isWorld(ev.player.level, AoADimensions.LELYETIA.key)) {
 				LelyetiaEvents.doPlayerTick(ev.player);
 			}
 			else if (WorldUtil.isWorld(ev.player.level, AoADimensions.VOX_PONDS.key)) {

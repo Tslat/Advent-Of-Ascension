@@ -3,8 +3,10 @@ package net.tslat.aoa3.item.tool.shovel;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -13,7 +15,8 @@ import java.util.List;
 
 public class OccultShovel extends BaseShovel {
 	public OccultShovel() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null),
+				new Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override

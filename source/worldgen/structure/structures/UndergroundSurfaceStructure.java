@@ -25,6 +25,8 @@ public class UndergroundSurfaceStructure extends AoAStructureBase<IntRangeConfig
 			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, IntRangeConfig config) {
 				IBlockReader blockReader = chunkGenerator.getBaseColumn(chunkCenter.getX(), chunkCenter.getZ());
 
+				chunkCenter.set(config.getValue(random));
+
 				if (blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable()) {
 					while (chunkCenter.getY() > 0 && blockReader.getBlockState(chunkCenter.move(Direction.DOWN)).getMaterial().isReplaceable()) {
 						;

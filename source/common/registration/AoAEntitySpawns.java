@@ -16,6 +16,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
@@ -307,7 +308,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Animals.CORATEE.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true));
         setSpawnPlacement(AoAEntities.Animals.GLOWING_PIXON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true));
         setSpawnPlacement(AoAEntities.Mobs.ANGLER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
-        setSpawnPlacement(AoAEntities.Mobs.CORALON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.MUNCHER.get(), IN_WATER, OCEAN_FLOOR, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.NEPTUNO.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SEA_VIPER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
@@ -488,6 +488,9 @@ public final class AoAEntitySpawns {
     	        return matchingBiomes.contains(biomeKey);
 
     	    if (ignoringBiomes != null && ignoringBiomes.contains(biomeKey))
+    	        return false;
+
+    	    if (biomeKey == Biomes.MUSHROOM_FIELDS || biomeKey == Biomes.MUSHROOM_FIELD_SHORE)
     	        return false;
 
     	    if (matchingBiomeTypes != null) {

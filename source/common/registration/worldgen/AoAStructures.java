@@ -140,6 +140,13 @@ public class AoAStructures {
 	public static final RegistryObject<YPosStructure> SPELLBINDER_HOUSE = register("spellbinder_house", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/spellbinder_house/main_pool"), 12, 40);
 	public static final RegistryObject<YPosStructure> ZARG_PLANETOID = register("zarg_planetoid", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/zarg_planetoid/main_pool"), 12, 40);
 
+	public static final RegistryObject<UndergroundCaveStructure> FUNGSHROOM = register("fungshroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/fungshroom/main_pool"), 8, 32);
+	public static final RegistryObject<UndergroundCaveStructure> GORB_VILLAGE = register("gorb_village", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/gorb_village/paths"), 20, 40);
+	public static final RegistryObject<UndergroundCaveStructure> MUSHROOM_SPIDER_CAVE = register("mushroom_spider_cave", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/mushroom_spider_cave/main_pool"), 8, 32);
+	public static final RegistryObject<UndergroundCaveStructure> MYSTIC_LOTTO_SHROOM = register("mystic_lotto_shroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/mystic_lotto_shroom/main_pool"), 8, 32);
+	public static final RegistryObject<UndergroundCaveStructure> RUNIC_ARENA = register("runic_arena", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_arena/main_pool"), 14, 40);
+	public static final RegistryObject<UndergroundCaveStructure> RUNIC_PORTAL_HOLLOW = register("runic_portal_hollow", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_portal_hollow/main_pool"), 12, 40);
+
 	public static final RegistryObject<GenericAoAStructure> CLUNKHEAD_ARENA = register("clunkhead_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/clunkhead_arena/main_pool"), 10, 36);
 	public static final RegistryObject<GenericAoAStructure> RUNE_RANDOMISATION_STATION = register("rune_randomisation_station", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/rune_randomisation_station/main_pool"), 8, 26);
 	public static final RegistryObject<YPosStructure> BLUE_RUNE_TEMPLAR_BUNKER = register("blue_rune_templar_bunker", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/rune_templar_bunker/blue"), 10, 32);

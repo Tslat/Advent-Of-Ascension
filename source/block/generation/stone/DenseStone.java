@@ -25,7 +25,7 @@ public class DenseStone extends Block {
 	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		super.playerWillDestroy(world, pos, state, player);
 
-		if (!world.isClientSide && RandomUtil.oneInNChance(50) && ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getItemInHand(Hand.MAIN_HAND))) {
+		if (!world.isClientSide && RandomUtil.oneInNChance(50) && !ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getItemInHand(Hand.MAIN_HAND))) {
 			ShikEntity shik = new ShikEntity(AoAEntities.Animals.SHIK.get(), world);
 
 			shik.teleportTo(pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f);

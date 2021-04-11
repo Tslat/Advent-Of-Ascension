@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.armour;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class AlchemyArmour extends AdventArmour implements SkillItem {
 	public AlchemyArmour(EquipmentSlotType slot) {
-		super(ItemUtil.customArmourMaterial("aoa3:alchemy", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
+		super(ItemUtil.customArmourMaterial("aoa3:alchemy", 65, new int[] {6, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot, Rarity.RARE);
 	}
 
 	@Override

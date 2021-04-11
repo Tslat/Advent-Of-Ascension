@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class TidalGreatblade extends BaseGreatblade {
 	public TidalGreatblade() {
-		super(24.0f, AttackSpeed.GREATBLADE, 1750);
+		super(24.0f, AttackSpeed.GREATBLADE, 1750, Rarity.RARE);
 	}
 
 	@Override

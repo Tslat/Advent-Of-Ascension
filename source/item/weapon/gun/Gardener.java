@@ -3,8 +3,10 @@ package net.tslat.aoa3.item.weapon.gun;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -28,7 +30,7 @@ public class Gardener extends BaseGun {
 	int firingDelay;
 
 	public Gardener(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(new Item.Properties().tab(AoAItemGroups.GUNS).durability(durability).rarity(Rarity.RARE), dmg, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
 	}

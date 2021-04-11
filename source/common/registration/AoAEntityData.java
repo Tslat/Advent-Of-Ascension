@@ -64,7 +64,6 @@ public final class AoAEntityData {
 			SPAWN_HEIGHTS.put(AoAEntities.Animals.CORATEE.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Animals.GLOWING_PIXON.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ANGLER.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CORALON.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MUNCHER.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.NEPTUNO.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SEA_VIPER.get(), 125);
@@ -96,7 +95,6 @@ public final class AoAEntityData {
 					AoAEntities.Mobs.CHIMERA.get(),
 					AoAEntities.Mobs.CHOCKO.get(),
 					AoAEntities.Mobs.CHOMPER.get(),
-					AoAEntities.Mobs.CORALON.get(),
 					AoAEntities.Mobs.CORNY.get(),
 					AoAEntities.Mobs.CREEPERLOCK.get(),
 					AoAEntities.Mobs.CREEPIRD.get(),
@@ -302,7 +300,6 @@ public final class AoAEntityData {
 			AttributeBuilder.create(AoAEntities.Mobs.CONSTRUCT_OF_STRENGTH.get()).health(69).moveSpeed(0.2875).meleeStrength(15).knockbackResist(0.5).armour(3).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.CONSTRUCT_OF_TERROR.get()).health(53).flyingSpeed(0.1).projectileDamage(9.5).armour(3).followRange(24).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.CORALLUS.get()).health(1800).moveSpeed(0.3286).meleeStrength(25).knockbackResist(1).followRange(52).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
-			AttributeBuilder.create(AoAEntities.Mobs.CORALON.get()).health(120).moveSpeed(0.2875).meleeStrength(12).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.CORNY.get()).health(95).moveSpeed(0.2875).meleeStrength(11).knockbackResist(0.15).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.COTTON_CANDOR.get()).health(3000).flyingSpeed(0.1).projectileDamage(35).knockbackResist(1).followRange(36).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.CRAEXXEUS.get()).health(3000).flyingSpeed(0.1).projectileDamage(10).knockbackResist(1).followRange(36).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
@@ -386,7 +383,6 @@ public final class AoAEntityData {
 			AttributeBuilder.create(AoAEntities.Mobs.HORNDRON.get()).health(40).moveSpeed(0.25).meleeStrength(5).knockbackResist(0.3).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.HOST.get()).health(180).moveSpeed(0.23).meleeStrength(0).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.HUNTER.get()).health(123).moveSpeed(0.3).meleeStrength(13.5).knockbackResist(0.25).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
-			AttributeBuilder.create(AoAEntities.Mobs.HYDROLON.get()).health(45).moveSpeed(0.2875).meleeStrength(11).knockbackResist(0.8).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.ICE_GIANT.get()).health(60).moveSpeed(0.3).meleeStrength(10).knockbackResist(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.INFERNAL.get()).health(95).moveSpeed(0.25).meleeStrength(8.5).knockbackResist(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.Mobs.INMATE_X.get()).health(138).moveSpeed(0.2875).meleeStrength(13.5).knockbackResist(0.1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
@@ -597,7 +593,6 @@ public final class AoAEntityData {
 			AttributeBuilder.create(AoAEntities.NPCs.METALLOID.get()).health(25).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.NPCs.MYSTIC_LOTTOMAN.get()).health(20).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.NPCs.NATURALIST.get()).health(25).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
-			AttributeBuilder.create(AoAEntities.NPCs.PORTAL_MASTER.get()).health(30).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.NPCs.PRECASIAN_LOTTOMAN.get()).health(20).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.NPCs.PRIMORDIAL_BANKER.get()).health(30).moveSpeed(0.329).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 			AttributeBuilder.create(AoAEntities.NPCs.PRIMORDIAL_GUIDE.get()).health(30).moveSpeed(0.23).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);

@@ -34,6 +34,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("NullableProblems")
 public class AsteroidsChunkGenerator extends ChunkGenerator {
 	public static final Codec<AsteroidsChunkGenerator> CODEC = RecordCodecBuilder.create((record) -> record.group(
 			BiomeProvider.CODEC.fieldOf("biome_source").forGetter((generator) -> generator.biomeSource),
@@ -69,12 +70,10 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 	private final OctavesNoiseGenerator lateralNoise;
 	private final OctavesNoiseGenerator verticalNoise;
 	private final INoiseGenerator surfaceNoise;
-	private final OctavesNoiseGenerator densityOffsetNoise;
 	protected final BlockState defaultBlock;
 	protected final BlockState defaultFluid;
 	private final long seed;
 	protected final Supplier<DimensionSettings> dimensionSettings;
-	private final int logicalWorldHeight;
 
 	private AsteroidsChunkGenerator(BiomeProvider biomeProvider, long seed, Supplier<DimensionSettings> dimSettingsSupplier) {
 		super(biomeProvider, biomeProvider, dimSettingsSupplier.get().structureSettings(), seed);
@@ -88,7 +87,6 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		this.defaultFluid = dimensionSettings.getDefaultFluid();
 
 		NoiseSettings noiseSettings = dimensionSettings.noiseSettings();
-		this.logicalWorldHeight = noiseSettings.height();
 		this.verticalNoiseGranularity = noiseSettings.noiseSizeVertical() * 4;
 		this.horizontalNoiseGranularity = noiseSettings.noiseSizeHorizontal() * 8;
 		this.noiseSizeX = 16 / this.horizontalNoiseGranularity;
@@ -96,9 +94,8 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		this.noiseSizeZ = 16 / this.horizontalNoiseGranularity;
 
 		this.surfaceNoise = noiseSettings.useSimplexSurfaceNoise() ? new PerlinNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-3, 0)) : new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-3, 0));
-		this.lateralNoise = new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-15, 0));
-		this.verticalNoise = new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-15, 0));
-		this.densityOffsetNoise = new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-15, 0));
+		this.lateralNoise = new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-3, 0));
+		this.verticalNoise = new OctavesNoiseGenerator(this.randomSeed, IntStream.rangeClosed(-9, 0));
 
 		this.randomSeed.consumeCount(2620);
 	}
@@ -180,7 +177,7 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 			noisePosMap[0][noisePosZ] = new double[noiseSizeY + 1];
 			noisePosMap[1][noisePosZ] = new double[noiseSizeY + 1];
 
-			fillNoiseColumn(noisePosMap[0][noisePosZ], chunkX * noiseSizeX, chunkZ * noiseSizeZ + noisePosZ, false);
+			fillNoiseColumn(noisePosMap[0][noisePosZ], chunkX * noiseSizeX, chunkZ * noiseSizeZ + noisePosZ);
 		}
 
 		ChunkPrimer primer = (ChunkPrimer)chunkPrimer;
@@ -192,7 +189,7 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 
 		for(int noisePosX = 0; noisePosX < noiseSizeX; ++noisePosX) {
 			for(int j1 = 0; j1 < noiseSizeZ + 1; ++j1) {
-				fillNoiseColumn(noisePosMap[1][j1], chunkX * noiseSizeX + noisePosX + 1, chunkZ * noiseSizeZ + j1, false);
+				fillNoiseColumn(noisePosMap[1][j1], chunkX * noiseSizeX + noisePosX + 1, chunkZ * noiseSizeZ + j1);
 			}
 
 			for(int noisePosZ = 0; noisePosZ < noiseSizeZ; ++noisePosZ) {
@@ -310,7 +307,7 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		int zNoiseStep = Math.floorMod(posZ, horizontalNoiseGranularity);
 		double xNoiseStepProgress = (double)xNoiseStep / (double)horizontalNoiseGranularity;
 		double zNoiseStepProgress = (double)zNoiseStep / (double)horizontalNoiseGranularity;
-		double[][] fuzzyNoiseColumns = new double[][] {getNoiseColumn(xPosNoiseGranularityOvershoot, zPosNoiseGranularityOvershoot, false), getNoiseColumn(xPosNoiseGranularityOvershoot, zPosNoiseGranularityOvershoot + 1, false), getNoiseColumn(xPosNoiseGranularityOvershoot + 1, zPosNoiseGranularityOvershoot, false), getNoiseColumn(xPosNoiseGranularityOvershoot + 1, zPosNoiseGranularityOvershoot + 1, false)};
+		double[][] fuzzyNoiseColumns = new double[][] {getNoiseColumn(xPosNoiseGranularityOvershoot, zPosNoiseGranularityOvershoot), getNoiseColumn(xPosNoiseGranularityOvershoot, zPosNoiseGranularityOvershoot + 1), getNoiseColumn(xPosNoiseGranularityOvershoot + 1, zPosNoiseGranularityOvershoot), getNoiseColumn(xPosNoiseGranularityOvershoot + 1, zPosNoiseGranularityOvershoot + 1)};
 
 		for(int noisePosY = noiseSizeY - 1; noisePosY >= 0; --noisePosY) {
 			double posYNoise = fuzzyNoiseColumns[0][noisePosY];
@@ -339,15 +336,15 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		return 0;
 	}
 
-	private double[] getNoiseColumn(int noiseX, int noiseZ, boolean isCeiling) {
+	private double[] getNoiseColumn(int noiseX, int noiseZ) {
 		double[] noiseColumn = new double[noiseSizeY + 1];
 
-		fillNoiseColumn(noiseColumn, noiseX, noiseZ, isCeiling);
+		fillNoiseColumn(noiseColumn, noiseX, noiseZ);
 
 		return noiseColumn;
 	}
 
-	private void fillNoiseColumn(double[] noiseColumn, int noiseX, int noiseZ, boolean isCeiling) {
+	private void fillNoiseColumn(double[] noiseColumn, int noiseX, int noiseZ) {
 		NoiseSettings noiseSettings = dimensionSettings.get().noiseSettings();
 		double biomeDensityOffset;
 		double biomeDensityFactor;
@@ -392,17 +389,13 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		double upperSlideSize = noiseSettings.topSlideSettings().size();
 		double upperSlideOffset = noiseSettings.topSlideSettings().offset();
 		double lowerSlideTarget = noiseSettings.bottomSlideSettings().target();
-		double lowerSlideSize = 10;//noiseSettings.bottomSlideSettings().size();
-		double lowerSlideOffset = 1;//noiseSettings.bottomSlideSettings().offset();
-		double randomNoiseDensityOffset = noiseSettings.randomDensityOffset() ? getNoiseDensityOffset(noiseX, noiseZ) : 0;
-		double noiseDensityFactor = noiseSettings.densityFactor();
+		double lowerSlideSize = 10;
+		double lowerSlideOffset = 1;
 		double noiseDensityOffset = noiseSettings.densityOffset();
 
 		for(int noiseY = 0; noiseY <= noiseSizeY; ++noiseY) {
 			double height = getCombinedNoiseAt(noiseX, noiseY, noiseZ, horizontalNoiseScale, verticalNoiseScale, horizontalNoiseScaleModifier, verticalNoiseScaleModifier);
-			double baseHeightGradient = 0;//1.0D - (double)noiseY * 2.0D / (double)noiseSizeY + randomNoiseDensityOffset;
-			double configuredHeightGradient = baseHeightGradient * noiseDensityFactor + noiseDensityOffset;
-			double biomeHeightGradient = (configuredHeightGradient + biomeDensityOffset) * biomeDensityFactor;
+			double biomeHeightGradient = (noiseDensityOffset + biomeDensityOffset) * biomeDensityFactor;
 
 			if (biomeHeightGradient > 0.0D) {
 				height = height + biomeHeightGradient * 4.0D;
@@ -416,10 +409,8 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 				height = MathHelper.clampedLerp(upperSlideTarget, height, upperSlideNoiseFraction);
 			}
 
-			if (lowerSlideSize > 0.0D) {
-				double lowerSlideNoiseFraction = ((double)noiseY - lowerSlideOffset) / lowerSlideSize;
-				height = MathHelper.clampedLerp(lowerSlideTarget, height, lowerSlideNoiseFraction);
-			}
+			double lowerSlideNoiseFraction = ((double)noiseY - lowerSlideOffset) / lowerSlideSize;
+			height = MathHelper.clampedLerp(lowerSlideTarget, height, lowerSlideNoiseFraction);
 
 			noiseColumn[noiseY] = height;
 		}
@@ -441,7 +432,7 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 			if (verticalNoiseOctave != null)
 				verticalNoise += verticalNoiseOctave.noise(x, y, z, verticalNoiseModifier, (double)posY * verticalNoiseModifier) / noiseStageMultiplier;
 
-			ImprovedNoiseGenerator lateralNoiseOctave = this.lateralNoise.getOctaveNoise(i + 5);
+			ImprovedNoiseGenerator lateralNoiseOctave = this.lateralNoise.getOctaveNoise(i / 3);
 
 			if (lateralNoiseOctave != null)
 				lateralNoise += lateralNoiseOctave.noise(y, x, z, lateralNoiseModifier, (double)posY * lateralNoiseModifier * 2) / noiseStageMultiplier;
@@ -453,18 +444,6 @@ public class AsteroidsChunkGenerator extends ChunkGenerator {
 		double max = Math.max(lateralNoise, verticalNoise);
 
 		return (verticalNoise / 2.5 * lateralNoise * 2.5 - min) / (max - min);
-	}
-
-	private double getNoiseDensityOffset(int x, int z) {
-		double depthNoise = this.densityOffsetNoise.getValue(x * 200, 10, z * 200, 1, 0, true);
-
-		if (depthNoise < 0.0D) {
-			depthNoise = -depthNoise * 0.3D;
-		}
-
-		double offset = depthNoise * 24.575625D - 2.0D;
-
-		return offset < 0 ? offset * 0.009486607142857142D : Math.min(offset, 1) * 0.006640625D;
 	}
 
 	private static double computeContribution(int x, int y, int z) {

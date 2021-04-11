@@ -5,11 +5,16 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class LunalusEvents {
 	public static void doPlayerTick(PlayerEntity pl) {
+		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+			return;
+
 		if (!pl.level.isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
 			if (pl.getY() <= -25)
 				pl.teleportTo(pl.getX(), 350, pl.getZ());
@@ -28,10 +33,16 @@ public class LunalusEvents {
 	}
 
 	public static void doPlayerJump(PlayerEntity pl) {
+		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+			return;
+
 		pl.setDeltaMovement(pl.getDeltaMovement().add(0, 0.5f, 0));
 	}
 
 	public static void doPlayerLanding(PlayerEntity pl, LivingFallEvent ev) {
+		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+			return;
+
 		ev.setDistance(Math.min(10, ev.getDistance()));
 	}
 }

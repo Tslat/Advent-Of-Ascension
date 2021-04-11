@@ -155,7 +155,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_STRENGTH.get(), new ConstructOfStrengthModel(), new ResourceLocation("aoa3", "textures/entities/mobs/crystevia/construct_of_strength.png"));
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_TERROR.get(), new ConstructOfTerrorModel(), new ResourceLocation("aoa3", "textures/entities/mobs/crystevia/construct_of_terror.png"));
 		renderManager.register(AoAEntities.Mobs.CORALLUS.get(), new CorallusRenderer(renderManager));
-		registerMobRenderer(AoAEntities.Mobs.CORALON.get(), new CoralonModel(), new ResourceLocation("aoa3", "textures/entities/mobs/lborean/coralon.png"));
 		animatedMobRenderer(AoAEntities.Animals.CORATEE.get(), shadow -> new AnimatedMobRenderer<CorateeEntity>(renderManager, new CorateeModel(), shadow));
 		registerMobRenderer(AoAEntities.Minions.CORBY.get(), new CorbyModel(), new ResourceLocation("aoa3", "textures/entities/minions/corby.png"));
 		registerMobRenderer(AoAEntities.Mobs.CORNY.get(), new CornyModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/corny.png"));
@@ -277,7 +276,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.HOST.get(), new HostModel(), 2.5f, new ResourceLocation("aoa3", "textures/entities/mobs/creeponia/host.png"));
 		registerMobRenderer(AoAEntities.Mobs.HUNTER.get(), new HunterModel(), new ResourceLocation("aoa3", "textures/entities/mobs/greckon/hunter.png"));
 		registerMobRenderer(AoAEntities.NPCs.HUNTER_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/hunter_master.png"));
-		registerMobRenderer(AoAEntities.Mobs.HYDROLON.get(), new CoralonModel(), 1.5f, new ResourceLocation("aoa3", "textures/entities/mobs/lborean/hydrolon.png"));
 		registerMobRenderer(AoAEntities.Mobs.ICE_GIANT.get(), new GiantModel(), 1.8f, new ResourceLocation("aoa3", "textures/entities/mobs/overworld/ice_giant.png"));
 		registerMobRenderer(AoAEntities.Mobs.INFERNAL.get(), new InfernalModel(), new ResourceLocation("aoa3", "textures/entities/mobs/nether/infernal.png"));
 		registerMobRenderer(AoAEntities.NPCs.INFUSION_MASTER.get(), new BipedModel<MobEntity>(0f), new ResourceLocation("aoa3", "textures/entities/npcs/skillmaster/infusion_master.png"));
@@ -360,7 +358,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Minions.PLATEOSAUR.get(), new PlateosaurModel(), new ResourceLocation("aoa3", "textures/entities/minions/plateosaur.png"));
 		registerMobRenderer(AoAEntities.Mobs.POD_PLANT.get(), new PodPlantModel(), new ResourceLocation("aoa3", "textures/entities/mobs/gardencia/pod_plant.png"));
 		registerMobRenderer(AoAEntities.Mobs.POLYTOM.get(), new PolytomModel(), new ResourceLocation("aoa3", "textures/entities/mobs/iromine/polytom.png"));
-		registerMobRenderer(AoAEntities.NPCs.PORTAL_MASTER.get(), new PortalMasterModel(), new ResourceLocation("aoa3", "textures/entities/npcs/trader/portal_master.png"));
 		registerMobRenderer(AoAEntities.NPCs.PRECASIAN_LOTTOMAN.get(), new LottomanModel(), new ResourceLocation("aoa3", "textures/entities/npcs/lottoman/precasian_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.PRIMITIVE_CARROTOP.get(), new PrimitiveCarrotopModel(), new ResourceLocation("aoa3", "textures/entities/mobs/precasia/primitive_carrotop.png"));
 		registerMobRenderer(AoAEntities.NPCs.PRIMORDIAL_BANKER.get(), new PrimordialNPCModel(), new ResourceLocation("aoa3", "textures/entities/npcs/banker/primordial_banker.png"));

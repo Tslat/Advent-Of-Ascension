@@ -30,16 +30,21 @@ public class DistortingArtifact extends Item {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!world.isClientSide && itemSlot < 9 && entity.getY() < -3) {
-			entity.teleportTo(entity.getX(), 257, entity.getZ());
-			entity.fallDistance = -255;
+		if (itemSlot >= 9)
+			return;
 
-			if (entity instanceof LivingEntity) {
-				EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).isAmbient().hideParticles());
+		if (!world.isClientSide) {
+			if (entity.getY() <= 50) {
+				entity.teleportTo(entity.getX(), 257, entity.getZ());
+				entity.fallDistance = -255;
 
-				if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
-					ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
-					((PlayerEntity)entity).inventoryMenu.broadcastChanges();
+				if (entity instanceof LivingEntity) {
+					EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).isAmbient().hideParticles());
+
+					if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
+						ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
+						((PlayerEntity)entity).inventoryMenu.broadcastChanges();
+					}
 				}
 			}
 		}

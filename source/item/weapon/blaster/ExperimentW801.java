@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -15,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class ExperimentW801 extends BaseBlaster {
 	public ExperimentW801(double dmg, int durability, int fireDelayTicks, float energyCost) {
-		super(new Item.Properties().tab(null).durability(durability), dmg, fireDelayTicks, energyCost);
+		super(new Item.Properties().tab(null).durability(durability).rarity(Rarity.EPIC), dmg, fireDelayTicks, energyCost);
 	}
 
 	@Nullable
