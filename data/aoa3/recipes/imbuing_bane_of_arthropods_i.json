@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:bane_of_arthropods"
+  },
+  "infusion_level": 5,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "minecraft:spider_eye"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

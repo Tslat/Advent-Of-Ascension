@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:knockback",
+    "level": 2
+  },
+  "infusion_level": 39,
+  "ingredients": [
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:glaring_power_stone"
+    }
+  ]
+}

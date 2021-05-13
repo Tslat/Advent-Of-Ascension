@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:form",
+    "level": 2
+  },
+  "infusion_level": 31,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:ambient_power_stone"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_shyre_staff"
+    ]
+  },
+  "criteria": {
+    "has_crystallite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:crystallite"
+          }
+        ]
+      }
+    },
+    "has_shyregem": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shyregem"
+          }
+        ]
+      }
+    },
+    "has_ender_pearl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:ender_pearl"
+          }
+        ]
+      }
+    },
+    "has_shyrestone_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shyrestone_ingot"
+          }
+        ]
+      }
+    },
+    "has_limonite_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_rod"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_shyre_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crystallite",
+      "has_shyregem",
+      "has_ender_pearl",
+      "has_shyrestone_ingot",
+      "has_limonite_rod",
+      "has_the_recipe"
+    ]
+  ]
+}

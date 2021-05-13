@@ -1,0 +1,505 @@
+{
+  "parent": "aoa3:completionist/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:bejewelled_lotto_banner"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.expensive_curtains.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.expensive_curtains.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_bejewelled_creepoid_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_creepoid_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_soul_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_soul_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_baron_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_baron_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_boreic_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_boreic_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_dustopian_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_dustopian_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_gingerbread_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_gingerbread_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_nethengeic_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_nethengeic_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_light_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_light_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_fungal_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_fungal_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_lunar_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_lunar_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_ghostly_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_ghostly_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_creation_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_creation_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_creepy_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_creepy_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_void_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_void_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_nether_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_nether_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_illusion_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_illusion_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_shiny_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_shiny_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_candy_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_candy_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_runic_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_runic_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_deep_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_deep_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_lelyetian_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_lelyetian_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_rosidian_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_rosidian_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_utopian_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_utopian_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_ancient_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_ancient_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_ghoul_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_ghoul_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_mecha_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_mecha_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_shyre_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_shyre_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_vox_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_vox_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_energy_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_energy_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_sea_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_sea_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_shadow_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_shadow_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_blood_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_blood_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_clown_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_clown_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_lotto_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_lotto_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_haunted_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_haunted_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_immortal_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_immortal_banner"
+          }
+        ]
+      }
+    },
+    "obtain_bejewelled_crystal_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bejewelled_crystal_banner"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_bejewelled_creepoid_banner"
+    ],
+    [
+      "obtain_bejewelled_soul_banner"
+    ],
+    [
+      "obtain_bejewelled_baron_banner"
+    ],
+    [
+      "obtain_bejewelled_boreic_banner"
+    ],
+    [
+      "obtain_bejewelled_dustopian_banner"
+    ],
+    [
+      "obtain_bejewelled_gingerbread_banner"
+    ],
+    [
+      "obtain_bejewelled_nethengeic_banner"
+    ],
+    [
+      "obtain_bejewelled_light_banner"
+    ],
+    [
+      "obtain_bejewelled_fungal_banner"
+    ],
+    [
+      "obtain_bejewelled_lunar_banner"
+    ],
+    [
+      "obtain_bejewelled_ghostly_banner"
+    ],
+    [
+      "obtain_bejewelled_creation_banner"
+    ],
+    [
+      "obtain_bejewelled_creepy_banner"
+    ],
+    [
+      "obtain_bejewelled_void_banner"
+    ],
+    [
+      "obtain_bejewelled_nether_banner"
+    ],
+    [
+      "obtain_bejewelled_illusion_banner"
+    ],
+    [
+      "obtain_bejewelled_shiny_banner"
+    ],
+    [
+      "obtain_bejewelled_candy_banner"
+    ],
+    [
+      "obtain_bejewelled_runic_banner"
+    ],
+    [
+      "obtain_bejewelled_deep_banner"
+    ],
+    [
+      "obtain_bejewelled_lelyetian_banner"
+    ],
+    [
+      "obtain_bejewelled_rosidian_banner"
+    ],
+    [
+      "obtain_bejewelled_utopian_banner"
+    ],
+    [
+      "obtain_bejewelled_ancient_banner"
+    ],
+    [
+      "obtain_bejewelled_ghoul_banner"
+    ],
+    [
+      "obtain_bejewelled_mecha_banner"
+    ],
+    [
+      "obtain_bejewelled_shyre_banner"
+    ],
+    [
+      "obtain_bejewelled_vox_banner"
+    ],
+    [
+      "obtain_bejewelled_energy_banner"
+    ],
+    [
+      "obtain_bejewelled_sea_banner"
+    ],
+    [
+      "obtain_bejewelled_shadow_banner"
+    ],
+    [
+      "obtain_bejewelled_blood_banner"
+    ],
+    [
+      "obtain_bejewelled_clown_banner"
+    ],
+    [
+      "obtain_bejewelled_lotto_banner"
+    ],
+    [
+      "obtain_bejewelled_haunted_banner"
+    ],
+    [
+      "obtain_bejewelled_immortal_banner"
+    ],
+    [
+      "obtain_bejewelled_crystal_banner"
+    ]
+  ]
+}

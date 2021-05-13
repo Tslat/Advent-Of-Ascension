@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:cooking_cooked_sapphire_strider"
+    ]
+  },
+  "criteria": {
+    "has_raw_sapphire_strider": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_sapphire_strider"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:cooking_cooked_sapphire_strider"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_sapphire_strider",
+      "has_the_recipe"
+    ]
+  ]
+}

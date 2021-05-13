@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:natural_rosite_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:natural_rosite_ivory_wall",
+    "count": 6
+  }
+}

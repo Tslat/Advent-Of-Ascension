@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " D ",
+    "BAB",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:sour_gummy"
+    },
+    "B": {
+      "item": "aoa3:pink_cotton_candy"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "aoa3:sweet_sword"
+  }
+}

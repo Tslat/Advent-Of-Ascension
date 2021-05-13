@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:luck_of_the_sea",
+    "level": 2
+  },
+  "infusion_level": 27,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

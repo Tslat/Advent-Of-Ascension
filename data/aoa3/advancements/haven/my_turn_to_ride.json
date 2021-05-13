@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:haven/rockslide",
+  "display": {
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.haven.my_turn_to_ride.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.haven.my_turn_to_ride.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_ornate_rock_rider_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:rock_rider\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.rock_rider\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_rock_rider_trophy"
+    ]
+  ]
+}

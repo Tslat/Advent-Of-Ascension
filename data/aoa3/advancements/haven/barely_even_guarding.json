@@ -1,0 +1,74 @@
+{
+  "parent": "aoa3:haven/guard_that",
+  "display": {
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.haven.barely_even_guarding.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.haven.barely_even_guarding.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_gold_red_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:red_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.red_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_blue_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:blue_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.blue_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_green_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:green_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.green_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_gold_yellow_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:yellow_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.yellow_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_red_guardian_trophy",
+      "obtain_gold_blue_guardian_trophy",
+      "obtain_gold_green_guardian_trophy",
+      "obtain_gold_yellow_guardian_trophy"
+    ]
+  ]
+}

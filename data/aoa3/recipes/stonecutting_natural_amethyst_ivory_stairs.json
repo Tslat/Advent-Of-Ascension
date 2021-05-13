@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:natural_amethyst_ivory"
+  },
+  "result": "aoa3:natural_amethyst_ivory_stairs",
+  "count": 1
+}

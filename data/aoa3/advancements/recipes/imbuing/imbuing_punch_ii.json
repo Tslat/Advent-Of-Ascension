@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_punch_ii"
+    ]
+  },
+  "criteria": {
+    "has_weight_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:weight_enhancer"
+          }
+        ]
+      }
+    },
+    "has_glaring_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:glaring_power_stone"
+          }
+        ]
+      }
+    },
+    "has_speed_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:speed_enhancer"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_punch_ii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_weight_enhancer",
+      "has_glaring_power_stone",
+      "has_speed_enhancer",
+      "has_the_recipe"
+    ]
+  ]
+}

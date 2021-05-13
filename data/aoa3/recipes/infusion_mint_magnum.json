@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "tag": "forge:mints"
+    },
+    {
+      "tag": "forge:mints"
+    },
+    {
+      "tag": "forge:mints"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mint_magnum"
+  }
+}

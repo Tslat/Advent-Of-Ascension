@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:runic_energy"
+    },
+    {
+      "item": "aoa3:runic_energy"
+    },
+    {
+      "item": "aoa3:elecanium_ingot"
+    },
+    {
+      "item": "aoa3:elecanium_ingot"
+    },
+    {
+      "item": "aoa3:power_core"
+    }
+  ],
+  "result": {
+    "item": "aoa3:energy_cannon"
+  }
+}

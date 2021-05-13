@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:haunted_wood"
+    }
+  ],
+  "result": {
+    "item": "aoa3:hauntedwood_planks",
+    "count": 4
+  }
+}

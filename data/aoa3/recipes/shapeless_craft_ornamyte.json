@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:ornamyte_block"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ornamyte",
+    "count": 9
+  }
+}

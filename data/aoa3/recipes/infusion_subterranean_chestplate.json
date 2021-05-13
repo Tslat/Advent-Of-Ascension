@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "minecraft:golden_pickaxe"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:subterranean_chestplate"
+  }
+}

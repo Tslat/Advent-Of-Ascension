@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_purity_shotgun"
+    ]
+  },
+  "criteria": {
+    "has_runic_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:runic_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_destruction_shotgun": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:destruction_shotgun"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_purity_shotgun"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_runic_upgrade_kit",
+      "has_destruction_shotgun",
+      "has_the_recipe"
+    ]
+  ]
+}

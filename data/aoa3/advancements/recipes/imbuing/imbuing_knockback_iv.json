@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_knockback_iv"
+    ]
+  },
+  "criteria": {
+    "has_radiant_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:radiant_power_stone"
+          }
+        ]
+      }
+    },
+    "has_weight_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:weight_enhancer"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_knockback_iv"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_radiant_power_stone",
+      "has_weight_enhancer",
+      "has_the_recipe"
+    ]
+  ]
+}

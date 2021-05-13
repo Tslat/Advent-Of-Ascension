@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:porkchop"
+    },
+    {
+      "item": "minecraft:porkchop"
+    },
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "result": {
+    "item": "aoa3:rammerhorn_slab",
+    "count": 4
+  }
+}

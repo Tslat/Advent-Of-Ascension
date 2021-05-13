@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " B ",
+    "CDE"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:sharp_claw"
+    },
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "aoa3:amethyst"
+    },
+    "D": {
+      "item": "minecraft:stick"
+    },
+    "E": {
+      "item": "aoa3:confetti_pile"
+    }
+  },
+  "result": {
+    "item": "aoa3:supremacy_sword"
+  }
+}

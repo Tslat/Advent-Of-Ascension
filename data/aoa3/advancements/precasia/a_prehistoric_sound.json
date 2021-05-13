@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:precasia/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:bone_horn",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.precasia.a_prehistoric_sound.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.precasia.a_prehistoric_sound.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_bone_horn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bone_horn"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_bone_horn"
+    ]
+  ]
+}

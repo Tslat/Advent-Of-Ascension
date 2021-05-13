@@ -1,0 +1,35 @@
+{
+  "parent": "aoa3:nether/his_bigger_badder_brother",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.nethengeic_shutdown.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.nethengeic_shutdown.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_nethengeic_wither": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aoa3:nethengeic_wither"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_nethengeic_wither"
+    ]
+  ]
+}

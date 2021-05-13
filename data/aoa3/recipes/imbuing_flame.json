@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:flame"
+  },
+  "infusion_level": 22,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

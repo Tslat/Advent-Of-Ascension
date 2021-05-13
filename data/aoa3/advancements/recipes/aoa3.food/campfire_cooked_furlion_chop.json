@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:campfire_cooked_furlion_chop"
+    ]
+  },
+  "criteria": {
+    "has_raw_furlion_chop": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_furlion_chop"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:campfire_cooked_furlion_chop"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_furlion_chop",
+      "has_the_recipe"
+    ]
+  ]
+}

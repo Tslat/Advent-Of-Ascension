@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_rosite_block"
+    ]
+  },
+  "criteria": {
+    "has_rosite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosite_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_rosite_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rosite_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

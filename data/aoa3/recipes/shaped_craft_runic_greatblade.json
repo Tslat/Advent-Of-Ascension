@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DAD",
+    "DAD",
+    "BCB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "aoa3:elecanium_ingot"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    },
+    "D": {
+      "item": "aoa3:runic_energy"
+    }
+  },
+  "result": {
+    "item": "aoa3:runic_greatblade"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:ka_500"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:floro_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:floro500"
+  }
+}

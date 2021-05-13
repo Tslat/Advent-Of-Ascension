@@ -1,0 +1,149 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "name": "main",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:old_boot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:carved_rune_of_direction"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:carved_rune_of_reality"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:carved_rune_of_space"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:carved_rune_of_travel"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 25
+            }
+          ],
+          "weight": 50,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 1000.0
+            }
+          ],
+          "name": "aoa3:rune_box"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 50
+            }
+          ],
+          "weight": 50,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 8000.0
+            }
+          ],
+          "name": "aoa3:fish_case"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 70
+            }
+          ],
+          "weight": 40,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 15000.0
+            }
+          ],
+          "name": "aoa3:weapons_case"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 85
+            }
+          ],
+          "weight": 30,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 30000.0
+            }
+          ],
+          "name": "aoa3:treasure_box"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 94
+            }
+          ],
+          "weight": 20,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 50000.0
+            }
+          ],
+          "name": "aoa3:crystal_box"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "hauling",
+              "level": 95
+            }
+          ],
+          "weight": 10,
+          "functions": [
+            {
+              "function": "aoa3:grant_skill_xp",
+              "skill": "hauling",
+              "xp": 55000.0
+            }
+          ],
+          "name": "aoa3:tidal_greatblade"
+        }
+      ]
+    }
+  ]
+}

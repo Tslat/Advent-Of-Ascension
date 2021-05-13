@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:toxic_lump"
+    },
+    {
+      "item": "aoa3:toxic_lump"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:jade"
+    },
+    {
+      "item": "aoa3:jade"
+    }
+  ],
+  "result": {
+    "item": "aoa3:toxic_terrorizer"
+  }
+}

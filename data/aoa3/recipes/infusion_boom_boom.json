@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:gemenyte"
+    },
+    {
+      "item": "aoa3:ornamyte"
+    },
+    {
+      "item": "aoa3:jewelyte"
+    },
+    {
+      "item": "aoa3:jewelyte"
+    }
+  ],
+  "result": {
+    "item": "aoa3:boom_boom"
+  }
+}

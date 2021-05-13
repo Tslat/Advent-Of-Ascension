@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:magma_cream"
+    },
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:ice_crystal"
+    }
+  ],
+  "result": {
+    "item": "aoa3:infernal_boots"
+  }
+}

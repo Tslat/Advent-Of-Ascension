@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_patterned_ivory"
+    ]
+  },
+  "criteria": {
+    "has_natural_ivory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:natural_ivory"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_patterned_ivory"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_natural_ivory",
+      "has_the_recipe"
+    ]
+  ]
+}

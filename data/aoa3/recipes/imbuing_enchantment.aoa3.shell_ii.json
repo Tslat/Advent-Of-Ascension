@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:shell",
+    "level": 2
+  },
+  "infusion_level": 40,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

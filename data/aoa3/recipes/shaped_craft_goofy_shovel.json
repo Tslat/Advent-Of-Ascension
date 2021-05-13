@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:balloon"
+    },
+    "B": {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "aoa3:goofy_shovel"
+  }
+}

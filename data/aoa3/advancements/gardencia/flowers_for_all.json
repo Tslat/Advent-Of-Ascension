@@ -1,0 +1,37 @@
+{
+  "parent": "aoa3:gardencia/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:petals"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.gardencia.flowers_for_all.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.gardencia.flowers_for_all.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_petals": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:petals"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_petals"
+    ]
+  ]
+}

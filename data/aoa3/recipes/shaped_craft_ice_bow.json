@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:ice_crystal"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:reinforced_cloth"
+    }
+  },
+  "result": {
+    "item": "aoa3:ice_bow"
+  }
+}

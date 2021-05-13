@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:ka_500"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:weapon_parts"
+  },
+  "result": {
+    "item": "aoa3:mark_maker"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_crystallite_bricks_slab"
+    ]
+  },
+  "criteria": {
+    "has_crystallite_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:crystallite_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_crystallite_bricks_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crystallite_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:embrodium_chestplate"
+  }
+}

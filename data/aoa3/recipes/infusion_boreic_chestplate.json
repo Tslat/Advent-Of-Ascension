@@ -1,0 +1,38 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:void_scales"
+    },
+    {
+      "item": "aoa3:coral_stone"
+    },
+    {
+      "item": "aoa3:coral_stone"
+    },
+    {
+      "item": "minecraft:tnt"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:boreic_chestplate"
+  }
+}

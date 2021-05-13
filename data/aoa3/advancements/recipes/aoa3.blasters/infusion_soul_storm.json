@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_soul_storm"
+    ]
+  },
+  "criteria": {
+    "has_ghastly_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ghastly_ingot"
+          }
+        ]
+      }
+    },
+    "has_ghoulasm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ghoulasm"
+          }
+        ]
+      }
+    },
+    "has_ghostly_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ghostly_powder"
+          }
+        ]
+      }
+    },
+    "has_blaster_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blaster_frame"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_soul_storm"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ghastly_ingot",
+      "has_ghoulasm",
+      "has_ghostly_powder",
+      "has_blaster_frame",
+      "has_the_recipe"
+    ]
+  ]
+}

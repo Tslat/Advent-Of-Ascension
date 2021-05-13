@@ -1,0 +1,74 @@
+{
+  "parent": "aoa3:haven/barely_even_guarding",
+  "display": {
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.haven.the_fifth_guardian.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.haven.the_fifth_guardian.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_ornate_red_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:red_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.red_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_ornate_green_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:green_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.green_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_ornate_blue_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:blue_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.blue_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    },
+    "obtain_ornate_yellow_guardian_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:yellow_guardian\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.yellow_guardian\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_red_guardian_trophy",
+      "obtain_ornate_green_guardian_trophy",
+      "obtain_ornate_blue_guardian_trophy",
+      "obtain_ornate_yellow_guardian_trophy"
+    ]
+  ]
+}

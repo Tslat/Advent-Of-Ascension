@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:raw_halycon_beef"
+  },
+  "result": "aoa3:cooked_halycon_beef",
+  "experience": 3.0,
+  "cookingtime": 200
+}

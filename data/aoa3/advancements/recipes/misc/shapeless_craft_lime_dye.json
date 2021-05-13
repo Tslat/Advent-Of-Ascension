@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_lime_dye"
+    ]
+  },
+  "criteria": {
+    "has_green_celebulbs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:green_celebulbs"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_lime_dye"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_green_celebulbs",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:small_red_petal"
+    },
+    {
+      "item": "aoa3:chilli"
+    },
+    {
+      "item": "aoa3:baronyte_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:flammable_dust"
+    }
+  ],
+  "result": {
+    "item": "aoa3:chilli_chugger"
+  }
+}

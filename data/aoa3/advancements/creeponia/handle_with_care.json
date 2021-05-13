@@ -1,0 +1,37 @@
+{
+  "parent": "aoa3:creeponia/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:explosive_gems"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.creeponia.handle_with_care.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.creeponia.handle_with_care.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_explosive_gems": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:explosive_gems"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_explosive_gems"
+    ]
+  ]
+}

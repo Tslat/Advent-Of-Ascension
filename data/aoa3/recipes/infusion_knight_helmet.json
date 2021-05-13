@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    {
+      "item": "aoa3:shyregem"
+    },
+    {
+      "item": "aoa3:whitewashing_solution"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:knight_helmet"
+  }
+}

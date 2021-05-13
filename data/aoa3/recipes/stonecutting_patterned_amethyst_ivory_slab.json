@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:patterned_amethyst_ivory"
+  },
+  "result": "aoa3:patterned_amethyst_ivory_slab",
+  "count": 2
+}

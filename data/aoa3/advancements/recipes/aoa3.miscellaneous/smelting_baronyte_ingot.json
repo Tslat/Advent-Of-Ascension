@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_baronyte_ingot"
+    ]
+  },
+  "criteria": {
+    "has_baronyte_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:baronyte_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_baronyte_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_baronyte_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

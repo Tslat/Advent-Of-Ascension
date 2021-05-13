@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:runic_planks"
+    }
+  ],
+  "result": {
+    "item": "aoa3:runic_button"
+  }
+}

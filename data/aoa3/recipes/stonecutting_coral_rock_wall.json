@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:coral_rock"
+  },
+  "result": "aoa3:coral_rock_wall",
+  "count": 1
+}

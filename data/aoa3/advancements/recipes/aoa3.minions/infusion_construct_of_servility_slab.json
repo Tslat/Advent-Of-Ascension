@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_construct_of_servility_slab"
+    ]
+  },
+  "criteria": {
+    "has_green_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:green_druse"
+          }
+        ]
+      }
+    },
+    "has_green_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:green_crystal"
+          }
+        ]
+      }
+    },
+    "has_blank_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blank_slab"
+          }
+        ]
+      }
+    },
+    "has_glistering_melon_slice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:glistering_melon_slice"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_construct_of_servility_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_green_druse",
+      "has_green_crystal",
+      "has_blank_slab",
+      "has_glistering_melon_slice",
+      "has_the_recipe"
+    ]
+  ]
+}

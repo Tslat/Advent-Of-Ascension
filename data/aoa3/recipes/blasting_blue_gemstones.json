@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "aoa3:blue_gemstone_ore"
+  },
+  "result": "aoa3:blue_gemstones",
+  "experience": 3.0,
+  "cookingtime": 100
+}

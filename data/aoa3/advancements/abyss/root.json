@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:nightmare_flakes"
+    },
+    "title": {
+      "color": "dark_red",
+      "translate": "advancements.aoa3.abyss.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.abyss.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/abyssal_stone.png"
+  },
+  "criteria": {
+    "enter_block_abyss_portal": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "aoa3:abyss_portal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_block_abyss_portal"
+    ]
+  ]
+}

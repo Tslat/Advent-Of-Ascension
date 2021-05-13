@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:feather_falling",
+    "level": 2
+  },
+  "infusion_level": 13,
+  "ingredients": [
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

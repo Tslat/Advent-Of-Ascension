@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:archmage"
+  },
+  "infusion_level": 70,
+  "ingredients": [
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:radiant_power_stone"
+    }
+  ]
+}

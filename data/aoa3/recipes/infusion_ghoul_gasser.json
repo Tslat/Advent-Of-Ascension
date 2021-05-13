@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ghoulish_ingot"
+    },
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:amethyst"
+    },
+    {
+      "item": "aoa3:amethyst"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ghoul_gasser"
+  }
+}

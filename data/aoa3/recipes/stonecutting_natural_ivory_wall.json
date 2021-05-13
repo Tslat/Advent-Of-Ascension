@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:natural_ivory"
+  },
+  "result": "aoa3:natural_ivory_wall",
+  "count": 1
+}

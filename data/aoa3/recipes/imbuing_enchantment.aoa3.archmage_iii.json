@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:archmage",
+    "level": 3
+  },
+  "infusion_level": 89,
+  "ingredients": [
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    }
+  ]
+}

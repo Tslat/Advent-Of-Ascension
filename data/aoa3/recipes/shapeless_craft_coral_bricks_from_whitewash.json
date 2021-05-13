@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:whitewash_bricks"
+    },
+    {
+      "item": "aoa3:coral_stone"
+    }
+  ],
+  "result": {
+    "item": "aoa3:coral_bricks",
+    "count": 8
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_gardencia_bricks_wall"
+    ]
+  },
+  "criteria": {
+    "has_gardencia_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gardencia_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_gardencia_bricks_wall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gardencia_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

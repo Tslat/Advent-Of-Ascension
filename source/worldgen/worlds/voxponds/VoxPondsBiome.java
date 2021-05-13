@@ -7,11 +7,10 @@ import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.common.registration.AoABlocks;
@@ -22,6 +21,8 @@ import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.worldgen.AoABiome;
 import net.tslat.aoa3.worldgen.structures.AoAStructure;
 import net.tslat.aoa3.worldgen.structures.StructuresHandler;
+
+import java.util.function.BiConsumer;
 
 public class VoxPondsBiome extends AoABiome {
 	public VoxPondsBiome() {
@@ -55,43 +56,42 @@ public class VoxPondsBiome extends AoABiome {
 	}
 
 	@Override
-	public void generateStructuredChunk(WorldGenRegion world, SharedSeedRandom rand, IChunk chunk, int startX, int startZ) {
-		RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(rand);
+	public void generateStructuredChunk(IWorld world, ChunkPrimer chunk, SharedSeedRandom rand, BiConsumer<BlockPos, BlockState> blockPlacer) {
 		BlockPos.Mutable pos = new BlockPos.Mutable();
 		BlockState toxicStone = AoABlocks.POLLUTED_STONE.get().getDefaultState();
 		BlockState toxicWaste = AoABlocks.TOXIC_WASTE.get().getDefaultState();
 
-		setAllBlocksInRegion(chunk, 0, 0, 0, 15, 15, 15, toxicStone);
-		setAllBlocksInRegion(chunk, 0, 16, 0, 15, 17, 15, Blocks.WATER.getDefaultState());
-		setAllBlocksInRegion(chunk, 0, 32, 0, 15, 35, 15, toxicStone);
+		setAllBlocksInRegion(blockPlacer, 0, 0, 0, 15, 15, 15, toxicStone);
+		setAllBlocksInRegion(blockPlacer, 0, 16, 0, 15, 17, 15, Blocks.WATER.getDefaultState());
+		setAllBlocksInRegion(blockPlacer, 0, 32, 0, 15, 35, 15, toxicStone);
 
 		if (rand.nextBoolean()) {
-			setAllBlocksInRegion(chunk, 0, 36, 0, 15, 36, 15, toxicStone);
-			setAllBlocksInRegion(chunk, 0, 37, 0, 15, 37, 15, toxicWaste);
+			setAllBlocksInRegion(blockPlacer, 0, 36, 0, 15, 36, 15, toxicStone);
+			setAllBlocksInRegion(blockPlacer, 0, 37, 0, 15, 37, 15, toxicWaste);
 
 			for (int x = 0; x <= 15; x++) {
 				for (int z = 0; z <= 15; z++) {
 					if (rand.nextBoolean())
-						chunk.setBlockState(pos.setPos(x, 36, z), toxicWaste, false);
+						blockPlacer.accept(pos.setPos(x, 36, z), toxicWaste);
 				}
 			}
 		}
 		else {
-			setAllBlocksInRegion(chunk, 0, 36, 0, 15, 37, 15, AoABlocks.POLLUTED_SOIL.get().getDefaultState());
-			setAllBlocksInRegion(chunk, 0, 38, 0, 15, 38, 15, AoABlocks.POLLUTED_GRASS.get().getDefaultState());
+			setAllBlocksInRegion(blockPlacer, 0, 36, 0, 15, 37, 15, AoABlocks.POLLUTED_SOIL.get().getDefaultState());
+			setAllBlocksInRegion(blockPlacer, 0, 38, 0, 15, 38, 15, AoABlocks.POLLUTED_GRASS.get().getDefaultState());
 
 			for (int x = 0; x <= 15; x++) {
 				for (int z = 0; z <= 15; z++) {
 					if (rand.nextBoolean())
-						chunk.setBlockState(pos.setPos(x, 36, z), toxicStone, false);
+						blockPlacer.accept(pos.setPos(x, 36, z), toxicStone);
 				}
 			}
 		}
 
-		setAllBlocksInRegion(chunk, 0, 0, 0, 15, 1, 15, AoABlocks.DIMENSIONAL_FABRIC.get().getDefaultState());
+		setAllBlocksInRegion(blockPlacer, 0, 0, 0, 15, 1, 15, AoABlocks.DIMENSIONAL_FABRIC.get().getDefaultState());
 	}
 
-	private void setAllBlocksInRegion(IChunk chunk, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ, final BlockState block) {
+	private void setAllBlocksInRegion(BiConsumer<BlockPos, BlockState> blockPlacer, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ, final BlockState block) {
 		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
 		int x;
 		int y;
@@ -100,7 +100,7 @@ public class VoxPondsBiome extends AoABiome {
 		for (x = lowerX; x <= upperX; x++) {
 			for (y = lowerY; y <= upperY; y++) {
 				for (z = lowerZ; z <= upperZ; z++) {
-					chunk.setBlockState(mutablePos.setPos(x, y, z), block, false);
+					blockPlacer.accept(mutablePos.setPos(x, y, z), block);
 				}
 			}
 		}

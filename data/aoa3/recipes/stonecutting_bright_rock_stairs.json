@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:bright_rock"
+  },
+  "result": "aoa3:bright_rock_stairs",
+  "count": 1
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    " D ",
+    " E "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:energy_rune"
+    },
+    "B": {
+      "item": "aoa3:magnet_shard"
+    },
+    "C": {
+      "item": "aoa3:wither_rune"
+    },
+    "D": {
+      "item": "aoa3:lyon_ingot"
+    },
+    "E": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:lyonic_staff"
+  }
+}

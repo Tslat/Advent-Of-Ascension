@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_encrusted_shiny_banner"
+    ]
+  },
+  "criteria": {
+    "has_gilded_shiny_banner": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gilded_shiny_banner"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_encrusted_shiny_banner"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gilded_shiny_banner",
+      "has_the_recipe"
+    ]
+  ]
+}

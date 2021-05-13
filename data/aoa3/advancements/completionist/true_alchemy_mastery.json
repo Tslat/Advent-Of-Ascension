@@ -1,0 +1,35 @@
+{
+  "parent": "aoa3:completionist/alchemy_mastery",
+  "display": {
+    "icon": {
+      "item": "aoa3:alchemy_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.completionist.true_alchemy_mastery.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.true_alchemy_mastery.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "alchemy_level_1000": {
+      "trigger": "aoa3:level_up",
+      "conditions": {
+        "skill": "alchemy",
+        "level": 1000
+      }
+    }
+  },
+  "requirements": [
+    [
+      "alchemy_level_1000"
+    ]
+  ]
+}

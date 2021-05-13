@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_roulette"
+    ]
+  },
+  "criteria": {
+    "has_stampede": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:stampede"
+          }
+        ]
+      }
+    },
+    "has_weapon_parts": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:weapon_parts"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_roulette"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stampede",
+      "has_weapon_parts",
+      "has_the_recipe"
+    ]
+  ]
+}

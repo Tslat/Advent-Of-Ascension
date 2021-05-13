@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    " C ",
+    " D "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:shyrestone_ingot"
+    },
+    "B": {
+      "item": "aoa3:shyregem"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    },
+    "D": {
+      "item": "aoa3:sapphire"
+    }
+  },
+  "result": {
+    "item": "aoa3:pickmax"
+  }
+}

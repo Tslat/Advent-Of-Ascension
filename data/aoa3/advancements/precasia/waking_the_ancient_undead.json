@@ -1,0 +1,36 @@
+{
+  "parent": "aoa3:precasia/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:skeletal_sword",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.precasia.waking_the_ancient_undead.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.precasia.waking_the_ancient_undead.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_skele_elder": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aoa3:skele_elder"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_skele_elder"
+    ]
+  ]
+}

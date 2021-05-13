@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:mysterium/a_nice_cup_of_shroom_tea",
+  "display": {
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.mysterium.fungicide.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.mysterium.fungicide.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_ornate_king_shroomus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:king_shroomus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.king_shroomus\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_king_shroomus_trophy"
+    ]
+  ]
+}

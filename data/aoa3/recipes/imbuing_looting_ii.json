@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:looting",
+    "level": 2
+  },
+  "infusion_level": 30,
+  "ingredients": [
+    {
+      "item": "aoa3:luck_enhancer"
+    },
+    {
+      "item": "aoa3:luck_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

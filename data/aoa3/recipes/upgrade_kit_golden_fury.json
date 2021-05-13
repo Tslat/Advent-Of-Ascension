@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:flaming_fury"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:golden_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:golden_fury"
+  }
+}

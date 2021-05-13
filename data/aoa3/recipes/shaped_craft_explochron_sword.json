@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDE",
+    " A ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:lyon_ingot"
+    },
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "aoa3:enchanted_gunpowder"
+    },
+    "D": {
+      "item": "aoa3:blazium_ingot"
+    },
+    "E": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "item": "aoa3:explochron_sword"
+  }
+}

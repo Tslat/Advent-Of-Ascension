@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:punch",
+    "level": 3
+  },
+  "infusion_level": 63,
+  "ingredients": [
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:glaring_power_stone"
+    }
+  ]
+}

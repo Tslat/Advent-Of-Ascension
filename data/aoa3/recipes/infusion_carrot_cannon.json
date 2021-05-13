@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:small_orange_petal"
+    },
+    {
+      "item": "aoa3:rosid_root"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "aoa3:limonite_ingot"
+    },
+    {
+      "item": "minecraft:carrot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:carrot_cannon"
+  }
+}

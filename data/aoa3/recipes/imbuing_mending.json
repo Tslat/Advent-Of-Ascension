@@ -1,0 +1,24 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:mending"
+  },
+  "infusion_level": 97,
+  "ingredients": [
+    {
+      "item": "aoa3:divine_enhancer"
+    },
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    }
+  ]
+}

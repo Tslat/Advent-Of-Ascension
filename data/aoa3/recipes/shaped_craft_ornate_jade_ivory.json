@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X",
+    "   ",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:patterned_jade_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:ornate_jade_ivory",
+    "count": 4
+  }
+}

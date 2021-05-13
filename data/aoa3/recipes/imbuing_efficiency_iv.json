@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:efficiency",
+    "level": 4
+  },
+  "infusion_level": 47,
+  "ingredients": [
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

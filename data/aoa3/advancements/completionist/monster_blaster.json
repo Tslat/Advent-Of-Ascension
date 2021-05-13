@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:completionist/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:experiment_w_801",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.monster_blaster.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.monster_blaster.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_experiment_w_801": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:experiment_w_801"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_experiment_w_801"
+    ]
+  ]
+}

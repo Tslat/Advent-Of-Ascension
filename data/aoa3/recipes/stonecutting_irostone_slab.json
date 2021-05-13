@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:irostone"
+  },
+  "result": "aoa3:irostone_slab",
+  "count": 2
+}

@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_depth_strider_iii"
+    ]
+  },
+  "criteria": {
+    "has_magic_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:magic_enhancer"
+          }
+        ]
+      }
+    },
+    "has_speed_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:speed_enhancer"
+          }
+        ]
+      }
+    },
+    "has_ambient_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ambient_power_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_depth_strider_iii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_magic_enhancer",
+      "has_speed_enhancer",
+      "has_ambient_power_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

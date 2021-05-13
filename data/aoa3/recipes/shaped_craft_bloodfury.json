@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " A ",
+    "CBC"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:bloodstone"
+    },
+    "B": {
+      "item": "minecraft:stick"
+    },
+    "C": {
+      "item": "aoa3:nightmare_flakes"
+    }
+  },
+  "result": {
+    "item": "aoa3:bloodfury"
+  }
+}

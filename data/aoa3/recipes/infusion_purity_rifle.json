@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:elecanium_ingot"
+    },
+    {
+      "item": "aoa3:elecanium_ingot"
+    },
+    {
+      "item": "aoa3:runic_energy"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:white_druse"
+    }
+  ],
+  "result": {
+    "item": "aoa3:purity_rifle"
+  }
+}

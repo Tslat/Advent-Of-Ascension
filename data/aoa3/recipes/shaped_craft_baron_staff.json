@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CDC",
+    " A ",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:baronyte_ingot"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:power_rune"
+    },
+    "D": {
+      "item": "aoa3:hive_chunk"
+    }
+  },
+  "result": {
+    "item": "aoa3:baron_staff"
+  }
+}

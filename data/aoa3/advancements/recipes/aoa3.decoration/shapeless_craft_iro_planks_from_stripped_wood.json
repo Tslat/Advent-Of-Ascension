@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_iro_planks_from_stripped_wood"
+    ]
+  },
+  "criteria": {
+    "has_stripped_irowood": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:stripped_irowood"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_iro_planks_from_stripped_wood"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stripped_irowood",
+      "has_the_recipe"
+    ]
+  ]
+}

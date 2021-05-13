@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:achony_button",
+    "aoa3:bloodwood_button",
+    "aoa3:churry_button",
+    "aoa3:creep_button",
+    "aoa3:dawnwood_button",
+    "aoa3:hauntedwood_button",
+    "aoa3:irowood_button",
+    "aoa3:lucalus_button",
+    "aoa3:lunide_button",
+    "aoa3:runic_button",
+    "aoa3:shadow_button",
+    "aoa3:shyre_button",
+    "aoa3:stranglewood_button",
+    "aoa3:toxicwood_button"
+  ]
+}

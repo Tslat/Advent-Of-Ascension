@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:baronyte_ingot"
+    },
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:magnet_shard"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mecha_blaster"
+  }
+}

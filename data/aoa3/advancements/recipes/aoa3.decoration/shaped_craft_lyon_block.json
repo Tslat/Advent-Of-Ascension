@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_lyon_block"
+    ]
+  },
+  "criteria": {
+    "has_lyon_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:lyon_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_lyon_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_lyon_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_golden_fury"
+    ]
+  },
+  "criteria": {
+    "has_flaming_fury": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:flaming_fury"
+          }
+        ]
+      }
+    },
+    "has_golden_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:golden_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_golden_fury"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_flaming_fury",
+      "has_golden_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

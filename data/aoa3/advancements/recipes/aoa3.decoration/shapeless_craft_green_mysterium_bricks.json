@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_green_mysterium_bricks"
+    ]
+  },
+  "criteria": {
+    "has_whitewash_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:whitewash_bricks"
+          }
+        ]
+      }
+    },
+    "has_mystite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:mystite_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_green_mysterium_bricks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_whitewash_bricks",
+      "has_mystite_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_crystik_staff"
+    ]
+  },
+  "criteria": {
+    "has_ice_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ice_crystal"
+          }
+        ]
+      }
+    },
+    "has_blue_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blue_druse"
+          }
+        ]
+      }
+    },
+    "has_limonite_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_rod"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_crystik_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ice_crystal",
+      "has_blue_druse",
+      "has_limonite_rod",
+      "has_the_recipe"
+    ]
+  ]
+}

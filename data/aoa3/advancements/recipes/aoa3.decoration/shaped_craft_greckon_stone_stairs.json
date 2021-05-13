@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_greckon_stone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_greckon_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:greckon_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_greckon_stone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_greckon_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:precasian_lower_rock"
+    }
+  },
+  "result": {
+    "item": "aoa3:precasian_lower_rock_wall",
+    "count": 6
+  }
+}

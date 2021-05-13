@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_flame_wrecker"
+    ]
+  },
+  "criteria": {
+    "has_chain_wrecker": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:chain_wrecker"
+          }
+        ]
+      }
+    },
+    "has_nether_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:nether_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_flame_wrecker"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_chain_wrecker",
+      "has_nether_upgrade_kit",
+      "has_the_recipe"
+    ]
+  ]
+}

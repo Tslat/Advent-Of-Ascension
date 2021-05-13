@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "ABA",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:limonite_bullet"
+    },
+    "B": {
+      "item": "minecraft:gunpowder"
+    },
+    "C": {
+      "item": "aoa3:limonite_ingot"
+    }
+  },
+  "result": {
+    "item": "aoa3:spreadshot",
+    "count": 5
+  }
+}

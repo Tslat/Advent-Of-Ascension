@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_stranglewood"
+    }
+  ],
+  "result": {
+    "item": "aoa3:stranglewood_planks",
+    "count": 4
+  }
+}

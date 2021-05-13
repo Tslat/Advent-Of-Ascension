@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:magnet_shard"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:vivo"
+  }
+}

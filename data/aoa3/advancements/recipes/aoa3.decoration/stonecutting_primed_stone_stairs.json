@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_primed_stone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_primed_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:primed_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_primed_stone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_primed_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:haunter_rifle"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:smiley_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:happy_haunter"
+  }
+}

@@ -128,7 +128,6 @@ public class StructureCommand implements Command<CommandSource> {
 	private static int spawnStructure(CommandContext<CommandSource> cmd, Mirror mirror, Rotation rotation, boolean ignoreEntities) throws CommandSyntaxException {
 		try {
 			ResourceLocation id = StructureIdArgument.getStructureId(cmd, "structure_id");
-			System.out.println(id.toString());
 			Template template = ((MinecraftServer)LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER)).getWorld(DimensionType.OVERWORLD).getStructureTemplateManager().getTemplate(id);
 			BlockPos spawnPos = cmd.getArgument("position", ILocationArgument.class).getBlockPos(cmd.getSource());
 
@@ -320,7 +319,7 @@ public class StructureCommand implements Command<CommandSource> {
 
 		sizePos.move(1, 1, 1);
 
-		if (sizePos.getX() > 32 || sizePos.getY() > 32 || sizePos.getZ() > 32)
+		if (sizePos.getX() > 48 || sizePos.getY() > 48 || sizePos.getZ() > 48)
 			errors.add("Structure is too large, must fit within 32x32x32. Current size: " + sizePos.getX() + "x" + sizePos.getY() + "x" + sizePos.getZ());
 
 		if (errors.isEmpty()) {

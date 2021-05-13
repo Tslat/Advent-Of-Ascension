@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_rainbow_druse"
+    ]
+  },
+  "criteria": {
+    "has_green_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:green_druse"
+          }
+        ]
+      }
+    },
+    "has_white_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:white_druse"
+          }
+        ]
+      }
+    },
+    "has_red_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:red_druse"
+          }
+        ]
+      }
+    },
+    "has_yellow_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_druse"
+          }
+        ]
+      }
+    },
+    "has_blue_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blue_druse"
+          }
+        ]
+      }
+    },
+    "has_purple_druse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:purple_druse"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_rainbow_druse"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_green_druse",
+      "has_white_druse",
+      "has_red_druse",
+      "has_yellow_druse",
+      "has_blue_druse",
+      "has_purple_druse",
+      "has_the_recipe"
+    ]
+  ]
+}

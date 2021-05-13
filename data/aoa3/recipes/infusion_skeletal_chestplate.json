@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:chestbone_fragment"
+    },
+    {
+      "item": "aoa3:chestbone_fragment"
+    },
+    {
+      "tag": "forge:food"
+    },
+    {
+      "tag": "forge:food"
+    }
+  ],
+  "result": {
+    "item": "aoa3:skeletal_chestplate"
+  }
+}

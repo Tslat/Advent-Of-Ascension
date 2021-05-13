@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:purple_druse"
+    },
+    {
+      "item": "aoa3:orbulon"
+    },
+    {
+      "item": "aoa3:orbulon"
+    },
+    {
+      "item": "aoa3:lunar_ingot"
+    },
+    {
+      "item": "aoa3:lunar_ingot"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:orbocron"
+  }
+}

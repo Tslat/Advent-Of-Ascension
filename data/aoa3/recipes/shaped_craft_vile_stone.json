@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:toxic_waste"
+    },
+    "B": {
+      "item": "aoa3:uncharged_stone"
+    }
+  },
+  "result": {
+    "item": "aoa3:vile_stone"
+  }
+}

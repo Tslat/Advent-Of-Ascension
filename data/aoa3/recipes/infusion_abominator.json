@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:ghoulish_ingot"
+    },
+    {
+      "item": "aoa3:ghoulish_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:abominator"
+  }
+}

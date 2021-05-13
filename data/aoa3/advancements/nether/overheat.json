@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:nether/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:chilli"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.nether.overheat.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.overheat.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "lava_chilli_consume": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "lava_chilli_consume"
+    ]
+  ]
+}

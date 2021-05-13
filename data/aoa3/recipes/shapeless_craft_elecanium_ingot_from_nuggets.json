@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    },
+    {
+      "item": "aoa3:elecanium_nugget"
+    }
+  ],
+  "result": {
+    "item": "aoa3:elecanium_ingot"
+  }
+}

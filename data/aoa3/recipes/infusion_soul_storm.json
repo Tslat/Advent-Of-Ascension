@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    },
+    {
+      "item": "aoa3:ghostly_powder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:soul_storm"
+  }
+}

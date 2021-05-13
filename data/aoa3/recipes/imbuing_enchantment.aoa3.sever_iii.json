@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "aoa3:sever",
+    "level": 3
+  },
+  "infusion_level": 32,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:limonite_rod"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

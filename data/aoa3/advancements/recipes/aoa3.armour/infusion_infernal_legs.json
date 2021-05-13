@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_infernal_legs"
+    ]
+  },
+  "criteria": {
+    "has_leggings_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:leggings_frame"
+          }
+        ]
+      }
+    },
+    "has_magma_cream": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:magma_cream"
+          }
+        ]
+      }
+    },
+    "has_ice_crystal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ice_crystal"
+          }
+        ]
+      }
+    },
+    "has_emberstone_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:emberstone_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_infernal_legs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leggings_frame",
+      "has_magma_cream",
+      "has_ice_crystal",
+      "has_emberstone_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

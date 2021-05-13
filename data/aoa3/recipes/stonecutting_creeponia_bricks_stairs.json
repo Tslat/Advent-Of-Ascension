@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:creeponia_bricks"
+  },
+  "result": "aoa3:creeponia_bricks_stairs",
+  "count": 1
+}

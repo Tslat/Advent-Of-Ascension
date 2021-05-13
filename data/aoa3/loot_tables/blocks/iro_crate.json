@@ -1,0 +1,75 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mechanical_assault_rifle"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mecha_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mechyro"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mecha_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mecha_cannon"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:incomplete_mecha_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:iro_crate"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [],
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {
+                "enchantment": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

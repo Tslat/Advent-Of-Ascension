@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:power",
+    "level": 3
+  },
+  "infusion_level": 25,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

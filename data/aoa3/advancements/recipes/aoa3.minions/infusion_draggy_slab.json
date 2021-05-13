@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_draggy_slab"
+    ]
+  },
+  "criteria": {
+    "has_blank_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blank_slab"
+          }
+        ]
+      }
+    },
+    "has_rabbit_hide": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:rabbit_hide"
+          }
+        ]
+      }
+    },
+    "has_magenta_dye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:magenta_dye"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_draggy_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blank_slab",
+      "has_rabbit_hide",
+      "has_magenta_dye",
+      "has_the_recipe"
+    ]
+  ]
+}

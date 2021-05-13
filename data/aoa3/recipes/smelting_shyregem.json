@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:shyregem_ore"
+  },
+  "result": "aoa3:shyregem",
+  "experience": 5.0,
+  "cookingtime": 200
+}

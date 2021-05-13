@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:emberstone_ingot"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "result": {
+    "item": "aoa3:destruction_shotgun"
+  }
+}

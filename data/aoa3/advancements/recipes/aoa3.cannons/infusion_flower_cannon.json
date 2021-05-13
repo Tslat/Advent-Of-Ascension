@@ -1,0 +1,98 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_flower_cannon"
+    ]
+  },
+  "criteria": {
+    "has_small_green_petal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:small_green_petal"
+          }
+        ]
+      }
+    },
+    "has_limonite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_ingot"
+          }
+        ]
+      }
+    },
+    "has_cannon_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:cannon_frame"
+          }
+        ]
+      }
+    },
+    "has_jade": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:jade"
+          }
+        ]
+      }
+    },
+    "has_rosid_root": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosid_root"
+          }
+        ]
+      }
+    },
+    "has_sticky_slime": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:sticky_slime"
+          }
+        ]
+      }
+    },
+    "has_dandelion": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:dandelion"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_flower_cannon"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_small_green_petal",
+      "has_limonite_ingot",
+      "has_cannon_frame",
+      "has_jade",
+      "has_rosid_root",
+      "has_sticky_slime",
+      "has_dandelion",
+      "has_the_recipe"
+    ]
+  ]
+}

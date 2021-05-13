@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_yellow_dye"
+    ]
+  },
+  "criteria": {
+    "has_yellow_celebulbs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:yellow_celebulbs"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_yellow_dye"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_yellow_celebulbs",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:intricate_rosite_ivory"
+  },
+  "result": "aoa3:intricate_rosite_ivory_wall",
+  "count": 1
+}

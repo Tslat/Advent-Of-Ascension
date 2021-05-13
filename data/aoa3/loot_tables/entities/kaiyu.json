@@ -1,0 +1,69 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/precasia"
+        }
+      ]
+    },
+    {
+      "name": "mob_specific_loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 6,
+          "name": "aoa3:kaiyu_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 18,
+          "name": "aoa3:ivory"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "name": "aoa3:skullbone_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "name": "aoa3:chestbone_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "name": "aoa3:legbone_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "name": "aoa3:footbone_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 19,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:energy_rune"
+        }
+      ]
+    }
+  ]
+}

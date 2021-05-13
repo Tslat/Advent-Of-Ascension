@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:shyregem"
+    }
+  },
+  "result": {
+    "item": "aoa3:shyregem_block"
+  }
+}

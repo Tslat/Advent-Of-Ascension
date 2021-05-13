@@ -1,0 +1,17 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:fire_aspect"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "minecraft:lava_bucket"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

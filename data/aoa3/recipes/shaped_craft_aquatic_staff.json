@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CAC",
+    "ABA",
+    " B "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:coral_stone"
+    },
+    "B": {
+      "item": "aoa3:limonite_rod"
+    },
+    "C": {
+      "item": "aoa3:water_rune"
+    }
+  },
+  "result": {
+    "item": "aoa3:aquatic_staff"
+  }
+}

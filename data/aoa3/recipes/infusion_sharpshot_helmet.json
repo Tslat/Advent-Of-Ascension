@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:urka_hide"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:sapphire"
+    }
+  ],
+  "result": {
+    "item": "aoa3:sharpshot_helmet"
+  }
+}

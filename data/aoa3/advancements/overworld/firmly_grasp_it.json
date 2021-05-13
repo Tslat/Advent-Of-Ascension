@@ -1,0 +1,42 @@
+{
+  "parent": "aoa3:overworld/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:carrot_cannon",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.firmly_grasp_it.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.firmly_grasp_it.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "carrot_cannon_rabbit_kill": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "minecraft:rabbit"
+        },
+        "killing_blow": {
+          "is_projectile": true,
+          "direct_entity": {
+            "type": "aoa3:carrot_ball"
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "carrot_cannon_rabbit_kill"
+    ]
+  ]
+}

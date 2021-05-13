@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:blood_drainer"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:runic_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:soul_drainer"
+  }
+}

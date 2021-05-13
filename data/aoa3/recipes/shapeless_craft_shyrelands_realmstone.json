@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "aoa3:bloodstone"
+    },
+    {
+      "item": "minecraft:glowstone"
+    },
+    {
+      "item": "aoa3:haunted_flower"
+    },
+    {
+      "item": "aoa3:magic_mending_solution"
+    },
+    {
+      "item": "aoa3:blank_realmstone"
+    }
+  ],
+  "result": {
+    "item": "aoa3:shyrelands_realmstone"
+  }
+}

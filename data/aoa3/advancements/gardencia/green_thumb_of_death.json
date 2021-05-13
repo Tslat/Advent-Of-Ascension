@@ -1,0 +1,35 @@
+{
+  "parent": "aoa3:gardencia/flowers_for_all",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.gardencia.green_thumb_of_death.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.gardencia.green_thumb_of_death.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_vinocorne": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aoa3:vinocorne"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_vinocorne"
+    ]
+  ]
+}

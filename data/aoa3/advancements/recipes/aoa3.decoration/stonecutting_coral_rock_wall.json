@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:stonecutting_coral_rock_wall"
+    ]
+  },
+  "criteria": {
+    "has_coral_rock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:coral_rock"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:stonecutting_coral_rock_wall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_coral_rock",
+      "has_the_recipe"
+    ]
+  ]
+}

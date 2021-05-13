@@ -7,8 +7,11 @@ import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.*;
+import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.GenerationSettings;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.common.registration.AoABlocks;
@@ -22,6 +25,8 @@ import net.tslat.aoa3.worldgen.trees.AchonyTreeGenerator;
 import net.tslat.aoa3.worldgen.trees.ChurryTreeGenerator;
 import net.tslat.aoa3.worldgen.trees.InvertedAchonyTreeGenerator;
 import net.tslat.aoa3.worldgen.trees.InvertedChurryTreeGenerator;
+
+import java.util.function.BiConsumer;
 
 public class LelyetiaBiome extends AoABiome {
 	public LelyetiaBiome() {
@@ -55,174 +60,175 @@ public class LelyetiaBiome extends AoABiome {
 	}
 
 	@Override
-	public void generateStructuredChunk(WorldGenRegion world, SharedSeedRandom rand, IChunk chunk, int startX, int startZ) {
+	public void generateStructuredChunk(IWorld world, ChunkPrimer chunk, SharedSeedRandom rand, BiConsumer<BlockPos, BlockState> blockPlacer) {
 		RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(rand);
 		BlockPos.Mutable pos = new BlockPos.Mutable();
 		
 		if (random.percentChance(0.364)) {
 			switch (random.randomNumberUpTo(7)) {
 				case 0:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 0);
-					genLandStrip(chunk, 0, 55, 15, 15, 59, 15);
-					genLandStrip(chunk, 15, 55, 0, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 0, 0, 59, 15);
-					chunk.setBlockState(pos.setPos(1, 59, 1), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(14, 59, 14), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(1, 59, 14), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(14, 59, 1), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 0);
+					genLandStrip(blockPlacer, 0, 55, 15, 15, 59, 15);
+					genLandStrip(blockPlacer, 15, 55, 0, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 0, 0, 59, 15);
+					
+					blockPlacer.accept(pos.setPos(1, 59, 1), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(14, 59, 14), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(1, 59, 14), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(14, 59, 1), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
 
-					genLandStrip(chunk, 1, 55, 1, 14, 58, 1);
-					genLandStrip(chunk, 1, 55, 14, 14, 58, 14);
-					genLandStrip(chunk, 14, 55, 1, 14, 58, 14);
-					genLandStrip(chunk, 1, 55, 1, 1, 58, 14);
-					chunk.setBlockState(pos.setPos(2, 58, 2), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(13, 58, 13), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(2, 58, 13), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(13, 58, 2), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
+					genLandStrip(blockPlacer, 1, 55, 1, 14, 58, 1);
+					genLandStrip(blockPlacer, 1, 55, 14, 14, 58, 14);
+					genLandStrip(blockPlacer, 14, 55, 1, 14, 58, 14);
+					genLandStrip(blockPlacer, 1, 55, 1, 1, 58, 14);
+					blockPlacer.accept(pos.setPos(2, 58, 2), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(13, 58, 13), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(2, 58, 13), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(13, 58, 2), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
 
-					genLandStrip(chunk, 2, 55, 2, 13, 57, 2);
-					genLandStrip(chunk, 2, 55, 13, 13, 57, 13);
-					genLandStrip(chunk, 13, 55, 2, 13, 57, 13);
-					genLandStrip(chunk, 2, 55, 2, 2, 57, 13);
-					chunk.setBlockState(pos.setPos(3, 57, 3), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(12, 57, 12), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(3, 57, 12), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
-					chunk.setBlockState(pos.setPos(12, 57, 3), AoABlocks.LELYETIAN_GRASS.get().getDefaultState(), false);
+					genLandStrip(blockPlacer, 2, 55, 2, 13, 57, 2);
+					genLandStrip(blockPlacer, 2, 55, 13, 13, 57, 13);
+					genLandStrip(blockPlacer, 13, 55, 2, 13, 57, 13);
+					genLandStrip(blockPlacer, 2, 55, 2, 2, 57, 13);
+					blockPlacer.accept(pos.setPos(3, 57, 3), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(12, 57, 12), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(3, 57, 12), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					blockPlacer.accept(pos.setPos(12, 57, 3), AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
 
-					genLandStrip(chunk, 3, 55, 3, 12, 56, 3);
-					genLandStrip(chunk, 3, 55, 12, 12, 56, 12);
-					genLandStrip(chunk, 12, 55, 3, 12, 56, 12);
-					genLandStrip(chunk, 3, 55, 3, 3, 56, 12);
+					genLandStrip(blockPlacer, 3, 55, 3, 12, 56, 3);
+					genLandStrip(blockPlacer, 3, 55, 12, 12, 56, 12);
+					genLandStrip(blockPlacer, 12, 55, 3, 12, 56, 12);
+					genLandStrip(blockPlacer, 3, 55, 3, 3, 56, 12);
 					break;
 				case 1:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 1);
-					genLandStrip(chunk, 0, 55, 14, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 2, 1, 59, 13);
-					genLandStrip(chunk, 14, 55, 2, 15, 59, 13);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 1);
+					genLandStrip(blockPlacer, 0, 55, 14, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 2, 1, 59, 13);
+					genLandStrip(blockPlacer, 14, 55, 2, 15, 59, 13);
 
-					genLandStrip(chunk, 4, 55, 4, 11, 59, 5);
-					genLandStrip(chunk, 4, 55, 10, 11, 59, 11);
-					genLandStrip(chunk, 4, 55, 6, 5, 59, 9);
-					genLandStrip(chunk, 10, 55, 6, 11, 59, 9);
+					genLandStrip(blockPlacer, 4, 55, 4, 11, 59, 5);
+					genLandStrip(blockPlacer, 4, 55, 10, 11, 59, 11);
+					genLandStrip(blockPlacer, 4, 55, 6, 5, 59, 9);
+					genLandStrip(blockPlacer, 10, 55, 6, 11, 59, 9);
 					break;
 				case 2:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 0);
-					genLandStrip(chunk, 0, 55, 15, 15, 59, 15);
-					genLandStrip(chunk, 15, 55, 0, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 0, 0, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 0);
+					genLandStrip(blockPlacer, 0, 55, 15, 15, 59, 15);
+					genLandStrip(blockPlacer, 15, 55, 0, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 0, 0, 59, 15);
 
-					genLandStrip(chunk, 1, 55, 1, 6, 59, 6);
-					genLandStrip(chunk, 9, 55, 1, 14, 59, 6);
-					genLandStrip(chunk, 1, 55, 9, 6, 59, 14);
-					genLandStrip(chunk, 9, 55, 9, 14, 59, 14);
+					genLandStrip(blockPlacer, 1, 55, 1, 6, 59, 6);
+					genLandStrip(blockPlacer, 9, 55, 1, 14, 59, 6);
+					genLandStrip(blockPlacer, 1, 55, 9, 6, 59, 14);
+					genLandStrip(blockPlacer, 9, 55, 9, 14, 59, 14);
 					break;
 				case 3:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 1);
-					genLandStrip(chunk, 0, 55, 14, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 2, 1, 59, 13);
-					genLandStrip(chunk, 14, 55, 2, 15, 59, 13);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 1);
+					genLandStrip(blockPlacer, 0, 55, 14, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 2, 1, 59, 13);
+					genLandStrip(blockPlacer, 14, 55, 2, 15, 59, 13);
 
-					genLandStrip(chunk, 2, 55, 2, 13, 57, 3);
-					genLandStrip(chunk, 2, 55, 12, 13, 57, 13);
-					genLandStrip(chunk, 2, 55, 2, 3, 57, 11);
-					genLandStrip(chunk, 12, 55, 2, 13, 57, 11);
+					genLandStrip(blockPlacer, 2, 55, 2, 13, 57, 3);
+					genLandStrip(blockPlacer, 2, 55, 12, 13, 57, 13);
+					genLandStrip(blockPlacer, 2, 55, 2, 3, 57, 11);
+					genLandStrip(blockPlacer, 12, 55, 2, 13, 57, 11);
 
-					genLandStrip(chunk, 4, 55, 4, 11, 56, 5);
-					genLandStrip(chunk, 4, 55, 10, 11, 56, 11);
-					genLandStrip(chunk, 4, 55, 4, 5, 56, 9);
-					genLandStrip(chunk, 10, 55, 4, 11, 56, 9);
+					genLandStrip(blockPlacer, 4, 55, 4, 11, 56, 5);
+					genLandStrip(blockPlacer, 4, 55, 10, 11, 56, 11);
+					genLandStrip(blockPlacer, 4, 55, 4, 5, 56, 9);
+					genLandStrip(blockPlacer, 10, 55, 4, 11, 56, 9);
 					break;
 				case 4:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 4);
-					genLandStrip(chunk, 0, 55, 11, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 5, 4, 59, 10);
-					genLandStrip(chunk, 11, 55, 5, 15, 59, 10);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 4);
+					genLandStrip(blockPlacer, 0, 55, 11, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 5, 4, 59, 10);
+					genLandStrip(blockPlacer, 11, 55, 5, 15, 59, 10);
 
-					genLandStrip(chunk, 5, 55, 10, 6, 59, 10);
-					genLandStrip(chunk, 5, 55, 9, 5, 59, 9);
+					genLandStrip(blockPlacer, 5, 55, 10, 6, 59, 10);
+					genLandStrip(blockPlacer, 5, 55, 9, 5, 59, 9);
 
-					genLandStrip(chunk, 9, 55, 10, 10, 59, 10);
-					genLandStrip(chunk, 10, 55, 9, 10, 59, 9);
+					genLandStrip(blockPlacer, 9, 55, 10, 10, 59, 10);
+					genLandStrip(blockPlacer, 10, 55, 9, 10, 59, 9);
 
-					genLandStrip(chunk, 5, 55, 5, 5, 59, 6);
-					genLandStrip(chunk, 6, 55, 5, 6, 59, 5);
+					genLandStrip(blockPlacer, 5, 55, 5, 5, 59, 6);
+					genLandStrip(blockPlacer, 6, 55, 5, 6, 59, 5);
 
-					genLandStrip(chunk, 10, 55, 5, 10, 59, 6);
-					genLandStrip(chunk, 9, 55, 5, 9, 59, 5);
+					genLandStrip(blockPlacer, 10, 55, 5, 10, 59, 6);
+					genLandStrip(blockPlacer, 9, 55, 5, 9, 59, 5);
 					break;
 				case 5:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 1);
-					genLandStrip(chunk, 0, 55, 14, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 2, 1, 59, 13);
-					genLandStrip(chunk, 14, 55, 2, 15, 59, 13);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 1);
+					genLandStrip(blockPlacer, 0, 55, 14, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 2, 1, 59, 13);
+					genLandStrip(blockPlacer, 14, 55, 2, 15, 59, 13);
 
-					setAllBlocksInRegion(chunk, 7, 58, 2, 8, 58, 13, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
-					setAllBlocksInRegion(chunk, 2, 58, 7, 6, 58, 8, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
-					setAllBlocksInRegion(chunk, 9, 58, 7, 13, 58, 8, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
-					setAllBlocksInRegion(chunk, 7, 59, 2, 8, 59, 13, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
-					setAllBlocksInRegion(chunk, 2, 59, 7, 6, 59, 8, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
-					setAllBlocksInRegion(chunk, 9, 59, 7, 13, 59, 8, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 7, 58, 2, 8, 58, 13, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 2, 58, 7, 6, 58, 8, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 9, 58, 7, 13, 58, 8, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 7, 59, 2, 8, 59, 13, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 2, 59, 7, 6, 59, 8, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+					setAllBlocksInRegion(blockPlacer, 9, 59, 7, 13, 59, 8, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
 					break;
 				case 6:
-					genLandStrip(chunk, 0, 55, 0, 15, 59, 0);
-					genLandStrip(chunk, 0, 55, 15, 15, 59, 15);
-					genLandStrip(chunk, 15, 55, 0, 15, 59, 15);
-					genLandStrip(chunk, 0, 55, 0, 0, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 0);
+					genLandStrip(blockPlacer, 0, 55, 15, 15, 59, 15);
+					genLandStrip(blockPlacer, 15, 55, 0, 15, 59, 15);
+					genLandStrip(blockPlacer, 0, 55, 0, 0, 59, 15);
 
-					genLandStrip(chunk, 7, 55, 1, 8, 59, 14);
-					genLandStrip(chunk, 1, 55, 7, 6, 59, 8);
-					genLandStrip(chunk, 9, 55, 7, 14, 59, 8);
+					genLandStrip(blockPlacer, 7, 55, 1, 8, 59, 14);
+					genLandStrip(blockPlacer, 1, 55, 7, 6, 59, 8);
+					genLandStrip(blockPlacer, 9, 55, 7, 14, 59, 8);
 
-					genLandStrip(chunk, 1, 55, 1, 6, 58, 1);
-					genLandStrip(chunk, 1, 55, 6, 6, 58, 6);
-					genLandStrip(chunk, 1, 55, 2, 1, 58, 5);
-					genLandStrip(chunk, 6, 55, 2, 6, 58, 5);
-					genLandStrip(chunk, 2, 55, 2, 5, 57, 2);
-					genLandStrip(chunk, 2, 55, 5, 5, 57, 5);
-					genLandStrip(chunk, 2, 55, 3, 2, 57, 4);
-					genLandStrip(chunk, 5, 55, 3, 5, 57, 4);
+					genLandStrip(blockPlacer, 1, 55, 1, 6, 58, 1);
+					genLandStrip(blockPlacer, 1, 55, 6, 6, 58, 6);
+					genLandStrip(blockPlacer, 1, 55, 2, 1, 58, 5);
+					genLandStrip(blockPlacer, 6, 55, 2, 6, 58, 5);
+					genLandStrip(blockPlacer, 2, 55, 2, 5, 57, 2);
+					genLandStrip(blockPlacer, 2, 55, 5, 5, 57, 5);
+					genLandStrip(blockPlacer, 2, 55, 3, 2, 57, 4);
+					genLandStrip(blockPlacer, 5, 55, 3, 5, 57, 4);
 
-					genLandStrip(chunk, 1, 55, 9, 6, 58, 9);
-					genLandStrip(chunk, 1, 55, 14, 6, 58, 14);
-					genLandStrip(chunk, 1, 55, 10, 1, 58, 13);
-					genLandStrip(chunk, 6, 55, 10, 6, 58, 13);
-					genLandStrip(chunk, 2, 55, 10, 5, 57, 10);
-					genLandStrip(chunk, 2, 55, 13, 5, 57, 13);
-					genLandStrip(chunk, 2, 55, 11, 2, 57, 12);
-					genLandStrip(chunk, 5, 55, 11, 5, 57, 12);
+					genLandStrip(blockPlacer, 1, 55, 9, 6, 58, 9);
+					genLandStrip(blockPlacer, 1, 55, 14, 6, 58, 14);
+					genLandStrip(blockPlacer, 1, 55, 10, 1, 58, 13);
+					genLandStrip(blockPlacer, 6, 55, 10, 6, 58, 13);
+					genLandStrip(blockPlacer, 2, 55, 10, 5, 57, 10);
+					genLandStrip(blockPlacer, 2, 55, 13, 5, 57, 13);
+					genLandStrip(blockPlacer, 2, 55, 11, 2, 57, 12);
+					genLandStrip(blockPlacer, 5, 55, 11, 5, 57, 12);
 
-					genLandStrip(chunk, 9, 55, 1, 14, 58, 1);
-					genLandStrip(chunk, 9, 55, 6, 14, 58, 6);
-					genLandStrip(chunk, 9, 55, 2, 9, 58, 5);
-					genLandStrip(chunk, 14, 55, 2, 14, 58, 5);
-					genLandStrip(chunk, 10, 55, 2, 13, 57, 2);
-					genLandStrip(chunk, 10, 55, 5, 13, 57, 5);
-					genLandStrip(chunk, 10, 55, 3, 10, 57, 4);
-					genLandStrip(chunk, 13, 55, 3, 13, 57, 4);
+					genLandStrip(blockPlacer, 9, 55, 1, 14, 58, 1);
+					genLandStrip(blockPlacer, 9, 55, 6, 14, 58, 6);
+					genLandStrip(blockPlacer, 9, 55, 2, 9, 58, 5);
+					genLandStrip(blockPlacer, 14, 55, 2, 14, 58, 5);
+					genLandStrip(blockPlacer, 10, 55, 2, 13, 57, 2);
+					genLandStrip(blockPlacer, 10, 55, 5, 13, 57, 5);
+					genLandStrip(blockPlacer, 10, 55, 3, 10, 57, 4);
+					genLandStrip(blockPlacer, 13, 55, 3, 13, 57, 4);
 
-					genLandStrip(chunk, 9, 55, 9, 14, 58, 9);
-					genLandStrip(chunk, 9, 55, 14, 14, 58, 14);
-					genLandStrip(chunk, 9, 55, 10, 9, 58, 13);
-					genLandStrip(chunk, 14, 55, 10, 14, 58, 13);
-					genLandStrip(chunk, 10, 55, 10, 13, 57, 10);
-					genLandStrip(chunk, 10, 55, 13, 13, 57, 13);
-					genLandStrip(chunk, 10, 55, 11, 10, 57, 12);
-					genLandStrip(chunk, 13, 55, 11, 13, 57, 12);
+					genLandStrip(blockPlacer, 9, 55, 9, 14, 58, 9);
+					genLandStrip(blockPlacer, 9, 55, 14, 14, 58, 14);
+					genLandStrip(blockPlacer, 9, 55, 10, 9, 58, 13);
+					genLandStrip(blockPlacer, 14, 55, 10, 14, 58, 13);
+					genLandStrip(blockPlacer, 10, 55, 10, 13, 57, 10);
+					genLandStrip(blockPlacer, 10, 55, 13, 13, 57, 13);
+					genLandStrip(blockPlacer, 10, 55, 11, 10, 57, 12);
+					genLandStrip(blockPlacer, 13, 55, 11, 13, 57, 12);
 					break;
 			}
 		}
 		else {
-			genLandStrip(chunk, 0, 55, 0, 15, 59, 15);
+			genLandStrip(blockPlacer, 0, 55, 0, 15, 59, 15);
 		}
 	}
 
-	private void genLandStrip(IChunk chunk, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ) {
-		setAllBlocksInRegion(chunk, lowerX, lowerY, lowerZ, upperX, lowerY, upperZ, AoABlocks.INVERTED_LELYETIAN_GRASS.get().getDefaultState());
-		setAllBlocksInRegion(chunk, lowerX, lowerY + 1, lowerZ, upperX, upperY - 1, upperZ, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
-		setAllBlocksInRegion(chunk, lowerX, upperY, lowerZ, upperX, upperY, upperZ, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
+	private void genLandStrip(BiConsumer<BlockPos, BlockState> blockPlacer, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ) {
+		setAllBlocksInRegion(blockPlacer, lowerX, lowerY, lowerZ, upperX, lowerY, upperZ, AoABlocks.INVERTED_LELYETIAN_GRASS.get().getDefaultState());
+		setAllBlocksInRegion(blockPlacer, lowerX, lowerY + 1, lowerZ, upperX, upperY - 1, upperZ, AoABlocks.LELYETIAN_STONE.get().getDefaultState());
+		setAllBlocksInRegion(blockPlacer, lowerX, upperY, lowerZ, upperX, upperY, upperZ, AoABlocks.LELYETIAN_GRASS.get().getDefaultState());
 	}
 	
-	private void setAllBlocksInRegion(IChunk chunk, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ, final BlockState block) {
+	private void setAllBlocksInRegion(BiConsumer<BlockPos, BlockState> blockPlacer, final int lowerX, final int lowerY, final int lowerZ, final int upperX, final int upperY, final int upperZ, final BlockState block) {
 		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
 		int x;
 		int y;
@@ -231,7 +237,7 @@ public class LelyetiaBiome extends AoABiome {
 		for (x = lowerX; x <= upperX; x++) {
 			for (y = lowerY; y <= upperY; y++) {
 				for (z = lowerZ; z <= upperZ; z++) {
-					chunk.setBlockState(mutablePos.setPos(x, y, z), block, false);
+					blockPlacer.accept(mutablePos.setPos(x, y, z), block);
 				}
 			}
 		}

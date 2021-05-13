@@ -1,0 +1,24 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:green_druse"
+    },
+    {
+      "item": "aoa3:green_druse"
+    },
+    {
+      "item": "aoa3:green_crystal"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    }
+  ],
+  "result": {
+    "item": "aoa3:construct_of_servility_slab",
+    "count": 4
+  }
+}

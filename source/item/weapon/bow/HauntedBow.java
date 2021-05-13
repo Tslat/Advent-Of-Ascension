@@ -2,6 +2,7 @@ package net.tslat.aoa3.item.weapon.bow;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -15,6 +16,13 @@ import java.util.List;
 public class HauntedBow extends BaseBow {
 	public HauntedBow(double damage, float drawSpeedMultiplier, int durability) {
 		super(damage, drawSpeedMultiplier, durability);
+	}
+
+	@Override
+	public CustomArrowEntity doArrowMods(CustomArrowEntity arrow, LivingEntity shooter, ItemStack ammoStack, int useTicksRemaining) {
+		arrow.setIgnoreExplosions();
+
+		return arrow;
 	}
 
 	@Override

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "aoa3:raw_candlefish"
+  },
+  "result": "aoa3:cooked_candlefish",
+  "experience": 3.0,
+  "cookingtime": 100
+}

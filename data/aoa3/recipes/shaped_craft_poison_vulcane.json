@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:poison_vulcane_augment"
+    },
+    "B": {
+      "item": "aoa3:vulcane"
+    }
+  },
+  "result": {
+    "item": "aoa3:poison_vulcane"
+  }
+}

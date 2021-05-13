@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_purple_punisher"
+    ]
+  },
+  "criteria": {
+    "has_haunted_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:haunted_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_red_rocket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:red_rocket"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_purple_punisher"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_haunted_upgrade_kit",
+      "has_red_rocket",
+      "has_the_recipe"
+    ]
+  ]
+}

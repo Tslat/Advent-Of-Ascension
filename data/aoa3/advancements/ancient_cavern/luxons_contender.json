@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:ancient_cavern/white_knighting",
+  "display": {
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.ancient_cavern.luxons_contender.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.ancient_cavern.luxons_contender.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_gold_horon_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:horon\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.horon\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_horon_trophy"
+    ]
+  ]
+}

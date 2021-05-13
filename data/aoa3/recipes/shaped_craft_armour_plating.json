@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:chitin"
+    }
+  },
+  "result": {
+    "item": "aoa3:armour_plating"
+  }
+}

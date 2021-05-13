@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:yellow_wool"
+    },
+    {
+      "item": "minecraft:red_wool"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:big_top"
+  }
+}

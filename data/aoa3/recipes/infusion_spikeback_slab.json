@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "aoa3:urka_hide"
+    }
+  ],
+  "result": {
+    "item": "aoa3:spikeback_slab",
+    "count": 4
+  }
+}

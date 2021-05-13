@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_lunide_log"
+    }
+  ],
+  "result": {
+    "item": "aoa3:lunide_planks",
+    "count": 4
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_ancient_discharger"
+    ]
+  },
+  "criteria": {
+    "has_ancient_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ancient_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_discharge_cannon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:discharge_cannon"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_ancient_discharger"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ancient_upgrade_kit",
+      "has_discharge_cannon",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "aoa3:iromine/not_legal_tender",
+  "display": {
+    "icon": {
+      "item": "aoa3:trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.iromine.clubbed_to_death.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.iromine.clubbed_to_death.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "kill_silverfoot": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": {
+          "type": "aoa3:silverfoot"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "kill_silverfoot"
+    ]
+  ]
+}

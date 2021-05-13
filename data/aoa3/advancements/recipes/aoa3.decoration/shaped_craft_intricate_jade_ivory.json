@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_intricate_jade_ivory"
+    ]
+  },
+  "criteria": {
+    "has_ornate_jade_ivory": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornate_jade_ivory"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_intricate_jade_ivory"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ornate_jade_ivory",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:rosid_root"
+    },
+    {
+      "item": "aoa3:jungle_thorns"
+    },
+    {
+      "item": "aoa3:jade"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:gas_blaster"
+  }
+}

@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraft.item.*;
 import net.minecraft.potion.Effects;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -515,6 +516,21 @@ public final class AoAItems {
 	
 	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new MusicDiscItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new MusicDiscItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().group(AoAItemGroups.MISC_ITEMS).maxStackSize(1).rarity(Rarity.RARE)));
+
+	public static final RegistryObject<Item> COMPASS_RUNE_BANNER_PATTERN = registerItem("compass_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_COMPASS_RUNE", "compass_rune", "aoacomr", new ItemStack(AoAItems.COMPASS_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> DISTORTION_RUNE_BANNER_PATTERN = registerItem("distortion_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_DISTORTION_RUNE", "distortion_rune", "aoadisr", new ItemStack(AoAItems.DISTORTION_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> ENERGY_RUNE_BANNER_PATTERN = registerItem("energy_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_ENERGY_RUNE", "energy_rune", "aoaener", new ItemStack(AoAItems.ENERGY_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> FIRE_RUNE_BANNER_PATTERN = registerItem("fire_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_FIRE_RUNE", "fire_rune", "aoafirr", new ItemStack(AoAItems.FIRE_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> KINETIC_RUNE_BANNER_PATTERN = registerItem("kinetic_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_KINETIC_RUNE", "kinetic_rune", "aoakinr", new ItemStack(AoAItems.KINETIC_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LIFE_RUNE_BANNER_PATTERN = registerItem("life_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LIFE_RUNE", "life_rune", "aoalifr", new ItemStack(AoAItems.LIFE_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LUNAR_RUNE_BANNER_PATTERN = registerItem("lunar_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LUNAR_RUNE", "lunar_rune", "aoalunr", new ItemStack(AoAItems.LUNAR_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POISON_RUNE_BANNER_PATTERN = registerItem("poison_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POISON_RUNE", "poison_rune", "aoapoir", new ItemStack(AoAItems.POISON_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POWER_RUNE_BANNER_PATTERN = registerItem("power_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POWER_RUNE", "power_rune", "aoapowr", new ItemStack(AoAItems.POWER_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STORM_RUNE_BANNER_PATTERN = registerItem("storm_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STORM_RUNE", "storm_rune", "aoastor", new ItemStack(AoAItems.STORM_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STRIKE_RUNE_BANNER_PATTERN = registerItem("strike_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STRIKE_RUNE", "strike_rune", "aoastrr", new ItemStack(AoAItems.STRIKE_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WATER_RUNE_BANNER_PATTERN = registerItem("water_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WATER_RUNE", "water_rune", "aoawatr", new ItemStack(AoAItems.WATER_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WIND_RUNE_BANNER_PATTERN = registerItem("wind_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WIND_RUNE", "wind_rune", "aoawinr", new ItemStack(AoAItems.WIND_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WITHER_RUNE", "wither_rune", "aoawithr", new ItemStack(AoAItems.WITHER_RUNE.get())), new Item.Properties().maxStackSize(1).group(AoAItemGroups.MISC_ITEMS)));
 
 	private static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item) {
 		return ITEMS.register(registryId, item);

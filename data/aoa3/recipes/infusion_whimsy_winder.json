@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    {
+      "item": "aoa3:floating_stone"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:whimsy_winder"
+  }
+}

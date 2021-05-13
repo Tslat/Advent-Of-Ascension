@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:trophy"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:copy_name",
+          "source": "block_entity"
+        },
+        {
+          "function": "minecraft:copy_nbt",
+          "source": "block_entity",
+          "ops": [
+            {
+              "source": "EntityID",
+              "target": "BlockEntityTag.EntityID",
+              "op": "replace"
+            }
+          ]
+        },
+        {
+          "function": "minecraft:copy_nbt",
+          "source": "block_entity",
+          "ops": [
+            {
+              "source": "OriginalTrophy",
+              "target": "BlockEntityTag.OriginalTrophy",
+              "op": "replace"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

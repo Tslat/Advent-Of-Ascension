@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_battleborn_legs"
+    ]
+  },
+  "criteria": {
+    "has_darkly_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:darkly_powder"
+          }
+        ]
+      }
+    },
+    "has_leggings_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:leggings_frame"
+          }
+        ]
+      }
+    },
+    "has_reinforced_cloth": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:reinforced_cloth"
+          }
+        ]
+      }
+    },
+    "has_rosite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:rosite_ingot"
+          }
+        ]
+      }
+    },
+    "has_bloodstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bloodstone"
+          }
+        ]
+      }
+    },
+    "has_armour_plating": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:armour_plating"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_battleborn_legs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_darkly_powder",
+      "has_leggings_frame",
+      "has_reinforced_cloth",
+      "has_rosite_ingot",
+      "has_bloodstone",
+      "has_armour_plating",
+      "has_the_recipe"
+    ]
+  ]
+}

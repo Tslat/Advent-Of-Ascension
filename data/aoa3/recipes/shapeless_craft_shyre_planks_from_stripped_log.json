@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_shyre_log"
+    }
+  ],
+  "result": {
+    "item": "aoa3:shyre_planks",
+    "count": 4
+  }
+}

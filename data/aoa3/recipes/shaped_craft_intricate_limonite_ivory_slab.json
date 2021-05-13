@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:intricate_limonite_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:intricate_limonite_ivory_slab",
+    "count": 6
+  }
+}

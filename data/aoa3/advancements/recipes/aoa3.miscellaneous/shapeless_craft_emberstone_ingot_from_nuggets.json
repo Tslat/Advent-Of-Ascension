@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_emberstone_ingot_from_nuggets"
+    ]
+  },
+  "criteria": {
+    "has_emberstone_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:emberstone_nugget"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_emberstone_ingot_from_nuggets"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_emberstone_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

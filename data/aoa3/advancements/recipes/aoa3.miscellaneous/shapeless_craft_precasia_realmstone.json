@@ -1,0 +1,98 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_precasia_realmstone"
+    ]
+  },
+  "criteria": {
+    "has_spruce_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:spruce_sapling"
+          }
+        ]
+      }
+    },
+    "has_dark_oak_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:dark_oak_sapling"
+          }
+        ]
+      }
+    },
+    "has_oak_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:oak_sapling"
+          }
+        ]
+      }
+    },
+    "has_acacia_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:acacia_sapling"
+          }
+        ]
+      }
+    },
+    "has_birch_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:birch_sapling"
+          }
+        ]
+      }
+    },
+    "has_jungle_sapling": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:jungle_sapling"
+          }
+        ]
+      }
+    },
+    "has_blank_realmstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blank_realmstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_precasia_realmstone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_spruce_sapling",
+      "has_dark_oak_sapling",
+      "has_oak_sapling",
+      "has_acacia_sapling",
+      "has_birch_sapling",
+      "has_jungle_sapling",
+      "has_blank_realmstone",
+      "has_the_recipe"
+    ]
+  ]
+}

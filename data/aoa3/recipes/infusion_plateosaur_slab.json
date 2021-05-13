@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blank_slab"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:rammerhead_hide"
+    },
+    {
+      "tag": "aoa3:precasian_bone"
+    }
+  ],
+  "result": {
+    "item": "aoa3:plateosaur_slab",
+    "count": 4
+  }
+}

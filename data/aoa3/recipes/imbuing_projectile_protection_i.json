@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:projectile_protection"
+  },
+  "infusion_level": 8,
+  "ingredients": [
+    {
+      "item": "aoa3:resistance_enhancer"
+    },
+    {
+      "item": "minecraft:arrow"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

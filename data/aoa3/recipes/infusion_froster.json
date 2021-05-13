@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "item": "aoa3:sour_gummy"
+    },
+    {
+      "item": "aoa3:spearmint_candy"
+    },
+    {
+      "item": "aoa3:peppermint_candy"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "result": {
+    "item": "aoa3:froster"
+  }
+}

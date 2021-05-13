@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_yellow_dye_from_irotops"
+    ]
+  },
+  "criteria": {
+    "has_irotops": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:irotops"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_yellow_dye_from_irotops"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_irotops",
+      "has_the_recipe"
+    ]
+  ]
+}

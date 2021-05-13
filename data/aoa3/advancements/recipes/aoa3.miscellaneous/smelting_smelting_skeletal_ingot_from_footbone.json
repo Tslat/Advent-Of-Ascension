@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_smelting_skeletal_ingot_from_footbone"
+    ]
+  },
+  "criteria": {
+    "has_footbone_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:footbone_fragment"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_smelting_skeletal_ingot_from_footbone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_footbone_fragment",
+      "has_the_recipe"
+    ]
+  ]
+}

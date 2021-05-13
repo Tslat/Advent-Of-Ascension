@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:shyrelands/sit_back_down",
+  "display": {
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.shyrelands.golden_warrior.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.shyrelands.golden_warrior.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_gold_xxeus_trophy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gold_trophy",
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:xxeus\",OriginalTrophy:1b},display:{Name:\u0027{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.xxeus\"}]}\u0027}}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_xxeus_trophy"
+    ]
+  ]
+}

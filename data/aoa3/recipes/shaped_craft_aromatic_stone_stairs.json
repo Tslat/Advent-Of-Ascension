@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:aromatic_stone"
+    }
+  },
+  "result": {
+    "item": "aoa3:aromatic_stone_stairs",
+    "count": 4
+  }
+}

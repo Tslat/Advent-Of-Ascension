@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:incomplete_mecha_cannon"
+    },
+    {
+      "item": "aoa3:power_core"
+    },
+    {
+      "item": "aoa3:mecha_gear"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mecha_cannon"
+  }
+}

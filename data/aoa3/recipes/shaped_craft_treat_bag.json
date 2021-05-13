@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:candy"
+    },
+    "B": {
+      "item": "aoa3:sour_gummy"
+    }
+  },
+  "result": {
+    "item": "aoa3:treat_bag"
+  }
+}

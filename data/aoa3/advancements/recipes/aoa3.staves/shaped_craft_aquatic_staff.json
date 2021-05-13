@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_aquatic_staff"
+    ]
+  },
+  "criteria": {
+    "has_water_rune": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:water_rune"
+          }
+        ]
+      }
+    },
+    "has_coral_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:coral_stone"
+          }
+        ]
+      }
+    },
+    "has_limonite_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_rod"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_aquatic_staff"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_water_rune",
+      "has_coral_stone",
+      "has_limonite_rod",
+      "has_the_recipe"
+    ]
+  ]
+}

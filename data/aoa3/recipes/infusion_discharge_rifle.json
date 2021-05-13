@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ornamyte"
+    },
+    {
+      "item": "aoa3:ornamyte"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:discharge_capsule"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "aoa3:rosite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:discharge_rifle"
+  }
+}

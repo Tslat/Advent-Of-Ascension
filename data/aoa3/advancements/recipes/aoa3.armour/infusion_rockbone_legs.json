@@ -1,0 +1,65 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:infusion_rockbone_legs"
+    ]
+  },
+  "criteria": {
+    "has_dense_rock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:dense_rock"
+          }
+        ]
+      }
+    },
+    "has_leggings_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:leggings_frame"
+          }
+        ]
+      }
+    },
+    "has_arrow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:arrow"
+          }
+        ]
+      }
+    },
+    "has_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:bone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:infusion_rockbone_legs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dense_rock",
+      "has_leggings_frame",
+      "has_arrow",
+      "has_bone",
+      "has_the_recipe"
+    ]
+  ]
+}

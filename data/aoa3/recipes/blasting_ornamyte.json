@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "aoa3:ornamyte_ore"
+  },
+  "result": "aoa3:ornamyte",
+  "experience": 3.0,
+  "cookingtime": 100
+}

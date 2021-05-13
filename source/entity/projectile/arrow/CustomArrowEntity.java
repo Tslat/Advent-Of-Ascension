@@ -32,6 +32,8 @@ public class CustomArrowEntity extends ArrowEntity {
 	protected BaseBow bow;
 	protected BaseCrossbow crossbow;
 
+	private boolean ignoreExplosions = false;
+
 	public CustomArrowEntity(EntityType<? extends ArrowEntity> type, World world) {
 		super(type, world);
 	}
@@ -131,6 +133,15 @@ public class CustomArrowEntity extends ArrowEntity {
 		}
 
 		super.tick();
+	}
+
+	@Override
+	public boolean isImmuneToExplosions() {
+		return ignoreExplosions;
+	}
+
+	public void setIgnoreExplosions() {
+		this.ignoreExplosions = true;
 	}
 
 	@Override

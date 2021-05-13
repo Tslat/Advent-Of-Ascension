@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smelting_ornamyte"
+    ]
+  },
+  "criteria": {
+    "has_ornamyte_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ornamyte_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smelting_ornamyte"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ornamyte_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

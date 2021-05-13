@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:power_ray"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:abyssal_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:death_ray"
+  }
+}

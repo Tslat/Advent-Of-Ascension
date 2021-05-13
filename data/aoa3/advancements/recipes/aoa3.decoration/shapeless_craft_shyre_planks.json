@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_shyre_planks"
+    ]
+  },
+  "criteria": {
+    "has_shyre_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shyre_log"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_shyre_planks"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shyre_log",
+      "has_the_recipe"
+    ]
+  ]
+}

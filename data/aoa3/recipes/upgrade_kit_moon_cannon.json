@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:energy_cannon"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:lunar_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:moon_cannon"
+  }
+}

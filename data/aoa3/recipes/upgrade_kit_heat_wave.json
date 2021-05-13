@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:hot_shot"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:nether_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:heat_wave"
+  }
+}

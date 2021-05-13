@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_enchantment.aoa3.sever_iii"
+    ]
+  },
+  "criteria": {
+    "has_damage_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:damage_enhancer"
+          }
+        ]
+      }
+    },
+    "has_glistening_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:glistening_power_stone"
+          }
+        ]
+      }
+    },
+    "has_limonite_rod": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:limonite_rod"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_enchantment.aoa3.sever_iii"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_damage_enhancer",
+      "has_glistening_power_stone",
+      "has_limonite_rod",
+      "has_the_recipe"
+    ]
+  ]
+}

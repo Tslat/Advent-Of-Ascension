@@ -1,0 +1,38 @@
+{
+  "parent": "aoa3:completionist/root",
+  "display": {
+    "icon": {
+      "item": "aoa3:gardener",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.green_thumb.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.green_thumb.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_gardener": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gardener"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gardener"
+    ]
+  ]
+}

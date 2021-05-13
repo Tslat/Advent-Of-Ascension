@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skeletal_ingot"
+    },
+    {
+      "item": "aoa3:skullbone_fragment"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:food"
+    }
+  ],
+  "result": {
+    "item": "aoa3:skeletal_helmet"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:ghastly_ingot"
+    },
+    {
+      "item": "aoa3:ghoulasm"
+    },
+    {
+      "item": "aoa3:wither_rune"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:ghast_blaster"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:blasting_shyrestone_ingot"
+    ]
+  },
+  "criteria": {
+    "has_shyrestone_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:shyrestone_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:blasting_shyrestone_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shyrestone_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

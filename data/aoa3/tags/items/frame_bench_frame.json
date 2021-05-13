@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:blaster_frame",
+    "aoa3:crossbow_frame",
+    "aoa3:boots_frame",
+    "aoa3:leggings_frame",
+    "aoa3:chestplate_frame",
+    "aoa3:helmet_frame",
+    "aoa3:cannon_frame",
+    "aoa3:gun_frame",
+    "aoa3:shotgun_frame",
+    "aoa3:sniper_frame"
+  ]
+}

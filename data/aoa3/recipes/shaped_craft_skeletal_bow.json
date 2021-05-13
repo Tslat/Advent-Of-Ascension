@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " AB",
+    "A B",
+    " AB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:skeletal_ingot"
+    },
+    "B": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "aoa3:skeletal_bow"
+  }
+}

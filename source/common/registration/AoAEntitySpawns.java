@@ -486,6 +486,8 @@ public final class AoAEntitySpawns {
         blacklist.add(Biomes.NETHER);
         blacklist.add(Biomes.THE_VOID);
         blacklist.add(Biomes.THE_END);
+        blacklist.add(Biomes.MUSHROOM_FIELDS);
+        blacklist.add(Biomes.MUSHROOM_FIELD_SHORE);
 
         for (Biome biome : ForgeRegistries.BIOMES.getValues()) {
             if (!blacklist.contains(biome))

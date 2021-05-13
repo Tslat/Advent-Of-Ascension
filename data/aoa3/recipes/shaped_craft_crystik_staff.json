@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    " B ",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:ice_crystal"
+    },
+    "B": {
+      "item": "aoa3:blue_druse"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:crystik_staff"
+  }
+}

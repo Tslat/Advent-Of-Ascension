@@ -1,16 +1,16 @@
 package net.tslat.aoa3.worldgen.worlds.lunalus;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.common.registration.AoABlocks;
@@ -22,6 +22,8 @@ import net.tslat.aoa3.worldgen.AoABiome;
 import net.tslat.aoa3.worldgen.structures.StructuresHandler;
 import net.tslat.aoa3.worldgen.trees.LuniciaTreeGenerator;
 import net.tslat.aoa3.worldgen.trees.LunossoTreeGenerator;
+
+import java.util.function.BiConsumer;
 
 public class LunalusBiome extends AoABiome {
 	public LunalusBiome() {
@@ -55,7 +57,7 @@ public class LunalusBiome extends AoABiome {
 	}
 
 	@Override
-	public void generateStructuredChunk(WorldGenRegion world, SharedSeedRandom rand, IChunk chunk, int startX, int startZ) {}
+	public void generateStructuredChunk(IWorld world, ChunkPrimer chunk, SharedSeedRandom rand, BiConsumer<BlockPos, BlockState> blockPlacer) {}
 	
 	@Override
 	public void decorate(GenerationStage.Decoration stage, ChunkGenerator<? extends GenerationSettings> chunkGenerator, IWorld world, long seed, SharedSeedRandom rand, BlockPos pos) {

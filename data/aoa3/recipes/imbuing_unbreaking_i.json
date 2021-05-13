@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:infusion",
+  "infusion": {
+    "enchantment": "minecraft:unbreaking"
+  },
+  "infusion_level": 16,
+  "ingredients": [
+    {
+      "item": "aoa3:durability_enhancer"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "aoa3:gleaming_power_stone"
+    }
+  ]
+}

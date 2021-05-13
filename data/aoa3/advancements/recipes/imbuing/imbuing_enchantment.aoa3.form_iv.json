@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_enchantment.aoa3.form_iv"
+    ]
+  },
+  "criteria": {
+    "has_damage_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:damage_enhancer"
+          }
+        ]
+      }
+    },
+    "has_glowing_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:glowing_power_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_enchantment.aoa3.form_iv"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_damage_enhancer",
+      "has_glowing_power_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:smoking_cooked_pearl_stripefish"
+    ]
+  },
+  "criteria": {
+    "has_raw_pearl_stripefish": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:raw_pearl_stripefish"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:smoking_cooked_pearl_stripefish"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_raw_pearl_stripefish",
+      "has_the_recipe"
+    ]
+  ]
+}

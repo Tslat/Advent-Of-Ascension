@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:greckon_stone"
+  },
+  "result": "aoa3:greckon_stone_wall",
+  "count": 1
+}

@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "name": "main_loot",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:wind_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:fire_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:water_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:wither_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:energy_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:lunar_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:kinetic_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:distortion_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:poison_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:strike_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:power_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:storm_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:life_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:compass_rune"
+        }
+      ]
+    }
+  ]
+}

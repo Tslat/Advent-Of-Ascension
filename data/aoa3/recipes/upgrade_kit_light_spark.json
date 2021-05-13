@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:upgrade_kit",
+  "input": {
+    "item": "aoa3:soul_spark"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:light_upgrade_kit"
+  },
+  "result": {
+    "item": "aoa3:light_spark"
+  }
+}

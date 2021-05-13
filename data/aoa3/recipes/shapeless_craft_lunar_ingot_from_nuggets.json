@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    },
+    {
+      "item": "aoa3:lunar_nugget"
+    }
+  ],
+  "result": {
+    "item": "aoa3:lunar_ingot"
+  }
+}

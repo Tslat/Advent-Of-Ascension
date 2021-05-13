@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "item": "aoa3:padded_cloth"
+    }
+  ],
+  "result": {
+    "item": "aoa3:embrodium_helmet"
+  }
+}

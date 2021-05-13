@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shaped_craft_weightless_stone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_weightless_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:weightless_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shaped_craft_weightless_stone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_weightless_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

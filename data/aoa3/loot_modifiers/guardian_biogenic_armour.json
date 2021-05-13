@@ -1,0 +1,15 @@
+{
+  "type": "aoa3:roll_extra_tables",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "minecraft:guardian"
+      },
+      "entity": "THIS"
+    }
+  ],
+  "tables": [
+    "aoa3:entities/vanilla_guardian"
+  ]
+}

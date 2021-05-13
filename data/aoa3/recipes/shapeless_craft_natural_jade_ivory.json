@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:jade"
+    }
+  ],
+  "result": {
+    "item": "aoa3:natural_jade_ivory",
+    "count": 4
+  }
+}

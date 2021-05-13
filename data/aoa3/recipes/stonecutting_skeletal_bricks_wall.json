@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:skeletal_bricks"
+  },
+  "result": "aoa3:skeletal_bricks_wall",
+  "count": 1
+}

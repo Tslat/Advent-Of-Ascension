@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:creeponia/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:gunpowder"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.creeponia.worst_farmer_ever.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.creeponia.worst_farmer_ever.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "creep_cow_milk": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "creep_cow_milk"
+    ]
+  ]
+}

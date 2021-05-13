@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "ABA",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:pink_coral"
+    },
+    "B": {
+      "item": "aoa3:coral_stone"
+    },
+    "C": {
+      "item": "aoa3:limonite_rod"
+    }
+  },
+  "result": {
+    "item": "aoa3:coral_greatblade"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:blasting_bloodstone"
+    ]
+  },
+  "criteria": {
+    "has_bloodstone_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:bloodstone_ore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:blasting_bloodstone"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bloodstone_ore",
+      "has_the_recipe"
+    ]
+  ]
+}

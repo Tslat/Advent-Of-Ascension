@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_kinetic_rune_banner_pattern"
+    ]
+  },
+  "criteria": {
+    "has_kinetic_rune": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:kinetic_rune"
+          }
+        ]
+      }
+    },
+    "has_paper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:paper"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_kinetic_rune_banner_pattern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_kinetic_rune",
+      "has_paper",
+      "has_the_recipe"
+    ]
+  ]
+}

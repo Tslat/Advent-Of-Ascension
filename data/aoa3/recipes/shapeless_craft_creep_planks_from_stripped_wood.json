@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:stripped_creep_wood"
+    }
+  ],
+  "result": {
+    "item": "aoa3:creep_planks",
+    "count": 4
+  }
+}

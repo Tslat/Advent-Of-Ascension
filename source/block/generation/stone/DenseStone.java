@@ -25,7 +25,7 @@ public class DenseStone extends Block {
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		super.onBlockHarvested(world, pos, state, player);
 
-		if (!world.isRemote && RandomUtil.oneInNChance(50) && ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getHeldItem(Hand.MAIN_HAND))) {
+		if (!world.isRemote && RandomUtil.oneInNChance(50) && !ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getHeldItem(Hand.MAIN_HAND))) {
 			ShikEntity shik = new ShikEntity(AoAEntities.Animals.SHIK.get(), world);
 
 			shik.setPositionAndUpdate(pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f);

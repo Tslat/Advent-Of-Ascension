@@ -75,7 +75,6 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 					return false;
 
 				if (blockEntityTag.contains("EntityID")) {
-					System.out.println(blockEntityTag.getString("EntityID"));
 					if (entityType == null) {
 						entityType = blockEntityTag.getString("EntityID");
 					}

@@ -7,6 +7,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.biome.provider.BiomeProvider;
+import net.minecraft.world.chunk.ChunkPrimer;
+import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -14,6 +16,8 @@ import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.server.ChunkHolder;
+import net.minecraft.world.server.ServerChunkProvider;
 import net.minecraft.world.spawner.WorldEntitySpawner;
 import net.tslat.aoa3.worldgen.AoABiome;
 
@@ -23,20 +27,42 @@ public class StructureChunkBuilder extends ChunkGenerator<GenerationSettings> {
 	}
 
 	@Override
-	public void makeBase(IWorld world, IChunk chunk) {}
+	public void makeBase(IWorld world, IChunk chunk) {
+		SharedSeedRandom random = new SharedSeedRandom(this.seed);
+		ChunkPrimer primer = (ChunkPrimer)chunk;
+		Biome biome = world.getBiome(chunk.getPos().asBlockPos());
+
+		primer.getHeightmap(Heightmap.Type.OCEAN_FLOOR_WG);
+		random.setBaseChunkSeed(chunk.getPos().x, chunk.getPos().z);
+
+		Heightmap groundHeightmap = primer.getHeightmap(Heightmap.Type.WORLD_SURFACE_WG);
+
+		for (int x = 0; x < 4; x++) {
+			for (int z = 0; z < 4; z++) {
+				primer.getSection(15);
+
+				for (int i = 0; i < 256; i += 15) {
+					primer.getSection(i >> 4);
+				}
+			}
+		}
+
+		if (biome instanceof AoABiome) {
+			((AoABiome)biome).generateStructuredChunk(world, primer, random, (pos, state) -> {
+				BlockPos globalPos = new BlockPos(primer.getPos().asBlockPos().add(pos));
+				ChunkSection chunkSection = primer.getSection(pos.getY() >> 4);
+
+				if (state.getLightValue(primer, globalPos) != 0)
+					primer.addLightPosition(globalPos);
+
+				chunkSection.setBlockState(pos.getX(), pos.getY() & 15, pos.getZ(), state, false);
+				groundHeightmap.update(pos.getX(), pos.getY(), pos.getZ(), state);
+			});
+		}
+	}
 
 	@Override
-	public void generateSurface(WorldGenRegion world, IChunk chunk) {
-		int posX = world.getMainChunkX() * 16;
-		int posZ = world.getMainChunkZ() * 16;
-		Biome biome = world.getBiome(new BlockPos(posX, 0, posZ));
-		SharedSeedRandom rand = new SharedSeedRandom();
-
-		rand.setBaseChunkSeed(chunk.getPos().x, chunk.getPos().z);
-
-		if (biome instanceof AoABiome)
-			((AoABiome)biome).generateStructuredChunk(world, rand, chunk, posX, posZ);
-	}
+	public void generateSurface(WorldGenRegion world, IChunk chunk) {}
 
 	@Override
 	public void spawnMobs(WorldGenRegion region) {
@@ -61,7 +87,15 @@ public class StructureChunkBuilder extends ChunkGenerator<GenerationSettings> {
 
 	@Override
 	public int getHeight(int x, int z, Heightmap.Type heightmapType) {
-		return world.getChunk(x >> 4, z >> 4, ChunkStatus.SURFACE).getTopBlockY(heightmapType, x & 15, z & 15) + 1;
+		if (world.getChunkProvider() instanceof ServerChunkProvider) {
+			ServerChunkProvider provider = (ServerChunkProvider)world.getChunkProvider();
+			ChunkHolder holder = provider.func_217213_a(new ChunkPos(new BlockPos(x, 0, z)).asLong());
+
+			if (holder != null && ChunkHolder.getChunkStatusFromLevel(holder.getChunkLevel()).isAtLeast(ChunkStatus.SURFACE))
+				return world.getChunk(x >> 4, z >> 4, ChunkStatus.SURFACE).getTopBlockY(heightmapType, x & 15, z & 15) + 1;
+		}
+
+		return 0;
 	}
 
 	@Override

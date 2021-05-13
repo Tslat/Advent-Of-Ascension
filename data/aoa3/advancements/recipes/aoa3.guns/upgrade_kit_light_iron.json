@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:upgrade_kit_light_iron"
+    ]
+  },
+  "criteria": {
+    "has_light_upgrade_kit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:light_upgrade_kit"
+          }
+        ]
+      }
+    },
+    "has_blood_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:blood_iron"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:upgrade_kit_light_iron"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_light_upgrade_kit",
+      "has_blood_iron",
+      "has_the_recipe"
+    ]
+  ]
+}

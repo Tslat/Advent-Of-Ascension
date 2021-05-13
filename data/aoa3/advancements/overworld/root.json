@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "aoa3:blast_cannon",
+      "nbt": "{HideFlags:2b,Damage:0}"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.root.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.root.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "aoa3:textures/block/ancient_rock.png"
+  },
+  "criteria": {
+    "playerjoin": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "playerjoin"
+    ]
+  ]
+}

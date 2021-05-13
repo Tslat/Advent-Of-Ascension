@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:imbuing_fortune_i"
+    ]
+  },
+  "criteria": {
+    "has_luck_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:luck_enhancer"
+          }
+        ]
+      }
+    },
+    "has_magic_enhancer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:magic_enhancer"
+          }
+        ]
+      }
+    },
+    "has_gleaming_power_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:gleaming_power_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:imbuing_fortune_i"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_luck_enhancer",
+      "has_magic_enhancer",
+      "has_gleaming_power_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

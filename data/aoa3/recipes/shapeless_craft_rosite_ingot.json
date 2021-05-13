@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:rosite_block"
+    }
+  ],
+  "result": {
+    "item": "aoa3:rosite_ingot",
+    "count": 9
+  }
+}

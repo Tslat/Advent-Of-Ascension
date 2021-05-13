@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DAB",
+    "C B",
+    "DAB"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:crystallite"
+    },
+    "B": {
+      "item": "minecraft:string"
+    },
+    "C": {
+      "item": "aoa3:reinforced_cloth"
+    },
+    "D": {
+      "item": "aoa3:sharp_claw"
+    }
+  },
+  "result": {
+    "item": "aoa3:justice_bow"
+  }
+}

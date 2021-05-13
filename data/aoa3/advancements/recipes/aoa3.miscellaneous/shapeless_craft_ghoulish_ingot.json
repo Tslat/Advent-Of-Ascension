@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "aoa3:shapeless_craft_ghoulish_ingot"
+    ]
+  },
+  "criteria": {
+    "has_ghoulish_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "aoa3:ghoulish_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "aoa3:shapeless_craft_ghoulish_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ghoulish_block",
+      "has_the_recipe"
+    ]
+  ]
+}
