@@ -49,42 +49,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:soulvyre",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:shyre_knight",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arcbeast",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:omnilight",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sysker",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:stimulosus",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:arc_flower",
         "weight": 20,
         "minCount": 1,
@@ -97,7 +61,43 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:stimulosus",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:soulvyre",
+        "weight": 5,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sysker",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arcbeast",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:shyre_knight",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:axiolight",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:omnilight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -106,13 +106,13 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:expedition_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:expedition_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

@@ -42,18 +42,6 @@
     "monster": [],
     "creature": [
       {
-        "type": "aoa3:rainicorn",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:eeo",
-        "weight": 3,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:dawnlight",
         "weight": 5,
         "minCount": 1,
@@ -70,6 +58,18 @@
         "weight": 3,
         "minCount": 1,
         "maxCount": 3
+      },
+      {
+        "type": "aoa3:eeo",
+        "weight": 3,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:rainicorn",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 1
       },
       {
         "type": "aoa3:angelica",

@@ -50,24 +50,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:valkyrie",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:silencer",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:grillface",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:shifter",
         "weight": 20,
         "minCount": 1,
@@ -80,7 +62,25 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:grillface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sugarface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:silencer",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:valkyrie",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

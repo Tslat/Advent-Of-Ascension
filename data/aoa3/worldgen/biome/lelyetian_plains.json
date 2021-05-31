@@ -46,13 +46,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:lelyetian_warrior",
+        "type": "aoa3:flye",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:flye",
+        "type": "aoa3:lelyetian_warrior",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -86,6 +86,12 @@
     ],
     "ambient": [
       {
+        "type": "aoa3:glaring_pixon",
+        "weight": 12,
+        "minCount": 1,
+        "maxCount": 4
+      },
+      {
         "type": "aoa3:logging_master",
         "weight": 1,
         "minCount": 0,
@@ -96,12 +102,6 @@
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
-      },
-      {
-        "type": "aoa3:glaring_pixon",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 4
       }
     ],
     "water_creature": [],
