@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 public class AirGap extends Block {
 	public AirGap() {
-		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.NONE, BlockUtil.UNBREAKABLE_HARDNESS, 0));
+		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.NONE).stats(BlockUtil.UNBREAKABLE_HARDNESS, 0f).isAir().noDrops().noOcclusion().noClip().get());
 	}
 	@Override
 	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {

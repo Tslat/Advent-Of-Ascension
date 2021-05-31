@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.item.ItemEntity;
@@ -24,7 +23,7 @@ import java.util.HashSet;
 
 public class LunarCreationTable extends Block {
 	public LunarCreationTable() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());
 	}
 
 	@Override

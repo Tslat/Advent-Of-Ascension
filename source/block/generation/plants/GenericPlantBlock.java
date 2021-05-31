@@ -32,15 +32,13 @@ public class GenericPlantBlock extends Block implements IForgeShearable, IPlanta
 	protected final List<Material> growthMaterials;
 
 	public GenericPlantBlock(Material material, MaterialColor mapColour, SoundType sound, int lightLevel, Material... growthMaterials) {
-		super(BlockUtil.generateBlockProperties(material, mapColour, 0, 0, null, sound, lightLevel, -1).noCollission());
+		super(new BlockUtil.CompactProperties(material, mapColour).stats(0, 0).sound(sound).light(lightLevel).noClip().get());
 
 		this.growthMaterials = Arrays.asList(growthMaterials);
 	}
 
 	public GenericPlantBlock(Material material, MaterialColor mapColour, SoundType sound, Material... growthMaterials) {
-		super(BlockUtil.generateBlockProperties(material, mapColour, 0, 0, sound).noCollission());
-
-		this.growthMaterials = Arrays.asList(growthMaterials);
+		this(material, mapColour, sound, 0, growthMaterials);
 	}
 
 	public GenericPlantBlock(Material material, MaterialColor mapColour, Material... growthMaterials) {

@@ -27,10 +27,6 @@
         {
           "type": "minecraft:item",
           "name": "aoa3:incomplete_mecha_staff"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:iro_crate"
         }
       ],
       "conditions": [
@@ -54,7 +50,12 @@
     },
     {
       "rolls": 1,
-      "entries": [],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:iro_crate"
+        }
+      ],
       "conditions": [
         {
           "condition": "minecraft:match_tool",

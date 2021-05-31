@@ -18,7 +18,7 @@ import net.tslat.aoa3.util.RandomUtil;
 
 public class DenseStone extends Block {
 	public DenseStone() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY, 1.5f, 10f, ToolType.PICKAXE, 0));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).stats(1.5f, 10f).harvestTool(ToolType.PICKAXE).get());
 	}
 
 	@Override

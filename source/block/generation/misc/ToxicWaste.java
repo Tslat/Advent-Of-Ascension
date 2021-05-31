@@ -23,11 +23,11 @@ public class ToxicWaste extends Block {
 	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public ToxicWaste() {
-		super(BlockUtil.generateBlockProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN, 0.25f, 1, SoundType.SLIME_BLOCK));
+		super(new BlockUtil.CompactProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN).stats(0.25f, 1f).sound(SoundType.SLIME_BLOCK).get());
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		return SHAPE;
 	}
 

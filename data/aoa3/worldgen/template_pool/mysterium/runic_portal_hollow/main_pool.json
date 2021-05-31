@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:mysterium/runic_portal_hollow/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/runic_portal_hollow/runic_portal_hollow",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

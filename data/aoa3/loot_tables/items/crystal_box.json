@@ -7,22 +7,18 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 10,
           "name": "aoa3:giant_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
           "name": "aoa3:large_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 130,
           "name": "aoa3:medium_skill_crystal"
         },
         {
           "type": "minecraft:item",
-          "weight": 280,
           "name": "aoa3:small_skill_crystal"
         }
       ]

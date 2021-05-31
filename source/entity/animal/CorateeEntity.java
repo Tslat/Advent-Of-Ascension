@@ -10,10 +10,12 @@ import net.minecraft.item.Item;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -21,6 +23,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.entity.base.AoAAnimal;
+import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -113,6 +116,14 @@ public class CorateeEntity extends AoAAnimal implements IAnimatable {
 	@Override
 	public boolean checkSpawnObstruction(IWorldReader world) {
 		return world.isUnobstructed(this);
+	}
+
+	@Override
+	public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
+		if (!EntityUtil.isNaturalSpawnReason(reason))
+			return true;
+
+		return world.getBlockState(blockPosition()).getFluidState().is(FluidTags.WATER);
 	}
 
 	@Override

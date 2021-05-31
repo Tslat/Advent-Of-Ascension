@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraft.item.*;
 import net.minecraft.potion.Effects;
+import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -96,10 +97,10 @@ public final class AoAItems {
 	public static final RegistryObject<Item> BLANK_SLAB = registerItem("blank_slab", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CHITIN = registerItem("chitin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CIRCUS_COIN = registerItem("circus_coin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> COPPER_COIN = registerItem("copper_coin", () ->new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> SILVER_COIN = registerItem("silver_coin", () ->new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> GOLD_COIN = registerItem("gold_coin", () ->new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LUNAVER_COIN = registerItem("lunaver_coin", () ->new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> COPPER_COIN = registerItem("copper_coin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> SILVER_COIN = registerItem("silver_coin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> GOLD_COIN = registerItem("gold_coin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LUNAVER_COIN = registerItem("lunaver_coin", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CONFETTI_PILE = registerItem("confetti_pile", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)), 10);
 	public static final RegistryObject<Item> CORAL_STONE = registerItem("coral_stone", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> COSMIC_DUST = registerItem("cosmic_dust", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
@@ -245,29 +246,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> VILE_STONE = registerItem("vile_stone", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> VOLIANT_HEART = registerItem("voliant_heart", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> WARLOCK_GEM = registerItem("warlock_gem", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-
-	public static final RegistryObject<Item> ABYSS_TOKENS = registerItem("abyss_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> BARON_TOKENS = registerItem("baron_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> BOREAN_TOKENS = registerItem("borean_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> CANDYLAND_TOKENS = registerItem("candyland_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> CELEVE_TOKENS = registerItem("celeve_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> CREEPONIA_TOKENS = registerItem("creeponia_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> CRYSTEVIA_TOKENS = registerItem("crystevia_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> DEEPLANDS_TOKENS = registerItem("deeplands_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> DUNGEON_TOKENS = registerItem("dungeon_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> DUSTOPIA_TOKENS = registerItem("dustopia_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> GARDENCIA_TOKENS = registerItem("gardencia_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> GRECKON_TOKENS = registerItem("greckon_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> HAVEN_TOKENS = registerItem("haven_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> IROMINE_TOKENS = registerItem("iromine_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LELYETIA_TOKENS = registerItem("lelyetia_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LUNAR_TOKENS = registerItem("lunar_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> MYSTERIUM_TOKENS = registerItem("mysterium_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> NETHER_TOKENS = registerItem("nether_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> PRECASIAN_TOKENS = registerItem("precasian_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> RUNANDOR_TOKENS = registerItem("runandor_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> SHYRELANDS_TOKENS = registerItem("shyrelands_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> VOX_PONDS_TOKENS = registerItem("vox_ponds_tokens", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 
 	public static final RegistryObject<Item> ABYSSAL_UPGRADE_KIT = registerItem("abyssal_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> ANCIENT_UPGRADE_KIT = registerItem("ancient_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE))); // TODO Obtain Method
@@ -275,6 +254,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> CLOWN_UPGRADE_KIT = registerItem("clown_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> DARKLY_UPGRADE_KIT = registerItem("darkly_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> FLORO_UPGRADE_KIT = registerItem("floro_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> FUNGAL_UPGRADE_KIT = registerItem("fungal_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> GOLDEN_UPGRADE_KIT = registerItem("golden_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> HAUNTED_UPGRADE_KIT = registerItem("haunted_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> LELYETIAN_UPGRADE_KIT = registerItem("lelyetian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
@@ -282,9 +262,8 @@ public final class AoAItems {
 	public static final RegistryObject<Item> LUNAR_UPGRADE_KIT = registerItem("lunar_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> NETHER_UPGRADE_KIT = registerItem("nether_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> PRECASIAN_UPGRADE_KIT = registerItem("precasian_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
-	public static final RegistryObject<Item> PREDATOR_UPGRADE_KIT = registerItem("predator_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE))); // TODO Precasia event placement
+	public static final RegistryObject<Item> PREDATOR_UPGRADE_KIT = registerItem("predator_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> ROCKY_UPGRADE_KIT = registerItem("rocky_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
-	public static final RegistryObject<Item> RUNIC_UPGRADE_KIT = registerItem("runic_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> SEASIDE_UPGRADE_KIT = registerItem("seaside_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> SMILEY_UPGRADE_KIT = registerItem("smiley_upgrade_kit", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.RARE)));
 
@@ -490,6 +469,21 @@ public final class AoAItems {
 	
 	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new MusicDiscItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new MusicDiscItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
+
+	public static final RegistryObject<Item> COMPASS_RUNE_BANNER_PATTERN = registerItem("compass_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_COMPASS_RUNE", "compass_rune", "aoacomr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> DISTORTION_RUNE_BANNER_PATTERN = registerItem("distortion_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_DISTORTION_RUNE", "distortion_rune", "aoadisr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> ENERGY_RUNE_BANNER_PATTERN = registerItem("energy_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_ENERGY_RUNE", "energy_rune", "aoaener"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> FIRE_RUNE_BANNER_PATTERN = registerItem("fire_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_FIRE_RUNE", "fire_rune", "aoafirr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> KINETIC_RUNE_BANNER_PATTERN = registerItem("kinetic_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_KINETIC_RUNE", "kinetic_rune", "aoakinr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LIFE_RUNE_BANNER_PATTERN = registerItem("life_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LIFE_RUNE", "life_rune", "aoalifr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LUNAR_RUNE_BANNER_PATTERN = registerItem("lunar_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LUNAR_RUNE", "lunar_rune", "aoalunr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POISON_RUNE_BANNER_PATTERN = registerItem("poison_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POISON_RUNE", "poison_rune", "aoapoir"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POWER_RUNE_BANNER_PATTERN = registerItem("power_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POWER_RUNE", "power_rune", "aoapowr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STORM_RUNE_BANNER_PATTERN = registerItem("storm_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STORM_RUNE", "storm_rune", "aoastor"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STRIKE_RUNE_BANNER_PATTERN = registerItem("strike_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STRIKE_RUNE", "strike_rune", "aoastrr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WATER_RUNE_BANNER_PATTERN = registerItem("water_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WATER_RUNE", "water_rune", "aoawatr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WIND_RUNE_BANNER_PATTERN = registerItem("wind_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WIND_RUNE", "wind_rune", "aoawinr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WITHER_RUNE", "wither_rune", "aoawithr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
 
 	private static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item) {
 		return ITEMS.register(registryId, item);

@@ -19,7 +19,7 @@ public class CarpetBlock extends Block {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
 	public CarpetBlock(MaterialColor mapColour) {
-		super(BlockUtil.generateBlockProperties(Material.CLOTH_DECORATION, mapColour, 0.1f, 0.1f, SoundType.WOOL));
+		super(new BlockUtil.CompactProperties(Material.CLOTH_DECORATION, mapColour).stats(0.1f).sound(SoundType.WOOL).get());
 	}
 
 	@Override

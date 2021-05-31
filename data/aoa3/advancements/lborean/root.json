@@ -18,16 +18,16 @@
     "background": "aoa3:textures/block/coral_rock.png"
   },
   "criteria": {
-    "enter_block_borean_portal": {
+    "enter_block_lborean_portal": {
       "trigger": "minecraft:enter_block",
       "conditions": {
-        "block": "aoa3:borean_portal"
+        "block": "aoa3:lborean_portal"
       }
     }
   },
   "requirements": [
     [
-      "enter_block_borean_portal"
+      "enter_block_lborean_portal"
     ]
   ]
 }

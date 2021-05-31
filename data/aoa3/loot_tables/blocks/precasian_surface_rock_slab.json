@@ -6,7 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "name": "aoa3:precasian_surface_rock_slab"
         }
       ],

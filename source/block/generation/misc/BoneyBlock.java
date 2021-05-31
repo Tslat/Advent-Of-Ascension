@@ -16,7 +16,7 @@ public class BoneyBlock extends Block {
 	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.001d, 0.001d, 0.001d, 0.999d, 0.999d, 0.999d));
 
 	public BoneyBlock() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_GRAY, 3, 3, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_GRAY).stats(3f).get());
 	}
 
 	@Override

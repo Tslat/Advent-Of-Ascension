@@ -21,10 +21,14 @@ import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMovementController;
 import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.util.player.PlayerUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob {
+public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, IAnimatable {
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	protected boolean isSlipperyMovement = false;
 
 	protected AoAFlyingMeleeMob(EntityType<? extends FlyingEntity> entityType, World world) {
@@ -114,4 +118,12 @@ public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob {
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.animationFactory;
+	}
 }

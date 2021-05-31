@@ -7,10 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.scheduling.async.CreepSpawnTask;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,6 +41,11 @@ public class CreepAltar extends BossAltarBlock {
 
 		new CreepSpawnTask(world, centerX, blockPos.getY() + 1, centerZ, RandomUtil.randomNumberUpTo(4)).schedule(1, TimeUnit.SECONDS);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.creep.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key);
 	}
 
 	@Override

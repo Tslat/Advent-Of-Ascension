@@ -51,6 +51,15 @@
                         "Properties": {
                           "waterlogged": "false"
                         },
+                        "Name": "aoa3:purple_shroom"
+                      }
+                    },
+                    {
+                      "weight": 10,
+                      "data": {
+                        "Properties": {
+                          "waterlogged": "false"
+                        },
                         "Name": "aoa3:blue_shroom"
                       }
                     }

@@ -11,21 +11,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 3.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:shyrelands_tokens"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 20,
           "functions": [
             {

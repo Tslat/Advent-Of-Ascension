@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +16,7 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class WhitewashingTable extends Block {
 	public WhitewashingTable() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE, 5, 10, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE).stats(5f, 10f).get());
 	}
 
 	@Override

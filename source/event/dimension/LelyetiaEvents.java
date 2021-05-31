@@ -7,7 +7,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class LelyetiaEvents {
 	public static void doPlayerTick(PlayerEntity pl) {
-		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+		if (ItemUtil.hasItemInHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get()))
 			return;
 
 		if (pl.getY() <= -25 && PlayerUtil.shouldPlayerBeAffected(pl))

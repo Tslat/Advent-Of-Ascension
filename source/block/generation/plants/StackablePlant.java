@@ -1,9 +1,6 @@
 package net.tslat.aoa3.block.generation.plants;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +8,6 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -29,8 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
-import net.minecraft.block.AbstractBlock;
-
 public class StackablePlant extends Block implements IForgeShearable, IPlantable {
 	protected Supplier<Block> hatBlock;
 	protected Supplier<Block> stemBlock;
@@ -45,7 +39,8 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	public StackablePlant(Material material, MaterialColor mapColour, SoundType sound, Material... growthMaterial) {
-		super(BlockUtil.generateBlockProperties(material, mapColour, 0, 0, sound).noCollission());
+		super(new BlockUtil.CompactProperties(material, mapColour).sound(sound).noClip().get());
+
 		this.hatBlock = () -> this;
 		this.stemBlock = () -> this;
 		this.growthMaterials = Arrays.asList(growthMaterial);

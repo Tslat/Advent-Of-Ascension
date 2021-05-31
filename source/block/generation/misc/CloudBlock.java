@@ -17,7 +17,7 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class CloudBlock extends Block {
 	public CloudBlock() {
-		super(BlockUtil.generateBlockProperties(Material.AIR, MaterialColor.NONE, 0, 0, SoundType.WOOL).noCollission().noOcclusion().noDrops());
+		super(new BlockUtil.CompactProperties(Material.AIR, MaterialColor.NONE).stats(0f).sound(SoundType.WOOL).noClip().noOcclusion().noDrops().get());
 	}
 
 	@Override

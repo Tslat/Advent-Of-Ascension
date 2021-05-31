@@ -6,7 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 90,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -21,7 +20,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 80,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -36,22 +34,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 95,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 6.0,
-                "max": 12.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:deeplands_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -66,7 +48,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -81,7 +62,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 70,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -96,12 +76,10 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "name": "aoa3:gold_coin"
         },
         {
           "type": "minecraft:item",
-          "weight": 65,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -116,7 +94,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -131,7 +108,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -146,12 +122,10 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
           "name": "aoa3:deep_bow"
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
           "name": "aoa3:rocker_rifle"
         }
       ],

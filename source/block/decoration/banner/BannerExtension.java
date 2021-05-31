@@ -27,7 +27,7 @@ import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class BannerExtension extends Block implements IWaterLoggable {
 	public BannerExtension() {
-		super(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.METAL, 0.5f, 1f, SoundType.WOOL).noOcclusion().noCollission());
+		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
 
 		registerDefaultState(defaultBlockState().setValue(BannerBlock.TYPE, BannerBlock.BannerType.MOUNTED).setValue(HorizontalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}

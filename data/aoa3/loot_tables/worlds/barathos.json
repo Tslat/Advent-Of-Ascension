@@ -2,42 +2,24 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "dimension_specific_loot",
+      "name": "rare_table",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100
+          "weight": 200
         },
         {
-          "type": "minecraft:item",
-          "weight": 80,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:looting_enchant",
-              "count": {
-                "min": 0.0,
-                "max": 2.0
-              }
-            }
-          ],
-          "name": "aoa3:baron_tokens"
+          "type": "minecraft:loot_table",
+          "name": "aoa3:misc/rare_table"
         }
       ]
     },
     {
       "name": "supplies",
       "rolls": {
-        "min": 0.0,
-        "max": 2.0,
+        "min": 1.0,
+        "max": 3.0,
         "type": "minecraft:uniform"
       },
       "entries": [
@@ -47,7 +29,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -63,7 +44,7 @@
       ]
     },
     {
-      "name": "rare_table",
+      "name": "dimension_specific_loot",
       "rolls": 1,
       "entries": [
         {
@@ -71,8 +52,8 @@
           "weight": 200
         },
         {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:misc/rare_table"
+          "type": "minecraft:item",
+          "name": "aoa3:predator_upgrade_kit"
         }
       ]
     }

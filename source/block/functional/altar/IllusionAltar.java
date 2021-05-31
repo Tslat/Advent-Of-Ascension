@@ -7,11 +7,13 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.Heightmap;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.ElusiveEntity;
 import net.tslat.aoa3.entity.mob.misc.ElusiveCloneEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class IllusionAltar extends BossAltarBlock {
 	public IllusionAltar() {
@@ -34,6 +36,11 @@ public class IllusionAltar extends BossAltarBlock {
 		player.level.addFreshEntity(elusive);
 		player.level.addFreshEntity(clone);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.elusive.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.ABYSS.key);
 	}
 
 	@Override

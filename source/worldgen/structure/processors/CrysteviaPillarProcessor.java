@@ -45,6 +45,8 @@ public class CrysteviaPillarProcessor extends StructureProcessor {
 				placementPos.move(Direction.DOWN);
 				testBlock = world.getBlockState(placementPos);
 			}
+
+			return new Template.BlockInfo(relativisedBlockInfo.pos, pillarBlock, null);
 		}
 
 		return relativisedBlockInfo;

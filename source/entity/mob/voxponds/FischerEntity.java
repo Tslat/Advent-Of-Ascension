@@ -3,18 +3,19 @@ package net.tslat.aoa3.entity.mob.voxponds;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class FischerEntity extends AoAMeleeMob {
-    public FischerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+public class FischerEntity extends AoAWaterMeleeMob {
+    public FischerEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -66,4 +67,6 @@ public class FischerEntity extends AoAMeleeMob {
         }
     }
 
+    @Override
+    public void registerControllers(AnimationData animationData) {}
 }

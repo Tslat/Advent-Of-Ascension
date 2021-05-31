@@ -6,13 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:survives_explosion"
-            }
-          ],
-          "weight": 100,
-          "name": "aoa3:kaiyu_temple_trap_fire"
+          "name": "aoa3:kaiyu_temple_block_squares"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }

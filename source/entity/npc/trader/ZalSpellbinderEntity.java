@@ -1,22 +1,36 @@
 package net.tslat.aoa3.entity.npc.trader;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ZalSpellbinderEntity extends AoATrader {
-	public ZalSpellbinderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.LUNAR_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.trade(AoAItems.DISTORTION_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.trade(AoAItems.LIFE_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.trade(AoAItems.KINETIC_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.trade(AoABlocks.RUNE_SHRINE).cost(AoAItems.COPPER_COIN).xp(1).stock(64))
+			.trades(2,
+					BuildableTrade.trade(AoATools.SOULSTONE_AXE).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(3),
+					BuildableTrade.trade(AoATools.SOULSTONE_SHOVEL).cost(AoAItems.GOLD_COIN, 11).xp(100).stock(3),
+					BuildableTrade.trade(AoATools.SOULSTONE_PICKAXE).cost(AoAItems.GOLD_COIN, 12).xp(100).stock(3),
+					BuildableTrade.trade(AoAWeapons.ULTRA_CANNON).cost(AoAWeapons.SUPER_CANNON).cost(AoAItems.SILVER_COIN, 7),
+					BuildableTrade.trade(EnchantedBookItem.createForEnchantment(new EnchantmentData(Enchantments.MENDING, 1))).cost(AoAItems.LUNAVER_COIN, 2).xp(150).stock(5)).build();
+
+	public ZalSpellbinderEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -30,17 +44,9 @@ public class ZalSpellbinderEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.LUNAR_RUNE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.DISTORTION_RUNE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.LIFE_RUNE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(AoAItems.KINETIC_RUNE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get()), new ItemStack(AoABlocks.RUNE_SHRINE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get(), 2), EnchantedBookItem.createForEnchantment(new EnchantmentData(Enchantments.MENDING, 1))));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 7), new ItemStack(AoAWeapons.SUPER_CANNON.get(), 1), new ItemStack(AoAWeapons.ULTRA_CANNON.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 10), new ItemStack(AoATools.SOULSTONE_AXE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 11), new ItemStack(AoATools.SOULSTONE_SHOVEL.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 12), new ItemStack(AoATools.SOULSTONE_PICKAXE.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

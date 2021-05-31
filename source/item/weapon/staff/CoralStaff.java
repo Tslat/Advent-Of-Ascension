@@ -17,6 +17,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.library.scheduling.async.CoralStaffTask;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -52,20 +53,20 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 			for (int z = -2; z <= 1; z++) {
 				checkPos.set(pos.getX() + x, pos.getY() - 2, pos.getZ() + z);
 
-				if (safeBlockPos(caster, checkPos))
+				if (safeBlockPos(caster, checkPos, staff))
 					coralPositions.add(checkPos.immutable());
 
-				if (safeBlockPos(caster, checkPos.move(Direction.UP, 4)))
+				if (safeBlockPos(caster, checkPos.move(Direction.UP, 4), staff))
 					coralPositions.add(checkPos.immutable());
 			}
 
 			for (int y = -2; y <= 2; y++) {
 				checkPos.set(pos.getX() + x, pos.getY() + y, pos.getZ() - 2);
 
-				if (safeBlockPos(caster, checkPos))
+				if (safeBlockPos(caster, checkPos, staff))
 					coralPositions.add(checkPos.immutable());
 
-				if (safeBlockPos(caster, checkPos.move(Direction.SOUTH, 4)))
+				if (safeBlockPos(caster, checkPos.move(Direction.SOUTH, 4), staff))
 					coralPositions.add(checkPos.immutable());
 			}
 		}
@@ -74,10 +75,10 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 			for (int y = -2; y <= 2; y++) {
 				checkPos.set(pos.getX() - 2, pos.getY() + y, pos.getZ() + z);
 
-				if (safeBlockPos(caster, checkPos))
+				if (safeBlockPos(caster, checkPos, staff))
 					coralPositions.add(checkPos.immutable());
 
-				if (safeBlockPos(caster, checkPos.move(Direction.EAST, 4)))
+				if (safeBlockPos(caster, checkPos.move(Direction.EAST, 4), staff))
 					coralPositions.add(checkPos.immutable());
 			}
 		}
@@ -97,8 +98,8 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 		}
 	}
 
-	private boolean safeBlockPos(LivingEntity caster, BlockPos pos) {
-		return caster.level.getBlockState(pos).getBlock() == Blocks.AIR;
+	private boolean safeBlockPos(LivingEntity caster, BlockPos pos, ItemStack staff) {
+		return caster.level.getBlockState(pos).getBlock() == Blocks.AIR && WorldUtil.canPlaceBlock(caster.level, pos, caster, staff);
 	}
 
 	@Override

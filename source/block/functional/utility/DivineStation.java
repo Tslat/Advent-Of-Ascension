@@ -17,7 +17,7 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class DivineStation extends Block {
 	public DivineStation() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_CYAN, 5, 10, SoundType.GLASS));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_CYAN).stats(5f, 10f).sound(SoundType.GLASS).get());
 	}
 
 	@Override

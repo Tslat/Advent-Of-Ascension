@@ -3,7 +3,6 @@ package net.tslat.aoa3.block.functional.misc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
@@ -39,7 +38,7 @@ public class LivingGrowth extends Block {
 	};
 
 	public LivingGrowth() {
-		super(BlockUtil.generateBlockProperties(Material.PLANT, MaterialColor.COLOR_GREEN, 1, 0, SoundType.GRASS));
+		super(new BlockUtil.CompactProperties(Material.PLANT, MaterialColor.COLOR_GREEN).stats(1f, 0f).get());
 
 		registerDefaultState(defaultBlockState().setValue(GROWTH_STAGE, 0));
 	}

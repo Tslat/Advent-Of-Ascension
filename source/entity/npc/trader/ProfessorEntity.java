@@ -1,23 +1,31 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ProfessorEntity extends AoATrader {
-	public ProfessorEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.SCRAP_METAL).cost(AoAItems.COPPER_COIN, 15).xp(11))
+			.trades(2,
+					BuildableTrade.trade(AoAItems.DISCHARGE_CAPSULE, 8).cost(AoAItems.SILVER_COIN).cost(Items.IRON_NUGGET, 5).xp(20))
+			.trades(3,
+					BuildableTrade.trade(AoAItems.MECHA_GEAR).cost(AoAItems.GOLD_COIN).cost(AoAItems.LYON_INGOT, 5).xp(30),
+					BuildableTrade.trade(AoAItems.GOLD_SPRING).cost(AoABlocks.IRO_CRATE).xp(30),
+					BuildableTrade.trade(AoAWeapons.SUPER_CANNON).cost(AoAWeapons.MINI_CANNON).cost(AoAItems.SILVER_COIN, 5).xp(40).stock(9999),
+					BuildableTrade.trade(AoAWeapons.DEMOLISHER).cost(AoAItems.LYON_INGOT, 7).cost(AoAItems.SILVER_COIN, 17).xp(25).stock(5)).build();
+
+	public ProfessorEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -27,22 +35,13 @@ public class ProfessorEntity extends AoATrader {
 	}
 
 	@Override
-	protected boolean isFixedTradesList() {
-		return true;
-	}
-
-	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return !WorldUtil.isWorld(level, AoADimensions.IROMINE.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 1), new ItemStack(AoAItems.LYON_INGOT.get(), 5), new ItemStack(AoAItems.MECHA_GEAR.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 1), new ItemStack(Items.IRON_NUGGET, 5), new ItemStack(AoAItems.DISCHARGE_CAPSULE.get(), 8), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 15), ItemStack.EMPTY, new ItemStack(AoAItems.SCRAP_METAL.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoABlocks.IRO_CRATE.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.GOLD_SPRING.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAWeapons.MINI_CANNON.get(), 1), new ItemStack(AoAWeapons.SUPER_CANNON.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 3), new ItemStack(AoAItems.LYON_INGOT.get(), 7), new ItemStack(AoAWeapons.DEMOLISHER.get(), 1), 0, 9999));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

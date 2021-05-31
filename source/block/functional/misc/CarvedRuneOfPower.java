@@ -3,7 +3,6 @@ package net.tslat.aoa3.block.functional.misc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +19,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class CarvedRuneOfPower extends Block {
 	public CarvedRuneOfPower() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_BLACK, 3f, 10f, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(3f, 10f).get());
 	}
 
 	@Override

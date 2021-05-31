@@ -44,11 +44,11 @@ public class TrophyBlock extends WaterloggableBlock {
 	private static final VoxelShape FULL_AABB = VoxelShapes.or(BASE_SHAPE, MIDDLE_SHAPE, TOP_SHAPE);
 
 	public TrophyBlock() {
-		super(BlockUtil.generateBlockProperties(new Material(MaterialColor.GOLD, false, false, true, false, false, false, PushReaction.BLOCK), MaterialColor.STONE, 10f, 2000f));
+		super(new BlockUtil.CompactProperties(new Material(MaterialColor.GOLD, false, false, true, false, false, false, PushReaction.BLOCK), MaterialColor.STONE).stats(10f, 2000f).get());
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		return FULL_AABB;
 	}
 
@@ -69,7 +69,7 @@ public class TrophyBlock extends WaterloggableBlock {
 	}
 
 	@Override
-	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (stack.hasTag()) {
 			CompoundNBT tag = stack.getTag();
 
@@ -77,7 +77,7 @@ public class TrophyBlock extends WaterloggableBlock {
 				CompoundNBT dataTag = tag.getCompound("BlockEntityTag");
 
 				if (dataTag.contains("EntityID", 8)) {
-					TileEntity tile = worldIn.getBlockEntity(pos);
+					TileEntity tile = world.getBlockEntity(pos);
 
 					if (tile instanceof TrophyTileEntity)
 						((TrophyTileEntity)tile).setEntity(dataTag.getString("EntityID"), dataTag.contains("OriginalTrophy") && !dataTag.getBoolean("OriginalTrophy"));
@@ -90,7 +90,7 @@ public class TrophyBlock extends WaterloggableBlock {
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
-		if (!WorldUtil.canModifyBlock(world, pos, player))
+		if (!WorldUtil.canModifyBlock(world, pos, player, heldStack))
 			return ActionResultType.FAIL;
 
 		if (heldStack.getItem() instanceof SpawnEggItem) {

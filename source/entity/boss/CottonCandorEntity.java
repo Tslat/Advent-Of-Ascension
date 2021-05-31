@@ -88,6 +88,9 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
+		if (source == DamageSource.OUT_OF_WORLD)
+			return false;
+
 		if (source.getDirectEntity() instanceof ProjectileEntity) {
 			ProjectileEntity projectile = (ProjectileEntity)source.getDirectEntity();
 

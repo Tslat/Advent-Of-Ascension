@@ -37,7 +37,7 @@ public class CropBlock extends CropsBlock {
 	private final Supplier<Item> seedItem;
 
 	public CropBlock(MaterialColor colour, Supplier<Item> seedItem) {
-		super(BlockUtil.generateBlockProperties(Material.PLANT, colour, 0, 0, SoundType.CROP).noCollission().randomTicks());
+		super(new BlockUtil.CompactProperties(Material.PLANT, colour).sound(SoundType.CROP).noClip().randomTicks().get());
 
 		this.seedItem = seedItem;
 	}

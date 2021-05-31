@@ -27,10 +27,7 @@ public final class AoAEntityData {
 		public static final HashSet<EntityType<?>> DAYLIGHT_MOBS = new HashSet<EntityType<?>>();
 
 		private static void registerSpawnHeightLimitations() {
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ARCBEAST.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ARCWORM.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ARC_FLOWER.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ARC_WIZARD.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.AXIOLIGHT.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CAVE_CREEPOID.get(), 30);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.HAPPY.get(), 50);
@@ -42,22 +39,15 @@ public final class AoAEntityData {
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.FISCHER.get(), 30);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.GHOST.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.KEELER.get(), 50);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.LIGHTWALKER.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MAGICAL_CREEPER.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MAGICAL_CREEPER.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MOTHER_VOID_WALKER.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.OMNILIGHT.get(), 35);
+			SPAWN_HEIGHTS.put(AoAEntities.Mobs.OMNILIGHT.get(), 60);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.PARASECT.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.PINCHER.get(), 55);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SHADE.get(), 30);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SHADOW.get(), 45);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SHYRE_KNIGHT.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SOULSCORNE.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SOULVYRE.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SQUIGGLER.get(), 27);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.STIMULO.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.STIMULOSUS.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SYSKER.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.TRICKSTER.get(), 20);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.VOID_CHARGER.get(), 20);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.VOID_WALKER.get(), 50);

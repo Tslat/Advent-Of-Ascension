@@ -7,6 +7,9 @@
             "feature": {
               "config": {
                 "spawn_entities": false,
+                "processors": {
+                  "processors": []
+                },
                 "templates": [
                   "aoa3:vox_ponds/decorations/degraded_support_beam"
                 ]

@@ -45,7 +45,7 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	private static final VoxelShape STANDING_WEST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.453125, 0, 0.1875, 0.609375, 1, 0.8125));
 
 	public BannerBlock() {
-		super(BlockUtil.generateBlockProperties(Material.DECORATION, MaterialColor.METAL, 0.5f, 1f, SoundType.WOOL).noOcclusion().noCollission());
+		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
 
 		registerDefaultState(defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}

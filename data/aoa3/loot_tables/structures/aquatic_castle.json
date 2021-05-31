@@ -59,21 +59,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:borean_tokens"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 7,
           "functions": [
             {

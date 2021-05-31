@@ -12,7 +12,7 @@ import net.tslat.aoa3.util.BlockUtil;
 
 public class VinesBlock extends VineBlock {
 	public VinesBlock(MaterialColor mapColour) {
-		super(BlockUtil.generateBlockProperties(Material.REPLACEABLE_PLANT, mapColour, 0.2f, 0, SoundType.GRASS).noCollission().randomTicks());
+		super(new BlockUtil.CompactProperties(Material.REPLACEABLE_PLANT, mapColour).stats(0.2f, 0f).sound(SoundType.GRASS).noClip().randomTicks().get());
 	}
 
 	public BlockState getStateForPosition(IWorld world, BlockPos pos) {

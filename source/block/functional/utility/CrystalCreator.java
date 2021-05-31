@@ -25,7 +25,7 @@ public class CrystalCreator extends Block {
 	private final Supplier<Item> crystal;
 
 	public CrystalCreator(MaterialColor mapColour, Supplier<Item> gemstone, Supplier<Item> crystal) {
-		super(BlockUtil.generateBlockProperties(Material.STONE, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
+		super(new BlockUtil.CompactProperties(Material.STONE, mapColour).stats(10f, 15f).sound(SoundType.GLASS).get());
 
 		this.gemstone = gemstone;
 		this.crystal = crystal;

@@ -8,7 +8,7 @@
   "downfall": 0.25,
   "effects": {
     "fog_color": 0,
-    "sky_color": 26880,
+    "sky_color": 37120,
     "water_color": 255,
     "water_fog_color": 255,
     "grass_color_modifier": "none"
@@ -20,9 +20,7 @@
     [],
     [],
     [],
-    [
-      "aoa3:compass_rune_shrine"
-    ],
+    [],
     [],
     [],
     [],
@@ -35,30 +33,19 @@
   ],
   "starts": [
     "aoa3:celevian_lotto_balloon",
-    "aoa3:toy_tower"
+    "aoa3:toy_tower",
+    "aoa3:compass_rune_shrine"
   ],
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:stitches",
+        "type": "aoa3:koko",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:kranky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tipsy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:chocko",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -76,7 +63,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:koko",
+        "type": "aoa3:snappy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tipsy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stitches",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -94,7 +93,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:snappy",
+        "type": "aoa3:chocko",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

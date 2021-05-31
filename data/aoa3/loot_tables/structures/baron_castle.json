@@ -20,21 +20,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 3.0,
-                "max": 12.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:baron_tokens"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 10,
           "functions": [
             {

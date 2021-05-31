@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:shyrelands/shyre_pillar/layer4",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:shyrelands/shyre_pillar/layer4",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

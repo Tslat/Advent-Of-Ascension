@@ -22,7 +22,11 @@
     [],
     [],
     [],
-    [],
+    [
+      "aoa3:shyrelands_large_decorations",
+      "aoa3:shyrelands_underground_decorations",
+      "aoa3:shyrelands_misc_decorations"
+    ],
     [],
     [
       "aoa3:ore_shyrestone",
@@ -35,23 +39,23 @@
     ],
     []
   ],
-  "starts": [],
+  "starts": [
+    "aoa3:crae_statue",
+    "aoa3:shyre_pillar",
+    "aoa3:luxocron_dungeon",
+    "aoa3:archer_outpost",
+    "aoa3:shyre_bank_stand"
+  ],
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:axiolight",
-        "weight": 20,
+        "type": "aoa3:soulvyre",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:stimulosus",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arc_flower",
+        "type": "aoa3:shyre_knight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -75,20 +79,26 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:stimulosus",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arc_flower",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:stimulo",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:shyre_knight",
+        "type": "aoa3:axiolight",
         "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:soulvyre",
-        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       }

@@ -1,22 +1,32 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class PrimordialWizardEntity extends AoATrader {
-	public PrimordialWizardEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(AoAItems.PRIMORDIAL_SKULL).xp(12))
+			.trades(2,
+					BuildableTrade.trade(AoAWeapons.HELLFIRE, 2).cost(AoAItems.COPPER_COIN, 4),
+					BuildableTrade.trade(AoAWeapons.VULKRAM, 2).cost(AoAItems.COPPER_COIN, 3))
+			.trades(3,
+					BuildableTrade.trade(AoAWeapons.PRIMORDIAL_STAFF).cost(AoAItems.GOLD_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(Items.DRAGON_BREATH).cost(AoAItems.LUNAVER_COIN).xp(100).stock(3)).build();
+
+	public PrimordialWizardEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -30,12 +40,9 @@ public class PrimordialWizardEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.DUSTOPIA.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PRIMORDIAL_SKULL.get(), 1), new ItemStack(AoAItems.COPPER_COIN.get(), 15)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 2), new ItemStack(AoAWeapons.HELLFIRE.get(), 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 3), new ItemStack(AoAWeapons.VULKRAM.get(), 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 2), new ItemStack(AoAWeapons.PRIMORDIAL_STAFF.get(), 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get(), 1), new ItemStack(Items.DRAGON_BREATH, 1)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

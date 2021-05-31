@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.container.*;
 import net.tslat.aoa3.common.container.*;
-import net.tslat.aoa3.entity.base.AoATrader;
+import net.tslat.aoa3.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.entity.npc.trader.CorruptedTravellerEntity;
 
 public final class AoAContainers {
@@ -31,7 +31,7 @@ public final class AoAContainers {
 
 	public static final RegistryObject<ContainerType<MerchantContainer>> TRADER = registerContainer("trader", (screenId, inventory, buffer) -> new MerchantContainer(screenId, inventory, (IMerchant)inventory.player.level.getEntity(buffer.readInt())));
 	public static final RegistryObject<ContainerType<CorruptedTravellerContainer>> CORRUPTED_TRAVELLER = registerContainer("corrupted_traveller", (screenId, inventory, buffer) -> new CorruptedTravellerContainer(screenId, inventory, (CorruptedTravellerEntity)inventory.player.level.getEntity(buffer.readInt())));
-	public static final RegistryObject<ContainerType<BankerContainer>> BANKER = registerContainer("banker", (screenId, inventory, buffer) -> new BankerContainer(screenId, inventory, (AoATrader)inventory.player.level.getEntity(buffer.readInt())));
+	public static final RegistryObject<ContainerType<BankerContainer>> BANKER = registerContainer("banker", (screenId, inventory, buffer) -> new BankerContainer(screenId, inventory, (AoABanker)inventory.player.level.getEntity(buffer.readInt())));
 
 	private static <T extends Container> RegistryObject<ContainerType<T>> registerContainer(String id, IContainerFactory<T> factory) {
 		return CONTAINERS.register(id, () -> IForgeContainerType.create(factory));

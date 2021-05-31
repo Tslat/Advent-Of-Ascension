@@ -27,7 +27,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -48,8 +47,7 @@ public final class AoAEntitySpawns {
     public static void registerEntitySpawns() {
         Logging.logStatusMessage("Registering entity spawns");
 
-        if (!AoAConfig.SERVER.disableOverworldMobs.get())
-            populateOverworldSpawnEntries();
+        populateOverworldSpawnEntries();
 
         setAbyssSpawnPlacements();
         setBarathosSpawnPlacements();
@@ -154,8 +152,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.FIEND.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.OCCULENT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.WEB_REAPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.BUTCHERY_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.BUTCHERY_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setBarathosSpawnPlacements() {
@@ -169,8 +167,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.RAMRADON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SQUIGGLER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.THARAFLY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.CREATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.CREATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setCandylandSpawnPlacements() {
@@ -180,7 +178,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.CANDY_CORNY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.CHERRY_BLASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.LOLLYPOPPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setCeleveSpawnPlacements() {
@@ -194,8 +192,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.STICKY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STITCHES.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TIPSY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.INNERVATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.INNERVATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setCreeponiaSpawnPlacements() {
@@ -209,7 +207,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.KING_CREEPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.MAGICAL_CREEPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.WINGED_CREEPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setCrysteviaSpawnPlacements() {
@@ -220,7 +218,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.CONSTRUCT_OF_SPEED.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.CONSTRUCT_OF_STRENGTH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.CONSTRUCT_OF_TERROR.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setDeeplandsSpawnPlacements() {
@@ -232,8 +230,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.ROCKBITER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.ROCK_CRAWLER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.ROCK_CRITTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.EXTRACTION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.EXTRACTION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setDustopiaSpawnPlacements() {
@@ -246,7 +244,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.LOST_SOUL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.LURKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setGardenciaSpawnPlacements() {
@@ -257,7 +255,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.FLOWERFACE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SQUASHER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SUNNY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setGreckonSpawnPlacements() {
@@ -268,8 +266,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.SKULL_CREATURE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SUGARFACE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.VALKYRIE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.INFUSION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.INFUSION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setHavenSpawnPlacements() {
@@ -279,7 +277,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Animals.HALYCON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, false));
         setSpawnPlacement(AoAEntities.Animals.RAINICORN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, false));
         setSpawnPlacement(AoAEntities.Animals.VOLIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, false));
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setIromineSpawnPlacements() {
@@ -287,9 +285,9 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.MECHAMATON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.POLYTOM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.VOLTRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.FORAGING_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.METALLOID.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.FORAGING_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.METALLOID.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void populateNetherSpawnEntries() {
@@ -306,7 +304,8 @@ public final class AoAEntitySpawns {
 
     public static void setLboreanSpawnPlacements() {
         setSpawnPlacement(AoAEntities.Animals.CORATEE.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true));
-        setSpawnPlacement(AoAEntities.Animals.GLOWING_PIXON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true));
+        setSpawnPlacement(AoAEntities.Animals.GLOWING_PIXON.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true));
         setSpawnPlacement(AoAEntities.Mobs.ANGLER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.MUNCHER.get(), IN_WATER, OCEAN_FLOOR, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.NEPTUNO.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
@@ -321,8 +320,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.LELYETIAN_CASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.LELYETIAN_WARRIOR.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TRACKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.LOGGING_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.LOGGING_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void populateLunalusSpawnEntries() {
@@ -342,8 +341,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.FUNGBACK.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.FUNGIK.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.FUNGUNG.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.RUNATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.RUNATION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     public static void setPrecasiaSpawnPlacements() {
@@ -354,7 +353,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.SABRETOOTH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TERRADON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TORTIONE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setRunandorSpawnPlacements() {
@@ -364,8 +363,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.PALADIN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.RUNICORN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.RUNICORN_RIDER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.ANIMA_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.ANIMA_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setShyrelandsSpawnPlacements() {
@@ -378,8 +377,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.STIMULO.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STIMULOSUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SYSKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.EXPEDITION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.EXPEDITION_MASTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false));
     }
 
     public static void setVoxPondsSpawnPlacements() {
@@ -391,7 +390,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.GADGETOID.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SLIMER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TOXXULOUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
-        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.NPC);
+        setSpawnPlacement(AoAEntities.NPCs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -521,7 +520,7 @@ public final class AoAEntitySpawns {
         }
 
         private SpawnEntry<T> placeNPC() {
-            return place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (EntitySpawnPlacementRegistry.IPlacementPredicate<T>)SpawnPredicates.NPC);
+            return place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (EntitySpawnPlacementRegistry.IPlacementPredicate<T>)SpawnPredicates.npcPredicate(false));
         }
 
         private SpawnEntry<T> placeMonster() {
@@ -546,11 +545,13 @@ public final class AoAEntitySpawns {
     }
 
 	private static final class SpawnPredicates {
-        private static final EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> NPC = (EntityType<MobEntity> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> {
-            if (!MobEntity.checkMobSpawnRules(type, world, reason, pos, rand))
-                return false;
+        private static final EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> npcPredicate(boolean spawnsInDarkness) {
+            return (EntityType<MobEntity> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> {
+                if (!MobEntity.checkMobSpawnRules(type, world, reason, pos, rand))
+                    return false;
 
-            return WorldUtil.getLightLevel(world, pos, false, false) >= 8;
+                return spawnsInDarkness || WorldUtil.getLightLevel(world, pos, false, false) >= 8;
+            };
         };
 
         private static final EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> MONSTER = (EntityType<MobEntity> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> {
@@ -612,7 +613,7 @@ public final class AoAEntitySpawns {
 
         private static <T extends MobEntity> EntitySpawnPlacementRegistry.IPlacementPredicate<T> animalPredicate(@Nullable ITag<Block> blockTag, boolean spawnsInDarkness) {
             return (EntityType<T> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> {
-                if (blockTag == null || !world.getBlockState(pos.below()).is(blockTag))
+                if (blockTag != null && !world.getBlockState(pos.below()).is(blockTag))
                     return false;
 
                 return spawnsInDarkness || world.getRawBrightness(pos, 0) >= 8;

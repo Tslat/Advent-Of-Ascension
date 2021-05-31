@@ -5,6 +5,9 @@
         "feature": {
           "config": {
             "spawn_entities": false,
+            "processors": {
+              "processors": []
+            },
             "templates": [
               "aoa3:candyland/decorations/swirl_pop1",
               "aoa3:candyland/decorations/swirl_pop2",

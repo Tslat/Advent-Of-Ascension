@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:creep_stone",
+    "aoa3:pressed_creep_stone",
+    "aoa3:primed_stone"
+  ]
+}

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.entity.boss;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,7 +14,11 @@ import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
+import net.tslat.aoa3.entity.ai.mob.FlyingMeleeAttackGoal;
+import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -22,8 +27,19 @@ import javax.annotation.Nullable;
 public class VisualentEntity extends AoAFlyingMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
+	private boolean isEnraged = false;
+
 	public VisualentEntity(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
+	}
+
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
+		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
+		goalSelector.addGoal(3, new FlyingMeleeAttackGoal(this, 0.6f, false));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> this.isEnraged && entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> this.isEnraged && pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Override
@@ -73,6 +89,17 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (super.hurt(source, amount)) {
+			this.isEnraged = true;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean startRiding(Entity entity, boolean force) {
 		return false;
 	}
@@ -113,5 +140,8 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.VISUALENT_MUSIC.getId()));
 		bossInfo.removePlayer(player);
+
+		if (bossInfo.getPlayers().isEmpty())
+			this.isEnraged = false;
 	}
 }

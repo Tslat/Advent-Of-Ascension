@@ -1,18 +1,45 @@
 package net.tslat.aoa3.entity.npc.trader;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+
+import javax.annotation.Nullable;
 
 public class NaturalistEntity extends AoATrader {
-	public NaturalistEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 18).cost(Blocks.MELON, 8).xp(12),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(Blocks.PUMPKIN, 8).xp(11),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 10).cost(Items.BEETROOT, 8).xp(6),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 8).cost(Items.CARROT, 8).xp(4),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 2).cost(Items.MELON_SLICE, 8),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(Items.POTATO, 8).xp(7),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 9).cost(Items.WHEAT, 8).xp(6))
+			.trades(2,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.BUBBLE_BERRIES, 8).xp(9),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 10).cost(AoAItems.CHILLI, 8).xp(7),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 11).cost(AoAItems.EYE_BULB, 8).xp(7),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 16).cost(AoAItems.FLORACLE_STICKS, 8).xp(12),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 14).cost(AoAItems.GOLDICAP_PETALS, 8).xp(10),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNACRIKE, 8).xp(9),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNA_GLOBE, 8).xp(9),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNALON_SEEDS, 8).xp(9),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(AoAItems.MYSTIC_SHROOMS, 8).xp(11),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 16).cost(AoAItems.ROSIDONS, 8).xp(12),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 14).cost(AoAItems.TEA_SHREDDINGS, 8).xp(10),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 13).cost(AoAItems.TRILLIAD_LEAVES, 8).xp(10))
+			.trades(3,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 19).cost(AoAItems.HEART_FRUIT, 8).xp(14),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 13).cost(AoAItems.MAGIC_MARANG, 8).xp(11),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(Items.CHORUS_FRUIT, 8).xp(13)).build();
+
+	public NaturalistEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -21,28 +48,9 @@ public class NaturalistEntity extends AoATrader {
 		return true;
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Blocks.MELON, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 18)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Blocks.PUMPKIN, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 15)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.BUBBLE_BERRIES.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CHILLI.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.EYE_BULB.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 11)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.FLORACLE_STICKS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 16)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLDICAP_PETALS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 14)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.HEART_FRUIT.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 19)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNACRIKE.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNA_GLOBE.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNALONS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.MAGIC_MARANG.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 13)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.MYSTIC_SHROOMS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 15)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.ROSIDONS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 16)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.TEA_SHREDDINGS.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 14)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.TRILLIAD_LEAVES.get(), 8), new ItemStack(AoAItems.COPPER_COIN.get(), 13)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.BEETROOT, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.CARROT, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 8)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.MELON_SLICE, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.POTATO, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 12)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.WHEAT, 8), new ItemStack(AoAItems.COPPER_COIN.get(), 9)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

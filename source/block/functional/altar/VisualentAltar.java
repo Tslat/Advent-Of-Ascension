@@ -6,10 +6,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.VisualentEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class VisualentAltar extends BossAltarBlock {
 	public VisualentAltar() {
@@ -23,6 +25,11 @@ public class VisualentAltar extends BossAltarBlock {
 		visualent.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
 		player.level.addFreshEntity(visualent);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.visualent.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.LUNALUS.key);
 	}
 
 	@Override

@@ -68,6 +68,11 @@ public class GrawEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
+	public boolean startRiding(Entity entity, boolean force) {
+		return false;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 

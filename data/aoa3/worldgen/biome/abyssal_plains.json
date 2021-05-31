@@ -26,14 +26,14 @@
     [],
     [],
     [],
-    [
-      "aoa3:wither_rune_shrine"
-    ],
+    [],
     [],
     [
       "aoa3:ore_bloodstone"
     ],
-    [],
+    [
+      "aoa3:eye_bulb_grotto"
+    ],
     [
       "aoa3:abyss_tall_plants",
       "aoa3:tubeicles",
@@ -45,6 +45,7 @@
   "starts": [
     "aoa3:abyssal_lotto_hut",
     "aoa3:illusion_tree",
+    "aoa3:wither_rune_shrine",
     "aoa3:shadowlord_platform",
     "aoa3:flesh_temple",
     "aoa3:jawe_hut"
@@ -52,19 +53,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:anemia",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:occulent",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:apparition",
+        "type": "aoa3:web_reaper",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -76,26 +71,38 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fiend",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 2
-      },
-      {
         "type": "aoa3:distorter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:web_reaper",
+        "type": "aoa3:apparition",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:anemia",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fiend",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 2
       }
     ],
     "creature": [],
     "ambient": [
+      {
+        "type": "aoa3:undead_herald",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
       {
         "type": "aoa3:butchery_master",
         "weight": 1,
@@ -106,12 +113,6 @@
         "type": "aoa3:shining_pixon",
         "weight": 12,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
         "maxCount": 1
       }
     ],

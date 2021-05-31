@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
@@ -611,6 +610,10 @@ public abstract class ItemUtil {
 		return false;
 	}
 
+	public static boolean hasItemInHotbar(PlayerEntity player, Item item) {
+		return getStackFromInventory(player, item) != null;
+	}
+
 	@Nullable
 	public static ItemStack getStackFromHotbar(PlayerEntity player, Item item) {
 		for (int i = 0; i < 9; i++) {
@@ -621,6 +624,10 @@ public abstract class ItemUtil {
 		}
 
 		return null;
+	}
+
+	public static boolean hasItemInOffhand(PlayerEntity player, Item item) {
+		return player.getItemInHand(Hand.OFF_HAND).getItem() == item;
 	}
 
 	@Nullable

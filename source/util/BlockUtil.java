@@ -1,6 +1,7 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -24,75 +25,226 @@ import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.misc.MutableSupplier;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public abstract class BlockUtil {
 	public static final float UNBREAKABLE_HARDNESS = -1f;
 	public static final float UNBREAKABLE_RESISTANCE = 999999999f;
 
-	public static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance) {
-		return generateBlockProperties(material, mapColour, hardness, resistance, null, null, 0, -1);
-	}
+	public static class CompactProperties {
+		private final AbstractBlock.Properties properties;
 
-	public static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, int lightLevel) {
-		return generateBlockProperties(material, mapColour, hardness, resistance, null, null, lightLevel, -1);
-	}
-
-	public static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, ToolType harvestTool, int harvestLevel) {
-		return generateBlockProperties(material, mapColour, hardness, resistance, harvestTool, null, 0, harvestLevel);
-	}
-
-	public static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, @Nullable SoundType soundType) {
-		return generateBlockProperties(material, mapColour, hardness, resistance, null, soundType, 0, -1);
-	}
-
-	public static AbstractBlock.Properties generateBlockProperties(Material material, MaterialColor mapColour, float hardness, float resistance, @Nullable ToolType harvestTool, @Nullable SoundType soundType, int lightLevel, int harvestLevel) {
-		AbstractBlock.Properties properties = AbstractBlock.Properties.of(material, mapColour);
-
-		properties.strength(hardness, resistance);
-		properties.harvestLevel(harvestLevel);
-		properties.lightLevel(state -> lightLevel);
-
-		if (hardness == UNBREAKABLE_HARDNESS && resistance == UNBREAKABLE_RESISTANCE)
-			properties.noDrops();
-
-		if (harvestTool != null)
-			properties.harvestTool(harvestTool);
-
-		if (soundType != null) {
-			properties.sound(soundType);
+		public CompactProperties(Material material, Function<BlockState, MaterialColor> mapColours) {
+			this.properties = AbstractBlock.Properties.of(material, mapColours).sound(approximateSound(material));
 		}
-		else {
-			if (material == null || material == Material.STONE) {
-				properties.sound(SoundType.STONE);
-			}
-			else if (material == Material.WOOD) {
-				properties.sound(SoundType.WOOD);
+
+		public CompactProperties(Material material, MaterialColor mapColour) {
+			this(material, state -> mapColour);
+		}
+
+		public CompactProperties harvestTool(ToolType tool, int harvestLevel) {
+			harvestTool(tool);
+			this.properties.harvestLevel(harvestLevel);
+
+			return this;
+		}
+
+		public CompactProperties harvestTool(ToolType tool) {
+			tool(tool);
+			this.properties.requiresCorrectToolForDrops();
+
+			return this;
+		}
+
+		public CompactProperties tool(ToolType tool) {
+			this.properties.harvestTool(tool);
+
+			return this;
+		}
+
+		public CompactProperties harvestLevel(int level) {
+			this.properties.harvestLevel(level);
+
+			return this;
+		}
+
+		public CompactProperties sound(SoundType sound) {
+			this.properties.sound(sound);
+
+			return this;
+		}
+
+		public CompactProperties stats(float hardness) {
+			return stats(hardness, hardness);
+		}
+
+		public CompactProperties stats(float hardness, float resistance) {
+			this.properties.strength(hardness, resistance);
+
+			return this;
+		}
+
+		public CompactProperties unbreakable() {
+			noDrops();
+
+			return stats(UNBREAKABLE_HARDNESS, UNBREAKABLE_RESISTANCE);
+		}
+
+		public CompactProperties light(int light) {
+			return light(state -> light);
+		}
+
+		public CompactProperties light(ToIntFunction<BlockState> light) {
+			this.properties.lightLevel(light);
+
+			return this;
+		}
+
+		public CompactProperties randomTicks() {
+			this.properties.randomTicks();
+
+			return this;
+		}
+
+		public CompactProperties isAir() {
+			this.properties.air();
+
+			return this;
+		}
+
+		public CompactProperties dynamicShape() {
+			this.properties.dynamicShape();
+
+			return this;
+		}
+
+		public CompactProperties slippery(float slipMod) {
+			this.properties.friction(slipMod);
+
+			return this;
+		}
+
+		public CompactProperties emissive() {
+			return emissive((state, world, pos) -> true);
+		}
+
+		public CompactProperties emissive(AbstractBlock.IPositionPredicate when) {
+			this.properties.emissiveRendering(when);
+
+			return this;
+		}
+
+		public CompactProperties renderAdjust() {
+			return renderAdjust((state, world, pos) -> true);
+		}
+
+		public CompactProperties renderAdjust(AbstractBlock.IPositionPredicate when) {
+			this.properties.hasPostProcess(when);
+
+			return this;
+		}
+
+		public CompactProperties moveSpeed(float speedMod) {
+			this.properties.speedFactor(speedMod);
+
+			return this;
+		}
+
+		public CompactProperties bouncy(float jumpFactor) {
+			this.properties.jumpFactor(jumpFactor);
+
+			return this;
+		}
+
+		public CompactProperties noDrops() {
+			this.properties.noDrops();
+
+			return this;
+		}
+
+		public CompactProperties noOcclusion() {
+			this.properties.noOcclusion();
+
+			return this;
+		}
+
+		public CompactProperties noClip() {
+			this.properties.noCollission();
+			coversScreen((state, world, pos) -> false);
+
+			return this;
+		}
+
+		public CompactProperties coversScreen(AbstractBlock.IPositionPredicate when) {
+			this.properties.isViewBlocking(when);
+
+			return this;
+		}
+
+		public CompactProperties noRedstone() {
+			return conductRedstone((state, world, pos) -> false);
+		}
+
+		public CompactProperties conductRedstone(AbstractBlock.IPositionPredicate when) {
+			this.properties.isRedstoneConductor(when);
+
+			return this;
+		}
+
+		public CompactProperties noSpawns() {
+			return specialSpawns((state, world, pos, entityType) -> false);
+		}
+
+		public CompactProperties specialSpawns(AbstractBlock.IExtendedPositionPredicate<EntityType<?>> when) {
+			this.properties.isValidSpawn(when);
+
+			return this;
+		}
+
+		public CompactProperties breathable() {
+			return suffocate((state, world, pos) -> false);
+		}
+
+		public CompactProperties suffocate(AbstractBlock.IPositionPredicate when) {
+			this.properties.isSuffocating(when);
+
+			return this;
+		}
+
+		public AbstractBlock.Properties get() {
+			return this.properties;
+		}
+
+		private static SoundType approximateSound(Material material) {
+			if (material == Material.WOOD) {
+				return SoundType.WOOD;
 			}
 			else if (material == Material.GLASS) {
-				properties.sound(SoundType.GLASS);
+				return SoundType.GLASS;
 			}
 			else if (material == Material.DIRT) {
-				properties.sound(SoundType.GRAVEL);
+				return SoundType.GRAVEL;
 			}
 			else if (material == Material.PLANT || material == Material.GRASS) {
-				properties.sound(SoundType.GRASS);
+				return SoundType.GRASS;
 			}
 			else if (material == Material.TOP_SNOW || material == Material.SNOW) {
-				properties.sound(SoundType.SNOW);
+				return SoundType.SNOW;
 			}
 			else if (material == Material.SAND) {
-				properties.sound(SoundType.SAND);
+				return SoundType.SAND;
 			}
 			else if (material == Material.WOOL) {
-				properties.sound(SoundType.WOOL);
+				return SoundType.WOOL;
+			}
+			else {
+				return SoundType.STONE;
 			}
 		}
-
-		return properties;
 	}
 
 	public static RegistryObject<FlowingFluidBlock> createFluidBlock(String id, Material material, int colour, int viscosity, int density) {
@@ -141,44 +293,44 @@ public abstract class BlockUtil {
 		private WeightedSpawnerEntity nextSpawn = null;
 		private final ArrayList<WeightedSpawnerEntity> mobs = new ArrayList<WeightedSpawnerEntity>(1);
 
-		public SpawnerBuilder initialSpawnDelay(short ticks) {
-			this.initialSpawnDelay = ticks;
+		public SpawnerBuilder initialSpawnDelay(int ticks) {
+			this.initialSpawnDelay = (short)ticks;
 
 			return this;
 		}
 
-		public SpawnerBuilder minSpawnDelay(short ticks) {
-			this.minSpawnDelay = ticks;
+		public SpawnerBuilder minSpawnDelay(int ticks) {
+			this.minSpawnDelay = (short)ticks;
 
 			return this;
 		}
 
-		public SpawnerBuilder maxSpawnDelay(short ticks) {
-			this.maxNearbyEntities = ticks;
+		public SpawnerBuilder maxSpawnDelay(int ticks) {
+			this.maxSpawnDelay = (short)ticks;
 
 			return this;
 		}
 
-		public SpawnerBuilder spawnsPerGroup(short amount) {
-			this.spawnsPerGroup = amount;
+		public SpawnerBuilder spawnsPerGroup(int amount) {
+			this.spawnsPerGroup = (short)amount;
 
 			return this;
 		}
 
-		public SpawnerBuilder maxNearbyEntities(short amount) {
-			this.maxNearbyEntities = 6;
+		public SpawnerBuilder maxNearbyEntities(int amount) {
+			this.maxNearbyEntities = (short)amount;
 
 			return this;
 		}
 
-		public SpawnerBuilder whenPlayerWithin(short distance) {
-			this.requiredPlayerRange = distance;
+		public SpawnerBuilder whenPlayerWithin(int distance) {
+			this.requiredPlayerRange = (short)distance;
 
 			return this;
 		}
 
-		public SpawnerBuilder spawnWithinXBlocks(short distance) {
-			this.spawnRange = distance;
+		public SpawnerBuilder spawnWithinXBlocks(int distance) {
+			this.spawnRange = (short)distance;
 
 			return this;
 		}

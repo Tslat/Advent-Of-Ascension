@@ -9,7 +9,7 @@
         "processors": {
           "processors": []
         },
-        "projection": "rigid",
+        "projection": "terrain_matching",
         "element_type": "minecraft:single_pool_element"
       }
     }

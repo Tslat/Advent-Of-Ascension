@@ -1,0 +1,7 @@
+{
+  "config": {
+    "min": 20,
+    "max": 30
+  },
+  "type": "aoa3:strike_rune_shrine"
+}

@@ -30,7 +30,7 @@ public class AcidBlock extends Block {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
 
 	public AcidBlock() {
-		super(BlockUtil.generateBlockProperties(Material.TOP_SNOW, MaterialColor.TERRACOTTA_ORANGE, 0, 0, SoundType.WET_GRASS).noDrops().randomTicks());
+		super(new BlockUtil.CompactProperties(Material.TOP_SNOW, MaterialColor.TERRACOTTA_ORANGE).sound(SoundType.WET_GRASS).noDrops().randomTicks().get());
 	}
 
 	@Override

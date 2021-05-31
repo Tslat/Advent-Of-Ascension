@@ -14,6 +14,7 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,15 +34,15 @@ public class DistortingArtifact extends Item {
 		if (itemSlot >= 9)
 			return;
 
-		if (!world.isClientSide) {
-			if (entity.getY() <= 50) {
+		if (!world.isClientSide && stack.getDamageValue() < stack.getMaxDamage()) {
+			if (entity.getY() <= -50) {
 				entity.teleportTo(entity.getX(), 257, entity.getZ());
 				entity.fallDistance = -255;
 
 				if (entity instanceof LivingEntity) {
 					EntityUtil.applyPotions(entity, new PotionUtil.EffectBuilder(Effects.BLINDNESS, 40).isAmbient().hideParticles());
 
-					if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
+					if (entity instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)entity)) {
 						ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
 						((PlayerEntity)entity).inventoryMenu.broadcastChanges();
 					}

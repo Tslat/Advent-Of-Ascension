@@ -26,9 +26,7 @@
     [],
     [],
     [],
-    [
-      "aoa3:distortion_rune_shrine"
-    ],
+    [],
     [],
     [
       "aoa3:ore_mystite"
@@ -43,7 +41,15 @@
     ],
     []
   ],
-  "starts": [],
+  "starts": [
+    "aoa3:gorb_village",
+    "aoa3:mushroom_spider_cave",
+    "aoa3:poison_rune_shrine",
+    "aoa3:mystic_lotto_shroom",
+    "aoa3:runic_portal_hollow",
+    "aoa3:runic_arena",
+    "aoa3:fungshroom"
+  ],
   "spawners": {
     "monster": [
       {
@@ -59,14 +65,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fungung",
-        "weight": 1,
+        "type": "aoa3:fungat",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:fungat",
-        "weight": 20,
+        "type": "aoa3:fungung",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }
@@ -74,16 +80,16 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:blooming_pixon",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 4
-      },
-      {
         "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:blooming_pixon",
+        "weight": 12,
+        "minCount": 1,
+        "maxCount": 4
       },
       {
         "type": "aoa3:runation_master",

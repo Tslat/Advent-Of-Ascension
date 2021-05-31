@@ -40,7 +40,7 @@ public class PrimalSword extends BaseSword {
 					((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
 				}
 			}
-			else if (cap.getValue() != 0) {
+			else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
 				((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
 				cap.setValue(0);
 			}

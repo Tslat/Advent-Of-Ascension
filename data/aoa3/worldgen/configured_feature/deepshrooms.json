@@ -6,6 +6,9 @@
           "config": {
             "feature": {
               "config": {
+                "processors": {
+                  "processors": []
+                },
                 "templates": [
                   "aoa3:deeplands/decorations/black_shroom_tree1",
                   "aoa3:deeplands/decorations/black_shroom_tree2",

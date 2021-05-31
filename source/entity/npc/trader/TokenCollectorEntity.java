@@ -1,28 +1,20 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class TokenCollectorEntity extends AoATrader {
-	public TokenCollectorEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	public TokenCollectorEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 
 		this.setInvulnerable(true);
-	}
-
-	@Override
-	protected boolean isFixedTradesList() {
-		return true;
 	}
 
 	@Override
@@ -30,7 +22,13 @@ public class TokenCollectorEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.NOWHERE.key);
 	}
 
+	@Nullable
 	@Override
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return null;
+	}
+
+	/*@Override TODO
 	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUNGEON_TOKENS.get(), 1), ItemStack.EMPTY, new ItemStack(AoABlocks.IMMORTAL_BANNER.get(), 1), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUNGEON_TOKENS.get(), 1), ItemStack.EMPTY, new ItemStack(AoAWeapons.VULCANE.get(), 1), 0, 9999));
@@ -43,5 +41,5 @@ public class TokenCollectorEntity extends AoATrader {
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUNGEON_TOKENS.get(), 20), ItemStack.EMPTY, new ItemStack(AoAItems.BATTLE_VULCANE_AUGMENT.get()), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUNGEON_TOKENS.get(), 28), ItemStack.EMPTY, new ItemStack(AoAWeapons.VULCAMMER_MAUL.get()), 0, 9999));
 		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUNGEON_TOKENS.get(), 26), ItemStack.EMPTY, new ItemStack(AoAWeapons.METEOR_STAFF.get()), 0, 9999));
-	}
+	} */
 }

@@ -1,31 +1,43 @@
 package net.tslat.aoa3.entity.npc.trader;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAArmour;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ExplosivesExpertEntity extends AoATrader {
-	public ExplosivesExpertEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAWeapons.GRENADE).cost(AoAItems.COPPER_COIN, 5).xp(5).stock(12),
+					BuildableTrade.trade(AoAItems.DISCHARGE_CAPSULE).cost(AoAItems.COPPER_COIN, 2))
+			.trades(2,
+					BuildableTrade.trade(Blocks.TNT).cost(AoAItems.COPPER_COIN, 13).xp(10).stock(12))
+			.trades(3,
+					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.helmet).cost(AoAItems.GEMENYTE, 3).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.chestplate).cost(AoAItems.GEMENYTE, 5).cost(AoAItems.UNSTABLE_GUNPOWDER, 3).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.leggings).cost(AoAItems.GEMENYTE, 4).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.leggings).cost(AoAItems.GEMENYTE, 3).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5))
+			.trades(4,
+					BuildableTrade.trade(AoAItems.LUNAVER_COIN, 50).cost(getExplosiveExpertFireworks()).xp(1000).stock(1).locked()).build();
+
+	public ExplosivesExpertEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
@@ -39,17 +51,10 @@ public class ExplosivesExpertEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.CREEPONIA.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 5), new ItemStack(AoAWeapons.GRENADE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 2), new ItemStack(AoAItems.DISCHARGE_CAPSULE.get(), 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 13), new ItemStack(Blocks.TNT)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Blocks.TNT), new ItemStack(AoAItems.COPPER_COIN.get(), 10)));
-		newTradesList.add(new AoATraderRecipe(getExplosiveExpertFireworks(), ItemStack.EMPTY, new ItemStack(AoAItems.LUNAVER_COIN.get(), 50), 1, 1));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GEMENYTE.get(), 3), new ItemStack(AoAItems.UNSTABLE_GUNPOWDER.get(), 2), new ItemStack(AoAArmour.OMNI_ARMOUR.helmet.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GEMENYTE.get(), 5), new ItemStack(AoAItems.UNSTABLE_GUNPOWDER.get(), 3), new ItemStack(AoAArmour.OMNI_ARMOUR.chestplate.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GEMENYTE.get(), 4), new ItemStack(AoAItems.UNSTABLE_GUNPOWDER.get(), 2), new ItemStack(AoAArmour.OMNI_ARMOUR.leggings.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GEMENYTE.get(), 3), new ItemStack(AoAItems.UNSTABLE_GUNPOWDER.get(), 2), new ItemStack(AoAArmour.OMNI_ARMOUR.boots.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 
 	public static ItemStack getExplosiveExpertFireworks() {

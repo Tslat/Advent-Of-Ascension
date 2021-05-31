@@ -10,7 +10,7 @@
           "weight": 100
         },
         {
-          "type": "minecraft:item",
+          "type": "minecraft:tag",
           "weight": 30,
           "functions": [
             {
@@ -20,18 +20,13 @@
                 "max": 6.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "aoa3:random_selection_from_tag",
-              "tag_type": "block",
-              "tag": "minecraft:small_flowers"
             }
           ],
-          "name": "minecraft:poppy"
+          "name": "minecraft:small_flowers",
+          "expand": true
         },
         {
           "type": "minecraft:item",
-          "weight": 26,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -46,7 +41,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -61,7 +55,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -76,7 +69,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -91,7 +83,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -106,7 +97,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -121,7 +111,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -140,7 +129,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -155,7 +143,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 23,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -170,7 +157,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
           "functions": [
             {
               "function": "minecraft:set_count",

@@ -1,10 +1,8 @@
 {
   "conditions": [
     {
-      "condition": "aoa3:is_specific_table",
-      "table_ids": [
-        "minecraft:chests/jungle_temple_dispenser"
-      ]
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple_dispenser"
     }
   ],
   "tables": [

@@ -1,24 +1,33 @@
 package net.tslat.aoa3.entity.npc.trader;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAArmour;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class PrimordialMerchantEntity extends AoATrader {
-	public PrimordialMerchantEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(Items.COOKED_BEEF).cost(AoAItems.COPPER_COIN, 8).xp(5).stock(32),
+					BuildableTrade.trade(Blocks.TORCH, 2).cost(AoAItems.COPPER_COIN).xp(1),
+					BuildableTrade.trade(AoAItems.LIMONITE_BULLET, 4).cost(AoAItems.COPPER_COIN, 14).xp(9))
+			.trades(4,
+					BuildableTrade.trade(AoAWeapons.DAYBREAKER_BOW).cost(AoAItems.DARKLY_POWDER, 7).xp(40).stock(5),
+					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.helmet).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.chestplate).cost(AoAItems.DARKLY_POWDER, 3).cost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.leggings).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.boots).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5)).build();
+
+	public PrimordialMerchantEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -32,15 +41,9 @@ public class PrimordialMerchantEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.DUSTOPIA.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DARKLY_POWDER.get(), 7), new ItemStack(AoAWeapons.DAYBREAKER_BOW.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 8), new ItemStack(Items.BEEF)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get()), new ItemStack(Blocks.TORCH, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 14), new ItemStack(AoAItems.LIMONITE_BULLET.get(), 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DARKLY_POWDER.get(), 2), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PRIMORDIAL_ARMOUR.helmet.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DARKLY_POWDER.get(), 3), new ItemStack(AoAItems.SILVER_COIN.get(), 3), new ItemStack(AoAArmour.PRIMORDIAL_ARMOUR.chestplate.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DARKLY_POWDER.get(), 2), new ItemStack(AoAItems.SILVER_COIN.get(), 3), new ItemStack(AoAArmour.PRIMORDIAL_ARMOUR.leggings.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DARKLY_POWDER.get(), 2), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PRIMORDIAL_ARMOUR.boots.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

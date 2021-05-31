@@ -2,10 +2,24 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "name": "rare_table",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 200
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:misc/rare_table"
+        }
+      ]
+    },
+    {
       "name": "supplies",
       "rolls": {
-        "min": 0.0,
-        "max": 2.0,
+        "min": 1.0,
+        "max": 3.0,
         "type": "minecraft:uniform"
       },
       "entries": [
@@ -15,7 +29,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -30,7 +43,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
           "functions": [
             {
               "function": "minecraft:looting_enchant",
@@ -44,57 +56,39 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:tea_seeds"
         },
         {
           "type": "minecraft:item",
-          "weight": 11,
           "name": "minecraft:iron_nugget"
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
           "name": "minecraft:bone"
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
           "name": "minecraft:coal"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:carved_rune_of_direction"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:carved_rune_of_reality"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:carved_rune_of_space"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:carved_rune_of_travel"
-        }
-      ]
-    },
-    {
-      "name": "rare_table",
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:empty",
-          "weight": 200
         },
         {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:misc/rare_table"
+          "type": "minecraft:item",
+          "name": "aoa3:mystic_shrooms"
         }
       ]
     }

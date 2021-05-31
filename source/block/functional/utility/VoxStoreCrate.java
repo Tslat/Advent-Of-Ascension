@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -19,7 +18,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 public class VoxStoreCrate extends Block {
 	public VoxStoreCrate() {
-		super(BlockUtil.generateBlockProperties(Material.WOOD, MaterialColor.TERRACOTTA_GREEN, 5, 3, SoundType.WOOD));
+		super(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.TERRACOTTA_GREEN).stats(5f, 3f).get());
 	}
 
 	@Override

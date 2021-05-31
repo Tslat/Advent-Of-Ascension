@@ -10,20 +10,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.base.AoATrader;
+import net.tslat.aoa3.entity.npc.banker.AoABanker;
 
 public class BankerContainer extends Container {
 	private final Inventory inputs;
 	private final Inventory outputs;
 
-	public final AoATrader banker;
+	public final AoABanker banker;
 	private final PlayerEntity player;
 
 	public BankerContainer(int screenId, PlayerInventory playerInventory) {
 		this(screenId, playerInventory, null);
 	}
 
-	public BankerContainer(int screenId, PlayerInventory playerInventory, AoATrader banker) {
+	public BankerContainer(int screenId, PlayerInventory playerInventory, AoABanker banker) {
 		super(AoAContainers.BANKER.get(), screenId);
 
 		this.player = playerInventory.player;

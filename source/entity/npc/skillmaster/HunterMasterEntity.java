@@ -1,31 +1,35 @@
 package net.tslat.aoa3.entity.npc.skillmaster;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAArmour;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.entity.base.AoATrader;
 
-public class HunterMasterEntity extends AoASkillMaster {
-	public HunterMasterEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+import javax.annotation.Nullable;
+
+public class HunterMasterEntity extends AoATrader {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAArmour.HUNTER_ARMOUR.helmet).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.HUNTER_ARMOUR.chestplate).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.HUNTER_ARMOUR.leggings).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.HUNTER_ARMOUR.boots).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5)).build();
+
+	public HunterMasterEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.LELYETIA.key);
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel == 1 ? 4 : 2;
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), new ItemStack(AoAArmour.HUNTER_ARMOUR.helmet.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), new ItemStack(AoAArmour.HUNTER_ARMOUR.chestplate.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), new ItemStack(AoAArmour.HUNTER_ARMOUR.leggings.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), new ItemStack(AoAArmour.HUNTER_ARMOUR.boots.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

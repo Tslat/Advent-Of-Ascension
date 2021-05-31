@@ -1,28 +1,26 @@
 package net.tslat.aoa3.entity.npc.lottoman;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.entity.base.AoATrader;
 
-public class WitheringLottomanEntity extends LottomanEntity {
-	public WitheringLottomanEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+import javax.annotation.Nullable;
+
+public class WitheringLottomanEntity extends AoATrader {
+	public WitheringLottomanEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected boolean isOverworldNPC() {
-		return false;
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel == 1 ? 4 : 2;
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.NETHER_TOKENS.get(), 28), new ItemStack(AoAItems.LOTTO_TOTEM.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.NETHER_TOKENS.get(), 15), new ItemStack(AoAItems.WEAPONS_CASE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.NETHER_TOKENS.get(), 10), new ItemStack(AoAItems.RUNE_BOX.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.NETHER_TOKENS.get(), 21), new ItemStack(AoAItems.TREASURE_BOX.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return LottomanEntity.TRADES;
 	}
 }

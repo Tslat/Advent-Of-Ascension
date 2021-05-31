@@ -1,24 +1,21 @@
 package net.tslat.aoa3.block.generation.ore;
 
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.common.ToolType;
+import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.RandomUtil;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class OreBlock extends Block {
 	private final int minXp;
 	private final int maxXp;
 
 	public OreBlock(MaterialColor mapColour, int minXp, int maxXp, int harvestLevel) {
-		super(generateBlockProperties(mapColour, harvestLevel));
+		super(new BlockUtil.CompactProperties(Material.STONE, mapColour).stats(5f, 10f).harvestTool(ToolType.PICKAXE, harvestLevel).get());
 
 		this.minXp = minXp;
 		this.maxXp = maxXp;
@@ -26,18 +23,6 @@ public class OreBlock extends Block {
 
 	public OreBlock(MaterialColor mapColour, int harvestLevel) {
 		this(mapColour, 0, 0, harvestLevel);
-	}
-
-	private static Properties generateBlockProperties(MaterialColor mapColour, int harvestLevel) {
-		AbstractBlock.Properties blockProperties = AbstractBlock.Properties.of(Material.STONE, mapColour);
-
-		blockProperties.strength(5.0f, 10f);
-		blockProperties.sound(SoundType.STONE);
-		blockProperties.harvestTool(ToolType.PICKAXE);
-		blockProperties.harvestLevel(harvestLevel);
-		blockProperties.requiresCorrectToolForDrops();
-
-		return blockProperties;
 	}
 
 	@Override

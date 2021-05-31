@@ -10,20 +10,17 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CreepBankerEntity extends AoATrader {
+public class CreepBankerEntity extends AoABanker {
 	public CreepBankerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -34,7 +31,7 @@ public class CreepBankerEntity extends AoATrader {
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
@@ -57,15 +54,5 @@ public class CreepBankerEntity extends AoATrader {
 				return new BankerContainer(screenId, player.inventory, CreepBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
-	}
-
-	@Override
-	protected boolean isFixedTradesList() {
-		return true;
-	}
-
-	@Override
-	protected void getTradesList(NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(ItemStack.EMPTY, ItemStack.EMPTY));
 	}
 }

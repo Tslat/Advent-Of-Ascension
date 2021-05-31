@@ -1,7 +1,0 @@
-{
-  "config": {
-    "min": 5,
-    "max": 220
-  },
-  "type": "aoa3:lunar_creation_platform"
-}

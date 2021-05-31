@@ -26,9 +26,7 @@
     [],
     [],
     [],
-    [
-      "aoa3:life_rune_shrine"
-    ],
+    [],
     [],
     [
       "aoa3:ore_legbone_fragments",
@@ -47,6 +45,7 @@
     "aoa3:skeletal_army_arena",
     "aoa3:kaiyu_temple",
     "aoa3:diocus_den",
+    "aoa3:life_rune_shrine",
     "aoa3:spinoledon_den",
     "aoa3:opteryx_nest",
     "aoa3:jungle_lotto_hut",
@@ -55,14 +54,20 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:dyrehorn",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:terradon",
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:tortione",
-        "weight": 3,
+        "type": "aoa3:deinotherium",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -73,19 +78,13 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:tortione",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sabretooth",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dyrehorn",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:deinotherium",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

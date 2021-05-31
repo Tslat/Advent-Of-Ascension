@@ -1,47 +1,42 @@
 package net.tslat.aoa3.entity.base;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.INPC;
-import net.minecraft.entity.SpawnReason;
+import com.mojang.serialization.Dynamic;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.merchant.IMerchant;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.MerchantOffer;
-import net.minecraft.item.MerchantOffers;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.RegistryObject;
+import net.tslat.aoa3.common.registration.AoAProfessions;
 import net.tslat.aoa3.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.entity.ai.trader.TraderPlayerTradeGoal;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
-import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.Random;
 
-public abstract class AoATrader extends CreatureEntity implements INPC, IMerchant {
-	private static final DataParameter<String> TRADE_STATUSES = EntityDataManager.<String>defineId(AoATrader.class, DataSerializers.STRING);
-	private static final DataParameter<Integer> ADDITIONAL_TRADES = EntityDataManager.<Integer>defineId(AoATrader.class, DataSerializers.INT);
-
-	private MerchantOffers trades;
-	private int maxTradesCount = 0;
-
-	private String currentTradesInfo = "";
-	private int additionalTrades = 0;
-	private PlayerEntity latestCustomer;
-
-	public AoATrader(EntityType<? extends CreatureEntity> entityType, World world) {
+public abstract class AoATrader extends VillagerEntity {
+	public AoATrader(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 
 		((GroundPathNavigator)getNavigation()).setCanOpenDoors(true);
@@ -59,39 +54,93 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 		goalSelector.addGoal(5, new LookRandomlyGoal(this));
 	}
 
+	@Nullable
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+		ILivingEntityData data = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
-		entityData.define(TRADE_STATUSES, "");
-		entityData.define(ADDITIONAL_TRADES, 0);
+		setVillagerData(getVillagerData().setProfession(AoAProfessions.WANDERER.get()));
+
+		return data;
+	}
+
+	@Override
+	protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+		return brainProvider().makeBrain(dynamic);
+	}
+
+	@Override
+	public void refreshBrain(ServerWorld world) {}
+
+	@Override
+	protected void ageBoundaryReached() {}
+
+	@Override
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+
+		if (itemstack.getItem() != Items.VILLAGER_SPAWN_EGG && isAlive() && !isTrading() && !isBaby()) {
+			if (hand == Hand.MAIN_HAND)
+				player.awardStat(Stats.TALKED_TO_VILLAGER);
+
+			if (!getOffers().isEmpty()) {
+				if (!level.isClientSide) {
+					updateSpecialPrices(player);
+					setTradingPlayer(player);
+					openTradingScreen(player, getDisplayName(), getVillagerData().getLevel());
+				}
+			}
+			return ActionResultType.sidedSuccess(level.isClientSide);
+		}
+		else {
+			return super.mobInteract(player, hand);
+		}
+	}
+
+	protected void updateSpecialPrices(PlayerEntity player) {
+		int reputation = getPlayerReputation(player);
+
+		if (reputation != 0) {
+			for(MerchantOffer offer : getOffers()) {
+				offer.addToSpecialPriceDiff(-MathHelper.floor((float)reputation * offer.getPriceMultiplier()));
+			}
+		}
+	}
+
+	@Override
+	protected void updateTrades() {
+		Int2ObjectMap<VillagerTrades.ITrade[]> trades = getTradesMap();
+
+		if (trades != null && !trades.isEmpty()) {
+			int professionLevel = getVillagerData().getLevel();
+			VillagerTrades.ITrade[] currentLevelOffers = trades.get(professionLevel);
+
+			if (currentLevelOffers != null)
+				addOffersFromItemListings(getOffers(), currentLevelOffers, getMaxTradesToUnlock(professionLevel));
+		}
+	}
+
+	@Override
+	protected ITextComponent getTypeName() {
+		return getType().getDescription();
+	}
+
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return 2;
+	}
+
+	protected boolean isOverworldNPC() {
+		return false;
+	}
+
+	@Override
+	public boolean canPickUpLoot() {
+		return false;
 	}
 
 	@Override
 	public int getMaxSpawnClusterSize() {
 		return 1;
-	}
-
-	protected boolean isFixedTradesList() {
-		return false;
-	}
-
-	@Override
-	public boolean showProgressBar() {
-		return false;
-	}
-
-	@Override
-	public void overrideOffers(@Nullable MerchantOffers offers) {
-		this.trades = offers;
-	}
-
-	@Override
-	public void overrideXp(int xpIn) {}
-
-	@Override
-	public int getVillagerXp() {
-		return 0;
 	}
 
 	@Override
@@ -100,225 +149,138 @@ public abstract class AoATrader extends CreatureEntity implements INPC, IMerchan
 	}
 
 	@Override
-	public void setTradingPlayer(@Nullable PlayerEntity player) {
-		latestCustomer = player;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return !isOverworldNPC() || !WorldUtil.isWorld(level, World.OVERWORLD) || tickCount >= 48000;
+	}
+
+	@Override
+	public VillagerEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
+		return null;
 	}
 
 	@Nullable
-	@Override
-	public PlayerEntity getTradingPlayer() {
-		return latestCustomer;
-	}
+	public abstract Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap();
 
-	public boolean isTrading() {
-		return latestCustomer != null;
-	}
+	public static class TradeListBuilder {
+		private final HashMap<Integer, VillagerTrades.ITrade[]> trades = new HashMap<Integer, VillagerTrades.ITrade[]>();
 
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || !WorldUtil.isWorld(level, World.OVERWORLD) || tickCount >= 72000;
-	}
+		public TradeListBuilder trades(int professionLevel, BuildableTrade... offers) {
+			this.trades.put(professionLevel, offers);
 
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
+			return this;
+		}
 
-		compound.putString("TradeStatuses", currentTradesInfo);
-		compound.putInt("AdditionalTrades", additionalTrades);
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
-		super.readAdditionalSaveData(compound);
-
-		currentTradesInfo = compound.contains("TradeStatuses") ? compound.getString("TradeStatuses") : "";
-		additionalTrades = compound.contains("AdditionalTrades") ? compound.getInt("AdditionalTrades") : 0;
-
-		if (!level.isClientSide) {
-			entityData.set(TRADE_STATUSES, currentTradesInfo);
-			entityData.set(ADDITIONAL_TRADES, additionalTrades);
-			deserializeTradeStatuses(currentTradesInfo);
+		public Int2ObjectMap<VillagerTrades.ITrade[]> build() {
+			return new Int2ObjectOpenHashMap<VillagerTrades.ITrade[]>(trades);
 		}
 	}
 
-	@Override
-	public void tick() {
-		super.tick();
+	public static class BuildableTrade implements VillagerTrades.ITrade {
+		private final ItemStack item;
+		private ItemStack cost1 = null;
+		@Nullable
+		private ItemStack cost2 = null;
 
-		if (level.isClientSide) {
-			String currentInfo = entityData.get(TRADE_STATUSES);
+		private int xpValue = 2;
+		private float priceMultiplier = 0.05f;
+		private int maxUses = 16;
 
-			if (!currentInfo.equals(currentTradesInfo)) {
-				currentTradesInfo = currentInfo;
-				int extraTrades = entityData.get(ADDITIONAL_TRADES);
+		private boolean isLocked = false;
 
-				if (extraTrades != additionalTrades) {
-					additionalTrades = extraTrades;
+		private BuildableTrade(ItemStack item) {
+			this.item = item;
+		}
 
-					generateTrades();
-				}
+		public static BuildableTrade trade(RegistryObject<? extends IItemProvider> item) {
+			return trade(item, 1);
+		}
 
-				deserializeTradeStatuses(currentInfo);
+		public static BuildableTrade trade(RegistryObject<? extends IItemProvider> item, int amount) {
+			return trade(item.get(), amount);
+		}
+
+		public static BuildableTrade trade(IItemProvider item) {
+			return trade(item, 1);
+		}
+
+		public static BuildableTrade trade(IItemProvider item, int amount) {
+			return trade(new ItemStack(item, amount));
+		}
+
+		public static BuildableTrade trade(ItemStack stack) {
+			return new BuildableTrade(stack);
+		}
+
+		public BuildableTrade locked() {
+			this.isLocked = true;
+
+			return this;
+		}
+
+		public BuildableTrade cost(RegistryObject<? extends IItemProvider> item) {
+			return cost(item, 1);
+		}
+
+		public BuildableTrade cost(RegistryObject<? extends IItemProvider> item, int amount) {
+			return cost(item.get(), amount);
+		}
+
+		public BuildableTrade cost(IItemProvider item) {
+			return cost(item, 1);
+		}
+
+		public BuildableTrade cost(IItemProvider item, int amount) {
+			return cost(new ItemStack(item, amount));
+		}
+
+		public BuildableTrade cost(ItemStack cost) {
+			if (this.cost1 == null) {
+				this.cost1 = cost;
 			}
-		}
-	}
-
-	protected boolean isOverworldNPC() {
-		return false;
-	}
-
-	protected int getSpawnChanceFactor() {
-		return 10;
-	}
-
-	private boolean checkSpawnChance(SpawnReason reason) {
-		return EntityUtil.isNaturalSpawnReason(reason) || getSpawnChanceFactor() <= 1 || random.nextInt(getSpawnChanceFactor()) == 0;
-	}
-
-	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-		ItemStack heldStack = player.getItemInHand(hand);
-
-		if (heldStack.getItem() == Items.NAME_TAG) {
-			ActionResultType result = heldStack.interactLivingEntity(player, this, hand);
-
-			if (result.consumesAction())
-				return result;
-		}
-
-		if (isAlive() && !player.isShiftKeyDown()) {
-			if (!level.isClientSide) {
-				getOffers();
-				setTradingPlayer(player);
-				openGui(player);
+			else if (this.cost2 == null) {
+				this.cost2 = cost;
 			}
 
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return this;
 		}
 
-		return super.mobInteract(player, hand);
-	}
+		public BuildableTrade xp(int tradeXp) {
+			this.xpValue = tradeXp;
 
-	protected void openGui(PlayerEntity player) {
-		openTradingScreen(player, getDisplayName(), 0);
-	}
+			return this;
+		}
 
-	@Override
-	public MerchantOffers getOffers() {
-		if (trades == null)
-			generateTrades();
+		public BuildableTrade priceMultiplier(float multiplier) {
+			this.priceMultiplier = multiplier;
 
-		return trades;
-	}
+			return this;
+		}
 
-	private void generateTrades() {
-		Random rand = new Random(1 + getUUID().getMostSignificantBits() + getUUID().getLeastSignificantBits());
-		NonNullList<AoATraderRecipe> allTrades = NonNullList.<AoATraderRecipe>create();
-		trades = new MerchantOffers();
+		public BuildableTrade stock(int stock) {
+			this.maxUses = stock;
 
-		getTradesList(allTrades);
+			return this;
+		}
 
-		maxTradesCount = allTrades.size();
+		@Nullable
+		@Override
+		public MerchantOffer getOffer(Entity trader, Random rand) {
+			MerchantOffer offer;
 
-		if (!isFixedTradesList()) {
-			int newTradesSize = Math.max(rand.nextInt(allTrades.size()), 1);
-
-			if (additionalTrades > 0 && newTradesSize < allTrades.size())
-				newTradesSize = Math.min(newTradesSize + additionalTrades, allTrades.size());
-
-			for (int i = 0; i < newTradesSize; i++) {
-				int pick = rand.nextInt(allTrades.size());
-
-				trades.add(allTrades.get(pick));
-				allTrades.remove(pick);
+			if (cost2 != null) {
+				offer = new MerchantOffer(cost1.copy(), cost2.copy(), item.copy(), maxUses, xpValue, priceMultiplier);
 			}
-		}
-		else {
-			trades.addAll(allTrades);
-		}
-	}
-
-	protected abstract void getTradesList(final NonNullList<AoATraderRecipe> newTradesList);
-
-	public void setTrades(MerchantOffers trades) {}
-
-	@Override
-	public void notifyTrade(MerchantOffer recipe) {
-		if (isFixedTradesList() || trades.size() >= maxTradesCount)
-			return;
-
-		recipe.increaseUses();
-
-		if (!level.isClientSide) {
-			if (recipe.getUses() >= recipe.getMaxUses()) {
-				boolean tradesComplete = true;
-
-				for (MerchantOffer trade : trades) {
-					if (!trade.isOutOfStock()) {
-						tradesComplete = false;
-
-						break;
-					}
-				}
-
-				if (tradesComplete)
-					addNewTrade();
+			else if (cost1 != null) {
+				offer = new MerchantOffer(cost1.copy(), item.copy(), maxUses, xpValue, priceMultiplier);
+			}
+			else {
+				return null;
 			}
 
-			currentTradesInfo = serializeTradeStatuses();
+			if (isLocked)
+				offer.setToOutOfStock();
 
-			entityData.set(TRADE_STATUSES, currentTradesInfo);
-			entityData.set(ADDITIONAL_TRADES, additionalTrades);
-		}
-	}
-
-	@Override
-	public void notifyTradeUpdated(ItemStack stack) {}
-
-	@Override
-	public World getLevel() {
-		return level;
-	}
-
-	private void addNewTrade() {
-		additionalTrades++;
-
-		generateTrades();
-	}
-
-	private String serializeTradeStatuses() {
-		if (trades == null)
-			return "";
-
-		StringBuilder builder = new StringBuilder();
-
-		for (MerchantOffer trade : trades) {
-			builder.append("|");
-			builder.append(trade.getUses());
-		}
-
-		return builder.substring(1);
-	}
-
-	private void deserializeTradeStatuses(String string) {
-		if (!currentTradesInfo.equals(string))
-			currentTradesInfo = string;
-
-		if (trades == null)
-			generateTrades();
-
-		int tradeIndex = 0;
-
-		if (!trades.isEmpty() && !currentTradesInfo.isEmpty()) {
-			for (String s : currentTradesInfo.split("\\|")) {
-				MerchantOffer trade = trades.get(tradeIndex);
-
-				for (int i = 0; i < Integer.parseInt(s) - trade.getUses(); i++) {
-					trade.increaseUses();
-				}
-
-				tradeIndex++;
-			}
+			return offer;
 		}
 	}
 }

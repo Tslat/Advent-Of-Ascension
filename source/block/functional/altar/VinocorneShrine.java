@@ -11,8 +11,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +25,7 @@ public class VinocorneShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		return player.level.getBlockState(pos.above()).getMaterial().isReplaceable();
+		return WorldUtil.isWorld(player.level, AoADimensions.GARDENCIA.key) && player.level.getBlockState(pos.above()).getMaterial().isReplaceable();
 	}
 
 	@Override

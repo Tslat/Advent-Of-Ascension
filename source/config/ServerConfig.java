@@ -3,7 +3,6 @@ package net.tslat.aoa3.config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public final class ServerConfig {
-	public final ForgeConfigSpec.BooleanValue disableOverworldMobs;
 	public final ForgeConfigSpec.BooleanValue allowUnsafeInfusion;
 	public final ForgeConfigSpec.IntValue portalSearchRadius;
 	public final ForgeConfigSpec.BooleanValue easyCorruptedTravellers;
@@ -14,13 +13,6 @@ public final class ServerConfig {
 
 	protected ServerConfig(ForgeConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("General Settings");
-
-		disableOverworldMobs = configBuilder
-				.comment("Set this to true to disable all overworld natural entity spawns.",
-						"WARNING: This will make a lot of content inaccessible without further modifications.",
-						"Use at your own risk!")
-				.translation("config.aoa3.server.disableOverworldMobs")
-				.define("disableOverworldMobs", false);
 
 		allowUnsafeInfusion = configBuilder
 				.comment("Set this to false to disable enchantments that breach level caps")

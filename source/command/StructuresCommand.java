@@ -67,7 +67,7 @@ public class StructuresCommand implements Command<CommandSource> {
 				return 1;
 			}
 			else {
-				template.placeInWorld(cmd.getSource().getLevel(), spawnPos, spawnPos, new PlacementSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setChunkPos(null), new Random(), 2);
+				template.placeInWorldChunk(cmd.getSource().getLevel(), spawnPos, new PlacementSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setChunkPos(null), new Random());
 			}
 
 			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(id.toString()), new StringTextComponent(spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ()));

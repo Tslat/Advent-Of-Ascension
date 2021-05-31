@@ -1,0 +1,133 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "spawn_entities": false,
+                "require_ground": false,
+                "processors": {
+                  "processors": [
+                    {
+                      "rules": [
+                        {
+                          "output_state": {
+                            "Name": "minecraft:nether_quartz_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:netherrack",
+                            "probability": 0.05,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        },
+                        {
+                          "output_state": {
+                            "Name": "minecraft:nether_gold_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:netherrack",
+                            "probability": 0.01,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        },
+                        {
+                          "output_state": {
+                            "Name": "minecraft:coal_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:stone",
+                            "probability": 0.01,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        },
+                        {
+                          "output_state": {
+                            "Name": "minecraft:iron_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:stone",
+                            "probability": 0.005,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        },
+                        {
+                          "output_state": {
+                            "Name": "minecraft:gold_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:stone",
+                            "probability": 0.0025,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        },
+                        {
+                          "output_state": {
+                            "Name": "minecraft:diamond_ore"
+                          },
+                          "input_predicate": {
+                            "block": "minecraft:stone",
+                            "probability": 0.00125,
+                            "predicate_type": "minecraft:random_block_match"
+                          },
+                          "location_predicate": {
+                            "predicate_type": "minecraft:always_true"
+                          }
+                        }
+                      ],
+                      "processor_type": "minecraft:rule"
+                    }
+                  ]
+                },
+                "templates": [
+                  "aoa3:lunalus/decorations/basalt_asteroid2",
+                  "aoa3:lunalus/decorations/icy_asteroid1",
+                  "aoa3:lunalus/decorations/icy_asteroid2",
+                  "aoa3:lunalus/decorations/nether_asteroid1"
+                ]
+              },
+              "type": "aoa3:structure_piece"
+            },
+            "decorator": {
+              "config": {
+                "bottom_offset": 0,
+                "top_offset": 0,
+                "maximum": 255
+              },
+              "type": "minecraft:range"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 600
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

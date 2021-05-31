@@ -22,7 +22,7 @@
               "entity": "this"
             }
           ],
-          "weight": 100,
+          "weight": 5,
           "quality": 2,
           "name": "aoa3:skills/hauling_treasure"
         },

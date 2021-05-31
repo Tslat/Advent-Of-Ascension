@@ -66,6 +66,11 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
+	public boolean startRiding(Entity entity, boolean force) {
+		return false;
+	}
+
+	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
 		return new CraexxeusShotEntity(this, BaseMobProjectile.Type.MAGIC);
 	}

@@ -1,21 +1,32 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ZalGrocerEntity extends AoATrader {
-	public ZalGrocerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(Items.CARROT, 3).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.trade(Items.POTATO, 2).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.trade(Items.MELON_SLICE, 4).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.trade(Items.BEETROOT, 2).cost(AoAItems.COPPER_COIN).xp(1).stock(32))
+			.trades(2,
+					BuildableTrade.trade(Items.COD).cost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.trade(Items.SALMON).cost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.trade(Items.COOKIE, 3).cost(AoAItems.COPPER_COIN).stock(32)).build();
+
+	public ZalGrocerEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -29,14 +40,9 @@ public class ZalGrocerEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 1), new ItemStack(Items.CARROT, 3)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 1), new ItemStack(Items.POTATO, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 1), new ItemStack(Items.MELON_SLICE, 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 3), new ItemStack(Items.COD)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 3), new ItemStack(Items.SALMON)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 1), new ItemStack(Items.BEETROOT, 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 1), new ItemStack(Items.COOKIE, 3)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

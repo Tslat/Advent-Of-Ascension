@@ -17,7 +17,7 @@ public class RecoilRenderer {
 
 	@SubscribeEvent
 	public static void renderEvent(TickEvent.RenderTickEvent ev) {
-		if (ev.phase != TickEvent.Phase.END)
+		if (ev.phase != TickEvent.Phase.END || Minecraft.getInstance().isPaused())
 			return;
 
 		if (recoilTicksRemaining > 0) {

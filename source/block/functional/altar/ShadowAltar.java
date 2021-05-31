@@ -8,9 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.scheduling.async.ShadowlordSpawnTask;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,11 @@ public class ShadowAltar extends BossAltarBlock {
 			if (player.hasEffect(Effects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.DUSTOPIA_REALMSTONE.get()));
 		}
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.ABYSS.key);
 	}
 
 	@Override

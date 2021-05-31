@@ -69,7 +69,7 @@ public class PortalBlock extends Block {
 	private final RegistryKey<World> world;
 
 	public PortalBlock(RegistryKey<World> world, MaterialColor mapColour, int particleColour) {
-		super(BlockUtil.generateBlockProperties(Material.PORTAL, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, 11).sound(SoundType.GLASS).noCollission());
+		super(new BlockUtil.CompactProperties(Material.PORTAL, mapColour).unbreakable().light(11).sound(SoundType.GLASS).noClip().get());
 
 		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
 

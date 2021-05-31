@@ -3,7 +3,6 @@ package net.tslat.aoa3.block.functional.utility;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,7 +44,7 @@ public class ExtractionDevice extends Block {
 	public static final BooleanProperty FILLED = BooleanProperty.create("filled");
 
 	public ExtractionDevice() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.PODZOL, 5, 10, SoundType.STONE).noOcclusion());
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.PODZOL).stats(5f, 10f).noOcclusion().get());
 
 		registerDefaultState(defaultBlockState().setValue(FILLED, false));
 	}

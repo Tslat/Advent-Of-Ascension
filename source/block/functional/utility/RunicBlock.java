@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,7 +18,7 @@ import net.tslat.aoa3.util.ItemUtil;
 
 public class RunicBlock extends Block {
 	public RunicBlock() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_BLUE, 10, 15, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_BLUE).stats(10f, 15f).get());
 	}
 
 	@Override

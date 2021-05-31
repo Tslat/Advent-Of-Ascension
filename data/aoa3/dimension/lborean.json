@@ -38,6 +38,11 @@
             "spacing": 24,
             "separation": 8,
             "salt": 250252268
+          },
+          "aoa3:water_rune_shrine": {
+            "spacing": 16,
+            "separation": 8,
+            "salt": 1317453236
           }
         }
       },

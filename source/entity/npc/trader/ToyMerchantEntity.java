@@ -1,19 +1,29 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ToyMerchantEntity extends AoATrader {
-	public ToyMerchantEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.BALLOON, 10).cost(AoAItems.CIRCUS_COIN, 2).xp(5).stock(32))
+			.trades(3,
+					BuildableTrade.trade(AoAItems.GRAVITATOR).cost(AoAItems.CIRCUS_COIN, 30).xp(40).stock(5),
+					BuildableTrade.trade(AoAItems.TOY_GYROCOPTER).cost(AoAItems.CIRCUS_COIN, 10).xp(25))
+			.trades(4,
+					BuildableTrade.trade(AoAWeapons.CONFETTI_CLUSTER).cost(AoAItems.CIRCUS_COIN, 12).xp(40).stock(5),
+					BuildableTrade.trade(AoAWeapons.BALLOON_BOMBER).cost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5)).build();
+
+	public ToyMerchantEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -22,13 +32,9 @@ public class ToyMerchantEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.CELEVE.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 2), new ItemStack(AoAItems.BALLOON.get(), 10)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 30), new ItemStack(AoAItems.GRAVITATOR.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 10), new ItemStack(AoAItems.TOY_GYROCOPTER.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 45), ItemStack.EMPTY, new ItemStack(AoAItems.SMILEY_UPGRADE_KIT.get()), 0, 1));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 12), new ItemStack(AoAWeapons.CONFETTI_CLUSTER.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CIRCUS_COIN.get(), 18), new ItemStack(AoAWeapons.BALLOON_BOMBER.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

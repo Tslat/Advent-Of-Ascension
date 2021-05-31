@@ -1,20 +1,26 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class ZalHerbalistEntity extends AoATrader {
-	public ZalHerbalistEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.LUNACRIKE_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25),
+					BuildableTrade.trade(AoAItems.LUNA_GLOBE_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25),
+					BuildableTrade.trade(AoAItems.LUNALON_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25)).build();
+
+	public ZalHerbalistEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -28,10 +34,9 @@ public class ZalHerbalistEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAItems.LUNACRIKE_SEEDS.get(), 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAItems.LUNA_GLOBE_SEEDS.get(), 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 5), new ItemStack(AoAItems.LUNALON_SEEDS.get(), 5)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

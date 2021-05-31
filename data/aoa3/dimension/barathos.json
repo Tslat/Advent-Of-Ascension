@@ -31,6 +31,11 @@
             "separation": 8,
             "salt": 286762965
           },
+          "aoa3:power_rune_shrine": {
+            "spacing": 16,
+            "separation": 8,
+            "salt": 853143163
+          },
           "aoa3:hive_nest": {
             "spacing": 20,
             "separation": 4,

@@ -51,9 +51,9 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:candy_corny",
+        "type": "aoa3:airhead",
         "weight": 20,
-        "minCount": 1,
+        "minCount": 0,
         "maxCount": 1
       },
       {
@@ -63,9 +63,9 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:airhead",
+        "type": "aoa3:candy_corny",
         "weight": 20,
-        "minCount": 0,
+        "minCount": 1,
         "maxCount": 1
       }
     ],

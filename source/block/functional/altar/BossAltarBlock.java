@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.functional.altar;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -20,15 +21,13 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock;
-
 public abstract class BossAltarBlock extends Block {
 	public BossAltarBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 
 	public BossAltarBlock(MaterialColor mapColour) {
-		this(BlockUtil.generateBlockProperties(Material.STONE, mapColour, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
+		this(new BlockUtil.CompactProperties(Material.STONE, mapColour).stats(35f, 1000f).get());
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package net.tslat.aoa3.block.functional.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +26,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class RuneShrine extends Block {
 	public RuneShrine() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_GRAY, 5, 10, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_GRAY).stats(5f, 10f).get());
 	}
 	// TODO Fix level distribution across dimensions
 	@Override

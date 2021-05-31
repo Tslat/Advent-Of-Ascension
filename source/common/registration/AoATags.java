@@ -197,7 +197,6 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> PRECASIAN_BONE = aoaTag("precasian_bone");
 		public static final Tags.IOptionalNamedTag<Item> ADVENT_RUNE = aoaTag("rune");
 		public static final Tags.IOptionalNamedTag<Item> FRAME_BENCH_FRAME = aoaTag("frame_bench_frame");
-		public static final Tags.IOptionalNamedTag<Item> ADVENT_TOKENS = aoaTag("tokens");
 		public static final Tags.IOptionalNamedTag<Item> INFUSION_STONE = aoaTag("infusion_stone");
 		public static final Tags.IOptionalNamedTag<Item> SKILL_CRYSTAL = aoaTag("skill_crystal");
 

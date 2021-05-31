@@ -24,8 +24,10 @@
     ],
     [],
     [
-      "aoa3:lunar_decorations",
-      "aoa3:lunar_rune_shrine"
+      "aoa3:lunalus_large_decorations",
+      "aoa3:lunar_geodes",
+      "aoa3:lunalus_misc_decorations",
+      "aoa3:basalt_asteroid1"
     ],
     [],
     [
@@ -38,19 +40,9 @@
     []
   ],
   "starts": [
-    "aoa3:spellbinder_house",
-    "aoa3:zarg_planetoid",
-    "aoa3:space_arena",
-    "aoa3:lunar_maze",
-    "aoa3:lunarade_stand",
-    "aoa3:lunar_creation_platform",
-    "aoa3:lunar_herbal_house",
-    "aoa3:lunar_lotto_platform",
-    "aoa3:lunar_bank",
-    "aoa3:lunar_garden",
-    "aoa3:observers_eye",
-    "aoa3:lunar_food_market",
-    "aoa3:lunar_prison"
+    "aoa3:stranded_lottoman",
+    "aoa3:zal_prison_camp",
+    "aoa3:lunar_oasis"
   ],
   "spawners": {
     "monster": [],

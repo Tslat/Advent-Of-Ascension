@@ -1,20 +1,22 @@
 package net.tslat.aoa3.entity.npc.lottoman;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class CreeponiaLottomanEntity extends LottomanEntity {
-	public CreeponiaLottomanEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+import javax.annotation.Nullable;
+
+public class CreeponiaLottomanEntity extends AoATrader {
+	public CreeponiaLottomanEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -24,7 +26,7 @@ public class CreeponiaLottomanEntity extends LottomanEntity {
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
@@ -34,10 +36,13 @@ public class CreeponiaLottomanEntity extends LottomanEntity {
 	}
 
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CREEPONIA_TOKENS.get(), 28), new ItemStack(AoAItems.LOTTO_TOTEM.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CREEPONIA_TOKENS.get(), 15), new ItemStack(AoAItems.WEAPONS_CASE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CREEPONIA_TOKENS.get(), 10), new ItemStack(AoAItems.RUNE_BOX.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CREEPONIA_TOKENS.get(), 21), new ItemStack(AoAItems.TREASURE_BOX.get())));
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel == 1 ? 4 : 2;
+	}
+
+	@Nullable
+	@Override
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return LottomanEntity.TRADES;
 	}
 }

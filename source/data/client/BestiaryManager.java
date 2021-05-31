@@ -39,6 +39,13 @@ public class BestiaryManager implements ISelectiveResourceReloadListener {
 					for (IResource resource : resourceManager.getResources(resourceLocation)) {
 						String relativePath = resource.getLocation().getPath().substring(15);
 						String[] pathParts = relativePath.split("/");
+
+						if (pathParts.length < 2) {
+							Logging.logMessage(Level.DEBUG, "Invalid resource path for bestiary entry, skipping. " + relativePath);
+
+							continue;
+						}
+
 						ResourceLocation entryId = new ResourceLocation(pathParts[0], pathParts[1].substring(0, pathParts[1].length() - 4));
 
 						BESTIARY.put(entryId, FileUtil.bufferedReaderToString(new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))));

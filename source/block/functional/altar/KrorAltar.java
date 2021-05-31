@@ -11,8 +11,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.scheduling.async.KrorSpawnTask;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
@@ -47,7 +49,7 @@ public class KrorAltar extends BossAltarBlock {
 			return false;
 		}
 
-		return true;
+		return WorldUtil.isWorld(player.level, AoADimensions.DEEPLANDS.key);
 	}
 
 	@Override

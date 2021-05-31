@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.LootUtil;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class CrystalBox extends Item {
 	public CrystalBox() {
-		super(new Item.Properties());
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
 	}
 
 	@Override

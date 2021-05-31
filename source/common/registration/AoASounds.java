@@ -519,9 +519,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_URKA_AMBIENT = registerSound("urka_ambient", "entity.urka.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_URKA_DEATH = registerSound("urka_death", "entity.urka.death");
 	public static final RegistryObject<SoundEvent> ENTITY_URKA_HURT = registerSound("urka_hurt", "entity.urka.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_URSA_AMBIENT = registerSound("ursa_ambient", "entity.ursa.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_URSA_DEATH = registerSound("ursa_death", "entity.ursa.death");
-	public static final RegistryObject<SoundEvent> ENTITY_URSA_HURT = registerSound("ursa_hurt", "entity.ursa.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_AMBIENT = registerSound("valkyrie_ambient", "entity.valkyrie.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_DEATH = registerSound("valkyrie_death", "entity.valkyrie.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VALKYRIE_HURT = registerSound("valkyrie_hurt", "entity.valkyrie.hurt");
@@ -629,8 +626,6 @@ public final class AoASounds {
 
 	public static final RegistryObject<SoundEvent> LOTTO_WIN = registerSound("lotto_win", "misc.lotto.win");
 	public static final RegistryObject<SoundEvent> JINGLE_BELLS = registerSound("jingle_bells", "misc.jingle_bells");
-
-	public static final RegistryObject<SoundEvent> SHYRELANDS_WIND = registerSound("shyrelands_wind", "world.shyrelands.wind");
 
 	public static final RegistryObject<SoundEvent> ITEM_ABOMINATOR_FIRE = registerSound("abominator_fire", "item.abominator.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ARTIFACT_FIRE = registerSound("artifact_fire", "item.artifact.fire");

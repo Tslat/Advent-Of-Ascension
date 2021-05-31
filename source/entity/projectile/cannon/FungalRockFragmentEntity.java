@@ -46,7 +46,7 @@ public class FungalRockFragmentEntity extends BaseBullet implements HardProjecti
 
 			Entity shooter = getOwner();
 
-			if (!WorldUtil.canModifyBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null))
+			if (!WorldUtil.canPlaceBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null, null))
 				return;
 
 			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.COBBLESTONE.defaultBlockState());

@@ -6,13 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "name": "minecraft:flower_pot"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
         }
       ]
     },
@@ -21,7 +15,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "name": "aoa3:bright_shyre_sapling"
         }
       ],

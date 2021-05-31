@@ -1,24 +1,35 @@
 package net.tslat.aoa3.entity.npc.skillmaster;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAArmour;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+import net.tslat.aoa3.entity.base.AoATrader;
 
-public class AnimaMasterEntity extends AoASkillMaster {
-	public AnimaMasterEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+import javax.annotation.Nullable;
+
+public class AnimaMasterEntity extends AoATrader {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAArmour.ANIMA_ARMOUR.helmet).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.ANIMA_ARMOUR.chestplate).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.ANIMA_ARMOUR.leggings).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5),
+					BuildableTrade.trade(AoAArmour.ANIMA_ARMOUR.boots).cost(AoAItems.LUNAVER_COIN).xp(150).stock(5)).build();
+
+	public AnimaMasterEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), ItemStack.EMPTY, new ItemStack(AoAArmour.ANIMA_ARMOUR.helmet.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), ItemStack.EMPTY, new ItemStack(AoAArmour.ANIMA_ARMOUR.chestplate.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), ItemStack.EMPTY, new ItemStack(AoAArmour.ANIMA_ARMOUR.leggings.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAVER_COIN.get()), ItemStack.EMPTY, new ItemStack(AoAArmour.ANIMA_ARMOUR.boots.get()), 0, 9999));
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel == 1 ? 4 : 2;
+	}
+
+	@Nullable
+	@Override
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

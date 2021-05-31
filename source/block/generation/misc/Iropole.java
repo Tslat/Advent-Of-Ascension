@@ -17,6 +17,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
@@ -27,7 +28,7 @@ public class Iropole extends RotatedPillarBlock {
 	private static final VoxelShape Z_SHAPE = box(3, 3, 0, 13, 13, 16);
 
 	public Iropole() {
-		super(BlockUtil.generateBlockProperties(Material.METAL, MaterialColor.COLOR_BLACK, 1.5f, 10f, SoundType.METAL));
+		super(new BlockUtil.CompactProperties(Material.METAL, MaterialColor.COLOR_BLACK).stats(1.5f, 10f).harvestTool(ToolType.PICKAXE).sound(SoundType.METAL).get());
 
 		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 	}

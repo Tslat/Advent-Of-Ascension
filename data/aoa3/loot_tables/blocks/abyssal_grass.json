@@ -24,7 +24,6 @@
                   }
                 }
               ],
-              "weight": 100,
               "name": "aoa3:abyssal_grass"
             },
             {
@@ -34,7 +33,6 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "weight": 100,
               "name": "aoa3:abyssal_stone"
             }
           ]

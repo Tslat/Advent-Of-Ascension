@@ -1,6 +1,5 @@
 package net.tslat.aoa3.block.generation.leaves;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,29 +8,18 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.util.BlockUtil;
 
 import java.util.Random;
-
-import net.minecraft.block.AbstractBlock;
 
 public class LeavesBlock extends net.minecraft.block.LeavesBlock {
 	private final float saplingDropChance;
 
 	public LeavesBlock(MaterialColor mapColour, float saplingChance) {
-		super(generateBlockProperties(mapColour));
-
-		this.saplingDropChance = saplingChance;
-	}
-
-	private static AbstractBlock.Properties generateBlockProperties(MaterialColor mapColour) {
-		AbstractBlock.Properties blockProperties = AbstractBlock.Properties.of(Material.LEAVES, mapColour);
-
-		blockProperties.strength(0.2f);
-		blockProperties.sound(SoundType.GRASS);
-		blockProperties.noOcclusion();
+		super(new BlockUtil.CompactProperties(Material.LEAVES, mapColour).stats(0.2f).sound(SoundType.GRASS).noOcclusion().get());
 		// TODO Tick Randomly & decay
 
-		return blockProperties;
+		this.saplingDropChance = saplingChance;
 	}
 
 	@Override

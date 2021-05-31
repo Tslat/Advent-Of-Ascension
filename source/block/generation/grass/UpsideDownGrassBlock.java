@@ -21,8 +21,8 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 public class UpsideDownGrassBlock extends GrassBlock {
-	public UpsideDownGrassBlock(MaterialColor mapColour, Supplier<Block> dirtBlock, boolean growsInDark) {
-		super(mapColour, dirtBlock, growsInDark);
+	public UpsideDownGrassBlock(MaterialColor mapColour, Supplier<Block> dirtBlock, boolean growsInDark, boolean isStoneBased) {
+		super(mapColour, dirtBlock, growsInDark, isStoneBased);
 	}
 
 	@Override

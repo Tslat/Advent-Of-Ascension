@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -249,16 +250,74 @@ public abstract class WorldUtil {
 		}
 	}
 
-	public static boolean canModifyBlock(IWorld world, BlockPos pos, @Nullable Entity entity) {
+	public static boolean canPlaceBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
 		if (!(world instanceof World))
 			return true;
 
+		World activeWorld = (World)world;
 		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
-		if (WorldUtil.isWorld((World)world, AoADimensions.NOWHERE.key))
+		if (relevantPlayer != null) {
+			if (!relevantPlayer.mayBuild())
+				return false;
+
+			if (relevantPlayer instanceof ServerPlayerEntity) {
+				GameType gameMode = ((ServerPlayerEntity)relevantPlayer).gameMode.getGameModeForPlayer();
+
+				if (gameMode == GameType.SPECTATOR)
+					return false;
+
+				if (gameMode == GameType.ADVENTURE && stack != null) {
+					if (stack.isEmpty())
+						return false;
+
+					if (!stack.hasAdventureModePlaceTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false)))
+						return false;
+				}
+			}
+		}
+
+		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
 			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		return true;
+	}
+
+	public static boolean canBreakBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
+		if (!(world instanceof World))
+			return true;
+
+		World activeWorld = (World)world;
+		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
+
+		if (relevantPlayer != null) {
+			if (!relevantPlayer.mayBuild())
+				return false;
+
+			if (relevantPlayer instanceof ServerPlayerEntity) {
+				GameType gameMode = ((ServerPlayerEntity)relevantPlayer).gameMode.getGameModeForPlayer();
+
+				if (gameMode == GameType.SPECTATOR)
+					return false;
+
+				if (gameMode == GameType.ADVENTURE && stack != null) {
+					if (stack.isEmpty())
+						return false;
+
+					if (!stack.hasAdventureModeBreakTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false)))
+						return false;
+				}
+			}
+		}
+
+		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
+			return relevantPlayer != null && relevantPlayer.isCreative();
+
+		return true;
+	}
+
+	public static boolean canModifyBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
+		return canBreakBlock(world, pos, entity, stack);
 	}
 
 	public static void operateOnMultipleBlocksInRange(World world, BlockPos center, int radius, Predicate<BlockState> test, Consumer<BlockPos> operation) {

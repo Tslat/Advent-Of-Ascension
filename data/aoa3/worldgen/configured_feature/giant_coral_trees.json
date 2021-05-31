@@ -5,6 +5,9 @@
         "feature": {
           "config": {
             "spawn_entities": false,
+            "processors": {
+              "processors": []
+            },
             "templates": [
               "aoa3:lborean/decorations/green_coral1",
               "aoa3:lborean/decorations/green_coral2",

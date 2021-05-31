@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,7 +31,7 @@ public class SkydriverBow extends BaseBow {
 				;
 			}
 
-			if (arrow.level.getBlockState(testPos).isFaceSturdy(arrow.level, testPos, Direction.UP) && arrow.level.getBlockState(testPos.above()).getMaterial().isReplaceable())
+			if (arrow.level.getBlockState(testPos).isFaceSturdy(arrow.level, testPos, Direction.UP) && arrow.level.getBlockState(testPos.above()).getMaterial().isReplaceable() && WorldUtil.canPlaceBlock(arrow.level, testPos.above(), shooter, null))
 				arrow.level.setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
 		}
 	}

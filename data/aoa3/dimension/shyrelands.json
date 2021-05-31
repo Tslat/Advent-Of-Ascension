@@ -15,7 +15,33 @@
         "Name": "minecraft:air"
       },
       "structures": {
-        "structures": {}
+        "structures": {
+          "aoa3:crae_statue": {
+            "spacing": 40,
+            "separation": 24,
+            "salt": 1240491875
+          },
+          "aoa3:shyre_pillar": {
+            "spacing": 12,
+            "separation": 6,
+            "salt": 446805612
+          },
+          "aoa3:luxocron_dungeon": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1312028393
+          },
+          "aoa3:archer_outpost": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1944614434
+          },
+          "aoa3:shyre_bank_stand": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 2137538733
+          }
+        }
       },
       "noise": {
         "top_slide": {

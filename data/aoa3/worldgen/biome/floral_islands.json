@@ -24,9 +24,7 @@
     ],
     [],
     [],
-    [
-      "aoa3:kinetic_rune_shrine"
-    ],
+    [],
     [],
     [],
     [],
@@ -38,6 +36,7 @@
     []
   ],
   "starts": [
+    "aoa3:kinetic_rune_shrine",
     "aoa3:garden_castle",
     "aoa3:lotto_sky_flower",
     "aoa3:daysee_flower",
@@ -46,24 +45,6 @@
   ],
   "spawners": {
     "monster": [
-      {
-        "type": "aoa3:squasher",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sunny",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:corny",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
       {
         "type": "aoa3:flowerface",
         "weight": 20,
@@ -77,13 +58,31 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:broccohead",
+        "type": "aoa3:carrotop",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:carrotop",
+        "type": "aoa3:corny",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sunny",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:squasher",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:broccohead",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

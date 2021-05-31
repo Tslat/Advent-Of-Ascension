@@ -2,12 +2,22 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "name": "parent_table",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 100,
+          "name": "aoa3:worlds/deeplands"
+        }
+      ]
+    },
+    {
       "name": "deep_case",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "name": "aoa3:deep_case"
         }
       ]

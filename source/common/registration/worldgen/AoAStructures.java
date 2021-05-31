@@ -26,6 +26,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.worldgen.feature.features.config.IntRangeConfig;
 import net.tslat.aoa3.worldgen.structure.structures.*;
 import net.tslat.aoa3.worldgen.structure.structures.special.KrorCaveStructure;
+import net.tslat.aoa3.worldgen.structure.structures.special.WindRuneShrine;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -36,19 +37,23 @@ public class AoAStructures {
 	public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, AdventOfAscension.MOD_ID);
 
 	public static final RegistryObject<YPosStructure> RUINED_TELEPORTER_FRAME = register("ruined_teleporter_frame", () -> new YPosStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "overworld/ruined_teleporter_frame/main_pool"), 4, 10);
+	public static final RegistryObject<WindRuneShrine> WIND_RUNE_SHRINE = register("wind_rune_shrine", () -> new WindRuneShrine(GenerationStage.Decoration.SURFACE_STRUCTURES, "overworld/wind_rune_shrine/wind_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<YPosStructure> NETHENGEIC_PIT = register("nethengeic_pit", () -> new YPosStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "nether/nethengeic_pit/main_pool"), 8, 32);
+	public static final RegistryObject<YPosStructure> FIRE_RUNE_SHRINE = register("fire_rune_shrine", () -> new YPosStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "nether/fire_rune_shrine/fire_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> FLESH_TEMPLE = register("flesh_temple", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/flesh_temple/main_pool"), 8, 32);
 	public static final RegistryObject<GenericAoAStructure> JAWE_HUT = register("jawe_hut", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/jawe_hut/main_pool"), 8, 32);
 	public static final RegistryObject<GenericAoAStructure> ABYSSAL_LOTTO_HUT = register("abyssal_lotto_hut", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/abyssal_lotto_hut/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> SHADOWLORD_PLATFORM = register("shadowlord_platform", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/shadowlord_platform/main_pool"), 10, 40);
 	public static final RegistryObject<GenericAoAStructure> ILLUSION_TREE = register("illusion_tree", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/illusion_tree/main_pool"), 20, 40);
+	public static final RegistryObject<AboveSurfaceStructure> WITHER_RUNE_SHRINE = register("wither_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "abyss/wither_rune_shrine/wither_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> BARON_CASTLE = register("baron_castle", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baron_castle/main_pool"), 11, 32);
 	public static final RegistryObject<GenericAoAStructure> BARONESS_ARENA = register("baroness_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baroness_arena/main_pool"), 12, 40);
 	public static final RegistryObject<GenericAoAStructure> BARONESS_HOUSE = register("baroness_house", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/baroness_house/main_pool"), 8, 32);
 	public static final RegistryObject<GenericAoAStructure> HIVE_NEST = register("hive_nest", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/hive_nest/main_pool"), 4, 20);
+	public static final RegistryObject<AboveSurfaceStructure> POWER_RUNE_SHRINE = register("power_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "barathos/power_rune_shrine/power_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> CANDY_LOTTO_PLATFORM = register("candy_lotto_platform", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "candyland/candy_lotto_platform/main_pool"), 4, 16);
 	public static final RegistryObject<GenericAoAStructure> COTTON_CANDY_TOWER = register("cotton_candy_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "candyland/cotton_candy_tower/main_pool"), 10, 32);
@@ -58,6 +63,7 @@ public class AoAStructures {
 
 	public static final RegistryObject<YPosStructure> CELEVIAN_LOTTO_BALLOON = register("celevian_lotto_balloon", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "celeve/celevian_lotto_balloon/main_pool"), 6, 26);
 	public static final RegistryObject<GenericAoAStructure> TOY_TOWER = register("toy_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "celeve/toy_tower/main_pool"), 10, 32);
+	public static final RegistryObject<AboveSurfaceStructure> COMPASS_RUNE_SHRINE = register("compass_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "celeve/compass_rune_shrine/compass_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> CREEPER_HQ = register("creeper_hq", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "creeponia/creeper_hq/main_pool"), 12, 37);
 	public static final RegistryObject<GenericAoAStructure> CREEPONIA_BANK = register("creeponia_bank", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "creeponia/creeponia_bank/main_pool"), 8, 32);
@@ -92,13 +98,16 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> GARDEN_CASTLE = register("garden_castle", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "gardencia/garden_castle/main_pool"), 12, 32);
 	public static final RegistryObject<GenericAoAStructure> LOTTO_SKY_FLOWER = register("lotto_sky_flower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "gardencia/lotto_sky_flower/main_pool"), 12, 32);
 	public static final RegistryObject<GenericAoAStructure> WIZARD_FLOWER = register("wizard_flower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "gardencia/wizard_flower/main_pool"), 10, 26);
+	public static final RegistryObject<AboveSurfaceStructure> KINETIC_RUNE_SHRINE = register("kinetic_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "gardencia/kinetic_rune_shrine/kinetic_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> HAUNTED_MAZE = register("haunted_maze", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "greckon/haunted_maze/main_pool"), 10, 32);
 	public static final RegistryObject<GenericAoAStructure> HAUNTED_LOTTO_ROCK = register("haunted_lotto_rock", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "greckon/haunted_lotto_rock/main_pool"), 8, 24);
 	public static final RegistryObject<GenericAoAStructure> FACELESS_TREE = register("faceless_tree", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "greckon/faceless_tree/main_pool"), 8, 20);
+	public static final RegistryObject<AboveSurfaceStructure> STORM_RUNE_SHRINE = register("storm_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "greckon/storm_rune_shrine/storm_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<YPosStructure> FLOATING_LOTTO_FOUNTAIN = register("floating_lotto_fountain", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "haven/floating_lotto_fountain/main_pool"), 10, 26);
 	public static final RegistryObject<GenericAoAStructure> GUARDIAN_TOWER = register("guardian_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "haven/guardian_tower/main_pool"), 12, 40);
+	public static final RegistryObject<AboveSurfaceStructure> STRIKE_RUNE_SHRINE = register("strike_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "haven/strike_rune_shrine/strike_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> CHARGING_PADS = register("charging_pads", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/charging_pads/main_pool"), 10, 36);
 	public static final RegistryObject<GenericAoAStructure> ENFORCER_TOWER = register("enforcer_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/enforcer_tower/main_pool"), 6, 26);
@@ -106,11 +115,13 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> IRO_PILLAR = register("iro_pillar", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/iro_pillar/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> MECHYON_TEMPLE = register("mechyon_temple", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/mechyon_temple/main_pool"), 6, 20);
 	public static final RegistryObject<GenericAoAStructure> PROFESSORS_LAB = register("professors_lab", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/professors_lab/main_pool"), 8, 24);
+	public static final RegistryObject<AboveSurfaceStructure> ENERGY_RUNE_SHRINE = register("energy_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "iromine/energy_rune_shrine/energy_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<OceanFloorStructure> AMPHIBIYTE_COVE = register("amphibiyte_cove", () -> new OceanFloorStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/amphibiyte_cove/main_pool"), 8, 32);
 	public static final RegistryObject<OceanFloorStructure> AQUATIC_CASTLE = register("aquatic_castle", () -> new OceanFloorStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/aquatic_castle/main_pool"), 12, 40);
 	public static final RegistryObject<OceanFloorStructure> DRACYON_FOUNTAIN = register("dracyon_fountain", () -> new OceanFloorStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/dracyon_fountain/main_pool"), 10, 36);
 	public static final RegistryObject<OceanFloorStructure> DROWNED_LOTTO_STAND = register("drowned_lotto_stand", () -> new OceanFloorStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/drowned_lotto_stand/main_pool"), 8, 24);
+	public static final RegistryObject<YPosStructure> WATER_RUNE_SHRINE = register("water_rune_shrine", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lborean/water_rune_shrine/water_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<YPosStructure> BONEY_DUNGEON = register("boney_dungeon", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lelyetia/boney_dungeon/main_pool"), 8, 24);
 	public static final RegistryObject<GenericAoAStructure> GRAW_PILLAR = register("graw_pillar", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lelyetia/graw_pillar/main_pool"), 10, 30);
@@ -125,20 +136,11 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> OPTERYX_NEST = register("opteryx_nest", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "precasia/opteryx_nest/main_pool"), 8, 24);
 	public static final RegistryObject<GenericAoAStructure> SKELETAL_ARMY_ARENA = register("skeletal_army_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "precasia/skeletal_army_arena/main_pool"), 10, 36);
 	public static final RegistryObject<YPosStructure> SPINOLEDON_DEN = register("spinoledon_den", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "precasia/spinoledon_den/main_pool"), 8, 24);
+	public static final RegistryObject<AboveSurfaceStructure> LIFE_RUNE_SHRINE = register("life_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "precasia/life_rune_shrine/life_rune_shrine"), 8, 16);
 
-	public static final RegistryObject<YPosStructure> LUNAR_BANK = register("lunar_bank", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_bank/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_CREATION_PLATFORM = register("lunar_creation_platform", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_creation_platform/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_FOOD_MARKET = register("lunar_food_market", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_food_market/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_GARDEN = register("lunar_garden", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_garden/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_HERBAL_HOUSE = register("lunar_herbal_house", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_herbal_house/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_LOTTO_PLATFORM = register("lunar_lotto_platform", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_lotto_platform/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_MAZE = register("lunar_maze", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_maze/main_pool"), 14, 40);
-	public static final RegistryObject<YPosStructure> LUNAR_PRISON = register("lunar_prison", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_prison/main_pool"), 16, 40);
-	public static final RegistryObject<YPosStructure> LUNARADE_STAND = register("lunarade_stand", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunarade_stand/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> OBSERVERS_EYE = register("observers_eye", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/observers_eye/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> SPACE_ARENA = register("space_arena", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/space_arena/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> SPELLBINDER_HOUSE = register("spellbinder_house", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/spellbinder_house/main_pool"), 12, 40);
-	public static final RegistryObject<YPosStructure> ZARG_PLANETOID = register("zarg_planetoid", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/zarg_planetoid/main_pool"), 12, 40);
+	public static final RegistryObject<YPosStructure> ZAL_PRISON_CAMP = register("zal_prison_camp", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/zal_prison_camp/main_pool"), 10, 32);
+	public static final RegistryObject<YPosStructure> STRANDED_LOTTOMAN = register("stranded_lottoman", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/stranded_lottoman/main_pool"), 10, 32);
+	public static final RegistryObject<YPosStructure> LUNAR_OASIS = register("lunar_oasis", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_oasis/main_pool"), 10, 32);
 
 	public static final RegistryObject<UndergroundCaveStructure> FUNGSHROOM = register("fungshroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/fungshroom/main_pool"), 8, 32);
 	public static final RegistryObject<UndergroundCaveStructure> GORB_VILLAGE = register("gorb_village", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/gorb_village/paths"), 20, 40);
@@ -146,6 +148,7 @@ public class AoAStructures {
 	public static final RegistryObject<UndergroundCaveStructure> MYSTIC_LOTTO_SHROOM = register("mystic_lotto_shroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/mystic_lotto_shroom/main_pool"), 8, 32);
 	public static final RegistryObject<UndergroundCaveStructure> RUNIC_ARENA = register("runic_arena", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_arena/main_pool"), 14, 40);
 	public static final RegistryObject<UndergroundCaveStructure> RUNIC_PORTAL_HOLLOW = register("runic_portal_hollow", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_portal_hollow/main_pool"), 12, 40);
+	public static final RegistryObject<AboveSurfaceStructure> DISTORTION_RUNE_SHRINE = register("distortion_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "mysterium/distortion_rune_shrine/distortion_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> CLUNKHEAD_ARENA = register("clunkhead_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/clunkhead_arena/main_pool"), 10, 36);
 	public static final RegistryObject<GenericAoAStructure> RUNE_RANDOMISATION_STATION = register("rune_randomisation_station", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/rune_randomisation_station/main_pool"), 8, 26);
@@ -156,6 +159,12 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> RUNIC_TOWER = register("runic_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/runic_tower/main_pool"), 8, 30);
 	public static final RegistryObject<GenericAoAStructure> SPECTRAL_CAGE = register("spectral_cage", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/spectral_cage/main_pool"), 8, 24);
 
+	public static final RegistryObject<GenericAoAStructure> ARCHER_OUTPOST = register("archer_outpost", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "shyrelands/archer_outpost/main_pool"), 10, 32);
+	public static final RegistryObject<GenericAoAStructure> CRAE_STATUE = register("crae_statue", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "shyrelands/crae_statue/main_pool"), 24, 40);
+	public static final RegistryObject<GenericAoAStructure> SHYRE_BANK_STAND = register("shyre_bank_stand", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "shyrelands/shyre_bank_stand/main_pool"), 10, 32);
+	public static final RegistryObject<GenericAoAStructure> LUXOCRON_DUNGEON = register("luxocron_dungeon", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "shyrelands/luxocron_dungeon/main_pool"), 10, 32);
+	public static final RegistryObject<YPosStructure> SHYRE_PILLAR = register("shyre_pillar", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "shyrelands/shyre_pillar/main_pool"), 6, 12);
+
 	public static final RegistryObject<GenericAoAStructure> CELL_TOWER = register("cell_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/cell_tower/main_pool"), 12, 40);
 	public static final RegistryObject<GenericAoAStructure> CONTROL_TOWER = register("control_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/control_tower/main_pool"), 8, 28);
 	public static final RegistryObject<GenericAoAStructure> DESTROYED_STORE = register("destroyed_store", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/destroyed_store/main_pool"), 8, 24);
@@ -163,6 +172,7 @@ public class AoAStructures {
 	public static final RegistryObject<GenericAoAStructure> OBSERVATION_TOWER = register("observation_tower", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/observation_tower/main_pool"), 8, 26);
 	public static final RegistryObject<GenericAoAStructure> VOX_LOTTO_OUTPOST = register("vox_lotto_outpost", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/vox_lotto_outpost/main_pool"), 8, 24);
 	public static final RegistryObject<GenericAoAStructure> VOXXULON_BEACON = register("voxxulon_beacon", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/voxxulon_beacon/main_pool"), 10, 32);
+	public static final RegistryObject<AboveSurfaceStructure> POISON_RUNE_SHRINE = register("poison_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "vox_ponds/poison_rune_shrine/poison_rune_shrine"), 8, 16);
 
 	public static final RegistryObject<OneTimeStructure> NOWHERE_HUB = register("nowhere_hub", () -> new OneTimeStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "nowhere/hub/main_pool"), 0, 1);
 
@@ -203,6 +213,8 @@ public class AoAStructures {
 
 	public static class Configured {
 		private static final StructureFeature<?, ? extends Structure<?>> NETHENGEIC_PIT = register("nethengeic_pit", AoAStructures.NETHENGEIC_PIT.get().configured(new IntRangeConfig(25, 35)));
+		private static final StructureFeature<?, ? extends Structure<?>> FIRE_RUNE_SHRINE = register("fire_rune_shrine", AoAStructures.FIRE_RUNE_SHRINE.get().configured(new IntRangeConfig(25, 100)));
+		private static final StructureFeature<?, ? extends Structure<?>> WIND_RUNE_SHRINE = register("wind_rune_shrine", AoAStructures.WIND_RUNE_SHRINE.get().configured(new IntRangeConfig(20, 30)));
 		private static final StructureFeature<?, ? extends Structure<?>> RUINED_TELEPORTER_FRAME = register("ruined_teleporter_frame", AoAStructures.RUINED_TELEPORTER_FRAME.get().configured(new IntRangeConfig(10, 20, true)));
 
 		public static void postInit() {}
@@ -250,9 +262,13 @@ public class AoAStructures {
 
 		if (biomeTypes.contains(BiomeDictionary.Type.OVERWORLD)) {
 			structures.add(() -> Configured.RUINED_TELEPORTER_FRAME);
+
+			if (biomeTypes.contains(BiomeDictionary.Type.MOUNTAIN))
+				structures.add(() -> Configured.WIND_RUNE_SHRINE);
 		}
 		else if (biomeTypes.contains(BiomeDictionary.Type.NETHER)) {
 			structures.add(() -> Configured.NETHENGEIC_PIT);
+			structures.add(() -> Configured.FIRE_RUNE_SHRINE);
 		}
 	}
 }

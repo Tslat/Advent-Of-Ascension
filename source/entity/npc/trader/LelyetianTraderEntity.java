@@ -1,20 +1,26 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class LelyetianTraderEntity extends AoATrader {
-	public LelyetianTraderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 4).cost(AoAItems.ZHINX_DUST).xp(3),
+					BuildableTrade.trade(AoABlocks.LELYETIAN_GLASS, 14).cost(AoAItems.COPPER_COIN, 10).xp(7),
+					BuildableTrade.trade(AoABlocks.LELYETIAN_GLASS, 64).cost(AoAItems.SILVER_COIN, 2).xp(35))
+			.trades(4,
+					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5),
+					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5)).build();
+
+	public LelyetianTraderEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -23,12 +29,9 @@ public class LelyetianTraderEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.LELYETIA.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), new ItemStack(AoAItems.YELLOW_SPORES.get(), 5), new ItemStack(AoAWeapons.GAUGE_RIFLE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), new ItemStack(AoAItems.ORANGE_SPORES.get(), 5), new ItemStack(AoAWeapons.GAUGE_RIFLE.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.ZHINX_DUST.get()), new ItemStack(AoAItems.COPPER_COIN.get(), 4)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoABlocks.LELYETIAN_GLASS.get(), 64)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 10), new ItemStack(AoABlocks.LELYETIAN_GLASS.get(), 14)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

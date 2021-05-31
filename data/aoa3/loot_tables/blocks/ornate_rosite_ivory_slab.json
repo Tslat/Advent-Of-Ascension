@@ -6,7 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "name": "aoa3:ornate_rosite_ivory_slab"
         }
       ],

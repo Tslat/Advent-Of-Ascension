@@ -46,7 +46,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:lelyetian_caster",
+        "type": "aoa3:lelyetian_warrior",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -58,21 +58,21 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:tracker",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:grobbler",
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:lelyetian_warrior",
+        "type": "aoa3:lelyetian_caster",
         "weight": 20,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tracker",
-        "weight": 20,
-        "minCount": 0,
         "maxCount": 1
       }
     ],
@@ -92,16 +92,16 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:glaring_pixon",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 4
-      },
-      {
         "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:glaring_pixon",
+        "weight": 12,
+        "minCount": 1,
+        "maxCount": 4
       }
     ],
     "water_creature": [],

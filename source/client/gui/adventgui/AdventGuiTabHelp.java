@@ -28,7 +28,7 @@ public class AdventGuiTabHelp extends Screen {
 	protected AdventGuiTabHelp() {
 		super(new TranslationTextComponent("gui.aoa3.adventGui.help"));
 
-		tipNumber = RandomUtil.randomNumberUpTo(14);
+		tipNumber = RandomUtil.randomNumberUpTo(12);
 	}
 
 	@Override

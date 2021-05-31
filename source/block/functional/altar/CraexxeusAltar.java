@@ -6,10 +6,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.CraexxeusEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class CraexxeusAltar extends BossAltarBlock {
 	public CraexxeusAltar() {
@@ -23,9 +25,14 @@ public class CraexxeusAltar extends BossAltarBlock {
 		int offsetX = player.getRandom().nextBoolean() ? -11 : 11;
 		int offsetZ = player.getRandom().nextBoolean() ? -11 : 11;
 
-		craexxeus.moveTo(blockPos.getX() + offsetX, blockPos.getY(), blockPos.getZ() + offsetZ, 0, 0);
+		craexxeus.moveTo(blockPos.getX() + offsetX, blockPos.getY() + 5, blockPos.getZ() + offsetZ, 0, 0);
 		player.level.addFreshEntity(craexxeus);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.craexxeus.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.SHYRELANDS.key);
 	}
 
 	@Override

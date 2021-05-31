@@ -1,0 +1,7 @@
+{
+  "config": {
+    "min": 80,
+    "max": 110
+  },
+  "type": "aoa3:water_rune_shrine"
+}

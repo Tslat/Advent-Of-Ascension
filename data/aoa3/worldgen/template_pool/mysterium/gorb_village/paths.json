@@ -1,0 +1,834 @@
+{
+  "name": "aoa3:mysterium/gorb_village/paths",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_straight",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_straight_up",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_bend_left",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_bend_right",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_bend_up_left",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:mysterium/gorb_village/path_bend_up_right",
+        "processors": {
+          "processors": [
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:blue_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:green_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:orange_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:purple_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "aoa3:yellow_glowshroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:red_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:brown_mushroom"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "probability": 0.1,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                },
+                {
+                  "output_state": {
+                    "Name": "minecraft:air"
+                  },
+                  "input_predicate": {
+                    "block": "minecraft:cobblestone",
+                    "predicate_type": "minecraft:block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            },
+            {
+              "rules": [
+                {
+                  "output_state": {
+                    "Name": "aoa3:fungal_rock"
+                  },
+                  "input_predicate": {
+                    "block": "aoa3:fungal_dirt",
+                    "probability": 0.35,
+                    "predicate_type": "minecraft:random_block_match"
+                  },
+                  "location_predicate": {
+                    "predicate_type": "minecraft:always_true"
+                  }
+                }
+              ],
+              "processor_type": "minecraft:rule"
+            }
+          ]
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

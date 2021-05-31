@@ -47,7 +47,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:runicorn",
+        "type": "aoa3:bouncer",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -59,7 +59,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:bouncer",
+        "type": "aoa3:runicorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

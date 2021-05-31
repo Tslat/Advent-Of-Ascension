@@ -1,5 +1,6 @@
 package net.tslat.aoa3.block.functional.light;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -15,13 +16,14 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.List;
 
-public class VoxLight extends LightBlock {
+public class VoxLight extends Block {
 	public VoxLight() {
-		super(MaterialColor.TERRACOTTA_GREEN, Material.GLASS, 0.6f, 1.2f, 8);
+		super(new BlockUtil.CompactProperties(Material.GLASS, MaterialColor.TERRACOTTA_GREEN).stats(0.6f, 1.2f).light(8).get());
 	}
 
 	@Override

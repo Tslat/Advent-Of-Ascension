@@ -15,7 +15,43 @@
         "Name": "minecraft:air"
       },
       "structures": {
-        "structures": {}
+        "structures": {
+          "aoa3:gorb_village": {
+            "spacing": 40,
+            "separation": 20,
+            "salt": 2060447634
+          },
+          "aoa3:mushroom_spider_cave": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 1703926404
+          },
+          "aoa3:poison_rune_shrine": {
+            "spacing": 16,
+            "separation": 8,
+            "salt": 1430782666
+          },
+          "aoa3:mystic_lotto_shroom": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 1941286008
+          },
+          "aoa3:runic_portal_hollow": {
+            "spacing": 40,
+            "separation": 12,
+            "salt": 97879083
+          },
+          "aoa3:runic_arena": {
+            "spacing": 40,
+            "separation": 14,
+            "salt": 1114327163
+          },
+          "aoa3:fungshroom": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 1647855778
+          }
+        }
       },
       "noise": {
         "top_slide": {

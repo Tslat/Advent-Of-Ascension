@@ -1,22 +1,30 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAArmour;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class GorbEngineerEntity extends AoATrader {
-	public GorbEngineerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.SILVER_COIN).cost(AoAItems.POWER_CORE).xp(15).stock(12),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 8).cost(AoAItems.SCRAP_METAL).xp(5))
+			.trades(4,
+					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.helmet).cost(AoAItems.PHANTASM, 10).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.chestplate).cost(AoAItems.PHANTASM, 15).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.leggings).cost(AoAItems.PHANTASM, 12).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.boots).cost(AoAItems.PHANTASM, 8).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.trade(AoAWeapons.ULTRAFLAME).cost(AoAItems.GOLD_COIN, 3).xp(75).stock(5)).build();
+
+	public GorbEngineerEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -30,14 +38,9 @@ public class GorbEngineerEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.MYSTERIUM.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 3), new ItemStack(AoAWeapons.ULTRAFLAME.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PHANTASM.get(), 10), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PHANTASM_ARMOUR.helmet.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PHANTASM.get(), 15), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PHANTASM_ARMOUR.chestplate.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PHANTASM.get(), 12), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PHANTASM_ARMOUR.leggings.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PHANTASM.get(), 8), new ItemStack(AoAItems.SILVER_COIN.get(), 2), new ItemStack(AoAArmour.PHANTASM_ARMOUR.boots.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.POWER_CORE.get()), new ItemStack(AoAItems.SILVER_COIN.get(), 1)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SCRAP_METAL.get()), new ItemStack(AoAItems.COPPER_COIN.get(), 8)));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

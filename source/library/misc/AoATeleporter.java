@@ -158,7 +158,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		int posX = (int)Math.floor(entity.getX());
 		int posY = (int)Math.floor(entity.getY());
 		int posZ = (int)Math.floor(entity.getZ());
-		ChunkPos chunkPos = world.getChunk(new BlockPos(posX, posY, posZ)).getPos();
+		ChunkPos chunkPos = new ChunkPos(new BlockPos(posX, posY, posZ));
 		Long chunkPosLong = ChunkPos.asLong(chunkPos.x, chunkPos.z);
 		HashMap<Long, BlockPos> cachedPortalMap = getCachedPortalMap();
 

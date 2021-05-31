@@ -1,9 +1,6 @@
 package net.tslat.aoa3.entity.boss;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
@@ -84,6 +81,11 @@ public class GyroEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
+	public boolean startRiding(Entity entity, boolean force) {
 		return false;
 	}
 

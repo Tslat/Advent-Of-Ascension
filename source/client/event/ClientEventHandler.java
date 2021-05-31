@@ -62,11 +62,13 @@ public class ClientEventHandler {
 			if (tick > 24000)
 				tick = 0;
 
-			if (ScreenOverlayRenderer.overlayTicks > 0)
-				--ScreenOverlayRenderer.overlayTicks;
+			if (!Minecraft.getInstance().isPaused()) {
+				if (ScreenOverlayRenderer.overlayTicks > 0)
+					--ScreenOverlayRenderer.overlayTicks;
 
-			if (RecoilRenderer.recoilTicksRemaining > 0)
-				--RecoilRenderer.recoilTicksRemaining;
+				if (RecoilRenderer.recoilTicksRemaining > 0)
+					--RecoilRenderer.recoilTicksRemaining;
+			}
 
 			ClientPlayerEntity player = Minecraft.getInstance().player;
 

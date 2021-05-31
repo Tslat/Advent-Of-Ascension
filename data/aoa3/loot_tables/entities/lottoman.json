@@ -2,10 +2,12 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
+      "name": "base_drops",
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:loot_table",
+          "weight": 100,
           "name": "aoa3:entities/base_trader_drops"
         }
       ]

@@ -34,6 +34,7 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrix);
 		super.render(matrix, mouseX, mouseY, partialTicks);
+		renderTooltip(matrix, mouseX, mouseY);
 	}
 
 	@Override
@@ -74,7 +75,6 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 
 			if (stack.isEmpty()) {
 				ItemStack coinStack = new ItemStack(BankerContainer.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
-
 				IBakedModel model = mc.getItemRenderer().getModel(coinStack, null, null);
 
 				matrix.pushPose();

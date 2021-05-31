@@ -10,11 +10,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.GrawEntity;
 import net.tslat.aoa3.entity.mob.lelyetia.FlyeEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class GrawAltar extends BossAltarBlock {
 	public GrawAltar() {
@@ -47,6 +49,11 @@ public class GrawAltar extends BossAltarBlock {
 		graw.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(graw);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.graw.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.LELYETIA.key);
 	}
 
 	@Override

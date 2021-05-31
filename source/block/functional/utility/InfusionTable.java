@@ -28,7 +28,7 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class InfusionTable extends Block {
 	public InfusionTable() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_PURPLE, 10, 15, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());
 	}
 
 	@Override

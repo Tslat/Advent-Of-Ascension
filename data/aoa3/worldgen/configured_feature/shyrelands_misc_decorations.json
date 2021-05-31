@@ -1,0 +1,45 @@
+{
+  "config": {
+    "feature": {
+      "config": {
+        "feature": {
+          "config": {
+            "feature": {
+              "config": {
+                "spawn_entities": false,
+                "processors": {
+                  "processors": []
+                },
+                "templates": [
+                  "aoa3:shyrelands/decorations/blade_of_the_heavens",
+                  "aoa3:shyrelands/decorations/ruined_archer_outpost",
+                  "aoa3:shyrelands/decorations/ruined_house1",
+                  "aoa3:shyrelands/decorations/ruined_house2",
+                  "aoa3:shyrelands/decorations/ruined_house2"
+                ]
+              },
+              "type": "aoa3:structure_piece"
+            },
+            "decorator": {
+              "config": {},
+              "type": "minecraft:heightmap_world_surface"
+            }
+          },
+          "type": "minecraft:decorated"
+        },
+        "decorator": {
+          "config": {},
+          "type": "minecraft:square"
+        }
+      },
+      "type": "minecraft:decorated"
+    },
+    "decorator": {
+      "config": {
+        "chance": 600
+      },
+      "type": "minecraft:chance"
+    }
+  },
+  "type": "minecraft:decorated"
+}

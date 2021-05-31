@@ -34,7 +34,15 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 
 	@Override
 	public ArrayList<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> state.getBlock() instanceof IGrowable && ((IGrowable)state.getBlock()).isValidBonemealTarget(caster.level, pos.immutable(), state, false));
+		ArrayList<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> {
+			if (!(state.getBlock() instanceof IGrowable))
+				return false;
+
+			if (((IGrowable)state.getBlock()).isValidBonemealTarget(caster.level, pos.immutable(), state, false))
+				return false;
+
+			return WorldUtil.canModifyBlock(caster.level, pos, caster, staff);
+		});
 
 		return blocks.isEmpty() ? null : blocks;
 	}
@@ -47,7 +55,7 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
-		for (BlockPos pos : (ArrayList<BlockPos>)args) {
+		for (BlockPos pos : args) {
 			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level, pos);
 		}
 	}

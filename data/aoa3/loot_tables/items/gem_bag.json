@@ -2,117 +2,44 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "tokens",
+      "name": "gems",
       "rolls": {
-        "min": 7.0,
-        "max": 15.0,
+        "min": 1.0,
+        "max": 4.0,
         "type": "minecraft:uniform"
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:abyss_tokens"
+          "name": "minecraft:diamond"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:baron_tokens"
+          "name": "minecraft:emerald"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:borean_tokens"
+          "name": "minecraft:lapis_lazuli"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:candyland_tokens"
+          "name": "minecraft:prismarine_crystals"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:celeve_tokens"
+          "name": "minecraft:quartz"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:creeponia_tokens"
+          "name": "aoa3:amethyst"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:crystevia_tokens"
+          "name": "aoa3:jade"
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:deeplands_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:dustopia_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:gardencia_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:greckon_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:haven_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:iromine_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:lelyetia_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:lunar_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:mysterium_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:nether_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:precasian_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:runandor_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:shyrelands_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:vox_ponds_tokens"
+          "name": "aoa3:sapphire"
         }
       ]
     }

@@ -2,16 +2,15 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "supplies",
+      "name": "suppies",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 300
+          "weight": 285
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -26,7 +25,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "quality": 5,
           "functions": [
             {
@@ -42,22 +40,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:haven_tokens"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 2,
           "quality": 3,
           "name": "aoa3:voliant_heart"
         }

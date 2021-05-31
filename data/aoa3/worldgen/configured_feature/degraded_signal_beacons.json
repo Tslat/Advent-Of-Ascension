@@ -10,6 +10,9 @@
                   "config": {
                     "spawn_entities": false,
                     "require_ground": false,
+                    "processors": {
+                      "processors": []
+                    },
                     "templates": [
                       "aoa3:vox_ponds/decorations/hanging_degraded_signal_beacon"
                     ]

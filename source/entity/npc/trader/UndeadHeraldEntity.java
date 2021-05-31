@@ -1,30 +1,30 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.MerchantOffer;
+import net.minecraft.item.MerchantOffers;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class UndeadHeraldEntity extends AoATrader {
-	public UndeadHeraldEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoABlocks.CREATION_BANNER).cost(AoAItems.SILVER_COIN, 10).xp(20).stock(9),
+					BuildableTrade.trade(AoABlocks.ENERGY_BANNER).cost(AoAItems.SILVER_COIN, 10).xp(20).stock(9),
+					BuildableTrade.trade(AoABlocks.SOUL_BANNER).cost(AoAItems.SILVER_COIN, 10).xp(20).stock(9),
+					BuildableTrade.trade(AoABlocks.BLOOD_BANNER).cost(AoAItems.SILVER_COIN, 10).xp(20).stock(9)).build();
+
+	public UndeadHeraldEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
-	}
-
-	@Override
-	protected int getSpawnChanceFactor() {
-		return 100;
-	}
-
-	@Override
-	protected boolean isFixedTradesList() {
-		return true;
 	}
 
 	@Override
@@ -38,79 +38,83 @@ public class UndeadHeraldEntity extends AoATrader {
 	}
 
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		switch (AoADimensions.getDim(level.dimension())) {
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel == 1 ? 4 : 2;
+	}
+
+	@Override
+	protected void updateTrades() {
+		Int2ObjectMap<VillagerTrades.ITrade[]> trades = getTradesMap();
+
+		if (trades != null && !trades.isEmpty() && getVillagerData().getLevel() == 1) {
+			MerchantOffers offers = getOffers();
+			MerchantOffer additionalOffer = getAdditionalBannerTrade(level);
+
+			addOffersFromItemListings(offers, trades.get(1), getMaxTradesToUnlock(getVillagerData().getLevel()));
+
+			if (additionalOffer != null)
+				offers.add(additionalOffer);
+		}
+	}
+
+	@Nullable
+	@Override
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
+	}
+
+	private MerchantOffer getAdditionalBannerTrade(World world) {
+		AoADimensions.AoADimension dim = AoADimensions.getDim(world.dimension());
+
+		if (dim == null)
+			return null;
+
+		switch (dim) {
 			case ABYSS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.ABYSS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.SHADOW_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.SHADOW_BANNER.get()), 9, 20, 0.05f);
 			case BARATHOS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.BARON_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.BARON_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.BARON_BANNER.get()), 9, 20, 0.05f);
 			case CANDYLAND:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CANDYLAND_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.CANDY_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.CANDY_BANNER.get()), 9, 20, 0.05f);
 			case CELEVE:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CELEVE_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.CLOWN_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.CLOWN_BANNER.get()), 9, 20, 0.05f);
 			case CREEPONIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CREEPONIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.CREEPY_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.CREEPY_BANNER.get()), 9, 20, 0.05f);
 			case CRYSTEVIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.CRYSTAL_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.CRYSTAL_BANNER.get()), 9, 20, 0.05f);
 			case DEEPLANDS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DEEPLANDS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.DEEP_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.DEEP_BANNER.get()), 9, 20, 0.05f);
 			case DUSTOPIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.DUSTOPIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.DUSTOPIAN_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.DUSTOPIAN_BANNER.get()), 9, 20, 0.05f);
 			case GARDENCIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GARDENCIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.ROSIDIAN_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.ROSIDIAN_BANNER.get()), 9, 20, 0.05f);
 			case GRECKON:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GRECKON_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.HAUNTED_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.HAUNTED_BANNER.get()), 9, 20, 0.05f);
 			case HAVEN:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.HAVEN_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.UTOPIAN_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.UTOPIAN_BANNER.get()), 9, 20, 0.05f);
 			case IROMINE:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.IROMINE_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.MECHA_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.MECHA_BANNER.get()), 9, 20, 0.05f);
 			case LELYETIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LELYETIA_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.LELYETIAN_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.LELYETIAN_BANNER.get()), 9, 20, 0.05f);
 			case LUNALUS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.LUNAR_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.LUNAR_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.LUNAR_BANNER.get()), 9, 20, 0.05f);
 			case MYSTERIUM:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.MYSTERIUM_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.FUNGAL_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.FUNGAL_BANNER.get()), 9, 20, 0.05f);
 			case NETHER:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.NETHER_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.NETHER_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.NETHER_BANNER.get()), 9, 20, 0.05f);
 			case OVERWORLD:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.VOID_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.VOID_BANNER.get()), 9, 20, 0.05f);
 			case PRECASIA:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PRECASIAN_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.ANCIENT_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.ANCIENT_BANNER.get()), 9, 20, 0.05f);
 			case RUNANDOR:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.RUNANDOR_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.RUNIC_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.RUNIC_BANNER.get()), 9, 20, 0.05f);
 			case SHYRELANDS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SHYRELANDS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.SHYRE_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.SHYRE_BANNER.get()), 9, 20, 0.05f);
 			case VOX_PONDS:
-				newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.VOX_PONDS_TOKENS.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.VOX_BANNER.get(), 1), 0, 9999));
-				break;
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  10), new ItemStack(AoABlocks.VOX_BANNER.get()), 9, 20, 0.05f);
 			case NOWHERE:
 			default:
-				break;
+				return null;
 		}
-
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.CREATION_BANNER.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.ENERGY_BANNER.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.SOUL_BANNER.get(), 1), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(AoABlocks.BLOOD_BANNER.get(), 1), 0, 9999));
 	}
 }

@@ -2,6 +2,7 @@ package net.tslat.aoa3.block.generation.misc;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -20,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class DimensionalFabric extends Block {
 	public DimensionalFabric() {
-		super(BlockUtil.generateBlockProperties(Material.BARRIER, MaterialColor.COLOR_BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, null).isValidSpawn((state, blockReader, pos, entityType) -> false));
+		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.COLOR_BLACK).unbreakable().noSpawns().sound(SoundType.WOOL).get());
 	}
 
 	@Override

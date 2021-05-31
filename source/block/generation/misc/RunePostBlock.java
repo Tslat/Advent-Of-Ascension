@@ -1,7 +1,6 @@
 package net.tslat.aoa3.block.generation.misc;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.tslat.aoa3.item.misc.RuneItem;
@@ -15,7 +14,7 @@ public class RunePostBlock extends Block {
 	private final float xp;
 
 	public RunePostBlock(int level, float xp, Supplier<RuneItem> runeItem) {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_BLACK, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.STONE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(10f, 15f).get());
 		this.lvl = level;
 		this.xp = xp;
 		this.rune = runeItem;

@@ -27,6 +27,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.misc.HeartStoneEntity;
 import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.util.EntityUtil;
@@ -173,5 +174,14 @@ public class EntityEvents {
 	public static void onEntityExploded(ExplosionEvent.Detonate ev) {
 		if (AoAConfig.SERVER.saveLootFromExplosions.get())
 			ev.getAffectedEntities().removeIf(entity -> entity instanceof ItemEntity && entity.tickCount < 20);
+
+		if (WorldUtil.isWorld(ev.getWorld(), AoADimensions.NOWHERE.key))
+			ev.getAffectedBlocks().clear();
+	}
+
+	@SubscribeEvent
+	public static void livingConvert(LivingConversionEvent.Pre ev) {
+		if (ev.getEntityLiving() instanceof AoATrader)
+			ev.setCanceled(true);
 	}
 }

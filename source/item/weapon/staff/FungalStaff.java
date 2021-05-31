@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -48,13 +49,19 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 		for (int x = -2; x <= 2; x++) {
 			for (int y = -2; y <= 2; y++) {
 				for (int z = -2; z <= 2; z++) {
-					Block block = caster.level.getBlockState(checkPos.set(caster.getX() + x, caster.getY() + y, caster.getZ() + z)).getBlock();
+					BlockPos pos = new BlockPos(caster.getX() + x, caster.getY() + y, caster.getZ() + z);
+					BlockState state = caster.level.getBlockState(pos);
+					Block block = state.getBlock();
 
 					if (block == Blocks.GRASS_BLOCK) {
-						workablePositions.put(checkPos.immutable(), true);
+						if (WorldUtil.canModifyBlock(caster.level, pos, caster, staff))
+							workablePositions.put(pos, true);
 					}
 					else if (block instanceof MushroomBlock) {
-						workablePositions.put(checkPos.immutable(), false);
+						MushroomBlock mushroom = (MushroomBlock)block;
+
+						if (mushroom.isValidBonemealTarget(caster.level, pos, state, caster.level.isClientSide()) && WorldUtil.canModifyBlock(caster.level, pos, caster, staff))
+							workablePositions.put(pos, false);
 					}
 				}
 			}
@@ -67,19 +74,20 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 	public void cast(World world, ItemStack staff, LivingEntity caster, HashMap<BlockPos, Boolean> args) {
 		if (world instanceof ServerWorld) {
 			for (Map.Entry<BlockPos, Boolean> entry : args.entrySet()) {
+				BlockPos pos = entry.getKey();
+
 				if (entry.getValue()) {
-					world.setBlockAndUpdate(entry.getKey(), Blocks.MYCELIUM.defaultBlockState());
+					world.setBlockAndUpdate(pos, Blocks.MYCELIUM.defaultBlockState());
 				}
 				else {
-					BlockPos pos = entry.getKey();
 					BlockState state = world.getBlockState(pos);
 					MushroomBlock mushroom = (MushroomBlock)state.getBlock();
 
-					if (mushroom.isValidBonemealTarget(world, pos, state, false) && mushroom.isBonemealSuccess(world, random, pos, state))
+					if (mushroom.isBonemealSuccess(world, random, pos, state))
 						mushroom.performBonemeal((ServerWorld)world, random, pos, state);
 				}
 
-				world.levelEvent(2005, entry.getKey(), 0);
+				world.levelEvent(2005, pos, 0);
 			}
 		}
 	}

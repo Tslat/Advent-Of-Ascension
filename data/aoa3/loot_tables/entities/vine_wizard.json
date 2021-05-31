@@ -2,6 +2,17 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "name": "parent_table",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "weight": 100,
+          "name": "aoa3:worlds/gardencia"
+        }
+      ]
+    },
+    {
       "name": "loot",
       "rolls": 1,
       "entries": [
@@ -11,12 +22,10 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "name": "aoa3:tangle_staff"
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -30,7 +39,7 @@
           "name": "minecraft:vine"
         },
         {
-          "type": "minecraft:item",
+          "type": "minecraft:tag",
           "weight": 36,
           "functions": [
             {
@@ -40,18 +49,13 @@
                 "max": 3.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "aoa3:random_selection_from_tag",
-              "tag_type": "block",
-              "tag": "minecraft:small_flowers"
             }
           ],
-          "name": "minecraft:dandelion"
+          "name": "minecraft:small_flowers",
+          "expand": true
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -66,7 +70,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -78,15 +81,6 @@
             }
           ],
           "name": "aoa3:water_rune"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/gardencia"
         }
       ]
     }

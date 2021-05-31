@@ -34,7 +34,9 @@ public class KrorCaveStructure extends AoAStructureBase<IntRangeConfig> {
 						;
 					}
 
-					return chunkCenter.getY() > 13;
+					chunkCenter.move(Direction.DOWN, 12);
+
+					return chunkCenter.getY() > 0;
 				}
 
 				return false;

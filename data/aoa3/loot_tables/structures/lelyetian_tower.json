@@ -25,21 +25,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 3.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:lelyetia_tokens"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 7,
           "functions": [
             {

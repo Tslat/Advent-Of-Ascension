@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CrystalExtensionShrine extends Block {
 	public CrystalExtensionShrine() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE, SoundType.GLASS));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE).stats(10f, 15f).sound(SoundType.GLASS).get());
 	}
 
 	@Override

@@ -1,22 +1,32 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
+
 public class GorbArmsDealerEntity extends AoATrader {
-	public GorbArmsDealerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 2).cost(Items.ARROW))
+			.trades(2,
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 7).cost(AoAWeapons.RUNIC_BOMB).xp(5),
+					BuildableTrade.trade(AoAWeapons.GRENADE, 5).cost(AoAItems.SILVER_COIN).xp(15))
+			.trades(3,
+					BuildableTrade.trade(AoAWeapons.LASER_BLASTER).cost(AoAItems.GOLD_COIN, 3).xp(50).stock(5),
+					BuildableTrade.trade(AoAItems.WEAPON_PARTS).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(1)).build();
+
+	public GorbArmsDealerEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -30,12 +40,9 @@ public class GorbArmsDealerEntity extends AoATrader {
 		return !WorldUtil.isWorld(level, AoADimensions.MYSTERIUM.key);
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get()), new ItemStack(AoAWeapons.GRENADE.get(), 5)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAWeapons.RUNIC_BOMB.get()), new ItemStack(AoAItems.COPPER_COIN.get(), 7)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(Items.ARROW), new ItemStack(AoAItems.COPPER_COIN.get(), 2)));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 3), new ItemStack(AoAWeapons.LASER_BLASTER.get())));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GOLD_COIN.get(), 10), new ItemStack(AoAItems.WEAPON_PARTS.get())));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

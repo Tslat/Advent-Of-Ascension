@@ -16,6 +16,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
@@ -24,7 +25,7 @@ public class ToxicBlock extends Block {
 	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public ToxicBlock() {
-		super(BlockUtil.generateBlockProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN, 1.5f, 1, SoundType.SLIME_BLOCK));
+		super(new BlockUtil.CompactProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN).stats(1.5f, 1f).tool(ToolType.SHOVEL).sound(SoundType.SLIME_BLOCK).get());
 	}
 
 	@Override

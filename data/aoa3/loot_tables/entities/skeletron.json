@@ -65,21 +65,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 36,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 5.0,
-                "max": 32.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:precasian_tokens"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 40,
           "functions": [
             {

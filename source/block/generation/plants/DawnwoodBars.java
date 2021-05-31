@@ -10,13 +10,14 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class DawnwoodBars extends BidirectionalStackablePlant {
 	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 1D, 0.625D));
 
 	public DawnwoodBars() {
-		super(BlockUtil.generateBlockProperties(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_BLACK, 1, 0, SoundType.GRASS));
+		super(new BlockUtil.CompactProperties(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_BLACK).stats(1f, 0f).tool(ToolType.AXE).sound(SoundType.GRASS).get());
 	}
 
 	@Override

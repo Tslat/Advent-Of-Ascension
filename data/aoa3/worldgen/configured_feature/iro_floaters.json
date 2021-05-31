@@ -8,6 +8,9 @@
               "config": {
                 "spawn_entities": false,
                 "require_ground": false,
+                "processors": {
+                  "processors": []
+                },
                 "templates": [
                   "aoa3:iromine/decorations/iro_doubler",
                   "aoa3:iromine/decorations/iro_floater"

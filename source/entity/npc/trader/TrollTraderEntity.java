@@ -1,20 +1,27 @@
 package net.tslat.aoa3.entity.npc.trader;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
+
+import javax.annotation.Nullable;
 
 public class TrollTraderEntity extends AoATrader {
-	public TrollTraderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+			.trades(1,
+					BuildableTrade.trade(Blocks.SAND, 64).cost(AoAItems.COPPER_COIN, 10).xp(5).stock(64),
+					BuildableTrade.trade(Items.INK_SAC).cost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.trade(Items.PRISMARINE_SHARD, 4).cost(AoAItems.SILVER_COIN).xp(15),
+					BuildableTrade.trade(Items.PRISMARINE_CRYSTALS, 2).cost(AoAItems.SILVER_COIN).xp(15)).build();
+
+	public TrollTraderEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);
 	}
 
@@ -24,20 +31,13 @@ public class TrollTraderEntity extends AoATrader {
 	}
 
 	@Override
-	protected boolean isFixedTradesList() {
-		return true;
-	}
-
-	@Override
 	protected boolean isOverworldNPC() {
 		return true;
 	}
 
+	@Nullable
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 10), ItemStack.EMPTY, new ItemStack(Blocks.SAND, 64), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 1), ItemStack.EMPTY, new ItemStack(Items.PRISMARINE_SHARD, 4), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.SILVER_COIN.get(), 1), ItemStack.EMPTY, new ItemStack(Items.PRISMARINE_CRYSTALS, 2), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.COPPER_COIN.get(), 3), ItemStack.EMPTY, new ItemStack(Items.INK_SAC), 0, 9999));
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

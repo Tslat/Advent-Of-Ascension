@@ -11,25 +11,28 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.SkeletronEntity;
 import net.tslat.aoa3.entity.mob.precasia.*;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.Random;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.TERRACOTTA_GREEN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE).randomTicks());
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_GREEN).stats(35f, 1000f).randomTicks().get());
 	}
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		if (!player.level.isClientSide && player.level.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(pos).inflate(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
+		if (!player.level.isClientSide && WorldUtil.isWorld(player.level, AoADimensions.PRECASIA.key) && player.level.getEntitiesOfClass(MonsterEntity.class, new AxisAlignedBB(pos).inflate(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
 			SkeleElderEntity skeleElder = new SkeleElderEntity(player.level, pos, 0);
 
 			skeleElder.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -42,7 +45,7 @@ public class ArmyBlock extends BossAltarBlock {
 
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		if (!world.isClientSide && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AxisAlignedBB(pos).inflate(100)).isEmpty())
+		if (!world.isClientSide && WorldUtil.isWorld((IServerWorld)world, AoADimensions.PRECASIA.key) && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AxisAlignedBB(pos).inflate(100)).isEmpty())
 			world.addFreshEntity(new SkeleElderEntity(world, pos, 0));
 	}
 

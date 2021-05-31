@@ -1,25 +1,39 @@
 package net.tslat.aoa3.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class CrystalTraderEntity extends AoATrader {
-	public CrystalTraderEntity(EntityType<? extends CreatureEntity> entityType, World world) {
-		super(entityType, world);
-	}
+import javax.annotation.Nullable;
 
-	@Override
-	protected boolean isFixedTradesList() {
-		return true;
+public class CrystalTraderEntity extends AoATrader {
+	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new AoATrader.TradeListBuilder()
+			.trades(1,
+					AoATrader.BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.BLUE_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.GREEN_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.PURPLE_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.RED_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.WHITE_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.YELLOW_CRYSTAL).stock(9999))
+			.trades(2,
+					BuildableTrade.trade(AoAItems.BLUE_DRUSE).cost(AoAItems.BLUE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.trade(AoAItems.GREEN_DRUSE).cost(AoAItems.GREEN_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.trade(AoAItems.PURPLE_DRUSE).cost(AoAItems.PURPLE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.trade(AoAItems.RED_DRUSE).cost(AoAItems.RED_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.trade(AoAItems.WHITE_DRUSE).cost(AoAItems.WHITE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.trade(AoAItems.YELLOW_DRUSE).cost(AoAItems.YELLOW_CRYSTAL, 16).xp(15).stock(9999))
+			.trades(3,
+					BuildableTrade.trade(AoAWeapons.CRYSTAL_MAUL).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5),
+					BuildableTrade.trade(AoAWeapons.CRYSTAL_GREATBLADE).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5)).build();
+
+	public CrystalTraderEntity(EntityType<? extends AoATrader> entityType, World world) {
+		super(entityType, world);
 	}
 
 	@Override
@@ -28,20 +42,13 @@ public class CrystalTraderEntity extends AoATrader {
 	}
 
 	@Override
-	protected void getTradesList(final NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.BLUE_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GREEN_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PURPLE_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.RED_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.WHITE_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.YELLOW_CRYSTAL.get(), 1), ItemStack.EMPTY, new ItemStack(AoAItems.CRYSTEVIA_TOKENS.get(), 3), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.BLUE_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.BLUE_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.GREEN_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.GREEN_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.PURPLE_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.PURPLE_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.RED_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.RED_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.WHITE_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.WHITE_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.YELLOW_CRYSTAL.get(), 16), ItemStack.EMPTY, new ItemStack(AoAItems.YELLOW_DRUSE.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.RAINBOW_DRUSE.get(), 12), ItemStack.EMPTY, new ItemStack(AoAWeapons.CRYSTAL_MAUL.get()), 0, 9999));
-		newTradesList.add(new AoATraderRecipe(new ItemStack(AoAItems.RAINBOW_DRUSE.get(), 12), ItemStack.EMPTY, new ItemStack(AoAWeapons.CRYSTAL_GREATBLADE.get()), 0, 9999));
+	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+		return newProfessionLevel < 3 ? 6 : 2;
+	}
+
+	@Nullable
+	@Override
+	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+		return TRADES;
 	}
 }

@@ -12,16 +12,18 @@ import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class LunalusEvents {
 	public static void doPlayerTick(PlayerEntity pl) {
-		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
-			return;
+		boolean hasDistortingArtifact = ItemUtil.hasItemInHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get());
 
 		if (!pl.level.isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
-			if (pl.getY() <= -25)
+			if (pl.getY() <= -25 && !hasDistortingArtifact)
 				pl.teleportTo(pl.getX(), 350, pl.getZ());
 
 			if (!DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)pl))
 				pl.hurt(new DamageSource("suffocation").bypassArmor().bypassMagic(), 1f);
 		}
+
+		if (hasDistortingArtifact)
+			return;
 
 		if (pl.flyingSpeed < 0.05f)
 			pl.flyingSpeed = Math.min(0.05f, pl.flyingSpeed + 0.05f);

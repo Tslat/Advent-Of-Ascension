@@ -3,7 +3,6 @@ package net.tslat.aoa3.block.functional.misc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneTorchBlock;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +21,7 @@ public class DustopianLamp extends Block {
 	public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
 	public DustopianLamp() {
-		super(BlockUtil.generateBlockProperties(Material.GLASS, MaterialColor.COLOR_GRAY, 5f, 10f, SoundType.GLASS).lightLevel(state -> state.getValue(LIT) ? 14 : 0));
+		super(new BlockUtil.CompactProperties(Material.GLASS, MaterialColor.COLOR_GRAY).stats(5f, 10f).light(state -> state.getValue(LIT) ? 14 : 0).get());
 
 		registerDefaultState(defaultBlockState().setValue(LIT, false));
 	}

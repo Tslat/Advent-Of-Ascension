@@ -11,33 +11,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ToolType;
+import net.tslat.aoa3.util.BlockUtil;
 
 import java.util.Random;
 import java.util.function.Supplier;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class GrassBlock extends net.minecraft.block.GrassBlock {
 	protected final Supplier<Block> soilBlock;
 	protected final boolean growsInDark;
 
 	public GrassBlock(MaterialColor mapColour, Supplier<Block> soilBlock, boolean growsInDark) {
-		super(generateBlockProperties(mapColour));
+		this(mapColour, soilBlock, growsInDark, false);
+	}
+
+	public GrassBlock(MaterialColor mapColour, Supplier<Block> soilBlock, boolean growsInDark, boolean isStoneBased) {
+		super(new BlockUtil.CompactProperties(Material.GRASS, mapColour).stats(0.6f).sound(isStoneBased ? SoundType.NYLIUM : SoundType.GRASS).randomTicks().tool(ToolType.SHOVEL).get());
 
 		this.soilBlock = soilBlock;
 		this.growsInDark = growsInDark;
-	}
-
-	private static Properties generateBlockProperties(MaterialColor mapColour) {
-		Properties blockProperties = Properties.of(Material.GRASS, mapColour);
-
-		blockProperties.strength(0.6f);
-		blockProperties.sound(SoundType.GRASS);
-		blockProperties.randomTicks();
-		blockProperties.harvestTool(ToolType.SHOVEL);
-		blockProperties.harvestLevel(0);
-
-		return blockProperties;
 	}
 
 	public Supplier<Block> getSoilBlock() {

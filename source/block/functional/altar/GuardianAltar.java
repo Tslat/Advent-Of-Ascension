@@ -17,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.BlueGuardianEntity;
@@ -25,15 +26,19 @@ import net.tslat.aoa3.entity.boss.RedGuardianEntity;
 import net.tslat.aoa3.entity.boss.YellowGuardianEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class GuardianAltar extends Block {
 	public GuardianAltar() {
-		super(BlockUtil.generateBlockProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GREEN, BlockUtil.UNBREAKABLE_HARDNESS, BlockUtil.UNBREAKABLE_RESISTANCE));
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GREEN).stats(35f, 1000f).get());
 	}
 
 	@Override
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ItemStack heldStack = player.getItemInHand(hand);
+
+		if (!WorldUtil.isWorld(world, AoADimensions.HAVEN.key))
+			return ActionResultType.FAIL;
 
 		if (heldStack.getItem() == AoAItems.VOLIANT_HEART.get()) {
 			if (!world.isClientSide) {

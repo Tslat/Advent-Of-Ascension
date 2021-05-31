@@ -1,13 +1,32 @@
 {
   "conditions": [
     {
-      "condition": "aoa3:is_specific_table",
-      "table_ids": [
-        "minecraft:chests/bastion_bridge",
-        "minecraft:chests/bastion_hoglin_stable",
-        "minecraft:chests/bastion_other",
-        "minecraft:chests/end_city_treasure",
-        "minecraft:chests/nether_bridge"
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/bastion_bridge"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/bastion_hoglin_stable"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/bastion_other"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/bastion_treasure"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/end_city_treasure"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/nether_bridge"
+        }
       ]
     }
   ],

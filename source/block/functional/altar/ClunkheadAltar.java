@@ -12,11 +12,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.ClunkheadEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
@@ -56,6 +58,11 @@ public class ClunkheadAltar extends BossAltarBlock {
 		clunkhead.teleportTo(blockPos.getX() - 1, blockPos.above().getY() + 1, blockPos.getZ() - 1);
 		player.level.addFreshEntity(clunkhead);
 		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName()), blockPos);
+	}
+
+	@Override
+	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		return WorldUtil.isWorld(player.level, AoADimensions.RUNANDOR.key);
 	}
 
 	@Override

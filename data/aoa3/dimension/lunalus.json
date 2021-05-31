@@ -16,70 +16,20 @@
       },
       "structures": {
         "structures": {
-          "aoa3:spellbinder_house": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 180902932
+          "aoa3:stranded_lottoman": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 44891480
           },
-          "aoa3:zarg_planetoid": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 662014983
+          "aoa3:zal_prison_camp": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 1495962723
           },
-          "aoa3:space_arena": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 733665647
-          },
-          "aoa3:lunar_maze": {
-            "spacing": 40,
-            "separation": 14,
-            "salt": 220850375
-          },
-          "aoa3:lunarade_stand": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 71685813
-          },
-          "aoa3:lunar_creation_platform": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 580143683
-          },
-          "aoa3:lunar_herbal_house": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 1898918911
-          },
-          "aoa3:lunar_lotto_platform": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 355656489
-          },
-          "aoa3:lunar_bank": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 1659681006
-          },
-          "aoa3:lunar_garden": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 594661699
-          },
-          "aoa3:observers_eye": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 1439139198
-          },
-          "aoa3:lunar_food_market": {
-            "spacing": 40,
-            "separation": 12,
-            "salt": 1808474371
-          },
-          "aoa3:lunar_prison": {
-            "spacing": 40,
-            "separation": 16,
-            "salt": 1258766953
+          "aoa3:lunar_oasis": {
+            "spacing": 32,
+            "separation": 10,
+            "salt": 350391043
           }
         }
       },

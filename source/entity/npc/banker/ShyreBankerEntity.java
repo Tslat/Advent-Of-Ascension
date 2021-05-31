@@ -7,27 +7,18 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.entity.base.AoATrader;
-import net.tslat.aoa3.entity.npc.AoATraderRecipe;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class ShyreBankerEntity extends AoATrader {
+public class ShyreBankerEntity extends AoABanker {
 	public ShyreBankerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
-	}
-
-	@Override
-	protected boolean isFixedTradesList() {
-		return true;
 	}
 
 	@Override
@@ -49,10 +40,5 @@ public class ShyreBankerEntity extends AoATrader {
 				return new BankerContainer(screenId, player.inventory, ShyreBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
-	}
-
-	@Override
-	protected void getTradesList(NonNullList<AoATraderRecipe> newTradesList) {
-		newTradesList.add(new AoATraderRecipe(ItemStack.EMPTY, ItemStack.EMPTY));
 	}
 }

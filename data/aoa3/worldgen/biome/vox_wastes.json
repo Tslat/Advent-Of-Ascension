@@ -31,9 +31,7 @@
       "aoa3:degraded_support_beams",
       "aoa3:degraded_signal_beacons"
     ],
-    [
-      "aoa3:poison_rune_shrine"
-    ],
+    [],
     [],
     [],
     [],
@@ -46,6 +44,7 @@
   ],
   "starts": [
     "aoa3:cell_tower",
+    "aoa3:distortion_rune_shrine",
     "aoa3:destroyed_store",
     "aoa3:vox_lotto_outpost",
     "aoa3:voxxulon_beacon",
@@ -55,18 +54,6 @@
   ],
   "spawners": {
     "monster": [
-      {
-        "type": "aoa3:gadgetoid",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:slimer",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
       {
         "type": "aoa3:alarmo",
         "weight": 20,
@@ -80,7 +67,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:slimer",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:destructor",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fischer",
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
@@ -92,8 +91,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fischer",
-        "weight": 1,
+        "type": "aoa3:gadgetoid",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

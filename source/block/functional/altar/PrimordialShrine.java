@@ -13,9 +13,11 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.block.functional.misc.DustopianLamp;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.KajarosEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
 public class PrimordialShrine extends BossAltarBlock {
@@ -39,6 +41,9 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+		if (!WorldUtil.isWorld(player.level, AoADimensions.DUSTOPIA.key))
+			return false;
+
 		BlockPos pos2 = pos.above(1).west(3).north(5);
 		BlockPos pos3 = pos.above(1).west(1).north(4);
 		BlockPos pos4 = pos.above(3).north(3).east(1);

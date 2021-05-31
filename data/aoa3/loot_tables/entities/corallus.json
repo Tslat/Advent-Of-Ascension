@@ -1,28 +1,13 @@
 {
-  "type": "minecraft:entity",
   "pools": [
     {
-      "name": "rares",
+      "name": "parent_table",
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 100
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:coral_staff"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 15,
-          "name": "aoa3:reef_staff"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:achelos_helmet"
+          "type": "minecraft:loot_table",
+          "weight": 100,
+          "name": "aoa3:worlds/lborean"
         }
       ]
     },
@@ -40,7 +25,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -55,7 +39,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -70,7 +53,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -85,7 +67,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -100,7 +81,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -115,11 +95,10 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "name": "aoa3:sharp_claw"
         },
         {
-          "type": "minecraft:item",
+          "type": "minecraft:tag",
           "weight": 36,
           "functions": [
             {
@@ -129,18 +108,13 @@
                 "max": 12.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "aoa3:random_selection_from_tag",
-              "tag_type": "item",
-              "tag": "forge:rawfish"
             }
           ],
-          "name": "minecraft:cod"
+          "name": "forge:rawfish",
+          "expand": true
         },
         {
           "type": "minecraft:item",
-          "weight": 28,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -155,7 +129,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -170,7 +143,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -187,6 +159,28 @@
       "bonus_rolls": 1.0
     },
     {
+      "name": "rares",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:coral_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:reef_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:achelos_helmet"
+        }
+      ]
+    },
+    {
       "name": "statue",
       "rolls": 1,
       "entries": [
@@ -199,15 +193,6 @@
             }
           ],
           "name": "aoa3:trophy"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/lborean"
         }
       ]
     }

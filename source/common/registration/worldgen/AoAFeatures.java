@@ -44,7 +44,6 @@ public class AoAFeatures {
 		public static final RegistryObject<Feature<CappedColumnConfig>> CAPPED_COLUMN = register("capped_column", () -> new CappedColumnFeature(CappedColumnConfig.CODEC));
 		public static final RegistryObject<Feature<ColumnConfig>> COLUMN = register("column", () -> new ColumnFeature(ColumnConfig.CODEC));
 		public static final RegistryObject<Feature<LiquidDrainConfig>> LIQUID_DRAIN = register("liquid_drain", () -> new LiquidDrainFeature(LiquidDrainConfig.CODEC));
-		public static final RegistryObject<Feature<BlockStateFeatureConfig>> RUNE_SHRINE = register("rune_shrine", () -> new RuneShrineFeature(BlockStateFeatureConfig.CODEC));
 		public static final RegistryObject<Feature<BlockStateFeatureConfig>> BIOME_FRIENDLY_LAKE = register("biome_friendly_lake", () -> new BiomeFriendlyLake(BlockStateFeatureConfig.CODEC));
 		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> BLOCK_PILE = register("block_pile", () -> new BlockPileFeature(MiscStateAndVariablesConfig.CODEC));
 		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> CUBE = register("cube", () -> new CubeFeature(MiscStateAndVariablesConfig.CODEC));
@@ -159,19 +158,6 @@ public class AoAFeatures {
 						.squared()
 						.count(15));
 
-		private static final ConfiguredFeature<?, ?> WIND_RUNE_SHRINE = register("wind_rune_shrine",
-				Features.RUNE_SHRINE.get().configured(new BlockStateFeatureConfig(AoABlocks.WIND_RUNE_POST.get().defaultBlockState()))
-						.decorated(Placements.WORLD_HEIGHT_DEPENDENT.get().configured(new CountDividedRangeConfig(100, 0, 1)))
-						.decorated(Placements.ABOVE_HEIGHTMAP.get().configured(new IntRangeConfig(30, 40)))
-						.squared()
-						.chance(150));
-
-		private static final ConfiguredFeature<?, ?> FIRE_RUNE_SHRINE = register("fire_rune_shrine",
-				Features.RUNE_SHRINE.get().configured(new BlockStateFeatureConfig(AoABlocks.FIRE_RUNE_POST.get().defaultBlockState()))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(10, 0, 60)))
-						.squared()
-						.chance(100));
-
 		public static void postInit() {}
 
 		private static <C extends IFeatureConfig, F extends Feature<C>> ConfiguredFeature<C, F> register(String id, ConfiguredFeature<C, F> feature) {
@@ -195,14 +181,9 @@ public class AoAFeatures {
 			builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Configured.RUNIUM_ORE);
 			builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Configured.JADE_ORE);
 			builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Configured.SAPPHIRE_ORE);
-
-			if (biomeTypes.contains(BiomeDictionary.Type.MOUNTAIN)) {
-				builder.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Configured.WIND_RUNE_SHRINE);
-			}
 		}
 		else if (biomeTypes.contains(BiomeDictionary.Type.NETHER)) {
 			builder.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Configured.EMBERSTONE_ORE);
-			builder.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Configured.FIRE_RUNE_SHRINE);
 		}
 	}
 }
