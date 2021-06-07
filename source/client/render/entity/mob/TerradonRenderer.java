@@ -9,10 +9,10 @@ import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.common.registration.AoAEntities;
 
 public class TerradonRenderer extends AoAMobRenderer {
-	private final ResourceLocation invulnTexture = new ResourceLocation("aoa3", "textures/entities/mobs/precasia/terradon_invincible.png");
+	private final ResourceLocation invulnTexture = new ResourceLocation("aoa3", "textures/entity/mobs/precasia/terradon_invincible.png");
 
 	public TerradonRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new TerradonModel(), AoAEntities.Mobs.TERRADON.get().getWidth() / 3f, 1.0f, new ResourceLocation("aoa3", "textures/entities/mobs/precasia/terradon.png"));
+		super(renderManager, new TerradonModel(), AoAEntities.Mobs.TERRADON.get().getWidth() / 3f, 1.0f, new ResourceLocation("aoa3", "textures/entity/mobs/precasia/terradon.png"));
 	}
 
 	@Override

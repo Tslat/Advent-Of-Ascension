@@ -236,7 +236,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> HIVE_EGG = registerItem("hive_egg", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> MEGA_RUNE_STONE = registerItem("mega_rune_stone", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(5).setNoRepair()));
 	public static final RegistryObject<Item> NETHENGEIC_CALLSTONE = registerItem("nethengeic_callstone", NethengeicCallstone::new);
-	public static final RegistryObject<Item> OBSERVING_EYE = registerItem("observing_eye", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> OBSERVING_EYE = registerItem("observing_eye", ObservingEye::new);
 	public static final RegistryObject<Item> PETALS = registerItem("petals", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> SHROOM_STONE = registerItem("shroom_stone", ShroomStone::new);
 	public static final RegistryObject<Item> STARING_EYE = registerItem("staring_eye", () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));

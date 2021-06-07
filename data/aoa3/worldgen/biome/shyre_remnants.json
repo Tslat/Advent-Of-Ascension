@@ -41,8 +41,11 @@
   ],
   "starts": [
     "aoa3:crae_statue",
+    "aoa3:whitewashing_mill",
     "aoa3:shyre_pillar",
     "aoa3:luxocron_dungeon",
+    "aoa3:shyre_lotto_bunker",
+    "aoa3:divine_ritual_temple",
     "aoa3:archer_outpost",
     "aoa3:shyre_bank_stand"
   ],
@@ -61,8 +64,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:stimulosus",
-        "weight": 1,
+        "type": "aoa3:soulscorne",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -85,7 +88,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:shyre_knight",
+        "type": "aoa3:omnilight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -97,8 +100,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:omnilight",
+        "type": "aoa3:shyre_knight",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stimulosus",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }
@@ -106,13 +115,13 @@
     "creature": [],
     "ambient": [
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:expedition_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:expedition_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

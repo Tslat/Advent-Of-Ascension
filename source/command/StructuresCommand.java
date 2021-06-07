@@ -67,7 +67,7 @@ public class StructuresCommand implements Command<CommandSource> {
 				return 1;
 			}
 			else {
-				template.placeInWorldChunk(cmd.getSource().getLevel(), spawnPos, new PlacementSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setChunkPos(null), new Random());
+				template.placeInWorldChunk(cmd.getSource().getLevel(), spawnPos, new PlacementSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setFinalizeEntities(!ignoreEntities).setChunkPos(null), new Random());
 			}
 
 			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, new StringTextComponent(id.toString()), new StringTextComponent(spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ()));
@@ -86,12 +86,12 @@ public class StructuresCommand implements Command<CommandSource> {
 		return 1;
 	}
 
-	private static class StructureIdArgument implements ArgumentType<ResourceLocation> {
+	public static class StructureIdArgument implements ArgumentType<ResourceLocation> {
 		private static final Collection<String> EXAMPLES = Arrays.asList("minecraft:bastion/starts", "aoa3:nether/nethengeic_pit/main_pool");
 		private static final DynamicCommandExceptionType UNKNOWN_STRUCTURE_EXCEPTION = new DynamicCommandExceptionType(arg -> new TranslationTextComponent("command.aoa.structures.invalidStructure", arg));
 		private static MinecraftServer server = null;
 
-		private static StructureIdArgument instance() {
+		public static StructureIdArgument instance() {
 			return new StructureIdArgument();
 		}
 

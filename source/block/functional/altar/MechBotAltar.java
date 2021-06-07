@@ -24,7 +24,7 @@ public class MechBotAltar extends BossAltarBlock {
 
 		mechbot.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(mechbot);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.mechbot.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.MECHBOT.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

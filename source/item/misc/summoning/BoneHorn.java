@@ -82,7 +82,7 @@ public class BoneHorn extends Item {
 			tyrosaur.setTarget(user);
 			world.addFreshEntity(tyrosaur);
 			ItemUtil.damageItem(stack, user, user.getUsedItemHand());
-			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.tyrosaur.spawn", user.getDisplayName()), world, user.blockPosition(), 50);
+			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.TYROSAUR.get().getDescriptionId() + ".spawn", user.getDisplayName()), world, user.blockPosition(), 50);
 		}
 
 		return stack;

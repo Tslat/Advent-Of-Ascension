@@ -27,7 +27,7 @@ public class CraexxeusAltar extends BossAltarBlock {
 
 		craexxeus.moveTo(blockPos.getX() + offsetX, blockPos.getY() + 5, blockPos.getZ() + offsetZ, 0, 0);
 		player.level.addFreshEntity(craexxeus);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.craexxeus.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CRAEXXEUS.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

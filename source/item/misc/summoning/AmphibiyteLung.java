@@ -38,7 +38,7 @@ public class AmphibiyteLung extends BossSpawningItem {
 
 		corallus.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(corallus);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.corallus.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CORALLUS.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override

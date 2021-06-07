@@ -28,7 +28,7 @@ public class VoxStoreCrate extends Block {
 
 			storeKeeper.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
 			world.addFreshEntity(storeKeeper);
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxStoreKeeper.spawn"), Util.NIL_UUID);
+			player.sendMessage(LocaleUtil.getLocaleMessage(AoAEntities.NPCs.STORE_KEEPER.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
 		}
 	}
 }

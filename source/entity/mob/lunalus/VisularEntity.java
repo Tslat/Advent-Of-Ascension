@@ -9,7 +9,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
-import software.bernie.geckolib3.core.IAnimatable;
+import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -51,22 +51,27 @@ public class VisularEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
+	public int getCurrentSwingDuration() {
+		return 20;
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<VisularEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<VisularEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<VisularEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(ATTACK_ANIMATION);
+					event.getController().setAnimation(ATTACK_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
-				else if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(MOVE_ANIMATION);
+				else if (event.isMoving()) {
+					event.getController().setAnimation(MOVE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
 				else {
-					animationEvent.getController().setAnimation(IDLE_ANIMATION);
+					event.getController().setAnimation(IDLE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

@@ -6,6 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 19,
           "name": "aoa3:tentacle_eye_red"
         },
         {

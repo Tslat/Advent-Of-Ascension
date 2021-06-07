@@ -33,7 +33,7 @@ public class HeavyBoulder extends BossSpawningItem {
 
 		rockrider.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(rockrider);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.rockrider.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.ROCK_RIDER.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class HeavyBoulder extends BossSpawningItem {
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.HAVEN.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.rockrider.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.ROCK_RIDER.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

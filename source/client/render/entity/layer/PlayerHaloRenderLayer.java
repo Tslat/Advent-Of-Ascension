@@ -17,10 +17,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.misc.PlayerHaloModel;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.library.misc.AoAHalos;
+import net.tslat.aoa3.util.AoAHaloUtil;
 
 public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entities/player/halo_texture.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/player/halo_texture.png");
 	private static final PlayerHaloModel MODEL = new PlayerHaloModel();
 	private final PlayerRenderer renderer;
 
@@ -33,7 +33,7 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 	@Override
 	public void render(MatrixStack matrix, IRenderTypeBuffer buffer, int packedLightIn, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
-			AoAHalos.Type chosenHalo = AoAHalos.getHalo(player.getUUID());
+			AoAHaloUtil.Type chosenHalo = AoAHaloUtil.getHalo(player.getUUID());
 			float red = 0;
 			float green = 0;
 			float blue = 0;

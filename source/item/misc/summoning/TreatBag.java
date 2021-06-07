@@ -41,7 +41,7 @@ public class TreatBag extends Item {
 			}
 			else {
 				if (!WorldUtil.isWorld(world, AoADimensions.CANDYLAND.key)) {
-					PlayerUtil.notifyPlayer(pl, "entity.aoa3.cotton_candor.wrongDimension", TextFormatting.RED);
+					PlayerUtil.notifyPlayer(pl, AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 				}
 				else {
 					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAEntities.Mobs.COTTON_CANDOR.get(), world);
@@ -52,7 +52,7 @@ public class TreatBag extends Item {
 					if (!((ServerPlayerEntity)eater).isCreative())
 						stack.shrink(1);
 
-					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.spawn", pl.getDisplayName()), eater.level, eater.blockPosition(), 50);
+					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".spawn", pl.getDisplayName()), eater.level, eater.blockPosition(), 50);
 				}
 			}
 		}

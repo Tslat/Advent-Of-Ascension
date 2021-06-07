@@ -13,7 +13,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.util.NumberUtil;
 
 public class BloodlustRenderer extends LivingRenderer<BloodlustEntity, EntityModel<BloodlustEntity>> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/misc/bloodlust.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/bloodlust.png");
 
 	public BloodlustRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new BloodlustModel(), 0);

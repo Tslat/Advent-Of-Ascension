@@ -11,34 +11,42 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 50,
           "name": "minecraft:diamond"
         },
         {
           "type": "minecraft:item",
+          "weight": 35,
           "name": "minecraft:emerald"
         },
         {
           "type": "minecraft:item",
+          "weight": 85,
           "name": "minecraft:lapis_lazuli"
         },
         {
           "type": "minecraft:item",
+          "weight": 70,
           "name": "minecraft:prismarine_crystals"
         },
         {
           "type": "minecraft:item",
+          "weight": 75,
           "name": "minecraft:quartz"
         },
         {
           "type": "minecraft:item",
+          "weight": 60,
           "name": "aoa3:amethyst"
         },
         {
           "type": "minecraft:item",
+          "weight": 40,
           "name": "aoa3:jade"
         },
         {
           "type": "minecraft:item",
+          "weight": 25,
           "name": "aoa3:sapphire"
         }
       ]

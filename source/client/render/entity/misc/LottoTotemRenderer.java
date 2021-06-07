@@ -16,7 +16,7 @@ import net.tslat.aoa3.client.model.entity.misc.LottoTotemModel;
 import javax.annotation.Nullable;
 
 public class LottoTotemRenderer extends EntityRenderer<Entity> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/misc/lotto_totem.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/lotto_totem.png");
 	private final EntityModel<Entity> model = new LottoTotemModel();
 
 	public LottoTotemRenderer(EntityRendererManager renderManager) {

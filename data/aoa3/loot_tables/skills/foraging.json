@@ -2,7 +2,6 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "drops",
       "rolls": 1,
       "entries": [
         {

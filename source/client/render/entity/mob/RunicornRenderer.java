@@ -15,7 +15,7 @@ import net.tslat.aoa3.util.NumberUtil;
 
 public class RunicornRenderer extends AoAMobRenderer {
 	public RunicornRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RunicornModel(), AoAEntities.Mobs.RUNICORN.get().getWidth() / 3f, 1.0f, new ResourceLocation("aoa3", "textures/entities/mobs/runandor/runicorn.png"));
+		super(renderManager, new RunicornModel(), AoAEntities.Mobs.RUNICORN.get().getWidth() / 3f, 1.0f, new ResourceLocation("aoa3", "textures/entity/mobs/runandor/runicorn.png"));
 	}
 
 	@Override

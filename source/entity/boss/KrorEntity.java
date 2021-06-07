@@ -20,8 +20,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -122,7 +124,7 @@ public class KrorEntity extends AoAMeleeMob implements IAnimatable {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.kror.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.KROR.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -173,14 +175,14 @@ public class KrorEntity extends AoAMeleeMob implements IAnimatable {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<KrorEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<KrorEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<KrorEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(SWING_ANIMATION);
+					event.getController().setAnimation(SWING_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
-				else if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(WALK_ANIMATION);
+				else if (event.isMoving()) {
+					event.getController().setAnimation(WALK_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

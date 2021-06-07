@@ -24,7 +24,7 @@ public class VoxxulonAltar extends BossAltarBlock {
 
 		voxxulon.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(voxxulon);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.voxxulon.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VOXXULON.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

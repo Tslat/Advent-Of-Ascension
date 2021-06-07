@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.entity.mob.misc.BaneCloneEntity;
@@ -102,7 +103,7 @@ public class BaneEntity extends AoAMeleeMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.bane.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.BANE.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 			for (AoAMeleeMob summon : summons) {
 				if (summon != null)

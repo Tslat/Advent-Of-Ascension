@@ -30,33 +30,33 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.library.misc.PortalCoordinatesContainer;
+import net.tslat.aoa3.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.player.PlayerDataManager;
 import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.worldgen.worlds.abyss.AbyssTeleporter;
-import net.tslat.aoa3.worldgen.worlds.barathos.BarathosTeleporter;
-import net.tslat.aoa3.worldgen.worlds.candyland.CandylandTeleporter;
-import net.tslat.aoa3.worldgen.worlds.celeve.CeleveTeleporter;
-import net.tslat.aoa3.worldgen.worlds.creeponia.CreeponiaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.crystevia.CrysteviaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.deeplands.DeeplandsTeleporter;
-import net.tslat.aoa3.worldgen.worlds.dustopia.DustopiaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.gardencia.GardenciaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.greckon.GreckonTeleporter;
-import net.tslat.aoa3.worldgen.worlds.haven.HavenTeleporter;
-import net.tslat.aoa3.worldgen.worlds.iromine.IromineTeleporter;
-import net.tslat.aoa3.worldgen.worlds.lborean.LBoreanTeleporter;
-import net.tslat.aoa3.worldgen.worlds.lelyetia.LelyetiaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.lunalus.LunalusTeleporter;
-import net.tslat.aoa3.worldgen.worlds.mysterium.MysteriumTeleporter;
-import net.tslat.aoa3.worldgen.worlds.nether.NetherTeleporter;
-import net.tslat.aoa3.worldgen.worlds.nowhere.NowhereTeleporter;
-import net.tslat.aoa3.worldgen.worlds.precasia.PrecasiaTeleporter;
-import net.tslat.aoa3.worldgen.worlds.runandor.RunandorTeleporter;
-import net.tslat.aoa3.worldgen.worlds.shyrelands.ShyrelandsTeleporter;
-import net.tslat.aoa3.worldgen.worlds.voxponds.VoxPondsTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.AbyssTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.BarathosTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.CandylandTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.CeleveTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.CreeponiaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.CrysteviaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.DeeplandsTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.DustopiaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.GardenciaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.GreckonTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.HavenTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.IromineTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.LBoreanTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.LelyetiaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.LunalusTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.MysteriumTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.NetherTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.NowhereTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.PrecasiaTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.RunandorTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.ShyrelandsTeleporter;
+import net.tslat.aoa3.world.teleporter.specific.VoxPondsTeleporter;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -156,7 +156,7 @@ public class PortalBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (!world.isClientSide() && entity.getVehicle() == null && !entity.isVehicle()) {
+		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
 			if (!AoAConfig.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof PlayerEntity))
 				return;
 

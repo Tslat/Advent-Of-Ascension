@@ -48,7 +48,7 @@ public class GrawAltar extends BossAltarBlock {
 
 		graw.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(graw);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.graw.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.GRAW.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

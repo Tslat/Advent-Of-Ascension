@@ -5,9 +5,8 @@ import net.minecraftforge.fml.VersionChecker;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.library.misc.AoAHalos;
-import net.tslat.aoa3.library.scheduling.AoAScheduler;
-import net.tslat.aoa3.library.scheduling.async.UpdateHalosMapTask;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.scheduling.async.UpdateHalosMapTask;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
 
@@ -34,7 +33,7 @@ public abstract class WebUtil {
 		}
 	}
 
-	public static HashMap<UUID, AoAHalos.PlayerHaloContainer> fillHalosMap(HashMap<UUID, AoAHalos.PlayerHaloContainer> halosMap) {
+	public static HashMap<UUID, AoAHaloUtil.PlayerHaloContainer> fillHalosMap(HashMap<UUID, AoAHaloUtil.PlayerHaloContainer> halosMap) {
 		Logging.logMessage(Level.DEBUG, "Updating player halos map");
 
 		BufferedReader fileReader = null;
@@ -61,7 +60,7 @@ public abstract class WebUtil {
 						UUID uuid;
 
 						if (lineSplit.length > 2) {
-							HashSet<AoAHalos.Type> halosSet = new HashSet<AoAHalos.Type>(lineSplit.length - 1);
+							HashSet<AoAHaloUtil.Type> halosSet = new HashSet<AoAHaloUtil.Type>(lineSplit.length - 1);
 
 							try {
 								uuid = UUID.fromString(lineSplit[1]);
@@ -75,23 +74,23 @@ public abstract class WebUtil {
 
 							for (int i = 2; i < lineSplit.length; i++) {
 								try {
-									halosSet.add(AoAHalos.Type.valueOf(lineSplit[i]));
+									halosSet.add(AoAHaloUtil.Type.valueOf(lineSplit[i]));
 								} catch (IllegalArgumentException ex) {
 									if (AoAConfig.CLIENT.doVerboseDebugging.get())
 										Logging.logMessage(Level.WARN, "Invalid halo type from web: " + lineSplit[i]);
 								}
 							}
 
-							halosMap.put(uuid, new AoAHalos.PlayerHaloContainer(halosSet));
+							halosMap.put(uuid, new AoAHaloUtil.PlayerHaloContainer(halosSet));
 							Logging.logMessage(Level.DEBUG, "Found player halo for " + uuid.toString());
 						}
 					}
 				}
 
-				HashSet<AoAHalos.Type> haloSet = new HashSet<AoAHalos.Type>(1);
+				HashSet<AoAHaloUtil.Type> haloSet = new HashSet<AoAHaloUtil.Type>(1);
 
-				haloSet.add(AoAHalos.Type.Tslat);
-				halosMap.put(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4"), new AoAHalos.PlayerHaloContainer(haloSet));
+				haloSet.add(AoAHaloUtil.Type.Tslat);
+				halosMap.put(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4"), new AoAHaloUtil.PlayerHaloContainer(haloSet));
 			}
 
 			connection.disconnect();
@@ -111,7 +110,7 @@ public abstract class WebUtil {
 
 
 	public static void extraPlayerHalosFromWeb() {
-		HashMap<UUID, AoAHalos.PlayerHaloContainer> newMap = AoAHalos.getHaloMapForPrefill();
+		HashMap<UUID, AoAHaloUtil.PlayerHaloContainer> newMap = AoAHaloUtil.getHaloMapForPrefill();
 
 		if (newMap != null) {
 			fillHalosMap(newMap);

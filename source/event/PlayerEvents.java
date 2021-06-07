@@ -62,7 +62,7 @@ import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.item.misc.ReservedItem;
 import net.tslat.aoa3.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.item.tool.misc.ExpFlask;
-import net.tslat.aoa3.library.misc.AoAHalos;
+import net.tslat.aoa3.util.AoAHaloUtil;
 import net.tslat.aoa3.util.*;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Resources;
@@ -327,7 +327,7 @@ public class PlayerEvents {
 					pl.level.addParticle(ParticleTypes.LARGE_SMOKE, true, pl.getX(), pl.getY() + 0.2d, pl.getZ(), RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d);
 				}
 			}
-			else if (AoAHalos.isCrazyDonator(uuid)) {
+			else if (AoAHaloUtil.isCrazyDonator(uuid)) {
 				msg = TextFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
 			}
 
@@ -350,7 +350,7 @@ public class PlayerEvents {
 				AoAPackets.messagePlayer(pl, new ResourceDataPacket(stats.getResourceValue(Resources.CREATION), stats.getResourceValue(Resources.ENERGY), stats.getResourceValue(Resources.RAGE), stats.getResourceValue(Resources.SOUL), plData.isRevengeActive()));
 			}
 
-			AoAHalos.syncWithNewClient(pl);
+			AoAHaloUtil.syncWithNewClient(pl);
 
 			PlayerAdvancements plAdvancements = pl.getAdvancements();
 			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));

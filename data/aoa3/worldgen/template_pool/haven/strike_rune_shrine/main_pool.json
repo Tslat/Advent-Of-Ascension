@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:haven/strike_rune_shrine/main_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:haven/strike_rune_shrine/strike_rune_shrine",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

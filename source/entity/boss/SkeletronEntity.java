@@ -89,7 +89,7 @@ public class SkeletronEntity extends AoAMeleeMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.SKELETRON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 				if (killer instanceof ServerPlayerEntity && killer.getMainHandItem().getItem() == AoAWeapons.SKELETAL_SWORD.get()) {
 					for (ItemStack stack : killer.getArmorSlots()) {

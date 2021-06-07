@@ -10,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.library.scheduling.async.ShadowlordSpawnTask;
+import net.tslat.aoa3.scheduling.async.ShadowlordSpawnTask;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.WorldUtil;
 

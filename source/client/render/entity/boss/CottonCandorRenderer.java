@@ -11,11 +11,11 @@ import net.tslat.aoa3.entity.boss.CottonCandorEntity;
 import javax.annotation.Nullable;
 
 public class CottonCandorRenderer extends MobRenderer<CottonCandorEntity, EntityModel<CottonCandorEntity>> {
-	private static final ResourceLocation WIND_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/cottoncandor/cotton_candor_wind.png");
-	private static final ResourceLocation WATER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/cottoncandor/cotton_candor_water.png");
-	private static final ResourceLocation FIRE_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/cottoncandor/cotton_candor_fire.png");
-	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/cottoncandor/cotton_candor_wither.png");
-	private static final ResourceLocation POISON_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/cottoncandor/cotton_candor_poison.png");
+	private static final ResourceLocation WIND_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_wind.png");
+	private static final ResourceLocation WATER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_water.png");
+	private static final ResourceLocation FIRE_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_fire.png");
+	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_wither.png");
+	private static final ResourceLocation POISON_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_poison.png");
 
 	public CottonCandorRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new CottonCandorModel(), AoAEntities.Mobs.COTTON_CANDOR.get().getWidth() / 3);

@@ -29,6 +29,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.minion.AoAMinion;
@@ -53,7 +54,6 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	private final float[] yRotOHeads = new float[2];
 	private final int[] nextHeadUpdate = new int[2];
 	private final int[] idleHeadUpdates = new int[2];
-	public static final float entityWidth = 1.3f;
 
 	private int attackCooldown = 45;
 
@@ -394,7 +394,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.nethengeicWither.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.NETHENGEIC_WITHER.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 

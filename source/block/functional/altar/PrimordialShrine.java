@@ -107,7 +107,7 @@ public class PrimordialShrine extends BossAltarBlock {
 
 		kajaros.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(kajaros);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.primordialFive.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.OKAZOR.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

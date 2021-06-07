@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.library.scheduling.AoAScheduler;
-import net.tslat.aoa3.library.scheduling.async.EchoGullTask;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.scheduling.async.EchoGullTask;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 

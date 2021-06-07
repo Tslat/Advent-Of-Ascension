@@ -35,7 +35,7 @@ public class IllusionAltar extends BossAltarBlock {
 		elusive.moveTo(posX, player.level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING, new BlockPos(posX, 64, posZ)).getY(), posZ, 0, 0);
 		player.level.addFreshEntity(elusive);
 		player.level.addFreshEntity(clone);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.elusive.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.ELUSIVE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

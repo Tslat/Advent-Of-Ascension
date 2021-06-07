@@ -20,12 +20,13 @@ import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.SpectralShotEntity;
-import net.tslat.aoa3.library.scheduling.async.DracyonCleanupTask;
+import net.tslat.aoa3.scheduling.async.DracyonCleanupTask;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -111,7 +112,7 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.dracyon.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.DRACYON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 

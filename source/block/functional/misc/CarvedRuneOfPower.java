@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.item.misc.BlankRealmstone;
 import net.tslat.aoa3.item.misc.Realmstone;
-import net.tslat.aoa3.library.misc.AoAPortalFrame;
+import net.tslat.aoa3.world.teleporter.AoAPortalFrame;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 

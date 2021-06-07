@@ -27,10 +27,11 @@ public final class AoAEntityData {
 		public static final HashSet<EntityType<?>> DAYLIGHT_MOBS = new HashSet<EntityType<?>>();
 
 		private static void registerSpawnHeightLimitations() {
+			SPAWN_HEIGHTS.put(AoAEntities.Animals.CORATEE.get(), 125);
+			SPAWN_HEIGHTS.put(AoAEntities.Animals.GLOWING_PIXON.get(), 125);
+			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ANGLER.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ARCWORM.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.AXIOLIGHT.get(), 35);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CAVE_CREEPOID.get(), 30);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.HAPPY.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CREEPERLOCK.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CREEPERLOCK.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.CRYPTID.get(), 27);
@@ -42,21 +43,17 @@ public final class AoAEntityData {
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MAGICAL_CREEPER.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MAGICAL_CREEPER.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MOTHER_VOID_WALKER.get(), 35);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.OMNILIGHT.get(), 60);
+			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MUNCHER.get(), 125);
+			SPAWN_HEIGHTS.put(AoAEntities.Mobs.NEPTUNO.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.PARASECT.get(), 50);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.PINCHER.get(), 55);
+			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SEA_VIPER.get(), 125);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SHADE.get(), 30);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SHADOW.get(), 45);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SQUIGGLER.get(), 27);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.TRICKSTER.get(), 20);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.VOID_CHARGER.get(), 20);
 			SPAWN_HEIGHTS.put(AoAEntities.Mobs.VOID_WALKER.get(), 50);
-			SPAWN_HEIGHTS.put(AoAEntities.Animals.CORATEE.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Animals.GLOWING_PIXON.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.ANGLER.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.MUNCHER.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.NEPTUNO.get(), 125);
-			SPAWN_HEIGHTS.put(AoAEntities.Mobs.SEA_VIPER.get(), 125);
 		}
 
 		private static void registerDaylightMobs() {
@@ -65,8 +62,10 @@ public final class AoAEntityData {
 					AoAEntities.Mobs.ANCIENT_GOLEM.get(),
 					AoAEntities.Mobs.ANGLER.get(),
 					AoAEntities.Mobs.ARCBEAST.get(),
+					AoAEntities.Mobs.ARCWORM.get(),
 					AoAEntities.Mobs.ARCHVINE.get(),
 					AoAEntities.Mobs.ARC_FLOWER.get(),
+					AoAEntities.Mobs.ARC_WIZARD.get(),
 					AoAEntities.Mobs.ARIEL.get(),
 					AoAEntities.Mobs.ARKBACK.get(),
 					AoAEntities.Mobs.AXIOLIGHT.get(),
@@ -120,8 +119,10 @@ public final class AoAEntityData {
 					AoAEntities.Mobs.LEAFY_GIANT.get(),
 					AoAEntities.Mobs.LELYETIAN_CASTER.get(),
 					AoAEntities.Mobs.LELYETIAN_WARRIOR.get(),
+					AoAEntities.Mobs.LIGHTWALKER.get(),
 					AoAEntities.Mobs.LIVING_FUNGI.get(),
 					AoAEntities.Mobs.LOLLYPOPPER.get(),
+					AoAEntities.Mobs.LUXOCRON.get(),
 					AoAEntities.Mobs.MAGICAL_CREEPER.get(),
 					AoAEntities.Mobs.MECHACHRON.get(),
 					AoAEntities.Mobs.MECHAMATON.get(),
@@ -147,7 +148,10 @@ public final class AoAEntityData {
 					AoAEntities.Mobs.SNAPPY.get(),
 					AoAEntities.Mobs.SNOW_CHARGER.get(),
 					AoAEntities.Mobs.SOULVYRE.get(),
+					AoAEntities.Mobs.SOULSCORNE.get(),
 					AoAEntities.Mobs.SPHINX.get(),
+					AoAEntities.Mobs.SPIRIT_GUARDIAN.get(),
+					AoAEntities.Mobs.SPIRIT_PROTECTOR.get(),
 					AoAEntities.Mobs.SQUASHER.get(),
 					AoAEntities.Mobs.SQUIGGLER.get(),
 					AoAEntities.Mobs.STICKY.get(),

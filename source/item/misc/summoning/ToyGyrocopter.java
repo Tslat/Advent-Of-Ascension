@@ -11,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -31,7 +32,7 @@ public class ToyGyrocopter extends Item {
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
 			if (!world.isClientSide) {
 				world.addFreshEntity(new GyrocopterEntity(player));
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.gyro.spawn", player.getDisplayName()), world, player.blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.GYRO.get().getDescriptionId() + ".spawn", player.getDisplayName()), world, player.blockPosition(), 50);
 
 				if (!player.isCreative())
 					player.getItemInHand(hand).shrink(1);

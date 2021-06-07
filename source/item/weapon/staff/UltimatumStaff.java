@@ -13,8 +13,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.UltimatumShotEntity;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.scheduling.AoAScheduler;
-import net.tslat.aoa3.library.scheduling.sync.UltimatumStaffTask;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.scheduling.sync.UltimatumStaffTask;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 

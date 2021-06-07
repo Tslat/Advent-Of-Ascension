@@ -45,6 +45,30 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:happy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sticky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stitches",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:bobo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:koko",
         "weight": 20,
         "minCount": 1,
@@ -57,25 +81,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:stitches",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sticky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:kranky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:bobo",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -88,12 +94,6 @@
       },
       {
         "type": "aoa3:tipsy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:happy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

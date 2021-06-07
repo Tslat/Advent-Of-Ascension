@@ -23,14 +23,15 @@ public class ExplosivesExpertEntity extends AoATrader {
 					BuildableTrade.trade(AoAWeapons.GRENADE).cost(AoAItems.COPPER_COIN, 5).xp(5).stock(12),
 					BuildableTrade.trade(AoAItems.DISCHARGE_CAPSULE).cost(AoAItems.COPPER_COIN, 2))
 			.trades(2,
-					BuildableTrade.trade(Blocks.TNT).cost(AoAItems.COPPER_COIN, 13).xp(10).stock(12))
+					BuildableTrade.trade(Blocks.TNT).cost(AoAItems.COPPER_COIN, 13).xp(10).stock(12),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 10).cost(Blocks.TNT).xp(10))
 			.trades(3,
 					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.helmet).cost(AoAItems.GEMENYTE, 3).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5),
 					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.chestplate).cost(AoAItems.GEMENYTE, 5).cost(AoAItems.UNSTABLE_GUNPOWDER, 3).xp(50).stock(5),
 					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.leggings).cost(AoAItems.GEMENYTE, 4).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.leggings).cost(AoAItems.GEMENYTE, 3).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5))
+					BuildableTrade.trade(AoAArmour.OMNI_ARMOUR.boots).cost(AoAItems.GEMENYTE, 3).cost(AoAItems.UNSTABLE_GUNPOWDER, 2).xp(50).stock(5))
 			.trades(4,
-					BuildableTrade.trade(AoAItems.LUNAVER_COIN, 50).cost(getExplosiveExpertFireworks()).xp(1000).stock(1).locked()).build();
+					BuildableTrade.trade(AoAItems.LUNAVER_COIN, 50).cost(getExplosiveExpertFireworks()).xp(1000).locked()).build();
 
 	public ExplosivesExpertEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);

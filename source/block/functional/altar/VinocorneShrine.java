@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -33,7 +34,7 @@ public class VinocorneShrine extends BossAltarBlock {
 		player.level.setBlockAndUpdate(blockPos.above(), AoABlocks.LIVING_GROWTH.get().defaultBlockState());
 		player.level.getBlockTicks().scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
 
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.vinocorne.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VINOCORNE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

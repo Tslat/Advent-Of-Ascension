@@ -2,7 +2,7 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "aoa_biogenic_armour",
+      "name": "biogenic_armour",
       "rolls": 1,
       "entries": [
         {

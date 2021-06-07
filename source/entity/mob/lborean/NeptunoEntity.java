@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -59,19 +58,19 @@ public class NeptunoEntity extends AoAWaterMeleeMob {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<NeptunoEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<NeptunoEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<NeptunoEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(ATTACK_ANIMATION);
+					event.getController().setAnimation(ATTACK_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
-				else if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+				else if (event.isMoving()) {
+					event.getController().setAnimation(SWIM_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
 				else {
-					animationEvent.getController().setAnimation(IDLE_ANIMATION);
+					event.getController().setAnimation(IDLE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

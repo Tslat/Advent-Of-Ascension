@@ -23,6 +23,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.entity.base.AoAAnimal;
+import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -166,14 +167,14 @@ public class CorateeEntity extends AoAAnimal implements IAnimatable {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<CorateeEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<CorateeEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
-				if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+			public PlayState test(AnimationEvent<CorateeEntity> event) {
+				if (event.isMoving()) {
+					event.getController().setAnimation(SWIM_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
 				else {
-					animationEvent.getController().setAnimation(IDLE_ANIMATION);
+					event.getController().setAnimation(IDLE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

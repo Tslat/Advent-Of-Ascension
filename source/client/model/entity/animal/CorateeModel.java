@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 public class CorateeModel extends AnimatedGeoModel<CorateeEntity> {
 	private static final ResourceLocation MODEL = new ResourceLocation(AdventOfAscension.MOD_ID, "geo/entities/animals/lborean/coratee.geo.json");
-	private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/entities/animals/coratee.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/entity/animals/coratee.png");
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/animals/lborean/coratee.animation.json");
 
 	@Override

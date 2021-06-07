@@ -13,7 +13,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -67,14 +66,14 @@ public class SeaViperEntity extends AoAWaterMeleeMob {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<SeaViperEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<SeaViperEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<SeaViperEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(BITE_ANIMATION);
+					event.getController().setAnimation(BITE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
-				else if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+				else if (event.isMoving()) {
+					event.getController().setAnimation(SWIM_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

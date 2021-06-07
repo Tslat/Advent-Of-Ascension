@@ -7,6 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 75,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -21,10 +22,12 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 50,
           "name": "aoa3:silver_coin"
         },
         {
           "type": "minecraft:item",
+          "weight": 50,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -39,6 +42,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -53,6 +57,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -67,6 +72,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 40,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -81,6 +87,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -95,14 +102,17 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "name": "aoa3:magic_repair_dust"
         },
         {
           "type": "minecraft:item",
+          "weight": 6,
           "name": "aoa3:gold_coin"
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -117,18 +127,22 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:utopian_helmet"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:utopian_chestplate"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:utopian_legs"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:utopian_boots"
         }
       ]

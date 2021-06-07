@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
@@ -32,6 +33,8 @@ public class BaseBullet extends ThrowableEntity implements HardProjectile {
 	private BaseGun weapon;
 	private Entity lastPierceTarget;
 	private Hand hand;
+
+	private Entity cachedOwner = null;
 
 	public BaseBullet(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -137,6 +140,17 @@ public class BaseBullet extends ThrowableEntity implements HardProjectile {
 		setPos(x, y, z);
 	}
 
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		if (this.cachedOwner != null && this.cachedOwner.isAlive())
+			return this.cachedOwner;
+
+		this.cachedOwner = super.getOwner();
+
+		return this.cachedOwner;
+	}
+
 	@Override
 	public void shoot(double directionX, double directionY, double directionZ, float velocity, float inaccuracy) {
 		Vector3d motionVec = (new Vector3d(directionX, directionY, directionZ)).normalize().add(random.nextGaussian() * 0.0075F * inaccuracy, random.nextGaussian() * 0.0075F * inaccuracy, random.nextGaussian() * (double)0.0075F * inaccuracy).scale(velocity);
@@ -157,7 +171,7 @@ public class BaseBullet extends ThrowableEntity implements HardProjectile {
 
 		bl.onProjectileHit(level, bl, rayTrace, this);
 
-		if (WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS)) {
+		if (WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && WorldUtil.canBreakBlock(level, resultPos, getOwner(), weapon == null ? null : new ItemStack(weapon))) {
 			float hardness = bl.getDestroySpeed(level, resultPos);
 
 			if (hardness >= 0 && hardness <= 0.3f) {

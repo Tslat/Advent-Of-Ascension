@@ -31,7 +31,7 @@ public class BaronessAltar extends BossAltarBlock {
 
 		baroness.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
 		player.level.addFreshEntity(baroness);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.baroness.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.BARONESS.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

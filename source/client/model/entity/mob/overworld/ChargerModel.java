@@ -26,18 +26,18 @@ public class ChargerModel extends EntityModel<MobEntity> {
 		if (HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.HALLOWEEN) {
 			if (model.isGhost) {
 				if (RandomUtil.fiftyFifty()) {
-					return new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger_ghost.png");
+					return new ResourceLocation("aoa3", "textures/entity/mobs/overworld/charger_ghost.png");
 				}
 				else {
-					return new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger_bloody_ghost.png");
+					return new ResourceLocation("aoa3", "textures/entity/mobs/overworld/charger_bloody_ghost.png");
 				}
 			}
 			else {
-				return new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger_zombie.png");
+				return new ResourceLocation("aoa3", "textures/entity/mobs/overworld/charger_zombie.png");
 			}
 		}
 
-		return backupTexture == null ? new ResourceLocation("aoa3", "textures/entities/mobs/overworld/charger.png") : backupTexture;
+		return backupTexture == null ? new ResourceLocation("aoa3", "textures/entity/mobs/overworld/charger.png") : backupTexture;
 	}
 
 	private void doGhostChargerModel() {

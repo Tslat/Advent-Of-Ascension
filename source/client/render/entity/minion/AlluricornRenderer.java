@@ -14,7 +14,7 @@ import net.tslat.aoa3.util.NumberUtil;
 
 public class AlluricornRenderer extends AoAMobRenderer {
 	public AlluricornRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RainicornModel(), AoAEntities.Minions.ALLURICORN.get().getWidth(), 1f, new ResourceLocation("aoa3", "textures/entities/minions/alluricorn.png"));
+		super(renderManager, new RainicornModel(), AoAEntities.Minions.ALLURICORN.get().getWidth(), 1f, new ResourceLocation("aoa3", "textures/entity/minions/alluricorn.png"));
 	}
 
 	@Override

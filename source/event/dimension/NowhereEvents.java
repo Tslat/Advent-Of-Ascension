@@ -24,6 +24,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.item.tablet.TabletItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
@@ -76,10 +77,9 @@ public class NowhereEvents {
 			return;
 
 		BlockState block = ev.getWorld().getBlockState(ev.getPos());
+		Item heldItem = ev.getPlayer().getItemInHand(ev.getHand()).getItem();
 
 		if (block.getBlock() == Blocks.JUKEBOX) {
-			Item heldItem = ev.getPlayer().getItemInHand(ev.getHand()).getItem();
-
 			if (heldItem == Items.AIR || heldItem instanceof MusicDiscItem) {
 				ev.setUseItem(Event.Result.ALLOW);
 				ev.setUseBlock(Event.Result.ALLOW);
@@ -88,6 +88,11 @@ public class NowhereEvents {
 		}
 		else if (block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
 			ev.setUseItem(Event.Result.DENY);
+		}
+		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
+			ev.setUseItem(Event.Result.ALLOW);
+			ev.setUseBlock(Event.Result.DENY);
+			ev.getPlayer().abilities.mayBuild = true;
 		}
 		else {
 			ev.setCanceled(true);

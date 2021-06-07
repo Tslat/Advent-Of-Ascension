@@ -2,22 +2,12 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "rares",
+      "name": "parent_table",
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 100
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 27,
-          "name": "aoa3:lunar_assault_rifle"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 22,
-          "name": "aoa3:lunar_staff"
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/lunalus"
         }
       ]
     },
@@ -170,6 +160,11 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 32,
+          "name": "aoa3:observing_eye"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 30,
           "functions": [
             {
@@ -195,14 +190,40 @@
           "name": "minecraft:potion"
         }
       ],
-      "bonus_rolls": 1.0
+      "functions": [
+        {
+          "function": "minecraft:looting_enchant",
+          "count": 1.0
+        }
+      ]
     },
     {
-      "name": "statue",
+      "name": "rares",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 27,
+          "name": "aoa3:lunar_assault_rifle"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 22,
+          "name": "aoa3:lunar_staff"
+        }
+      ]
+    },
+    {
+      "name": "trophy",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_nbt",
@@ -210,15 +231,6 @@
             }
           ],
           "name": "aoa3:trophy"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/lunalus"
         }
       ]
     }

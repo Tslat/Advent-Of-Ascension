@@ -16,10 +16,14 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.item.EnergyProjectileWeapon;
 
+import javax.annotation.Nullable;
+
 public abstract class BaseEnergyShot extends ThrowableEntity {
 	protected int lifespan;
 	private int age;
 	protected EnergyProjectileWeapon weapon;
+
+	private Entity cachedOwner = null;
 
 	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
@@ -123,6 +127,17 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 	public BaseEnergyShot(EntityType<? extends ThrowableEntity> entityType, World world, double x, double y, double z) {
 		super(entityType, world);
 		this.age = 0;
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		if (this.cachedOwner != null && this.cachedOwner.isAlive())
+			return this.cachedOwner;
+
+		this.cachedOwner = super.getOwner();
+
+		return this.cachedOwner;
 	}
 
 	@Override

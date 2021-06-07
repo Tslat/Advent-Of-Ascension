@@ -24,7 +24,7 @@ public class PowerStation extends BossAltarBlock {
 
 		crystocore.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(crystocore);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.crystocore.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CRYSTOCORE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

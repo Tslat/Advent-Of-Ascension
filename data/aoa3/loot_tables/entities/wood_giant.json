@@ -18,6 +18,7 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 8,
           "functions": [
             {
               "function": "minecraft:set_count",

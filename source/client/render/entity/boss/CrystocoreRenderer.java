@@ -12,12 +12,12 @@ import net.tslat.aoa3.entity.boss.CrystocoreEntity;
 import javax.annotation.Nullable;
 
 public class CrystocoreRenderer extends MobRenderer<CrystocoreEntity, EntityModel<CrystocoreEntity>> {
-	private static final ResourceLocation SLOWNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_slowness.png");
-	private static final ResourceLocation POISON_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_poison.png");
-	private static final ResourceLocation BLINDNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_blindness.png");
-	private static final ResourceLocation WEAKNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_weakness.png");
-	private static final ResourceLocation NAUSEA_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_nausea.png");
-	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/crystocore/crystocore_wither.png");
+	private static final ResourceLocation SLOWNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_slowness.png");
+	private static final ResourceLocation POISON_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_poison.png");
+	private static final ResourceLocation BLINDNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_blindness.png");
+	private static final ResourceLocation WEAKNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_weakness.png");
+	private static final ResourceLocation NAUSEA_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_nausea.png");
+	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_wither.png");
 
 	public CrystocoreRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new CrystocoreModel(), AoAEntities.Mobs.CRYSTOCORE.get().getWidth() / 3);

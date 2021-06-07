@@ -26,6 +26,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
 public class CustomArrowEntity extends ArrowEntity {
@@ -33,6 +34,7 @@ public class CustomArrowEntity extends ArrowEntity {
 	protected BaseCrossbow crossbow;
 
 	private boolean ignoreExplosions = false;
+	private Entity cachedOwner = null;
 
 	public CustomArrowEntity(EntityType<? extends ArrowEntity> type, World world) {
 		super(type, world);
@@ -121,6 +123,17 @@ public class CustomArrowEntity extends ArrowEntity {
 		target.yRot = source.yRot;
 		target.xRotO = source.xRotO;
 		target.yRotO = source.yRotO;
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		if (this.cachedOwner != null && this.cachedOwner.isAlive())
+			return this.cachedOwner;
+
+		this.cachedOwner = super.getOwner();
+
+		return this.cachedOwner;
 	}
 
 	@Override

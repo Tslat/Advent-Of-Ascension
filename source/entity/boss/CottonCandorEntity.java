@@ -21,6 +21,7 @@ import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
@@ -166,7 +167,7 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.cottonCandor.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 				if (cause.getDirectEntity() instanceof PrimordialShotEntity && (killer.getMainHandItem().getItem() == AoAWeapons.WIND_STAFF.get() || killer.getOffhandItem().getItem() == AoAWeapons.WIND_STAFF.get()))
 					AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "candyland/when_push_comes_to_shove"), "wind_staff_cotton_candor_kill");

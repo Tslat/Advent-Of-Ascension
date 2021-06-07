@@ -15,7 +15,7 @@ import net.tslat.aoa3.entity.misc.OccultBlockEntity;
 import javax.annotation.Nullable;
 
 public class OccultBlockRenderer extends EntityRenderer<OccultBlockEntity> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/misc/occult_block.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/occult_block.png");
 
 	public OccultBlockRenderer(EntityRendererManager renderManager) {
 		super(renderManager);

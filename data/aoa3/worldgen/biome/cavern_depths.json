@@ -48,8 +48,14 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:doubler",
-        "weight": 2,
+        "type": "aoa3:rock_critter",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:case_construct",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -66,8 +72,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:dweller",
-        "weight": 20,
+        "type": "aoa3:doubler",
+        "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
@@ -78,13 +84,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:case_construct",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:rock_critter",
+        "type": "aoa3:dweller",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -100,13 +100,13 @@
     ],
     "ambient": [
       {
-        "type": "aoa3:extraction_master",
+        "type": "aoa3:undead_herald",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
+        "type": "aoa3:extraction_master",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1

@@ -48,19 +48,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:basilisk",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:lost_soul",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:devourer",
+        "type": "aoa3:lurker",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
@@ -72,19 +60,31 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:stalker",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:duston",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:lurker",
+        "type": "aoa3:basilisk",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:devourer",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lost_soul",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stalker",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
@@ -104,12 +104,6 @@
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
-      },
-      {
-        "type": "aoa3:radiant_pixon",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 4
       }
     ],
     "water_creature": [],

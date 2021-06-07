@@ -14,7 +14,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.animal.MeganeuropsisEntity;
 
 public class MeganeuropsisRenderer extends MobRenderer<MeganeuropsisEntity, EntityModel<MeganeuropsisEntity>> {
-	private static final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/passive/meganeuropsis.png");
+	private static final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/passive/meganeuropsis.png");
 	public MeganeuropsisRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new MeganeuropsisModel(), AoAEntities.Animals.MEGANEUROPSIS.get().getWidth() / 3f);
 	}

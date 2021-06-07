@@ -43,7 +43,7 @@ import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.item.armour.ScreenOverlayArmour;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
-import net.tslat.aoa3.library.scheduling.AoAScheduler;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.lwjgl.glfw.GLFW;
 

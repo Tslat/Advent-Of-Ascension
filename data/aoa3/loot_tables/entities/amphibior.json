@@ -22,14 +22,17 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "name": "minecraft:water_bucket"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:boreic_bow"
         },
         {
           "type": "minecraft:item",
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -44,6 +47,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 22,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -58,6 +62,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 22,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -72,6 +77,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 22,
           "functions": [
             {
               "function": "minecraft:set_count",

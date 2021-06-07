@@ -87,13 +87,11 @@ public abstract class ScrollablePane {
 		}
 
 		distanceScrolled = MathHelper.clamp(distanceScrolled, 0, paneHeight - viewHeight);
-		GL11.glEnable(GL11.GL_SCISSOR_TEST);
-
 		MainWindow mcWindow = mc.getWindow();
 		float windowWidthScale = currentRenderScale * (mcWindow.getScreenWidth() / (float)mcWindow.getGuiScaledWidth());
 		float windowHeightScale = currentRenderScale * (mcWindow.getScreenHeight() / (float)mcWindow.getGuiScaledHeight());
 
-		GL11.glScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale));
+		RenderSystem.enableScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale));
 		drawBackground(matrix);
 		GuiUtils.drawGradientRect(matrix.last().pose(), 0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
 		int newTop = top - Math.max(0, (int)distanceScrolled);
@@ -132,7 +130,7 @@ public abstract class ScrollablePane {
 		RenderSystem.shadeModel(GL11.GL_FLAT);
 		RenderSystem.enableAlphaTest();
 		RenderSystem.disableBlend();
-		GL11.glDisable(GL11.GL_SCISSOR_TEST);
+		RenderSystem.disableScissor();
 	}
 
 	public void onResize(Minecraft mc, int left, int top, int viewWidth, int viewHeight) {

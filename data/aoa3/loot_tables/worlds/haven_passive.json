@@ -7,10 +7,12 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 285
+          "weight": 285,
+          "quality": -1
         },
         {
           "type": "minecraft:item",
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -25,6 +27,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "quality": 5,
           "functions": [
             {
@@ -40,6 +43,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 2,
           "quality": 3,
           "name": "aoa3:voliant_heart"
         }

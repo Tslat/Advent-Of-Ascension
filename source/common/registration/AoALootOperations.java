@@ -9,9 +9,9 @@ import net.minecraft.loot.functions.ILootFunction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.library.loot.conditions.*;
-import net.tslat.aoa3.library.loot.functions.EnchantSpecific;
-import net.tslat.aoa3.library.loot.functions.GrantSkillXp;
+import net.tslat.aoa3.loottable.condition.*;
+import net.tslat.aoa3.loottable.function.EnchantSpecific;
+import net.tslat.aoa3.loottable.function.GrantSkillXp;
 
 public final class AoALootOperations {
 	public static final class LootFunctions {

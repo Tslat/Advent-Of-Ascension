@@ -11,10 +11,12 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 100,
           "name": "aoa3:copper_coin"
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "name": "aoa3:silver_coin"
         }
       ]

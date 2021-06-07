@@ -13,8 +13,6 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import javax.annotation.Nullable;
 
 public class DyrehornEntity extends AoAMeleeMob {
-	public static final float entityWidth = 1f;
-
 	public DyrehornEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 

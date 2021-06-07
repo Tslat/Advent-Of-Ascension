@@ -5,7 +5,18 @@
     {
       "weight": 1,
       "element": {
-        "location": "aoa3:lunalus/zal_prison_camp/zal_prison_camp",
+        "location": "aoa3:lunalus/zal_prison_camp/zal_prison_camp1",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:lunalus/zal_prison_camp/zal_prison_camp2",
         "processors": {
           "processors": []
         },

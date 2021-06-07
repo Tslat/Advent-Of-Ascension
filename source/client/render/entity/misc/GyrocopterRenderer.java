@@ -20,7 +20,7 @@ import net.tslat.aoa3.util.NumberUtil;
 import javax.annotation.Nullable;
 
 public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/boss/gyro/gyro.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/boss/gyro/gyro.png");
 	private final EntityModel<Entity> model = new GyrocopterModel();
 
 	public GyrocopterRenderer(EntityRendererManager renderManager) {

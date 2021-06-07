@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 public class KrorModel extends AnimatedGeoModel<KrorEntity> {
 	private static final ResourceLocation MODEL = new ResourceLocation(AdventOfAscension.MOD_ID, "geo/entities/bosses/kror/kror.geo.json");
-	private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/entities/boss/kror/kror.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/entity/boss/kror/kror.png");
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/bosses/kror/kror.animation.json");
 
 	@Override

@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.animal;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
@@ -10,6 +11,7 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
@@ -65,11 +67,53 @@ public class VoliantEntity extends AoAAnimal {
 		return false;
 	}
 
+	public void travel(Vector3d travelVector) {
+		if (isInWater()) {
+			moveRelative(0.02F, travelVector);
+			move(MoverType.SELF, getDeltaMovement());
+			setDeltaMovement(getDeltaMovement().scale(0.8F));
+		}
+		else if (isInLava()) {
+			moveRelative(0.02F, travelVector);
+			move(MoverType.SELF, getDeltaMovement());
+			setDeltaMovement(getDeltaMovement().scale(0.5D));
+		}
+		else {
+			BlockPos groundPos = blockPosition().below();
+			float friction = 0.91F;
+
+			if (onGround)
+				friction = level.getBlockState(groundPos).getSlipperiness(this.level, groundPos, this) * 0.91F;
+
+			float frictionFactor = 0.16277137F / (friction * friction * friction);
+			friction = 0.91F;
+
+			if (onGround)
+				friction = level.getBlockState(groundPos).getSlipperiness(level, groundPos, this) * 0.91F;
+
+			moveRelative(onGround ? 0.1F * frictionFactor : 0.02F, travelVector);
+			move(MoverType.SELF, getDeltaMovement());
+			setDeltaMovement(getDeltaMovement().scale(friction));
+		}
+
+		calculateEntityAnimation(this, false);
+	}
+
 	@Override
 	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {}
 
 	@Override
 	public boolean onClimbable() {
+		return false;
+	}
+
+	@Override
+	public boolean isIgnoringBlockTriggers() {
+		return true;
+	}
+
+	@Override
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 }

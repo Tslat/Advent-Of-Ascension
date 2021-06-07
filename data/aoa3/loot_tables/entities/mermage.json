@@ -22,18 +22,22 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 4,
           "name": "aoa3:atlantic_staff"
         },
         {
           "type": "minecraft:item",
+          "weight": 9,
           "name": "aoa3:torn_cloth"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:magic_repair_dust"
         },
         {
           "type": "minecraft:item",
+          "weight": 16,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -64,6 +68,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 13,
           "functions": [
             {
               "function": "minecraft:set_count",

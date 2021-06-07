@@ -22,10 +22,12 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "name": "aoa3:tangle_staff"
         },
         {
           "type": "minecraft:item",
+          "weight": 35,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -56,6 +58,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -70,6 +73,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 30,
           "functions": [
             {
               "function": "minecraft:set_count",

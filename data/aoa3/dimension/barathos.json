@@ -26,15 +26,15 @@
             "separation": 12,
             "salt": 533982223
           },
-          "aoa3:baroness_house": {
-            "spacing": 32,
-            "separation": 8,
-            "salt": 286762965
-          },
           "aoa3:power_rune_shrine": {
             "spacing": 16,
             "separation": 8,
             "salt": 853143163
+          },
+          "aoa3:baron_house": {
+            "spacing": 32,
+            "separation": 8,
+            "salt": 1014938269
           },
           "aoa3:hive_nest": {
             "spacing": 20,

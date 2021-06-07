@@ -29,6 +29,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -36,6 +37,13 @@
                 "min": 1.0,
                 "max": 3.0,
                 "type": "minecraft:uniform"
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": -1.0,
+                "max": 2.0
               }
             }
           ],
@@ -53,6 +61,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:looting_enchant",
@@ -66,6 +75,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "functions": [
             {
               "function": "minecraft:looting_enchant",

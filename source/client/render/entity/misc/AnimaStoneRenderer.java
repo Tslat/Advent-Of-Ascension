@@ -20,7 +20,7 @@ import net.tslat.aoa3.util.NumberUtil;
 import javax.annotation.Nullable;
 
 public class AnimaStoneRenderer extends EntityRenderer<AnimaStoneEntity> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/misc/anima_stone.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/anima_stone.png");
 	private final EntityModel<Entity> model = new AnimaStoneModel();
 
 	public AnimaStoneRenderer(EntityRendererManager renderManager) {

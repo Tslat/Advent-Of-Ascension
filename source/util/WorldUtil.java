@@ -290,6 +290,9 @@ public abstract class WorldUtil {
 		World activeWorld = (World)world;
 		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
+		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
+			return relevantPlayer != null && relevantPlayer.isCreative();
+
 		if (relevantPlayer != null) {
 			if (!relevantPlayer.mayBuild())
 				return false;
@@ -304,14 +307,10 @@ public abstract class WorldUtil {
 					if (stack.isEmpty())
 						return false;
 
-					if (!stack.hasAdventureModeBreakTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false)))
-						return false;
+					return stack.hasAdventureModeBreakTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false));
 				}
 			}
 		}
-
-		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
-			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		return true;
 	}

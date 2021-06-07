@@ -33,7 +33,7 @@ public class ShroomStone extends BossSpawningItem {
 
 		kingShroomus.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(kingShroomus);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.king_shroomus.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.KING_SHROOMUS.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class ShroomStone extends BossSpawningItem {
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.MYSTERIUM.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.king_shroomus.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.KING_SHROOMUS.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

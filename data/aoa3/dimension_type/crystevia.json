@@ -1,7 +1,7 @@
 {
   "name": "aoa3:crystevia",
   "ultrawarm": false,
-  "natural": true,
+  "natural": false,
   "coordinate_scale": 1.0,
   "has_skylight": false,
   "has_ceiling": true,

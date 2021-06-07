@@ -2,7 +2,6 @@
   "type": "minecraft:fishing",
   "pools": [
     {
-      "name": "main",
       "rolls": 1,
       "entries": [
         {
@@ -11,14 +10,14 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "functions": [
+          "conditions": [
             {
-              "function": "aoa3:grant_skill_xp",
+              "condition": "aoa3:player_has_level",
               "skill": "hauling",
-              "xp": 15.0
+              "level": 15
             }
           ],
+          "weight": 100,
           "name": "minecraft:cod"
         },
         {

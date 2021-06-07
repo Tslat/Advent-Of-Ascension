@@ -29,6 +29,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -37,12 +38,20 @@
                 "max": 3.0,
                 "type": "minecraft:uniform"
               }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": -1.0,
+                "max": 2.0
+              }
             }
           ],
           "name": "aoa3:copper_coin"
         },
         {
           "type": "minecraft:item",
+          "weight": 2,
           "name": "aoa3:mystic_shrooms"
         }
       ]
@@ -57,6 +66,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:looting_enchant",

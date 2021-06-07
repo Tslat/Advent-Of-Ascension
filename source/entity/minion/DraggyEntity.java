@@ -12,9 +12,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class DraggyEntity extends AoAMinion {
-	public static final float entityWidth = 0.9f;
-	public static final float entityHeight = 0.9375f;
-
 	public DraggyEntity(EntityType<? extends TameableEntity> entityType, final World world){
 		super(entityType, world);
 	}

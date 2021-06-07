@@ -46,7 +46,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:flye",
+        "type": "aoa3:lelyetian_caster",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -64,14 +64,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:grobbler",
-        "weight": 1,
+        "type": "aoa3:flye",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:lelyetian_caster",
-        "weight": 20,
+        "type": "aoa3:grobbler",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }
@@ -85,12 +85,6 @@
       }
     ],
     "ambient": [
-      {
-        "type": "aoa3:glaring_pixon",
-        "weight": 12,
-        "minCount": 1,
-        "maxCount": 4
-      },
       {
         "type": "aoa3:logging_master",
         "weight": 1,

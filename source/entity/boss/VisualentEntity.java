@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.entity.ai.mob.FlyingMeleeAttackGoal;
@@ -84,14 +85,18 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.visualent.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VISUALENT.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
+	}
+
+	public void enrage() {
+		this.isEnraged = true;
 	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (super.hurt(source, amount)) {
-			this.isEnraged = true;
+			enrage();
 
 			return true;
 		}

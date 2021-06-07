@@ -34,7 +34,7 @@ public class TrollIdol extends BossSpawningItem {
 		smash.moveTo(posX + 0.5d, posY + 0.5d, posZ + 0.5d, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(smash);
 
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.smash.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.SMASH.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class TrollIdol extends BossSpawningItem {
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.OVERWORLD.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.smash.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.SMASH.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

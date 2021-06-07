@@ -44,7 +44,7 @@ public class RandomFlyingGoal extends Goal {
 
 	@Override
 	public boolean canContinueToUse() {
-		return false;
+		return !this.taskOwner.getNavigation().isDone() && !this.taskOwner.isVehicle();
 	}
 
 	@Override

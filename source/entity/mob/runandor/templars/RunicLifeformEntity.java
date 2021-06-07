@@ -14,8 +14,6 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public abstract class RunicLifeformEntity extends AoAMeleeMob {
-	public static final float entityWidth = 0.75f;
-	public static final float entityHeight = 0.99f;
 	private final RuneTemplarEntity templar;
 
 	public RunicLifeformEntity(EntityType<? extends MonsterEntity> entityType, RuneTemplarEntity templar) {

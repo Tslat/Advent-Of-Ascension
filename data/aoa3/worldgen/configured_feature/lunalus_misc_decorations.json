@@ -97,6 +97,7 @@
                 },
                 "templates": [
                   "aoa3:lunalus/decorations/basalt_asteroid2",
+                  "aoa3:lunalus/decorations/basalt_asteroid3",
                   "aoa3:lunalus/decorations/icy_asteroid1",
                   "aoa3:lunalus/decorations/icy_asteroid2",
                   "aoa3:lunalus/decorations/nether_asteroid1"
@@ -124,7 +125,7 @@
     },
     "decorator": {
       "config": {
-        "chance": 600
+        "chance": 500
       },
       "type": "minecraft:chance"
     }

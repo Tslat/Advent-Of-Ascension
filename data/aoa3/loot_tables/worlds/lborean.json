@@ -29,6 +29,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 100,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -37,16 +38,25 @@
                 "max": 3.0,
                 "type": "minecraft:uniform"
               }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": -1.0,
+                "max": 2.0
+              }
             }
           ],
           "name": "aoa3:copper_coin"
         },
         {
           "type": "minecraft:item",
+          "weight": 10,
           "name": "aoa3:bubble_berry_seeds"
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -71,6 +81,7 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 20,
           "functions": [
             {
               "function": "minecraft:looting_enchant",

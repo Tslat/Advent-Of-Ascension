@@ -24,7 +24,7 @@ public class DracyonAltar extends BossAltarBlock {
 
 		dracyon.moveTo(blockPos.getX(), blockPos.getY() + 3, blockPos.getZ(), 0, 0);
 		player.level.addFreshEntity(dracyon);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.dracyon.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.DRACYON.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class ArmyBlock extends BossAltarBlock {
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
 		spawnWave(player.level, blockPos, 1);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.skeletalArmy.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.SKELETRON.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	private static void spawnWaveEntities(World world, BlockPos armyBlockPos, Entity... entities) {

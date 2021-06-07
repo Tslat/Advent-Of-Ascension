@@ -58,14 +58,14 @@ public class AnglerEntity extends AoAWaterMeleeMob implements IAnimatable {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<AnglerEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<AnglerEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<AnglerEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(BITE_ANIMATION);
+					event.getController().setAnimation(BITE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}
-				else if (animationEvent.isMoving()) {
-					animationEvent.getController().setAnimation(SWIM_ANIMATION);
+				else if (event.isMoving()) {
+					event.getController().setAnimation(SWIM_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

@@ -12,8 +12,8 @@ import net.tslat.aoa3.entity.boss.RockRiderEntity;
 import javax.annotation.Nullable;
 
 public class RockRiderRenderer extends MobRenderer<RockRiderEntity, EntityModel<RockRiderEntity>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/rockrider/rock_rider.png");
-	private static final ResourceLocation ALTERNATE_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/rockrider/rock_rider_alternate.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/rockrider/rock_rider.png");
+	private static final ResourceLocation ALTERNATE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/rockrider/rock_rider_alternate.png");
 
 	public RockRiderRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new RockRiderModel(), AoAEntities.Mobs.ROCK_RIDER.get().getWidth() / 3);

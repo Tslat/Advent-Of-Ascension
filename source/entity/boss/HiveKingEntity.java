@@ -105,7 +105,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 
 	@Override
 	public boolean canChangeDimensions() {
-		return false;
+		return growthPercent >= 100;
 	}
 
 	public int getGrowthPercent() {
@@ -178,7 +178,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.hiveKing.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.HIVE_KING.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 				if (killer instanceof ServerPlayerEntity && cause.getDirectEntity() instanceof HiveSoldierEntity)
 					AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "barathos/daddy_issues"), "hive_king_hive_staff_kill");

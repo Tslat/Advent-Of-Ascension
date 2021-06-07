@@ -21,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
@@ -102,7 +103,7 @@ public class TyrosaurEntity extends AoAMeleeMob {
 			for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(35), PlayerUtil::shouldPlayerBeAffected)) {
 				if (pl.onGround && !level.isClientSide) {
 					if (DamageUtil.dealAoeDamage(null, this, pl, 10, false))
-						pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.tyrosaur.stomp", TextFormatting.DARK_GREEN), Util.NIL_UUID);
+						pl.sendMessage(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.TYROSAUR.get().getDescriptionId() + ".stomp", TextFormatting.DARK_GREEN), Util.NIL_UUID);
 				}
 			}
 		}
@@ -116,7 +117,7 @@ public class TyrosaurEntity extends AoAMeleeMob {
 			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("message.mob.tyrosaur.kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.TYROSAUR.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 

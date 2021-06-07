@@ -28,8 +28,6 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private static final DataParameter<Boolean> DISABLED = EntityDataManager.<Boolean>defineId(RuneTemplarEntity.class, DataSerializers.BOOLEAN);
 	private final HashSet<RunicLifeformEntity> lifeforms = new HashSet<RunicLifeformEntity>();
-	public static final float entityWidth = 1.125f;
-	public static final float entityHeight = 2f;
 
 	public RuneTemplarEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
@@ -40,6 +38,11 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
 		return 1.8125f;
+	}
+
+	@Override
+	public boolean canChangeDimensions() {
+		return false;
 	}
 
 	@Override

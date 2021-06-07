@@ -33,7 +33,7 @@ public class NethengeicCallstone extends BossSpawningItem {
 
 		nethengeicWither.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(nethengeicWither);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.nethengeic_wither.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.NETHENGEIC_WITHER.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class NethengeicCallstone extends BossSpawningItem {
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.NETHER.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.nethengeic_wither.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.NETHENGEIC_WITHER.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

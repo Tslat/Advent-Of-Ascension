@@ -33,7 +33,7 @@ public class ExplosiveIdol extends BossSpawningItem {
 
 		kingBamBamBam.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(kingBamBamBam);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage("entity.aoa3.king_bambambam.spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.KING_BAMBAMBAM.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class ExplosiveIdol extends BossSpawningItem {
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.NETHER.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.king_bambambam.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.KING_BAMBAMBAM.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

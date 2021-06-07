@@ -79,7 +79,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> LELYETIAN_GREATBLADE = registerWeapon("lelyetian_greatblade", LelyetianGreatblade::new);
 	public static final RegistryObject<Item> LUNAR_GREATBLADE = registerWeapon("lunar_greatblade", LunarGreatblade::new);
 	public static final RegistryObject<Item> LUXON_SCYTHE = registerWeapon("luxon_scythe", LuxonScythe::new);
-	public static final RegistryObject<Item> LYONIC_GREATBLADE = registerWeapon("lyonic_greatblade", () -> new BaseGreatblade(20.0f, -3.1D, 1500));
+	public static final RegistryObject<Item> LYONIC_GREATBLADE = registerWeapon("lyonic_greatblade", () -> new BaseGreatblade(19.0f, -3.1D, 1420));
 	public static final RegistryObject<Item> MILLENNIUM_GREATBLADE = registerWeapon("millennium_greatblade", MillenniumGreatblade::new);
 	public static final RegistryObject<Item> NOXIOUS_GREATBLADE = registerWeapon("noxious_greatblade", NoxiousGreatblade::new);
 	public static final RegistryObject<Item> PLUTON_SCYTHE = registerWeapon("pluton_scythe", PlutonScythe::new);

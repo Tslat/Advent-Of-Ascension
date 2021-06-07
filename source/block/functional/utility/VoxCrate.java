@@ -31,7 +31,7 @@ public class VoxCrate extends Block {
 
 			lottoman.moveTo(pos.getX(), pos.getY() + 0.5, pos.getZ(), 0, 0);
 			world.addFreshEntity(lottoman);
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.mob.voxLottoMan.spawn"), Util.NIL_UUID);
+			player.sendMessage(LocaleUtil.getLocaleMessage(AoAEntities.NPCs.TOXIC_LOTTOMAN.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
 		}
 	}
 }

@@ -14,7 +14,7 @@ import net.tslat.aoa3.util.NumberUtil;
 
 public class RainicornRenderer extends AoAMobRenderer {
 	public RainicornRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RainicornModel(), AoAEntities.Animals.RAINICORN.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entities/animals/rainicorn.png"));
+		super(renderManager, new RainicornModel(), AoAEntities.Animals.RAINICORN.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/animals/rainicorn.png"));
 	}
 
 	@Override

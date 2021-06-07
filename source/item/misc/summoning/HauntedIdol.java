@@ -38,7 +38,7 @@ public class HauntedIdol extends BossSpawningItem {
 	@Override
 	public boolean canSpawnHere(World world, ServerPlayerEntity player, double posX, double posY, double posZ) {
 		if (!WorldUtil.isWorld(world, AoADimensions.GRECKON.key)) {
-			PlayerUtil.notifyPlayer(player, "entity.aoa3.bane.wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.BANE.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
 
 			return false;
 		}

@@ -6,8 +6,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.worldgen.biomeprovider.FloatingIslandsBiomeProvider;
-import net.tslat.aoa3.worldgen.biomeprovider.LayeredBiomeProvider;
+import net.tslat.aoa3.world.gen.biomeprovider.FloatingIslandsBiomeProvider;
+import net.tslat.aoa3.world.gen.biomeprovider.LayeredBiomeProvider;
 
 public final class AoABiomes {
 	public static void postInit() {

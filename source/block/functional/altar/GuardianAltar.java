@@ -87,7 +87,7 @@ public class GuardianAltar extends Block {
 				yellowGuardian.setRedGuardian(redGuardian);
 
 				for (PlayerEntity pl : world.getEntitiesOfClass(PlayerEntity.class, new AxisAlignedBB(pos.getX() - 25, pos.getY() - 25, pos.getZ() - 25, pos.getX() + 26, pos.getY() + 26, pos.getZ() + 26))) {
-					pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.fourGuardians.spawn"), Util.NIL_UUID);
+					pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.four_guardians.spawn"), Util.NIL_UUID);
 				}
 			}
 

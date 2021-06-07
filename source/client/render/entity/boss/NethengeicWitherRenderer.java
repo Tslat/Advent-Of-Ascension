@@ -12,9 +12,9 @@ import net.tslat.aoa3.entity.boss.NethengeicWitherEntity;
 import javax.annotation.Nullable;
 
 public class NethengeicWitherRenderer extends MobRenderer<NethengeicWitherEntity, EntityModel<NethengeicWitherEntity>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither.png");
-	private static final ResourceLocation ENRAGED_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither_enraged.png");
-	private static final ResourceLocation CATACLYSMIC_TEXTURE = new ResourceLocation("aoa3", "textures/entities/boss/nethengeicwither/nethengeic_wither_cataclysmic.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/nethengeicwither/nethengeic_wither.png");
+	private static final ResourceLocation ENRAGED_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/nethengeicwither/nethengeic_wither_enraged.png");
+	private static final ResourceLocation CATACLYSMIC_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/nethengeicwither/nethengeic_wither_cataclysmic.png");
 
 	public NethengeicWitherRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new NethengeicWitherModel(), AoAEntities.Mobs.NETHENGEIC_WITHER.get().getWidth() / 3);

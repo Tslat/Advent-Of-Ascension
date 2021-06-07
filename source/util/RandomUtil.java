@@ -120,7 +120,7 @@ public abstract class RandomUtil {
 		}
 
 		public int randomNumberBetween(int min, int max) {
-			return min + RANDOM.nextInt(max - min);
+			return min + (int)Math.floor(RANDOM.nextDouble() * (1 + max - min));
 		}
 
 		public double randomValueBetween(double min, double max) {

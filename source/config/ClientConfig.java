@@ -2,7 +2,7 @@ package net.tslat.aoa3.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.tslat.aoa3.client.gui.hud.ResourcesRenderer;
-import net.tslat.aoa3.library.misc.AoAHalos;
+import net.tslat.aoa3.util.AoAHaloUtil;
 
 public final class ClientConfig {
 	public final ForgeConfigSpec.BooleanValue doVerboseDebugging;
@@ -10,7 +10,7 @@ public final class ClientConfig {
 	public final ForgeConfigSpec.BooleanValue showXpParticles;
 	public final ForgeConfigSpec.BooleanValue showWelcomeMessage;
 	public final ForgeConfigSpec.BooleanValue showPlayerHalos;
-	public final ForgeConfigSpec.EnumValue<AoAHalos.Type.Choosable> personalHaloPreference;
+	public final ForgeConfigSpec.EnumValue<AoAHaloUtil.Type.Choosable> personalHaloPreference;
 	public final ForgeConfigSpec.ConfigValue<String> adventGuiTheme;
 	public final ForgeConfigSpec.BooleanValue adventGuiPausesGame;
 	public final ForgeConfigSpec.BooleanValue thirdPartyBestiary;
@@ -55,7 +55,7 @@ public final class ClientConfig {
 		personalHaloPreference = specBuilder
 				.comment("If multiple halos are available, which one would you prefer to have on?")
 				.translation("config.aoa3.client.personalHaloPreference")
-				.defineEnum("personalHaloPreference", AoAHalos.Type.Choosable.Donator);
+				.defineEnum("personalHaloPreference", AoAHaloUtil.Type.Choosable.Donator);
 
 		adventGuiTheme = specBuilder
 				.comment("The current theme for the main Advent of Ascension window.")

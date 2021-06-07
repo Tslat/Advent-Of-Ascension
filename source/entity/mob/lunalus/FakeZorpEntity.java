@@ -15,8 +15,6 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import javax.annotation.Nullable;
 
 public class FakeZorpEntity extends AoAMeleeMob {
-	public static final float entityWidth = 0.6f;
-
 	public FakeZorpEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
 

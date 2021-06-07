@@ -8,6 +8,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.boss.HiveKingEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -24,7 +25,7 @@ public class HiveSpawner extends BossAltarBlock {
 
 		hiveKing.moveTo(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
 		player.level.addFreshEntity(hiveKing);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.hiveKing.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.HIVE_KING.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

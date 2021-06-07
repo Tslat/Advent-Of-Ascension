@@ -16,7 +16,7 @@ import net.tslat.aoa3.entity.misc.BaronBombEntity;
 import javax.annotation.Nullable;
 
 public class BaronBombRenderer extends EntityRenderer<BaronBombEntity> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entities/misc/baron_bomb.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/misc/baron_bomb.png");
 	private final EntityModel<BaronBombEntity> model = new BaronBombModel();
 
 	public BaronBombRenderer(EntityRendererManager renderManager) {

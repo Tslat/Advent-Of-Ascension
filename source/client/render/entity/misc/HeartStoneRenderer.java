@@ -18,7 +18,7 @@ import net.tslat.aoa3.util.NumberUtil;
 import javax.annotation.Nullable;
 
 public class HeartStoneRenderer extends EntityRenderer<HeartStoneEntity> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entities/misc/heart_stone.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/heart_stone.png");
 	private final EntityModel<Entity> model = new HeartStoneModel();
 
 	public HeartStoneRenderer(EntityRendererManager renderManager) {

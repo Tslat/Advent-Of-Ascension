@@ -15,7 +15,7 @@ import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.library.scheduling.async.CoralStaffTask;
+import net.tslat.aoa3.scheduling.async.CoralStaffTask;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 

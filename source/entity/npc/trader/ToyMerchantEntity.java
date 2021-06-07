@@ -21,7 +21,8 @@ public class ToyMerchantEntity extends AoATrader {
 					BuildableTrade.trade(AoAItems.TOY_GYROCOPTER).cost(AoAItems.CIRCUS_COIN, 10).xp(25))
 			.trades(4,
 					BuildableTrade.trade(AoAWeapons.CONFETTI_CLUSTER).cost(AoAItems.CIRCUS_COIN, 12).xp(40).stock(5),
-					BuildableTrade.trade(AoAWeapons.BALLOON_BOMBER).cost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5)).build();
+					BuildableTrade.trade(AoAWeapons.BALLOON_BOMBER).cost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5),
+					BuildableTrade.trade(AoAItems.SMILEY_UPGRADE_KIT).cost(AoAItems.CIRCUS_COIN, 64).xp(100).stock(1)).build();
 
 	public ToyMerchantEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);

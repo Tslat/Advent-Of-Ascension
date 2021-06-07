@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -86,9 +85,9 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(new AnimationController<MuncherEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<MuncherEntity>() {
 			@Override
-			public <P extends IAnimatable> PlayState test(AnimationEvent<P> animationEvent) {
+			public PlayState test(AnimationEvent<MuncherEntity> event) {
 				if (swinging) {
-					animationEvent.getController().setAnimation(BITE_ANIMATION);
+					event.getController().setAnimation(BITE_ANIMATION);
 
 					return PlayState.CONTINUE;
 				}

@@ -11,7 +11,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
+          "weight": 13,
+          "name": "aoa3:iro_cannon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
           "name": "aoa3:iro_miner"
         },
         {
@@ -212,7 +217,7 @@
       "bonus_rolls": 1.0
     },
     {
-      "name": "statue",
+      "name": "trophy",
       "rolls": 1,
       "entries": [
         {

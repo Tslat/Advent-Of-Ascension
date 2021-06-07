@@ -6,8 +6,11 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,20 +18,19 @@ import net.minecraft.item.MerchantOffer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAProfessions;
 import net.tslat.aoa3.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.entity.ai.trader.TraderPlayerTradeGoal;
+import net.tslat.aoa3.entity.ai.trader.TraderRestockGoal;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -45,11 +47,12 @@ public abstract class AoATrader extends VillagerEntity {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new SwimGoal(this));
-		goalSelector.addGoal(1, new AvoidEntityGoal<AoAMeleeMob>(this, AoAMeleeMob.class, 8f, 0.8d, 1d));
+		goalSelector.addGoal(1, new AvoidEntityGoal<MonsterEntity>(this, MonsterEntity.class, 8f, 0.8d, 1d));
 		goalSelector.addGoal(1, new TraderPlayerTradeGoal(this));
 		goalSelector.addGoal(1, new TraderFaceCustomerGoal(this));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 3f, 1f));
+		goalSelector.addGoal(3, new TraderRestockGoal(this));
 		goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.6d));
 		goalSelector.addGoal(5, new LookRandomlyGoal(this));
 	}
@@ -77,9 +80,9 @@ public abstract class AoATrader extends VillagerEntity {
 
 	@Override
 	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getItemInHand(hand);
+		ItemStack itemStack = player.getItemInHand(hand);
 
-		if (itemstack.getItem() != Items.VILLAGER_SPAWN_EGG && isAlive() && !isTrading() && !isBaby()) {
+		if (itemStack.getItem() != Items.VILLAGER_SPAWN_EGG && isAlive() && !isTrading() && !isBaby()) {
 			if (hand == Hand.MAIN_HAND)
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 
@@ -93,7 +96,7 @@ public abstract class AoATrader extends VillagerEntity {
 			return ActionResultType.sidedSuccess(level.isClientSide);
 		}
 		else {
-			return super.mobInteract(player, hand);
+			return ActionResultType.PASS;
 		}
 	}
 
@@ -149,6 +152,40 @@ public abstract class AoATrader extends VillagerEntity {
 	}
 
 	@Override
+	protected void rewardTradeXp(MerchantOffer offer) {
+		int xp = 3 + this.random.nextInt(4);
+		this.villagerXp += offer.getXp();
+		this.lastTradedPlayer = this.getTradingPlayer();
+
+		if (this.shouldIncreaseLevel()) {
+			this.updateMerchantTimer = 40;
+			this.increaseProfessionLevelOnUpdate = true;
+			xp += 5;
+		}
+
+		xp /= (offer.getMaxUses() / 16f);
+
+		if (offer.shouldRewardExp())
+			level.addFreshEntity(new ExperienceOrbEntity(level, getX(), getY() + 0.5D, getZ(), xp));
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return null;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
+		return SoundEvents.GENERIC_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.GENERIC_DEATH;
+	}
+
+	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return !isOverworldNPC() || !WorldUtil.isWorld(level, World.OVERWORLD) || tickCount >= 48000;
 	}
@@ -156,6 +193,50 @@ public abstract class AoATrader extends VillagerEntity {
 	@Override
 	public VillagerEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
 		return null;
+	}
+
+	@Override
+	public void thunderHit(ServerWorld world, LightningBoltEntity lightning) {
+		setRemainingFireTicks(getRemainingFireTicks() + 1);
+
+		if (getRemainingFireTicks() == 0)
+			setSecondsOnFire(8);
+
+		hurt(DamageSource.LIGHTNING_BOLT, 5.0F);
+	}
+
+	@Override
+	public void die(DamageSource cause) {
+		if (cause.getEntity() != null)
+			tellWitnessesThatIWasMurdered(cause.getEntity());
+
+		if (!ForgeHooks.onLivingDeath(this, cause)) {
+			if (!removed && !dead) {
+				Entity entity = cause.getEntity();
+				LivingEntity killer = getKillCredit();
+
+				if (deathScore >= 0 && killer != null)
+					killer.awardKillScore(this, deathScore, cause);
+
+				dead = true;
+
+				getCombatTracker().recheckStatus();
+
+				if (this.level instanceof ServerWorld) {
+					if (entity != null) {
+						entity.killed((ServerWorld)this.level, this);
+					}
+
+					dropAllDeathLoot(cause);
+					createWitherRose(killer);
+				}
+
+				level.broadcastEntityEvent(this, (byte)3);
+				setPose(Pose.DYING);
+			}
+		}
+
+		stopTrading();
 	}
 
 	@Nullable
@@ -213,6 +294,7 @@ public abstract class AoATrader extends VillagerEntity {
 
 		public BuildableTrade locked() {
 			this.isLocked = true;
+			this.maxUses = 0;
 
 			return this;
 		}

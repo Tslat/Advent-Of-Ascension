@@ -57,7 +57,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 
 		clunkhead.teleportTo(blockPos.getX() - 1, blockPos.above().getY() + 1, blockPos.getZ() - 1);
 		player.level.addFreshEntity(clunkhead);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.clunkhead.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CLUNKHEAD.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

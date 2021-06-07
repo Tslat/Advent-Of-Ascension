@@ -24,7 +24,7 @@ public class VisualentAltar extends BossAltarBlock {
 
 		visualent.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
 		player.level.addFreshEntity(visualent);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage("message.mob.visualent.spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VISUALENT.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override

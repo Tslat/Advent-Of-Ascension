@@ -18,6 +18,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class PrimalSword extends BaseSword {
@@ -30,19 +31,24 @@ public class PrimalSword extends BaseSword {
 		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
-			if (isSelected) {
-				float currentDamageMod = cap.getValue();
-				float currentCalcBuff = getCurrentDamageBuff(entity);
+			try {
+				if (isSelected) {
+					float currentDamageMod = cap.getValue();
+					float currentCalcBuff = getCurrentDamageBuff(entity);
 
-				if (currentDamageMod != currentCalcBuff) {
+					if (currentDamageMod != currentCalcBuff) {
+						((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+						cap.setValue(currentCalcBuff);
+						((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+					}
+				}
+				else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
 					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
-					cap.setValue(currentCalcBuff);
-					((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+					cap.setValue(0);
 				}
 			}
-			else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
-				((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
-				cap.setValue(0);
+			catch (ConcurrentModificationException ex) {
+				// Don't really have a way of pre-empting this issue, and I hate this solution but idk what else I can do
 			}
 		}
 	}
