@@ -1,7 +1,7 @@
 Expédition (compétence)
 
 Voilà une compétence dont tout le monde peut profiter. L'expédition est une compétence basée autour de l'exploration et du mouvement.
-Pendant que tu cours dans tout les sens, explorant les territoires, tu gagnes parfois de l'xp d'expédition. Tu n'as même pas besoin de faire quelque chose en particulier!
+Pendant que tu cours dans tout les sens, explorant les territoires, tu gagnes parfois de l'exp d'expédition. Tu n'as même pas besoin de faire quelque chose en particulier!
 
 Quand tes niveaux d'expédition montent, tu auras de plus en plus de force dans tes jambes et te rendras compte que tu prendras moins de dégâts de chute.
 
