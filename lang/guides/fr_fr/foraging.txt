@@ -1,6 +1,6 @@
 Forage (compétence)
 
 Creuser, creuser, creuser. Qui n'aime pas creuser?
-Le forage est une compétence qui permet de trouver des trésors supplémentaires en minant de la pierre ordinaire. En minant, tu pourrais occasionellement trouver un beau butin en plus du bloc de pierre. À chaque fois que ça arrive, tu gagneras un peu d'xp.
+Le forage est une compétence qui permet de trouver des trésors supplémentaires en minant de la pierre ordinaire. En minant, tu pourrais occasionellement trouver un beau butin en plus du bloc de pierre. À chaque fois que ça arrive, tu gagneras un peu d'exp.
 
 Plus le niveau de forage est haut, plus le butin est fréquent, et le meilleur il est aussi!
