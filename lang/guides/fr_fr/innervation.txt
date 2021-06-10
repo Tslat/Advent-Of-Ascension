@@ -1,6 +1,6 @@
 Létalité (compétence)
 
-La létalité est la compétence de la vitalité. À chaque fois que tu tues une créature, elle droppera peut-être un petit fragment de sa vitalité sous la forme d'un cœur de pierre. Tu peut ensuite ramasser ce cœur de pierre pour obtenir un peu d'xp de létalité.
+La létalité est la compétence de la vitalité. À chaque fois que tu tues une créature, elle droppera peut-être un petit fragment de sa vitalité sous la forme d'un cœur de pierre. Tu peut ensuite ramasser ce cœur de pierre pour obtenir un peu d'exp de létalité.
 
 Alors que tu montes ta létalité, tu verras ta vie maximale augmenter au-delà de ses anciennes limites. Plus tu as un bon niveau, plus ta vie est augmentée!
 Cette vitalité augmentée est permanente, c'est donc un atout vital pour les tâches dangereuses.
