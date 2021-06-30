@@ -97,7 +97,6 @@
                 },
                 "templates": [
                   "aoa3:lunalus/decorations/cradle_of_life",
-                  "aoa3:lunalus/decorations/impact",
                   "aoa3:lunalus/decorations/molten_core",
                   "aoa3:lunalus/decorations/nether_asteroid2",
                   "aoa3:lunalus/decorations/nether_asteroid3"
@@ -107,9 +106,9 @@
             },
             "decorator": {
               "config": {
-                "bottom_offset": 0,
+                "bottom_offset": 5,
                 "top_offset": 0,
-                "maximum": 255
+                "maximum": 215
               },
               "type": "minecraft:range"
             }

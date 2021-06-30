@@ -56,20 +56,26 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:silencer",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:shifter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:skull_creature",
+        "type": "aoa3:silencer",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:valkyrie",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:hunter",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -80,27 +86,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:valkyrie",
+        "type": "aoa3:skull_creature",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }
     ],
     "creature": [],
-    "ambient": [
-      {
-        "type": "aoa3:infusion_master",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

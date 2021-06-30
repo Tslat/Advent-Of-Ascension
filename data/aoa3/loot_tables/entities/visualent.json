@@ -184,7 +184,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:13000,Id:16b,Amplifier:0b}],display:{CustomPotionColor:\"9400\",Name:'{\"translate\":\"item.aoa3.potion.nocturnal\"}'}}"
+              "tag": "{CustomPotionColor:\"37888\",CustomPotionEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:13000,Id:16b,Amplifier:0b}],display:{Name:'{\"translate\":\"item.aoa3.potion.nocturnal\"}'}}"
             }
           ],
           "name": "minecraft:potion"
@@ -207,13 +207,33 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
+          "weight": 13,
           "name": "aoa3:lunar_assault_rifle"
         },
         {
           "type": "minecraft:item",
-          "weight": 22,
+          "weight": 10,
           "name": "aoa3:lunar_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "aoa3:spaceking_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "aoa3:spaceking_chestplate"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "aoa3:spaceking_legs"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "name": "aoa3:spaceking_boots"
         }
       ]
     },

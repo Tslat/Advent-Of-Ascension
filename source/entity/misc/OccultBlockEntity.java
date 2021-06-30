@@ -28,6 +28,11 @@ public class OccultBlockEntity extends Entity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		tickCount++;

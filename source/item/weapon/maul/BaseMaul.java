@@ -5,7 +5,9 @@ import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -30,7 +32,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -60,7 +61,7 @@ public class BaseMaul extends Item implements LongReachItem {
 	}
 
 	public float getAttackDamage() {
-		return baseDamage * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return baseDamage;
 	}
 
 	public double getAttackSpeed() {
@@ -107,6 +108,11 @@ public class BaseMaul extends Item implements LongReachItem {
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
 		return true;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return enchantment == Enchantments.MOB_LOOTING || super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
 	@Override

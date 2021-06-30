@@ -30,11 +30,11 @@ public class KrorCaveStructure extends AoAStructureBase<IntRangeConfig> {
 				chunkCenter.setY(config.getValue(random));
 
 				if (blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable()) {
-					while (chunkCenter.getY() > 14 && blockReader.getBlockState(chunkCenter.move(Direction.DOWN)).getMaterial().isReplaceable()) {
+					while (chunkCenter.getY() > 15 && blockReader.getBlockState(chunkCenter.move(Direction.DOWN)).getMaterial().isReplaceable()) {
 						;
 					}
 
-					chunkCenter.move(Direction.DOWN, 12);
+					chunkCenter.move(Direction.DOWN, 13);
 
 					return chunkCenter.getY() > 0;
 				}

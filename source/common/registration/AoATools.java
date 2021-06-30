@@ -43,16 +43,16 @@ public final class AoATools {
 	public static final RegistryObject<Item> SKELETAL_SHOVEL = registerTool("skeletal_shovel", SkeletalShovel::new);
 	public static final RegistryObject<Item> SOULSTONE_SHOVEL = registerTool("soulstone_shovel", SoulstoneShovel::new);
 
-	public static final RegistryObject<Item> AMETHYST_AXE = registerTool("amethyst_axe", () -> new BaseAxe(ItemUtil.customItemTier(1200, 8.0f, 4.5f, 3, 14, AoAItems.AMETHYST)));
+	public static final RegistryObject<Item> AMETHYST_AXE = registerTool("amethyst_axe", () -> new BaseAxe(ItemUtil.customItemTier(1200, 8.0f, 7f, 3, 14, AoAItems.AMETHYST)));
 	public static final RegistryObject<Item> EMBERSTONE_AXE = registerTool("emberstone_axe", EmberstoneAxe::new);
 	public static final RegistryObject<Item> ENERGISTIC_AXE = registerTool("energistic_axe", EnergisticAxe::new);
 	public static final RegistryObject<Item> GOOFY_AXE = registerTool("goofy_axe", GoofyAxe::new);
-	public static final RegistryObject<Item> JADE_AXE = registerTool("jade_axe", () -> new BaseAxe(ItemUtil.customItemTier(650, 7.5f, 4.0f, 3, 11, AoAItems.JADE)));
-	public static final RegistryObject<Item> LIMONITE_AXE = registerTool("limonite_axe", () -> new BaseAxe(ItemUtil.customItemTier(350, 5.0f, 2.0f, 2, 3, AoAItems.LIMONITE_INGOT)));
+	public static final RegistryObject<Item> JADE_AXE = registerTool("jade_axe", () -> new BaseAxe(ItemUtil.customItemTier(650, 7.5f, 6.5f, 3, 11, AoAItems.JADE)));
+	public static final RegistryObject<Item> LIMONITE_AXE = registerTool("limonite_axe", () -> new BaseAxe(ItemUtil.customItemTier(350, 5.0f, 4.5f, 2, 3, AoAItems.LIMONITE_INGOT)));
 	public static final RegistryObject<Item> OCCULT_AXE = registerTool("occult_axe", OccultAxe::new);
 	public static final RegistryObject<Item> ORNAMYTE_AXE = registerTool("ornamyte_axe", OrnamyteAxe::new);
-	public static final RegistryObject<Item> ROSITE_AXE = registerTool("rosite_axe", () -> new BaseAxe(ItemUtil.customItemTier(600, 6.5f, 3.5f, 3, 6, AoAItems.ROSITE_INGOT)));
-	public static final RegistryObject<Item> SAPPHIRE_AXE = registerTool("sapphire_axe", () -> new BaseAxe(ItemUtil.customItemTier(2500, 9.0f, 5.0f, 4, 19, AoAItems.SAPPHIRE)));
+	public static final RegistryObject<Item> ROSITE_AXE = registerTool("rosite_axe", () -> new BaseAxe(ItemUtil.customItemTier(600, 6.5f, 6f, 3, 6, AoAItems.ROSITE_INGOT)));
+	public static final RegistryObject<Item> SAPPHIRE_AXE = registerTool("sapphire_axe", () -> new BaseAxe(ItemUtil.customItemTier(2500, 9.0f, 10f, 4, 19, AoAItems.SAPPHIRE)));
 	public static final RegistryObject<Item> SKELETAL_AXE = registerTool("skeletal_axe", SkeletalAxe::new);
 	public static final RegistryObject<Item> SOULSTONE_AXE = registerTool("soulstone_axe", SoulstoneAxe::new);
 	public static final RegistryObject<Item> CHAINSAW = registerTool("chainsaw", Chainsaw::new);

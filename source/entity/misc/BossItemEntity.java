@@ -66,6 +66,11 @@ public class BossItemEntity extends ItemEntity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 

@@ -22,7 +22,7 @@ import java.util.List;
 
 public class OccultAxe extends BaseAxe {
 	public OccultAxe() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null),
+		super(ItemUtil.customItemTier(3000, 11.0f, 11.5f, 6, 10, null),
 				new Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 

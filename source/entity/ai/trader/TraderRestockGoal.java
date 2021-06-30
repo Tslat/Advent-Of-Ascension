@@ -15,17 +15,17 @@ public class TraderRestockGoal extends Goal {
 	}
 
 	public boolean canUse() {
-		return canContinueToUse();
+		return this.trader.isAlive() && !this.trader.isTrading() && this.trader.canRestock() && this.trader.allowedToRestock() && !this.trader.level.hasNearbyAlivePlayer(this.trader.position().x(), this.trader.position().y(), this.trader.position().z(), 24);
 	}
 
 	@Override
 	public boolean canContinueToUse() {
-		return trader.isAlive() && trader.isTrading() && trader.canRestock() && trader.shouldRestock();
+		return false;
 	}
 
 	@Override
 	public void start() {
-		if (!this.trader.level.hasNearbyAlivePlayer(this.trader.position().x(), this.trader.position().y(), this.trader.position().z(), 24))
+		if (trader.shouldRestock())
 			trader.restock();
 
 		stop();

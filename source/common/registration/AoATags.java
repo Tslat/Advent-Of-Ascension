@@ -87,6 +87,7 @@ public final class AoATags {
 
 	public static class Fluids {
 		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = aoaTag("candied_water");
+		public static final Tags.IOptionalNamedTag<Fluid> TOXIC_WASTE = aoaTag("toxic_waste");
 
 		private static Tags.IOptionalNamedTag<Fluid> aoaTag(String id) {
 			return FluidTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));

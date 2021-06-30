@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:magic_marang_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:magic_marang"
+    },
+    {
+      "item": "aoa3:magic_marang_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:blue_havendales_stem"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

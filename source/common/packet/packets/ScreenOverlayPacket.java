@@ -17,12 +17,12 @@ public class ScreenOverlayPacket implements AoAPacket {
 
 	@Override
 	public void encode(PacketBuffer buffer) {
+		buffer.writeInt(screenId);
 		buffer.writeInt(durationTicks);
-		buffer.writeShort(screenId);
 	}
 
 	public static ScreenOverlayPacket decode(PacketBuffer buffer) {
-		return new ScreenOverlayPacket(Type.getById(buffer.readShort()), buffer.readInt());
+		return new ScreenOverlayPacket(Type.getById(buffer.readInt()), buffer.readInt());
 	}
 
 	@Override
@@ -41,10 +41,8 @@ public class ScreenOverlayPacket implements AoAPacket {
 		LIGHTWALKER(4),
 		PURPLE_FOG(5),
 		SCRATCHES(6),
-		SHYRELANDS_BLIND(7),
-		SHYRELANDS_DIZZY(8),
-		SPIKEY_CIRCLES(9),
-		STATIC(10);
+		SPIKEY_CIRCLES(7),
+		STATIC(8);
 
 		public final int id;
 
@@ -55,27 +53,23 @@ public class ScreenOverlayPacket implements AoAPacket {
 		public static Type getById(final int id) {
 			switch(id) {
 				case 0:
-					return SCRATCHES;
-				case 1:
 					return BLOODY;
+				case 1:
+					return CIRCLES;
 				case 2:
-					return STATIC;
+					return DARKNESS;
 				case 3:
 					return GRILLFACE;
 				case 4:
-					return DARKNESS;
+					return LIGHTWALKER;
 				case 5:
 					return PURPLE_FOG;
 				case 6:
-					return CIRCLES;
+					return SCRATCHES;
 				case 7:
 					return SPIKEY_CIRCLES;
 				case 8:
-					return SHYRELANDS_DIZZY;
-				case 9:
-					return SHYRELANDS_BLIND;
-				case 10:
-					return LIGHTWALKER;
+					return STATIC;
 				default:
 					return null;
 			}

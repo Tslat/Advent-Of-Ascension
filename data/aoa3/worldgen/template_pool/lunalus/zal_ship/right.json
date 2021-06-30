@@ -1,0 +1,17 @@
+{
+  "name": "aoa3:lunalus/zal_ship/right",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "aoa3:lunalus/zal_ship/right",
+        "processors": {
+          "processors": []
+        },
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

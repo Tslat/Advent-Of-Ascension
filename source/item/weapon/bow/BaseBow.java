@@ -9,14 +9,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.*;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -35,7 +37,7 @@ public class BaseBow extends BowItem {
 	}
 
 	public double getDamage() {
-		return dmg * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return dmg;
 	}
 
 	@Override

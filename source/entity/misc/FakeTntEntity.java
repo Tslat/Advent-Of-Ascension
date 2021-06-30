@@ -32,6 +32,11 @@ public class FakeTntEntity extends TNTEntity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}

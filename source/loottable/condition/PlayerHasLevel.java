@@ -39,6 +39,14 @@ public class PlayerHasLevel implements ILootCondition {
 		return entity instanceof ServerPlayerEntity && PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)entity, skill, level);
 	}
 
+	public Skills getSkill() {
+		return this.skill;
+	}
+
+	public int getLevel() {
+		return this.level;
+	}
+
 	public static class Serializer implements ILootSerializer<PlayerHasLevel> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasLevel playerHasLevel, JsonSerializationContext jsonSerializationContext) {

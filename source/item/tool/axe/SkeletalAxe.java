@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SkeletalAxe extends BaseAxe implements LootModifyingItem {
 	public SkeletalAxe() {
-		super(ItemUtil.customItemTier(2000, 10.0f, 6.0f, 5, 10, null));
+		super(ItemUtil.customItemTier(2000, 10.0f, 11f, 5, 10, null));
 	}
 
 	@Override

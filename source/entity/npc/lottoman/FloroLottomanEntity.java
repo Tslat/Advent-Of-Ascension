@@ -21,7 +21,7 @@ public class FloroLottomanEntity extends AoATrader {
 	}
 
 	@Override
-	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+	public int getMaxTradesToUnlock(int newProfessionLevel) {
 		return newProfessionLevel == 1 ? 4 : 2;
 	}
 

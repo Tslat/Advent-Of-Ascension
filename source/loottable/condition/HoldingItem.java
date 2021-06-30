@@ -53,6 +53,19 @@ public class HoldingItem implements ILootCondition {
 		return AoALootOperations.LootConditions.HOLDING_ITEM;
 	}
 
+	public LootContext.EntityTarget getTarget() {
+		return this.target;
+	}
+
+	public ItemPredicate getPredicate() {
+		return this.predicate;
+	}
+
+	@Nullable
+	public Hand getHand() {
+		return this.hand;
+	}
+
 	public static class Serializer implements ILootSerializer<HoldingItem> {
 		@Override
 		public void serialize(JsonObject json, HoldingItem holdingItem, JsonSerializationContext jsonSerializationContext) {

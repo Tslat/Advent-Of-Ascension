@@ -46,6 +46,24 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:carrotop",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:corny",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:flowerface",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sunny",
         "weight": 1,
         "minCount": 1,
@@ -58,45 +76,20 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:broccohead",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:archvine",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:carrotop",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:flowerface",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:corny",
+        "type": "aoa3:broccohead",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }
     ],
     "creature": [],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

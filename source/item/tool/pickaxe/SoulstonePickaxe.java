@@ -36,7 +36,10 @@ public class SoulstonePickaxe extends BasePickaxe implements LootModifyingItem {
 		BlockState harvestedBlock = getHarvestedBlock(lootContext);
 		Block block = harvestedBlock.getBlock();
 
-		if (block == Blocks.AIR || existingLoot.isEmpty() || !harvestedBlock.isToolEffective(ToolType.PICKAXE) || (!block.is(Tags.Blocks.STONE) && !block.is(Tags.Blocks.COBBLESTONE)) || !lootContext.hasParam(LootParameters.THIS_ENTITY))
+		if (block == Blocks.AIR || existingLoot.isEmpty() || !harvestedBlock.isToolEffective(ToolType.PICKAXE) || !lootContext.hasParam(LootParameters.THIS_ENTITY))
+			return;
+
+		if (!block.is(Tags.Blocks.STONE) && !block.is(Tags.Blocks.COBBLESTONE))
 			return;
 
 		Entity harvestingPlayer = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);

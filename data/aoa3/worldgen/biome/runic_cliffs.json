@@ -47,18 +47,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:bouncer",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:runicorn",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:runicorn_rider",
         "weight": 1,
         "minCount": 1,
@@ -75,23 +63,22 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
-      }
-    ],
-    "creature": [],
-    "ambient": [
+      },
       {
-        "type": "aoa3:anima_master",
-        "weight": 1,
-        "minCount": 0,
+        "type": "aoa3:runicorn",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
+        "type": "aoa3:bouncer",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       }
     ],
+    "creature": [],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

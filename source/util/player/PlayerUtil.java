@@ -176,7 +176,7 @@ public class PlayerUtil {
         if (ray.getType() != RayTraceResult.Type.BLOCK)
             return null;
 
-        return  ray.getBlockPos();
+        return ray.getBlockPos();
     }
 
     public static void playSoundForPlayer(ServerPlayerEntity player, SoundEvent sound, SoundCategory category, double posX, double posY, double posZ, float volume, float pitch) {

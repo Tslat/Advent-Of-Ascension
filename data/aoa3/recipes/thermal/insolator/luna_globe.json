@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:luna_globe_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:luna_globe"
+    },
+    {
+      "item": "aoa3:luna_globe_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

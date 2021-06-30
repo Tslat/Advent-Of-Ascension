@@ -144,7 +144,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:13000,Id:10b,Amplifier:0b}],display:{CustomPotionColor:\"16384112\",Name:'{\"translate\":\"item.aoa3.potion.medic\"}'}}"
+              "tag": "{CustomPotionColor:\"372785426\",CustomPotionEffects:[{Ambient:0b,CurativeItems:[{id:\"minecraft:milk_bucket\",Count:1b}],ShowIcon:1b,ShowParticles:1b,Duration:13000,Id:10b,Amplifier:0b}],display:{Name:'{\"translate\":\"item.aoa3.potion.medic\"}'}}"
             }
           ],
           "name": "minecraft:potion"

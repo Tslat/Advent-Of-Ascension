@@ -98,7 +98,7 @@ public class IrogoldTreeFeature extends AoATreeFeature {
 		pos = pos.above(trunkHeight - 1);
 		int branchWidth = 2 + rand.nextInt(3);
 
-		for (int i = branchWidth - 1; i <= branchWidth; i++) {
+		for (int i = 1; i <= branchWidth; i++) {
 			for (int j = -1; j <= 1; j += 2) {
 				int i2 = (j < 0 ? i - 1 : i) * j;
 

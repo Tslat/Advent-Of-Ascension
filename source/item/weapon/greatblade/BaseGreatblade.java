@@ -4,7 +4,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -32,7 +34,6 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.item.LongReachItem;
 import net.tslat.aoa3.util.ItemUtil;
 
@@ -89,7 +90,7 @@ public class BaseGreatblade extends Item implements LongReachItem {
 	}
 
 	public double getAttackDamage() {
-		return baseDamage * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return baseDamage;
 	}
 
 	public double getAttackSpeed() {
@@ -98,6 +99,11 @@ public class BaseGreatblade extends Item implements LongReachItem {
 
 	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
 		return getAttackDamage();
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return enchantment == Enchantments.MOB_LOOTING || super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
 	@Override

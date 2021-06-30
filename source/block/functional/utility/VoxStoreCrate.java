@@ -6,11 +6,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.npc.trader.StoreKeeperEntity;
 import net.tslat.aoa3.util.BlockUtil;
@@ -27,6 +29,7 @@ public class VoxStoreCrate extends Block {
 			StoreKeeperEntity storeKeeper = new StoreKeeperEntity(AoAEntities.NPCs.STORE_KEEPER.get(), world);
 
 			storeKeeper.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
+			storeKeeper.finalizeSpawn((ServerWorld)world, world.getCurrentDifficultyAt(pos), SpawnReason.EVENT, null, null);
 			world.addFreshEntity(storeKeeper);
 			player.sendMessage(LocaleUtil.getLocaleMessage(AoAEntities.NPCs.STORE_KEEPER.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
 		}

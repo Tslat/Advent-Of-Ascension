@@ -19,7 +19,6 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.config.AoAConfig;
 
 import javax.annotation.Nullable;
 
@@ -44,7 +43,7 @@ public class BaseSword extends SwordItem {
 
 	@Override
 	public float getDamage() {
-		return dmg * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return dmg;
 	}
 
 	public double getAttackSpeed() {

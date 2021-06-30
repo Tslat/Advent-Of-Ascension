@@ -18,7 +18,7 @@ public class LelyetianTraderEntity extends AoATrader {
 					BuildableTrade.trade(AoABlocks.LELYETIAN_GLASS, 64).cost(AoAItems.SILVER_COIN, 2).xp(35))
 			.trades(4,
 					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5),
-					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5)).build();
+					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.ORANGE_SPORES, 5).xp(40).stock(5)).build();
 
 	public LelyetianTraderEntity(EntityType<? extends AoATrader> entityType, World world) {
 		super(entityType, world);

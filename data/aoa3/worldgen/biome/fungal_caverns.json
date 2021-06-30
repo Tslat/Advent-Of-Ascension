@@ -59,6 +59,12 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:fungung",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:fungback",
         "weight": 15,
         "minCount": 1,
@@ -69,29 +75,10 @@
         "weight": 15,
         "minCount": 1,
         "maxCount": 1
-      },
-      {
-        "type": "aoa3:fungung",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
       }
     ],
     "creature": [],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:runation_master",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

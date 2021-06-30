@@ -87,7 +87,7 @@ public class StructuresCommand implements Command<CommandSource> {
 	}
 
 	public static class StructureIdArgument implements ArgumentType<ResourceLocation> {
-		private static final Collection<String> EXAMPLES = Arrays.asList("minecraft:bastion/starts", "aoa3:nether/nethengeic_pit/main_pool");
+		private static final Collection<String> EXAMPLES = Arrays.asList("minecraft:structures/igloo/bottom", "aoa3:structures/abyss/abyssal_lotto_hut/abyssal_lotto_hut");
 		private static final DynamicCommandExceptionType UNKNOWN_STRUCTURE_EXCEPTION = new DynamicCommandExceptionType(arg -> new TranslationTextComponent("command.aoa.structures.invalidStructure", arg));
 		private static MinecraftServer server = null;
 

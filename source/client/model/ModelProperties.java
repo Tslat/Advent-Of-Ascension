@@ -1,13 +1,15 @@
-package net.tslat.aoa3.common.registration;
+package net.tslat.aoa3.client.model;
 
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
 
-public final class AoAItemModelProperties {
+public final class ModelProperties {
 	public static void init() {
 		registerBows(
 				(BaseBow)AoAWeapons.ALACRITY_BOW.get(),

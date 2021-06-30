@@ -41,6 +41,11 @@ public class GyrocopterEntity extends Entity {
     }
 
     @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
     protected void defineSynchedData() {}
 
     @Override

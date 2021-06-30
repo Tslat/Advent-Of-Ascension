@@ -1,5 +1,6 @@
 package net.tslat.aoa3.loottable.function;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
@@ -40,6 +41,10 @@ public class EnchantSpecific extends LootFunction {
 		EnchantmentHelper.setEnchantments(enchants, stack);
 
 		return stack;
+	}
+
+	public Map<Enchantment, Integer> getEnchantments() {
+		return ImmutableMap.copyOf(enchants);
 	}
 
 	public static Builder<?> builder(EnchantmentData... enchantments) {

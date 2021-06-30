@@ -19,7 +19,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.entity.ai.mob.FlyingRangedAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
@@ -115,21 +114,20 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 	@Override
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
 		boolean success;
-		float mod = AoAConfig.COMMON.hardcoreMode.get() ? 1.5f : 1f;
 
 		switch (projectile.getProjectileType()) {
 			case MAGIC:
-				success = DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * mod, false);
+				success = DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()), false);
 				break;
 			case GUN:
-				success = DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * mod);
+				success = DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 				break;
 			case PHYSICAL:
-				success = DamageUtil.dealRangedDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * mod);
+				success = DamageUtil.dealRangedDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 				break;
 			case OTHER:
 			default:
-				success = target.hurt(DamageSource.indirectMobAttack(projectile, this), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * mod);
+				success = target.hurt(DamageSource.indirectMobAttack(projectile, this), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 				break;
 		}
 

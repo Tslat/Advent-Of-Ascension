@@ -49,38 +49,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:cryptid",
-        "weight": 30,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:emperor_beast",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:keeler",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:squiggler",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:parasect",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:ramradon",
-        "weight": 20,
+        "type": "aoa3:tharafly",
+        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       },
@@ -91,9 +61,27 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:tharafly",
-        "weight": 15,
+        "type": "aoa3:squiggler",
+        "weight": 1,
         "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:ramradon",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:cryptid",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:emperor_beast",
+        "weight": 1,
+        "minCount": 0,
         "maxCount": 1
       },
       {
@@ -107,23 +95,22 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
-      }
-    ],
-    "creature": [],
-    "ambient": [
+      },
       {
-        "type": "aoa3:creation_master",
-        "weight": 1,
-        "minCount": 0,
+        "type": "aoa3:keeler",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
+        "type": "aoa3:parasect",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       }
     ],
+    "creature": [],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

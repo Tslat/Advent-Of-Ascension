@@ -11,6 +11,6 @@ public class BaseAxe extends AxeItem {
 	}
 
 	public BaseAxe(IItemTier stats, Item.Properties properties) {
-		super(stats, 1.5F, -2.8F, properties);
+		super(stats, 1.5F, -3F, properties);
 	}
 }

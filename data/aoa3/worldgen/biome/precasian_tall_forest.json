@@ -60,8 +60,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:terradon",
-        "weight": 1,
+        "type": "aoa3:deinotherium",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -72,13 +72,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:giant_snail",
-        "weight": 20,
+        "type": "aoa3:terradon",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:deinotherium",
+        "type": "aoa3:giant_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -98,14 +98,7 @@
         "maxCount": 2
       }
     ],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

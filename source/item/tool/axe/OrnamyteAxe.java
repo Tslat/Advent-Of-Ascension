@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OrnamyteAxe extends BaseAxe {
 	public OrnamyteAxe() {
-		super(ItemUtil.customItemTier(2750, 10.0f, 6.0f, 5, 14, null));
+		super(ItemUtil.customItemTier(2750, 10.0f, 11.5f, 5, 14, null));
 	}
 
 	@Override

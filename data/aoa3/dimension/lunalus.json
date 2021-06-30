@@ -16,10 +16,20 @@
       },
       "structures": {
         "structures": {
+          "aoa3:zal_ship": {
+            "spacing": 60,
+            "separation": 40,
+            "salt": 729642039
+          },
           "aoa3:stranded_lottoman": {
             "spacing": 32,
             "separation": 10,
             "salt": 44891480
+          },
+          "aoa3:infested_asteroid": {
+            "spacing": 32,
+            "separation": 12,
+            "salt": 1153353149
           },
           "aoa3:zal_prison_camp": {
             "spacing": 32,
@@ -28,7 +38,7 @@
           },
           "aoa3:lunar_oasis": {
             "spacing": 32,
-            "separation": 10,
+            "separation": 12,
             "salt": 350391043
           }
         }

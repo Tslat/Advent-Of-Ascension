@@ -42,7 +42,7 @@ public class LunalusEvents {
 	}
 
 	public static void doPlayerLanding(PlayerEntity pl, LivingFallEvent ev) {
-		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null && !ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get()))
 			return;
 
 		ev.setDistance(Math.min(10, ev.getDistance()));

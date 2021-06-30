@@ -28,8 +28,6 @@ import javax.annotation.Nullable;
 public class VisualentEntity extends AoAFlyingMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	private boolean isEnraged = false;
-
 	public VisualentEntity(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -39,8 +37,8 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
 		goalSelector.addGoal(3, new FlyingMeleeAttackGoal(this, 0.6f, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> this.isEnraged && entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> this.isEnraged && pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> this.isAggressive() && entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> this.isAggressive() && pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Override
@@ -89,14 +87,10 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 		}
 	}
 
-	public void enrage() {
-		this.isEnraged = true;
-	}
-
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (super.hurt(source, amount)) {
-			enrage();
+			this.setAggressive(true);
 
 			return true;
 		}
@@ -147,6 +141,6 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 		bossInfo.removePlayer(player);
 
 		if (bossInfo.getPlayers().isEmpty())
-			this.isEnraged = false;
+			this.setAggressive(false);
 	}
 }

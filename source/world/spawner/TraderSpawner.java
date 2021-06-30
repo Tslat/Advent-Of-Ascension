@@ -113,6 +113,6 @@ public class TraderSpawner implements ISpecialSpawner {
 	public static boolean isValidSpawnWorld(ServerWorld world) {
 		RegistryKey<World> key = world.dimension();
 
-		return key == World.OVERWORLD || key == World.NETHER || (key.getRegistryName().getNamespace().equals(AdventOfAscension.MOD_ID) && key != AoADimensions.NOWHERE.key);
+		return key == World.OVERWORLD || key == World.NETHER || (key.location().getNamespace().equals(AdventOfAscension.MOD_ID) && key != AoADimensions.NOWHERE.key);
 	}
 }

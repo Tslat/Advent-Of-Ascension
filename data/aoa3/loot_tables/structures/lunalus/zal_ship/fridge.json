@@ -1,0 +1,157 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 10,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 300,
+          "quality": -2
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "minecraft:cake"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "minecraft:milk_bucket"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 8.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:cooked_beef"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 8.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:cooked_porkchop"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:tropical_fish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 14.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:cookie"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:raw_candlefish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:raw_ironback"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:raw_charger_shank"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "minecraft:golden_apple"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_golden_apple"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lunar_ingot"
+        }
+      ],
+      "bonus_rolls": {
+        "min": -1.0,
+        "max": 1.0
+      }
+    }
+  ]
+}

@@ -28,6 +28,9 @@
                 "decorator": {
                   "config": {
                     "block": {
+                      "Properties": {
+                        "level": "0"
+                      },
                       "Name": "aoa3:toxic_waste"
                     }
                   },

@@ -17,6 +17,7 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.KajarosEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.player.PlayerUtil;
 
@@ -44,20 +45,15 @@ public class PrimordialShrine extends BossAltarBlock {
 		if (!WorldUtil.isWorld(player.level, AoADimensions.DUSTOPIA.key))
 			return false;
 
-		BlockPos pos2 = pos.above(1).west(3).north(5);
-		BlockPos pos3 = pos.above(1).west(1).north(4);
-		BlockPos pos4 = pos.above(3).north(3).east(1);
-		BlockPos pos5 = pos.above(5).north(1).east(1);
-
 		return checkLamps(player.level,
-				pos.above(1).west(3).north(5),
-				pos2.south(10),
-				pos.above(1).west(1).north(4),
-				pos3.south(8),
-				pos.above(3).north(3).east(1),
-				pos4.south(6),
-				pos.above(5).north(1).east(1),
-				pos5.south(2));
+				pos.offset(5, 1, -3),
+				pos.offset(4, 1, -1),
+				pos.offset(3, 3, 1),
+				pos.offset(1, 5, 1),
+				pos.offset(-1, 5, 1),
+				pos.offset(-3, 3, 1),
+				pos.offset(-4, 1, -1),
+				pos.offset(-5, 1, -3));
 	}
 
 	private boolean checkLamps(World world, BlockPos... positions) {
@@ -76,32 +72,15 @@ public class PrimordialShrine extends BossAltarBlock {
 		World world = player.level;
 		BlockState lampOff = AoABlocks.DUSTOPIAN_LAMP.get().defaultBlockState().setValue(DustopianLamp.LIT, false);
 
-		switch (player.getRandom().nextInt(8)) {
-			case 0:
-				world.setBlockAndUpdate(blockPos.above().west(3).north(5), lampOff);
-				break;
-			case 1:
-				world.setBlockAndUpdate(blockPos.above().west(3).south(5), lampOff);
-				break;
-			case 2:
-				world.setBlockAndUpdate(blockPos.above().west().north(4), lampOff);
-				break;
-			case 3:
-				world.setBlockAndUpdate(blockPos.above().west().south(4), lampOff);
-				break;
-			case 4:
-				world.setBlockAndUpdate(blockPos.above(3).north(3).east(), lampOff);
-				break;
-			case 5:
-				world.setBlockAndUpdate(blockPos.above(3).south(3).east(), lampOff);
-				break;
-			case 6:
-				world.setBlockAndUpdate(blockPos.above(5).north().east(), lampOff);
-				break;
-			case 7:
-				world.setBlockAndUpdate(blockPos.above(5).south().east(), lampOff);
-				break;
-		}
+		world.setBlockAndUpdate(RandomUtil.getRandomSelection(
+				blockPos.offset(5, 1, -3),
+				blockPos.offset(4, 1, -1),
+				blockPos.offset(3, 3, 1),
+				blockPos.offset(1, 5, 1),
+				blockPos.offset(-1, 5, 1),
+				blockPos.offset(-3, 3, 1),
+				blockPos.offset(-4, 1, -1),
+				blockPos.offset(-5, 1, -3)), lampOff);
 
 		KajarosEntity kajaros = new KajarosEntity(AoAEntities.Mobs.KAJAROS.get(), player.level);
 

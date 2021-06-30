@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "aoa3:precasian_bone"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone_meal"
+  }
+}

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 	public EmberstoneAxe() {
-		super(ItemUtil.customItemTier(2000, 10.0f, 5.5f, 5, 10, AoAItems.EMBERSTONE_INGOT));
+		super(ItemUtil.customItemTier(2000, 10.0f, 11f, 5, 10, AoAItems.EMBERSTONE_INGOT));
 	}
 
 	@Override

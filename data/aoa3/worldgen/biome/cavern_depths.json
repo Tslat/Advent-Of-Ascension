@@ -60,7 +60,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:rockbiter",
+        "type": "aoa3:cave_creep",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -72,19 +72,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:dweller",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:doubler",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:cave_creep",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dweller",
+        "type": "aoa3:rockbiter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -98,20 +98,7 @@
         "maxCount": 3
       }
     ],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:extraction_master",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

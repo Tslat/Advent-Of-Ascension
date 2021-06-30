@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:plastic_stick"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

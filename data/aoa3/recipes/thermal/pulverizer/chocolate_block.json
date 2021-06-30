@@ -4,7 +4,17 @@
     "item": "aoa3:chocolate_block"
   },
   "energy": 3000,
-  "result": [],
+  "result": [
+    {
+      "item": "minecraft:cocoa_beans",
+      "count": 2
+    },
+    {
+      "item": "minecraft:sugar",
+      "count": 3,
+      "chance": 0.4
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

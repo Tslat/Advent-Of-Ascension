@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.constant.Skills;
@@ -27,12 +26,6 @@ public class HeartStoneEntity extends Entity {
         setSilent(true);
     }
 
-    public HeartStoneEntity(World world, BlockPos spawnPosition) {
-        this(AoAEntities.Misc.HEART_STONE.get(), world);
-
-        teleportTo(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
-    }
-
     @Override
     protected float getEyeHeight(Pose pose, EntitySize size) {
         return 0.25f;
@@ -41,6 +34,11 @@ public class HeartStoneEntity extends Entity {
     @Override
     public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
     }
 
     @Override

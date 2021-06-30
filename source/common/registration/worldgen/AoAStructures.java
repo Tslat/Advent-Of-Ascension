@@ -140,7 +140,9 @@ public class AoAStructures {
 
 	public static final RegistryObject<YPosStructure> ZAL_PRISON_CAMP = register("zal_prison_camp", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/zal_prison_camp/main_pool"), 10, 32);
 	public static final RegistryObject<YPosStructure> STRANDED_LOTTOMAN = register("stranded_lottoman", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/stranded_lottoman/main_pool"), 10, 32);
-	public static final RegistryObject<YPosStructure> LUNAR_OASIS = register("lunar_oasis", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_oasis/main_pool"), 10, 32);
+	public static final RegistryObject<YPosStructure> LUNAR_OASIS = register("lunar_oasis", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/lunar_oasis/main_pool"), 12, 32);
+	public static final RegistryObject<YPosStructure> INFESTED_ASTEROID = register("infested_asteroid", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/infested_asteroid/main_pool"), 12, 32);
+	public static final RegistryObject<YPosStructure> ZAL_SHIP = register("zal_ship", () -> new YPosStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "lunalus/zal_ship/main_pool"), 40, 60);
 
 	public static final RegistryObject<UndergroundCaveStructure> FUNGSHROOM = register("fungshroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/fungshroom/main_pool"), 8, 32);
 	public static final RegistryObject<UndergroundCaveStructure> GORB_VILLAGE = register("gorb_village", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/gorb_village/paths"), 20, 40);

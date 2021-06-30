@@ -10,11 +10,13 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,6 +28,8 @@ import net.tslat.aoa3.block.decoration.banner.BannerExtension;
 import net.tslat.aoa3.block.decoration.misc.CarpetBlock;
 import net.tslat.aoa3.block.decoration.misc.NonFullBlock;
 import net.tslat.aoa3.block.functional.altar.*;
+import net.tslat.aoa3.block.functional.fluid.ClearWater;
+import net.tslat.aoa3.block.functional.fluid.ToxicWaste;
 import net.tslat.aoa3.block.functional.light.LampBlock;
 import net.tslat.aoa3.block.functional.light.VoxLight;
 import net.tslat.aoa3.block.functional.misc.*;
@@ -214,7 +218,7 @@ public final class AoABlocks {
 	public static final RegistryObject<SaplingBlock> DAWNWOOD_SAPLING = customRender(registerBlock("dawnwood_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.DAWNWOOD_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> EYEBUSH_SAPLING = customRender(registerBlock("eyebush_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.EYEBUSH_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> EYE_HANGER_SAPLING = customRender(registerBlock("eye_hanger_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.EYE_HANGER_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
-	public static final RegistryObject<SaplingBlock> HAUNTED_SAPLING = customRender(registerBlock("haunted_sapling", () -> new DarkGrowingSapling(null, new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
+	public static final RegistryObject<SaplingBlock> HAUNTED_SAPLING = customRender(registerBlock("haunted_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.HAUNTED_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> BLUE_HAVEN_SAPLING = customRender(registerBlock("blue_haven_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.BLUE_HAVEN_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> PINK_HAVEN_SAPLING = customRender(registerBlock("pink_haven_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.PINK_HAVEN_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> PURPLE_HAVEN_SAPLING = customRender(registerBlock("purple_haven_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.PURPLE_HAVEN_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
@@ -224,7 +228,7 @@ public final class AoABlocks {
 	public static final RegistryObject<SaplingBlock> IRODUST_SAPLING = customRender(registerBlock("irodust_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.IRODUST_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> IROGOLD_SAPLING = customRender(registerBlock("irogold_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.IROGOLD_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> LUCALUS_SAPLING = customRender(registerBlock("lucalus_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.LUCALUS_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
-	public static final RegistryObject<SaplingBlock> LUNICIA_SAPLING = customRender(registerBlock("lunicia_sapling", () -> new DarkGrowingSapling(null, new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
+	public static final RegistryObject<SaplingBlock> LUNICIA_SAPLING = customRender(registerBlock("lunicia_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.LUNICIA_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> LUNOSSO_SAPLING = customRender(registerBlock("lunosso_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.LUNOSSO_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> RUNIC_SAPLING = customRender(registerBlock("runic_sapling", () -> new SaplingBlock(new AoATree(AoAFeatures.Features.RUNIC_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
 	public static final RegistryObject<SaplingBlock> SHADOW_SAPLING = customRender(registerBlock("shadow_sapling", () -> new DarkGrowingSapling(new AoATree(AoAFeatures.Features.SHADOW_TREE), new CompactProperties(Material.PLANT, MaterialColor.PLANT).randomTicks().noClip().get()), AoAItemGroups.FUNCTIONAL_BLOCKS), CUTOUT);
@@ -839,12 +843,12 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> PURPLE_MUSHROOM_BLOCK = registerBlock("purple_mushroom_block", () -> new HugeMushroomBlock(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.TERRACOTTA_ORANGE).stats(0.2f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> YELLOW_MUSHROOM_BLOCK = registerBlock("yellow_mushroom_block", () -> new HugeMushroomBlock(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.TERRACOTTA_ORANGE).stats(0.2f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> SKELETAL_BLOCK = registerBlock("skeletal_block", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE).stats(5f, 5f).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE = registerBlock("tentacle", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE_DOTS_LEFT = registerBlock("tentacle_dots_left", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE_DOTS_RIGHT = registerBlock("tentacle_dots_right", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE_EYE_ORANGE = registerBlock("tentacle_eye_orange", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE_EYE_RED = registerBlock("tentacle_eye_red", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TENTACLE_GREEN = registerBlock("tentacle_green", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE = registerBlock("tentacle", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE_DOTS_LEFT = registerBlock("tentacle_dots_left", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE_DOTS_RIGHT = registerBlock("tentacle_dots_right", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE_EYE_ORANGE = registerBlock("tentacle_eye_orange", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE_EYE_RED = registerBlock("tentacle_eye_red", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> TENTACLE_GREEN = registerBlock("tentacle_green", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.WOOD).tool(ToolType.AXE).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> TOXIC_STEM = registerBlock("toxic_stem", () -> new Block(new CompactProperties(Material.VEGETABLE, MaterialColor.TERRACOTTA_RED).stats(3f, 1f).sound(SoundType.STEM).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> PARAVITE_HIVE = registerBlock("paravite_hive", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).stats(1.5f, 10f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> IROPOLE = customRender(registerBlock("iropole", Iropole::new, AoAItemGroups.GENERATION_BLOCKS), CUTOUT);
@@ -861,15 +865,15 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> LUNAR_PILLAR = customRender(registerBlock("lunar_pillar", () -> new NonFullBlock(VoxelShapes.box(0.0625, 0, 0.0625, 0.9375, 1, 0.9375), new CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(1.5f, 10f).noOcclusion().get()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
 	public static final RegistryObject<Block> SPIKEY_PILLAR = customRender(registerBlock("spikey_pillar", () -> new NonFullBlock(VoxelShapes.box(0.1875, 0, 0.1875, 0.8125, 1, 0.8125), new CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(1.5f, 10f).noOcclusion().get()), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
 	public static final RegistryObject<Block> TOXIC_BLOCK = registerBlock("toxic_block", ToxicBlock::new, AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> TOXIC_WASTE = registerBlock("toxic_waste", ToxicWaste::new, AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> SHYRE_CLOUD = customRender(registerBlock("shyre_cloud", CloudBlock::new, AoAItemGroups.GENERATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> SHYRE_CRUST = registerBlock("shyre_crust", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.GOLD).stats(45f, 1000f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.GENERATION_BLOCKS);
 
 	public static final RegistryObject<Block> GIANT_SNAIL_ACID = registerItemlessBlock("giant_snail_acid", GiantSnailAcid::new);
 	public static final RegistryObject<Block> ORANGE_ACID = registerItemlessBlock("orange_acid", AcidBlock::new);
 
-	public static final RegistryObject<FlowingFluidBlock> CANDIED_WATER = customRender(BlockUtil.createFluidBlock("candied_water", Material.WATER, NumberUtil.alpha(NumberUtil.RGB(255, 105, 180), 200), 1200, 1200), TRANSLUCENT);
-	public static final RegistryObject<FlowingFluidBlock> CLEAR_WATER = customRender(BlockUtil.createFluidBlock("clear_water", Material.WATER, NumberUtil.alpha(NumberUtil.RGB(63, 118, 228), 255), 1000, 1000, (supplier, properties) -> () -> new ClearWater(supplier, properties)), TRANSLUCENT);
+	public static final RegistryObject<FlowingFluidBlock> CANDIED_WATER = customRender(new BlockUtil.FluidBuilder("candied_water").colour(255, 105, 180, 200).viscosity(1200).density(1200).register(), TRANSLUCENT);
+	public static final RegistryObject<FlowingFluidBlock> CLEAR_WATER = customRender(new BlockUtil.FluidBuilder("clear_water").colour(63, 118, 228, 255).blockFunction((supplier, properties) -> () -> new ClearWater(supplier, properties)).register(), TRANSLUCENT);
+	public static final RegistryObject<FlowingFluidBlock> TOXIC_WASTE = new BlockUtil.FluidBuilder("toxic_waste").colour(38, 42, 23, 255).viscosity(10000).density(5000).temperature(400).stillTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_still")).flowingTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_flow")).submergedOverlay(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_overlay")).blockFunction((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).sourceFluid(properties -> {properties.tickRate(50); return () -> new ForgeFlowingFluid.Source(properties);}).register();
 
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_WITHER = registerBlock("kaiyu_temple_trap_wither", KaiyuTempleTrapWither::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_DAMAGE = registerBlock("kaiyu_temple_trap_damage", KaiyuTempleTrapDamage::new, AoAItemGroups.FUNCTIONAL_BLOCKS);

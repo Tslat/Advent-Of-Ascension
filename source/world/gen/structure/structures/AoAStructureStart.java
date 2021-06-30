@@ -56,7 +56,7 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 	}
 
 	protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, T config) {
-		return true;
+		return chunkGenerator.getFirstFreeHeight(chunkCenter.getX(), chunkCenter.getZ(), Heightmap.Type.WORLD_SURFACE_WG) > 0;
 	}
 
 	protected void generateStructurePieces(DynamicRegistries registries, int maxDepth, ChunkGenerator chunkGenerator, TemplateManager templateManager, BlockPos chunkCenter, Random rand, boolean bool1, boolean generateOnSurface) {
@@ -78,7 +78,7 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 		if (generateOnSurface)
 			centerY = chunkCenter.getY() + chunkGenerator.getFirstFreeHeight(centerX, centerZ, Heightmap.Type.WORLD_SURFACE_WG);
 
-		villagePiece.move(0, centerY - yOffset, 0);
+		villagePiece.move(0, centerY + 1 - yOffset, 0);
 		pieces.add(villagePiece);
 
 		if (config.maxDepth() > 0)

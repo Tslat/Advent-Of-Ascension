@@ -62,7 +62,6 @@ import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.item.misc.ReservedItem;
 import net.tslat.aoa3.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.item.tool.misc.ExpFlask;
-import net.tslat.aoa3.util.AoAHaloUtil;
 import net.tslat.aoa3.util.*;
 import net.tslat.aoa3.util.constant.Deities;
 import net.tslat.aoa3.util.constant.Resources;
@@ -84,7 +83,7 @@ public class PlayerEvents {
 			if (ev.player instanceof ServerPlayerEntity) {
 				PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.player).tickPlayer();
 
-				if (!ev.player.isCreative() && ev.player.onGround && !ev.player.isVehicle() && ev.player.getVehicle() == null)
+				if (!ev.player.isCreative() && ev.player.onGround && !ev.player.isVehicle() && ev.player.getVehicle() == null && AoAConfig.COMMON.skillsEnabled.get())
 					ExpeditionUtil.handleRunningTick(ev, (ServerPlayerEntity)ev.player);
 			}
 
@@ -280,8 +279,9 @@ public class PlayerEvents {
 					}
 
 					if (leaves ? RandomUtil.oneInNChance(35) : RandomUtil.oneInNChance(crop ? 6 : 8)) {
-						AnimaStoneEntity animaStone = new AnimaStoneEntity(world, pos);
+						AnimaStoneEntity animaStone = new AnimaStoneEntity(AoAEntities.Misc.ANIMA_STONE.get(), pl.level);
 
+						animaStone.setPos(pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f);
 						ev.getWorld().playSound(null, pos, AoASounds.HEART_STONE_SPAWN.get(), SoundCategory.MASTER, 1.0f, 1.0f);
 						ev.getWorld().addFreshEntity(animaStone);
 					}
@@ -320,7 +320,7 @@ public class PlayerEvents {
 			UUID uuid = pl.getGameProfile().getId();
 			String msg = null;
 
-			if (uuid.toString().equals("2a459b511-ca45-43d8-808d-f0eb30a63be4")) {
+			if (uuid.compareTo(UUID.fromString("2a459b511-ca45-43d8-808d-f0eb30a63be4")) == 0) {
 				msg = TextFormatting.DARK_RED + "It begins...Is this the end?";
 
 				for (int i = 0; i < 16; i++) {
@@ -336,6 +336,8 @@ public class PlayerEvents {
 
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 			PlayerDataManager.PlayerStats stats = plData.stats();
+
+			AoAConfig.COMMON.sync(pl);
 
 			if (AoAConfig.COMMON.skillsEnabled.get()) {
 				for (Skills sk : Skills.values()) {

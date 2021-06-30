@@ -98,7 +98,6 @@ public abstract class AoATreeFeature extends Feature<BlockStateFeatureConfig> {
 		}
 
 		for (Triple<BlockState, Block, BlockPos> soil : soils) {
-			soil.getMiddle().onPlantGrow(soil.getLeft(), reader, soil.getRight(), soil.getRight().above());
 			reader.setBlock(soil.getRight().above(), Blocks.AIR.defaultBlockState(), 2);
 		}
 

@@ -4,7 +4,15 @@
     "tag": "aoa3:frame_bench_frame"
   },
   "energy": 3000,
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:scrap_metal"
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "chance": 0.2
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:trilliad_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:trilliad_leaves"
+    },
+    {
+      "item": "aoa3:trilliad_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

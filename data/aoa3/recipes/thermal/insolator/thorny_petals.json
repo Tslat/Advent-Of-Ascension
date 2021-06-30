@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:thorny_plant_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:thorny_petals"
+    },
+    {
+      "item": "aoa3:thorny_plant_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

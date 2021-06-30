@@ -10,11 +10,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class AoAScheduler {
-	private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+	private static ScheduledExecutorService scheduler = null;
 	private static final HashSet<Runnable> scheduledTasks = new HashSet<Runnable>();
 	private static final HashMultimap<Integer, Runnable> scheduledSynchTasks = HashMultimap.<Integer, Runnable>create();
 
 	public static void scheduleRequiredAsyncTask(Runnable run, int time, TimeUnit unit) {
+		if (scheduler == null)
+			serverStartupTasks();
+
 		scheduler.schedule(run, time, unit);
 		scheduledTasks.add(run);
 	}
@@ -24,7 +27,22 @@ public class AoAScheduler {
 	}
 
 	public static void scheduleAsyncTask(Runnable run, int time, TimeUnit unit) {
+		if (scheduler == null)
+			serverStartupTasks();
+
 		scheduler.schedule(run, time, unit);
+	}
+
+	public static void serverStartupTasks() {
+		if (scheduler != null) {
+			for (Runnable task : scheduledTasks) {
+				task.run();
+			}
+
+			scheduler.shutdownNow();
+		}
+
+		scheduler = Executors.newScheduledThreadPool(1);
 	}
 
 	public static void serverShutdownTasks() {
@@ -33,6 +51,7 @@ public class AoAScheduler {
 		}
 
 		scheduler.shutdownNow();
+		scheduler = null;
 	}
 
 	public static void handleSyncScheduledTasks(int tick) {

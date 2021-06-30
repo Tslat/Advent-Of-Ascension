@@ -87,7 +87,7 @@ public class GrassBlock extends net.minecraft.block.GrassBlock {
 				for(int i = 0; i < 4; ++i) {
 					BlockPos spreadPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
 
-					if (world.getBlockState(spreadPos).is(Blocks.DIRT) && isSnowyAndNotUnderwater(defaultState, world, spreadPos))
+					if (world.getBlockState(spreadPos).getBlock() == soilBlock.get() && isSnowyAndNotUnderwater(defaultState, world, spreadPos))
 						world.setBlockAndUpdate(spreadPos, defaultState.setValue(SNOWY, Boolean.valueOf(world.getBlockState(spreadPos.above()).is(Blocks.SNOW))));
 				}
 			}

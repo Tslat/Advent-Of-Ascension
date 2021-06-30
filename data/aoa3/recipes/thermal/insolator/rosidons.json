@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:rosidon_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:rosidons"
+    },
+    {
+      "item": "aoa3:rosidon_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

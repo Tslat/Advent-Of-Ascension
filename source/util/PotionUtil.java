@@ -76,7 +76,7 @@ public abstract class PotionUtil {
 		boolean translatable = false;
 		ArrayList<EffectInstance> effects = null;
 		Integer colour = null;
-		boolean dynamicColour = false;
+		boolean dynamicColour = true;
 
 		public PotionBuilder(Item potionItem) {
 			this.potionItem = potionItem;
@@ -106,12 +106,7 @@ public abstract class PotionUtil {
 
 		public PotionBuilder withColour(int colour) {
 			this.colour = Integer.parseInt(String.valueOf(colour), 16);
-
-			return this;
-		}
-
-		public PotionBuilder enableDynamicColour() {
-			this.dynamicColour = true;
+			this.dynamicColour = false;
 
 			return this;
 		}
@@ -128,7 +123,7 @@ public abstract class PotionUtil {
 				colour = PotionUtils.getColor(effects);
 
 			if (colour != null)
-				displayTag.putString("CustomPotionColor", Integer.toHexString(colour));
+				nbt.putString("CustomPotionColor", String.valueOf(colour));
 
 			if (effects != null && !effects.isEmpty())
 				PotionUtils.setCustomEffects(stack, effects);

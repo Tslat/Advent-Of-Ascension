@@ -1,9 +1,6 @@
 package net.tslat.aoa3.entity.mob.barathos;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -38,5 +35,10 @@ public class TharaflyEntity extends AoAFlyingMeleeMob {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return AoASounds.ENTITY_THARAFLY_DEATH.get();
+	}
+
+	@Override
+	public CreatureAttribute getMobType() {
+		return CreatureAttribute.ARTHROPOD;
 	}
 }

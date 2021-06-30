@@ -9,7 +9,6 @@ public final class CommonConfig {
 	public final ForgeConfigSpec.BooleanValue doVerboseDebugging;
 	public final ForgeConfigSpec.BooleanValue skillsEnabled;
 	public final ForgeConfigSpec.BooleanValue resourcesEnabled;
-	public final ForgeConfigSpec.BooleanValue hardcoreMode;
 
 	protected CommonConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("AoA Synced config options. Do not edit on client-side, only edit on server-side.").push("General Settings");
@@ -36,15 +35,6 @@ public final class CommonConfig {
 				.define("doVerboseDebugging", false);
 
 		specBuilder.pop();
-		specBuilder.comment("Just for fun :)").push("Fun Options");
-
-		hardcoreMode = specBuilder
-				.comment("Set this to true to enable AoA hardcore mode.")
-				.translation("config.aoa3.common.hardcoreMode")
-				.worldRestart()
-				.define("hardcoreMode", false);
-
-		specBuilder.pop();
 	}
 
 	public void sync() {
@@ -56,6 +46,6 @@ public final class CommonConfig {
 	}
 
 	private CommonConfigSyncPacket getPacket() {
-		return new CommonConfigSyncPacket(skillsEnabled.get(), resourcesEnabled.get(), hardcoreMode.get());
+		return new CommonConfigSyncPacket(skillsEnabled.get(), resourcesEnabled.get());
 	}
 }

@@ -32,7 +32,7 @@ public class HelmetScreenRenderer {
 
 		switch (type) {
 			case NIGHT_VISION_GOGGLES:
-				mc.getTextureManager().bind(new ResourceLocation("aoa3:textures/gui/overlay/helmet/night_vision_goggles.png"));
+				mc.getTextureManager().bind(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/helmet/night_vision_goggles.png"));
 				break;
 			default:
 				return;

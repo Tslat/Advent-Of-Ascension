@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:heart_fruit_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:heart_fruit"
+    },
+    {
+      "item": "aoa3:heart_fruit_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

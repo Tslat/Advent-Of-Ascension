@@ -42,7 +42,7 @@ public class CrystalTraderEntity extends AoATrader {
 	}
 
 	@Override
-	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+	public int getMaxTradesToUnlock(int newProfessionLevel) {
 		return newProfessionLevel < 3 ? 6 : 2;
 	}
 

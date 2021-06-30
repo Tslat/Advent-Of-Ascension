@@ -30,7 +30,7 @@ public class ObservingEye extends BossSpawningItem {
 	public void spawnBoss(World world, ServerPlayerEntity summoner, double posX, double posY, double posZ) {
 		VisualentEntity visualent = new VisualentEntity(AoAEntities.Mobs.VISUALENT.get(), world);
 
-		visualent.enrage();
+		visualent.setAggressive(true);
 		visualent.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(visualent);
 		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VISUALENT.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);

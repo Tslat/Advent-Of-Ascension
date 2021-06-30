@@ -47,6 +47,14 @@ public class PlayerHasTribute implements ILootCondition {
 		return false;
 	}
 
+	public Deities getDeity() {
+		return this.deity;
+	}
+
+	public int getAmount() {
+		return this.amount;
+	}
+
 	public static class Serializer implements ILootSerializer<PlayerHasTribute> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasTribute playerHasTribute, JsonSerializationContext jsonSerializationContext) {

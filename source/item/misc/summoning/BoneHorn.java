@@ -48,9 +48,7 @@ public class BoneHorn extends Item {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
-			if (!world.isClientSide)
-				player.playSound(AoASounds.ITEM_BONE_HORN_CALL.get(), 1.0f, 1.0f);
-
+			player.playSound(AoASounds.ITEM_BONE_HORN_CALL.get(), 1.0f, 1.0f);
 			player.startUsingItem(hand);
 			player.getCooldowns().addCooldown(this, 150);
 

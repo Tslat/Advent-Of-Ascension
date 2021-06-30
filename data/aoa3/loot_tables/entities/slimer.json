@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/abyss"
+          "name": "aoa3:worlds/vox_ponds"
         }
       ]
     },

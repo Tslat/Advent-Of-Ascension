@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.ItemUtil;
@@ -29,12 +28,6 @@ public class AnimaStoneEntity extends Entity {
         setSilent(true);
     }
 
-    public AnimaStoneEntity(World world, BlockPos spawnPosition) {
-        this(AoAEntities.Misc.ANIMA_STONE.get(), world);
-
-        teleportTo(spawnPosition.getX(), spawnPosition.getY(), spawnPosition.getZ());
-    }
-
     @Override
     protected float getEyeHeight(Pose pose, EntitySize size) {
         return 0.25f;
@@ -47,6 +40,11 @@ public class AnimaStoneEntity extends Entity {
 
     @Override
     protected void defineSynchedData() {}
+
+    @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
 
     @Override
     public void tick() {

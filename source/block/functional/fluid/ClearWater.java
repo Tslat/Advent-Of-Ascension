@@ -1,4 +1,4 @@
-package net.tslat.aoa3.block.generation.misc;
+package net.tslat.aoa3.block.functional.fluid;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
@@ -7,8 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
 import java.util.function.Supplier;
-
-import net.minecraft.block.AbstractBlock.Properties;
 
 public class ClearWater extends FlowingFluidBlock {
 	public ClearWater(Supplier<? extends FlowingFluid> supplier, Properties properties) {

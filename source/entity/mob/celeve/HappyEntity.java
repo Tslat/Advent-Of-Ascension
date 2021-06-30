@@ -1,4 +1,4 @@
-package net.tslat.aoa3.entity.mob.overworld;
+package net.tslat.aoa3.entity.mob.celeve;
 
 import net.minecraft.entity.*;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -43,19 +43,19 @@ public class HappyEntity extends AoARangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_HAPPY_AMBIENT.get();
+		return AoASounds.ENTITY_CELEVE_CLOWN_AMBIENT.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_HAPPY_DEATH.get();
+		return AoASounds.ENTITY_CELEVE_CLOWN_DEATH.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_HAPPY_HURT.get();
+		return AoASounds.ENTITY_CELEVE_CLOWN_HURT.get();
 	}
 
 	@Nullable

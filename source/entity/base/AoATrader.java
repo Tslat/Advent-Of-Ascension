@@ -128,7 +128,7 @@ public abstract class AoATrader extends VillagerEntity {
 		return getType().getDescription();
 	}
 
-	protected int getMaxTradesToUnlock(int newProfessionLevel) {
+	public int getMaxTradesToUnlock(int newProfessionLevel) {
 		return 2;
 	}
 

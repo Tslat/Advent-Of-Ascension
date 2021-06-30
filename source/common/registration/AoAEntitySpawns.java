@@ -74,7 +74,7 @@ public final class AoAEntitySpawns {
         setShyrelandsSpawnPlacements();
         setVoxPondsSpawnPlacements();
 
-        new SpawnEntry(AoAEntities.Animals.AMBIENT_PIXON.get(), 12).groupSize(1, 4).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "haven"), new ResourceLocation(AdventOfAscension.MOD_ID, "runandor"), new ResourceLocation(AdventOfAscension.MOD_ID, "candyland"), new ResourceLocation(AdventOfAscension.MOD_ID, "shyrelands")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.Animals.AMBIENT_PIXON.get(), 12).groupSize(1, 4).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "haven"), new ResourceLocation(AdventOfAscension.MOD_ID, "runic_cliffs"), new ResourceLocation(AdventOfAscension.MOD_ID, "candy_hills"), new ResourceLocation(AdventOfAscension.MOD_ID, "shyre_remnants")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
     }
 
     public static void populateOverworldSpawnEntries() {
@@ -344,14 +344,7 @@ public final class AoAEntitySpawns {
     }
 
     public static void populateLunalusSpawnEntries() {
-        new SpawnEntry(AoAEntities.Mobs.EXPLODOT.get(), 20).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.LUNARCHER.get(), 20).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.VISULAR.get(), 20).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.MODULO.get(), 15).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.TERRESTRIAL.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-        new SpawnEntry(AoAEntities.Mobs.VISULON.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeMonster();
-
-        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus")).placeNPC().specialSpawner(TraderSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "asteroid_belt")).placeNPC().specialSpawner(TraderSpawner::addSpawn);
     }
 
     public static void setMysteriumSpawnPlacements() {
@@ -396,6 +389,7 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.OMNILIGHT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SHYRE_KNIGHT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SOULVYRE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
+        setSpawnPlacement(AoAEntities.Mobs.SOULSCORNE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STIMULO.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STIMULOSUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SYSKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);

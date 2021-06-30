@@ -52,6 +52,11 @@ public class LottoTotemEntity extends Entity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
 		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
 			if (player instanceof ServerPlayerEntity) {

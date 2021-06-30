@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:rune_bulbs"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

@@ -118,7 +118,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> CRYSTAL_CARVER = registerWeapon("crystal_carver", () -> new CrystalCarver(12.0f, 870, 16, 5.0f));
 	public static final RegistryObject<Item> CYCLONE = registerWeapon("cyclone", () -> new Cyclone(9.5f, 1100, 12, 3.0f));
 	public static final RegistryObject<Item> DARKENER = registerWeapon("darkener", () -> new Darkener(11.5f, 1510, 12, 7.0f));
-	public static final RegistryObject<Item> DART_GUN = registerWeapon("dart_gun", () -> new DartGun(10.0f, 360, 20, 0.2f));
+	public static final RegistryObject<Item> DART_GUN = registerWeapon("dart_gun", () -> new DartGun(17.0f, 1130, 20, 0.2f));
 	public static final RegistryObject<Item> DESTRUCTION_RIFLE = registerWeapon("destruction_rifle", () -> new DestructionRifle(12.5f, 610, 20, 5.0f));
 	public static final RegistryObject<Item> DISCHARGE_RIFLE = registerWeapon("discharge_rifle", () -> new DischargeRifle(5.0f, 570, 24, 6.0f));
 	public static final RegistryObject<Item> DRACO = registerWeapon("draco", () -> new Draco(15.0f, 1390, 16, 2.0f));

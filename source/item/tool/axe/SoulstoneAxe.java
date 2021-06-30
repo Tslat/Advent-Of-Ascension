@@ -28,7 +28,7 @@ import java.util.List;
 
 public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 	public SoulstoneAxe() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(2000, 11.0f, 11f, 6, 10, null));
 	}
 
 	@Override

@@ -44,7 +44,9 @@
     []
   ],
   "starts": [
+    "aoa3:zal_ship",
     "aoa3:stranded_lottoman",
+    "aoa3:infested_asteroid",
     "aoa3:zal_prison_camp",
     "aoa3:lunar_oasis"
   ],

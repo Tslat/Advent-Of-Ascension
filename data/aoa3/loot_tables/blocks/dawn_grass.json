@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:dawn_grass"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

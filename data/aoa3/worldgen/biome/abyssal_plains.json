@@ -53,7 +53,19 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:distorter",
+        "type": "aoa3:web_reaper",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:anemia",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:apparition",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -77,39 +89,14 @@
         "maxCount": 2
       },
       {
-        "type": "aoa3:anemia",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:apparition",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:web_reaper",
+        "type": "aoa3:distorter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }
     ],
     "creature": [],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:butchery_master",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

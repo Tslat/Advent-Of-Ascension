@@ -1,13 +1,11 @@
 package net.tslat.aoa3.world.spawner;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
@@ -22,7 +20,10 @@ import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.RandomUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class PixonSpawner implements ISpecialSpawner {
 	private static final HashMap<RegistryKey<Biome>, List<MobSpawnInfo.Spawners>> SPAWNS = new HashMap<RegistryKey<Biome>, List<MobSpawnInfo.Spawners>>();
@@ -85,6 +86,9 @@ public class PixonSpawner implements ISpecialSpawner {
 			EntitySpawnPlacementRegistry.PlacementType placementType = EntitySpawnPlacementRegistry.getPlacementType(pixon);
 			Heightmap.Type heightmap = EntitySpawnPlacementRegistry.getHeightmapType(pixon);
 			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);
+
+			if (world.getEntities(pixon, new AxisAlignedBB(x - 5, pos.getY() - 5, z - 5, x + 5, pos.getY() + 5, z + 5), LivingEntity::isAlive).size() > 3)
+				continue;
 
 			if (WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, pixon))
 				positions.add(Pair.of(pixon, pos));

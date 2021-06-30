@@ -440,7 +440,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Animals.SPEARMINT_SNAIL.get(), new SnailModel(), new ResourceLocation("aoa3", "textures/entity/passive/spearmint_snail.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPECTRAL_WIZARD.get(), new SpectralWizardModel(), new ResourceLocation("aoa3", "textures/entity/mobs/runandor/spectral_wizard.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPHINX.get(), new SphinxModel(), new ResourceLocation("aoa3", "textures/entity/mobs/overworld/sphinx.png"));
-		registerMobRenderer(AoAEntities.Minions.SPIKEBACK.get(), new BlissardModel(), new ResourceLocation("aoa3", "textures/entity/minions/spikeback.png"));
+		registerMobRenderer(AoAEntities.Minions.SPIKEBACK.get(), new SpikebackModel(), new ResourceLocation("aoa3", "textures/entity/minions/spikeback.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPINOLEDON.get(), new SpinoledonModel(), new ResourceLocation("aoa3", "textures/entity/mobs/precasia/spinoledon.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPIRIT_GUARDIAN.get(), new SpiritGuardianModel(), new ResourceLocation("aoa3", "textures/entity/mobs/haven/spirit_guardian.png"));
 		registerMobRenderer(AoAEntities.Mobs.SPIRIT_PROTECTOR.get(), new SpiritProtectorModel(), new ResourceLocation("aoa3", "textures/entity/mobs/haven/spirit_guardian.png"));

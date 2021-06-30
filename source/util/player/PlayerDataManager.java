@@ -274,12 +274,6 @@ public final class PlayerDataManager {
 	public void handlePlayerDeath(final LivingDeathEvent ev) {
 		equipment.handlePlayerDeath(ev);
 		storeInterventionItems();
-
-		if (AoAConfig.COMMON.hardcoreMode.get()) {
-			Skills skill = RandomUtil.getRandomSelection(Skills.values());
-
-			stats.levels.put(skill, Math.max(1, stats.levels.get(skill) - 1));
-		}
 	}
 
 	public void handlePlayerRespawn(final PlayerEvent.PlayerRespawnEvent ev) {

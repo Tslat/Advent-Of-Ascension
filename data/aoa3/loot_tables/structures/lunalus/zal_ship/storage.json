@@ -1,0 +1,280 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 10,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 300,
+          "quality": -2
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6.0,
+                "max": 20.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lunide_log"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 15.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:stripped_lunide_log"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 6.0,
+                "max": 20.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lucalus_log"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 15.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:stripped_lucalus_log"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 45,
+          "quality": 1,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 5.0,
+                "max": 10.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lunar_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 45,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 10.0,
+                "max": 40.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:bone_meal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 9.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:luna_globe_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 9.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lunalon_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 9.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:lunacrike_seeds"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 36,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 5.0,
+                "max": 10.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:ivory"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:armour_plating"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:observing_eye"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:magic_repair_dust"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "name": "aoa3:cup"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:gold_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 4.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "aoa3:silver_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 35,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:jungle_sapling"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 35,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:oak_sapling"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 35,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 6.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:spruce_sapling"
+        },
+        {
+          "type": "minecraft:item",
+          "quality": 1,
+          "name": "aoa3:lunar_greatblade"
+        }
+      ],
+      "bonus_rolls": {
+        "min": -1.0,
+        "max": 1.0
+      }
+    }
+  ]
+}

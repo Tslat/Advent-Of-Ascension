@@ -19,7 +19,7 @@ import java.util.List;
 
 public class OceanusHelmet extends AdventArmour {
 	public OceanusHelmet() {
-		super(ItemUtil.customArmourMaterial("aoa3:oceanus", 40, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:oceanus", 60, new int[] {5, 7, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), EquipmentSlotType.HEAD);
 	}
 
 	@Override

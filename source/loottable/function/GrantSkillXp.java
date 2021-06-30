@@ -46,6 +46,14 @@ public class GrantSkillXp extends LootFunction {
 		return stack;
 	}
 
+	public Skills getSkill() {
+		return this.skill;
+	}
+
+	public float getXp() {
+		return this.xp;
+	}
+
 	public static Builder<?> builder(Skills skill, float xp) {
 		return simpleBuilder((conditions) -> new GrantSkillXp(conditions, skill, xp));
 	}

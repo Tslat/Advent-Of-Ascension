@@ -22,10 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.*;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.misc.HeartStoneEntity;
@@ -63,8 +60,9 @@ public class EntityEvents {
 
 				if (killerPlayer instanceof ServerPlayerEntity) {
 					if (entity.getMaxHealth() > 1 && RandomUtil.oneInNChance(EntityUtil.isHostileMob(entity) ? 8 : 24) && InnervationUtil.canEntitySpawnHeartstone(entity)) {
-						HeartStoneEntity heartStone = new HeartStoneEntity(entity.level, entity.blockPosition());
+						HeartStoneEntity heartStone = new HeartStoneEntity(AoAEntities.Misc.HEART_STONE.get(), entity.level);
 
+						heartStone.setPos(entity.getX(), entity.getY(), entity.getZ());
 						entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), AoASounds.HEART_STONE_SPAWN.get(), SoundCategory.MASTER, 1.0f, 1.0f);
 						entity.level.addFreshEntity(heartStone);
 					}

@@ -29,7 +29,7 @@ public class NaturalistEntity extends AoATrader {
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 14).cost(AoAItems.GOLDICAP_PETALS, 8).xp(10),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNACRIKE, 8).xp(9),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNA_GLOBE, 8).xp(9),
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNALON_SEEDS, 8).xp(9),
+					BuildableTrade.trade(AoAItems.COPPER_COIN, 12).cost(AoAItems.LUNALONS, 8).xp(9),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(AoAItems.MYSTIC_SHROOMS, 8).xp(11),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 16).cost(AoAItems.ROSIDONS, 8).xp(12),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 14).cost(AoAItems.TEA_SHREDDINGS, 8).xp(10),

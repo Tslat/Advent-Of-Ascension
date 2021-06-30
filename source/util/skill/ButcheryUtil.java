@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.misc.BloodlustEntity;
 import net.tslat.aoa3.item.armour.AdventArmour;
@@ -117,8 +118,12 @@ public class ButcheryUtil {
 	}
 
 	public static void tryBloodlustSpawn(PlayerEntity pl, LivingEntity target) {
-		if (AoAConfig.COMMON.skillsEnabled.get() && RandomUtil.oneInNChance(30) && canMobSpawnBloodlust(target))
-			pl.level.addFreshEntity(new BloodlustEntity(pl.level, target.blockPosition()));
+		if (AoAConfig.COMMON.skillsEnabled.get() && RandomUtil.oneInNChance(30) && canMobSpawnBloodlust(target)) {
+			BloodlustEntity bloodlust = new BloodlustEntity(AoAEntities.Misc.BLOODLUST.get(), pl.level);
+
+			bloodlust.setPos(target.getX(), target.getY(), target.getZ());
+			pl.level.addFreshEntity(bloodlust);
+		}
 	}
 
 	public static void blacklistEntityFromBloodlusts(Entity entity) {

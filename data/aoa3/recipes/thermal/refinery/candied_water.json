@@ -7,6 +7,10 @@
   "energy": 4000,
   "result": [
     {
+      "item": "minecraft:sugar",
+      "count": 2
+    },
+    {
       "fluid": "minecraft:water",
       "amount": 100
     }

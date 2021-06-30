@@ -26,7 +26,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.enchantment.BraceEnchantment;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectile.gun.LimoniteBulletEntity;
@@ -69,7 +68,7 @@ public abstract class BaseGun extends Item {
 	}
 
 	public double getDamage() {
-		return dmg * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return dmg;
 	}
 
 	public float getRecoil() {

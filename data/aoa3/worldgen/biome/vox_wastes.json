@@ -55,13 +55,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:toxxulous",
-        "weight": 20,
+        "type": "aoa3:destructor",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:alarmo",
+        "type": "aoa3:centinel",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -79,19 +79,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:alarmo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:fischer",
         "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:destructor",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:centinel",
+        "type": "aoa3:toxxulous",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -105,14 +105,7 @@
         "maxCount": 2
       }
     ],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

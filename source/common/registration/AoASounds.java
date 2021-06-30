@@ -109,9 +109,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_CHIMERA_HURT = registerSound("chimera_hurt", "entity.chimera.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_CHOMPER_AMBIENT = registerSound("chomper_ambient", "entity.chomper.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_CHOMPER_HURT = registerSound("chomper_hurt", "entity.chomper.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_HAPPY_AMBIENT = registerSound("happy_ambient", "entity.happy.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_HAPPY_DEATH = registerSound("happy_death", "entity.happy.death");
-	public static final RegistryObject<SoundEvent> ENTITY_HAPPY_HURT = registerSound("happy_hurt", "entity.happy.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_CLUNKHEAD_DEATH = registerSound("clunkhead_death", "entity.clunkhead.death");
 	public static final RegistryObject<SoundEvent> ENTITY_COMPEER_AMBIENT = registerSound("compeer_ambient", "entity.compeer.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_COMPEER_DEATH = registerSound("compeer_death", "entity.compeer.death");
@@ -750,7 +747,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> BLOCK_EXTRACTION_DEVICE_USE = registerSound("extraction_device_use", "block.extraction_device.use");
 	public static final RegistryObject<SoundEvent> BLOCK_HAUNTING_TABLE_USE = registerSound("haunting_table_use", "block.haunting_table.use");
 	public static final RegistryObject<SoundEvent> BLOCK_INFUSION_TABLE_CONVERT = registerSound("infusion_table_convert", "block.infusion_table.convert");
-	public static final RegistryObject<SoundEvent> BLOCK_LUNAR_ENRICHMENT_TABLE_USE = registerSound("lunar_enrichment_table_use", "block.lunar_enrichment_table.use");
 	public static final RegistryObject<SoundEvent> BLOCK_PETAL_CRAFTING_STATION_USE = registerSound("petal_crafting_station_use", "block.petal_crafting_station.use");
 	public static final RegistryObject<SoundEvent> BLOCK_RUNE_RANDOMIZER_USE = registerSound("rune_randomizer_use", "block.rune_randomizer.use");
 	public static final RegistryObject<SoundEvent> BLOCK_RUNE_SHRINE_USE = registerSound("rune_shrine_use", "block.rune_shrine.use");

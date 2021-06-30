@@ -33,7 +33,7 @@ public class Clownimator extends BaseSniper {
 
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() < 50)
+		if (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() < 75)
 			bulletDmgMultiplier *= 1.15;
 
 		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);

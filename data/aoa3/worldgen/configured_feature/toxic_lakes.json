@@ -5,6 +5,9 @@
         "feature": {
           "config": {
             "state": {
+              "Properties": {
+                "level": "0"
+              },
               "Name": "aoa3:toxic_waste"
             }
           },

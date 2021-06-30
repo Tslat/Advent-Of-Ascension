@@ -77,6 +77,7 @@
               ]
             }
           ],
+          "weight": 50,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -91,6 +92,15 @@
             }
           ],
           "name": "minecraft:stick"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "aoa3:magic_marang_seeds"
         }
       ],
       "conditions": [

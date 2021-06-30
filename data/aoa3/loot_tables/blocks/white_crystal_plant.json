@@ -5,12 +5,54 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "aoa3:white_druse"
-        },
-        {
           "type": "minecraft:empty",
           "weight": 49
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:white_druse"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "enchantments": [
+                {
+                  "enchantment": "minecraft:silk_touch",
+                  "levels": {
+                    "min": 1
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:white_crystal_plant"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "enchantments": [
+              {
+                "enchantment": "minecraft:silk_touch",
+                "levels": {
+                  "min": 1
+                }
+              }
+            ]
+          }
         }
       ]
     }

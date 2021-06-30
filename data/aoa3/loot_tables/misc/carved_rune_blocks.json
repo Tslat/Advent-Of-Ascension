@@ -3,8 +3,12 @@
   "pools": [
     {
       "name": "carved_rune_blocks",
-      "rolls": 2,
+      "rolls": 1,
       "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 150
+        },
         {
           "type": "minecraft:item",
           "weight": 100,

@@ -16,8 +16,6 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
-import net.tslat.aoa3.item.armour.AdventArmour.Overlay;
-
 public class NightVisionGoggles extends AdventArmour implements ScreenOverlayArmour {
 	public NightVisionGoggles() {
 		super(ItemUtil.customArmourMaterial("aoa3:night_vision_goggles", 27, new int[] {2, 2, 2, 2}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 1), EquipmentSlotType.HEAD);

@@ -49,6 +49,14 @@ public class PlayerHasResource implements ILootCondition {
 		return false;
 	}
 
+	public Resources getResource() {
+		return this.resource;
+	}
+
+	public float getAmount() {
+		return this.amount;
+	}
+
 	public static class Serializer implements ILootSerializer<PlayerHasResource> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {

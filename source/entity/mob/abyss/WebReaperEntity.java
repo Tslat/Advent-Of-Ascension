@@ -50,7 +50,7 @@ public class WebReaperEntity extends AoARangedMob {
 	private final AttributeModifier STAGE_DAMAGE_MOD = new AttributeModifier(UUID.fromString("104c09f0-28cc-43dd-81c0-10de6b3083bd"), "StageDamageModifier", 1, AttributeModifier.Operation.MULTIPLY_TOTAL) {
 		@Override
 		public double getAmount() {
-			return Math.max(0, stageMod);
+			return Math.max(0, stageMod - 1);
 		}
 	};
 

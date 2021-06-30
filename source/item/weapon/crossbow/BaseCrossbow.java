@@ -27,7 +27,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -45,7 +44,7 @@ public class BaseCrossbow extends CrossbowItem {
 	}
 
 	public double getDamage() {
-		return damage * (AoAConfig.COMMON.hardcoreMode.get() ? 1.25f : 1f);
+		return damage;
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class BaseCrossbow extends CrossbowItem {
 
 	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
-		return super.getUseAnimation(stack);
+		return UseAction.CROSSBOW;
 	}
 
 	@Override

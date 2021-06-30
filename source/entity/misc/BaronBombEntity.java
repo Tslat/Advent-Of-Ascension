@@ -61,6 +61,11 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	protected void defineSynchedData() {}
 
 	@Override

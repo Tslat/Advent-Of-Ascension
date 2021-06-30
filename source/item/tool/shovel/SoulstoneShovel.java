@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.tool.shovel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.GrassBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -15,8 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.item.LootModifyingItem;
+import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.constant.Resources;
@@ -36,6 +40,9 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 		Block block = harvestedBlock.getBlock();
 
 		if (block == Blocks.AIR || existingLoot.isEmpty() || !harvestedBlock.isToolEffective(ToolType.SHOVEL) || !lootContext.hasParam(LootParameters.THIS_ENTITY))
+			return;
+
+		if (!BlockUtil.isBlockTaggedAs(block, Tags.Blocks.DIRT, Tags.Blocks.SAND, Tags.Blocks.GRAVEL, AoATags.Blocks.GRASS) && !(block instanceof GrassBlock))
 			return;
 
 		Entity harvestingPlayer = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);

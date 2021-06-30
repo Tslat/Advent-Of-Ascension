@@ -42,14 +42,20 @@
     "monster": [],
     "creature": [
       {
-        "type": "aoa3:halycon",
-        "weight": 3,
+        "type": "aoa3:dawnlight",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 3
       },
       {
         "type": "aoa3:voliant",
         "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:eeo",
+        "weight": 3,
         "minCount": 0,
         "maxCount": 1
       },
@@ -66,26 +72,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:eeo",
+        "type": "aoa3:halycon",
         "weight": 3,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dawnlight",
-        "weight": 5,
         "minCount": 1,
         "maxCount": 3
       }
     ],
-    "ambient": [
-      {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      }
-    ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:pink_havendales"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

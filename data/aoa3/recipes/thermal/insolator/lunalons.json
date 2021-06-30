@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:lunalon_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:lunalons"
+    },
+    {
+      "item": "aoa3:lunalon_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

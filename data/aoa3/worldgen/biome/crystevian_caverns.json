@@ -58,25 +58,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:construct_of_flight",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:construct_of_mind",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_strength",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:construct_of_range",
+        "type": "aoa3:construct_of_speed",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -88,7 +76,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_speed",
+        "type": "aoa3:construct_of_range",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -98,17 +86,22 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
-      }
-    ],
-    "creature": [],
-    "ambient": [
+      },
       {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
+        "type": "aoa3:construct_of_strength",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:construct_of_flight",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       }
     ],
+    "creature": [],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

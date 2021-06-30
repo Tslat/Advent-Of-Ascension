@@ -8,14 +8,6 @@
           "type": "minecraft:item",
           "name": "aoa3:lelyetian_stem_cap"
         }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "tag": "forge:shears"
-          }
-        }
       ]
     }
   ]

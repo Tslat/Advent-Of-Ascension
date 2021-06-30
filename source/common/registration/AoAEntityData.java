@@ -105,6 +105,7 @@ public final class AoAEntityData {
 					AoAEntities.Mobs.GOBLIN.get(),
 					AoAEntities.Mobs.GROBBLER.get(),
 					AoAEntities.Mobs.HAG.get(),
+					AoAEntities.Mobs.HAPPY.get(),
 					AoAEntities.Mobs.HIDING_FUNGI.get(),
 					AoAEntities.Mobs.HILL_CHARGER.get(),
 					AoAEntities.Mobs.HORNDRON.get(),

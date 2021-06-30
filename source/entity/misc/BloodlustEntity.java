@@ -52,6 +52,11 @@ public class BloodlustEntity extends CreatureEntity {
     protected void doPush(Entity entity) {}
 
     @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
     public void playerTouch(PlayerEntity player) {
         if (player instanceof ServerPlayerEntity && isAlive()) {
             PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);

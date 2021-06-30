@@ -3,7 +3,14 @@
   "input": {
     "item": "aoa3:tea_seeds"
   },
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:tea_shreddings"
+    },
+    {
+      "item": "aoa3:tea_seeds"
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

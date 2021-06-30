@@ -1,11 +1,14 @@
 {
   "type": "aoa3:infusion",
   "input": {
-    "item": "aoa3:boots_frame"
+    "item": "aoa3:chestplate_frame"
   },
   "ingredients": [
     {
-      "item": "aoa3:blank_slab"
+      "item": "aoa3:orbulon"
+    },
+    {
+      "item": "aoa3:lunar_ingot"
     },
     {
       "item": "aoa3:lunar_ingot"
@@ -20,13 +23,16 @@
       "item": "aoa3:armour_plating"
     },
     {
-      "item": "aoa3:padded_cloth"
+      "item": "aoa3:armour_plating"
     },
     {
-      "item": "aoa3:padded_cloth"
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
     }
   ],
   "result": {
-    "item": "aoa3:spaceking_boots"
+    "item": "aoa3:lunar_chestplate"
   }
 }

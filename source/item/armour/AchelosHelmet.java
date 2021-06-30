@@ -20,7 +20,7 @@ import java.util.List;
 public class AchelosHelmet extends AdventArmour {
 
 	public AchelosHelmet() {
-		super(ItemUtil.customArmourMaterial("aoa3:achelos", 40, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:achelos", 60, new int[] {5, 7, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), EquipmentSlotType.HEAD);
 	}
 
 	@Override

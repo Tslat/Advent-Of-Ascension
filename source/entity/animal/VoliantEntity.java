@@ -29,8 +29,6 @@ public class VoliantEntity extends AoAAnimal {
 
 	@Override
 	protected void registerGoals() {
-		super.registerGoals();
-
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 	}
 

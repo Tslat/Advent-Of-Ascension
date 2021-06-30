@@ -4,7 +4,17 @@
     "item": "aoa3:gingerbread"
   },
   "energy": 3000,
-  "result": [],
+  "result": [
+    {
+      "item": "aoa3:gingerbread_cookie",
+      "count": 2
+    },
+    {
+      "item": "aoa3:gingerbread_cookie",
+      "count": 2,
+      "chance": 0.5
+    }
+  ],
   "conditions": [
     {
       "modid": "thermal_expansion",

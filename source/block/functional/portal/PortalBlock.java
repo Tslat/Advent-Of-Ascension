@@ -166,7 +166,7 @@ public class PortalBlock extends Block {
 				return;
 			}
 
-			if (this.world == null)
+			if (this.world == null || !world.getServer().isNetherEnabled())
 				return;
 
 			ITeleporter teleporter = this.world == World.NETHER ? new NetherTeleporter() : getTeleporterForWorld(world.getServer().getLevel(this.world));

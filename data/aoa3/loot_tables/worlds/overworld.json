@@ -85,22 +85,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 2,
           "name": "aoa3:carved_rune_of_direction"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 2,
           "name": "aoa3:carved_rune_of_reality"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 2,
           "name": "aoa3:carved_rune_of_space"
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
+          "weight": 2,
           "name": "aoa3:carved_rune_of_travel"
         }
       ]

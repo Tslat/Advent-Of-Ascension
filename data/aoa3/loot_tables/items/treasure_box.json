@@ -47,21 +47,6 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 2.0,
-                "max": 5.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:tea"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 30,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
                 "min": 3.0,
                 "max": 10.0,
                 "type": "minecraft:uniform"

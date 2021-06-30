@@ -1,11 +1,11 @@
 {
   "type": "aoa3:infusion",
   "input": {
-    "item": "aoa3:helmet_frame"
+    "item": "aoa3:boots_frame"
   },
   "ingredients": [
     {
-      "item": "aoa3:blank_slab"
+      "item": "aoa3:orbulon"
     },
     {
       "item": "aoa3:lunar_ingot"
@@ -27,6 +27,6 @@
     }
   ],
   "result": {
-    "item": "aoa3:spaceking_helmet"
+    "item": "aoa3:lunar_boots"
   }
 }

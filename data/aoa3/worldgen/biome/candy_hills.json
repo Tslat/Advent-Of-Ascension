@@ -45,18 +45,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:lollypopper",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:airhead",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:cherry_blaster",
         "weight": 20,
         "minCount": 1,
@@ -67,30 +55,35 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:lollypopper",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:airhead",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
       }
     ],
     "creature": [
-      {
-        "type": "aoa3:peppermint_snail",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 3
-      },
       {
         "type": "aoa3:spearmint_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 3
-      }
-    ],
-    "ambient": [
+      },
       {
-        "type": "aoa3:undead_herald",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
+        "type": "aoa3:peppermint_snail",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 3
       }
     ],
+    "ambient": [],
     "water_creature": [],
     "water_ambient": [],
     "misc": []

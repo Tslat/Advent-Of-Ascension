@@ -28,7 +28,7 @@ import java.util.List;
 
 public class EnergisticAxe extends BaseAxe {
 	public EnergisticAxe() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(2000, 11.0f, 11.5f, 6, 10, null));
 	}
 
 	@Override
