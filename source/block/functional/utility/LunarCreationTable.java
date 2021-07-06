@@ -22,6 +22,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.block.tileentity.LunarCreationTableTileEntity;
 import net.tslat.aoa3.common.registration.AoABlocks;
@@ -34,7 +35,7 @@ public class LunarCreationTable extends Block {
 	private static final ITextComponent CONTAINER_TITLE = new TranslationTextComponent("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
 
 	public LunarCreationTable() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).tool(ToolType.PICKAXE).get());
 	}
 
 	@Override
@@ -46,6 +47,18 @@ public class LunarCreationTable extends Block {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new LunarCreationTableTileEntity();
+	}
+
+	@Override
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!state.is(newState.getBlock())) {
+			TileEntity tile = world.getBlockEntity(pos);
+
+			if (tile instanceof LunarCreationTableTileEntity)
+				((LunarCreationTableTileEntity)tile).dropContents(world, pos);
+
+			super.onRemove(state, world, pos, newState, isMoving);
+		}
 	}
 
 	@Override

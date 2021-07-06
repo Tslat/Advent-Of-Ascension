@@ -53,12 +53,6 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:web_reaper",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:anemia",
         "weight": 1,
         "minCount": 0,
@@ -71,13 +65,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:bloodsucker",
+        "type": "aoa3:occulent",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:occulent",
+        "type": "aoa3:web_reaper",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:bloodsucker",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

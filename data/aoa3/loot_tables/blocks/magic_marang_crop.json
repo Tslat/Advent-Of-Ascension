@@ -6,7 +6,19 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aoa3:magic_marang"
+          "name": "aoa3:magic_marang_seeds"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:block_state_property",
+            "block": "aoa3:magic_marang_crop",
+            "properties": {
+              "age": "7"
+            }
+          }
         }
       ]
     },

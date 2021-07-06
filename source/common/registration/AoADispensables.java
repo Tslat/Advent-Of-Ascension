@@ -1,19 +1,22 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.OptionalDispenseBehavior;
-import net.minecraft.dispenser.ProjectileDispenseBehavior;
+import net.minecraft.dispenser.*;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.entity.projectile.thrown.*;
 
 public final class AoADispensables {
 	public static void registerDispenseBehaviours() {
+		registerFluidDispensables();
 		registerProjectileDispensables();
 		registerMiscDispensables();
 	}
@@ -89,5 +92,31 @@ public final class AoADispensables {
 				return stack;
 			}
 		});
+	}
+
+	private static void registerFluidDispensables() {
+		IDispenseItemBehavior fluidDispenser = new DefaultDispenseItemBehavior() {
+			private final DefaultDispenseItemBehavior defaultBehaviour = new DefaultDispenseItemBehavior();
+
+			@Override
+			protected ItemStack execute(IBlockSource source, ItemStack stack) {
+				BucketItem bucket = (BucketItem)stack.getItem();
+				BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				World world = source.getLevel();
+
+				if (bucket.emptyBucket(null, world, pos, null)) {
+					bucket.checkExtraContent(world, stack, pos);
+
+					return new ItemStack(Items.BUCKET);
+				}
+				else {
+					return this.defaultBehaviour.dispense(source, stack);
+				}
+			}
+		};
+
+		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "candied_water_bucket")), fluidDispenser);
+		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "toxic_waste_bucket")), fluidDispenser);
+		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "clear_water_bucket")), fluidDispenser);
 	}
 }

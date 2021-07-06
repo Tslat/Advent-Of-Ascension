@@ -65,18 +65,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:table_bonus",
-              "enchantment": "minecraft:fortune",
-              "chances": [
-                0.0066666673,
-                0.0076666675,
-                0.008666668,
-                0.009666668
-              ]
-            }
-          ],
           "weight": 50,
           "functions": [
             {
@@ -86,9 +74,6 @@
                 "max": 2.0,
                 "type": "minecraft:uniform"
               }
-            },
-            {
-              "function": "minecraft:explosion_decay"
             }
           ],
           "name": "minecraft:stick"
@@ -130,6 +115,21 @@
               }
             ]
           }
+        },
+        {
+          "condition": "minecraft:table_bonus",
+          "enchantment": "minecraft:fortune",
+          "chances": [
+            0.0066666673,
+            0.0076666675,
+            0.008666668,
+            0.009666668
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
         }
       ]
     }

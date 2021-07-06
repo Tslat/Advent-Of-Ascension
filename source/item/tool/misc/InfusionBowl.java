@@ -88,6 +88,7 @@ public class InfusionBowl extends Item {
 					harvestStacks.addAll(harvestTable.getRandomItems(lootContext));
 
 				pixon.setHealth(pixon.getHealth() - 7 + RandomUtil.randomNumberUpTo(6));
+				pixon.setLastHurtByPlayer(player);
 
 				harvestCount++;
 			}
@@ -99,8 +100,10 @@ public class InfusionBowl extends Item {
 				plData.stats().addTribute(Deities.LUXON, 4 * harvestCount);
 
 			if (pixon.isAlive()) {
-				pixon.setLastHurtByMob(player);
 				pixon.nextHarvestTick = pixon.level.getGameTime() + 8 + pixon.getRandom().nextInt(32);
+			}
+			else {
+				player.awardStat(Stats.ENTITY_KILLED.get(pixon.getType()));
 			}
 
 			player.awardStat(Stats.ITEM_USED.get(stack.getItem()));

@@ -1,12 +1,15 @@
 package net.tslat.aoa3.block.tileentity;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.common.registration.AoATileEntities;
 
@@ -22,6 +25,15 @@ public class LunarCreationTableTileEntity extends TileEntity {
 
 	public NonNullList<ItemStack> getContents() {
 		return this.items;
+	}
+
+	public void dropContents(World world, BlockPos pos) {
+		for (ItemStack stack : getContents()) {
+			world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack));
+		}
+
+		this.items.clear();
+		setChanged();
 	}
 
 	public void setContents(int index, ItemStack item) {

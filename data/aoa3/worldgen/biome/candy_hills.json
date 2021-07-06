@@ -45,9 +45,9 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:cherry_blaster",
+        "type": "aoa3:airhead",
         "weight": 20,
-        "minCount": 1,
+        "minCount": 0,
         "maxCount": 1
       },
       {
@@ -57,27 +57,27 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:lollypopper",
+        "type": "aoa3:cherry_blaster",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:airhead",
+        "type": "aoa3:lollypopper",
         "weight": 20,
-        "minCount": 0,
+        "minCount": 1,
         "maxCount": 1
       }
     ],
     "creature": [
       {
-        "type": "aoa3:spearmint_snail",
+        "type": "aoa3:peppermint_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 3
       },
       {
-        "type": "aoa3:peppermint_snail",
+        "type": "aoa3:spearmint_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 3

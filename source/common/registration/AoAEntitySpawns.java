@@ -39,8 +39,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 import static net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType.*;
-import static net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES;
-import static net.minecraft.world.gen.Heightmap.Type.OCEAN_FLOOR;
+import static net.minecraft.world.gen.Heightmap.Type.*;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
@@ -326,8 +325,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.NEPTUNO.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SEA_VIPER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.WATER_MONSTER);
 
-        new SpawnEntry(AoAEntities.Animals.GLOWING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "coral_fields")).place(IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(null, true)).specialSpawner(PixonSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "coral_fields")).place(IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.Animals.GLOWING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "coral_fields")).place(IN_WATER, OCEAN_FLOOR, SpawnPredicates.animalPredicate(null, true)).specialSpawner(PixonSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "coral_fields")).place(IN_WATER, OCEAN_FLOOR, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
     public static void setLelyetiaSpawnPlacements() {

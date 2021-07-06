@@ -49,20 +49,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:tharafly",
-        "weight": 15,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:nospike",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:squiggler",
-        "weight": 1,
+        "type": "aoa3:cryptid",
+        "weight": 30,
         "minCount": 1,
         "maxCount": 1
       },
@@ -73,20 +61,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:cryptid",
-        "weight": 30,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:emperor_beast",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:arkback",
-        "weight": 20,
+        "type": "aoa3:nospike",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       },
@@ -103,8 +85,26 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:tharafly",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arkback",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:parasect",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:squiggler",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }

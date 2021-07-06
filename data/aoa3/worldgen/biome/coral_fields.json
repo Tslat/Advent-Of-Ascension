@@ -44,14 +44,14 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:angler",
-        "weight": 20,
+        "type": "aoa3:neptuno",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:neptuno",
-        "weight": 1,
+        "type": "aoa3:angler",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -80,21 +80,15 @@
     ],
     "water_ambient": [
       {
-        "type": "aoa3:coratee",
-        "weight": 7,
-        "minCount": 2,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:tropical_fish",
-        "weight": 10,
-        "minCount": 3,
-        "maxCount": 7
-      },
-      {
         "type": "minecraft:cod",
         "weight": 13,
         "minCount": 1,
+        "maxCount": 4
+      },
+      {
+        "type": "aoa3:coratee",
+        "weight": 7,
+        "minCount": 2,
         "maxCount": 4
       },
       {
@@ -102,6 +96,12 @@
         "weight": 15,
         "minCount": 1,
         "maxCount": 5
+      },
+      {
+        "type": "minecraft:tropical_fish",
+        "weight": 10,
+        "minCount": 3,
+        "maxCount": 7
       }
     ],
     "misc": []

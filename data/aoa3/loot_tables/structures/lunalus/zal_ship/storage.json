@@ -52,7 +52,7 @@
               }
             }
           ],
-          "name": "aoa3:lucalus_log"
+          "name": "aoa3:lunide_wood"
         },
         {
           "type": "minecraft:item",
@@ -67,7 +67,7 @@
               }
             }
           ],
-          "name": "aoa3:stripped_lucalus_log"
+          "name": "aoa3:stripped_lunide_wood"
         },
         {
           "type": "minecraft:item",

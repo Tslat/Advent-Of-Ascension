@@ -53,26 +53,26 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:fungat",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:fungung",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:fungback",
         "weight": 15,
         "minCount": 1,
         "maxCount": 1
       },
       {
+        "type": "aoa3:fungat",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:fungik",
         "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungung",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }

@@ -21,14 +21,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MillenniumGreatblade extends BaseGreatblade {
-	private final double baseDmg;
-	private final double maxDmg;
+	private final double maxDmg = 39.75f;
 
 	public MillenniumGreatblade() {
-		super(26.5f, AttackSpeed.GREATBLADE, 2050);
-
-		this.baseDmg = getAttackDamage() - (getAttackDamage() / 2d);
-		this.maxDmg = getAttackDamage() + (getAttackDamage() / 2d);
+		super(13.25f, AttackSpeed.GREATBLADE, 2050);
 	}
 
 	@Override
@@ -51,6 +47,6 @@ public class MillenniumGreatblade extends BaseGreatblade {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(baseDmg)), new StringTextComponent(Double.toString(maxDmg))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(getAttackDamage())), new StringTextComponent(Double.toString(maxDmg))));
 	}
 }

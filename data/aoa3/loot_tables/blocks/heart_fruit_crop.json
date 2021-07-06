@@ -8,6 +8,18 @@
           "type": "minecraft:item",
           "name": "aoa3:heart_fruit"
         }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:block_state_property",
+            "block": "aoa3:heart_fruit_crop",
+            "properties": {
+              "age": "7"
+            }
+          }
+        }
       ]
     },
     {

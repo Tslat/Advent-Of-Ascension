@@ -90,7 +90,10 @@ public class TraderSpawner implements ISpecialSpawner {
 			Heightmap.Type heightmap = EntitySpawnPlacementRegistry.getHeightmapType(trader);
 			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);
 
-			if (WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, trader))
+			if (!WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, trader))
+				continue;
+
+			if (world.noCollision(trader.getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)))
 				positions.add(Pair.of(trader, pos));
 		}
 

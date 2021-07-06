@@ -149,7 +149,7 @@ public class AoAStructures {
 	public static final RegistryObject<UndergroundCaveStructure> MUSHROOM_SPIDER_CAVE = register("mushroom_spider_cave", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/mushroom_spider_cave/main_pool"), 8, 32);
 	public static final RegistryObject<UndergroundCaveStructure> MYSTIC_LOTTO_SHROOM = register("mystic_lotto_shroom", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/mystic_lotto_shroom/main_pool"), 8, 32);
 	public static final RegistryObject<UndergroundCaveStructure> RUNIC_ARENA = register("runic_arena", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_arena/main_pool"), 14, 40);
-	public static final RegistryObject<UndergroundCaveStructure> RUNIC_PORTAL_HOLLOW = register("runic_portal_hollow", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_portal_hollow/main_pool"), 12, 40);
+	public static final RegistryObject<UndergroundCaveStructure> RUNIC_PORTAL_HOLLOW = register("runic_portal_hollow", () -> new UndergroundCaveStructure(GenerationStage.Decoration.UNDERGROUND_STRUCTURES, "mysterium/runic_portal_hollow/main_pool"), 12, 20);
 	public static final RegistryObject<AboveSurfaceStructure> POISON_RUNE_SHRINE = register("poison_rune_shrine", () -> new AboveSurfaceStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "mysterium/poison_rune_shrine/main_pool"), 8, 16);
 
 	public static final RegistryObject<GenericAoAStructure> CLUNKHEAD_ARENA = register("clunkhead_arena", () -> new GenericAoAStructure(GenerationStage.Decoration.SURFACE_STRUCTURES, "runandor/clunkhead_arena/main_pool"), 10, 36);

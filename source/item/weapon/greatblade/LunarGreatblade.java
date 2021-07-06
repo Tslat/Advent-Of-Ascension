@@ -21,14 +21,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class LunarGreatblade extends BaseGreatblade {
-	private final double baseDmg;
-	private final double maxDmg;
+	private final double maxDmg = 37.5f;
 
 	public LunarGreatblade() {
-		super(25.0f, AttackSpeed.GREATBLADE, 1850);
-
-		this.baseDmg = getAttackDamage() - (getAttackDamage() / 2d);
-		this.maxDmg = getAttackDamage() + (getAttackDamage() / 2d);
+		super(12.5f, AttackSpeed.GREATBLADE, 1850);
 	}
 
 	@Override
@@ -51,6 +47,6 @@ public class LunarGreatblade extends BaseGreatblade {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(baseDmg)), new StringTextComponent(Double.toString(maxDmg))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(getAttackDamage())), new StringTextComponent(Double.toString(maxDmg))));
 	}
 }

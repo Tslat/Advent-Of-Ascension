@@ -85,12 +85,15 @@ public class PixonSpawner implements ISpecialSpawner {
 			EntityType<? extends MobEntity> pixon = (EntityType<? extends MobEntity>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.source(), SPAWNS.get(key.get())).type;
 			EntitySpawnPlacementRegistry.PlacementType placementType = EntitySpawnPlacementRegistry.getPlacementType(pixon);
 			Heightmap.Type heightmap = EntitySpawnPlacementRegistry.getHeightmapType(pixon);
-			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);
+			pos = new BlockPos(x, world.getRandom().nextInt(world.getHeight(heightmap, x, z) + 1), z);
 
 			if (world.getEntities(pixon, new AxisAlignedBB(x - 5, pos.getY() - 5, z - 5, x + 5, pos.getY() + 5, z + 5), LivingEntity::isAlive).size() > 3)
 				continue;
 
-			if (WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, pixon))
+			if (!WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, pixon))
+				continue;
+
+			if (world.noCollision(pixon.getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)))
 				positions.add(Pair.of(pixon, pos));
 		}
 
