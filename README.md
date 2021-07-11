@@ -176,3 +176,37 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 編集の過程のチュートリアルはここで読むことが出来ます。
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
+--
+
+# Advento de Ĉieliro
+Jen estas la official Github por Advento de Ĉieliro.
+
+Ĉi tio branĉo estas por la plej nova 1.16.5 versio de la modifo.
+
+## MALGARANTIO 
+La fontkodo provizita en ĉi tiu github estas nur por vidi celojn. Vi rajtas modifi la kodo por PRIVATA UZO NUR.
+Redistribuo de la kodo estas BREĈON de la kondiĉoj de la permesilo.
+
+La kodo ĉi tio estas libera de devontigo. Ĉiuj fonto rigardebla ĉi tie estas reprezentanton de la plej nova publika eldono.
+Tiel, ĉiuj netradukaj devontigoj al ĉi tio kodo estos tuj forigitajn. Submetiĝu cimraporton aŭ sugeston por korektojn kaj ŝanĝojn. 
+
+## Kion mi povas fari ĉi tie?
+Vi povas fari 3 aferojn ĉi tie:
+1. Submetiĝu cimraporto. Fari ĉi tion, iru al la numera paĝo, kaj klaku "Nova Numero":
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2. Submetiĝu sugesto. Fari ĉi tion, iru al la numera paĝo, kaj klaku "Nova Numero", tiam elektu la sugestospeco vi volas:
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3. Kontribuu al la traduko de la mod. Por fari tion, vi devas sekvi ĉi tiujn paŝojn:
+
+   i) Iru al la dosierujo 'lang' kaj alklaku la lingvan dosieron, kiun vi volas traduki;
+
+   ii) Alklaku la malgrandan krajonan ikonon supre dekstre por redakti la dosieron;
+
+   iii) Redaktu la dosieron laŭplaĉe, tiam alklaku "Proponu dosierŝanĝon". 
+
+NOTO: Vi nun rigardas la lingvajn dosierojn por la versio Minecraft-1.16.5 de la mod. Por traduki la aliajn versiojn, alklaku la butonon "Branĉo", kaj elektu kiun version vi volas redakti. 
+
+Vi povas legi lernilon pri la redakta procezo en angla ĉi tie:
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
