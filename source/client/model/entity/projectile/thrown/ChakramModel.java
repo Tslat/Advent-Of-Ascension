@@ -5,9 +5,9 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.projectile.thrown.ChakramEntity;
+import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 
-public class ChakramModel extends EntityModel<ChakramEntity> {
+public class ChakramModel extends EntityModel<BaseBullet> {
 	private final ModelRenderer part;
 
 	public ChakramModel() {
@@ -30,7 +30,7 @@ public class ChakramModel extends EntityModel<ChakramEntity> {
 	}
 
 	@Override
-	public void setupAnim(ChakramEntity chakram, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
+	public void setupAnim(BaseBullet chakram, float pLimbSwing, float pLimbSwingAmount, float tickAge, float pNetHeadYaw, float pHeadPitch) {
 		if (chakram.getDeltaMovement().x() != 0 || chakram.getDeltaMovement().y() != 0 || chakram.getDeltaMovement().z() != 0) {
 			part.yRot = MathHelper.lerp(pLimbSwingAmount, tickAge - 1 % 360, tickAge % 360);
 		}

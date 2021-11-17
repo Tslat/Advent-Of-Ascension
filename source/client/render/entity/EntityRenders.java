@@ -717,7 +717,7 @@ public class EntityRenders {
 		registerProjectileRenderer(AoAEntities.Projectiles.VORTEX_BLAST.get(), new VortexBlastRenderer(renderManager));
 		registerProjectileRenderer(AoAEntities.Projectiles.VOX_CANNON.get(), new VoxCannonShotRenderer(renderManager, new ResourceLocation("aoa3", "textures/entity/projectiles/cannonshots/cannonball.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.VOXXULON_METEOR.get(), new VoxxulonMeteorRenderer(renderManager));
-		registerProjectileRenderer(AoAEntities.Projectiles.VULKRAM.get(), new ModelledProjectileRenderer<BaseBullet>(renderManager, new SliceStarModel(), AdventOfAscension.id("textures/entity/projectiles/thrown/vulkram.png")));
+		registerProjectileRenderer(AoAEntities.Projectiles.VULKRAM.get(), new ModelledProjectileRenderer<BaseBullet>(renderManager, new ChakramModel(), AdventOfAscension.id("textures/entity/projectiles/thrown/vulkram.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.VOLATILE_CANNONBALL.get(), new TexturedProjectileRenderer<VolatileCannonballEntity>(renderManager, new ResourceLocation("aoa3", "textures/entity/projectiles/cannonshots/cannonball.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.WART_DART.get(), new TexturedProjectileRenderer<WartDartEntity>(renderManager, new ResourceLocation("aoa3", "textures/entity/projectiles/bullets/wart_dart.png")));
 		registerProjectileRenderer(AoAEntities.Projectiles.WATER_BALLOON_BOMB.get(), new WaterBalloonBombRenderer(renderManager, new ResourceLocation("aoa3", "textures/entity/projectiles/cannonshots/balloon_bomb.png")));

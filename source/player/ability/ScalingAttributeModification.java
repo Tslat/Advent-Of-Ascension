@@ -104,6 +104,9 @@ public class ScalingAttributeModification extends AoAAbility.Instance {
 	@Override
 	public void removeAttributeModifiers(PlayerDataManager plData) {
 		EntityUtil.removeAttributeModifier(plData.player(), attribute, modifier.getId());
+
+		if (attribute == Attributes.MAX_HEALTH && plData.player().getHealth() > plData.player().getMaxHealth())
+			plData.player().setHealth(plData.player().getMaxHealth());
 	}
 
 	@Override
@@ -140,7 +143,7 @@ public class ScalingAttributeModification extends AoAAbility.Instance {
 	public void loadFromNbt(CompoundNBT data) {
 		super.loadFromNbt(data);
 
-		if (attribute == Attributes.MAX_HEALTH && data.contains("current_health")) {
+		if (attribute == Attributes.MAX_HEALTH && getListenerState() == ListenerState.ACTIVE && data.contains("current_health")) {
 			if (getLevelReq() == 1) {
 				loginHealth = (float)data.getDouble("current_health");
 			}

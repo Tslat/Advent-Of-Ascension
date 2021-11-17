@@ -66,7 +66,7 @@ public final class PlayerDataManager implements AoAPlayerEventListener {
 
 	private final ArrayListMultimap<ListenerType, AoAPlayerEventListener> activeEventListeners = ArrayListMultimap.create();
 	private final ArrayListMultimap<ListenerType, AoAPlayerEventListener> disabledEventListeners = ArrayListMultimap.create();
-	private final ArrayList<AoAPlayerEventListener> dirtyListeners = new ArrayList<AoAPlayerEventListener>();
+	private final HashSet<AoAPlayerEventListener> dirtyListeners = new HashSet<AoAPlayerEventListener>();
 
 	private HashMap<RegistryKey<World>, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<RegistryKey<World>, PortalCoordinatesContainer>();
 	private HashSet<ItemStack> itemStorage = null;

@@ -65,7 +65,6 @@ public final class ClientOperations {
 
 		SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager)mc.getResourceManager();
 
-		resourceManager.registerReloadListener(new GuidesReloadListener());
 		resourceManager.registerReloadListener(new BestiaryReloadListener());
 		resourceManager.registerReloadListener(new MiscellaneousReloadListener());
 		resourceManager.registerReloadListener(new RealmstoneInsertsReloadListener());

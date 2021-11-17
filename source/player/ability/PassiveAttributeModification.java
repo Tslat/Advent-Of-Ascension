@@ -65,12 +65,15 @@ public class PassiveAttributeModification extends AoAAbility.Instance {
 
 	@Override
 	public void applyAttributeModifiers(PlayerDataManager plData) {
-		EntityUtil.applyAttributeModifierSafely(plData.player(), attribute, modifier, false);
+		EntityUtil.reapplyAttributeModifier(plData.player(), attribute, modifier, false);
 	}
 
 	@Override
 	public void removeAttributeModifiers(PlayerDataManager plData) {
 		EntityUtil.removeAttributeModifier(plData.player(), attribute, modifier.getId());
+
+		if (attribute == Attributes.MAX_HEALTH && plData.player().getHealth() > plData.player().getMaxHealth())
+			plData.player().setHealth(plData.player().getMaxHealth());
 	}
 
 	@Override
@@ -101,7 +104,7 @@ public class PassiveAttributeModification extends AoAAbility.Instance {
 	public void loadFromNbt(CompoundNBT data) {
 		super.loadFromNbt(data);
 
-		if (attribute == Attributes.MAX_HEALTH && data.contains("current_health")) {
+		if (attribute == Attributes.MAX_HEALTH && getListenerState() == ListenerState.ACTIVE && data.contains("current_health")) {
 			float health = data.getFloat("current_health");
 
 			if (health > 0)

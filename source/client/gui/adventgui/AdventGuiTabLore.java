@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.IGuiEventListener;
@@ -107,24 +106,6 @@ public class AdventGuiTabLore extends Screen {
 		}
 	}
 
-	private void renderDraggedStack(ItemStack stack, int mouseX, int mouseY, String hoverText) {
-		RenderSystem.translatef(0, 0, 32);
-		setBlitOffset(200);
-
-		itemRenderer.blitOffset = 200;
-		FontRenderer font = stack.getItem().getFontRenderer(stack);
-
-		if (font == null)
-			font = this.font;
-
-		itemRenderer.renderAndDecorateItem(stack, mouseX, mouseY);
-		itemRenderer.renderGuiItemDecorations(font, stack, mouseX, mouseY - 8, hoverText);
-
-		setBlitOffset(0);
-
-		itemRenderer.blitOffset = 0;
-	}
-
 	public static void bookOpened(ResourceLocation id) {
 		if (!loreBooks.containsKey(id))
 			AoAPackets.messageServer(new PatchouliBookOpenPacket(id));
@@ -204,10 +185,7 @@ public class AdventGuiTabLore extends Screen {
 			if (mouseX > (this.x + this.titleWidth / 2f + 32 + 5) * AdventMainGui.SCALE)
 				return false;
 
-			if (mouseY > (this.y + 22 + 32 + 5) * AdventMainGui.SCALE)
-				return false;
-
-			return true;
+			return !(mouseY > (this.y + 22 + 32 + 5) * AdventMainGui.SCALE);
 		}
 
 		@Override

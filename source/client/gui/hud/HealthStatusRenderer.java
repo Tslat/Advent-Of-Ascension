@@ -33,9 +33,9 @@ public class HealthStatusRenderer {
 			ClientPlayerEntity player = mc.player;
 			MatrixStack matrix = ev.getMatrixStack();
 
-			int guiHeightOffset = ForgeIngameGui.left_height;
 			int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
-			int top = mc.getWindow().getGuiScaledHeight() - guiHeightOffset;
+			int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.left_height;
+			ForgeIngameGui.left_height += 10;
 			int healthColour;
 
 			float currentHealth = player.getHealth();
@@ -117,7 +117,7 @@ public class HealthStatusRenderer {
 			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + 144, uvY, 9, 9, 256, 256);
 		}
 		else {
-			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + (currentHealth == mc.player.getMaxHealth() ? 36 : 45), uvY, 9, 9, 256, 256);
+			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + (currentHealth >= mc.player.getMaxHealth() ? 36 : 45), uvY, 9, 9, 256, 256);
 		}
 	}
 
